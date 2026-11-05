@@ -1,0 +1,924 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E8 – Accounts access control design</title><style>body{font-family:Segoe UI,Arial,sans-serif;max-width:1180px;margin:24px auto;padding:0 16px;color:#1f2937;line-height:1.45;background:#fff}
+h1{font-size:24px;color:#4a1d6b}h2{font-size:19px;color:#4a1d6b;margin-top:32px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}h3{font-size:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}th,td{border:1px solid #d1d5db;padding:6px 8px;vertical-align:top;text-align:left}th{background:#f3f4f6}
+code{background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:12.5px}
+img{max-width:100%;border:1px solid #d1d5db;border-radius:4px;margin:6px 0 18px}
+hr{border:0;border-top:1px solid #e5e7eb;margin:24px 0}</style></head><body><h1>E8 — Accounts module access control: design (development only)</h1>
+<p><strong>Status:</strong> design for your approval. <strong>Nothing has been changed:</strong> no code, permission or data on development, and live is not touched. The retired-tool change stays installed on development, as it is.</p>
+<p><strong>Priority:</strong> high. E8 is a separate item from D1–D7 and E1–E7. It also covers E4: the Tour Dashboard reaching debtor-invoice actions.</p>
+<p><strong>Basis:</strong> the 203 addresses under <code>accounts/</code>, read from the code on 12 Oct 2026. Appendix A lists every one of them with its proposed rule; the same list is in the CSV.</p>
+<hr />
+<h2>1. Why this is needed — what the inventory shows</h2>
+<table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Evidence (development)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>One menu opens the whole module.</strong> The permission check allows every address that <em>starts with</em> an allowed menu address. So "Manage Accounts" (address <code>accounts</code>) opens all 203 addresses. Every other Accounts menu likewise opens everything below its own address.</td>
+<td>It is held by groups 1, 17 (Auditor, 3 active users), 25 (Admin, no users) and 30 (Accounts).</td>
+</tr>
+<tr>
+<td><strong>Page access and actions are the same permission.</strong> Anyone who can open a screen can also change its data.</td>
+<td>73 addresses change data:<br>• 68 by POST<br>• 5 by a plain link (GET)</td>
+</tr>
+<tr>
+<td><strong>Changes made by plain links.</strong></td>
+<td>• <code>creditor_invoice/expenses_delete</code> and <code>new_creditor_invoice/expenses_delete</code>: delete a ledger entry and its voucher rows<br>• <code>debtor_invoice/cancellation_request</code>: request a tour amendment<br>• <code>debtor_invoice/cancellation</code>: cancel an invoice and mark the tour cancelled<br>• <code>utility_bill/delete</code>: delete a ledger entry</td>
+</tr>
+<tr>
+<td><strong>Almost no security token.</strong></td>
+<td>Only Daily Bank Reconciliation (27 actions) and the two retired tools check a token. <strong>45 actions accept a request without one.</strong></td>
+</tr>
+<tr>
+<td><strong>Almost no own checks in code.</strong></td>
+<td>Only 40 of 203 addresses check the privilege again in their own code: Daily Bank Reconciliation and the retired tool. The other 163 rely on the menu alone.</td>
+</tr>
+<tr>
+<td><strong>Almost no audit trail.</strong></td>
+<td>No audit row for Accounts actions, except Daily Bank Reconciliation and the retired tools.</td>
+</tr>
+<tr>
+<td><strong>Read-only is guessed from the group's name.</strong> It refuses POSTs, and GETs whose address contains a change word as a separate part.</td>
+<td>4 of the 5 changing links slip through this rule.</td>
+</tr>
+<tr>
+<td><strong>Back doors from other modules.</strong> Hidden "aliases" in the permission filter open Accounts addresses to other menus.</td>
+<td>• Tour Dashboard (110), Working Dashboard (117) and Payment Forecast (132) open <strong>everything under <code>debtor_invoice_new/</code></strong>, including posting a debtor invoice and sending a receipt (E4). This reaches 12 groups.<br>• Invoice Cancellation (187) and Inquiry (79, 203) open the amendment request.</td>
+</tr>
+<tr>
+<td><strong>Dead routes.</strong> These addresses point at code that does not exist.</td>
+<td><code>new_creditor_invoice/complete_payment</code>, <code>voucher_payments/voucher_delete</code>, <code>debtor_invoice_new/tour_details</code>, <code>utility_bill_entertainment/delete</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correction to my last answer.</strong> <code>journal_entry/fetch</code> only <em>reads</em>: it is the account search box on the journal page. A code-reading mistake made it look like a write. There are <strong>5</strong> changing links, not 6. The corrected Manage Accounts list is delivered with this design.</p>
+<p><strong>Classes of the 203 addresses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th style="text-align: right;">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pages</td>
+<td style="text-align: right;">82</td>
+</tr>
+<tr>
+<td>Reads</td>
+<td style="text-align: right;">44 (29 GET, 15 POST)</td>
+</tr>
+<tr>
+<td>Writes</td>
+<td style="text-align: right;">73 (68 POST, 5 GET)</td>
+</tr>
+<tr>
+<td>Dead</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Design principles</h2>
+<ol>
+<li><strong>Deny by default.</strong> An Accounts address that is not in the registry is refused and audited.</li>
+<li><strong>Seeing is not doing.</strong> Page privileges let a user open screens and read. Every change needs a separate <strong>action privilege</strong>.</li>
+<li><strong>Every change is a POST with the security token</strong>, and is <strong>audited</strong>, whether it succeeds or is refused.</li>
+<li><strong>Least privilege.</strong> A user gets an action only if their role needs it. Destructive, corrective and approval actions are separated from day-to-day posting.</li>
+<li><strong>Auditors read from an explicit allowlist</strong>, not a name guess, and have <strong>no</strong> action privileges.</li>
+<li><strong>No surprises.</strong><ul>
+<li>The new rules first run in <strong>report mode</strong>: they write down what they <em>would</em> refuse, and refuse nothing.</li>
+<li>Enforcement starts only after you have reviewed those reports.</li>
+<li>Every step can be rolled back.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2>3. Target design</h2>
+<h3>3.1 One route registry — the single source of truth</h3>
+<p>A new configuration file, <code>app/Config/AccessPolicy.php</code>, lists every Accounts address once (Appendix A). Each entry has:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>method + address</td>
+<td>e.g. <code>POST accounts/journal_entry/save</code>. Placeholders such as <code>(:num)</code> are allowed.</td>
+</tr>
+<tr>
+<td>class</td>
+<td>page / read / write</td>
+</tr>
+<tr>
+<td>required privilege</td>
+<td><strong>Page or read:</strong> the existing menu of that screen (unchanged).<br><strong>Write:</strong> an action privilege (3.2).</td>
+</tr>
+<tr>
+<td>other modules allowed</td>
+<td>Explicit replacement for today's hidden aliases. For example, Tour Management may read <code>creditor_invoice/get_details</code>. Only reads and the amendment request are carried over.</td>
+</tr>
+<tr>
+<td>read-only allowed</td>
+<td>yes / no (the Auditor allowlist, 3.7)</td>
+</tr>
+<tr>
+<td>token / audit</td>
+<td>Always on for writes</td>
+</tr>
+</tbody>
+</table>
+<p>The registry covers 199 addresses, plus 5 "tombstones" for the old links converted to POST. The 4 dead routes are removed. <strong>An automated test fails if a new <code>accounts/</code> route is added without a registry entry</strong> (8.T1). The rule cannot silently decay again.</p>
+<h3>3.2 Action privileges — 22 new, hidden</h3>
+<p>They are stored like every Avenir privilege, as menu rows granted to groups (Settings → Group Privileges):</p>
+<ul>
+<li>hidden from the sidebar (<code>show_in_menu_bar = 1</code>);</li>
+<li>with an address of the form <code>act:…</code>, which can never match a real page, so the old prefix rule can never hand them out by accident.</li>
+</ul>
+<p>Each day-to-day action is paired with today's screen. Destructive, corrective and approval actions are separate and elevated. The Daily Bank Reconciliation keeps its own three privileges (view, prepare, review) unchanged. The retired tool is denied to everyone.</p>
+<table>
+<thead>
+<tr>
+<th>Action privilege</th>
+<th>What it allows</th>
+<th style="text-align: right;">Addresses</th>
+<th>Paired with today's menu</th>
+<th>Default holders (proposal, for decision)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>act:chart.maintain</code></td>
+<td>Chart of accounts — maintain</td>
+<td style="text-align: right;">9</td>
+<td>— (new, elevated)</td>
+<td>1 System Administrator</td>
+</tr>
+<tr>
+<td><code>act:records.delete</code></td>
+<td>Delete a posted record (reason required)</td>
+<td style="text-align: right;">4</td>
+<td>— (new, elevated)</td>
+<td>1 System Administrator, 29 Finance &amp; Approvals — Management Approver</td>
+</tr>
+<tr>
+<td><code>act:journal.correct</code></td>
+<td>Journal — reverse / change date (reason required)</td>
+<td style="text-align: right;">2</td>
+<td>— (new, elevated)</td>
+<td>1 System Administrator, 29 Finance &amp; Approvals — Management Approver</td>
+</tr>
+<tr>
+<td><code>act:journal.post</code></td>
+<td>Journal — post</td>
+<td style="text-align: right;">1</td>
+<td>Journal Entry (81)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:vouchers.create</code></td>
+<td>Vouchers — create</td>
+<td style="text-align: right;">1</td>
+<td>Voucher Payments (82)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:vouchers.finalise</code></td>
+<td>Vouchers — finalise (Mark Finalized) / authorise</td>
+<td style="text-align: right;">1</td>
+<td>Bank Payment Check Report (189)</td>
+<td>1 System Administrator</td>
+</tr>
+<tr>
+<td><code>act:vouchers.audit_mark</code></td>
+<td>Voucher audit — record marks</td>
+<td style="text-align: right;">2</td>
+<td>Voucher Audit (124)</td>
+<td>1 System Administrator, 29 Finance &amp; Approvals — Management Approver, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:creditor_invoice.post</code></td>
+<td>Payment amendment — post</td>
+<td style="text-align: right;">1</td>
+<td>Payment Amendment (84)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:creditor_payment.post</code></td>
+<td>Creditor payment — post</td>
+<td style="text-align: right;">1</td>
+<td>Creditor Payment (56)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:other_invoice.post</code></td>
+<td>Service provider invoice — post</td>
+<td style="text-align: right;">1</td>
+<td>Service Provider Invoice (172)</td>
+<td>1 System Administrator, 9 Accountant, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:service_provider_payment.post</code></td>
+<td>Service provider payment — post</td>
+<td style="text-align: right;">1</td>
+<td>Service Provider Payment (194)</td>
+<td>1 System Administrator, 9 Accountant, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:advance_payment.post</code></td>
+<td>Advance payment — post</td>
+<td style="text-align: right;">1</td>
+<td>Advance Payments (90)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:utility_bill.post</code></td>
+<td>Utility bill — post / pay</td>
+<td style="text-align: right;">3</td>
+<td>Utility Bill Payment (113)</td>
+<td>1 System Administrator, 9 Accountant, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:entertainment.post</code></td>
+<td>Entertainment expense — post</td>
+<td style="text-align: right;">3</td>
+<td>Utility Bill Entertainment (181)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:debtor_payment.post</code></td>
+<td>Debtor receipt — post</td>
+<td style="text-align: right;">1</td>
+<td>Debtor Payment (78)</td>
+<td>1 System Administrator, 18 ticketing_admin, 20 TicketingAccountant, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:debtor_invoice.post</code></td>
+<td>Debtor invoice — post / send receipt</td>
+<td style="text-align: right;">2</td>
+<td>Debtor Invoice (86)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:debit_note.post</code></td>
+<td>Debit note — post</td>
+<td style="text-align: right;">1</td>
+<td>Debit Note (115)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:credit_note.post</code></td>
+<td>Credit note — post</td>
+<td style="text-align: right;">1</td>
+<td>Credit Note (139)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:usd_withdrawal.post</code></td>
+<td>USD withdrawal — post</td>
+<td style="text-align: right;">1</td>
+<td>USD Withdrawal (192)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+<tr>
+<td><code>act:amendment.request</code></td>
+<td>Tour amendment — request</td>
+<td style="text-align: right;">1</td>
+<td>Invoice Cancellation (187)</td>
+<td>1 System Administrator, 13 Operational, 15 Maintenance</td>
+</tr>
+<tr>
+<td><code>act:amendment.decide</code></td>
+<td>Tour amendment — approve / finalise</td>
+<td style="text-align: right;">1</td>
+<td>Tour Amendment Approval (127)</td>
+<td>1 System Administrator, 29 Finance &amp; Approvals — Management Approver</td>
+</tr>
+<tr>
+<td><code>act:old_bankrec.change</code></td>
+<td>Old bank reconciliation — change (until withdrawn, D7)</td>
+<td style="text-align: right;">6</td>
+<td>Bank Reconcillation (112)</td>
+<td>1 System Administrator, 30 Accounts</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 The enforcement filter</h3>
+<p>A new filter, <code>AccessPolicyFilter</code>, runs after the sign-in check. <strong>Only for addresses the registry manages</strong> (in phase 1: <code>accounts/</code>), it replaces the old "starts with" rule. For each request:</p>
+<ol>
+<li><strong>Not in the registry</strong> → 403 "not available", audited (<code>access_policy_denied</code>, reason <em>unregistered</em>).</li>
+<li><strong>Wrong method</strong> (for example, a GET to a write) → 405, audited.</li>
+<li><strong>The user's group is read-only</strong> and the address is not on the allowlist → 403, audited.</li>
+<li><strong>The user holds none of the required privileges</strong> → 403, audited. The System Administrator keeps every privilege, as today, but steps 2, 5 and 6 still apply.</li>
+<li><strong>Write without a valid security token</strong> → 403 "Security token missing or expired — reload the page. Nothing was changed.", audited.</li>
+<li><strong>Write allowed</strong> → it runs. Afterwards one audit row records the outcome (6.T6), and the response carries the next token.</li>
+</ol>
+<p><strong>Modes, per module, in the same config file:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>legacy</code></td>
+<td>Today's behaviour.</td>
+</tr>
+<tr>
+<td><code>report</code></td>
+<td>Today's behaviour, plus one <code>access_policy_shadow</code> audit row for every request the new rules <em>would</em> refuse.</td>
+</tr>
+<tr>
+<td><code>enforce</code></td>
+<td>The new rules.</td>
+</tr>
+</tbody>
+</table>
+<p>Switching modes is a one-line change, and the first rollback lever (7.1).</p>
+<h3>3.4 Security token for every change</h3>
+<p><strong>Making it available to every page</strong></p>
+<ul>
+<li><code>layouts/head.php</code> gets two <code>&lt;meta&gt;</code> tags with the token name and value.</li>
+<li><code>layouts/scripts.php</code> gets a small jQuery prefilter. It adds the token as the <code>X-CSRF-TOKEN</code> header to every same-site POST, and picks up the new token from each response.</li>
+<li>The token rotates after every successful change and is read from the page; the cookie is HttpOnly, so scripts cannot read it.</li>
+<li>Pages that already send the token keep working: Daily Bank Reconciliation, and the retired-tool pages, which send it in the body.</li>
+</ul>
+<p><strong>What the inventory found</strong></p>
+<ul>
+<li><strong>No plain HTML forms post to Accounts.</strong> All 77 page calls to Accounts POST addresses are jQuery requests, so the prefilter covers them without editing each page.</li>
+</ul>
+<h3>3.5 Changing links become POST</h3>
+<p>For each of the 5 links:</p>
+<ol>
+<li>Its route becomes POST.</li>
+<li>The controller reads its values from the POST body; a value in the address is ignored.</li>
+<li>Each active page that calls it switches its call to POST; the prefilter adds the token.</li>
+<li>The old GET address stays for one stabilisation period as a <strong>tombstone</strong>. It answers 405 "This action now needs a POST from the page; reload the page", changes nothing, and is audited.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Active pages that call it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>creditor_invoice/expenses_delete</code></td>
+<td><code>accounts/creditor_invoice.php</code></td>
+</tr>
+<tr>
+<td><code>new_creditor_invoice/expenses_delete</code></td>
+<td><code>accounts/new_creditor_invoice.php</code></td>
+</tr>
+<tr>
+<td><code>debtor_invoice/cancellation_request</code></td>
+<td><code>accounts/debtor_arrival_report.php</code>, <code>accounts/debtor_invoice_report.php</code>, <code>accounts/debtor_receipt_report.php</code>, <code>dashboard2/tile_dashboard.php</code>, <code>dashboard2/tile_dashboard2.php</code>, <code>dashboard2/tour_search/timeline.php</code>, <code>inquiry/inquiry_timeline.php</code>, <code>inquiry/inquiry_timeline_full.php</code>, <code>tour/quotation/quotation_timeline.php</code></td>
+</tr>
+<tr>
+<td><code>debtor_invoice/cancellation</code></td>
+<td><code>accounts/debtor_invoice_cancellation_req.php</code>, <code>accounts/debtor_invoice_cancellation_req_final.php</code></td>
+</tr>
+<tr>
+<td><code>utility_bill/delete</code></td>
+<td><code>accounts/utility_bill_report.php</code>, <code>accounts/entertainment_expenses_report.php</code></td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>Two backup copies of these pages are never rendered by any route, so they are left alone.</li>
+<li><strong>The working dashboard (<code>tile_dashboard.php</code>, <code>tile_dashboard2.php</code>) is touched.</strong> The change is one call per file, from GET to POST, with no visual change. Under your standing rule on the dashboard, this needs your explicit approval (decision X9).</li>
+</ul>
+<h3>3.6 Audit trail</h3>
+<p><strong>Where:</strong> <code>tpd_audit</code>, the same table the payment and reconciliation work uses.</p>
+<p><strong>One row per change attempt, recording:</strong></p>
+<ul>
+<li>action: <code>accounts_action</code>, <code>access_policy_denied</code> or <code>access_policy_shadow</code>;</li>
+<li>the address and method;</li>
+<li>the user and group;</li>
+<li>the time and IP address;</li>
+<li>the answer (HTTP status, and the application's own status where it returns one);</li>
+<li>the privilege used;</li>
+<li>the record identifiers posted (for example invoice number, voucher, tour, entry ID);</li>
+<li>the reason, for deletes and corrections (X8).</li>
+</ul>
+<p><strong>Never recorded:</strong> amounts, bank account numbers, or free text other than the reason. Refusals are recorded the same way. Page views stay in the existing activity log.</p>
+<h3>3.7 Auditor read-only allowlist</h3>
+<ul>
+<li><strong>Who:</strong> the read-only groups are listed explicitly in the config: 17 Auditor and 34 Auditor (read-only). The old name guess is no longer used for Accounts.</li>
+<li><strong>What they can open:</strong> <strong>84 addresses</strong> (56 pages and 28 reads), flagged "yes" in Appendix A.<ul>
+<li>all reports, ledgers, statements and prints;</li>
+<li>the chart of accounts view;</li>
+<li>the bank-reconciliation details and summary;</li>
+<li>Daily Bank Reconciliation view (they already hold it).</li>
+</ul>
+</li>
+<li><strong>What they cannot open:</strong> entry screens and their helper reads (26 pages, 16 reads). They do not need these to audit, and showing them invites attempted changes.</li>
+<li><strong>Actions:</strong> none. "Voucher audit — record marks" is the one exception you may want to grant to named auditors (X4).</li>
+</ul>
+<h3>3.8 Least privilege — who can do what, today and proposed</h3>
+<p><strong>Defaults</strong> (each one subject to your decisions in section 4):</p>
+<ul>
+<li><strong>Day-to-day posting</strong> goes to the groups that hold that screen today. Auditor groups and the empty Admin group are excluded.</li>
+<li><strong>Elevated actions</strong> (deletes, journal corrections, chart maintenance, amendment approval, voucher finalisation) go to the Management Approver and/or the System Administrator.</li>
+<li><strong>Other modules keep only reads</strong>, plus the amendment request.</li>
+</ul>
+<p><strong>Counts on development:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th style="text-align: right;">Active users (dev)</th>
+<th style="text-align: right;">Pages / reads reachable today</th>
+<th style="text-align: right;">Changing actions reachable today</th>
+<th style="text-align: right;">Proposed changing actions</th>
+<th>Proposed action privileges (default, for decision)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 System Administrator</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">45</td>
+<td>advance_payment.post, amendment.decide, amendment.request, chart.maintain, credit_note.post, creditor_invoice.post, creditor_payment.post, debit_note.post, debtor_invoice.post, debtor_payment.post, entertainment.post, journal.correct, journal.post, old_bankrec.change, other_invoice.post, records.delete, service_provider_payment.post, usd_withdrawal.post, utility_bill.post, vouchers.audit_mark, vouchers.create, vouchers.finalise</td>
+</tr>
+<tr>
+<td>9 Accountant</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td>other_invoice.post, service_provider_payment.post, utility_bill.post</td>
+</tr>
+<tr>
+<td>12 Sales</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>13 Operational</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td>amendment.request</td>
+</tr>
+<tr>
+<td>15 Maintenance</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td>amendment.request</td>
+</tr>
+<tr>
+<td>17 Auditor</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>18 ticketing_admin</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>debtor_payment.post</td>
+</tr>
+<tr>
+<td>20 TicketingAccountant</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>debtor_payment.post</td>
+</tr>
+<tr>
+<td>21 Management</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>23 Transport Manager</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>25 Admin</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>29 Finance &amp; Approvals — Management Approver</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td>amendment.decide, journal.correct, records.delete, vouchers.audit_mark</td>
+</tr>
+<tr>
+<td>30 Accounts</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">27</td>
+<td>advance_payment.post, credit_note.post, creditor_invoice.post, creditor_payment.post, debit_note.post, debtor_invoice.post, debtor_payment.post, entertainment.post, journal.post, old_bankrec.change, other_invoice.post, service_provider_payment.post, usd_withdrawal.post, utility_bill.post, vouchers.audit_mark, vouchers.create</td>
+</tr>
+<tr>
+<td>31 Tour Reservations</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>32 Hotel Reservations</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33 Transport &amp; Guide Handling</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>34 Auditor (read-only)</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35 Finance &amp; Approvals — Bank Authoriser</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>36 Pilot / Operations Allocation</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What changes</strong></p>
+<ul>
+<li><strong>Auditor groups 17 and 34:</strong> from 45 / 4 reachable changing actions to <strong>0</strong>.</li>
+<li><strong>Empty Admin group 25:</strong> from 45 to <strong>0</strong>.</li>
+<li><strong>Sales, Management, Tour, Hotel and Transport Reservations, Pilot</strong> (2 each, through the Tour Dashboard aliases — E4): to <strong>0</strong>.</li>
+<li><strong>Accounts:</strong> keeps the 27 day-to-day actions and loses the 18 elevated ones.</li>
+<li><strong>Management Approver:</strong> gains the elevated ones. These are mostly actions they cannot reach today (4 → 9).</li>
+<li><strong>System Administrator:</strong> keeps everything, now with token, method check and audit.</li>
+</ul>
+<hr />
+<h2>4. Decisions needed from you before building</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>My recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X1</td>
+<td>Approve the 22 action privileges and the registry (Appendix A) as the rule set</td>
+<td>Approve; I will adjust any row you mark</td>
+</tr>
+<tr>
+<td>X2</td>
+<td>Elevated actions: deletes (4), journal reverse / change date (2), tour amendment approval (1)</td>
+<td>Management Approver + System Administrator, <strong>reason required</strong>; not the Accounts preparer</td>
+</tr>
+<tr>
+<td>X3</td>
+<td>Chart of accounts maintenance (9 actions)</td>
+<td>System Administrator only for now. Later, a named Finance Controller, as with the bank master (D4)</td>
+</tr>
+<tr>
+<td>X4</td>
+<td>Voucher audit marks (2): the auditor's own work, or Accounts / Approver?</td>
+<td>If auditors must record marks, grant only this one action to named auditors. Otherwise Approver + Accounts</td>
+</tr>
+<tr>
+<td>X5</td>
+<td>Voucher finalisation (<code>voucher_auth/update</code>, used by Bank Payment Check "Mark Finalized")</td>
+<td>System Administrator only, consistent with "Paid = System Administrator only". Add Bank Authoriser (35) only if you want them to finalise legacy vouchers</td>
+</tr>
+<tr>
+<td>X6</td>
+<td>Tour amendment requests from Operational (13) and Maintenance (15) pages</td>
+<td>Keep, as an explicit privilege. Add Accounts (30) if they also raise requests</td>
+</tr>
+<tr>
+<td>X7</td>
+<td>E4: remove <code>debtor_invoice_new/*</code> from Tour Dashboard, Working Dashboard and Payment Forecast</td>
+<td>Remove the actions. Keep only the print and "sent mail" reads those pages show</td>
+</tr>
+<tr>
+<td>X8</td>
+<td>Reason required for deletes and corrections (a one-line prompt; stored in the audit row)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>X9</td>
+<td>One-line GET→POST change in the working dashboard files (<code>tile_dashboard*.php</code>)</td>
+<td>Approve (no visual change). Otherwise amendment requests from the dashboard stop working when enforced</td>
+</tr>
+<tr>
+<td>X10</td>
+<td>Legacy groups: Accountant (9, 1 user) keeps utility / service-provider posting; ticketing_admin (18, 3 users) keeps debtor receipts</td>
+<td>Keep for now; review with E2 / E6</td>
+</tr>
+<tr>
+<td>X11</td>
+<td>Admin group 25 (no users)</td>
+<td>Remove its Accounts privileges</td>
+</tr>
+<tr>
+<td>X12</td>
+<td>Old Bank Reconciliation changes (6 actions)</td>
+<td>Accounts only, until the old menu is withdrawn under D7</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. Migration plan — development only</h2>
+<p>The order is: cloud copy → isolated test instance → development. Each phase has an exit check and stops for your approval.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>What</th>
+<th>Exit check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0</strong></td>
+<td>Your decisions X1–X12; the registry finalised</td>
+<td>Signed-off registry</td>
+</tr>
+<tr>
+<td><strong>P1 — cloud copy</strong></td>
+<td>Build:<br>• the registry and filter (with the three modes)<br>• the token meta tags and prefilter<br>• the after-audit<br>• the 5 GET→POST conversions with tombstones<br>• dead-route removal<br>• the privilege migration SQL and rollback SQL<br>Run the full test plan (section 6)</td>
+<td>All tests pass; rollback rehearsed at all three levels</td>
+</tr>
+<tr>
+<td><strong>P2 — isolated instance</strong></td>
+<td>Install the kit. Run the migration SQL on the test bed. Tests use temporary TEST logins under the fixture rules (TEST ONLY — NEVER LIVE; one-time passwords; removed afterwards, verified against the snapshot)</td>
+<td>Tests pass; rollback; fixture removed</td>
+</tr>
+<tr>
+<td><strong>P3 — development, report mode</strong></td>
+<td>Install the files with Accounts in <strong>report</strong> mode. Behaviour is unchanged; tokens are sent; shadow rows are recorded. Use development normally for an agreed period (for example 5 working days). I then report every <code>access_policy_shadow</code> row</td>
+<td>You review: no legitimate work would have been refused, or the registry is corrected</td>
+</tr>
+<tr>
+<td><strong>P4 — development, privileges</strong></td>
+<td>Back up the privilege tables: snapshot of <code>menu_list</code>, <code>user_privileges</code> and <code>group_profile</code>, plus a full database copy. Insert the 22 hidden <code>act:</code> privileges and the approved grants (every row tagged <code>E8</code>). Verify the per-group matrix against section 3.8</td>
+<td>Matrix matches; nothing else changed</td>
+</tr>
+<tr>
+<td><strong>P5 — development, enforce</strong></td>
+<td>Switch Accounts to <strong>enforce</strong>. Run development checks: refusals and page reads with TEST logins and (with your consent) your session. Check ledger integrity</td>
+<td>All checks pass; ledger identical</td>
+</tr>
+<tr>
+<td><strong>P6 — stabilisation</strong></td>
+<td>Monitor the audit trail. After an agreed period, with a separate approval, remove the tombstones and the old code path</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Live</strong> needs its own inventory, kit and approval later. Live is behind development, and its users and permissions differ.</p>
+<hr />
+<h2>6. Test plan</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Test</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td><strong>Registry completeness:</strong> every <code>accounts/</code> route in <code>Routes.php</code> appears exactly once in the registry, and no registry entry is stale (a build check)</td>
+<td>cloud, isolated, development</td>
+</tr>
+<tr>
+<td>T2</td>
+<td><strong>Route matrix:</strong> 199 addresses × 7 personas (no session, unprivileged, Auditor, Accounts, Approver, Bank Authoriser, System Administrator) × request variants (GET; POST without, with wrong, and with valid token). The expected answer is computed from the registry</td>
+<td><strong>Cloud:</strong> all of it, including successful changes on test data.<br><strong>Isolated:</strong> all of it.<br><strong>Development:</strong> refusals and reads only</td>
+</tr>
+<tr>
+<td>T3</td>
+<td><strong>Functional regression:</strong> every one of the 45 changing actions is performed from its own page by the right role, and the database effect is compared with the legacy code on the same restored snapshot (the method used for the Manual Update buttons)</td>
+<td>cloud</td>
+</tr>
+<tr>
+<td>T4</td>
+<td><strong>Security token:</strong> missing, wrong or expired → 403; several changes in one page (rotation); two tabs; long-open pages</td>
+<td>cloud, isolated</td>
+</tr>
+<tr>
+<td>T5</td>
+<td><strong>GET→POST:</strong> old links answer 405 and are audited; every calling page works by POST (browser clicks on all 15 active pages)</td>
+<td>cloud, isolated</td>
+</tr>
+<tr>
+<td>T6</td>
+<td><strong>Audit:</strong> exactly one row per change attempt, with the right fields and no amounts or account numbers</td>
+<td>all three</td>
+</tr>
+<tr>
+<td>T7</td>
+<td><strong>Read-only:</strong> auditors open all 84 allowlisted addresses, are refused everything else, and make 0 changes</td>
+<td>cloud, isolated</td>
+</tr>
+<tr>
+<td>T8</td>
+<td><strong>Existing suites:</strong><br>• regression battery (202 / 71 / 36 / 33 / 26 / 10)<br>• r2 108 and r3 132 suites, plus their screens<br>• sign-out fix<br>• retired-tools tests</td>
+<td>cloud</td>
+</tr>
+<tr>
+<td>T9</td>
+<td><strong>Ledger and data integrity:</strong> rows, totals, flags and checksums before and after; all tables compared (only audit, log, session and the tagged privilege rows may change)</td>
+<td>isolated, development</td>
+</tr>
+<tr>
+<td>T10</td>
+<td><strong>Rollback rehearsal</strong>, all three levels (section 7)</td>
+<td>cloud, isolated; levels 1–2 on development</td>
+</tr>
+<tr>
+<td>T11</td>
+<td><strong>Overhead:</strong> time per request with the filter on (target under 5 ms)</td>
+<td>cloud</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7. Full rollback</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>How</th>
+<th>Restores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>7.1 Mode switch</strong> (seconds)</td>
+<td><code>enforce</code> → <code>report</code> or <code>legacy</code> in <code>AccessPolicy.php</code> (one line)</td>
+<td>Today's permission behaviour. The GET→POST pages keep working, because the POST routes stay.</td>
+</tr>
+<tr>
+<td><strong>7.2 Files</strong></td>
+<td><code>apply.py rollback</code></td>
+<td>Every changed file back <strong>byte-for-byte</strong>: filter, config, routes, layouts, controllers, pages. Checked against <code>ORIGINAL-MD5</code>, as for the retired-tool kit.</td>
+</tr>
+<tr>
+<td><strong>7.3 Data</strong></td>
+<td><code>rollback-e8-privileges.sql</code> deletes only the rows tagged <code>E8</code>: the 22 <code>act:</code> menu rows and their grants</td>
+<td><code>menu_list</code>, <code>user_privileges</code> and <code>group_profile</code> identical to the P4 snapshot (checked row by row and by checksum). A full database copy taken in P4 is the last resort.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Order:</strong> 7.1 first. 7.2 if code must go. 7.3 can follow at any time; unused <code>act:</code> rows are harmless.</li>
+<li><strong>Kept:</strong> audit rows stay as the record.</li>
+<li><strong>Not needed:</strong> no ledger or business data is migrated, so there is no data rollback beyond privileges.</li>
+</ul>
+<hr />
+<h2>8. What will change (expected, for the kit)</h2>
+<p><strong>New files</strong></p>
+<ul>
+<li><code>app/Config/AccessPolicy.php</code> (registry and modes)</li>
+<li><code>app/Filters/AccessPolicyFilter.php</code></li>
+<li>the migration and rollback SQL</li>
+<li>the tests</li>
+</ul>
+<p><strong>Changed files</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/Config/Filters.php</code></td>
+<td>Register the filter</td>
+</tr>
+<tr>
+<td><code>app/Filters/UserPermissionFilter.php</code></td>
+<td>Delegate managed modules; aliases into <code>accounts/</code> replaced by registry entries</td>
+</tr>
+<tr>
+<td><code>app/Config/Routes.php</code></td>
+<td>5 GET→POST, 5 tombstones, 4 dead removed</td>
+</tr>
+<tr>
+<td><code>layouts/head.php</code>, <code>layouts/scripts.php</code></td>
+<td>Token meta tags and prefilter</td>
+</tr>
+<tr>
+<td>4 controllers</td>
+<td>Read from POST</td>
+</tr>
+<tr>
+<td>2 more controllers (journal, entertainment expenses)</td>
+<td>Reason for deletes and corrections (X8)</td>
+</tr>
+<tr>
+<td>15 active pages</td>
+<td>Calls switched to POST, plus reason prompts. Includes the two working-dashboard files (X9)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not changed</strong></p>
+<ul>
+<li>no ledger table or business data;</li>
+<li>no existing menu or grant (only new <code>act:</code> rows are added in P4);</li>
+<li>no other module's behaviour (they stay on the old rule; see section 9).</li>
+</ul>
+<hr />
+<h2>9. Out of scope and risks</h2>
+<p><strong>Out of scope</strong></p>
+<ul>
+<li><strong>Other modules.</strong> Other modules have the same "starts with" rule: <code>tour/</code>, <code>dashboard2/</code>, <code>master_files/</code>, <code>report/</code>, <code>settings/</code>. The same registry and filter can take them on one by one later, each with its own inventory. I recommend that as the next step after Accounts.</li>
+<li><strong>Live</strong> (see section 5).</li>
+</ul>
+<p><strong>Risks and mitigations</strong></p>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A legitimate action is refused after enforcement</td>
+<td>Report mode first (P3); the mode switch (7.1)</td>
+</tr>
+<tr>
+<td>Pages left open across the deployment send no token</td>
+<td>They get a clear "reload the page" message. The prefilter is loaded from server-rendered layouts, so no browser cache issue</td>
+</tr>
+<tr>
+<td>Hidden callers of a converted link</td>
+<td>The tombstones record them for review</td>
+</tr>
+<tr>
+<td>Work beyond these 203 addresses</td>
+<td>The registry test (T1) keeps new Accounts routes from bypassing the rules</td>
+</tr>
+</tbody>
+</table></body></html>

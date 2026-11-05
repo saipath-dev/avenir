@@ -1,0 +1,20 @@
+1. r1 skeleton (md5 as on development): 921c2ea6 ed6df577  set 20053a35f89c
+2. check:
+   changed 13 added ['app/Libraries/BankRec/LegacyGuard.php'] not_r1 [] missing []
+3. apply:
+   verified True changed 13
+   files now = kit src: b0b1fc921362 / b0b1fc921362
+No syntax errors detected in /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/bankrec/r3work/rehearse_apply_dev_kit/app/Libraries/BankRec/LegacyGuard.php
+4. rollback with deleting refused (as on your computer):
+   back_to_r1 True | ['app/Libraries/BankRec/LegacyGuard.php moved out']
+   IDENTICAL to r1
+5. apply again + normal rollback:
+   back_to_r1 True
+   IDENTICAL to r1
+6. isolated-instance base URL:
+   Refused: /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/bankrec/r3work/rehearse_apply_dev_rv has the base URL "http://loca
+7. live base URL:
+   Refused: /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/bankrec/r3work/rehearse_apply_dev_live has the base URL "https://s
+8. a file that is not the r1 file:
+   not_r1 ['app/Libraries/BankRec/Rec.php (8d2201bcc540ff9182c3bceadc065bba)'] | Stopped: the target is not tf-bankrec-r1 as installed on development; nothing was written.
+   LegacyGuard.php written: 0

@@ -1,0 +1,737 @@
+{
+ "about": "tf-entrance-r1 — the approved list for the one-time import into the Place to Visit / Entrance Fee Master (entrances and safaris only). Read once by Install now; each old record is [id, name] and is found by both (or by its name alone when the id carries another name). Proposed 3 Oct 2026 from the live Place to Visit list (119 records) and Excursion Rates; to be approved before go-live.",
+ "places": [
+  {
+   "category": "Heritage site",
+   "old": [
+    [
+     1,
+     "SIGIRIYA"
+    ]
+   ],
+   "excursion": [
+    "SIGIRIYA"
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     2,
+     "DAMBULLA TEMPLA"
+    ]
+   ],
+   "excursion": [
+    "DAMBULLAENTRANCE"
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     4,
+     "kandy Temple Entrances"
+    ],
+    [
+     18,
+     "Dalada Maligawa"
+    ]
+   ],
+   "excursion": [
+    "KANDYTEMPLE"
+   ]
+  },
+  {
+   "category": "Heritage site",
+   "old": [
+    [
+     5,
+     "Pidurangala Rock"
+    ]
+   ]
+  },
+  {
+   "category": "Garden",
+   "old": [
+    [
+     9,
+     "Kandy Botanical Gardens"
+    ],
+    [
+     41,
+     "Peradeniya Garden"
+    ]
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     11,
+     "PINNAWELA"
+    ]
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     14,
+     "NAMAL UYANA"
+    ]
+   ]
+  },
+  {
+   "category": "Museum",
+   "old": [
+    [
+     17,
+     "National Museum Colombo"
+    ]
+   ]
+  },
+  {
+   "category": "Heritage site",
+   "old": [
+    [
+     23,
+     "Mediaeval capital city"
+    ],
+    [
+     34,
+     "POLONNARUWA SS"
+    ]
+   ],
+   "excursion": [
+    "POLONNARUWA"
+   ]
+  },
+  {
+   "name": "Yala National Park",
+   "code": "YALA",
+   "category": "National park / safari",
+   "jeep": true,
+   "old": [
+    [
+     24,
+     "Yala Safari"
+    ],
+    [
+     99,
+     "YALA SAFARI JEEP"
+    ]
+   ],
+   "mixed": [
+    24
+   ],
+   "jeep_old": [
+    99
+   ],
+   "excursion": [
+    "YALAENTRANCE",
+    "YALAJEEP"
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     28,
+     "Gangaramaya"
+    ]
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     29,
+     "Geoffrey bawa"
+    ],
+    [
+     61,
+     "Geoffrey Bawa NUMBER 11"
+    ]
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     39,
+     "Isurumuniya Temple"
+    ]
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     40,
+     "Sri Maha Bhodiya"
+    ]
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     42,
+     "Udawatthe Kele"
+    ]
+   ]
+  },
+  {
+   "name": "Wilpattu National Park",
+   "code": "W",
+   "category": "National park / safari",
+   "jeep": true,
+   "old": [
+    [
+     43,
+     "Wilpattu National Park75"
+    ],
+    [
+     62,
+     "Willpattu Jeep Safari"
+    ]
+   ],
+   "mixed": [
+    62
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     44,
+     "Alu Viharaya Rock Temple"
+    ]
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     45,
+     "Ambuluwawa"
+    ]
+   ]
+  },
+  {
+   "category": "Heritage site",
+   "old": [
+    [
+     46,
+     "Mihinthale"
+    ]
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     47,
+     "Hindu Temple"
+    ]
+   ]
+  },
+  {
+   "category": "Heritage site",
+   "old": [
+    [
+     52,
+     "ANURADHAPURA"
+    ]
+   ],
+   "excursion": [
+    "ANURADHAPURAENTRANCE"
+   ]
+  },
+  {
+   "category": "Garden",
+   "old": [
+    [
+     59,
+     "lunuganga"
+    ]
+   ]
+  },
+  {
+   "category": "Garden",
+   "old": [
+    [
+     60,
+     "BRIEF GARDEN"
+    ]
+   ]
+  },
+  {
+   "category": "National park / safari",
+   "old": [
+    [
+     72,
+     "Horton plains"
+    ]
+   ]
+  },
+  {
+   "category": "National park / safari",
+   "old": [
+    [
+     74,
+     "PIGEON ISLAND"
+    ]
+   ]
+  },
+  {
+   "category": "Garden",
+   "old": [
+    [
+     78,
+     "Victoria Park"
+    ]
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     79,
+     "Gregory Lake"
+    ]
+   ]
+  },
+  {
+   "name": "Kaudulla National Park",
+   "category": "National park / safari",
+   "jeep": true,
+   "old": [
+    [
+     85,
+     "Kaudulla National Park"
+    ],
+    [
+     7,
+     "kaudulla safari"
+    ]
+   ],
+   "mixed": [
+    7
+   ]
+  },
+  {
+   "category": "Other paid place",
+   "old": [
+    [
+     89,
+     "Turtle Hatchery"
+    ]
+   ]
+  },
+  {
+   "category": "Garden",
+   "old": [
+    [
+     90,
+     "Hakgala Botanical Garden"
+    ]
+   ]
+  },
+  {
+   "category": "National park / safari",
+   "jeep": true,
+   "old": [
+    [
+     91,
+     "UDAWALAWA"
+    ]
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     92,
+     "MANAWARI RAMALINGESHWARAM"
+    ]
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     93,
+     "SEETHADEVI KOVIL"
+    ]
+   ]
+  },
+  {
+   "category": "Temple",
+   "old": [
+    [
+     94,
+     "KONESHWRAM"
+    ]
+   ]
+  },
+  {
+   "category": "Museum",
+   "old": [
+    [
+     108,
+     "Sigiriya Museum - Archeological"
+    ]
+   ]
+  },
+  {
+   "category": "Museum",
+   "old": [
+    [
+     109,
+     "National Museum Kandy (Royal Place )"
+    ]
+   ]
+  },
+  {
+   "category": "Museum",
+   "old": [
+    [
+     110,
+     "Ceylon Tea Museum Hanthana - Kandy"
+    ]
+   ]
+  },
+  {
+   "name": "Minneriya National Park",
+   "code": "MIN",
+   "category": "National park / safari",
+   "jeep": true,
+   "old": [
+    [
+     3,
+     "Minneriya with Jeep and Entrance"
+    ],
+    [
+     114,
+     "MINNERIYA JEEP - LUCKY"
+    ]
+   ],
+   "mixed": [
+    3
+   ],
+   "jeep_old": [
+    114
+   ],
+   "excursion": [
+    "MINNERIYAENTRANCES",
+    "MINNERIYAJEEPFEE"
+   ]
+  }
+ ],
+ "sightseeing": [
+  [
+   19,
+   "Colombo SS"
+  ],
+  [
+   20,
+   "Galle City Tour"
+  ],
+  [
+   32,
+   "Nuwara Eliya SS"
+  ],
+  [
+   36,
+   "Gall SS"
+  ],
+  [
+   64,
+   "KANDY MARKET"
+  ],
+  [
+   65,
+   "GALLE FACE COLOMBO"
+  ],
+  [
+   69,
+   "Ella"
+  ],
+  [
+   50,
+   "Nine Arch Bridge"
+  ],
+  [
+   53,
+   "Gem Shopping"
+  ],
+  [
+   63,
+   "SHOPPING"
+  ],
+  [
+   98,
+   "Boutique 87"
+  ],
+  [
+   66,
+   "BMICH"
+  ]
+ ],
+ "review": [
+  [
+   107,
+   "Adam's Peak",
+   "Adam's Peak — entrance fee not confirmed."
+  ],
+  [
+   67,
+   "ROSE QUARTZ MOUNTAN",
+   "Rose Quartz Mountain — entrance fee not confirmed."
+  ],
+  [
+   95,
+   "KINNIYA HOT WATER",
+   "Kinniya Hot Water — entrance fee not confirmed."
+  ],
+  [
+   35,
+   "SPICE GARDEN",
+   "Spice Garden — entrance fee not confirmed."
+  ],
+  [
+   55,
+   "Galoya",
+   "Gal Oya — entrance fee not confirmed."
+  ],
+  [
+   8,
+   "ECO park",
+   "Eco Park — entrance fee not confirmed."
+  ],
+  [
+   16,
+   "Habarana Jeep Safari",
+   "A jeep safari with no park named (Habarana) — put its figures on the park it goes to, once known."
+  ]
+ ],
+ "services": [
+  [
+   6,
+   "Village Tour Sigiriya"
+  ],
+  [
+   10,
+   "KANDIAN DANCE"
+  ],
+  [
+   12,
+   "LUNCH"
+  ],
+  [
+   15,
+   "Parking and Toll"
+  ],
+  [
+   21,
+   "Guide Fee"
+  ],
+  [
+   26,
+   "SPA Treatments"
+  ],
+  [
+   27,
+   "JEEP HIRE"
+  ],
+  [
+   30,
+   "Drivers Accommodation"
+  ],
+  [
+   31,
+   "En route Tea factory"
+  ],
+  [
+   33,
+   "Gallery café"
+  ],
+  [
+   37,
+   "GALLERY CAFFÈ"
+  ],
+  [
+   38,
+   "ELEPHANT RIDE"
+  ],
+  [
+   48,
+   "Train tickets"
+  ],
+  [
+   49,
+   "Ayurvedic Treatment"
+  ],
+  [
+   51,
+   "HIGH TEA"
+  ],
+  [
+   54,
+   "Tips"
+  ],
+  [
+   56,
+   "Horoscope"
+  ],
+  [
+   57,
+   "Tea Plucking , Tea Tasting and Tea factory Visit"
+  ],
+  [
+   58,
+   "NEW YEAR SUP - AMAGI ARIA"
+  ],
+  [
+   68,
+   "HOME COOKING"
+  ],
+  [
+   70,
+   "The Blue water/Lunch"
+  ],
+  [
+   71,
+   "Avani Bentota/Lunch"
+  ],
+  [
+   73,
+   "BIRD WATCHING"
+  ],
+  [
+   75,
+   "Dinner"
+  ],
+  [
+   76,
+   "Flower Garland"
+  ],
+  [
+   77,
+   "Tea Factory Visit"
+  ],
+  [
+   80,
+   "Kandy Perahera"
+  ],
+  [
+   81,
+   "TUK TUK RIDE"
+  ],
+  [
+   82,
+   "Gemming"
+  ],
+  [
+   83,
+   "Whale Watching"
+  ],
+  [
+   84,
+   "AIRPORT EXPENSE"
+  ],
+  [
+   86,
+   "River Safari"
+  ],
+  [
+   87,
+   "Boat Ride"
+  ],
+  [
+   88,
+   "Madu River Boat Safari"
+  ],
+  [
+   96,
+   "Water Bottle"
+  ],
+  [
+   97,
+   "HORESCOPE READING"
+  ],
+  [
+   100,
+   "TRAIN TICKET"
+  ],
+  [
+   101,
+   "Air Tickets"
+  ],
+  [
+   102,
+   "Land Package"
+  ],
+  [
+   103,
+   "Air Tickets  For 3 persons"
+  ],
+  [
+   104,
+   "Land Package for 4 Person"
+  ],
+  [
+   105,
+   "Air Tickets  For 3 persons - Per Person LKR 170,000"
+  ],
+  [
+   106,
+   "Land Package For 4 person - LKR 195,000 PP"
+  ],
+  [
+   111,
+   "Elephant Ride Sigiriya"
+  ],
+  [
+   112,
+   "Domestic Air tickets"
+  ],
+  [
+   113,
+   "Cinnamon Air"
+  ],
+  [
+   115,
+   "KYNROCK AIRPORT HOTEL"
+  ],
+  [
+   116,
+   "Indian Pilgrimage Passenger"
+  ],
+  [
+   117,
+   "NO EXPENSES"
+  ],
+  [
+   118,
+   "Unpaid Millage"
+  ],
+  [
+   119,
+   "Tea & Snacks"
+  ],
+  [
+   120,
+   "Royal High Tea"
+  ],
+  [
+   121,
+   "Astrology Reading"
+  ],
+  [
+   122,
+   "Shikisen Japanese Restaurant"
+  ]
+ ]
+}

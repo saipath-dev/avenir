@@ -1,0 +1,92 @@
+[
+ [
+  "ok",
+  "H0 sign-in works (JSON 200, start page dashboard2/tiles, needs_usd_rate field kept)",
+  ""
+ ],
+ [
+  "ok",
+  "H0 signed in: a page opens",
+  ""
+ ],
+ [
+  "ok",
+  "H1 opening the sign-in page with a valid session goes to the start page (302) and the session stays signed in",
+  ""
+ ],
+ [
+  "ok",
+  "H2 a background check without a session gets 401 JSON \"session ended\" (no redirect to the sign-in page)",
+  ""
+ ],
+ [
+  "ok",
+  "H3 a page request without a session is still redirected to the sign-in page with ?redirect= (unchanged)",
+  ""
+ ],
+ [
+  "ok",
+  "H5 the sign-in page opens without a session (form shown)",
+  ""
+ ],
+ [
+  "ok",
+  "H4 a revoked session: the page goes to the sign-in page, which shows the form (no redirect loop)",
+  ""
+ ],
+ [
+  "ok",
+  "H4 a revoked session: background check 401 JSON",
+  ""
+ ],
+ [
+  "ok",
+  "H6 sign-out works; afterwards pages go to the sign-in page",
+  ""
+ ],
+ [
+  "ok",
+  "H7 System Administrator already signed in, opening the sign-in page \u2192 the administration dashboard (302)",
+  ""
+ ],
+ [
+  "ok",
+  "H8 a signed-in user without the privilege still gets 403 (permission filter unchanged)",
+  ""
+ ],
+ [
+  "ok",
+  "H9 a background check with no cookie (sent after signing out) answered after a new sign-in: 401 and no cookie sent back; the new sign-in stays",
+  ""
+ ],
+ [
+  "ok",
+  "H9 a background check with the old, ended session cookie answered after a new sign-in: 401 and no cookie sent back; the new sign-in stays",
+  ""
+ ],
+ [
+  "ok",
+  "P1 after sign-out, the old tab keeps its page (not blanked) and shows \"Your session has ended \u2026 Sign in again\"",
+  ""
+ ],
+ [
+  "ok",
+  "P1 background checks from an old tab answered just after a new sign-in in another tab: the sign-in stays and its page stays visible (6 held)",
+  ""
+ ],
+ [
+  "ok",
+  "P1 the old tab works again once signed in elsewhere (notice removed after a successful check)",
+  ""
+ ],
+ [
+  "ok",
+  "P2 HTML with plugins.js inserted after load leaves the page as it was",
+  ""
+ ],
+ [
+  "ok",
+  "P3 no script error from the new code on the pages used",
+  ""
+ ]
+]

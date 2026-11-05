@@ -1,0 +1,57 @@
+  ok   the test administrator signs in
+  ok   bar: the work tabs read Tour Inquiry … Transport Operations (no 'Inquiries', no bare 'Transport')
+  ok   bar: the rest of the tabs are as they were
+  ok   bar: Tour Inquiry is lit on its own screen, with the open count
+  ok   sidebar: the entries say Tour Inquiry and Transport Operations (menu_list names unchanged by 1c)
+  ok   the reading layer is included exactly once (through the bar)
+  ok   Masters opens
+  ok   Masters: the four groups, in order
+  ok   Masters: every master sits in its group (Tour Photos stays pinned on the bar)
+  ok   Masters: the URLs are the same twelve (one menu URL = one privilege, nothing new)
+  ok   Masters: two columns
+  ok   Masters: no group is split across the two columns
+  ok   Masters: the dividers are gone (the headings do that work)
+  ok   Masters: a count on a menu entry sits inline beside its name
+  ok   lead: the Tour Inquiry lead folds to its first sentence with 'How this works'
+  ok   lead: the first sentence shows, the rest is hidden until opened
+  ok   lead: 'How this works' opens the whole lead and reads 'Less'; nothing of the text is lost
+  ok   lead: and closes again
+  ok   rail: an open inquiry gets a section rail with one entry per section
+  ok   rail: it sits in the sticky side column on this screen
+  ok   rail: the entries are the section titles, in page order
+  ok   rail: a click jumps to the section
+  ok   rail: the current section is lit (one entry 'on' after the jump)
+  ok   fold: a section's title folds its body (the title stays)
+  ok   fold: the folded body is hidden, nothing removed from the page
+  ok   fold: the fold is remembered for the screen after a reload
+  ok   fold: and opens again from the title
+  ok   help: long explanations fold behind 'more'; the short field hints are untouched
+  ok   print: everything folded prints in full, the toggles do not print
+  ok   the picture slot with nothing in it says 'No picture yet' (source)
+  ok   Transport Operations: the screen's title is its name
+  ok   Transport Operations: its tab is lit
+  ok   Drivers & Guides: the title is the menu's name, the master named after it
+  ok   Drivers & Guides: the Transport & Guide Services strip is there with Drivers & Guides lit
+  ok   Hotel Incomplete Work: the Tour Desk bar is on the screen (as on live), Masters lit
+  ok   Hotel Incomplete Work: the reading layer once, through the bar
+  ok   Hotel Incomplete Work: the long lead folds to its first sentence (the whole text still there)
+  ok   Hotel Incomplete Work: one heading row per kind, each with its count
+  ok   Hotel Incomplete Work: every item sits under its heading, never two headings in a row
+  ok   Hotel Incomplete Work: the count on each heading equals the rows under it
+  ok   Hotel Incomplete Work: the item rows carry a colour dot, the kind pill sits once on the heading
+  ok   Hotel Incomplete Work: the heading row is shaded
+  ok   Hotel Incomplete Work: long explanations on the rows fold behind 'more'
+  ok   Hotel Incomplete Work: a search with no match shows no heading either
+  ok   Hotel Incomplete Work: the list comes back
+  ok   Hotel Incomplete Work: the KPI tiles are as before (open total first)
+  ok   no JS errors on the screens visited (the workspace's blocked lordicon fetch set aside)
+  ok   quote desk: the bar shows only its own screens ['tour/intake', 'tour/intake/confirmed']
+  ok   quote desk: every other screen is refused by the route filter (no 200)
+  ok   quote desk: its own screen opens (200)
+  ok   transport desk: the bar shows only its own screens ['tour/intake', 'tour/intake/confirmed', 'tour/transport_ops', 'tour/ticket_stock']
+  ok   transport desk: every other screen is refused by the route filter (no 200)
+  ok   transport desk: its own screen opens (200)
+  ok   hotel desk: the bar shows only its own screens ['tour/hotel_bookings', 'master_files/hotel_rate_v2', 'master_files/hotel_work']
+  ok   hotel desk: every other screen is refused by the route filter (no 200)
+  ok   hotel desk: its own screen opens (200)
+56 ok, 0 failed

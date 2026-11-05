@@ -1,0 +1,868 @@
+{
+    "key": "rts_jiejie_w2627",
+    "hotel": {
+        "acc": "6-9-11-11800",
+        "name": "Jie Jie Beach Hotel",
+        "location": "Panadura",
+        "chain": null,
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:43"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Jie Jie Beach Hotel"
+        },
+        "contract": {
+            "name": "Tour Operator Contract – 01 Nov 2026 to 30 Apr 2027 (net rates)",
+            "plan_type": "contract",
+            "priority": 0,
+            "contract_type": "Tour Operator (net rate)",
+            "tier": "all",
+            "hotel_reference": "Tour Operator Contract – Net Rate Agreement, prepared 29th September 2026",
+            "valid_from": "2026-11-01",
+            "valid_to": "2027-04-30",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "taxes_included": 1,
+            "tax_note": "Net Rate Agreement – net rates in USD; the contract does not mention taxes or service charge (confirm with the hotel).",
+            "source_type": "manual",
+            "received_at": "2026-10-02",
+            "contract_date": "2026-09-29",
+            "markets": [
+                {
+                    "code": "RU",
+                    "mode": "exclude"
+                },
+                {
+                    "code": "EE",
+                    "mode": "exclude"
+                },
+                {
+                    "code": "EU",
+                    "mode": "exclude"
+                },
+                {
+                    "code": "UK",
+                    "mode": "exclude"
+                },
+                {
+                    "code": "NL",
+                    "mode": "exclude"
+                },
+                {
+                    "code": "ES",
+                    "mode": "exclude"
+                }
+            ],
+            "child_policy_text": "Below 4.99 - FOC sharing parents' room on basis booked. (No Extra Bed). 5 – 11.99 years - US $ 5/- on BB, US $ 10/- on HB, US $ 15/- on FB, US $ 25/- on AI Basis per child per day sharing parents' room. (No Extra Bed). Extra Bed - US $ 10/- per bed per night. Room sharing: Standard, Standard Superior, Standard Superior Balcony, Deluxe, Deluxe Superior, Deluxe Superior Beach – 3 Adults or 2 Adults + 2 Children (Rollaway Bed); Standard Superior Family, Deluxe Superior Family – 4 Adults or 3 Adults + 2 Children (4th Bed Rollaway).",
+            "cancellation_text": "Cancellations & No-shows Policy: A cancellation fee will not be charged if a booking is cancelled 30 days prior to the date of arrival. Cancellations within 29 to 21 days prior to the date of arrival 25% of the total will be charged. Cancellations within 20 to 15 days prior to the date of arrival 50% of the total stay will be charged. Cancellation less than 14 days to the date of arrival, No Show bookings and cancellations within the stay will be charged for the total stay on the basis booked.",
+            "payment_text": "Payment shall be settled in full 14 days prior to the date of arrival. If a booking is made within 14 days to the date of arrival payment shall be made in full upon booking confirmation. Bookings are subject to release if payment is not made before the deadline or unless other arrangement is made with the resort. Bookings confirmed of 8 rooms and above will be considered as group bookings and will be confirmed subject to receipt of 50% non-refundable pre-payment by the hotel or at a deadline given by the hotel at the time of booking; the remaining 50% as stated in the Payment Policy & Terms applicable for Groups or any other deadline given by the Hotel. If Group bookings confirmed less than 15 days to arrival date 100% of the entire stay to be paid at the time of confirming same.",
+            "terms_text": "TOUR OPERATOR CONTRACT (Net Rate Agreement) prepared on 29th September 2026 between Jie Jie Beach Hotel, 150 Beach Road, Uyankella, Panadura (www.jiejiebeach.com) and Avenir Holidays Pvt Ltd, for the period 01st November 26 to 30th April 2027. The special rates offered will not be valid until signed acceptance is received by the Resort (sign and return the duplicate copy to the Sales Office). Market – All Markets (Excluding Russia, CIS, Europe and Eastern Europe); excluded markets: Albania, Armenia, Austria, Azerbaijan, Belarus, Belgium, Bosnia, Bulgaria, Croatia, Cyprus, Czech Republic, Czechia, Denmark, Estonia, Finland, France, Georgia, Germany, Greece, Herzegovina, Hungary, Ireland, Italy, Kazakhstan, Kyrgyzstan, Latvia, Lithuania, Luxembourg, Malta, Moldova, Montenegro, Netherlands, Norway, North Macedonia, Poland, Portugal, Romania, Russia, Serbia, Slovakia, Slovenia, Spain, Sweden, Tajikistan, Ukraine, United Kingdom, Uzbekistan. Currency – United States Dollars. Allotment – On Request. Basis and Rate – as per the grid. | EXTRA ADULT SUPPLEMENTS: Breakfast US $ 5 per adult per night; Half Board US $ 12; Full Board US $ 20; All Inclusive US $ 55 per adult per night; Extra Bed (Rollaway) US $ 10 per bed per night. | ROOM SUPPLEMENTS (per room per night): Standard Superior US $ 5 and Standard Superior Balcony US $ 15 on the Standard Room Rate; Deluxe Superior US $ 5 and Deluxe Superior Beach US $ 10 on the Deluxe Room Rate; Deluxe Superior Family US $ 10 on the Standard Superior Family Rate. All Standard Category Rooms on Land Side and Deluxe Category Rooms on Ocean Side. | COMPULSORY SUPPLEMENTS: Christmas Eve (24th Dec) US $ 50/- per adult and US $ 25/- per child on HB, FB or AI basis; New Year's Eve (31st Dec) US $ 75/- per adult and US $ 38/- per child on HB, FB or AI basis. | LISTING AND BROCHURE PRINTING: the Agent submits the picture and description of the Resort and the location for approval before printing or listing on a website; the rating of the Resort must be approved by the Resort and not be less than stated. | PRICING: minimum markup of 30% on the net rates must be allowed prior to publishing the rates to any sub agents. Any rates published in the web site should not be lower than the resort site rates. All rates should be sold as a package and should not be sold or advertised on hotel only. | RESERVATIONS: all booking requests are subject to written confirmation from the resort reservations department and to receipt of pre-payment; reservations@jiejiebeach.com, +94 38 7899899, +94 70 797 2457. | CHECK-IN 14:00, CHECK-OUT 12:00 noon. Early check-in from 08:00hrs free of charge subject to availability at the time of arrival; early check-in between 06:00 – 14:00 hrs charged at 50% of daily room rate subject to availability; arrivals prior to 06:00hrs book one extra night (from the previous day). Late check-out 12:00 – 18:00hrs on availability, confirmed at the resort: until 1500 hrs 30% of 01 days charge, until 1800 hrs 50%, after 1800 hrs 100%. | HONEYMOON OFFER (to be informed at the time of booking): FOC bed decoration & fruit platter. BIRTHDAY OFFER (to be informed at the time of booking, cross-checked at check-in): cake and bed decoration. | STANDARD ALL INCLUSIVE ENTITLEMENTS: Meals – buffet breakfast, lunch & dinner at the All Day Dining Restaurant (breakfast 0700–1000, lunch 1230–1430, dinner 1900–2130). Tea/coffee & snacks – morning 11:00–12:00, evening 16:00–17:00, night 22:00–23:00 (tea/coffee with one sweet & one savory). Beverages 1000–2300 hrs (excluding mini bar & room service): soft drinks (cordial fruit juices mango/pineapple/orange, mineral water, Coca Cola, Sprite, Fanta, soda, tonic, iced tea, tea & coffee); domestic spirits 50 ml by the glass, local pouring (vodka, rum, brandy, gin, whisky, arrack); cocktails (Gimlet, Screwdriver, Mojito, Bloody Mary, Classic Arrack, Black Sour, Whisky Sour); mocktails (Sun Downer, Virgin Mojito, Coco Colada, Jie Jie Cooler); house wine red/white by the glass (175 ml); domestic beer Lion Lager draught (glass). AI TERMS: the beverage package must be taken for the entire length of stay (also for add-on reservations / extensions); families or guests sharing rooms / travelling together as a group must be booked under the same package (children included); available in restaurants and bars during their operating hours; items not on the list charged at menu price; beverages only in the designated restaurants & bars (not in rooms, private dining, beach, shops, spa); excludes in-room dining, minibar, beach service and private dining venues; personal consumption only, not shared with non-occupants; one glass at a time, no accumulation; no refunds or substitutions, not transferable; brands may be substituted; no refunds for early departure or no-shows. | Sales & Marketing: Dinesh Soysa, Head of Sales & Marketing, +94 70 7639514, sales@jiejiebeach.com; signed 29th September 2026 (operator signature and date blank).",
+            "notes": "Transcribed from \"Winter 2026n27 Rates - Avenir Holidays Pvt Ltd.pdf\" (5 pages), saved to the winter RTS folder on 2 Oct 2026. Jie Jie Beach Hotel (Panadura) has NO supplier record – acc None, needs a supplier record before it can be loaded. Validity as printed \"01st November 26 to 30th April 2027\", but the rate grid only covers 01.11.26 – 31.03.27: April 2027 has no rate (W01 – ask the hotel). Rates per room per night (SGL / DBL / TPL / QUD) for Standard, Standard Superior Family and Deluxe on RO / BB / HB / FB / AI, all printed. The TPL and QUD cells of Standard and Deluxe are filled black on the page (the PDF text layer still carries figures under the black boxes) – NOT entered; a third adult in those rooms is presumably DBL + the \"Extra Adult Supplements\" (meal 5 / 12 / 20 / 55 + extra bed 10) – entered as optional supplements only, confirm with the hotel. The 01.11.26 – 25.12.26 and 11.01.27 – 31.03.27 grids are identical (kept as two seasons, as printed). Other room types are priced as supplements (Standard Superior +5, Standard Superior Balcony +15, Deluxe Superior +5, Deluxe Superior Beach +10, Deluxe Superior Family +10 on the Standard Superior Family rate). Markets: \"All Markets (Excluding Russia, CIS, Europe and Eastern Europe)\" → RU, EE, EU, UK, NL, ES excluded (Switzerland, Iceland etc. are not on the printed country list but fall under \"Europe\"). \"Net Rate Agreement\": taxes are not mentioned – entered as nett/inclusive (confirm). Contract date 29 Sep 2026; the rates are valid only once Avenir's signed acceptance reaches the resort. No guide policy printed.",
+            "source_file": "Winter 2026n27 Rates - Avenir Holidays Pvt Ltd.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Standard",
+                "priced_as": "base",
+                "max_adults": 3,
+                "max_children": 2,
+                "view": "Land side",
+                "description": "3 Adults or 2 Adults + 2 Children (Rollaway Bed); TPL/QUD blacked out on the rate grid"
+            },
+            {
+                "name": "Standard Superior",
+                "priced_as": "supplement",
+                "base_room_type": "Standard",
+                "max_adults": 3,
+                "max_children": 2,
+                "view": "Land side",
+                "description": "Standard Room Rate + US$ 5 per room per night; 3 Adults or 2 Adults + 2 Children (Rollaway Bed)"
+            },
+            {
+                "name": "Standard Superior Balcony",
+                "priced_as": "supplement",
+                "base_room_type": "Standard",
+                "max_adults": 3,
+                "max_children": 2,
+                "view": "Land side",
+                "description": "Standard Room Rate + US$ 15 per room per night; 3 Adults or 2 Adults + 2 Children (Rollaway Bed)"
+            },
+            {
+                "name": "Standard Superior Family",
+                "priced_as": "base",
+                "max_adults": 4,
+                "max_children": 2,
+                "view": "Land side",
+                "description": "4 Adults or 3 Adults + 2 Children (4th Bed Rollaway)"
+            },
+            {
+                "name": "Deluxe",
+                "priced_as": "base",
+                "max_adults": 3,
+                "max_children": 2,
+                "view": "Ocean side",
+                "description": "3 Adults or 2 Adults + 2 Children (Rollaway Bed); TPL/QUD blacked out on the rate grid"
+            },
+            {
+                "name": "Deluxe Superior",
+                "priced_as": "supplement",
+                "base_room_type": "Deluxe",
+                "max_adults": 3,
+                "max_children": 2,
+                "view": "Ocean side",
+                "description": "Deluxe Room Rate + US$ 5 per room per night; 3 Adults or 2 Adults + 2 Children (Rollaway Bed)"
+            },
+            {
+                "name": "Deluxe Superior Beach",
+                "priced_as": "supplement",
+                "base_room_type": "Deluxe",
+                "max_adults": 3,
+                "max_children": 2,
+                "view": "Ocean side",
+                "description": "Deluxe Room Rate + US$ 10 per room per night; 3 Adults or 2 Adults + 2 Children (Rollaway Bed)"
+            },
+            {
+                "name": "Deluxe Superior Family",
+                "priced_as": "supplement",
+                "base_room_type": "Standard Superior Family",
+                "max_adults": 4,
+                "max_children": 2,
+                "view": "Ocean side",
+                "description": "Standard Superior Family Rate + US$ 10 per room per night; 4 Adults or 3 Adults + 2 Children (4th Bed Rollaway)"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01.11.26 to 25.12.26",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-25"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "RO",
+                        "sgl": 75,
+                        "dbl": 80,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 85,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "HB",
+                        "sgl": 85,
+                        "dbl": 90,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "FB",
+                        "sgl": 93,
+                        "dbl": 106,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "AI",
+                        "sgl": 118,
+                        "dbl": 156,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "RO",
+                        "sgl": 90,
+                        "dbl": 95,
+                        "tpl": 110,
+                        "quad": 125,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "BB",
+                        "sgl": 95,
+                        "dbl": 100,
+                        "tpl": 125,
+                        "quad": 145,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "HB",
+                        "sgl": 100,
+                        "dbl": 105,
+                        "tpl": 146,
+                        "quad": 173,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "FB",
+                        "sgl": 108,
+                        "dbl": 121,
+                        "tpl": 164,
+                        "quad": 197,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "AI",
+                        "sgl": 133,
+                        "dbl": 171,
+                        "tpl": 224,
+                        "quad": 277,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "RO",
+                        "sgl": 85,
+                        "dbl": 90,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 90,
+                        "dbl": 95,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 95,
+                        "dbl": 100,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "FB",
+                        "sgl": 103,
+                        "dbl": 116,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "AI",
+                        "sgl": 128,
+                        "dbl": 166,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    }
+                ]
+            },
+            {
+                "name": "26.12.26 to 10.01.27",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-26",
+                        "to": "2027-01-10"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "RO",
+                        "sgl": 95,
+                        "dbl": 100,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 100,
+                        "dbl": 105,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "HB",
+                        "sgl": 105,
+                        "dbl": 110,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "FB",
+                        "sgl": 113,
+                        "dbl": 126,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "AI",
+                        "sgl": 138,
+                        "dbl": 176,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "RO",
+                        "sgl": 110,
+                        "dbl": 115,
+                        "tpl": 130,
+                        "quad": 145,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "BB",
+                        "sgl": 115,
+                        "dbl": 120,
+                        "tpl": 145,
+                        "quad": 165,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "HB",
+                        "sgl": 120,
+                        "dbl": 125,
+                        "tpl": 166,
+                        "quad": 193,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "FB",
+                        "sgl": 128,
+                        "dbl": 141,
+                        "tpl": 184,
+                        "quad": 217,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "AI",
+                        "sgl": 153,
+                        "dbl": 191,
+                        "tpl": 244,
+                        "quad": 297,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "RO",
+                        "sgl": 105,
+                        "dbl": 110,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 110,
+                        "dbl": 115,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 115,
+                        "dbl": 120,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "FB",
+                        "sgl": 123,
+                        "dbl": 136,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "AI",
+                        "sgl": 148,
+                        "dbl": 186,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    }
+                ]
+            },
+            {
+                "name": "11.01.27 to 31.03.27",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-11",
+                        "to": "2027-03-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "RO",
+                        "sgl": 75,
+                        "dbl": 80,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 85,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "HB",
+                        "sgl": 85,
+                        "dbl": 90,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "FB",
+                        "sgl": 93,
+                        "dbl": 106,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "AI",
+                        "sgl": 118,
+                        "dbl": 156,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "RO",
+                        "sgl": 90,
+                        "dbl": 95,
+                        "tpl": 110,
+                        "quad": 125,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "BB",
+                        "sgl": 95,
+                        "dbl": 100,
+                        "tpl": 125,
+                        "quad": 145,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "HB",
+                        "sgl": 100,
+                        "dbl": 105,
+                        "tpl": 146,
+                        "quad": 173,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "FB",
+                        "sgl": 108,
+                        "dbl": 121,
+                        "tpl": 164,
+                        "quad": 197,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Superior Family",
+                        "meal_plan": "AI",
+                        "sgl": 133,
+                        "dbl": 171,
+                        "tpl": 224,
+                        "quad": 277,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "RO",
+                        "sgl": 85,
+                        "dbl": 90,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 90,
+                        "dbl": 95,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 95,
+                        "dbl": 100,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "FB",
+                        "sgl": 103,
+                        "dbl": 116,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "AI",
+                        "sgl": 128,
+                        "dbl": 166,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "TPL and QUD cells are blacked out on the sheet (not entered)"
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [
+            {
+                "room_type": "Standard Superior",
+                "amount": 5,
+                "per": "room",
+                "note": "US $ 5 per room per night on the Standard Room Rate"
+            },
+            {
+                "room_type": "Standard Superior Balcony",
+                "amount": 15,
+                "per": "room",
+                "note": "US $ 15 per room per night on the Standard Room Rate"
+            },
+            {
+                "room_type": "Deluxe Superior",
+                "amount": 5,
+                "per": "room",
+                "note": "US $ 5 per room per night on the Deluxe Room Rate"
+            },
+            {
+                "room_type": "Deluxe Superior Beach",
+                "amount": 10,
+                "per": "room",
+                "note": "US $ 10 per room per night on the Deluxe Room Rate"
+            },
+            {
+                "room_type": "Deluxe Superior Family",
+                "amount": 10,
+                "per": "room",
+                "note": "US $ 10 per room per night on the Standard Superior Family Rate"
+            }
+        ],
+        "meal_deltas": [],
+        "meal_prices": [],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Christmas Eve (24th Dec)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 50,
+                "compulsory": 1,
+                "child_amount": 25,
+                "note": "Compulsory: US $ 50/- per adult and US $ 25/- per child on HB, FB or AI basis"
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve (31st Dec)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 75,
+                "compulsory": 1,
+                "child_amount": 38,
+                "note": "Compulsory: US $ 75/- per adult and US $ 38/- per child on HB, FB or AI basis"
+            },
+            {
+                "type": "extra_adult",
+                "name": "Extra adult – Breakfast",
+                "meal_plans": "BB",
+                "per": "adult",
+                "amount": 5,
+                "compulsory": 0,
+                "note": "US $ 5 per adult per night. Printed under \"Extra Adult Supplements\"; optional – how it combines with the room rate for a 3rd/4th adult is not stated"
+            },
+            {
+                "type": "extra_adult",
+                "name": "Extra adult – Half Board",
+                "meal_plans": "HB",
+                "per": "adult",
+                "amount": 12,
+                "compulsory": 0,
+                "note": "US $ 12 per adult per night. Printed under \"Extra Adult Supplements\"; optional – how it combines with the room rate for a 3rd/4th adult is not stated"
+            },
+            {
+                "type": "extra_adult",
+                "name": "Extra adult – Full Board",
+                "meal_plans": "FB",
+                "per": "adult",
+                "amount": 20,
+                "compulsory": 0,
+                "note": "US $ 20 per adult per night. Printed under \"Extra Adult Supplements\"; optional – how it combines with the room rate for a 3rd/4th adult is not stated"
+            },
+            {
+                "type": "extra_adult",
+                "name": "Extra adult – All Inclusive",
+                "meal_plans": "AI",
+                "per": "adult",
+                "amount": 55,
+                "compulsory": 0,
+                "note": "US $ 55 per adult per night. Printed under \"Extra Adult Supplements\"; optional – how it combines with the room rate for a 3rd/4th adult is not stated"
+            },
+            {
+                "type": "other",
+                "name": "Extra Bed (Rollaway)",
+                "per": "room",
+                "amount": 10,
+                "compulsory": 0,
+                "note": "US $ 10 per bed per night (listed under Extra Adult Supplements and under the child policy)"
+            },
+            {
+                "type": "early_checkin",
+                "name": "Early check-in between 06:00 and 14:00",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% of daily room rate, subject to availability. Early check-in from 08:00 is free of charge subject to availability of rooms at arrival."
+            },
+            {
+                "type": "early_checkin",
+                "name": "Arrival before 06:00",
+                "per": "room",
+                "pct_of_rate": 100,
+                "compulsory": 0,
+                "note": "Arrivals prior to 06:00hrs shall book their accommodation at one extra night rate (from the previous day)"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out until 15:00",
+                "per": "room",
+                "pct_of_rate": 30,
+                "compulsory": 0,
+                "note": "30% of 01 days charge (on availability, confirmed at the resort)"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out until 18:00",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% of 01 days charge (on availability)"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out after 18:00",
+                "per": "room",
+                "pct_of_rate": 100,
+                "compulsory": 0,
+                "note": "100% of 01 days charge"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 4.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Below 4.99: FOC sharing parents' room on basis booked (no extra bed)"
+            },
+            {
+                "age_from": 5,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "BB",
+                "amount": 5,
+                "note": "US $ 5/- on BB per child per day sharing parents' room (no extra bed); extra bed US $ 10 per bed per night"
+            },
+            {
+                "age_from": 5,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "HB",
+                "amount": 10,
+                "note": "US $ 10/- on HB per child per day sharing parents' room (no extra bed); extra bed US $ 10 per bed per night"
+            },
+            {
+                "age_from": 5,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "FB",
+                "amount": 15,
+                "note": "US $ 15/- on FB per child per day sharing parents' room (no extra bed); extra bed US $ 10 per bed per night"
+            },
+            {
+                "age_from": 5,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "AI",
+                "amount": 25,
+                "note": "US $ 25/- on AI per child per day sharing parents' room (no extra bed); extra bed US $ 10 per bed per night"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [
+            {
+                "kind": "honeymoon",
+                "name": "Honeymoon offer",
+                "stay_from": "2026-11-01",
+                "stay_to": "2027-04-30",
+                "per": "booking",
+                "conditions": "FOC Bed Decoration & Fruit Platter (to be informed at the time of booking). No money value."
+            },
+            {
+                "kind": "other",
+                "name": "Birthday offer",
+                "stay_from": "2026-11-01",
+                "stay_to": "2027-04-30",
+                "per": "booking",
+                "conditions": "Cake and Bed Decoration (to be informed at the time of booking; cross-checked at check-in). No money value."
+            }
+        ],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 29,
+                "days_to": 21,
+                "charge_pct": 25,
+                "note": "Cancellations within 29 to 21 days prior to the date of arrival: 25% of the total (no fee if cancelled 30 days prior)"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 20,
+                "days_to": 15,
+                "charge_pct": 50,
+                "note": "Cancellations within 20 to 15 days prior to the date of arrival: 50% of the total stay"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Less than 14 days, no-shows and cancellations within the stay: total stay on the basis booked"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 14,
+                "pct": 100,
+                "note": "Payment in full 14 days prior to arrival; bookings made within 14 days: full payment upon booking confirmation; unpaid bookings subject to release"
+            },
+            {
+                "applies": "group",
+                "kind": "advance",
+                "pct": 50,
+                "note": "Groups (8 rooms and above): 50% non-refundable pre-payment to confirm (or by a deadline given by the hotel); remaining 50% per payment terms"
+            },
+            {
+                "applies": "group",
+                "kind": "other",
+                "pct": 100,
+                "note": "Group bookings confirmed less than 15 days to arrival: 100% of the entire stay at the time of confirming"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

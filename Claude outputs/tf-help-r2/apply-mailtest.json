@@ -1,0 +1,210 @@
+{
+  "mode": "apply",
+  "root": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/www/avenir_mailtest",
+  "at": "20261010-050242",
+  "new_files": [
+    {
+      "file": "app/Commands/Help/Check.php",
+      "state": "differs"
+    },
+    {
+      "file": "app/Config/Routes.help.php",
+      "state": "differs"
+    },
+    {
+      "file": "app/Controllers/HelpController.php",
+      "state": "differs"
+    },
+    {
+      "file": "app/Filters/HelpWidgetFilter.php",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/README.md",
+      "state": "differs"
+    },
+    {
+      "file": "app/Help/images/hotel_master/01-new-supplier.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/02-hotel-list.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/03-hotel-head.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/04-hotel-details.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/05-room-types.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/06-history.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/07-manage-menu.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_master/08-duplicates.png",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/01-main-screen.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/02-find-hotel.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/03-rate-card.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/04-plan-list.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/05-add-rates.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/06-read-pdf.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/07-preview-wrong.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/08-plan-overview.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/09-seasons-rates.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/10-checks.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/11-approve.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/12-more-menu.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/13-approval-queue.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/14-inquiry-list.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/15-check-hotels-again.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/16-nights-priced.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/images/hotel_rates/17-night-window.png",
+      "state": "same"
+    },
+    {
+      "file": "app/Help/sections/general.json",
+      "state": "differs"
+    },
+    {
+      "file": "app/Help/sections/hotel_master.json",
+      "state": "new"
+    },
+    {
+      "file": "app/Help/sections/hotel_rates.json",
+      "state": "differs"
+    },
+    {
+      "file": "app/Libraries/Help/HelpAccess.php",
+      "state": "same"
+    },
+    {
+      "file": "app/Libraries/Help/HelpAnswer.php",
+      "state": "differs"
+    },
+    {
+      "file": "app/Libraries/Help/HelpManual.php",
+      "state": "differs"
+    },
+    {
+      "file": "app/Libraries/Help/HelpPdf.php",
+      "state": "differs"
+    },
+    {
+      "file": "app/Libraries/Help/HelpVerifier.php",
+      "state": "same"
+    },
+    {
+      "file": "app/Views/help/check.php",
+      "state": "same"
+    },
+    {
+      "file": "app/Views/help/index.php",
+      "state": "same"
+    },
+    {
+      "file": "public/assets/help/help-widget.css",
+      "state": "differs"
+    },
+    {
+      "file": "public/assets/help/help-widget.js",
+      "state": "differs"
+    }
+  ],
+  "patched": [
+    {
+      "file": "app/Config/Routes.php",
+      "change": "already in"
+    },
+    {
+      "file": "app/Config/Filters.php",
+      "change": "already in"
+    }
+  ],
+  "replaced": [
+    "app/Commands/Help/Check.php",
+    "app/Config/Routes.help.php",
+    "app/Controllers/HelpController.php",
+    "app/Help/README.md",
+    "app/Help/sections/general.json",
+    "app/Help/sections/hotel_rates.json",
+    "app/Libraries/Help/HelpAnswer.php",
+    "app/Libraries/Help/HelpManual.php",
+    "app/Libraries/Help/HelpPdf.php",
+    "public/assets/help/help-widget.css",
+    "public/assets/help/help-widget.js"
+  ],
+  "added": [
+    "app/Help/images/hotel_master/01-new-supplier.png",
+    "app/Help/images/hotel_master/02-hotel-list.png",
+    "app/Help/images/hotel_master/03-hotel-head.png",
+    "app/Help/images/hotel_master/04-hotel-details.png",
+    "app/Help/images/hotel_master/05-room-types.png",
+    "app/Help/images/hotel_master/06-history.png",
+    "app/Help/images/hotel_master/07-manage-menu.png",
+    "app/Help/images/hotel_master/08-duplicates.png",
+    "app/Help/sections/hotel_master.json"
+  ],
+  "backup": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/avenir/Claude outputs/tf-help-r2/help_kit/updates/20261010-050242"
+}

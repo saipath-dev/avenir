@@ -1,0 +1,98 @@
+{
+ "case": "R-13 (proposal rev 17, risk R13; the recovery trigger of section 5 step 6): a REFUSED Authorise click on an already-authorised voucher must run the r1.4 sweep before the refusal and so recover an abandoned claim of another voucher — without any new posting. Deduced from AuthGuard::claim(), which calls sweep() before it reads the voucher; test I-5 had triggered the sweep with a genuine posting of a third voucher, not with a refused click",
+ "verdict": "PASSED — the refused click (409 'Voucher 8107 is already authorised; it cannot be authorised again. No second posting was made.', 433 ms) ran the sweep first: the abandoned claim of 8108 (11 minutes at 'posting', lock free, nothing written by it) was found (audit 9940 auth_sweep), undone from its snapshot and removed (9941 auth_recovered_undone: 'no ledger rows had been written; voucher status restored to Aflag 0; 1 voucher lines restored; claim removed'), and only then was 8107 refused (9942 auth_refused, Aflag=1). CHECKSUM TABLE … EXTENDED of voucher, v_inv, account_runing, invoice_no, tpd_bank_approval and tpd_bank_initiation identical before and after; counters unchanged (8116 / 29096 / 10079); both named locks free afterwards",
+ "target": {
+  "database": "avenir_restore_verify_20261011 (DATABASE() read first; host ShanthaW; MySQL 8.4.7)",
+  "code": "the r1.4 release files installed on the isolated copy since 07:19:59 UTC (AuthGuard 5066cf6e)"
+ },
+ "fixture": {
+  "abandoned claim": "INSERT INTO pg_auth_claim (vnum 8108, voucher_id 8077, route 'V1 accounts/voucher_auth/update', user 'super admin', claimed_at NOW(3) - INTERVAL 11 MINUTE, state 'posting', snapshot {voucher Aflag 0 / Aut_user null / aut_date null; lines [{ID 8299, RCType 0}]; nights []; consignee null; allocations []}) — statement sha256 4f47e4f9…; sent 11:36:38.536 UTC; claimed_at 16:55:38.903 local, age 660 s when checked",
+  "voucher 8108": "TEST-DESK-9 (ID 8077), Aflag 0, no ledger rows, one line 8299 at RCType 0 — the state of an attempt whose process died right after the claim insert",
+  "lock": "IS_USED_LOCK('avr_auth_8108') NULL, IS_FREE_LOCK 1 before the click",
+  "already-authorised voucher": "8107 TEST-GUARD-29 (ID 8076), Aflag 1 since G-5's neighbour test (journal 29095, claim posted 12:51:09 local)"
+ },
+ "request": {
+  "label": "R13 refused click on authorised 8107",
+  "path": "accounts/voucher_auth/update",
+  "data": {
+   "update": "data",
+   "id": "8076",
+   "status": "1",
+   "bank_acc": "1-6-8-10380",
+   "type": "Bank Transfer",
+   "amount": "2929.29",
+   "payee": "TEST GUARD payee 29",
+   "voucher_no": "8107",
+   "sup": "0",
+   "remark": ""
+  },
+  "sent_utc": "2026-10-16T11:37:02.134Z",
+  "received_utc": "2026-10-16T11:37:02.567Z",
+  "ms": 433,
+  "http": 200,
+  "app_status": 409,
+  "message": "Voucher 8107 is already authorised; it cannot be authorised again. No second posting was made."
+ },
+ "before (11:36 UTC)": {
+  "checksums_extended": {
+   "voucher": 2256914821,
+   "v_inv": 3837465387,
+   "account_runing": 414511004,
+   "invoice_no": 426474164,
+   "tpd_bank_approval": 1632631679,
+   "tpd_bank_initiation": 1901071794
+  },
+  "tpd_audit": "9,939 rows, max id 9939",
+  "pg_auth_claim for 8107/8108": "8107 posted (29095); 8108 none (then the fixture row)",
+  "counters": "V_Num 8116, acc_id 29096, voucher 10079"
+ },
+ "after (11:37 UTC)": {
+  "audit": [
+   [
+    9940,
+    "17:07:02.363 local",
+    "auth_sweep",
+    8108,
+    "abandoned attempt found by the sweep: claimed 2026-10-16 16:55:38.903 by super admin (V1 accounts/voucher_auth/update), more than 10 minutes at posting, lock free"
+   ],
+   [
+    9941,
+    "17:07:02.534",
+    "auth_recovered_undone",
+    8108,
+    "recovered: the attempt … was incomplete (0 journal(s), 0 ledger rows, Aflag 0, 1 line(s) not all RCType 1) | undo: no ledger rows had been written; voucher status restored to Aflag 0; 1 voucher lines restored; claim removed",
+    "prev_value 'V1 accounts/voucher_auth/update (sweep)'"
+   ],
+   [
+    9942,
+    "17:07:02.544",
+    "auth_refused",
+    8107,
+    "Aflag=1"
+   ]
+  ],
+  "pg_auth_claim": "8108: no row (removed by the sweep); 8107: posted, 29095, unchanged",
+  "vouchers": "8107 Aflag 1 super admin 2026-10-16 (unchanged); 8108 Aflag 0, Aut_user NULL, aut_date NULL (unchanged); line 8299 RCType 0 (unchanged)",
+  "ledger": "account_runing rows for 8107/8108: 2 (the two rows of 8107's journal 29095, as before); none for 8108",
+  "checksums_extended": "all six identical to before",
+  "counters": "unchanged",
+  "locks": "IS_FREE_LOCK avr_auth_8108 = 1, avr_auth_8107 = 1"
+ },
+ "what_it_establishes": [
+  "[Observed] a refused click is a safe trigger of the sweep: it posts nothing to the ledger and recovers up to SWEEP_MAX (3) abandoned claims older than STALE_MIN (10) minutes whose lock is free, each audited (auth_sweep + auth_recovered_undone or auth_posted)",
+  "[Observed] the sweep ran before the voucher's own refusal (audit order 9940, 9941, then 9942; 171 ms for the recovery inside a 433 ms request)",
+  "[Deduced] on live this is the way to clear an abandoned claim during the payment freeze without making a new posting: after ten minutes, Accounts clicks Authorise once on any already-authorised voucher (section 5, step 6 of the proposal)"
+ ],
+ "records_left_on_the_isolated_copy": "tpd_audit rows 9940–9942 (TEST evidence, listed here); the fixture claim row was removed by the sweep itself; no voucher, line, ledger or counter changed",
+ "_common": {
+  "environment": {
+   "code": "C:\\wamp64\\www\\avenir_rv (isolated test copy) running exactly the ten release files of tf-payguard-r1.4 since 07:19:59 UTC (PayGuard 341f81f7 testHooks false, AuthGuard 5066cf6e, VoucherPaymentController 642bb0a2, DriverAdvancePaymentController fc1d299f, ManualUpdateController 07d5f632, TourPaymentDeskController e2582bb9, Bulk 978c2078, InvoiceNumberModel 942042c1, the two views); no test hooks, no test route.",
+   "database": "avenir_restore_verify_20261011",
+   "session": "super admin in the Claude browser pane (user_sessions 3812, my_profile 'Employee Number : 33740' re-read 11:35 UTC); phpMyAdmin 5.2.3 on localhost signed in by the owner, runner rv2-1 bound to avenir_restore_verify_20261011 (gate: one statement, no other database, writes only with the write flag).",
+   "user_deviation": "run under super admin on your instruction of 16 Oct (core workflow first); role-specific and two-user cases stay deferred and are not counted",
+   "audit_clock": "tpd_audit.at and the request started/finished stamps are Asia/Colombo local time (UTC+5:30); 'sent' / 'done' stamps are UTC",
+   "untouched": "development copy C:\\wamp64\\www\\avenir read only (its six current files were copied into the package's before\\ folder); live system never accessed"
+  },
+  "labels": "[Observed] unless marked otherwise"
+ }
+}

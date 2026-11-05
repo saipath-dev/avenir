@@ -1,0 +1,168 @@
+#=========================================================
+# Avenir (CodeIgniter 4) - track source code only
+#=========================================================
+
+#---------------------------------------------------------
+# Environment / secrets
+#---------------------------------------------------------
+.env
+!.env.example
+app/Config/App.php
+app/Config/Database.php
+*/config/development
+
+#---------------------------------------------------------
+# Dependencies (installed via composer)
+#---------------------------------------------------------
+/vendor/
+Ticketing/vendor/
+system/
+
+#---------------------------------------------------------
+# writable/ - runtime data only; keep the folder skeleton
+#---------------------------------------------------------
+# Ignore everything in writable/ ...
+/writable/*
+
+# ... except the protection files
+!/writable/.htaccess
+!/writable/index.html
+
+# ... the CA bundle used by curl
+!/writable/cacert.pem
+
+# ... the standard CI4 folders (placeholders only)
+!/writable/cache/
+/writable/cache/*
+!/writable/cache/index.html
+!/writable/cache/.htaccess
+
+!/writable/logs/
+/writable/logs/*
+!/writable/logs/index.html
+
+!/writable/session/
+/writable/session/*
+!/writable/session/index.html
+
+!/writable/uploads/
+/writable/uploads/*
+!/writable/uploads/index.html
+
+!/writable/debugbar/
+/writable/debugbar/*
+!/writable/debugbar/.gitkeep
+
+# ... hotel rate seed data read by HotelRateV2Controller (no backups)
+!/writable/hotel_rates_entry/
+/writable/hotel_rates_entry/_before_*/
+
+# Everything else in writable/ is excluded, e.g.:
+# tf_releases, tf_backups*, app_backups, backups, paydesk_rolled_back_*,
+# AvenirEvidence, help, tf_comm, tf_mail*, tf_tmp, _to_delete, schema_dump*
+
+# Ticketing sub-app runtime data
+Ticketing/writable/backups/*
+Ticketing/writable/cache/*
+Ticketing/writable/logs/*
+Ticketing/writable/session/*
+Ticketing/writable/uploads/*
+Ticketing/writable/debugbar/*
+Ticketing/public/uploads
+
+#---------------------------------------------------------
+# Public runtime files / user uploads
+#---------------------------------------------------------
+public/uploads
+public/email_sents.log
+public/sent_message_ids.txt
+
+#---------------------------------------------------------
+# CodeIgniter 3 leftovers
+#---------------------------------------------------------
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+
+#---------------------------------------------------------
+# Old copies / embedded repos / backups of source files
+#---------------------------------------------------------
+/app1/
+/Avenir_UAT/
+/Avenir_UAT
+New folder/
+*.bak
+*.bak-*
+*.orig
+*.final_backup
+*_backup.php
+*_backup_*.php
+
+#---------------------------------------------------------
+# Root-level scratch files (dumps, logs, docs, screenshots)
+#---------------------------------------------------------
+/*.sql
+/*.log
+/*.pdf
+/*.png
+/*.jpg
+/*.jpeg
+/*.xlsx
+/*.jsonl
+/*.txt
+/test_*.php
+# unused theme demo containing a Mapbox token (trips GitHub secret scanning)
+/public/assets/js/pages/leaflet-map.init.js
+/VoucherPaymentModel123.php
+/badge_demo.html
+/builds
+/implementation_plan_*.md
+/task_*.md
+/Documentation/
+/Updates/
+
+# Archives and DB dumps anywhere
+*.zip
+*.rar
+*.tar.gz
+*.sql
+!/database/**/*.sql
+!/app/Database/**/*.sql
+
+#---------------------------------------------------------
+# Logs
+#---------------------------------------------------------
+*/logs/log-*.php
+!*/logs/index.html
+*.log
+
+#---------------------------------------------------------
+# Docs build output
+#---------------------------------------------------------
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+
+#---------------------------------------------------------
+# Editors / tools / OS
+#---------------------------------------------------------
+.vscode/
+.idea/
+.claude/
+.mcp.json
+.playwright-mcp/
+.tmp.drivedownload/
+.tmp.driveupload/
+.github/instructions/snyk_rules.instructions.md
+Thumbs.db
+.DS_Store
+desktop.ini
+
+#---------------------------------------------------------
+# Exceptions (must stay last - later rules win)
+#---------------------------------------------------------
+# Claude outputs/ is kept (reports, SQL, logs) - but not release archives
+!/Claude outputs/**
+/Claude outputs/**/*.zip
+/Claude outputs/**/*.rar

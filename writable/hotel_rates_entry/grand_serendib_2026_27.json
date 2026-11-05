@@ -1,0 +1,340 @@
+{
+ "key": "grand_serendib_2026_27",
+ "hotel": {
+  "acc": "6-9-11-10873",
+  "name": "Grand Serendib Hotel",
+  "location": "Kandy",
+  "chain": null
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10873",
+   "name": "Grand Serendib Hotel"
+  },
+  "contract": {
+   "name": "Travel Agent Rates Agreement 2026/27 (01 Apr 2026 – 31 Mar 2027)",
+   "plan_type": "contract",
+   "tier": "all",
+   "valid_from": "2026-04-01",
+   "valid_to": "2027-03-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "Inclusive of all applicable taxes as of the proposal date (Service Chg 10%, VAT 18%, SSCL 2.5%)",
+   "source_type": "email",
+   "received_at": "2026-09-03",
+   "contract_type": "Travel agent agreement",
+   "hotel_reference": "Approved travel Agent Rates 2026-2027",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 20,
+   "child_policy_text": "Children 0-5 years - FOC | Children 6-12 years 50% on meal rates only will be charged when sharing parent's room with existing bedding (Up to maximum of 1 children) | Extra Bed Rate: USD 20.00 per day",
+   "guide_policy_text": "GUIDE & FOC POLICY: In the event of the hotel being fully booked on a particular day, we will be compelled to transfer the local guide to an alternate property within the locality. (No guide rate and no FOC ratio are printed.)",
+   "cancellation_text": "1-7 rooms – Cancellation period 14 days prior to arrival if not 100% charges will be applicable. Travel agents [who] does not have credit facilities need a deposit of 50% of the payments before 7 days and rest to be paid before check in. 8-15 rooms – Cancellation period 21 days prior to arrival if not 100% charges will be applicable. Travel agents [who] does not have credit facilities need a deposit of 50% of the payments before 14 days and rest to be paid before check in.",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment before the client checks into the hotel (1-7 rooms: 50% deposit 7 days before, 8-15 rooms: 50% deposit 14 days before, balance before check-in). Travel agents with credit facility must pay within the stipulated credit period; interest at local bank overdraft rates on overdue amounts. Cheque payments to be remitted three (03) working days prior to guest arrival.",
+   "terms_text": "The above rates are inclusive of all applicable taxes as of the proposal date. Any subsequent new taxes levied by the government will be passed on to the operator. (Existing taxes / percentages are; Service Chg: 10%, VAT: 18%, SSCL: 2.5%). The above rates should not be published on the electronics distribution system (Online bed bank, website, GDS, etc.) by you or any other 03rd party. The above rates should not be extended to the domestic market. As these special rates are extended to you on a confidential basis, and should they be published in any form, they should not be published on a sell-alone basis, but sold as a package. All reservations are subject to availability and confirmation by the Grand Serendib Hotel. Hotel will advise Black Out or Stop Sell period minimum 3 days prior to the Black Out period. Travel agents without credit facilities are required to make the relevant payment before the client checks into the Hotel. Travel agents with credit facility, must make necessary payments within the stipulated credit period. Grand Serendib Hotel reserves the right to charge interest equal to rates charged on overdraft facilities by local banks on all outstanding amounts not paid within the stipulated period. The company agrees to abide by the general conditions printed overleaf, which form an integral of this corporate rate agreement. Acknowledged on behalf of Grand Serendib Hotel, Kandy, Sri Lanka (signed: Front Office Executive, Accountant, Resident Manager, Director Operations).",
+   "notes": "The PDF is a scan with no text layer at all — every figure was typed from the rendered pages (entry/img/serendib-1.png, serendib-2.png and the crops serendib_rates.png / serendib_supp.png). \"All rates mentioned below are in US$ per room per night, Nett & Non-commissionable\". Only the Deluxe Room is priced; Deluxe Superior / Suite / Grand Suite are that rate plus US$10 / 30 / 50 per room per night. The two rate blocks pair April–July with September–November and August with December–March, so each is one season with two date ranges. The meal supplement line (breakfast 15 / lunch 18 / dinner 20 per person) is entered as extra-meal prices; only lunch (HB → FB) and breakfast (BB → RO) are used as meal deltas, because BB and HB are both printed and the printed difference between them is 10-25 per room, not 20 per person. COMPULSORY SUPPLEMENTS: the peak-period supplement is printed \"(21st December 2025 – 10th January 2026)\" — last season's dates on a sheet whose rate period is 01 Apr 2026 – 31 Mar 2027; entered as 21 Dec 2026 – 10 Jan 2027, please have the hotel confirm. \"Esala Perahera (10 Days)\" is priced but the ten nights are not printed, so the supplement carries no dates — the Perahera dates must be added before the season. Christmas Eve and New Year's Eve carry no year either; entered on 24 and 31 Dec 2026. The cancellation table covers 1-15 rooms only; nothing is printed for 16 rooms and above.",
+   "source_file": "grand serandib hotel rates — Approved travel Agent Rates 2026-2027.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe Room",
+    "priced_as": "base",
+    "room_count": 15,
+    "size_sqm": 40,
+    "bed_config": "12 double / 3 twin",
+    "description": "Free Wi-fi, 48 Inch LED Screen TV, Mini Bar, Electronic Safe, Tea Coffee making facility"
+   },
+   {
+    "name": "Deluxe Superior",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Room",
+    "room_count": 5,
+    "size_sqm": 42,
+    "bed_config": "4 double / 1 twin",
+    "description": "Free Wi-fi, 48 Inch LED Screen TV, Mini Bar, Electronic Safe, Tea Coffee making facility"
+   },
+   {
+    "name": "Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Room",
+    "room_count": 3,
+    "size_sqm": 45,
+    "description": "Free Wi-fi, 48 Inch LED Screen TV, Mini Bar, Electronic Safe, Tea Coffee making facility"
+   },
+   {
+    "name": "Grand Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Room",
+    "room_count": 1,
+    "size_sqm": 50,
+    "description": "Free Wi-fi, 48 Inch LED Screen TV, Mini Bar, Electronic Safe, Tea Coffee making facility"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Apr – 31 Jul 2026 & 01 Sep – 30 Nov 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-04-01",
+      "to": "2026-07-31"
+     },
+     {
+      "from": "2026-09-01",
+      "to": "2026-11-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "BB",
+      "sgl": 125,
+      "dbl": 130,
+      "tpl": 145,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 135,
+      "dbl": 145,
+      "tpl": 170,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 – 31 Aug 2026 & 01 Dec 2026 – 31 Mar 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+     },
+     {
+      "from": "2026-12-01",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "BB",
+      "sgl": 145,
+      "dbl": 150,
+      "tpl": 165,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 155,
+      "dbl": 165,
+      "tpl": 195,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Deluxe Superior",
+    "amount": 10,
+    "per": "room",
+    "note": "US$10 PRPN over the Deluxe Room"
+   },
+   {
+    "room_type": "Suite",
+    "amount": 30,
+    "per": "room",
+    "note": "US$30 PRPN over the Deluxe Room"
+   },
+   {
+    "room_type": "Grand Suite",
+    "amount": 50,
+    "per": "room",
+    "note": "US$50 PRPN over the Deluxe Room"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 18,
+    "note": "Meal supplement: lunch US$ 18 per person (BB and HB are printed, FB is not)"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -15,
+    "note": "Meal supplement: breakfast US$ 15 per person (room only derived from BB)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 15
+   },
+   {
+    "meal": "lunch",
+    "adult": 18
+   },
+   {
+    "meal": "dinner",
+    "adult": 20
+   }
+  ],
+  "supplements": [
+   {
+    "type": "festival",
+    "name": "Esala Perahera (10 Days)",
+    "per": "room",
+    "amount": 40,
+    "compulsory": 1,
+    "note": "Compulsory supplement US$ 40.00 per room per night; the sheet says \"10 Days\" but prints no dates — add the Perahera nights"
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "note": "Compulsory supplement US$ 40.00 per person; no year and no child price printed"
+   },
+   {
+    "type": "gala",
+    "name": "New Years' Eve",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 50,
+    "compulsory": 1,
+    "note": "Compulsory supplement US$ 50.00 per person; no year and no child price printed"
+   },
+   {
+    "type": "peak",
+    "name": "Peak period",
+    "date_from": "2026-12-21",
+    "date_to": "2027-01-10",
+    "per": "room",
+    "amount": 10,
+    "compulsory": 1,
+    "note": "US$ 10.00 per room per night; the sheet prints \"(21st December 2025 – 10th January 2026)\" — last year's dates, entered 26/27"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Children 0-5 years – FOC"
+   },
+   {
+    "age_from": 6,
+    "age_to": 12,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "max_children": 1,
+    "note": "Children 6-12 years: 50% on meal rates only when sharing parent's room with existing bedding, max 1 child"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-04-01",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": null,
+    "days_to": 14,
+    "charge_pct": 0,
+    "max_rooms": 7,
+    "note": "1-7 rooms: cancellation period 14 days prior to arrival"
+   },
+   {
+    "date_from": "2026-04-01",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 7,
+    "note": "1-7 rooms: \"if not 100% charges will be applicable\""
+   },
+   {
+    "date_from": "2026-04-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": null,
+    "days_to": 21,
+    "charge_pct": 0,
+    "min_rooms": 8,
+    "max_rooms": 15,
+    "note": "8-15 rooms: cancellation period 21 days prior to arrival"
+   },
+   {
+    "date_from": "2026-04-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 20,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 8,
+    "max_rooms": 15,
+    "note": "8-15 rooms: \"if not 100% charges will be applicable\""
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "advance",
+    "days_before": 7,
+    "pct": 50,
+    "note": "1-7 rooms: deposit of 50% of the payments before 7 days, rest to be paid before check in"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "advance",
+    "days_before": 14,
+    "pct": 50,
+    "note": "8-15 rooms: deposit of 50% of the payments before 14 days, rest to be paid before check in"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Travel agents without credit facilities pay before the client checks into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents with credit facility must make necessary payments within the stipulated credit period"
+   },
+   {
+    "applies": "all",
+    "kind": "interest",
+    "note": "Interest equal to local bank overdraft rates on all outstanding amounts not paid within the stipulated period"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "days_before": 3,
+    "note": "Payments settled via cheque: the cheque must be remitted three (03) working days prior to guest arrival"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

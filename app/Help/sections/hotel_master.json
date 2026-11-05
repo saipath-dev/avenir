@@ -1,0 +1,437 @@
+{
+  "id": "hotel_master",
+  "title": "Hotel Master",
+  "order": 20,
+  "checked": "2026-10-10",
+  "pages": ["master_files/hotel_rate_v2", "master_files/supplier"],
+  "home_pages": ["master_files/hotel_rate_v2", "master_files/supplier"],
+  "detect": [
+    { "page": "master_files/hotel_rate_v2", "active": ".hr-tab.on[data-tab=\"hotel\"], .hr-tab.on[data-tab=\"rooms\"], .hr-tab.on[data-tab=\"history\"], #m_dups.show" }
+  ],
+  "intro": "The Hotel Master is the list of hotels: each hotel's code (HTL-…), name, location, contacts, room types and status. A new hotel is added under **Master Files → Supplier**. Everything else is on **Hotel Rates (new)** → the hotel → **Hotel details**, **Room types** and **History**. Prices are in the **Hotel Rates** manual.",
+  "examples": [
+    "How do I add a new hotel?",
+    "How do I change a hotel's reservations e-mail?",
+    "How do I add a room type?",
+    "The same hotel is on the list twice"
+  ],
+  "menus": {
+    "master_files/supplier": "Supplier",
+    "master_files/hotel_rate_v2": "Hotel Rates (new)",
+    "master_files/hotel_rate_approval": "Hotel Rate Approval",
+    "tour/manage": "Tour Desk Admin",
+    "tour/hotel_bookings": "Hotel Bookings"
+  },
+  "guide": {
+    "title": "Step by step",
+    "intro": "From a new hotel to a tidy hotel list. The numbers in the pictures match the numbers in the text.",
+    "stages": [
+      {
+        "title": "Stage 1 — Add a new hotel",
+        "who": "Whoever keeps the suppliers (the Supplier permission)",
+        "steps": [
+          { "title": "Open New Supplier", "text": "Open **Master Files → Supplier**. The **New Supplier** form opens.", "image": "hotel_master/01-new-supplier.png" },
+          { "title": "Choose Hotel", "text": "In **Supplier Catogory** (1) choose **Hotel**. **Hotel Code** (2) fills in by itself with the next number — nobody types it." },
+          { "title": "Type the hotel", "text": "Type the **Supplier Name** (3) exactly as the hotel calls itself, and the **Location** (4). If you have them, add the reservations **Email** and **Tel No (Home)** (5): they become the hotel's **Reservations e-mail** and **Reservations phone** on the Hotel Master." },
+          { "title": "Save", "text": "Click **Save** (6). The message reads *Supplier Added successfully! Hotel code HTL-… — the hotel is on the Hotel Master.* The hotel is now on **Hotel Rates (new)** with the label **Incomplete — Rates Pending** until its rates are entered and approved (see the **Hotel Rates** manual)." }
+        ]
+      },
+      {
+        "title": "Stage 2 — Find and open a hotel",
+        "who": "Everyone with Hotel Rates (new)",
+        "steps": [
+          { "title": "Search the hotel list", "text": "Open **Hotel Rates (new)** (on the Tour Desk bar: **Masters → Hotel Rates**). Type a name, town, chain or hotel code in **Search hotel, location, chain or code…** (1). The buttons under it (2) narrow the list: **Frequently Used Hotels**, **No rate today**, **Has drafts**, **Used last year**, **Ends in … days**. The ☆ (3) marks a hotel Frequently Used. The label on the right (4) says whether the hotel has a rate today. The line at the bottom (5) counts the hotels.", "image": "hotel_master/02-hotel-list.png" },
+          { "title": "Open the hotel", "text": "Click the hotel. Its head shows the **hotel code** (1), **Frequently Used** (2), and the location, supplier account, status, currency and taxes (3). **···** (4) is Management's menu. The tabs (5) hold the rest: **Room types**, **Hotel details** and **History** are the Hotel Master; the rate tabs are in the **Hotel Rates** manual.", "image": "hotel_master/03-hotel-head.png" }
+        ]
+      },
+      {
+        "title": "Stage 3 — Keep the hotel's details right",
+        "who": "Hotel Desk (Hotel Rates (new))",
+        "steps": [
+          { "title": "Hotel details", "text": "Click **Hotel details** (1). The **Hotel code** (2) never changes. Correct the name, location, chain, star category, address, website, **Reservations e-mail** and **Reservations phone** (3), sales contact, accounts e-mail, check-in and check-out times, currency, **Taxes in rates**, tax note, bank details and notes. **Status** (4) is changed by Management only. Click **Save hotel** (5); the message reads *Hotel updated.*", "image": "hotel_master/04-hotel-details.png" },
+          { "title": "Room types", "text": "Click **Room types** (1). To add a room, type it in **Add a room type** (2) exactly as the hotel writes it and click **Add**. To correct a room, change its **Name** (3) or **Priced as** (4), scroll the table to the right and click **Save** on that row. A room the hotel no longer sells: set its **Status** to *inactive* — rooms are not deleted.", "image": "hotel_master/05-room-types.png" },
+          { "title": "History", "text": "Click **History** (1): every change to the hotel record, with **When**, **Who** and **What** (2). A hotel nobody has changed shows *No changes recorded yet.*", "image": "hotel_master/06-history.png" }
+        ]
+      },
+      {
+        "title": "Stage 4 — Keep the list tidy",
+        "who": "Hotel Rate Approval (merging) · Management, Tour Desk Admin (archiving)",
+        "steps": [
+          { "title": "The same hotel twice", "text": "Click **Duplicates** on the toolbar. **Possible duplicate hotels** (1) lists hotels that may be on file twice. Someone with **Hotel Rate Approval** clicks **Keep this one** (2) on the record to keep and confirms: the other record's plans, room types and supplier code move across. When the two are in different towns they are usually two hotels of one brand — the system then asks you to type MERGE. A merge can be undone: open the kept hotel and click **Undo merge**.", "image": "hotel_master/08-duplicates.png" },
+          { "title": "Archive or restore a hotel", "text": "Management clicks **···** (1). The menu (2) shows first what depends on the hotel, then **Archive (set inactive)…** (or **Restore (set active)** for an archived hotel). Archiving takes the hotel out of the inquiry pickers. Its rates and the nights on file keep their figures; nothing is deleted.", "image": "hotel_master/07-manage-menu.png" }
+        ]
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": "hm-add-hotel",
+      "title": "Add a new hotel",
+      "questions": [
+        "How do I add a new hotel?",
+        "How do I create a new hotel in the system?",
+        "A hotel is not on the list. How do I put it on?",
+        "Where do I register a new hotel supplier?"
+      ],
+      "keywords": { "new": 3, "hotel": 2, "supplier": 3, "missing": 0.5 },
+      "pages": ["master_files/supplier", "master_files/hotel_rate_v2"],
+      "audience": "Whoever keeps the suppliers",
+      "needs": ["master_files/supplier"],
+      "needs_note": "Adding a hotel needs the **Supplier** permission (Master Files → Supplier).",
+      "summary": "A hotel is added once, as a supplier: **Master Files → Supplier**, **Supplier Catogory** *Hotel*, then **Save**. The system gives it its hotel code and puts it on the Hotel Master by itself.",
+      "steps": [
+        { "text": "Open **Master Files → Supplier**. The **New Supplier** form opens.", "link": { "path": "master_files/supplier", "label": "Open New Supplier" } },
+        { "text": "In **Supplier Catogory** choose **Hotel**. **Hotel Code** fills in by itself." },
+        { "text": "Type the **Supplier Name** exactly as the hotel calls itself, and the **Location**. Add the reservations **Email** and **Tel No (Home)** if you have them." },
+        { "text": "Click **Save**. The message reads *Supplier Added successfully! Hotel code HTL-… — the hotel is on the Hotel Master.*" },
+        { "text": "Open **Hotel Rates (new)** and search the hotel: it shows with **Incomplete — Rates Pending** until its rates are entered and approved.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } }
+      ],
+      "notes": [
+        "If the message says *Please choose a different supplier name.*, the hotel is already a supplier: search it on **Hotel Rates (new)** instead of adding it again.",
+        "Do not add a hotel a second time under a slightly different name. If it happened, see *The same hotel is on the list twice*."
+      ],
+      "images": [ { "file": "hotel_master/01-new-supplier.png", "caption": "New Supplier: (1) Supplier Catogory Hotel, (2) the code fills in, (3–5) name, location, e-mail and phone, (6) Save" } ],
+      "related": ["hm-hotel-code", "hm-labels", "hm-duplicates"],
+      "manual_ref": "Hotel Master → Step by step, Stage 1 (steps 1–4)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/new_supplier.php", "has": ["New Supplier", "Supplier Catogory", "Hotel Code", "Supplier Name", "Location", "Email", "Tel No (Home)", "Save"] },
+        { "file": "app/Controllers/MasterFiles/SupplierController.php", "has": ["Supplier Added successfully!", "the hotel is on the Hotel Master.", "Please choose a different supplier name."] },
+        { "route": "master_files/supplier" },
+        { "route": "master_files/supplier/create", "method": "post" },
+        { "menu": "master_files/supplier" }
+      ]
+    },
+    {
+      "id": "hm-find",
+      "title": "Find a hotel on the Hotel Master",
+      "questions": [
+        "How do I find a hotel?",
+        "How do I search for a hotel by its code?",
+        "How do I see only the hotels we use often?",
+        "Which hotels have no rate today?"
+      ],
+      "keywords": { "search": 3, "hotel": 1.5, "code": 1, "frequent": 0.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Everyone with Hotel Rates (new)",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "The hotel list needs the **Hotel Rates (new)** permission.",
+      "summary": "On **Hotel Rates (new)**, type in **Search hotel, location, chain or code…** — a name, a town, a chain or the hotel code (HTL-017, htl17 or 17 all work). The buttons under the box narrow the list.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)**.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Type in **Search hotel, location, chain or code…**." },
+        { "text": "To narrow the list, click **Frequently Used Hotels**, **No rate today**, **Has drafts**, **Used last year** or **Ends in … days**. Click the same button again to see every hotel." },
+        { "text": "Click the hotel to open it." }
+      ],
+      "notes": [ "The line under the list counts the hotels shown, those priced for today and those marked Frequently Used." ],
+      "images": [ { "file": "hotel_master/02-hotel-list.png", "caption": "(1) search, (2) the filters, (3) Frequently Used, (4) the hotel's label, (5) the count" } ],
+      "related": ["hm-labels", "hm-frequent", "hm-hotel-code"],
+      "manual_ref": "Hotel Master → Step by step, Stage 2 (step 5)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Search hotel, location, chain or code…", "Frequently Used Hotels", "No rate today", "Has drafts", "Used last year", "Ends in"] },
+        { "route": "master_files/hotel_rate_v2" }
+      ]
+    },
+    {
+      "id": "hm-labels",
+      "title": "What the labels in the hotel list mean",
+      "questions": [
+        "What does Incomplete — Rates Pending mean?",
+        "What do the labels next to the hotels mean?",
+        "What does rate today mean?",
+        "What does gap today mean?"
+      ],
+      "keywords": { "labels": 3, "ratespending": 3, "hotel": 0.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Everyone",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "The hotel list needs the **Hotel Rates (new)** permission.",
+      "summary": "The label on the right of each hotel says whether a quotation can price it today, from the **approved** published plans.",
+      "steps": [
+        { "text": "**rate today** (green): an approved plan prices today." },
+        { "text": "**Incomplete — Rates Pending** (red): the hotel has no approved published contract rate yet. It is on the master for identification and preparation; it gives no quotation price until its rates are entered and approved." },
+        { "text": "**no rate** (red): nothing approved at all. **expired …** (amber): the last approved plan ended on that date. **from …** (amber): the next plan starts on that date. **gap today** (amber): plans exist, but none covers today." },
+        { "text": "**draft** (blue): a plan is waiting for approval. **inactive** (grey): the hotel is archived." }
+      ],
+      "notes": [ "To fix a red or amber label, the hotel's rates are entered and approved — see the **Hotel Rates** manual (*Upload a hotel rate sheet*, *Approve hotel rates*)." ],
+      "related": ["hm-find", "hr-upload-pdf", "hr-approve", "hr-expiry"],
+      "manual_ref": "Hotel Master → Questions and answers",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["rate today", "Incomplete — Rates Pending", "no rate", "expired ", "gap today", "draft", "inactive", "No valid published contract rate yet"] }
+      ]
+    },
+    {
+      "id": "hm-edit-details",
+      "title": "Change a hotel's details",
+      "questions": [
+        "How do I change a hotel's details?",
+        "How do I change the hotel address or phone number?",
+        "Where do I change the check-in time?",
+        "How do I rename a hotel?"
+      ],
+      "keywords": { "details": 3, "correct": 2, "hotel": 1.5, "email": 0.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Hotel Desk",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "Changing a hotel's details needs the **Hotel Rates (new)** permission.",
+      "summary": "Open the hotel on **Hotel Rates (new)** → **Hotel details**, correct the boxes and click **Save hotel**.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)** and click the hotel.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Click the **Hotel details** tab." },
+        { "text": "Correct what is wrong: **Hotel name**, **Location**, **Chain / management company**, **Star category**, **Address**, **Website**, **Reservations e-mail**, **Reservations phone**, **Sales contact**, **Accounts e-mail**, **Check-in time**, **Check-out time**, **Currency**, **Taxes in rates**, **Tax note**, **Bank details**, **Notes**." },
+        { "text": "Click **Save hotel**. The message reads *Hotel updated.*" }
+      ],
+      "notes": [
+        "The **Hotel code** never changes, also when the hotel is renamed.",
+        "**Status** (active / inactive) is changed by Management with **···** → **Archive (set inactive)…**, not in this form.",
+        "**Supplier accounts** are shown only; they come from Master Files → Supplier."
+      ],
+      "images": [ { "file": "hotel_master/04-hotel-details.png", "caption": "(1) Hotel details, (2) the fixed code, (3) reservations e-mail and phone, (4) Status — Management only, (5) Save hotel" } ],
+      "related": ["hm-reservations-email", "hm-archive", "hm-history"],
+      "manual_ref": "Hotel Master → Step by step, Stage 3 (step 7)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Hotel details", "Hotel name", "Chain / management company", "Star category", "Reservations e-mail", "Reservations phone", "Check-in time", "Check-out time", "Taxes in rates", "Supplier accounts", "Save hotel", "data-tab=\"hotel\"", "data-tab=\"rooms\"", "data-tab=\"history\"", "classList.toggle('on'"] },
+        { "file": "app/Controllers/MasterFiles/HotelRateV2Controller.php", "has": ["Hotel updated."] },
+        { "route": "master_files/hotel_rate_v2/hotel/(:num)/update", "method": "post" }
+      ]
+    },
+    {
+      "id": "hm-reservations-email",
+      "title": "The hotel's reservations e-mail (booking letters)",
+      "questions": [
+        "How do I change a hotel's reservations e-mail?",
+        "Where does the booking letter get the hotel's e-mail address?",
+        "The booking e-mail goes to the wrong address",
+        "How do I add the hotel's e-mail address?"
+      ],
+      "keywords": { "email": 3, "hotel": 1, "correct": 1, "reservation": 1.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Hotel Desk",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "Changing it on the Hotel Master needs the **Hotel Rates (new)** permission.",
+      "summary": "A hotel's booking letters go to the **Reservations e-mail** on its **Hotel details**. Change it there once and every new letter uses it.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)** and click the hotel.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Click **Hotel details**, correct **Reservations e-mail** (and **Reservations phone**), click **Save hotel**." },
+        { "text": "On **Hotel Bookings**, a hotel with no reservations e-mail shows an empty **To** box: type the address and tick **Also save this address on the Hotel Master as the hotel's Reservations e-mail (for every future booking)**.", "link": { "path": "tour/hotel_bookings", "label": "Open Hotel Bookings" } }
+      ],
+      "notes": [ "An address typed on one booking without the tick is kept for that stay only; the Hotel Master is not changed." ],
+      "related": ["hm-edit-details"],
+      "manual_ref": "Hotel Master → Questions and answers",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Reservations e-mail", "Save hotel"] },
+        { "view": "app/Views/pages/tour/hotel_bookings.php", "has": ["Also save this address on the Hotel Master as the hotel's Reservations e-mail (for every future booking)", "the hotel's Reservations e-mail, from the Hotel Master"] },
+        { "route": "tour/hotel_bookings" }
+      ]
+    },
+    {
+      "id": "hm-hotel-code",
+      "title": "The hotel code (HTL-…)",
+      "questions": [
+        "What is the hotel code?",
+        "How do I give a hotel its code?",
+        "Can I change a hotel code?",
+        "What is the difference between H and HTL codes?"
+      ],
+      "keywords": { "code": 3, "hotel": 1 },
+      "pages": ["master_files/hotel_rate_v2", "master_files/supplier"],
+      "audience": "Everyone",
+      "needs": [],
+      "summary": "Every hotel has a permanent code **HTL-…**, given by the system when the hotel is created. Nobody types or changes it; it stays when the hotel is renamed or archived.",
+      "steps": [
+        { "text": "A new hotel gets its code when it is saved under **Master Files → Supplier** (**Hotel Code** fills in by itself)." },
+        { "text": "The supplier's **H**-number and the Hotel Master's **HTL**-number are the same number: H336 is HTL-336." },
+        { "text": "Search by code on **Hotel Rates (new)**: *HTL-017*, *htl17* or *17* all find the hotel.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } }
+      ],
+      "related": ["hm-add-hotel", "hm-find"],
+      "manual_ref": "Hotel Master → Questions and answers",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Hotel code — permanent, given by the system; it stays if the hotel is renamed or archived", "permanent — given by the system, kept through renames and archiving"] },
+        { "file": "app/Controllers/MasterFiles/SupplierController.php", "has": ["H336 is HTL-336"] }
+      ]
+    },
+    {
+      "id": "hm-room-types",
+      "title": "Room types of a hotel",
+      "questions": [
+        "How do I add a room type to a hotel?",
+        "The same room has two names",
+        "How do I set a suite as base plus supplement?",
+        "How do I remove a room type?"
+      ],
+      "keywords": { "roomtype": 3, "new": 1, "manualentry": 0.5, "duplicate": 1, "delete": 0.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Hotel Desk",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "Editing room types needs the **Hotel Rates (new)** permission.",
+      "summary": "Open the hotel → **Room types** tab. Add a room with **Add a room type**. Keep one name per room.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)** and click the hotel.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Open the **Room types** tab." },
+        { "text": "To add a room: type its name in **Add a room type** exactly as the hotel writes it, click **Add**." },
+        { "text": "**Priced as**: *base rate* when the sheet prints its own prices, *base + suppl.* when it is another room plus a supplement. Scroll the table to the right and click **Save** on the row." },
+        { "text": "Two names for the same room, or a room no longer sold: use one name in every plan and set the other row's **Status** to *inactive*. Rooms are not deleted." }
+      ],
+      "images": [ { "file": "hotel_master/05-room-types.png", "caption": "(1) Room types, (2) Add a room type + Add, (3) the name, (4) Priced as" } ],
+      "related": ["hr-room-type"],
+      "manual_ref": "Hotel Master → Step by step, Stage 3 (step 8)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Room types", "Add a room type", "Exactly as the hotel writes it", "base + suppl.", "base rate", "Priced as"] },
+        { "route": "master_files/hotel_rate_v2/hotel/(:num)/room_type", "method": "post" }
+      ]
+    },
+    {
+      "id": "hm-frequent",
+      "title": "Frequently Used hotels (the star)",
+      "questions": [
+        "How do I mark a hotel as frequently used?",
+        "What is the star next to the hotel?",
+        "How do I see only our regular hotels?"
+      ],
+      "keywords": { "frequent": 3, "hotel": 1, "search": 0.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Everyone with Hotel Rates (new)",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "Marking needs the **Hotel Rates (new)** permission.",
+      "summary": "Click the ☆ beside a hotel in the list (or tick **Frequently Used** on its page). **Frequently Used Hotels** above the list then shows only those hotels. Only that mark changes — the hotel stays in the full list and its rates are not touched.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)**.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Click the ☆ beside the hotel. It turns ★ and a small note confirms it. Click again to untick." },
+        { "text": "Click **Frequently Used Hotels** above the list to see only the marked hotels; click it again for all hotels." }
+      ],
+      "related": ["hm-find"],
+      "manual_ref": "Hotel Master → Step by step, Stage 2",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Frequently Used Hotels", "Frequently Used", "the full list is unchanged"] },
+        { "route": "master_files/hotel_rate_v2/hotel/(:num)/frequent", "method": "post" }
+      ]
+    },
+    {
+      "id": "hm-duplicates",
+      "title": "The same hotel is on the list twice",
+      "questions": [
+        "The same hotel is on the list twice",
+        "How do I merge two hotels?",
+        "A hotel was created twice with different names",
+        "How do I undo a merge?"
+      ],
+      "keywords": { "merge": 3, "duplicate": 1.5, "hotel": 1.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Hotel Rate Approval",
+      "needs": ["master_files/hotel_rate_approval"],
+      "needs_note": "Anyone with **Hotel Rates (new)** can see **Duplicates**; merging needs **Hotel Rate Approval**.",
+      "summary": "**Duplicates** on the Hotel Rates toolbar lists hotels that may be on file twice. Someone with **Hotel Rate Approval** keeps one record and folds the other into it. A merge can be undone.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)** and click **Duplicates** on the toolbar.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "**Possible duplicate hotels** lists each group with its town, supplier account, plans and tour nights. Check it is really the same hotel." },
+        { "text": "Click **Keep this one** on the record to keep and confirm. The other record's plans, room types and supplier code move across; it is hidden from the quotation lists; its ledger history is not touched.", "needs": "master_files/hotel_rate_approval" },
+        { "text": "When the hotels are in **different locations** they are usually two hotels of one brand. Merge only if you are sure — the system asks you to type MERGE." },
+        { "text": "To undo: open the kept hotel and click **Undo merge** beside the hotel it absorbed.", "needs": "master_files/hotel_rate_approval" }
+      ],
+      "notes": [ "Two copies of the same *rate sheet* (not the same hotel) are a different thing: see *Same sheet uploaded twice* in the **Hotel Rates** manual." ],
+      "images": [ { "file": "hotel_master/08-duplicates.png", "caption": "(1) Possible duplicate hotels, (2) Keep this one — Hotel Rate Approval only" } ],
+      "related": ["hr-duplicate", "hm-add-hotel"],
+      "manual_ref": "Hotel Master → Step by step, Stage 4 (step 10)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Duplicates", "Possible duplicate hotels", "Keep this one", "different locations", "MERGE", "Undo merge"] },
+        { "file": "app/Controllers/MasterFiles/HotelRateV2Controller.php", "has": ["Hotels merged. The duplicate is hidden from quotation dropdowns; its ledger history is untouched."] },
+        { "route": "master_files/hotel_rate_v2/duplicates" },
+        { "route": "master_files/hotel_rate_approval/merge", "method": "post" },
+        { "route": "master_files/hotel_rate_approval/unmerge", "method": "post" },
+        { "menu": "master_files/hotel_rate_approval" }
+      ]
+    },
+    {
+      "id": "hm-archive",
+      "title": "Archive or restore a hotel (take it out of use)",
+      "questions": [
+        "How do I deactivate a hotel?",
+        "How do I archive a hotel we no longer use?",
+        "How do I delete a hotel?",
+        "How do I restore an archived hotel?"
+      ],
+      "keywords": { "archive": 3, "hotel": 1.5, "delete": 1.5 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Management",
+      "needs": ["tour/manage"],
+      "needs_note": "Archiving and restoring a hotel needs **Tour Desk Admin** (Management). The **···** button shows only for them.",
+      "summary": "Hotels are not deleted. Management archives a hotel (sets it inactive) from **···** on the hotel's page: it leaves the inquiry pickers, and its rates and nights on file stay. It can be restored.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)** and click the hotel.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Click **···** (Manage). The menu first shows **Depends on it**: approved plans, drafts, nights on open inquiries, open cards on the Hotel Desk and tour nights in the last year." },
+        { "text": "Click **Archive (set inactive)…**, write why if you like, click **Archive**.", "needs": "tour/manage" },
+        { "text": "To bring it back: **···** → **Restore (set active)**.", "needs": "tour/manage" }
+      ],
+      "notes": [
+        "Archiving is refused while stays at this hotel are open on the Hotel Desk: finish or archive those cards first.",
+        "Archived hotels stay in the list with the label **inactive**."
+      ],
+      "images": [ { "file": "hotel_master/07-manage-menu.png", "caption": "(1) ··· Manage — Management only, (2) what depends on the hotel, then Archive" } ],
+      "related": ["hm-edit-details", "hm-history"],
+      "manual_ref": "Hotel Master → Step by step, Stage 4 (step 11)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["Depends on it", "Archive (set inactive)…", "Restore (set active)", "Why (optional, stays on the history)", "Archived or restored by Management"] },
+        { "file": "app/Controllers/Tour/TourManageController.php", "has": ["stay(s) at this hotel are open on the Hotel Desk"] },
+        { "route": "tour/manage/hotel/(:num)/dependencies" },
+        { "route": "tour/manage/hotel/(:num)/(:segment)", "method": "post" },
+        { "menu": "tour/manage" }
+      ]
+    },
+    {
+      "id": "hm-history",
+      "title": "Who changed a hotel (History)",
+      "questions": [
+        "Who changed this hotel?",
+        "Where can I see the history of a hotel?",
+        "When was the hotel record changed?"
+      ],
+      "keywords": { "history": 3, "hotel": 1 },
+      "pages": ["master_files/hotel_rate_v2"],
+      "audience": "Everyone with Hotel Rates (new)",
+      "needs": ["master_files/hotel_rate_v2"],
+      "needs_note": "The history needs the **Hotel Rates (new)** permission.",
+      "summary": "Open the hotel → **History**: every change to the hotel record with **When**, **Who** and **What**.",
+      "steps": [
+        { "text": "Open **Hotel Rates (new)** and click the hotel.", "link": { "path": "master_files/hotel_rate_v2", "label": "Open Hotel Rates (new)" } },
+        { "text": "Click the **History** tab." }
+      ],
+      "notes": [ "A rate plan has its own history inside the plan (see the **Hotel Rates** manual)." ],
+      "images": [ { "file": "hotel_master/06-history.png", "caption": "(1) History, (2) the changes — When, Who, What (here: none yet)" } ],
+      "related": ["hm-edit-details"],
+      "manual_ref": "Hotel Master → Step by step, Stage 3 (step 9)",
+      "verify": [
+        { "view": "app/Views/pages/master_files/hotel_rate_v2.php", "has": ["History", "No changes recorded yet."] },
+        { "route": "master_files/hotel_rate_v2/hotel/(:num)/audit" }
+      ]
+    },
+    {
+      "id": "hm-permissions",
+      "title": "Who can add or change hotels?",
+      "questions": [
+        "Who can add a new hotel?",
+        "Who can change hotel details?",
+        "Why can I not see the ··· button?",
+        "Who can merge or archive hotels?"
+      ],
+      "keywords": { "permission": 3, "hotel": 1.5, "new": 0.5, "details": 0.5, "archive": 0.5, "merge": 0.5 },
+      "pages": ["master_files/hotel_rate_v2", "master_files/supplier"],
+      "audience": "Everyone",
+      "needs": [],
+      "summary": "Each action follows a menu permission given to your user group.",
+      "steps": [
+        { "text": "Add a hotel: **Supplier** (Master Files → Supplier)." },
+        { "text": "See hotels, change **Hotel details**, **Room types**, **Frequently Used**: **Hotel Rates (new)**." },
+        { "text": "Merge duplicate hotels: **Hotel Rate Approval**." },
+        { "text": "Archive or restore a hotel (the **···** button): **Tour Desk Admin** (Management)." },
+        { "text": "Missing one? Ask your manager; the System Administrator gives it under **Settings → Group Privileges**.", "link": { "path": "settings/group_privilege/0", "label": "Open Group Privileges" } }
+      ],
+      "related": ["gen-access", "hr-permissions"],
+      "manual_ref": "Hotel Master → Questions and answers",
+      "verify": [
+        { "menu": "master_files/supplier" },
+        { "menu": "master_files/hotel_rate_v2" },
+        { "menu": "master_files/hotel_rate_approval" },
+        { "menu": "tour/manage" }
+      ]
+    }
+  ]
+}

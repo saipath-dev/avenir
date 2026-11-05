@@ -1,0 +1,50 @@
+=== code under test
+660e4f1840873fcc1497bd10c0a3b0a4  app/Libraries/BankRec/Access.php
+0d73f66c528ca8f93da6f44927cb42c8  app/Libraries/BankRec/Corrections.php
+1d4cca93bf1f0ade3aafb99a793a421d  app/Libraries/BankRec/LegacyGuard.php
+9f481901a738eacb7c526bf863716576  app/Libraries/BankRec/Matching.php
+d075cb2c34becfa8d1a63ef61b65349c  app/Libraries/BankRec/Rec.php
+1e6fc0535e01ed4f949169d77391059b  app/Libraries/BankRec/Schema.php
+31b0ac8c6431873b14322499195ce3fb  app/Libraries/BankRec/Statements.php
+076f1be55d0547587d263517f071c60c  app/Controllers/Accounts/DailyBankRecController.php
+88a7bdcbfe060685d0d7819165dedc02  app/Controllers/Accounts/BankReconsillationController.php
+bbc382935ff7aec0fd5896cb40756ef1  app/Views/pages/accounts/bankrec/_common.php
+2c296d4cad02ac6d311d9136f55dd1d7  app/Views/pages/accounts/bankrec/account.php
+259b86839fd9b07036bd0a7b5f517479  app/Views/pages/accounts/bankrec/fx.php
+871d13f3bfa1ac2d12762a55a2af0683  app/Views/pages/accounts/bankrec/index.php
+739e9ba331513e2e74d984962ca1f76f  app/Views/pages/accounts/bank_reconcillation.php
+dd9abf3a46d1740398926a07a02b88ae  app/Controllers/LoginController.php
+d4e62fc36fa3d4c9a0b7612dafb6b946  app/Filters/UserSessionFilter.php
+2698bcb7645ea358a306fb39b2c0f068  public/assets/js/plugins.js
+cbf01ab37f84c504be2e4e790af05939  app/Views/layouts/scripts.php
+=== regression battery (08:23)
+=== r4 suite ===
+202 ok, 0 failed
+snapshot: db_after_suite.sql (14M)
+=== bulk ===
+71 ok, 0 failed
+=== pilot ===
+36 ok, 0 failed
+=== ops/conf ===
+33 ok, 0 failed
+LG_DONE
+=== r3 ===
+26/26 passed
+=== ledger guard (cloud) ===
+10/10 passed
+=== r2 suite (08:27)
+108/108 passed
+=== r2 screens (08:29)
+20/20 ok
+=== r3 suite (08:31)
+132/132 passed
+=== r3 screens (08:32)
+24/24 ok
+=== sign-out fix (08:33)
+18/18 passed (after)
+=== version mark (08:36)
+4/4 passed
+FINAL_DONE 08:37
+
+Note: after "18/18 passed (after)" the Playwright driver printed an unawaited-promise message ("Future exception was never
+retrieved … Error('Object')") while the test browser closed. It was printed after the result line and is not a check failure.

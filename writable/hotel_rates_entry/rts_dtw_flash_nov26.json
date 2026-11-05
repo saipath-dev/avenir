@@ -1,0 +1,81 @@
+{
+ "key": "rts_dtw_flash_nov26",
+ "hotel": {
+  "acc": "6-9-11-11354",
+  "name": "DoubleTree by Hilton Weerawila Rajawarna Resort",
+  "location": "Weerawila",
+  "chain": "Hilton"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11354",
+   "name": "DoubleTree by Hilton Weerawila Rajawarna Resort"
+  },
+  "contract": {
+   "name": "Flash Sale – Special Rate (Limited Period Only) 01 Sep – 15 Nov 2026, HB",
+   "plan_type": "tactical",
+   "priority": 10,
+   "contract_type": "Flash sale",
+   "tier": "all",
+   "hotel_reference": "FLASH SALE – Special Rate (Limited Period Only PRPN)",
+   "valid_from": "2026-09-01",
+   "valid_to": "2026-11-15",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "HB",
+   "taxes_included": 1,
+   "tax_note": "Tax and service charge included (flyer).",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "terms_text": "FLASH SALE – Special Rate (Limited Period Only PRPN): USD 140 SGL HB | USD 150DBL HB | USD 190 TPL HB ( 1st SEP to 15th November 2026 ). TERMS & CONDITIONS: Promo cannot be combined with any other promotions or offers • non-transferable and cannot be redeemed for cash or other benefits • Tax and service charge included. BOOK NOW +94 76 817 4507. DoubleTree by Hilton Weerawila Rajawarna Resort, Weerawila Watta, Wirawila 82632.",
+   "notes": "Transcribed from \"flash offer update NOV.jpeg\" (1 page — a JPEG flyer), saved to the winter RTS folder on 2 Oct 2026. DoubleTree by Hilton Weerawila (6-9-11-11354, UNKNOWN CODE locally — expected). Validity entered as printed, 01 Sep – 15 Nov 2026 (it runs past 1 Nov 2026; partly in the past on 4 Oct 2026). USD per room per night (PRPN), half board: SGL 140 / DBL 150 / TPL 190, tax and service charge included. The flyer does not name the room: entered as \"Deluxe Garden View\", the entry room of the DoubleTree FIT rate agreement (rts_dtw_2027) — confirm with the hotel. No booking window, rate code, child, cancellation or payment terms are printed, and the FIT agreement only starts on 16 Jan 2027, so nothing underneath covers those terms for Sep – Nov 2026 (no parent plan). Non-combinable with any other promotion.",
+   "source_file": "flash offer update NOV.jpeg"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe Garden View",
+    "priced_as": "base",
+    "bed_config": "King or twin (K1DS/T2DS/K1RRD/T2RRD)",
+    "description": "Entry room of the DoubleTree FIT rate agreement 2027 (\"K1DS/T2DS/K1RRD/T2RRD, DLX Garden View\"). The flash-sale flyer does not name a room — Standard / entry room assumed; confirm with the hotel."
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Sep – 15 Nov 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-11-15"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "HB",
+      "sgl": 140,
+      "dbl": 150,
+      "tpl": 190,
+      "quad": null,
+      "unit": null,
+      "note": "Flash sale USD 140 SGL HB | USD 150 DBL HB | USD 190 TPL HB per room per night, tax & SC incl.; room not named on the flyer"
+     }
+    ],
+    "notes": "Flash sale, limited period only; the flyer does not name the room (entered as the contract's entry room)"
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [],
+  "child_rates": [],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

@@ -1,0 +1,2623 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E8 – Appendix A route registry</title><style>body{font-family:Segoe UI,Arial,sans-serif;max-width:1180px;margin:24px auto;padding:0 16px;color:#1f2937;line-height:1.45;background:#fff}
+h1{font-size:24px;color:#4a1d6b}h2{font-size:19px;color:#4a1d6b;margin-top:32px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}h3{font-size:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}th,td{border:1px solid #d1d5db;padding:6px 8px;vertical-align:top;text-align:left}th{background:#f3f4f6}
+code{background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:12.5px}
+img{max-width:100%;border:1px solid #d1d5db;border-radius:4px;margin:6px 0 18px}
+hr{border:0;border-top:1px solid #e5e7eb;margin:24px 0}</style></head><body><h1>E8 — Appendix A: route registry draft (203 addresses under <code>accounts/</code>)</h1>
+<p>Development system, read from the code on 12 Oct 2026 (the cloud copy has the identical accounts routes, controllers, models and views; route list digest matched). <strong>Draft for approval — nothing changed.</strong></p>
+<p><strong>Class:</strong>
+- PAGE: a page that renders a screen;
+- READ: returns data and changes nothing;
+- WRITE: changes data;
+- WRITE via GET: changes data on a plain link (to be converted to POST);
+- dead: the route points at code that does not exist.</p>
+<p><strong>Today:</strong> the privilege that opens the address today. Every address is also opened by Manage Accounts (49), held by groups 1, 17, 25 and 30.</p>
+<p><strong>Auditor:</strong> whether the address is on the proposed read-only allowlist.</p>
+<h2>chart of accounts (16)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>acc_running_records</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>(accounts)</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>title_accounts</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>heading_accounts</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>get_accounts_list</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>heading_acc_transactions</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>posting_acc_transactions</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>create/title_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>create/heading_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>create/posting_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>update/title_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>update/heading_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>update/posting_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>delete/title_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>delete/heading_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>delete/posting_account</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:chart.maintain</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>balance_sheet (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>balance_sheet</code></td>
+<td>PAGE</td>
+<td>Balance Sheet (51)</td>
+<td></td>
+<td>view: Balance Sheet (51)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>outstanding_report (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>outstanding_report</code></td>
+<td>PAGE</td>
+<td>Outstanding Report (143)</td>
+<td></td>
+<td>view: Outstanding Report (143)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>trial_balance (4)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>trial_balance</code></td>
+<td>PAGE</td>
+<td>Trial Balance Report (100)</td>
+<td></td>
+<td>view: Trial Balance Report (100)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>trial_balance/report</code></td>
+<td>PAGE</td>
+<td>Trial Balance Report - Account (141)</td>
+<td></td>
+<td>view: Trial Balance Report - Account (141)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>trial_balance/load_accountant_report</code></td>
+<td>PAGE</td>
+<td>Trial Balance Report New (142)</td>
+<td></td>
+<td>view: Trial Balance Report New (142)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>trial_balance/trial_balance_details/(:any)</code></td>
+<td>PAGE</td>
+<td>Trial Balance Report (100)</td>
+<td></td>
+<td>view: Trial Balance Report (100)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>profit_loss (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>profit_loss</code></td>
+<td>PAGE</td>
+<td>Profit and Loss Report (103)</td>
+<td></td>
+<td>view: Profit and Loss Report (103)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>creditor_invoice (13)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice</code></td>
+<td>PAGE</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>creditor_invoice/complete_payment</code></td>
+<td>WRITE</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td><code>act:creditor_invoice.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/report</code></td>
+<td>PAGE</td>
+<td>Creditor Invoice Report (91)</td>
+<td></td>
+<td>view: Creditor Invoice Report (91)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/voucher_authentication</code></td>
+<td>PAGE</td>
+<td>Payment Release (96)</td>
+<td></td>
+<td>view: Payment Release (96)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/credited_report</code></td>
+<td>PAGE</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>creditor_invoice/get_details</code></td>
+<td>READ</td>
+<td>Payment Amendment (84)</td>
+<td>Tour Management (76); Driver Expense (151)</td>
+<td>view: Payment Amendment (84)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>creditor_invoice/get_tour_paymets</code></td>
+<td>READ</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>creditor_invoice/get_tour_details</code></td>
+<td>READ</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/view_expences</code></td>
+<td>PAGE</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/expenses_delete</code></td>
+<td>WRITE via GET</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td><code>act:records.delete</code></td>
+<td>no</td>
+<td>convert to POST + token + audit; GET answers 405 (audited)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/expenses_report</code></td>
+<td>PAGE</td>
+<td>Operational PNL (95)</td>
+<td></td>
+<td>view: Operational PNL (95)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_invoice/view_operational_expences</code></td>
+<td>PAGE</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>creditor_invoice/search_voucher_number</code></td>
+<td>READ</td>
+<td>Payment Amendment (84)</td>
+<td></td>
+<td>view: Payment Amendment (84)</td>
+<td>no</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>new_creditor_invoice (11)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>new_creditor_invoice/complete_payment</code></td>
+<td>dead (handler missing)</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>deny — remove route (handler missing)</td>
+<td>no</td>
+<td>remove route (handler does not exist)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/report</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/credited_report</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>new_creditor_invoice/get_details</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>new_creditor_invoice/get_tour_details</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/view_expences</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/expenses_delete</code></td>
+<td>WRITE via GET</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:records.delete</code></td>
+<td>no</td>
+<td>convert to POST + token + audit; GET answers 405 (audited)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/expenses_report</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/view_operational_expences</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>new_creditor_invoice/get_transaction_history</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>creditor_payment (3)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>creditor_payment</code></td>
+<td>PAGE</td>
+<td>Creditor Payment (56)</td>
+<td></td>
+<td>view: Creditor Payment (56)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>creditor_payment/complete_payment</code></td>
+<td>WRITE</td>
+<td>Creditor Payment (56)</td>
+<td></td>
+<td><code>act:creditor_payment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>creditor_payment/get_transaction_history</code></td>
+<td>READ</td>
+<td>Creditor Payment (56)</td>
+<td></td>
+<td>view: Creditor Payment (56)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>usd_withdrawal (4)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>usd_withdrawal</code></td>
+<td>PAGE</td>
+<td>USD Withdrawal (192)</td>
+<td></td>
+<td>view: USD Withdrawal (192)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>usd_withdrawal/process</code></td>
+<td>WRITE</td>
+<td>USD Withdrawal (192)</td>
+<td></td>
+<td><code>act:usd_withdrawal.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>usd_withdrawal/print</code></td>
+<td>PAGE</td>
+<td>USD Withdrawal (192)</td>
+<td></td>
+<td>view: USD Withdrawal (192)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>usd_withdrawal/history</code></td>
+<td>PAGE</td>
+<td>USD Withdrawal History (193)</td>
+<td></td>
+<td>view: USD Withdrawal History (193)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>debtor_payment (4)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>debtor_payment</code></td>
+<td>PAGE</td>
+<td>Debtor Payment (78)</td>
+<td></td>
+<td>view: Debtor Payment (78)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_payment/date_filter</code></td>
+<td>READ</td>
+<td>Debtor Payment (78)</td>
+<td></td>
+<td>view: Debtor Payment (78)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>debtor_payment/complete_payment</code></td>
+<td>WRITE</td>
+<td>Debtor Payment (78)</td>
+<td></td>
+<td><code>act:debtor_payment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_payment/report</code></td>
+<td>PAGE</td>
+<td>Debtor Receipt Report (145)</td>
+<td></td>
+<td>view: Debtor Receipt Report (145)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>debtor_invoice (13)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice</code></td>
+<td>PAGE</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td>view: Debtor Invoice (86)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>debtor_invoice/get_advance_payment</code></td>
+<td>READ</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td>view: Debtor Invoice (86)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/report</code></td>
+<td>PAGE</td>
+<td>Debtor Invoice Report (92)</td>
+<td></td>
+<td>view: Debtor Invoice Report (92)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/cancellation_request</code></td>
+<td>WRITE via GET</td>
+<td>Debtor Invoice (86)</td>
+<td>Invoice Cancellation (187); Tour Inquiry / New Inquiry (79, 203)</td>
+<td><code>act:amendment.request</code></td>
+<td>no</td>
+<td>convert to POST + token + audit; GET answers 405 (audited)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/cancellation</code></td>
+<td>WRITE via GET</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td><code>act:amendment.decide</code></td>
+<td>no</td>
+<td>convert to POST + token + audit; GET answers 405 (audited)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>debtor_invoice/get</code></td>
+<td>READ</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td>view: Debtor Invoice (86)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/get_cancellation_request</code></td>
+<td>PAGE</td>
+<td>Tour Amendment Approval (127)</td>
+<td></td>
+<td>view: Tour Amendment Approval (127)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/get_cancellation_request_final</code></td>
+<td>PAGE</td>
+<td>Tour Amendment Finalize (147)</td>
+<td></td>
+<td>view: Tour Amendment Finalize (147)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/get_cancellation</code></td>
+<td>PAGE</td>
+<td>Tour Amendment Report (128)</td>
+<td></td>
+<td>view: Tour Amendment Report (128)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/arrival_report</code></td>
+<td>PAGE</td>
+<td>Arrival Report (138)</td>
+<td></td>
+<td>view: Arrival Report (138)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/arrival_report_print</code></td>
+<td>PAGE</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td>view: Debtor Invoice (86)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/print_deptor_invoice_report</code></td>
+<td>PAGE</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td>view: Debtor Invoice (86)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice/cancellation_fee_print</code></td>
+<td>PAGE</td>
+<td>Debtor Invoice (86)</td>
+<td></td>
+<td>view: Debtor Invoice (86)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>service_invoice (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>service_invoice</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>debtor_invoice_new (8)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice_new</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>debtor_invoice_new/complete_payment</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td><code>act:debtor_invoice.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice_new/tour_details</code></td>
+<td>dead (handler missing)</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td>deny — remove route (handler missing)</td>
+<td>no</td>
+<td>remove route (handler does not exist)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice_new/print</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice_new/sent_mail</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice_new/print</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>debtor_invoice_new/send_receipt</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117); Debtor Invoice (86)</td>
+<td><code>act:debtor_invoice.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debtor_invoice_new/additional_inv</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td>Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117)</td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>debit_note (3)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>debit_note</code></td>
+<td>PAGE</td>
+<td>Debit Note (115)</td>
+<td></td>
+<td>view: Debit Note (115)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>debit_note/fetch/(:any)</code></td>
+<td>READ</td>
+<td>Debit Note (115)</td>
+<td></td>
+<td>view: Debit Note (115)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>debit_note/complete_payment</code></td>
+<td>WRITE</td>
+<td>Debit Note (115)</td>
+<td></td>
+<td><code>act:debit_note.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>credit_note (2)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>credit_note</code></td>
+<td>PAGE</td>
+<td>Credit Note (139)</td>
+<td></td>
+<td>view: Credit Note (139)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>credit_note/complete_payment</code></td>
+<td>WRITE</td>
+<td>Credit Note (139)</td>
+<td></td>
+<td><code>act:credit_note.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>bank_statement (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>bank_statement</code></td>
+<td>PAGE</td>
+<td>Bank Statement (109)</td>
+<td></td>
+<td>view: Bank Statement (109)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>bank_reconcil (15)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>bank_reconcil</code></td>
+<td>PAGE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/get_req_items</code></td>
+<td>READ</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/get_realised_sum</code></td>
+<td>READ</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/update</code></td>
+<td>WRITE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td><code>act:old_bankrec.change</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/post_unrealised_entries</code></td>
+<td>WRITE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td><code>act:old_bankrec.change</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/get_post_data</code></td>
+<td>READ</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/repost_unrealised_entries</code></td>
+<td>WRITE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td><code>act:old_bankrec.change</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/get_opening_balance</code></td>
+<td>READ</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/repost_single_entry</code></td>
+<td>WRITE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td><code>act:old_bankrec.change</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>bank_reconcil/load_printview</code></td>
+<td>PAGE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>bank_reconcil/load_details_print</code></td>
+<td>PAGE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td>view: Bank Reconcillation (112)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/reconciliation</code></td>
+<td>WRITE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td><code>act:old_bankrec.change</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>bank_reconcil/summary</code></td>
+<td>PAGE</td>
+<td>Bank Reconcillation Summary (123)</td>
+<td></td>
+<td>view: Bank Reconcillation Summary (123)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>bank_reconcil/details</code></td>
+<td>PAGE</td>
+<td>Bank Reconcillation Details (122)</td>
+<td></td>
+<td>view: Bank Reconcillation Details (122)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_reconcil/finalize_selected</code></td>
+<td>WRITE</td>
+<td>Bank Reconcillation (112)</td>
+<td></td>
+<td><code>act:old_bankrec.change</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>daily_bank_rec (42)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/account/(:num)</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/fx</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/accounts</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/day</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/statements</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/statement</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/open</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/suggest</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/rates</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/corrections</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/days</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/audit</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/setup</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/mapping/propose</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/mapping/decide</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/statement/preview</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/statement/save</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/statement/accept</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/statement/void</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/line/edit</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/line/category</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/rate/save</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/match/create</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/match/undo</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/mark/create</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/mark/clear</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/transfer/create</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/transfer/undo</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/correction/propose</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/correction/charges</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/correction/decide</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/correction/withdraw</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/correction/posted</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/opening/propose</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/opening/decide</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/day/prepare</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/day/review</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/opening_candidates</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>daily_bank_rec/api/day_record</code></td>
+<td>READ</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation view (unchanged)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/match/explain</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>daily_bank_rec/correction/reverify</code></td>
+<td>WRITE</td>
+<td>Daily Bank Reconciliation (253)</td>
+<td></td>
+<td>Daily Bank Reconciliation privileges (unchanged)</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>bank_unrealised_value (2)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>bank_unrealised_value</code></td>
+<td>PAGE</td>
+<td>Bank Req Data Transfer (184)</td>
+<td></td>
+<td>view: Bank Req Data Transfer (184) — notice only</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>bank_unrealised_value/process</code></td>
+<td>WRITE</td>
+<td>Bank Req Data Transfer (184)</td>
+<td></td>
+<td>deny — retired tool</td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>journal_entry (7)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>journal_entry</code></td>
+<td>PAGE</td>
+<td>Journal Entry (81)</td>
+<td></td>
+<td>view: Journal Entry (81)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>journal_entry/fetch/(:any)</code></td>
+<td>READ</td>
+<td>Journal Entry (81)</td>
+<td></td>
+<td>view: Journal Entry (81)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>journal_entry/save</code></td>
+<td>WRITE</td>
+<td>Journal Entry (81)</td>
+<td></td>
+<td><code>act:journal.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>journal_entry/report</code></td>
+<td>PAGE</td>
+<td>Journal Entry Report (102)</td>
+<td></td>
+<td>view: Journal Entry Report (102)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>journal_entry/edit_report</code></td>
+<td>PAGE</td>
+<td>Edit Journal Entry (120)</td>
+<td></td>
+<td>view: Edit Journal Entry (120)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>journal_entry/reverse</code></td>
+<td>WRITE</td>
+<td>Journal Entry (81)</td>
+<td></td>
+<td><code>act:journal.correct</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>journal_entry/edit_date</code></td>
+<td>WRITE</td>
+<td>Journal Entry (81)</td>
+<td></td>
+<td><code>act:journal.correct</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>voucher_payments (8)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>voucher_payments/(:num)</code></td>
+<td>PAGE</td>
+<td>Voucher Payments (82)</td>
+<td></td>
+<td>view: Voucher Payments (82)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>voucher_payments/voucher_cancel</code></td>
+<td>PAGE</td>
+<td>Pending Voucher Report (119)</td>
+<td></td>
+<td>view: Pending Voucher Report (119)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>voucher_payments/voucher_reject</code></td>
+<td>PAGE</td>
+<td>Voucher Payments (82)</td>
+<td></td>
+<td>view: Voucher Payments (82)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>voucher_payments/fetch/(:num)/(:any)</code></td>
+<td>READ</td>
+<td>Voucher Payments (82)</td>
+<td></td>
+<td>view: Voucher Payments (82)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>voucher_payments/save</code></td>
+<td>WRITE</td>
+<td>Voucher Payments (82)</td>
+<td></td>
+<td><code>act:vouchers.create</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>voucher_payments/getSupplierDetails</code></td>
+<td>READ</td>
+<td>Voucher Payments (82)</td>
+<td></td>
+<td>view: Voucher Payments (82)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>voucher_payments/voucher_delete</code></td>
+<td>dead (handler missing)</td>
+<td>Voucher Payments (82)</td>
+<td></td>
+<td>deny — remove route (handler missing)</td>
+<td>no</td>
+<td>remove route (handler does not exist)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>voucher_payments/get_pc_accumulated_balance</code></td>
+<td>READ</td>
+<td>Voucher Payments (82)</td>
+<td>voucher_auth (menu url accounts/voucher_auth); Bank Payment Check Report (189)</td>
+<td>view: Voucher Payments (82)</td>
+<td>no</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>voucher_auth (3)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>voucher_auth</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>voucher_auth/update</code></td>
+<td>WRITE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td><code>act:vouchers.finalise</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>voucher_auth/getVoucherDetails</code></td>
+<td>READ</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>voucher_audit (4)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>voucher_audit</code></td>
+<td>PAGE</td>
+<td>Voucher Audit (124)</td>
+<td></td>
+<td>view: Voucher Audit (124)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>voucher_audit/auth</code></td>
+<td>PAGE</td>
+<td>Voucher Audit (124)</td>
+<td></td>
+<td>view: Voucher Audit (124)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>voucher_audit/update</code></td>
+<td>WRITE</td>
+<td>Voucher Audit (124)</td>
+<td></td>
+<td><code>act:vouchers.audit_mark</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>voucher_audit/update_tour</code></td>
+<td>WRITE</td>
+<td>Voucher Audit (124)</td>
+<td></td>
+<td><code>act:vouchers.audit_mark</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>voucher_print (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>voucher_print/(:any)</code></td>
+<td>PAGE</td>
+<td>Manage Accounts (49)</td>
+<td></td>
+<td>view: Manage Accounts (49)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>account_filter (2)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>account_filter</code></td>
+<td>PAGE</td>
+<td>Ledger Accounts (108)</td>
+<td></td>
+<td>view: Ledger Accounts (108)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>account_filter/fetch/(:any)</code></td>
+<td>READ</td>
+<td>Ledger Accounts (108)</td>
+<td></td>
+<td>view: Ledger Accounts (108)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>utility_bill (7)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>utility_bill</code></td>
+<td>PAGE</td>
+<td>Utility Bill Payment (113)</td>
+<td></td>
+<td>view: Utility Bill Payment (113)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>utility_bill/fetch/(:num)/(:any)</code></td>
+<td>READ</td>
+<td>Utility Bill Payment (113)</td>
+<td></td>
+<td>view: Utility Bill Payment (113)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill/save</code></td>
+<td>WRITE</td>
+<td>Utility Bill Payment (113)</td>
+<td></td>
+<td><code>act:utility_bill.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>utility_bill/report</code></td>
+<td>PAGE</td>
+<td>Utility Bills Report (114)</td>
+<td></td>
+<td>view: Utility Bills Report (114)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>utility_bill/delete</code></td>
+<td>WRITE via GET</td>
+<td>Utility Bill Payment (113)</td>
+<td></td>
+<td><code>act:records.delete</code></td>
+<td>no</td>
+<td>convert to POST + token + audit; GET answers 405 (audited)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill/update_status</code></td>
+<td>WRITE</td>
+<td>Utility Bill Payment (113)</td>
+<td>Payment Approval V1 (185, no holders)</td>
+<td><code>act:utility_bill.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill/pay</code></td>
+<td>WRITE</td>
+<td>Utility Bill Payment (113)</td>
+<td></td>
+<td><code>act:utility_bill.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>utility_bill_entertainment (7)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>utility_bill_entertainment</code></td>
+<td>PAGE</td>
+<td>Utility Bill Entertainment (181)</td>
+<td></td>
+<td>view: Utility Bill Entertainment (181)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill_entertainment/save</code></td>
+<td>WRITE</td>
+<td>Utility Bill Entertainment (181)</td>
+<td></td>
+<td><code>act:entertainment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>utility_bill_entertainment/report</code></td>
+<td>PAGE</td>
+<td>Utility Bill Entertainment Report (182)</td>
+<td></td>
+<td>view: Utility Bill Entertainment Report (182)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>utility_bill_entertainment/delete</code></td>
+<td>dead (handler missing)</td>
+<td>Utility Bill Entertainment (181)</td>
+<td></td>
+<td>deny — remove route (handler missing)</td>
+<td>no</td>
+<td>remove route (handler does not exist)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill_entertainment/upload_invoice</code></td>
+<td>WRITE</td>
+<td>Utility Bill Entertainment (181)</td>
+<td></td>
+<td><code>act:entertainment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill_entertainment/update_expense</code></td>
+<td>WRITE</td>
+<td>Utility Bill Entertainment (181)</td>
+<td></td>
+<td><code>act:entertainment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>utility_bill_entertainment/delete_expense</code></td>
+<td>WRITE</td>
+<td>Utility Bill Entertainment (181)</td>
+<td></td>
+<td><code>act:records.delete</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+</tbody>
+</table>
+<h2>cash_book (2)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>cash_book</code></td>
+<td>PAGE</td>
+<td>Cash In Hand (101)</td>
+<td></td>
+<td>view: Cash In Hand (101)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>cash_book/petty_cash</code></td>
+<td>PAGE</td>
+<td>Cash In Hand (101)</td>
+<td></td>
+<td>view: Cash In Hand (101)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>age_analysis (2)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>age_analysis</code></td>
+<td>PAGE</td>
+<td>Age Analysis Report (104)</td>
+<td></td>
+<td>view: Age Analysis Report (104)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>age_analysis/creditor</code></td>
+<td>PAGE</td>
+<td>Creditor Age Analysis (105)</td>
+<td></td>
+<td>view: Creditor Age Analysis (105)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>liability (1)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>liability</code></td>
+<td>PAGE</td>
+<td>Liability Report (88)</td>
+<td></td>
+<td>view: Liability Report (88)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>advance_payment (5)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>advance_payment</code></td>
+<td>PAGE</td>
+<td>Advance Payments (90)</td>
+<td></td>
+<td>view: Advance Payments (90)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>advance_payment/get</code></td>
+<td>READ</td>
+<td>Advance Payments (90)</td>
+<td></td>
+<td>view: Advance Payments (90)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>advance_payment/add</code></td>
+<td>WRITE</td>
+<td>Advance Payments (90)</td>
+<td></td>
+<td><code>act:advance_payment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>advance_payment/payment_details</code></td>
+<td>READ</td>
+<td>Advance Payments (90)</td>
+<td></td>
+<td>view: Advance Payments (90)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>advance_payment/report</code></td>
+<td>PAGE</td>
+<td>Advance Payments Report (89)</td>
+<td></td>
+<td>view: Advance Payments Report (89)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>expenses_chart (2)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>expenses_chart</code></td>
+<td>PAGE</td>
+<td>Expenses Chart (94)</td>
+<td></td>
+<td>view: Expenses Chart (94)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>expenses_chart/report</code></td>
+<td>PAGE</td>
+<td>Expenses Report (180)</td>
+<td></td>
+<td>view: Expenses Report (180)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>other_invoice (4)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>other_invoice</code></td>
+<td>PAGE</td>
+<td>Service Provider Invoice (172)</td>
+<td></td>
+<td>view: Service Provider Invoice (172)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>other_invoice/add_invoice</code></td>
+<td>WRITE</td>
+<td>Service Provider Invoice (172)</td>
+<td></td>
+<td><code>act:other_invoice.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>other_invoice/report</code></td>
+<td>PAGE</td>
+<td>Service Provider Invoice Report (174)</td>
+<td></td>
+<td>view: Service Provider Invoice Report (174)</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>other_invoice/print</code></td>
+<td>PAGE</td>
+<td>Service Provider Invoice (172)</td>
+<td></td>
+<td>view: Service Provider Invoice (172)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>service_provider_payment (3)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Address (after <code>accounts/</code>)</th>
+<th>Class</th>
+<th>Today</th>
+<th>Also via (other modules)</th>
+<th>Proposed requirement</th>
+<th>Auditor</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>service_provider_payment</code></td>
+<td>PAGE</td>
+<td>Service Provider Payment (194)</td>
+<td></td>
+<td>view: Service Provider Payment (194)</td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>service_provider_payment/complete_payment</code></td>
+<td>WRITE</td>
+<td>Service Provider Payment (194)</td>
+<td></td>
+<td><code>act:service_provider_payment.post</code></td>
+<td>no</td>
+<td>POST + token + audit enforced</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>service_provider_payment/report</code></td>
+<td>PAGE</td>
+<td>Service Provider Payment Receipt (195)</td>
+<td></td>
+<td>view: Service Provider Payment Receipt (195)</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody>
+</table></body></html>

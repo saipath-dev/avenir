@@ -1,0 +1,1150 @@
+{
+ "key": "moi_ella",
+ "hotel": {
+  "acc": "6-9-11-10893",
+  "name": "Moi Ella",
+  "location": "Ella",
+  "chain": "DBI Ceylon / Moi Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10893",
+   "name": "Moi Ella"
+  },
+  "contract": {
+   "name": "All market rates WEF 01 Feb 2026 (Winter/Summer 2026 – Winter 2026/27)",
+   "plan_type": "contract",
+   "contract_type": "Travel Agent",
+   "valid_from": "2026-02-01",
+   "valid_to": "2027-04-30",
+   "taxes_included": 1,
+   "tax_note": "All above rates are inclusive of 18% VAT; inclusive of all taxes, non-commissionable",
+   "received_at": "2026-09-03",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 15,
+   "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+   "terms_text": "All room rates are inclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 11.00 am; early check-in / late check-out subject to availability, charges apply. No pets. Bookings are confirmed by e-mail, subject to written confirmation from the reservations department followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for any loss or damage to hotel property. DBI e-mail 24 Aug 2026: rates apply to new reservations only; only HB bookings are accepted on 24 and 31 Dec 2026; reservations / amendments / cancellations to info@dbihotels.lk, reservation@dbihotels.lk, sales3@dbihotels.lk.",
+   "child_policy_text": "Below 5.99 years free of charge sharing parent's bed on booked basis. 6 – 11 years 50% of the adult rate on booked basis per night (excluding extra bed). 12 years and above considered as an adult. Extra bed $15 per night. Child meal rate 50% of the adult rate.",
+   "cancellation_text": "November – April: release period 21 days prior to arrival; 50% of the full booking value charged if cancelled within 21 days. May – October: release period 14 days prior to arrival; 50% of the full booking value charged if cancelled within 14 days. No-shows: 100% of the full stay / no refund (if payment is settled). An early departure fee applies for cancellations made after check-in.",
+   "payment_text": "Full payment to be settled 7 days prior to the date of arrival. Cheque payments must be banked and realised at least 10 days prior to arrival. Reservations made within 7 days of arrival: payment in full upon booking confirmation. Failure to settle in full by the above date: rooms released without prior notice. Hotel reserves the right to release bookings with unsettled payment (excluding credit agents) with advance notice of 14 days or more. Bank: Moi Ella DBI (Pvt) Ltd, Commercial Bank Rajagiriya, A/C 1000636862. Quote travel agency / guest name / confirmation number as reference.",
+   "guide_policy_text": "Group bookings with 15 or more paying guests: guide room provided FOC. Guide fee (per night) for less than 15 paying guests: USD 35 BB / USD 45 HB. If the hotel is fully booked, guide accommodation will be provided at a nearby suitable accommodation.",
+   "notes": "09th Mile Post, Kurugama, Rakkitha Kanda Rd, Ella. 29 rooms on the sheet (e-mail says 30). Family Deluxe / Family Studio / Duplex Studio are priced for 3 or 4 pax only.",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "source_type": "email",
+   "source_file": "MOI HOTELS — Moi Ella WEF 01.02.2026.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Standard",
+    "priced_as": "base",
+    "room_count": 8,
+    "max_adults": 2
+   },
+   {
+    "name": "Deluxe Double",
+    "priced_as": "base",
+    "room_count": 9,
+    "max_adults": 2
+   },
+   {
+    "name": "Deluxe Triple",
+    "priced_as": "base",
+    "room_count": 8,
+    "max_adults": 3
+   },
+   {
+    "name": "Family Deluxe",
+    "priced_as": "base",
+    "room_count": 1,
+    "max_adults": 4,
+    "description": "Priced for 3 or 4 pax only"
+   },
+   {
+    "name": "Family Studio",
+    "priced_as": "base",
+    "room_count": 1,
+    "max_adults": 4,
+    "description": "Priced for 3 or 4 pax only"
+   },
+   {
+    "name": "Duplex Studio",
+    "priced_as": "base",
+    "room_count": 2,
+    "max_adults": 4,
+    "description": "Priced for 3 or 4 pax only"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Feb – 30 Apr 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-02-01",
+      "to": "2026-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 88,
+      "dbl": 98,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 103,
+      "dbl": 128,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 103,
+      "dbl": 113,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 118,
+      "dbl": 143,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 108,
+      "dbl": 118,
+      "tpl": 143,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 123,
+      "dbl": 148,
+      "tpl": 188,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 178,
+      "quad": 203,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 223,
+      "quad": 263,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 203,
+      "quad": 228,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 248,
+      "quad": 288,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 243,
+      "quad": 268,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 288,
+      "quad": 328,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 May – 30 Jun 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-06-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 70,
+      "dbl": 80,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 85,
+      "dbl": 110,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 85,
+      "dbl": 95,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 100,
+      "dbl": 125,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 90,
+      "dbl": 100,
+      "tpl": 125,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 105,
+      "dbl": 130,
+      "tpl": 170,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 145,
+      "quad": 170,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 190,
+      "quad": 230,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 185,
+      "quad": 210,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 230,
+      "quad": 270,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 205,
+      "quad": 230,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 250,
+      "quad": 290,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 Jul – 31 Aug 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-07-01",
+      "to": "2026-08-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 91,
+      "dbl": 101,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 106,
+      "dbl": 131,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 106,
+      "dbl": 116,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 121,
+      "dbl": 146,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 111,
+      "dbl": 121,
+      "tpl": 146,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 126,
+      "dbl": 151,
+      "tpl": 191,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 166,
+      "quad": 191,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 211,
+      "quad": 251,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 206,
+      "quad": 231,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 251,
+      "quad": 291,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 226,
+      "quad": 251,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 271,
+      "quad": 311,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 Sep – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 70,
+      "dbl": 80,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 85,
+      "dbl": 110,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 85,
+      "dbl": 95,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 100,
+      "dbl": 125,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 90,
+      "dbl": 100,
+      "tpl": 125,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 105,
+      "dbl": 130,
+      "tpl": 170,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 145,
+      "quad": 170,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 190,
+      "quad": 230,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 185,
+      "quad": 210,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 230,
+      "quad": 270,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 205,
+      "quad": 230,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 250,
+      "quad": 290,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 Nov – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 88,
+      "dbl": 98,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 103,
+      "dbl": 128,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 103,
+      "dbl": 113,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 118,
+      "dbl": 143,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 108,
+      "dbl": 118,
+      "tpl": 143,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 123,
+      "dbl": 148,
+      "tpl": 188,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 163,
+      "quad": 188,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 208,
+      "quad": 248,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 203,
+      "quad": 228,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 248,
+      "quad": 288,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 223,
+      "quad": 248,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 268,
+      "quad": 308,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "20 Dec 2026 – 15 Jan 2027 (festive)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-15"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 123,
+      "dbl": 133,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 138,
+      "dbl": 163,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 138,
+      "dbl": 148,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 153,
+      "dbl": 178,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 143,
+      "dbl": 153,
+      "tpl": 178,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 158,
+      "dbl": 183,
+      "tpl": 223,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 198,
+      "quad": 223,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 243,
+      "quad": 283,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 238,
+      "quad": 263,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 283,
+      "quad": 323,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 258,
+      "quad": 283,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 303,
+      "quad": 343,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "16 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-16",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard",
+      "meal_plan": "BB",
+      "sgl": 94,
+      "dbl": 104,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard",
+      "meal_plan": "HB",
+      "sgl": 109,
+      "dbl": 134,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "BB",
+      "sgl": 109,
+      "dbl": 119,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Double",
+      "meal_plan": "HB",
+      "sgl": 124,
+      "dbl": 149,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "BB",
+      "sgl": 114,
+      "dbl": 124,
+      "tpl": 149,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Triple",
+      "meal_plan": "HB",
+      "sgl": 129,
+      "dbl": 154,
+      "tpl": 194,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 169,
+      "quad": 194,
+      "unit": null
+     },
+     {
+      "room_type": "Family Deluxe",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 214,
+      "quad": 254,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 209,
+      "quad": 234,
+      "unit": null
+     },
+     {
+      "room_type": "Family Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 254,
+      "quad": 294,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 229,
+      "quad": 254,
+      "unit": null
+     },
+     {
+      "room_type": "Duplex Studio",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": 274,
+      "quad": 314,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 20,
+    "child": 10.0,
+    "note": "Dinner supplement (printed HB rows take precedence)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 15,
+    "child": 7.5,
+    "note": "Lunch supplement"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -10,
+    "child": -5.0,
+    "note": "Breakfast price (room-only derived)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 10,
+    "child": 5.0
+   },
+   {
+    "meal": "lunch",
+    "adult": 15,
+    "child": 7.5
+   },
+   {
+    "meal": "dinner",
+    "adult": 20,
+    "child": 10.0
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (BB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (HB/FB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (BB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (HB/FB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "child_pct": 50
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Free of charge sharing parents' bed on booked basis"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "adult_rate",
+    "note": "50% of the adult rate on booked basis per night (excluding extra bed)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "pct": 50,
+    "pct_basis": "adult_rate",
+    "note": "50% of the adult rate plus extra bed $15 per night"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 35,
+    "per": "person",
+    "free_from_pax": 15,
+    "accommodation": "hotel_room",
+    "note": "Guide fee per night for less than 15 paying guests; groups of 15+ paying guests get the guide room FOC; if the hotel is full, nearby suitable accommodation"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 45,
+    "per": "person",
+    "free_from_pax": 15,
+    "accommodation": "hotel_room",
+    "note": "Guide fee per night for less than 15 paying guests; groups of 15+ paying guests get the guide room FOC; if the hotel is full, nearby suitable accommodation"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 50,
+    "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+   },
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "No-show: 100% of the full stay, no refund"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 50,
+    "note": "Release period 14 days prior to arrival; 50% of the full booking value if cancelled within 14 days"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "No-show: 100% of the full stay, no refund"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 50,
+    "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "No-show: 100% of the full stay, no refund"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 7,
+    "pct": 100,
+    "note": "Full payment 7 days prior to arrival; reservations made within 7 days of arrival are paid in full on confirmation"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "days_before": 10,
+    "note": "Cheque payments must be banked and realised at least 10 days prior to arrival"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "other",
+    "days_before": 14,
+    "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "value": "HB",
+    "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+   },
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "value": "HB",
+    "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+   }
+  ],
+  "extras": []
+ }
+}

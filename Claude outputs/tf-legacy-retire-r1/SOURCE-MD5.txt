@@ -1,0 +1,5 @@
+102e7d8a2d99aecbba31c515be4cd7e3  app/Controllers/Accounts/BankUnrealisedValueController.php
+45ddf8e81e1f254c09eb340fe9bd4cdf  app/Controllers/Settings/ManualUpdateController.php
+93a621ca59f8e17ff88c9065e9ea830a  app/Libraries/BankRec/LegacyGuard.php
+c3ca2a7354928e3318562b19b53ff311  app/Views/pages/accounts/bank_unrealised_value_change.php
+616ab1584c8c0be629365ef0613a7185  app/Views/pages/settings/manual_update.php

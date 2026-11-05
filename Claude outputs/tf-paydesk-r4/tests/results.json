@@ -1,0 +1,1214 @@
+[
+ {
+  "test": 9,
+  "name": "two Avenir accounts in the master (one default, one with hidden external display)",
+  "ok": true,
+  "detail": "{'Com Bank LKR operating': 1, 'Sampath LKR account': 2}"
+ },
+ {
+  "test": 14,
+  "name": "a requester cannot save a company bank account (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'msg': 'Forbidden'}"
+ },
+ {
+  "test": 9,
+  "name": "the dashboard offers the master's accounts only (no free typing)",
+  "ok": true,
+  "detail": "master"
+ },
+ {
+  "test": 0,
+  "name": "the desk reports Supplier Payables in place (schema 4, accumulation on)",
+  "ok": true,
+  "detail": "(True, True)"
+ },
+ {
+  "test": 10,
+  "name": "the accountant cannot verify a supplier account (no verification privilege \u2192 403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Verifying needs the Supplier bank verification privilege.'}"
+ },
+ {
+  "test": 10,
+  "name": "six suppliers verified by the bank approver, Kassapa left unverified",
+  "ok": true,
+  "detail": "{'6-9-11-10626': 'verified', '6-9-11-11496': 'unverified', '6-9-11-11047': 'verified', '6-9-11-11392': 'verified', '6-9-11-11590': 'verified', '6-9-23-11075': 'verified', '6-9-11-11617': 'verified', '6-9-11-10639': 'unverified'}"
+ },
+ {
+  "test": 10,
+  "name": "the Kassapa line carries the \"not verified\" warning; COVENRO has none",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 14,
+  "name": "a requester cannot confirm the rate (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': \"Entering Today's USD Exchange Rate needs the Daily USD Rate privilege (or the Admin group).\"}"
+ },
+ {
+  "test": 3,
+  "name": "today's rate confirmed by the approver: 327.25, with who and when",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Today's rate confirmed: LKR 327.25 per USD. Payments already requested keep their own locked rate.\", 'rate': {'date': '2026-10-11', 'rate': 327.25, 'entered_by': 'tcpayappr', 'entered_at': '2026-10-11 05:16:01', 'set': True, 'last': None, 'recent': [{'rate_date': '2026-10-11', 'rate': '327.25', 'created_user': 'tcpayappr', 'created_at': '2026-10-11 05:16:01'}, {'rate_da"
+ },
+ {
+  "test": 3,
+  "name": "an unrequested USD line shows the LKR estimate at today's rate, marked indicative (55 \u00d7 327.25 = 17,998.75)",
+  "ok": true,
+  "detail": "(17998.75, \"today's rate \u2014 indicative until a payment is requested\")"
+ },
+ {
+  "test": 1,
+  "name": "requester: payment request accepted by the chain",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment Request saved successfully'}"
+ },
+ {
+  "test": 1,
+  "name": "status Awaiting Management Approval; rate 327.25 locked to the request; LKR 17,998.75; invoice kept",
+  "ok": true,
+  "detail": "('awaiting', 327.25, 17998.75, 'COV-INV-7781')"
+ },
+ {
+  "test": 16,
+  "name": "a second request for the same line while one is in flight is refused (409)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'A payment request has already been made for this item.'}"
+ },
+ {
+  "test": 8,
+  "name": "a requester cannot approve (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Approving a payment needs the management approval privilege (Tour payment approval, or the Payment approval page).'}"
+ },
+ {
+  "test": 1,
+  "name": "approver: Approved \u2014 NO voucher yet; the payment waits under its supplier (awaiting batch)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under COVENRO VEYANGODA in Supplier Payables until management creates the supplier's payment batch \u2014 provisional LKR 17,998.75 at 327.25 (the final LKR follows the rate of the actual payment date).\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': '327.2500', 'approval_lkr': '17998.75'}"
+ },
+ {
+  "test": 1,
+  "name": "dashboard: Approved for Payment; approval figures recorded \u2014 $55 \u00d7 327.25 = LKR 17,998.75 (provisional), approval date and user",
+  "ok": true,
+  "detail": "('approved', 327.25, 17998.75, 'tcpayappr')"
+ },
+ {
+  "test": 23,
+  "name": "the approval figures: the locked USD amount, the rate shown at approval, the provisional LKR, the approval date and user \u2014 on the request record",
+  "ok": true,
+  "detail": "55.00|327.2500|17998.75|2026-10-11|tcpayappr"
+ },
+ {
+  "test": 23,
+  "name": "Supplier Payables lists the approved payment under COVENRO: tour, guest, invoice, $55, approval rate, provisional LKR",
+  "ok": true,
+  "detail": "{'pr_id': 3150, 'tour_id': '2325', 'manual_id': 'AH 2218', 'guest': 'NEMOTO / REIKO MS', 'start_date': '2026-10-11', 'end_date': '2026-10-16', 'pax': 1, 'agent': ' STW', 'tour_cancelled': False, 'sup_acc': '6-9-11-10626', 'supplier': 'COVENRO VEYANGODA', 'type': 'Hotel', 'kind': 'Hotel', 'service_dates': ['2026-10-11'], 'currency': 'USD', 'usd_amount': 55, 'request_rate': 327.25, 'request_rate_dat"
+ },
+ {
+  "test": 23,
+  "name": "a requester (no payment role beyond the dashboard) cannot open Supplier Payables (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "test": 12,
+  "name": "approving the same request twice is refused (409)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'This request is not awaiting approval (status 4).'}"
+ },
+ {
+  "test": 23,
+  "name": "the accountant cannot create a batch (403) \u2014 batch creation is management's",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Creating a supplier payment batch needs the batch-creation privilege (management).'}"
+ },
+ {
+  "test": 23,
+  "name": "management creates the COVENRO batch: one voucher issued, placed in the accountant's queue",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Batch SB-00001 created \u2014 Payment Voucher No. 607 for COVENRO VEYANGODA (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 607, 'payment_voucher_no': 607, 'batch_id': 1, 'batch_no': 'SB-00001', 'individual': False}"
+ },
+ {
+  "test": 5,
+  "name": "voucher in the chain: Aflag 0, LKR 17,998.75 = $55 \u00d7 327.25 (provisional), paying ledger 1-6-8-10380, request voucher_created=1",
+  "ok": true,
+  "detail": "0|17998.75|55.00|1-6-8-10380|0"
+ },
+ {
+  "test": 5,
+  "name": "dashboard: Payment Voucher Issued, not paid; the batch shown on the line",
+  "ok": true,
+  "detail": "('voucher_issued', {'id': 1, 'no': 'SB-00001', 'status': 'issued', 'items': 1, 'tours': 1, 'supplier': 'COVENRO VEYANGODA', 'individual': False, 'bypass_label': None})"
+ },
+ {
+  "test": 23,
+  "name": "the payment left Supplier Payables once batched",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 12,
+  "name": "batching the same request twice is refused",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Request #3150 (AH 2218) already has a voucher or is in another batch.'}"
+ },
+ {
+  "test": 5,
+  "name": "payment voucher page and PDF: voucher no, batch no, tour, passenger, supplier, invoice, dates, USD, approval rate, provisional LKR, bank, approver",
+  "ok": true,
+  "detail": "(200, [])"
+ },
+ {
+  "test": 8,
+  "name": "Bank Payment Check (accountant): the voucher shows its batch link; no Mark Finalized for a batch voucher",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 8,
+  "name": "the approver cannot record a bank initiation (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Recording a bank initiation needs the Bank Payment Check (accountant) privilege.'}"
+ },
+ {
+  "test": 8,
+  "name": "the accountant cannot click Paid (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Only a holder of the Bank payment approver privilege can mark a payment Paid.'}"
+ },
+ {
+  "test": 24,
+  "name": "the accountant's bank payment page: supplier + verified bank, the included tour and invoice, locked USD 55, approval rate 327.25, provisional 17,998.75, today's confirmed rate, actual LKR, difference",
+  "ok": true,
+  "detail": "({'rate': 327.25, 'date': '2026-10-11', 'by': 'tcpayappr', 'at': '2026-10-11 05:16:01'}, {'rate': 327.25, 'usd_total': 55, 'provisional_lkr_total': 17998.75, 'actual_lkr_total': 17998.75, 'fx_diff': 0, 'rate_missing': False, 'lines': [{'pr_id': 3150, 'provisional_lkr': 17998.75, 'actual_lkr': 17998.75, 'fx_diff': 0}]})"
+ },
+ {
+  "test": 24,
+  "name": "the accountant cannot change the LKR amount (it is calculated from the locked USD \u00d7 the payment-date rate)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'The LKR amount is calculated from the locked USD amount and the payment-date rate (17,998.75); it is not typed. Reload the page.'}"
+ },
+ {
+  "test": 6,
+  "name": "accountant: bank initiation recorded \u2014 payment date, that day's rate 327.25 (daily), LKR 17,998.75, charges 150, total debit 18,148.75, batch, reference, file, note",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. USD 55.00 \u00d7 327.25 (2026-10-11) = LKR 17,998.75; exchange-rate difference against the approval figures +0.00. Bank charges LKR 150.00 (total debit 18,148.75). The bank approver can now confirm Paid. WARNING \u2014 Bank-charge ledger mapping incomplete: no Bank Charges account mapped. Final Paid of a payment with bank charges "
+ },
+ {
+  "test": 6,
+  "name": "status Bank Payment Initiated \u2014 Awaiting Bank Approval; still not paid",
+  "ok": true,
+  "detail": "bank_initiated"
+ },
+ {
+  "test": 12,
+  "name": "a second initiation for the same voucher is refused (409)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'A bank initiation is already recorded for voucher 607.'}"
+ },
+ {
+  "test": 8,
+  "name": "the accountant calling Mark Finalized directly is refused (403); the voucher stays unpaid",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Marking a payment finalized (Paid) needs the Bank payment approver privilege. The accountant records the bank initiation; the approver confirms the transfer and clicks Paid.'}"
+ },
+ {
+  "test": 24,
+  "name": "even the bank approver cannot Mark Finalized a batch voucher on Bank Payment Check \u2014 Paid is confirmed on the batch page with the payment-date rate",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Voucher 607 belongs to supplier payment batch SB-00001: confirm the final payment date and exchange rate on its batch page (Supplier Payables \u2192 SB-00001 \u2192 Paid).'}"
+ },
+ {
+  "test": 37,
+  "name": "the final approval page shows the configuration warning while the gain/loss ledger accounts are not mapped",
+  "ok": true,
+  "detail": "Exchange gain/loss ledger mapping incomplete: no Realised Exchange Gain account mapped; no Realised Exchange Loss account mapped. Final Paid of a foreign-currency payment is blocked until the System Administrator or the Accounts manager maps the accounts (Tour Payment Dashboard \u2192 Settings \u2192 Ledger mapping)."
+ },
+ {
+  "test": 37,
+  "name": "missing ledger mapping BLOCKS the final foreign-currency Paid (409, configuration warning); nothing was written",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Final Paid is blocked. Exchange gain/loss ledger mapping incomplete: no Realised Exchange Gain account mapped; no Realised Exchange Loss account mapped. Final Paid of a foreign-currency payment is blocked until the System Administrator or the Accounts manager maps the accounts (Tour Payment Dashboard \u2192 Settings \u2192 Ledger mapping).', 'config_warning': True, 'fx_mapping': "
+ },
+ {
+  "test": 37,
+  "name": "a requester cannot map the ledger accounts (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Mapping the ledger accounts is for the System Administrator or the Accounts manager (Avenir Bank Accounts privilege).'}"
+ },
+ {
+  "test": 37,
+  "name": "a code that is not an active ledger account is refused \u2014 nothing is invented",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Realised Exchange Gain: no active ledger account with code 4-8-109-00000 in the chart of accounts.'}"
+ },
+ {
+  "test": 37,
+  "name": "the same account for gain and loss is refused",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'The Realised Exchange Gain, Realised Exchange Loss and Bank Charges accounts must be three different ledger accounts.'}"
+ },
+ {
+  "test": 37,
+  "name": "the Accounts manager (Avenir Bank Accounts privilege) maps Realised Exchange Gain 4-8-109-31901 and Realised Exchange Loss 4-8-109-31902 from the chart of accounts; audit entry fx_mapping_saved",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Exchange-rate differences will be posted: gains to 4-8-109-31901 TEST Realised Exchange Gain, losses to 4-8-109-31902 TEST Realised Exchange Loss. Bank-charge mapping incomplete \u2014 no Bank Charges account mapped. Paid with bank charges stays blocked.', 'fx_mapping': {'gain': {'code': '4-8-109-31901', 'name': 'TEST Realised Exchange Gain'}, 'loss': {'code': '4-8-109-31902"
+ },
+ {
+  "test": 43,
+  "name": "the final approval page shows the bank-charge configuration warning (charges 150 entered at initiation, no Bank Charges account mapped); the Paid button is blocked",
+  "ok": true,
+  "detail": "Bank-charge ledger mapping incomplete: no Bank Charges account mapped. Final Paid of a payment with bank charges is blocked until the System Administrator or the Accounts manager maps the account (Tour Payment Dashboard \u2192 Settings \u2192 Ledger mapping). A payment the bank charged nothing for (charges 0.00) does not need it."
+ },
+ {
+  "test": 43,
+  "name": "missing bank-charge mapping BLOCKS a Paid with charges (409, configuration warning, before anything is written): voucher unpaid, no lock, ledger untouched, request records untouched",
+  "ok": true,
+  "detail": "(409, 'Final Paid is blocked: the bank charged LKR 150.00 and there is no account to post it to. Bank-charge ledger mapping incomplete: no Bank Charges account mapped. Final Paid of a payment with bank charges is blocked until the System Administrator or the Accounts manager maps the account (Tour Payment Dashboard \u2192 Settings \u2192 Ledger mapping). A payment the bank charged nothing for (charges 0.00)"
+ },
+ {
+  "test": 43,
+  "name": "negative bank charges are refused (400)",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Bank charges must be 0.00 or a positive LKR amount.'}"
+ },
+ {
+  "test": 43,
+  "name": "the loss account cannot double as the Bank Charges account (the three mappings must be different accounts)",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'The Realised Exchange Gain, Realised Exchange Loss and Bank Charges accounts must be three different ledger accounts.'}"
+ },
+ {
+  "test": 43,
+  "name": "a Bank Charges code that is not an active ledger account is refused \u2014 nothing is invented",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Bank Charges: no active ledger account with code 4-8-109-99999 in the chart of accounts.'}"
+ },
+ {
+  "test": 43,
+  "name": "the Accounts manager maps Bank Charges 4-8-109-31903 from the chart of accounts (the gain/loss mapping untouched); audit entry ledger_mapping_saved",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Exchange-rate differences will be posted: gains to 4-8-109-31901 TEST Realised Exchange Gain, losses to 4-8-109-31902 TEST Realised Exchange Loss. Bank charges will be posted to 4-8-109-31903 TEST Bank Charges (Dr) against the paying account (Cr), per tour line.', 'fx_mapping': {'gain': {'code': '4-8-109-31901', 'name': 'TEST Realised Exchange Gain'}, 'loss': {'code': '"
+ },
+ {
+  "test": 43,
+  "name": "the warning is gone; the page shows the account the charges will post to and the per-tour share (150.00 on the one tour)",
+  "ok": true,
+  "detail": "(None, [{'pr_id': 3150, 'tour_id': '2325', 'manual_id': 'AH 2218', 'basis': 17998.75, 'share': 150}])"
+ },
+ {
+  "test": 32,
+  "name": "Paid without confirming the paying account is refused (428)",
+  "ok": true,
+  "detail": "{'status': 428, 'message': 'Confirm the Avenir paying account shown on the page before clicking Paid.', 'needs_account_confirmation': True}"
+ },
+ {
+  "test": 32,
+  "name": "the final approval page shows the account the payment was initiated from (Com Bank LKR operating, as suggested) for the bank approver to confirm",
+  "ok": true,
+  "detail": "({'id': 1, 'label': 'Com Bank LKR operating', 'ledger_code': '1-6-8-10380', 'currency': 'LKR'}, {'id': 1, 'label': 'Com Bank LKR operating', 'ledger_code': '1-6-8-10380', 'currency': 'LKR'})"
+ },
+ {
+  "test": 7,
+  "name": "bank approver: Paid (same day as the approval), the paying account confirmed",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Paid. Payment Voucher No. 607 is locked: USD 55.00 \u00d7 327.25 (2026-10-11) = LKR 17,998.75; bank charges 150.00 posted to 4-8-109-31903 TEST Bank Charges (1 tour line(s)); total debited 18,148.75; ledger reconciled: credits to 1-6-8-10380 = LKR 18,148.75 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepa"
+ },
+ {
+  "test": 7,
+  "name": "the chain: voucher authorised (Aflag 1, ledger posted) and finalised with the bank date by the bank approver; amount LKR 17,998.75",
+  "ok": true,
+  "detail": "1|1|2026-10-11|tcbankappr|17998.75"
+ },
+ {
+  "test": 7,
+  "name": "ledger entries written by the existing authorisation step",
+  "ok": true,
+  "detail": "2"
+ },
+ {
+  "test": 7,
+  "name": "the Paid lock: date, amount, USD, rate, LKR, account, reference, initiator, approver \u2014 and the provisional LKR, the difference (0.00), charges, total debit",
+  "ok": true,
+  "detail": "2026-10-11|17998.75|55.00|327.2500|17998.75|1-6-8-10380|CB-TRF-000111|tcaccount|tcbankappr|17998.75|0.00|150.00|18148.75"
+ },
+ {
+  "test": 42,
+  "name": "NONZERO charges, one tour: LKR 150.00 posted ONCE as one balanced pair \u2014 Dr 4-8-109-31903 TEST Bank Charges / Cr 1-6-8-10380 (the paying account) \u2014 carrying the tour; charges_posted = 1; the request record carries its share 150.00",
+  "ok": true,
+  "detail": "('2325:4-8-109-31903:150.00:0.00;2325:1-6-8-10380:0.00:150.00', [{'tour': 'AH 2218', 'share': 150, 'account': '4-8-109-31903 TEST Bank Charges', 'bank': '1-6-8-10380 Commercial Bank Account', 'entry': 1359, 'posting': 'Dr Bank Charges / Cr paying account'}])"
+ },
+ {
+  "test": 42,
+  "name": "RECONCILED to the bank debit: credits to 1-6-8-10380 in the ledger = 17,998.75 (payment, posted by the chain) + 150.00 (charges) = 18,148.75 = the total the bank debited; every entry Dr = Cr; the lock records it",
+  "ok": true,
+  "detail": "(True, {'final_lkr': 17998.75, 'charges': 150, 'total_debit': 18148.75, 'bank_credit': 18148.75, 'payment_credit': 17998.75, 'charge_credit': 150, 'charge_debit': 150, 'dr': 18148.75, 'cr': 18148.75}, [])"
+ },
+ {
+  "test": 25,
+  "name": "approval and payment on the same day: final rate = approval rate, final LKR = provisional LKR, exchange-rate difference 0 \u2014 nothing to post",
+  "ok": true,
+  "detail": "327.2500|17998.75|0.00|2026-10-11"
+ },
+ {
+  "test": 12,
+  "name": "Paid twice is refused (409); the lock is untouched",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Voucher 607 is already Paid; a payment is never marked twice.'}"
+ },
+ {
+  "test": 46,
+  "name": "REPEATED Paid submission: refused; the ledger is byte-for-byte unchanged (no second payment posting, charges not posted twice), the lock and the request record unchanged",
+  "ok": true,
+  "detail": "('2398|1359|63030542.40|63030542.40', '2398|1359|63030542.40|63030542.40')"
+ },
+ {
+  "test": 7,
+  "name": "dashboard: Fully Paid + Supplier Notification Pending; paid LKR 17,998.75; balance 0",
+  "ok": true,
+  "detail": "('paid', 'notify_pending', 17998.75)"
+ },
+ {
+  "test": 12,
+  "name": "advice prepared: address from the supplier bank record, subject, body, PDF attached",
+  "ok": true,
+  "detail": "{'status': 200, 'remittance': {'id': 1, 'vnum': 607, 'status': 'prepared', 'to': 'covenro-test@example.invalid', 'subject': 'Payment completed \u2014 AH 2218 \u00b7 NEMOTO / REIKO MS \u00b7 Payment Voucher No. 607', 'body': '<p>Dear COVENRO VEYANGODA,</p><p>We confirm that the following payment has been completed. Please check your bank account.</p><p>The payment details and remittance advice are attached.</p><t"
+ },
+ {
+  "test": 11,
+  "name": "advice names only COVENRO; shows tour, passenger, voucher, date, LKR, USD + the payment-date rate, bank ref, Avenir bank (masked), no other supplier",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 12,
+  "name": "advice sent (through the test mail sink)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Sent to covenro-test@example.invalid. The supplier is now marked Notified.'}"
+ },
+ {
+  "test": 12,
+  "name": "the mail: to the supplier, subject, PDF attached, the approved wording",
+  "ok": true,
+  "detail": "('covenro-test@example.invalid', ['Remittance-advice-607.pdf'])"
+ },
+ {
+  "test": 12,
+  "name": "sending again is refused \u2014 no repeat supplier e-mail",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Already sent on 2026-10-11 05:16:03 to covenro-test@example.invalid. It is not sent twice.'}"
+ },
+ {
+  "test": 12,
+  "name": "status now Supplier Notified; the batch is Notified too",
+  "ok": true,
+  "detail": "('paid', 'notified')"
+ },
+ {
+  "test": 2,
+  "name": "first part requested: $70",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment Request saved successfully'}"
+ },
+ {
+  "test": 2,
+  "name": "rate 327.25 locked to part 1; LKR 22,907.50; balance $70 shown indicative",
+  "ok": true,
+  "detail": "(327.25, 22907.5, 70)"
+ },
+ {
+  "test": 10,
+  "name": "approval blocked: supplier bank not verified (428, needs authorised confirmation)",
+  "ok": true,
+  "detail": "{'status': 428, 'message': \"The supplier's bank account is not verified. A holder of the Supplier bank verification privilege must confirm it before this payment is approved.\", 'supplier_bank': {'sup_acc': '6-9-11-11496', 'supplier_name': 'Kassapa Lions Rock', 'beneficiary_name': 'Kassapa Lions Rock', 'bank_name': 'Test Bank', 'branch': 'Test branch', 'account_no': 'TEST1002002002', 'currency': 'L"
+ },
+ {
+  "test": 10,
+  "name": "the approver (no verification privilege) cannot confirm it (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Confirming an unverified supplier bank account needs the Supplier bank verification privilege.'}"
+ },
+ {
+  "test": 10,
+  "name": "a verifier confirms the account (recorded under their name)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Verified by tcbankappr.'}"
+ },
+ {
+  "test": 2,
+  "name": "part 1 approved \u2192 waits under Kassapa in Supplier Payables (provisional $70 \u00d7 327.25 = 22,907.50)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under Kassapa Lions Rock in Supplier Payables until management creates the supplier's payment batch \u2014 provisional LKR 22,907.50 at 327.25 (the final LKR follows the rate of the actual payment date).\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': '327.2500', 'approval_lkr': '22907.50'}"
+ },
+ {
+  "test": 2,
+  "name": "part 1 batched \u2192 voucher LKR 22,907.50 (provisional)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Batch SB-00002 created \u2014 Payment Voucher No. 608 for Kassapa Lions Rock (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 608, 'payment_voucher_no': 608, 'batch_id': 2, 'batch_no': 'SB-00002', 'individual': False}"
+ },
+ {
+  "test": 4,
+  "name": "today's rate changed to 329.10 (standing in for a later day's rate); audit keeps 327.25 \u2192 329.10",
+  "ok": true,
+  "detail": "Today's rate changed to LKR 329.10 per USD. Payments already requested keep their own locked rate."
+ },
+ {
+  "test": 4,
+  "name": "the paid COVENRO keeps 327.25 / LKR 17,998.75; Kassapa part 1 keeps its approval figures 327.25 / 22,907.50; only the unrequested $70 moves to 329.10",
+  "ok": true,
+  "detail": "(327.25, 23037)"
+ },
+ {
+  "test": 26,
+  "name": "the bank payment page shows today's rate 329.10 beside the approval rate 327.25: actual LKR 23,037.00, difference +129.50 (loss)",
+  "ok": true,
+  "detail": "{'rate': 329.1, 'usd_total': 70, 'provisional_lkr_total': 22907.5, 'actual_lkr_total': 23037, 'fx_diff': 129.5, 'rate_missing': False, 'lines': [{'pr_id': 3151, 'provisional_lkr': 22907.5, 'actual_lkr': 23037, 'fx_diff': 129.5}]}"
+ },
+ {
+  "test": 31,
+  "name": "management's suggestion recorded on the batch (Com Bank LKR operating)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 31,
+  "name": "revalidation: a USD account cannot pay an LKR voucher (refused)",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'The account \"Com Bank USD account\" is a USD account; this payment is made in LKR. Choose an LKR account.'}"
+ },
+ {
+  "test": 31,
+  "name": "a different account than the suggested one needs a reason (428)",
+  "ok": true,
+  "detail": "{'status': 428, 'message': 'You are paying from \"Sampath LKR account\" instead of the suggested \"Com Bank LKR operating\". Give the reason for the change (it is kept in the audit history).', 'needs_account_reason': True, 'suggested': 'Com Bank LKR operating', 'chosen': 'Sampath LKR account'}"
+ },
+ {
+  "test": 31,
+  "name": "the accountant pays from Sampath: the change recorded \u2014 original and new account, user, date/time, reason, currency and ledger revalidated; the voucher now pays from Sampath",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. USD 70.00 \u00d7 329.10 (2026-10-11) = LKR 23,037.00; exchange-rate difference against the approval figures +129.50. The bank approver can now confirm Paid.', 'amount': 23037, 'usd_rate': 329.1, 'fx_diff': 129.5, 'total_debit': 23037, 'charge_warning': None}, 'tcaccount|{\"account\":\"Com Bank LKR operating\",\"ledger\":\"1-6-8-1038"
+ },
+ {
+  "test": 26,
+  "name": "initiated at the payment-date rate: the voucher now carries LKR 23,037.00 ($70 \u00d7 329.10); the approval figures unchanged",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. USD 70.00 \u00d7 329.10 (2026-10-11) = LKR 23,037.00; exchange-rate difference against the approval figures +129.50. The bank approver can now confirm Paid.', 'amount': 23037, 'usd_rate': 329.1, 'fx_diff': 129.5, 'total_debit': 23037, 'charge_warning': None}, '23037.00')"
+ },
+ {
+  "test": 14,
+  "name": "part 1 initiated in the same bank batch as COVENRO (one batch reference, several suppliers)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 32,
+  "name": "the bank approver sees the final account (Sampath LKR account) beside the suggested one (Com Bank) and the change in the account history",
+  "ok": true,
+  "detail": "({'id': 2, 'label': 'Sampath LKR account', 'ledger_code': '1-6-8-10390', 'currency': 'LKR'}, 1)"
+ },
+ {
+  "test": 36,
+  "name": "exchange LOSS +129.50 posted to the mapped loss account, balanced against the supplier (Dr 4-8-109-31902 / Cr Kassapa), carrying the tour",
+  "ok": true,
+  "detail": "([{'tour': 'AH 2218', 'difference': 129.5, 'account': '4-8-109-31902 TEST Realised Exchange Loss', 'entry': 1362, 'posting': 'Dr loss / Cr supplier'}], '2325:4-8-109-31902:129.50:0.00;2325:6-9-11-11496:0.00:129.50')"
+ },
+ {
+  "test": 41,
+  "name": "ZERO charges (none entered): nothing posted to Bank Charges, charges_posted = 0, charges 0.00 on the lock; reconciled \u2014 credits to the paying account 23,037.00 = the bank debit; the exchange-loss pair balanced",
+  "ok": true,
+  "detail": "('', {'final_lkr': 23037, 'charges': 0, 'total_debit': 23037, 'bank_credit': 23037, 'payment_credit': 23037, 'charge_credit': 0, 'charge_debit': 0, 'dr': 23166.5, 'cr': 23166.5})"
+ },
+ {
+  "test": 2,
+  "name": "part 1 Paid at 329.10: final LKR 23,037.00, loss 129.50 recorded separately; ledger posted at the final LKR",
+  "ok": true,
+  "detail": "({'status': 200, 'message': \"Paid. Payment Voucher No. 608 is locked: USD 70.00 \u00d7 329.10 (2026-10-11) = LKR 23,037.00; exchange-rate loss 129.50 against the approval figures \u2014 posted to the loss account (1 tour line(s)); no bank charges; total debited 23,037.00; ledger reconciled: credits to 1-6-8-10390 = LKR 23,037.00 = the bank debit; paying account confirmed: Sampath LKR account. The supplier's"
+ },
+ {
+  "test": 2,
+  "name": "line is Partly Paid: paid $70 / LKR 23,037.00; balance $70; Request balance offered",
+  "ok": true,
+  "detail": "('partly_paid', 70, 23037, True)"
+ },
+ {
+  "test": 26,
+  "name": "the dashboard shows both: approval 327.25 / 22,907.50 and paid 329.10 / 23,037.00 (+129.50)",
+  "ok": true,
+  "detail": "{'pr_id': 3151, 'pr_status': 4, 'requested_at': '2026-10-11 05:16:05', 'requested_by': 'tcpayreq', 'accepted_at': '2026-10-11 05:16:05', 'accepted_by': 'tcpayappr', 'cancelled_at': None, 'cancelled_by': None, 'currency': 'USD', 'amount': 70, 'usd_rate': 329.1, 'rate_from': 'payment-date rate (final, locked at Paid)', 'rate_date': '2026-10-11', 'lkr': 23037, 'invoice_no': 'KLR-ADV-01', 'booking_ref"
+ },
+ {
+  "test": 2,
+  "name": "balance requested as a second request ($70) \u2014 allowed because part 1 is paid",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment Request saved successfully'}"
+ },
+ {
+  "test": 2,
+  "name": "part 2 locked at 329.10 \u2192 LKR 23,037.00; part 1 still 327.25 at approval",
+  "ok": true,
+  "detail": "(329.1, 23037, 3151)"
+ },
+ {
+  "test": 2,
+  "name": "part 2 approved (provisional $70 \u00d7 329.10 = 23,037.00)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under Kassapa Lions Rock in Supplier Payables until management creates the supplier's payment batch \u2014 provisional LKR 23,037.00 at 329.10 (the final LKR follows the rate of the actual payment date).\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': '329.1000', 'approval_lkr': '23037.00'}"
+ },
+ {
+  "test": 9,
+  "name": "part 2 batched from the second Avenir account (Sampath)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Batch SB-00003 created \u2014 Payment Voucher No. 609 for Kassapa Lions Rock (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Sampath LKR account \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 609, 'payment_voucher_no': 609, 'batch_id': 3, 'batch_no': 'SB-00003', 'individual': False}"
+ },
+ {
+  "test": 28,
+  "name": "the accountant initiates with payment date = yesterday: that day's confirmed rate 328.00 applies \u2014 LKR 22,960.00, difference \u221277.00 (gain)",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. USD 70.00 \u00d7 328.00 (2026-10-10) = LKR 22,960.00; exchange-rate difference against the approval figures \u221277.00. The bank approver can now confirm Paid.', 'amount': 22960, 'usd_rate': 328, 'fx_diff': -77, 'total_debit': 22960, 'charge_warning': None}, '2026-10-10|328.0000|daily|22960.00|-77.00')"
+ },
+ {
+  "test": 27,
+  "name": "today's rate changed to 325.00 (the rate decreases)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Today's rate changed to LKR 325.00 per USD. Payments already requested keep their own locked rate.\", 'rate': {'date': '2026-10-11', 'rate': 325, 'entered_by': 'tcpayappr', 'entered_at': '2026-10-11 05:16:06', 'set': True, 'last': None, 'recent': [{'rate_date': '2026-10-11', 'rate': '325.00', 'created_user': 'tcpayappr', 'created_at': '2026-10-11 05:16:06'}, {'rate_date'"
+ },
+ {
+  "test": 28,
+  "name": "the final approval page loads the rate of ITS date (today: 325.00), not the initiation's (328.00): actual LKR 22,750.00, difference \u2212287.00; the approval rate 329.10 stays visible",
+  "ok": true,
+  "detail": "({'rate': 325, 'date': '2026-10-11', 'by': 'tcpayappr', 'at': '2026-10-11 05:16:06'}, {'rate': 325, 'usd_total': 70, 'provisional_lkr_total': 23037, 'actual_lkr_total': 22750, 'fx_diff': -287, 'rate_missing': False, 'lines': [{'pr_id': 3152, 'provisional_lkr': 23037, 'actual_lkr': 22750, 'fx_diff': -287}]}, 328)"
+ },
+ {
+  "test": 35,
+  "name": "exchange GAIN \u2212287.00 posted to the mapped gain account, balanced against the supplier (Dr Kassapa / Cr 4-8-109-31901)",
+  "ok": true,
+  "detail": "2325:6-9-11-11496:287.00:0.00;2325:4-8-109-31901:0.00:287.00"
+ },
+ {
+  "test": 28,
+  "name": "Paid today: final rate 325.00 locked, final LKR 22,750.00, gain 287.00, charges 200, total debit 22,950.00; the initiation record keeps 328.00 / 22,960.00",
+  "ok": true,
+  "detail": "({'status': 200, 'message': \"Paid. Payment Voucher No. 609 is locked: USD 70.00 \u00d7 325.00 (2026-10-11) = LKR 22,750.00; exchange-rate gain 287.00 against the approval figures \u2014 posted to the gain account (1 tour line(s)); bank charges 200.00 posted to 4-8-109-31903 TEST Bank Charges (1 tour line(s)); total debited 22,950.00; ledger reconciled: credits to 1-6-8-10390 = LKR 22,950.00 = the bank debit"
+ },
+ {
+  "test": 42,
+  "name": "charges 200.00 on the Sampath payment: Dr Bank Charges / Cr 1-6-8-10390 (the account actually paid from); reconciled \u2014 22,750.00 + 200.00 = 22,950.00 credited to Sampath = the bank debit; the gain pair balanced",
+  "ok": true,
+  "detail": "('2325:4-8-109-31903:200.00:0.00;2325:1-6-8-10390:0.00:200.00', {'final_lkr': 22750, 'charges': 200, 'total_debit': 22950, 'bank_credit': 22950, 'payment_credit': 22750, 'charge_credit': 200, 'charge_debit': 200, 'dr': 23237, 'cr': 23237})"
+ },
+ {
+  "test": 27,
+  "name": "rate decreasing: the voucher and the ledger carry the final LKR 22,750.00; the request record: paid 325.00 / 22,750.00 / \u2212287.00; approval 329.10 / 23,037.00 unchanged",
+  "ok": true,
+  "detail": "329.1000|23037.00|325.0000|22750.00|-287.00"
+ },
+ {
+  "test": 2,
+  "name": "Kassapa Fully Paid: $140 = LKR 45,787.00 across two vouchers at two payment-date rates (329.10 and 325.00); two separate advices pending",
+  "ok": true,
+  "detail": "('paid', 45787)"
+ },
+ {
+  "test": 11,
+  "name": "Kassapa's advice for part 2 carries only Kassapa and only part 2 (22,750.00 @ 325.00)",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 3,
+  "name": "requested in LKR, no conversion, no rate",
+  "ok": true,
+  "detail": "({'pr_id': 3153, 'pr_status': 1, 'requested_at': '2026-10-11 05:16:06', 'requested_by': 'tcpayreq', 'accepted_at': None, 'accepted_by': None, 'cancelled_at': None, 'cancelled_by': None, 'currency': 'LKR', 'amount': 2500, 'usd_rate': None, 'rate_from': None, 'rate_date': '2026-10-11', 'lkr': 2500, 'invoice_no': 'GIM-0912', 'booking_ref': None, 'note': None, 'parent_pr_id': None, 'vnum': None, 'vouc"
+ },
+ {
+  "test": 3,
+  "name": "approved: the service-fee accrual is posted by the chain at approval (as before); no voucher; waits in Supplier Payables",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under GIMANHALA LUNCH VOUCHER in Supplier Payables until management creates the supplier's payment batch.\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': None, 'approval_lkr': '2500.00'}"
+ },
+ {
+  "test": 34,
+  "name": "Pay Individually Now without a reason is refused",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Pay Individually Now needs the reason the accumulation stage is bypassed: Driver advance \u00b7 Driver settlement \u00b7 Urgent cash payment \u00b7 Pay-at-gate item \u00b7 Emergency supplier payment \u00b7 Other authorised payment (must not wait for a bulk batch).'}"
+ },
+ {
+  "test": 34,
+  "name": "\"Other authorised payment\" without a note is refused",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Say why this payment must not wait for a bulk batch.'}"
+ },
+ {
+  "test": 34,
+  "name": "the accountant cannot use Pay Individually Now (403) \u2014 it is management's",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Creating a supplier payment batch needs the batch-creation privilege (management).'}"
+ },
+ {
+  "test": 34,
+  "name": "URGENT payment: Pay Individually Now creates a single-item batch at once; the bypass reason recorded on the batch and in the audit (accumulation_bypassed)",
+  "ok": true,
+  "detail": "({'status': 200, 'message': \"Paid individually (Urgent cash payment): batch SB-00004 created \u2014 Payment Voucher No. 610 for GIMANHALA LUNCH VOUCHER (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Sampath LKR account \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 610, 'payment_voucher_no': 610, 'batch_id': 4, 'batch_no': 'SB-00004', 'indiv"
+ },
+ {
+  "test": 3,
+  "name": "batched \u2192 voucher LKR 2,500.00 from Sampath; the accrual is NOT posted again",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Paid individually (Urgent cash payment): batch SB-00004 created \u2014 Payment Voucher No. 610 for GIMANHALA LUNCH VOUCHER (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Sampath LKR account \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 610, 'payment_voucher_no': 610, 'batch_id': 4, 'batch_no': 'SB-00004', 'indivi"
+ },
+ {
+  "test": 43,
+  "name": "with the Bank Charges mapping removed, an LKR Paid with charges 0.00 is NOT blocked by the mapping (nothing to post) \u2014 it stops only at the next gate, the account confirmation (428)",
+  "ok": true,
+  "detail": "{'status': 428, 'message': 'Confirm the Avenir paying account shown on the page before clicking Paid.', 'needs_account_confirmation': True}"
+ },
+ {
+  "test": 43,
+  "name": "the same LKR payment with charges 40.00 IS blocked while the mapping is missing (409) \u2014 the block does not depend on the currency; nothing written",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Final Paid is blocked: the bank charged LKR 40.00 and there is no account to post it to. Bank-charge ledger mapping incomplete: no Bank Charges account mapped. Final Paid of a payment with bank charges is blocked until the System Administrator or the Accounts manager maps the account (Tour Payment Dashboard \u2192 Settings \u2192 Ledger mapping). A payment the bank charged nothin"
+ },
+ {
+  "test": 32,
+  "name": "the bank approver confirming a DIFFERENT account than the initiation needs a reason (428)",
+  "ok": true,
+  "detail": "{'status': 428, 'message': 'The payment was initiated from \"Sampath LKR account\"; you are confirming \"Com Bank LKR operating\". Give the reason for the change (kept in the audit history).', 'needs_account_reason': True, 'initiated': 'Sampath LKR account', 'chosen': 'Com Bank LKR operating'}"
+ },
+ {
+  "test": 32,
+  "name": "the account changed at final approval: recorded (Sampath \u2192 Com Bank, bank approver, reason, stage); the ledger posted from Com Bank",
+  "ok": true,
+  "detail": "({'status': 200, 'message': \"Paid. Payment Voucher No. 610 is locked: LKR 2,500.00; no bank charges; total debited 2,500.00; ledger reconciled: credits to 1-6-8-10380 = LKR 2,500.00 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepare and send it when ready.\", 'lock': {'vnum': 610, 'voucher_id': 8035, 'tour_id': '2325', 'sup_acc'"
+ },
+ {
+  "test": 41,
+  "name": "LKR payment, zero charges: no charge posting, reconciled \u2014 2,500.00 credited to Com Bank = the bank debit",
+  "ok": true,
+  "detail": "{'final_lkr': 2500, 'charges': 0, 'total_debit': 2500, 'bank_credit': 2500, 'payment_credit': 2500, 'charge_credit': 0, 'charge_debit': 0, 'dr': 2500, 'cr': 2500}"
+ },
+ {
+  "test": 3,
+  "name": "initiated and Paid; lock has no rate and no difference",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. LKR 2,500.00. The bank approver can now confirm Paid.', 'amount': 2500, 'usd_rate': None, 'fx_diff': 0, 'total_debit': 2500, 'charge_warning': None}, {'status': 200, 'message': \"Paid. Payment Voucher No. 610 is locked: LKR 2,500.00; no bank charges; total debited 2,500.00; ledger reconciled: credits to 1-6-8-10380 = LKR "
+ },
+ {
+  "test": 11,
+  "name": "Gimanhala's own advice sent \u2014 separate from the hotels'",
+  "ok": true,
+  "detail": "(None, 'Sent to gimanhala-test@example.invalid. The supplier is now marked Notified.')"
+ },
+ {
+  "test": 29,
+  "name": "Cassamara requested on both tours ($60 each at 325.00)",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Payment Request saved successfully'}, {'status': 200, 'message': 'Payment Request saved successfully'})"
+ },
+ {
+  "test": 29,
+  "name": "both approved \u2192 Supplier Payables shows Cassamara with 2 payments on 2 tours ($120, provisional 39,000.00 at 325.00)",
+  "ok": true,
+  "detail": "(2, 2, 120, 39000)"
+ },
+ {
+  "test": 34,
+  "name": "Pay Individually Now takes exactly one payment (two refused)",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Pay Individually Now takes exactly one approved payment (it creates a single-item batch).'}"
+ },
+ {
+  "test": 29,
+  "name": "one batch, one voucher for both tours: LKR 39,000.00, two v_inv lines (one per tour), each request tied to its line",
+  "ok": true,
+  "detail": "({'status': 200, 'message': \"Batch SB-00005 created \u2014 Payment Voucher No. 611 for Cassamara Hotel (2 payment(s), 2 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 611, 'payment_voucher_no': 611, 'batch_id': 5, 'batch_no': 'SB-00005', 'individual': False}, '2325:19500.00,2390:19500.00')"
+ },
+ {
+  "test": 29,
+  "name": "each tour's dashboard shows its own share (LKR 19,500.00) of the batch voucher, not the whole voucher",
+  "ok": true,
+  "detail": "(19500, 19500)"
+ },
+ {
+  "test": 29,
+  "name": "initiated and Paid at 329.10: voucher LKR 39,492.00, loss +492.00, charges 300, total debit 39,792.00",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. USD 120.00 \u00d7 329.10 (2026-10-11) = LKR 39,492.00; exchange-rate difference against the approval figures +492.00. Bank charges LKR 300.00 (total debit 39,792.00). The bank approver can now confirm Paid.', 'amount': 39492, 'usd_rate': 329.1, 'fx_diff': 492, 'total_debit': 39792, 'charge_warning': None}, {'status': 200, 'me"
+ },
+ {
+  "test": 29,
+  "name": "the difference is allocated per tour: +246.00 to AH 2218 and +246.00 to AH 2290 (each $60 \u00d7 (329.10 \u2212 325.00)); each v_inv line re-rated to 19,746.00; the ledger posted per tour",
+  "ok": true,
+  "detail": "('2325:19746.00:246.00,2390:19746.00:246.00', '2325:19746.00,2390:19746.00')"
+ },
+ {
+  "test": 38,
+  "name": "bulk batch: the exchange difference posted as one balanced pair PER TOUR LINE \u2014 +246.00 to AH 2218 (2325) and +246.00 to AH 2290 (2390), Dr loss account / Cr Cassamara each; Dr = Cr",
+  "ok": true,
+  "detail": "2325:4-8-109-31902:246.00:0.00;2325:6-9-11-11047:0.00:246.00;2390:4-8-109-31902:246.00:0.00;2390:6-9-11-11047:0.00:246.00"
+ },
+ {
+  "test": 44,
+  "name": "MULTI-TOUR allocation: charges 300.00 on the two-tour batch split pro rata to the final LKR (19,746.00 / 19,746.00) \u2192 150.00 to AH 2218 and 150.00 to AH 2290, one balanced pair per tour (Dr Bank Charges / Cr Com Bank), each carrying its tour; each request record carries its share",
+  "ok": true,
+  "detail": "('2325:4-8-109-31903:150.00:0.00;2325:1-6-8-10380:0.00:150.00;2390:4-8-109-31903:150.00:0.00;2390:1-6-8-10380:0.00:150.00', '2325:150.00,2390:150.00')"
+ },
+ {
+  "test": 44,
+  "name": "reconciled: credits to Com Bank = 39,492.00 (two payment lines) + 300.00 (two charge lines) = 39,792.00 = the bank debit; charges recorded once (Dr Bank Charges 300.00); the two exchange-loss pairs balanced",
+  "ok": true,
+  "detail": "({'final_lkr': 39492, 'charges': 300, 'total_debit': 39792, 'bank_credit': 39792, 'payment_credit': 39492, 'charge_credit': 300, 'charge_debit': 300, 'dr': 40284, 'cr': 40284}, [])"
+ },
+ {
+  "test": 44,
+  "name": "each tour's payment record shows ITS share: dashboard AH 2218 \u2014 charges share 150.00, debited for this tour 19,896.00; AH 2290 the same; the batch page lists the share per line",
+  "ok": true,
+  "detail": "(150, 150, 19896)"
+ },
+ {
+  "test": 29,
+  "name": "both tours Fully Paid with their own final LKR 19,746.00; one advice for the supplier covering both invoices",
+  "ok": true,
+  "detail": "(19746, 19746)"
+ },
+ {
+  "test": 29,
+  "name": "the advice names Cassamara, both tours and both invoices, the final LKR 39,492.00 at 329.10",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 29,
+  "name": "the voucher document lists both tours with approval figures and final figures and the difference per tour",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 44,
+  "name": "the voucher document shows the charges share per tour (150.00 \u00b7 150.00), the charges and total debited, and \"reconciled\"",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 13,
+  "name": "two activity lines for the bulk supplier, one shared request expected (LKR 8,000 + 6,000)",
+  "ok": true,
+  "detail": "[('Minneriya safari jeep', {'lines': 2, 'total': 14000}), ('Kaudulla safari jeep (second park)', {'lines': 2, 'total': 14000})]"
+ },
+ {
+  "test": 13,
+  "name": "one request for the supplier covering both charges (LKR 14,000)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment Request saved successfully'}"
+ },
+ {
+  "test": 16,
+  "name": "the second charge cannot be requested separately while the supplier's request is in flight (409)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'A payment request has already been made for this item.'}"
+ },
+ {
+  "test": 13,
+  "name": "the request is shown on both lines, shared out 8,000 / 6,000 (no double counting)",
+  "ok": true,
+  "detail": "[(8000, 3156), (6000, 3156)]"
+ },
+ {
+  "test": 13,
+  "name": "approved: a bulk supplier's status 6 is kept; no voucher; waits in Supplier Payables",
+  "ok": true,
+  "detail": "({'status': 200, 'message': \"Approved for payment. It now waits under Fright Less Jeep Safari Minneriya  in Supplier Payables until management creates the supplier's payment batch.\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': None, 'approval_lkr': '14000.00'}, '6')"
+ },
+ {
+  "test": 13,
+  "name": "batched: one voucher LKR 14,000; both lines show the same voucher, Payment Voucher Issued",
+  "ok": true,
+  "detail": "[('voucher_issued', 612), ('voucher_issued', 612)]"
+ },
+ {
+  "test": 13,
+  "name": "paid once \u2192 both lines Fully Paid (8,000 + 6,000 = 14,000); one advice for the supplier",
+  "ok": true,
+  "detail": "[('paid', 6000), ('paid', 8000)]"
+ },
+ {
+  "test": 13,
+  "name": "the advice carries the supplier and both invoice numbers",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 5,
+  "name": "the voucher lists both supplier invoices as supporting documents",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 15,
+  "name": "the approver (special-rate privilege) sees the tactical rate available on the Radisson night; the requester does not see the special rate",
+  "ok": true,
+  "detail": "([{'level': 'danger', 'code': 'rate_check', 'text': 'No published rate \u2014 special rate available. No ad hoc or special rate found and no contract rate for this night \u2014 the quoted rate is used. Check the rate before payment.'}, {'level': 'info', 'code': 'special_rate', 'text': 'Special rate available \u2014 published rate used until an authorised user decides'}], True)"
+ },
+ {
+  "test": 15,
+  "name": "quoted $130 (no published rate on file for this room) vs tactical $125 on offer",
+  "ok": true,
+  "detail": "[{'plan_id': 325, 'kind': 'tactical', 'name': 'Winter & Summer 2026/2027 Tactical Rates \u2013 Tier 2 (book 01 Sep \u2013 31 Oct 2026)', 'rate_code': 'Tier 2', 'book_to': '2026-10-31', 'nights_fit': 1, 'nights_listed': 1, 'why': None, 'total_if_used': 125, 'saving': None, 'used': False}]"
+ },
+ {
+  "test": 15,
+  "name": "the requester's request is HELD for the rate review (not requested, no accounting entry) \u2014 the special rate stays hidden from quotation staff",
+  "ok": true,
+  "detail": "{'status': 200, 'held': True, 'hold_id': 1, 'message': 'Sent to the System Administrator for rate review. It goes on to Payment approval once the rate is confirmed.'}"
+ },
+ {
+  "test": 15,
+  "name": "dashboard: On Hold, \"Review & release\" offered to the approver",
+  "ok": true,
+  "detail": "('on_hold', {'request': False, 'request_balance': False, 'approve': False, 'reject': False, 'issue_voucher': False, 'initiate': False, 'paid': False, 'remit': False, 'cancel_request': False, 'invoice': True, 'document': True, 'review_rate': True, 'voucher_view': False, 'confirm_bank': False, 'batch_id': None, 'batch_no': None, 'payables': True})"
+ },
+ {
+  "test": 15,
+  "name": "the approver chooses the TACTICAL rate and releases: the request is made at the tactical amount",
+  "ok": true,
+  "detail": "{'status': 200, 'payment_request_id': 3157, 'message': 'Released to Payment approval: $ 125.00 requested for Radisson Blu Resort (prepared by tcpayreq).'}"
+ },
+ {
+  "test": 15,
+  "name": "request at the tactical amount $125 (quoted $130); the decision and who made it in the audit record",
+  "ok": true,
+  "detail": "[('rate_released', 'tcpayappr'), ('rate_selected', 'tcpayappr'), ('rate_held', 'tcpayreq'), ('rate_available', 'tcadmin')]"
+ },
+ {
+  "test": 15,
+  "name": "approved at the tactical amount \u2192 waits in Supplier Payables with its approval figures ($125 \u00d7 329.10)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under Radisson Blu Resort in Supplier Payables until management creates the supplier's payment batch \u2014 provisional LKR 41,137.50 at 329.10 (the final LKR follows the rate of the actual payment date).\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': '329.1000', 'approval_lkr': '41137.50'}"
+ },
+ {
+  "test": 18,
+  "name": "driver advance requested from the driver's own advance request (LKR 20,000)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment Request saved successfully'}"
+ },
+ {
+  "test": 18,
+  "name": "approved \u2192 waits under the driver in Supplier Payables (no bank-verification gate for a driver)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under MR. UDAYA KUMARA in Supplier Payables until management creates the supplier's payment batch.\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': None, 'approval_lkr': '20000.00'}"
+ },
+ {
+  "test": 33,
+  "name": "DRIVER ADVANCE uses Pay Individually Now: a single-item batch at once (reason \"Driver advance\" recorded), advance voucher (advances_pay 1), LKR 20,000, in the accountant's queue",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Paid individually (Driver advance): batch SB-00007 created \u2014 Payment Voucher No. 613 for MR. UDAYA KUMARA  (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 613, 'payment_voucher_no': 613, 'batch_id': 7, 'batch_no': 'SB-00007', 'individual': T"
+ },
+ {
+  "test": 33,
+  "name": "the dashboard shows the driver advance as paid individually with its reason",
+  "ok": true,
+  "detail": "{'id': 7, 'no': 'SB-00007', 'status': 'issued', 'items': 1, 'tours': 1, 'supplier': 'MR. UDAYA KUMARA ', 'individual': True, 'bypass_label': 'Driver advance'}"
+ },
+ {
+  "test": 43,
+  "name": "driver advance (LKR) with charges 75 recorded at initiation: Paid blocked while the Bank Charges mapping is missing (409); nothing written",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Final Paid is blocked: the bank charged LKR 75.00 and there is no account to post it to. Bank-charge ledger mapping incomplete: no Bank Charges account mapped. Final Paid of a payment with bank charges is blocked until the System Administrator or the Accounts manager maps the account (Tour Payment Dashboard \u2192 Settings \u2192 Ledger mapping). A payment the bank charged nothin"
+ },
+ {
+  "test": 42,
+  "name": "driver advance paid with charges 75.00 taken from the initiation: posted once (Dr Bank Charges / Cr Com Bank, the driver's tour); reconciled \u2014 20,000.00 + 75.00 = 20,075.00 = the bank debit",
+  "ok": true,
+  "detail": "(\"Paid. Payment Voucher No. 613 is locked: LKR 20,000.00; bank charges 75.00 posted to 4-8-109-31903 TEST Bank Charges (1 tour line(s)); total debited 20,075.00; ledger reconciled: credits to 1-6-8-10380 = LKR 20,075.00 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepare and send it when ready.\", '2325:4-8-109-31903:75.00:0.00;2"
+ },
+ {
+  "test": 18,
+  "name": "driver advance paid; line Fully Paid; settlement line stays for the log sheet",
+  "ok": true,
+  "detail": "('paid', 'Advance Paid')"
+ },
+ {
+  "test": 19,
+  "name": "expense added (restaurant, LKR 3,200) and placed on its day",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Expense added.', 'id': 1}"
+ },
+ {
+  "test": 12,
+  "name": "the same expense is not added twice (409)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'That expense is already on the tour (#1).'}"
+ },
+ {
+  "test": 19,
+  "name": "expense line on Day 4 with the invoice number, Payment Not Requested",
+  "ok": true,
+  "detail": "(4, 'GIM-0915', 'not_requested')"
+ },
+ {
+  "test": 19,
+  "name": "expense requested into the chain (type service fee)",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Payment requested \u2014 it now waits for management approval.', 'pr_id': 3159}, 'awaiting')"
+ },
+ {
+  "test": 21,
+  "name": "rejected with a reason \u2192 line Rejected, can be requested again",
+  "ok": true,
+  "detail": "('rejected', True)"
+ },
+ {
+  "test": 21,
+  "name": "re-requested then cancelled by the requester with a reason: line back to Not Requested, both attempts kept in its history",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Request cancelled.'}, 'not_requested', ['rejected', 'cancelled'])"
+ },
+ {
+  "test": 16,
+  "name": "loading the dashboard twice gives the same lines \u2014 nothing duplicated",
+  "ok": true,
+  "detail": "12"
+ },
+ {
+  "test": 16,
+  "name": "a new itinerary item appears as one new unpaid line; the paid lines are unchanged",
+  "ok": true,
+  "detail": "13"
+ },
+ {
+  "test": 17,
+  "name": "the paid COVENRO night removed from the itinerary: its payment stays, flagged \"no longer on the itinerary\", Requires Checking filter",
+  "ok": true,
+  "detail": "[('paid', 17998.75, ['removed'])]"
+ },
+ {
+  "test": 17,
+  "name": "nothing in the chain was altered by the removal (voucher, lock, advice intact)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 17,
+  "name": "Kassapa's second night removed after payment: warning \"requested $140 but the itinerary now prices $70\"; the two paid vouchers untouched",
+  "ok": true,
+  "detail": "(['amount_changed'], 70, 45787)"
+ },
+ {
+  "test": 20,
+  "name": "voucher: the rows that existed before are byte-for-byte the same (605 rows)",
+  "ok": true,
+  "detail": "('605\\t640\\t380a1e171017d114d1538fece816d113', '605\\t380a1e171017d114d1538fece816d113')"
+ },
+ {
+  "test": 20,
+  "name": "v_inv: the rows that existed before are byte-for-byte the same (609 rows)",
+  "ok": true,
+  "detail": "('609\\t658\\t02247432e0d6ac75a1cae147e0baff27', '609\\t02247432e0d6ac75a1cae147e0baff27')"
+ },
+ {
+  "test": 20,
+  "name": "payment_request: the rows that existed before are byte-for-byte the same (0 rows)",
+  "ok": true,
+  "detail": "('0\\t0\\tNULL', '0\\tNULL')"
+ },
+ {
+  "test": 20,
+  "name": "account_runing: the rows that existed before are byte-for-byte the same (2392 rows)",
+  "ok": true,
+  "detail": "('2392\\t1356\\t9e913abd3c36e9534beac35c38ee10b5', '2392\\t9e913abd3c36e9534beac35c38ee10b5')"
+ },
+ {
+  "test": 20,
+  "name": "the dashboard still shows the 2024 vouchers of other tours untouched (voucher 605 Heritance Kandalama, unpaid)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 30,
+  "name": "the approval figures of every payment recorded before the first Paid are byte-for-byte the same after four payments at three different rates",
+  "ok": true,
+  "detail": "see the request records"
+ },
+ {
+  "test": 30,
+  "name": "the exchange-rate differences are recorded separately, per payment: 0.00 \u00b7 +129.50 \u00b7 \u2212287.00 \u00b7 +246.00 \u00b7 +246.00 \u2014 and the ledger carries the final LKR of each voucher",
+  "ok": true,
+  "detail": "0.00,129.50,-287.00,246.00,246.00"
+ },
+ {
+  "test": 30,
+  "name": "every foreign-currency Paid posted its difference (four USD vouchers: COVENRO nothing to post, Kassapa loss, Kassapa gain, Cassamara two tours) \u2014 4 balanced pairs in the ledger, Dr = Cr",
+  "ok": true,
+  "detail": "('4', '4')"
+ },
+ {
+  "test": 21,
+  "name": "every action kind recorded: rate_confirmed, request_made, approved, batch_created, accumulation_bypassed, voucher_issued, bank_initiated, account_confirmed, bank_account_changed, paid, fx_posted, fx_mapping_saved, remittance_prepared, remittance_sent, rejected, request_cancelled, expense_added, bank_account_saved, supplier_bank_saved, supplier_bank_verified, supplier_bank_confirmed",
+  "ok": true,
+  "detail": "{'rate_confirmed': 4, 'request_made': 8, 'approved': 16, 'batch_created': 7, 'accumulation_bypassed': 2, 'voucher_issued': 7, 'bank_initiated': 7, 'account_confirmed': 12, 'bank_account_changed': 2, 'paid': 7, 'fx_posted': 4, 'fx_mapping_saved': 1, 'remittance_prepared': 2, 'remittance_sent': 2, 'rejected': 2, 'request_cancelled': 1, 'expense_added': 1, 'bank_account_saved': 3, 'supplier_bank_save"
+ },
+ {
+  "test": 21,
+  "name": "a Paid entry carries user, exact time (ms), the final rate, bank account and reference",
+  "ok": true,
+  "detail": "tcbankappr|2026-10-11 05:16:05.723|paid|329.1000|Sampath LKR account|CB-TRF-000112"
+ },
+ {
+  "test": 21,
+  "name": "the approval entry keeps the approval rate and provisional LKR; the Paid entry keeps the provisional LKR beside the final",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 21,
+  "name": "the audit table has no update/delete endpoint; the rate changes kept previous and new values",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 21,
+  "name": "the dashboard shows the complete history and the audit record to the requester",
+  "ok": true,
+  "detail": "(50, 90)"
+ },
+ {
+  "test": 39,
+  "name": "the same official Payment Voucher No. 611 appears in: Tour Payment Dashboard (AH 2218), Tour Payment Dashboard (AH 2290), Supplier Payables (batches), Supplier batch page, Payment voucher PDF / page, Accountant's payment page / bank approval record (the lock), Remittance advice, Supplier e-mail (subject and body), Complete Tour Record, Audit history",
+  "ok": true,
+  "detail": "{}"
+ },
+ {
+  "test": 39,
+  "name": "a consolidated supplier batch has ONE official voucher number while both supplier invoices stay listed separately on the voucher and the advice",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 39,
+  "name": "one number per voucher, never reused: every voucher in the table has a distinct Vnum (unique index in place)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 40,
+  "name": "DUPLICATION refused: inserting a second voucher with the same Payment Voucher No. fails at the database (unique index)",
+  "ok": true,
+  "detail": "--------------\nINSERT INTO voucher SELECT * FROM tv\n--------------\n\nERROR 1062 (23000) at line 1: Duplicate entry '611' for key 'uq_tpd_voucher_vnum'\n"
+ },
+ {
+  "test": 40,
+  "name": "EDITING refused: changing an issued Payment Voucher No. fails at the database (update guard); the number is unchanged",
+  "ok": true,
+  "detail": "--------------\nUPDATE voucher SET Vnum=999999 WHERE Vnum=611\n--------------\n\nERROR 1644 (45000) at line 1: Payment Voucher No. (Vnum) cannot be changed once iss"
+ },
+ {
+  "test": 40,
+  "name": "the desk never re-issues: batching an already-vouchered payment again is refused",
+  "ok": true,
+  "detail": "{'status': 400, 'message': 'Request #3154 (AH 2218) already has a voucher or is in another batch.'}"
+ },
+ {
+  "test": 40,
+  "name": "the guard touches only the number: other voucher columns still update as before",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 44,
+  "name": "the AH 2218 extra dinner (LKR 3,200, cancelled earlier) is requested again",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment requested \u2014 it now waits for management approval.', 'pr_id': 3161}"
+ },
+ {
+  "test": 44,
+  "name": "a Gimanhala expense on AH 2290 (LKR 1,800) added and requested",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Expense added.', 'id': 2}, {'status': 200, 'message': 'Payment requested \u2014 it now waits for management approval.', 'pr_id': 3162})"
+ },
+ {
+  "test": 44,
+  "name": "both approved \u2192 Gimanhala waits with 2 payments on 2 tours (LKR 5,000)",
+  "ok": true,
+  "detail": "(2, 2, 5000)"
+ },
+ {
+  "test": 44,
+  "name": "the page previews the allocation before Paid: 75.55 pro rata to 3,200 / 1,800 \u2192 48.35 to AH 2218 and 27.20 to AH 2290 (to the cent, adding up exactly)",
+  "ok": true,
+  "detail": "('Bank payment initiated \u2014 awaiting bank approval. LKR 5,000.00. Bank charges LKR 75.55 (total debit 5,075.55). The bank approver can now confirm Paid.', [{'pr_id': 3161, 'tour_id': '2325', 'manual_id': 'AH 2218', 'basis': 3200, 'share': 48.35}, {'pr_id': 3162, 'tour_id': '2390', 'manual_id': 'AH 2290', 'basis': 1800, 'share': 27.2}])"
+ },
+ {
+  "test": 44,
+  "name": "Paid: the charges posted as two balanced pairs \u2014 48.35 on AH 2218 (2325) and 27.20 on AH 2290 (2390), Dr Bank Charges / Cr Com Bank; sum 75.55; recorded once",
+  "ok": true,
+  "detail": "(\"Paid. Payment Voucher No. 614 is locked: LKR 5,000.00; bank charges 75.55 posted to 4-8-109-31903 TEST Bank Charges (2 tour line(s)); total debited 5,075.55; ledger reconciled: credits to 1-6-8-10380 = LKR 5,075.55 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepare and send it when ready.\", '2325:4-8-109-31903:48.35:0.00;2325"
+ },
+ {
+  "test": 44,
+  "name": "reconciled: 3,200.00 + 1,800.00 (payment lines) + 48.35 + 27.20 (charge lines) = 5,075.55 credited to Com Bank = the bank debit",
+  "ok": true,
+  "detail": "{'final_lkr': 5000, 'charges': 75.55, 'total_debit': 5075.55, 'bank_credit': 5075.55, 'payment_credit': 5000, 'charge_credit': 75.55, 'charge_debit': 75.55, 'dr': 5075.55, 'cr': 5075.55}"
+ },
+ {
+  "test": 44,
+  "name": "each tour's payment record shows its own share: AH 2218 \u2014 48.35 (debited for this tour 3,248.35); AH 2290 \u2014 27.20 (1,827.20)",
+  "ok": true,
+  "detail": "(48.35, 3248.35, 27.2, 1827.2)"
+ },
+ {
+  "test": 44,
+  "name": "the Complete Tour Record of AH 2218 shows the bank-charge share column: 150.00 (Cassamara batch) and 48.35 (Gimanhala batch), each marked posted",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 44,
+  "name": "the allocation rule (largest remainder, to the cent) on the awkward cases: 100.01 \u2192 50.01/50.00; 100 over three \u2192 33.34/33.33/33.33; 0.01 \u2192 0.01/0.00; no basis \u2192 equal 18.34/18.33/18.33; 75.55 \u2192 48.35/27.20; one line takes all; 0 \u2192 zeros \u2014 every sum exact",
+  "ok": true,
+  "detail": "100.01 over 19746/19746 => {\"a\":50.01,\"b\":50} sum=100.01\n100 over three equal => {\"a\":33.34,\"b\":33.33,\"c\":33.33} sum=100.00\n0.01 over two => {\"a\":0.01,\"b\":0} sum=0.01\n55 with no basis (equal split) => {\"a\":18.34,\"b\":18.33,\"c\":18.33} sum=55.00\n75.55 over 3200/1800 => {\"a\":48.35,\"b\":27.2} sum=75.55\n1 line => {\"a\":99.99} sum=99.99\n0 charges => {\"a\":0,\"b\":0} sum=0.00\n"
+ },
+ {
+  "test": 45,
+  "name": "the voucher-number counter (invoice_no.V_Num) is in step with the table: counter 614 = MAX(Vnum) 614",
+  "ok": true,
+  "detail": "(614, 614)"
+ },
+ {
+  "test": 45,
+  "name": "with the counter one behind, the next voucher would REUSE an issued number: the database refuses it (unique index) \u2014 no voucher row, no batch, the request still waiting, the ledger untouched",
+  "ok": true,
+  "detail": "(409, 'The voucher could not be issued: the voucher-number counter (invoice_no.V_Num = 613) is behind the voucher table (last Payment Voucher No. 614), so the next num')"
+ },
+ {
+  "test": 45,
+  "name": "with the counter corrected the batch issues the next number 615 cleanly; every Vnum still distinct",
+  "ok": true,
+  "detail": "Batch SB-00009 created \u2014 Payment Voucher No. 615 for Radisson Blu Resort (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation."
+ },
+ {
+  "test": 46,
+  "name": "two Paid submissions for the same voucher at the same instant (two servers, two sessions): exactly ONE succeeds (200) and one is refused (409) \u2014 one lock, the payment posted once, the charges posted once, reconciled",
+  "ok": true,
+  "detail": "([200, 409], ['Paid. Payment Voucher No. 615 is locked: USD 125.00 \u00d7 329.10 (2026-10-11) = LKR 41,137.50; bank char', 'Voucher 615 is already Paid; a payment is never marked twice.'])"
+ },
+ {
+  "test": 46,
+  "name": "a third and a fourth submission later (one with different charges) are refused; the lock keeps charges 125.00; one set of postings",
+  "ok": true,
+  "detail": "(409, 409)"
+ },
+ {
+  "test": 46,
+  "name": "the legacy Mark Finalized on an already-paid desk voucher is refused too (403); nothing changes",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 30,
+  "name": "all bank charges in the ledger balance: \u03a3 Dr Bank Charges = \u03a3 Cr paying accounts; every charge pair Dr = Cr; every Paid lock reconciled",
+  "ok": true,
+  "detail": "('925.55', '925.55')"
+ }
+]

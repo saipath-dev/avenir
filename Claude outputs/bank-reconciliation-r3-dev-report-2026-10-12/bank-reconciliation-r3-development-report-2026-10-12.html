@@ -1,0 +1,356 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bank Reconciliation r3 – development report</title><style>body{font-family:Segoe UI,Arial,sans-serif;max-width:1180px;margin:24px auto;padding:0 16px;color:#1f2937;line-height:1.45;background:#fff}
+h1{font-size:24px;color:#4a1d6b}h2{font-size:19px;color:#4a1d6b;margin-top:32px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}h3{font-size:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}th,td{border:1px solid #d1d5db;padding:6px 8px;vertical-align:top;text-align:left}th{background:#f3f4f6}
+code{background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:12.5px}
+img{max-width:100%;border:1px solid #d1d5db;border-radius:4px;margin:6px 0 18px}
+hr{border:0;border-top:1px solid #e5e7eb;margin:24px 0}</style></head><body><h1>Bank Reconciliation r3 — development stage report (12 Oct 2026)</h1>
+<p><strong>Summary.</strong> I installed r3 and the sign-out fix on <strong>development only</strong> and checked them there. <strong>Live was not touched.</strong></p>
+<ul>
+<li>No real bank account, mapping, first day, statement or accounting entry was created, changed or deleted.</li>
+<li>The ledger is unchanged.</li>
+<li>The mappings, the first days and the two old tools are waiting for your approval.</li>
+<li><strong>I have stopped here.</strong></li>
+</ul>
+<p>Times are Sri Lanka time.</p>
+<hr />
+<h2>1. Exactly what I changed (development, <code>C:\wamp64\www\avenir</code>, database <code>avenir</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Daily Bank Reconciliation r1 → r3</strong> (kit <code>tf-bankrec-r3-dev</code>)</td>
+<td><strong>13 files replaced, 1 added:</strong><br>• <code>Routes.php</code><br>• <code>DailyBankRecController</code><br>• <code>BankReconsillationController</code> (the old-screen guard)<br>• the BankRec libraries <code>Corrections</code>, <code>Matching</code>, <code>Rec</code>, <code>Schema</code>, <code>Statements</code>, and <code>LegacyGuard</code> (new)<br>• the old screen's view <code>bank_reconcillation.php</code> (it now shows the refusal reasons)<br>• the views <code>_common</code>, <code>account</code>, <code>fx</code>, <code>index</code><br>These are the same files, byte for byte, that passed on the isolated instance.</td>
+</tr>
+<tr>
+<td><strong>Database schema v1 → v2</strong></td>
+<td>Guarded script: it runs only on database <code>avenir</code> at version 1.<br>• 2 new tables: <code>brc_claim</code>, <code>brc_mark_event</code><br>• new columns and keys on the reconciliation tables (<code>brc_…</code>), which are all empty<br>• <code>brc_schema_version</code> 1 → 2<br>No other table was altered.</td>
+</tr>
+<tr>
+<td><strong>Sign-out fix</strong> (kit <code>tf-session-r1b</code>)</td>
+<td><code>LoginController</code>, <code>UserSessionFilter</code>, <code>plugins.js</code>, <code>layouts/scripts.php</code></td>
+</tr>
+<tr>
+<td><strong>Version mark (cache-busting)</strong></td>
+<td>Pages now load <code>plugins.js?v=&lt;the file's modification time&gt;</code> (currently 1791793440), so a changed <code>plugins.js</code> loads at once, without Ctrl+F5.<br><strong>Limit:</strong> the mark covers <code>plugins.js</code> only. Other shared scripts (e.g. <code>app.js</code>) have no mark yet. Adding it to them is a small change to <code>scripts.php</code>, for your approval.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not changed:</strong></p>
+<ul>
+<li>No mapping, first day, bank account, login, role or privilege was created or changed. Until mappings are confirmed, the guard protects nothing.</li>
+<li>Test scripts were served for a while from the local-only helper folder. They have been moved back out, and the folder holds only its 3 original files.</li>
+</ul>
+<h2>2. Backups and rollback</h2>
+<table>
+<thead>
+<tr>
+<th>Backup</th>
+<th>Where</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Files</strong></td>
+<td><code>C:\wamp64\www\avenir-backup-20261012-before-r3\</code> (<code>app\</code> + <code>public\</code>, md5 list of 2,481 files)</td>
+<td>Kept</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Full copy <code>avenir_backup_20261012_before_r3</code> (239 tables, checksums equal to development at copy time, sessions aside)</td>
+<td>Kept</td>
+</tr>
+<tr>
+<td><strong>Replaced files</strong></td>
+<td><code>tf-bankrec-r3-dev\before\20261012-083346\</code>, <code>tf-session-r1b\before\20261012-083352\</code></td>
+<td>Kept</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rollback was tested on development:</strong></p>
+<ul>
+<li>Both kits were rolled back, plus the schema script v2 → v1.</li>
+<li>The files were then md5-identical to the backup.</li>
+<li>The database was identical to the backup, apart from logs, sessions, audit rows and the automatic hotel scan.</li>
+<li>Then I installed both kits again.</li>
+</ul>
+<p><strong>Rolling back takes 3 steps:</strong></p>
+<ol>
+<li><code>apply.py rollback</code> for each kit.</li>
+<li>The rollback SQL in phpMyAdmin.</li>
+<li>Check the result as described in each kit's README.</li>
+</ol>
+<h2>3. Test results</h2>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>What</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Development</strong></td>
+<td>Checks that need no reconciliation data:<br>• who may see the pages and data (preparer, reviewer, view-only; four other departments refused)<br>• every action refused by role before anything is written<br>• a request without the security token refused<br>• the r3 routes are in place<br>• the old screen opens and carries the r3 messages<br>• the version mark<br>Run after the first install, and again after rollback and re-install.</td>
+<td><strong>18/18, 18/18</strong></td>
+</tr>
+<tr>
+<td><strong>Development</strong></td>
+<td>Sign-out fix, TEST login:<br>• a background request without a session gets a quiet 401, with no redirect<br>• a page request without a session goes to the sign-in page<br>• the sign-in page keeps a valid session<br>• after sign-out, requests are refused quietly</td>
+<td><strong>5/5</strong></td>
+</tr>
+<tr>
+<td>Development</td>
+<td><strong>Concurrency</strong> (two users at the same moment)</td>
+<td><strong>Not run.</strong> It needs reconciliation records; development has none, and dummy data is not allowed there (D11).</td>
+</tr>
+<tr>
+<td>Development</td>
+<td>The red "session ended" notice</td>
+<td><strong>Not run here.</strong> The browser pane blocks the page's scripts on 127.0.0.1, and the localhost tab holds your own session. It passed on the isolated instance and in the cloud.</td>
+</tr>
+<tr>
+<td>Isolated instance (same code)</td>
+<td>r3 verification earlier today</td>
+<td>38/38 browser, 16/16 database, races 2/2</td>
+</tr>
+<tr>
+<td>Cloud copy (identical code)</td>
+<td>• regression 202 / 71 / 36 / 33 / 26 / 10<br>• r2 suite 108/108, r2 screens 20/20<br>• r3 suite 132/132 (includes true parallel races)<br>• r3 screens 24/24<br>• sign-out fix 18/18<br>• version mark 4/4</td>
+<td><strong>All pass</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Offer:</em> I can run the concurrency tests on development with temporary TEST records and remove them afterwards. I will do this only if you approve.</p>
+<h2>4. Ledger and data integrity</h2>
+<p>At 14:14 I compared every table of development with the copy taken before the install.</p>
+<ul>
+<li><strong>Ledger <code>account_runing</code>: unchanged.</strong> 11,364 rows; Dr 965,763,907.13; Cr 965,314,763.93; the reconciliation flags are unchanged. The table checksum is identical.</li>
+<li><strong>The old screen's statement table <code>account_runing_bank_statetment</code>: unchanged.</strong></li>
+<li><strong>The reconciliation tables (<code>brc_…</code>):</strong> empty before and after.</li>
+<li><strong>230 tables are identical.</strong> 2 tables are new (the schema).</li>
+<li><strong>9 tables differ, all for expected reasons:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Why it differs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tpd_meta</code></td>
+<td>Schema version 1 → 2</td>
+</tr>
+<tr>
+<td><code>tpd_audit</code></td>
+<td>3 install / rollback / re-install rows, plus refusals recorded for the TEST logins</td>
+</tr>
+<tr>
+<td><code>a_log</code>, <code>user_sessions</code>, <code>ci_sessions</code></td>
+<td>Page visits and sign-ins of the TEST logins, and session records</td>
+</tr>
+<tr>
+<td><code>hr2_meta</code>, <code>hr2_work_item</code></td>
+<td>The system's automatic hotel work-item scan</td>
+</tr>
+<tr>
+<td><code>tf_activity</code>, <code>tf_intake</code></td>
+<td>One edit of inquiry 21 by "super admin" at 13:56 — your own work, not mine</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Account mappings and first days — for your approval (nothing applied)</h2>
+<p><strong>Before any mapping, the bank accounts must be entered (D4).</strong></p>
+<ul>
+<li>The bank-account master on development is <strong>empty</strong>.</li>
+<li>Accounts must enter the real accounts (bank, branch, account number). I do not enter account numbers.</li>
+<li>Each account is then mapped to its ledger account and given a first day.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Ledger account (as named in the system)</th>
+<th>Activity on development</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Com Bank LKR Account <code>1-6-8-10380</code></td>
+<td>1,844 rows, 27 Jan – Sep 2026 (192 in Sep)</td>
+<td><strong>Map. First day 1 Oct 2026</strong></td>
+</tr>
+<tr>
+<td>Com Bank USD Account <code>1-6-8-10898</code></td>
+<td>23 rows, Apr – Sep 2026</td>
+<td><strong>Map. 1 Oct 2026.</strong> LKR equivalents need D6</td>
+</tr>
+<tr>
+<td>Pan Asia Bank LKR Account <code>1-6-8-10998</code></td>
+<td>32 rows, 9 Apr – 25 Aug 2026</td>
+<td><strong>Map. 1 Oct 2026</strong></td>
+</tr>
+<tr>
+<td>Pan Asia Bank USD <code>1-6-8-10999</code>, YEN <code>1-6-8-11000</code></td>
+<td>No rows</td>
+<td><strong>Wait until they are used.</strong> YEN also needs a rate source (D6)</td>
+</tr>
+<tr>
+<td>Bank Control <code>1-6-8-9750</code>, Deposits in Transit <code>1-6-112-10782</code>, Advance deposit <code>1-6-112-11024</code></td>
+<td>—</td>
+<td><strong>Do not map.</strong> These are not bank accounts with statements; Deposits in Transit is the old screen's unrealised account.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>First day.</strong> 1 Oct 2026 works for an account only if all three of these hold:</p>
+<ul>
+<li>September is final in the ledger for that account;</li>
+<li>the bank's closing balance on 30 Sep is available;</li>
+<li>the opening difference is understood (E7).</li>
+</ul>
+<p>Dates before the first day stay on the old screen. If these conditions are not met, use <strong>1 Nov 2026</strong>. 1 Sep 2026 is also possible, if you want September's difference worked through in the new workflow.</p>
+<p><strong>Rows for Accounts to check.</strong> I left them unchanged. Inside a protected period they would appear as warnings.</p>
+<ul>
+<li><code>1-6-8-10380</code>:<ul>
+<li>rows dated 24 Oct and 13 Nov 2026 (after today);</li>
+<li>one row dated 1 Jan 2030 that carries old-screen flags;</li>
+<li>two rows dated 16 Apr 2525.</li>
+</ul>
+</li>
+<li><code>1-6-8-10898</code>: one row dated 24 Oct 2026.</li>
+<li>Bank Control: rows dated 20 Mar 2029 and 1 Jan 2030.</li>
+</ul>
+<p><strong>Development is a copy and may differ from live.</strong> These figures need a read-only recheck on live before you decide.</p>
+<h2>6. The two old tools that are not guarded (nothing changed)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>A. Settings → Manual Update → "Bank Not Reconciliation Record Insert"</strong></th>
+<th><strong>B. Accounts → "Bank Req Data Transfer"</strong> (<code>accounts/bank_unrealised_value</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What it does</strong></td>
+<td>Copies <strong>286 fixed ledger rows</strong> (chosen by row ID) from the 2024 database into the current ledger, under new IDs</td>
+<td>For one chosen bank account: copies its unreconciled FY 2024/25 entries from the 2024 ledger table into the ledger, and <strong>subtracts them from the "Brought Forward Balance 2025-03-31" rows</strong></td>
+</tr>
+<tr>
+<td><strong>Risk</strong></td>
+<td>• One click, with no confirmation and no security token<br>• <strong>Each click adds the rows again</strong><br>• On development the 2024 database does not exist, so it would fail; on live it would run</td>
+<td>• No security token<br>• <strong>A second run copies and subtracts again</strong></td>
+</tr>
+<tr>
+<td><strong>Who can use it (development)</strong></td>
+<td>System Administrator (1 user) and ticketing_admin (3 users)</td>
+<td>System Administrator (1 user)</td>
+</tr>
+<tr>
+<td><strong>Why r3 does not stop it</strong></td>
+<td>r3 guards only the old Bank Reconciliation screen, and only rows dated from the first day. This tool writes rows dated 2024/25.</td>
+<td>The same: it writes 2024/25 rows and changes the 31 Mar 2025 brought-forward balance. That shifts the balance the daily reconciliation starts from.</td>
+</tr>
+<tr>
+<td><strong>Recommendation</strong></td>
+<td><strong>Retire this one action:</strong><br>• the server refuses it, with a message and an audit record;<br>• the button is removed;<br>• the rest of Manual Update stays as it is.<br>(Taking the Manual Update menu away from ticketing_admin would also remove its other functions.)<br>Before that, check on live, read-only, whether it was already run.</td>
+<td><strong>Ask Accounts whether it has been run on live for each bank.</strong><br>• If done: retire it the same way.<br>• If still needed: run it once, under supervision, <strong>before</strong> that account's first day is confirmed, then retire it.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protection for both tools (my recommendation):</strong></p>
+<ul>
+<li>Same guard (<code>LegacyGuard</code>) and same refusal style as the old screen.</li>
+<li>Refused for any account with a confirmed mapping, <strong>whatever the date</strong>.</li>
+<li>Refused on a second run.</li>
+<li>Security token required.</li>
+<li>Every attempt audited.</li>
+</ul>
+<p>After your approval I would build this on development and test it before live.</p>
+<h2>7. D1–D7 and E1–E7 — all still open</h2>
+<table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Status after this work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1 off-computer copy of the export</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D2 who prepares, who reviews</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D3 first day per account</td>
+<td>Open — recommendation in §5</td>
+</tr>
+<tr>
+<td>D4 real bank accounts entered, mappings confirmed</td>
+<td>Open — the master is empty on development</td>
+</tr>
+<tr>
+<td>D5 statement format</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>D6 daily-rate source / exchange-rate policy</td>
+<td>Open — needed for USD and YEN</td>
+</tr>
+<tr>
+<td>D7 old screen overlapping the new workflow</td>
+<td>Open. Progress:<br>• the guard is <strong>installed on development</strong>, but inactive (no confirmed mapping)<br>Still to do:<br>• the old tools (§6)<br>• the live install<br>• withdrawing the old menu after a parallel month</td>
+</tr>
+<tr>
+<td>E1–E7</td>
+<td>All open; this work does not affect any of them:<br>• E1 masking Avenir's paying account<br>• E2 older groups' view of supplier bank numbers<br>• E3 InnoDB<br>• E4 debtor-invoice amendment link<br>• E5 <code>tour/print</code><br>• E6 <code>LEGACY_ALLOCATION_GROUPS</code><br>• E7 the 449,143.20 imbalance and the provisional 34,495,229.47 difference</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Still blocking live</h2>
+<ol>
+<li><strong>Your decisions on D2, D3, D5 and D6</strong>, and the mappings and first days (§5).</li>
+<li><strong>The real bank accounts entered by Accounts (D4).</strong></li>
+<li><strong>E7 understood</strong> for each account's opening balance.</li>
+<li><strong>The two old tools</strong> decided, then guarded or retired, and tested (§6).</li>
+<li><strong>D1:</strong> the off-computer copy.</li>
+<li><strong>Preparing live:</strong><ul>
+<li>a read-only check of live's files and schema;</li>
+<li>fresh file and database backups;</li>
+<li>a live kit built and rehearsed for live's current files (the development kits refuse live);</li>
+<li><strong>your explicit approval.</strong></li>
+</ul>
+</li>
+<li><strong>After go-live:</strong> one parallel month before the old menu is withdrawn (D7).</li>
+</ol>
+<p><strong>Optional, not blocking:</strong></p>
+<ul>
+<li>concurrency tests on development with temporary TEST records;</li>
+<li>the version mark on the other shared scripts.</li>
+</ul>
+<hr />
+<p><strong>Files</strong> in <code>Claude outputs\</code>:</p>
+<ul>
+<li><strong>Kits:</strong><ul>
+<li><code>tf-bankrec-r3-dev\</code> and <code>tf-session-r1b\</code></li>
+<li>each kit has <code>results\development\DEVELOPMENT-RESULTS.txt</code></li>
+<li><code>tf-bankrec-r3-dev\</code> also has <code>results\cloud\</code></li>
+</ul>
+</li>
+<li><strong>Zips</strong> (without the <code>before\</code> backups):<ul>
+<li><code>tf-bankrec-r3-dev-20261012.zip</code> (md5 6b797a194999a8cb985f78b4ee0cfe69)</li>
+<li><code>tf-session-r1b-20261012.zip</code> (md5 239d8ec378e3a7e73ce26c54d14be636)</li>
+</ul>
+</li>
+</ul></body></html>

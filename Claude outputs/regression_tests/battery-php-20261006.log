@@ -1,0 +1,100 @@
+New-generation regression battery — 2026-10-06 05:45:07 — /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir
+== PHP side (PHPUnit)
+PHPUnit 10.5.20 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.6
+Configuration: /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir/tests/newgen/phpunit.xml
+
+................................................................  64 / 64 (100%)
+
+Time: 00:19.720, Memory: 44.00 MB
+
+A01_Installer Schema (NewGen\Php\A01_InstallerSchema)
+ ✔ Schema is at the live version
+ ✔ Every tour flow table is there
+ ✔ The crew master carries the schema 44 columns
+ ✔ The copies folder is where the kits expect it
+ ✔ The write check probes a real write and cleans up
+ ✔ The write check still refuses a folder that cannot take a file
+ ✔ A snapshot is written whole with its checksum
+
+A02_Desks Access Rule (NewGen\Php\A02_DesksAccessRule)
+ ✔ The seed is frozen at version nine
+ ✔ Ensure changes nothing when the seed is already done
+ ✔ The three desk groups exist once
+ ✔ The desks hold exactly what was granted
+ ✔ Every desk screen is a menu entry and every grant points at one
+
+A03_Routes And Menus (NewGen\Php\A03_RoutesAndMenus)
+ ✔ There are tour operations routes
+ ✔ Every tour operations route points at a real controller method
+ ✔ Every guarded route sits under a menu url or an alias
+ ✔ The tour desk menu urls are single and live
+ ✔ The privilege view agrees with the tables
+ ✔ The menu headings are as installed
+
+A04_Source Integrity (NewGen\Php\A04_SourceIntegrity)
+ ✔ Every loadable php file parses
+ ✔ The new generation files carry no debug leftovers
+ ✔ The release kits on record match what is installed
+ ✔ The views of the release compile
+
+A05_Inquiry And Quotation (NewGen\Php\A05_InquiryAndQuotation)
+ ✔ The list and the counts agree with the table
+ ✔ An inquiry reads whole with its record and nothing guessed
+ ✔ The next inquiry number follows the last
+ ✔ Costing adds up and hides nothing
+ ✔ Pricing settings read and the markup is a choice not a guess
+ ✔ The pax matrix builds from the inquiry
+ ✔ Dates and text checks are pure
+ ✔ An inquiry started by hand is one record like any other
+
+A06_Tours And Desks (NewGen\Php\A06_ToursAndDesks)
+ ✔ A tour reads with its lanes and strip
+ ✔ A working inquiry cannot be confirmed without an issued quotation
+ ✔ The desk queues and counts agree with the tables
+ ✔ The badges on the bar come from the same numbers
+ ✔ Cancelled tours stay readable and off the desks
+ ✔ The tour record keeps its history
+
+A07_Transport And Guide Services (NewGen\Php\A07_TransportAndGuideServices)
+ ✔ The three categories and the master counts
+ ✔ The standards are shanthas figures
+ ✔ What a person is paid follows standard then agreed
+ ✔ Bank details are only given with the privilege
+ ✔ The general rates by vehicle class
+ ✔ Mileage allowances and the lookup never guess
+
+A08_Masters (NewGen\Php\A08_Masters)
+ ✔ The place master is installed and prices by date
+ ✔ The meal master settings and suppliers
+ ✔ Free visits paid activities and destinations
+ ✔ The ticket stock reads its attractions and fees
+ ✔ The offer selection privilege is its own menu entry
+
+A09_Hotel Rates And Work Queue (NewGen\Php\A09_HotelRatesAndWorkQueue)
+ ✔ The module is at its current version
+ ✔ Hotels and contracts read
+ ✔ A rate is looked up by date or not at all
+ ✔ The work queue scan is idempotent and its counts agree
+ ✔ Ignore is per item and survives the next scan
+ ✔ Readiness reports what cannot be priced
+
+A10_Kits And Rollback (NewGen\Php\A10_KitsAndRollback)
+ ✔ Every kit has its parts and its checksums are true
+ ✔ Apply roll back apply on a scratch tree
+ ✔ A kit refuses a tree that is neither before nor release
+
+A11_Security Rules (NewGen\Php\A11_SecurityRules)
+ ✔ Reauth refuses a wrong or empty password
+ ✔ Reauth accepts the right password of the test account
+ ✔ Edit request authority is never implied
+ ✔ The test accounts live only on the copy
+ ✔ The battery carries no secret
+ ✔ Sessions are kept in the database and logins are throttled
+
+A12_Engine Guard Rails (NewGen\Php\A12_EngineGuardRails)
+ ✔ An empty inquiry is refused with every reason named
+ ✔ The room mix is typed never worked out from the passenger count
+
+OK (64 tests, 602 assertions)

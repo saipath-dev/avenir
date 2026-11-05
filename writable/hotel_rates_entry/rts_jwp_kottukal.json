@@ -1,0 +1,443 @@
+{
+ "key": "rts_jwp_kottukal",
+ "hotel": {
+  "acc": "6-9-11-10598",
+  "name": "Jetwing Kottukal Beach House",
+  "location": "Pottuvil",
+  "chain": "Jetwing Hotels (Premium)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10598",
+   "name": "Jetwing Kottukal Beach House"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contracted rates – Premium Hotels (revised)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel Agent",
+   "tier": "all",
+   "hotel_reference": "Premium Hotels – Travel Agent Contracted Rates – Winter 2026-2027 (Revised)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "child_policy_text": "Child Policy - (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 30 (Per kid/Per night on BB including extra bed), USD 45 (Per kid/Per night on HB including extra bed), USD 58 (Per kid/Per night on FB including extra bed) (Not Applicable for Triple Occupancy); USD 10 (Per kid/Per night on BB excluding extra bed), USD 25 (Per kid/Per night on HB excluding extra bed), USD 38 (Per kid/Per night on FB excluding extra bed). Baby cot on request can be provided free of charge. (Up to one cot per room)",
+   "guide_policy_text": "Driver Accommodation – Available. The Guide/Tour leader policy on the terms page is only applicable at Jetwing Blue / Beach / Sea / Lake / St. Andrew's — no guide rate for this hotel.",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+   "terms_text": "JETWING KOTTUKAL BEACH HOUSE (Pottuvil): Deluxe (04 Rooms); Whole Villa (Maximum 08 Pax). Single Reduction – USD 20 / Triple Supplement – USD 40 (On BB). Single Reduction – USD 50 / Triple Supplement – USD 70 (On HB). Single Reduction – USD 75 / Triple Supplement – USD 95 (On FB). Special Offers: Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not Applicable for the stays during Super peak and month of February). Value Additions (Minimum 05 nights and above): Pottuvil Lagoon Safari (Once per stay); Cookery Demonstration (Once per stay); Complimentary Bottle of wine (Once per stay can be consumed only in the room); Special Dining Location – Garden or Beach (Once per stay); 10% off on Food and Beverage. Driver Accommodation – Available. Reservations +94 632030300 / +94 114 709 400, resv.villas@jetwinghotels.com. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | VALUE ADDITIONS POLICY: A maximum of 03 value adds can be used at each property. Experiences like Tours/Walks/Demonstrations etc. will be arranged in common groups depending on the occupancy for the day. Meal upgrade offers are valid only for FIT bookings. Food & Beverage discounts are not combinable with other promotions, offers, vouchers, outlets or seasonal deals. Food & Beverage discounts will not be applicable for liquor & tobacco. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+   "notes": "Transcribed from \"Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf\" (20 pages), saved to the winter RTS folder on 2 Oct 2026. Currency \"USD nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy; single/triple derived from the printed reductions/supplements (see row notes). Market clause \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner or rate code is printed. Early-bird / value-addition / meal-upgrade offers are in Offers (chosen by staff, never applied automatically). No early-bird offer and no Peak Period payment / cancellation box on this page (the terms page limits those to Blue / Beach / St. Andrew's / Lake) → standard Jetwing cancellation and payment all season. February is printed as its own period with the super-peak figures → kind peak. The sheet also prices the Whole Villa (maximum 08 pax) per night BB/HB/FB: 470/710/910, super peak 650/880/1080, 11–31 Jan & Mar 540/780/980, Feb 650/880/1080 — entered in the separate per-unit plan rts_jwp_kottukal_villa (one plan cannot mix per-room and per-unit).",
+   "source_file": "Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "room_count": 4,
+    "max_children": 2
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 25 Dec 2026 & 01 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-25"
+     },
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 110,
+      "dbl": 130,
+      "tpl": 170,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 130; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 140,
+      "dbl": 190,
+      "tpl": 260,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 190; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 165,
+      "dbl": 240,
+      "tpl": 335,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 240; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ]
+   },
+   {
+    "name": "26 Dec 2026 – 10 Jan 2027 (Super Peak Period)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-26",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 160,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 180; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 190,
+      "dbl": 240,
+      "tpl": 310,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 240; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 215,
+      "dbl": 290,
+      "tpl": 385,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 290; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ],
+    "notes": "Super Peak Period"
+   },
+   {
+    "name": "11 – 31 Jan 2027 & 01 – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-01-31"
+     },
+     {
+      "from": "2027-03-01",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 130,
+      "dbl": 150,
+      "tpl": 190,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 150; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 160,
+      "dbl": 210,
+      "tpl": 280,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 210; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 185,
+      "dbl": 260,
+      "tpl": 355,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 260; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ]
+   },
+   {
+    "name": "01 – 28 Feb 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2027-02-01",
+      "to": "2027-02-28"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 160,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 180; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 190,
+      "dbl": 240,
+      "tpl": 310,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 240; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 215,
+      "dbl": 290,
+      "tpl": 385,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 290; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ],
+    "notes": "Printed as its own period with the Super Peak figures; February is named with the super peak in the early-bird exclusions and the meal-upgrade exclusion (no peak payment / cancellation terms here)"
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Free of charge (maximum up to 02 children). Baby cot on request free of charge (up to one cot per room)."
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "max_children": 2,
+    "note": "Per kid per night on BB including extra bed; not applicable for triple occupancy"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 45,
+    "max_children": 2,
+    "note": "Per kid per night on HB including extra bed; not applicable for triple occupancy"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 58,
+    "max_children": 2,
+    "note": "Per kid per night on FB including extra bed; not applicable for triple occupancy"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 10,
+    "max_children": 2,
+    "note": "Per kid per night on BB excluding extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "max_children": 2,
+    "note": "Per kid per night on HB excluding extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "FB",
+    "amount": 38,
+    "max_children": 2,
+    "note": "Per kid per night on FB excluding extra bed"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "other",
+    "name": "Meal Upgrade Offer – FOC Half Board upgrade (minimum 03 nights)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "min_nights": 3,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not Applicable for the stays during Super peak and month of February). Meal upgrade offers are valid only for FIT bookings (Value Additions Policy)."
+   },
+   {
+    "kind": "other",
+    "name": "Meal Upgrade Offer – FOC Half Board upgrade (minimum 03 nights)",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-01-31",
+    "min_nights": 3,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not Applicable for the stays during Super peak and month of February). Meal upgrade offers are valid only for FIT bookings (Value Additions Policy)."
+   },
+   {
+    "kind": "other",
+    "name": "Meal Upgrade Offer – FOC Half Board upgrade (minimum 03 nights)",
+    "stay_from": "2027-03-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not Applicable for the stays during Super peak and month of February). Meal upgrade offers are valid only for FIT bookings (Value Additions Policy)."
+   },
+   {
+    "kind": "other",
+    "name": "Value additions (minimum 05 nights and above)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 5,
+    "per": "booking",
+    "conditions": "Value Additions (Minimum 05 nights and above): Pottuvil Lagoon Safari (Once per stay); Cookery Demonstration (Once per stay); Complimentary Bottle of wine (Once per stay can be consumed only in the room); Special Dining Location – Garden or Beach (Once per stay); 10% off on Food and Beverage. No money value printed. Value Additions Policy: max 03 value adds per property; tours/walks/demonstrations arranged in common groups depending on occupancy; meal upgrade offers FIT only; F&B discounts not combinable with other promotions/offers/vouchers/outlets/seasonal deals and not for liquor & tobacco."
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 5,
+    "pct": 100,
+    "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

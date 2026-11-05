@@ -1,0 +1,426 @@
+{
+    "key": "thema_villa_blue_monk",
+    "hotel": {
+        "acc": "6-9-11-11790",
+        "name": "Villa Blue Monk",
+        "location": "Tissamaharama",
+        "chain": "Thema Collection",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:23"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Villa Blue Monk"
+        },
+        "contract": {
+            "name": "Winter 2026/27 travel agent contract",
+            "plan_type": "contract",
+            "contract_type": "DMC",
+            "contract_date": "2026-02-27",
+            "valid_from": "2026-11-01",
+            "valid_to": "2027-04-30",
+            "taxes_included": 1,
+            "tax_note": "Net inclusive of 10% service charge and applicable taxes (VAT registered entity)",
+            "received_at": "2026-09-11",
+            "notes": "Entire villa (8 pax): USD 400 per night BB (01 Nov – 30 Apr); peak supplement 20 Dec – 10 Jan USD 70 per night for the villa. No extra beds: children 6–11.99 share parents' bed at USD 20 per child per night (BB).",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "source_type": "email",
+            "source_file": "Thema Collection Travel Agent Contract - Winter 2026/27 (e-mail 2026, per-hotel PDF)"
+        },
+        "room_types": [
+            {
+                "name": "Deluxe Room",
+                "priced_as": "base",
+                "room_count": 4,
+                "size_sqm": 13.5,
+                "bed_config": "1 queen (2) or 2 singles (2)",
+                "max_adults": 2,
+                "max_children": 1
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Nov – 19 Dec 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-19"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe Room",
+                        "meal_plan": "BB",
+                        "sgl": 100,
+                        "dbl": 110,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "20 Dec – 10 Jan (festive)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-20",
+                        "to": "2027-01-10"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe Room",
+                        "meal_plan": "BB",
+                        "sgl": 120,
+                        "dbl": 130,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "11 Jan – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-11",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe Room",
+                        "meal_plan": "BB",
+                        "sgl": 100,
+                        "dbl": 110,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 12,
+                "note": "Dinner supplement"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 10,
+                "note": "Lunch supplement"
+            },
+            {
+                "from": "BB",
+                "to": "RO",
+                "adult": -10,
+                "note": "Breakfast price (room only derived)"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 10
+            },
+            {
+                "meal": "lunch",
+                "adult": 10
+            },
+            {
+                "meal": "dinner",
+                "adult": 12
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (BB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 67,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (HB/FB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 55,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (BB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 67,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (HB/FB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 55,
+                "compulsory": 1,
+                "child_pct": 50
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Sharing parents bed"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "BB",
+                "amount": 20,
+                "note": "No extra beds available; sharing parents bed"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [
+            {
+                "kind": "honeymoon",
+                "name": "Honeymoon / anniversary offer",
+                "min_nights": 2,
+                "conditions": "Booked on HB or FB: fruit basket & décor on arrival, one candlelit dinner per stay (some hotels add a 30-min spa treatment)"
+            }
+        ],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2026-12-19",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2026-12-19",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 15,
+                "charge_pct": 80,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2026-12-19",
+                "tier": "fit",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 50,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2027-01-11",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2027-01-11",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 15,
+                "charge_pct": 80,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2027-01-11",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 50,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2026-12-19",
+                "tier": "group",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2026-12-19",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 80,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2026-12-19",
+                "tier": "group",
+                "days_from": 45,
+                "days_to": 31,
+                "charge_pct": 50,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2027-01-11",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2027-01-11",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 80,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2027-01-11",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 45,
+                "days_to": 31,
+                "charge_pct": 50,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "tier": "fit",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 80,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "tier": "fit",
+                "days_from": 45,
+                "days_to": 31,
+                "charge_pct": 50,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "tier": "group",
+                "days_from": 45,
+                "days_to": 31,
+                "charge_pct": 80,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "tier": "group",
+                "days_from": 60,
+                "days_to": 46,
+                "charge_pct": 50,
+                "min_pax": 15
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 30,
+                "pct": 100,
+                "note": "1-15 pax"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 60,
+                "pct": 100,
+                "note": "15+ pax"
+            },
+            {
+                "applies": "all",
+                "kind": "advance",
+                "pct": 50,
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-10",
+                "note": "50% advance for festive bookings, credit and non-credit agents"
+            },
+            {
+                "applies": "all",
+                "kind": "interest",
+                "pct": 2,
+                "note": "Late payments 2% per month"
+            },
+            {
+                "applies": "all",
+                "kind": "surcharge",
+                "pct": 3.25,
+                "note": "Credit card bank charge"
+            },
+            {
+                "applies": "all",
+                "kind": "surcharge",
+                "pct": 2.5,
+                "note": "SSCL on LKR payments"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

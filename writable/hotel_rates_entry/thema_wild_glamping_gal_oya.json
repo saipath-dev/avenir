@@ -1,0 +1,314 @@
+{
+ "key": "thema_wild_glamping_gal_oya",
+ "hotel": {
+  "acc": "6-9-11-10620",
+  "name": "Wild Glamping Gal Oya",
+  "location": "Gal Oya",
+  "chain": "Thema Collection"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10620",
+   "name": "Wild Glamping Gal Oya"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contract",
+   "plan_type": "contract",
+   "contract_type": "DMC",
+   "contract_date": "2026-02-27",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "taxes_included": 1,
+   "tax_note": "Net inclusive of 10% service charge and applicable taxes (VAT registered entity)",
+   "received_at": "2026-09-11",
+   "notes": "Family tent (up to 4): triple 320, quad 390 per tent per night BB",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "source_type": "email",
+   "source_file": "Thema Collection Travel Agent Contract - Winter 2026/27 (e-mail 2026, per-hotel PDF)"
+  },
+  "room_types": [
+   {
+    "name": "Luxury Tent",
+    "priced_as": "base",
+    "room_count": 20,
+    "bed_config": "double tents 48 m² queen (4) or 2 singles (11); family tents 80 m² queen + 2 singles (5)",
+    "max_adults": 4,
+    "max_children": 2
+   }
+  ],
+  "seasons": [
+   {
+    "name": "Winter 2026/27",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Luxury Tent",
+      "meal_plan": "BB",
+      "sgl": 220,
+      "dbl": 240,
+      "tpl": 320,
+      "quad": 390,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 24,
+    "note": "Dinner supplement"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 20,
+    "note": "Lunch supplement"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -17,
+    "note": "Breakfast price (room only derived)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 17
+   },
+   {
+    "meal": "lunch",
+    "adult": 20
+   },
+   {
+    "meal": "dinner",
+    "adult": 24
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (BB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 74,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (HB/FB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 50,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (BB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 74,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (HB/FB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 50,
+    "compulsory": 1,
+    "child_pct": 50
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Sharing parents bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 45,
+    "note": "Inclusive of extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 57,
+    "note": "Inclusive of extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 67,
+    "note": "Inclusive of extra bed"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 80,
+    "per": "person",
+    "accommodation": "nearby",
+    "note": "Driver accommodation FOC on sharing basis"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 90,
+    "per": "person",
+    "accommodation": "nearby",
+    "note": "Driver accommodation FOC on sharing basis"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 100,
+    "per": "person",
+    "accommodation": "nearby",
+    "note": "Driver accommodation FOC on sharing basis"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "honeymoon",
+    "name": "Honeymoon / anniversary offer",
+    "min_nights": 2,
+    "conditions": "Booked on HB or FB: fruit basket & décor on arrival, one candlelit dinner per stay (some hotels add a 30-min spa treatment)"
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 60,
+    "days_to": 46,
+    "charge_pct": 50,
+    "min_pax": 15
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 30,
+    "pct": 100,
+    "note": "1-12 pax"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 60,
+    "pct": 100,
+    "note": "12+ pax"
+   },
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "note": "50% advance for festive bookings, credit and non-credit agents"
+   },
+   {
+    "applies": "all",
+    "kind": "interest",
+    "pct": 2,
+    "note": "Late payments 2% per month"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 3.25,
+    "note": "Credit card bank charge"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 2.5,
+    "note": "SSCL on LKR payments"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

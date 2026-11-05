@@ -1,0 +1,254 @@
+{
+ "key": "rts_jp_lighthouse",
+ "hotel": {
+  "acc": "6-9-11-10670",
+  "name": "Jetwing Lighthouse",
+  "location": "Galle",
+  "chain": "Jetwing Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10670",
+   "name": "Jetwing Lighthouse"
+  },
+  "contract": {
+   "name": "Rates for Japanese market (Winter 2026 and 27) – HB",
+   "plan_type": "contract",
+   "priority": 20,
+   "contract_type": "Japanese market",
+   "tier": "all",
+   "hotel_reference": "Rates for Japanese market (Winter 2026 and 27) – USE THIS RATE SHEET",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "HB",
+   "taxes_included": 1,
+   "tax_note": "USD net per double room per day (JP sheet; no tax clause on it). All-market contract: USD nett, non-commissionable, new taxes may be added.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "JP",
+     "mode": "include"
+    }
+   ],
+   "child_policy_text": "JP sheet: \"Child policy / Higher category supplements will be as per All market contract\". All-market contract (Luxury Reserves sheet p.3): Child Policy - (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 30 (Per Child/Per Night on BB including Extra Bed), USD 45 (Per Child/Per Night on HB including Extra Bed), USD 58 (Per Child/Per Night on FB including Extra Bed) (Not Applicable for Triple Occupancy); USD 10 (Per Child/Per Night on BB excluding Extra Bed), USD 25 (Per Child/Per Night on HB excluding Extra bed), USD 38 (Per Child/Per Night on FB excluding Extra Bed). Baby cot can be provided on request - Free of Charge (Up to one cot per room).",
+   "guide_policy_text": "Tour Leader - 20% dc on Guest rate (Single accommodation). Guide Policy - Please note that we will not accommodate guides from 20th Dec to 15th March 2027 . Also No guide accommodation at Jetwing Kandy Gallery/ Jetwing Kaduruketha through out the season. 15 paying pax in the group Guide accommodation on Complimentary (Basis booked). If not, the following rates will apply: BB Single – USD 70/ HB Single – USD 90/FB Single – USD 105. (Japanese-market sheet)",
+   "foc_policy_text": "We will not provide complimentary accommodation on the above rates. (Japanese-market sheet)",
+   "cancellation_text": "JP sheet: \"Cancellation policy as per All market contract\". All-market contract: Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival. Peak Period Cancellation Policy (21st Dec 2026 – 10th Jan 2027 | Feb 2027): Cancellations Before 28 days of arrival date – 50% of the value of the booking and Cancellations within 28 days of the arrival date – 100% of the value of the booking. This will apply to credit or non-credit agents. General terms: \"For the periods of 21st Dec 2026 to 10th Jan 2027 & Feb 2027\" the same 28-day rule, only applicable for Vil Uyana, Lighthouse, Saman Villas and Yala.",
+   "payment_text": "Not stated on the Japanese-market sheet (it refers only the child policy, higher-category supplements and cancellation policy to the All market contract).",
+   "terms_text": "RATES FOR JAPANESE MARKET (WINTER 2026 AND 27) — \"USE THIS RATE SHEET\". Rates are in USD net per double room per day on Half Board basis. Columns: (1) 01st Nov – 20th Dec 26 + Month of April 2027 | (2) 21st Dec – 10th Jan 27 + Month of Feb 2027 | (3) 11th Jan – 31st Jan 2027 + Month of March 2027. Jetwing Lake USD 200 / 300 / 240; Jetwing St Andrew's (Superior Room) USD 200 / 260 / 220; Jetwing St Andrew's (Heritage Superior Room) USD 225 / 285 / 245; Jetwing Yala USD 280 / 410 / 310; Jetwing Lighthouse USD 280 / 410 / 310; Jetwing Kandy Gallery (Bed and Breakfast) USD 250 / 400 / 300; Jetwing Blue or Beach USD 180 / 240 / 210; Jetwing Sea USD 160 / 220 / 190; Jetwing Kaduruketha (Wel Vidana) USD 225 / 340 / 225. • Single Reduction – USD 50 per room per day. • Single Reduction – USD 20 per room per day on BB (Kandy Gallery only) • Triple – Double + 70 on HB • Triple – Double + 40 on BB (Kandy Gallery Only). Applicable at all above hotels: • Child policy / Higher category supplements will be as per All market contract • Cancellation policy as per All market contract. • Tour Leader - 20% dc on Guest rate (Single accommodation) • We will not provide complimentary accommodation on the above rates • Guide Policy - Please note that we will not accommodate guides from 20th Dec to 15th March 2027 . Also No guide accommodation at Jetwing Kandy Gallery/ Jetwing Kaduruketha through out the season • 15 paying pax in the group Guide accommodation on Complimentary (Basis booked) If not, the following rates will apply • BB Single – USD 70/ HB Single – USD 90/FB Single – USD 105 | All-market check-in/check-out terms (not on the JP sheet): Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+   "notes": "Transcribed from \"JETWING HOTELS - Rates for Japanese Market - Winter 26-27 - USE THIS RATE SHEET.pdf\" (1 page), saved to the winter RTS folder on 2 Oct 2026. Japanese-market contract (markets: JP only, priority 20 so it wins over the all-market plan for Japanese clients). The JP sheet prints USD net per double room per day on Half Board in three grouped columns, each entered as one season with two date ranges. Base room: the JP sheet does not name the room, so the room the all-market sheet prices lowest is used — Luxury Room (80 Rooms) — BB 280 / HB 340 / FB 390 in 01 Nov – 25 Dec & April (\"Jetwing Luxury Reserves - TA Contracted Rates - Winter 2026 & 2027.pdf\", p.3). Single Reduction – USD 50 per room per day; Triple – Double + 70 on HB: SGL = DBL − 50, TPL = DBL + 70 (row notes). Anything the JP sheet does not price (other room categories, other meal plans, early-bird / value-add offers, payment terms) stays with the all-market plan for this hotel (rts_jwl_lighthouse, \"Jetwing Luxury Reserves - TA Contracted Rates - Winter 2026 & 2027.pdf\"): the rate lookup moves on to that plan when the JP plan has no row, so a higher category booked for a Japanese client is returned at the full all-market rate, not JP rate + \"higher category supplement as per All market contract\" — staff must adjust. For information (derived, NOT entered — the all-market sheet prints full rates, not supplements): it prices Themed Suite (3 Rooms) USD 200 and Themed Suite with Plunge Pool (2 Rooms) USD 300 above Luxury Room in every period on BB, HB and FB. Child policy: the JP sheet says \"as per All market contract\"; the all-market child amounts for this hotel are copied into the child rules (the lookup takes child rates only from the plan that wins the night) and quoted in the child policy text. Cancellation: \"as per All market contract\" — the all-market wording is quoted in the cancellation text; no cancellation rules are entered here (see the all-market plan). Payment terms: not stated on the JP sheet. Guide policy (JP sheet): guides not accommodated 20 Dec 2026 – 15 Mar 2027; 15 paying pax → guide accommodation complimentary (basis booked); otherwise BB 70 / HB 90 / FB 105 single — entered as guide rules (the dates are in the notes; guide rules carry no dates). \"We will not provide complimentary accommodation on the above rates\" → FOC policy text, no FOC rule. No gala dinner, contract date or booking window is printed (the PDF properties show 6 Mar 2026 — not printed, so contract_date left empty). The all-market sheet requires a minimum 03-night stay from 26 Dec 2026 to 05 Jan 2027 at Lighthouse; the JP sheet does not mention it — not entered here, staff check.",
+   "source_file": "JETWING HOTELS - Rates for Japanese Market - Winter 26-27 - USE THIS RATE SHEET.pdf"
+  },
+  "room_types": [
+   {
+    "name": "LUXURY",
+    "priced_as": "base"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 20 Dec 2026 & Month of April 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-20"
+     },
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "LUXURY",
+      "meal_plan": "HB",
+      "sgl": 230,
+      "dbl": 280,
+      "tpl": 350,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 280; SGL = DBL − single reduction USD 50; TPL = DBL + 70; printed \"Luxury Room (80 Rooms)\""
+     }
+    ],
+    "notes": "Printed as one column on the JP sheet"
+   },
+   {
+    "name": "21 Dec 2026 – 10 Jan 2027 & Month of Feb 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-12-21",
+      "to": "2027-01-10"
+     },
+     {
+      "from": "2027-02-01",
+      "to": "2027-02-28"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "LUXURY",
+      "meal_plan": "HB",
+      "sgl": 360,
+      "dbl": 410,
+      "tpl": 480,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 410; SGL = DBL − single reduction USD 50; TPL = DBL + 70; printed \"Luxury Room (80 Rooms)\""
+     }
+    ],
+    "notes": "Printed as one column on the JP sheet (Christmas/New-Year peak and February)"
+   },
+   {
+    "name": "11 – 31 Jan 2027 & Month of March 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-01-31"
+     },
+     {
+      "from": "2027-03-01",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "LUXURY",
+      "meal_plan": "HB",
+      "sgl": 260,
+      "dbl": 310,
+      "tpl": 380,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 310; SGL = DBL − single reduction USD 50; TPL = DBL + 70; printed \"Luxury Room (80 Rooms)\""
+     }
+    ],
+    "notes": "Printed as one column on the JP sheet"
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Age of 0-5: Free of Charge (as per All market contract, Luxury Reserves sheet p.3)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "max_children": 2,
+    "note": "Per kid per night on BB including extra bed; not applicable for triple occupancy (as per All market contract, Luxury Reserves sheet p.3)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 45,
+    "max_children": 2,
+    "note": "Per kid per night on HB including extra bed; not applicable for triple occupancy (as per All market contract, Luxury Reserves sheet p.3)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 58,
+    "max_children": 2,
+    "note": "Per kid per night on FB including extra bed; not applicable for triple occupancy (as per All market contract, Luxury Reserves sheet p.3)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 10,
+    "max_children": 2,
+    "note": "Per kid per night on BB excluding extra bed (as per All market contract, Luxury Reserves sheet p.3)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "max_children": 2,
+    "note": "Per kid per night on HB excluding extra bed (as per All market contract, Luxury Reserves sheet p.3)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "FB",
+    "amount": 38,
+    "max_children": 2,
+    "note": "Per kid per night on FB excluding extra bed (as per All market contract, Luxury Reserves sheet p.3)"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "tour_leader",
+    "pct_of": "sgl",
+    "pct": 80,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Tour Leader - 20% dc on Guest rate (Single accommodation) — entered as 80% of the single rate"
+   },
+   {
+    "role": "guide",
+    "free_from_pax": 15,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "15 paying pax in the group: guide accommodation on complimentary (basis booked). Guides not accommodated 20 Dec 2026 – 15 Mar 2027 (JP sheet)"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 70,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "If not (fewer than 15 paying pax): BB Single – USD 70. Guides not accommodated 20 Dec 2026 – 15 Mar 2027 (JP sheet)"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 90,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "If not (fewer than 15 paying pax): HB Single – USD 90. Guides not accommodated 20 Dec 2026 – 15 Mar 2027 (JP sheet)"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 105,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "If not (fewer than 15 paying pax): FB Single – USD 105. Guides not accommodated 20 Dec 2026 – 15 Mar 2027 (JP sheet)"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

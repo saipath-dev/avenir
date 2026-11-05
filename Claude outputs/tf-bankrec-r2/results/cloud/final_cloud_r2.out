@@ -1,0 +1,23 @@
+=== regression battery (00:26)
+=== r4 suite ===
+202 ok, 0 failed
+snapshot: db_after_suite.sql (14M)
+=== bulk ===
+71 ok, 0 failed
+=== pilot ===
+36 ok, 0 failed
+=== ops/conf ===
+33 ok, 0 failed
+LG_DONE
+=== r3 ===
+26/26 passed
+=== ledger guard (cloud) ===
+10/10 passed
+=== r2 suite (00:31)
+108/108 passed
+=== r2 screens (00:32)
+20/20 ok
+=== rehearsal of the isolated-instance run (00:34)
+upgrade: 21	21	2
+63/63 passed
+FINAL_DONE 00:40

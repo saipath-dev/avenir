@@ -1,0 +1,407 @@
+{
+ "key": "moi_misty_villa_full_villa",
+ "hotel": {
+  "acc": null,
+  "name": "Misty Villa",
+  "location": "Pussellawa",
+  "chain": "DBI Ceylon / Moi Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": null,
+   "name": "Misty Villa"
+  },
+  "contract": {
+   "name": "All market rates WEF 01 Feb 2026 (Winter/Summer 2026 – Winter 2026/27) – Full Villa (5 rooms)",
+   "plan_type": "contract",
+   "contract_type": "Travel Agent",
+   "valid_from": "2026-02-01",
+   "valid_to": "2027-04-30",
+   "taxes_included": 1,
+   "tax_note": "All room rates inclusive of all taxes; non-commissionable",
+   "received_at": "2026-09-03",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 15,
+   "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+   "terms_text": "All room rates are inclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 11.00 am; early check-in / late check-out subject to availability, charges apply. No pets. Bookings are confirmed by e-mail, subject to written confirmation from the reservations department followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for any loss or damage to hotel property. DBI e-mail 24 Aug 2026: rates apply to new reservations only; only HB bookings are accepted on 24 and 31 Dec 2026; reservations / amendments / cancellations to info@dbihotels.lk, reservation@dbihotels.lk, sales3@dbihotels.lk.",
+   "child_policy_text": "Below 5.99 years free of charge sharing parent's bed on booked basis. 6 – 11 years 50% of the adult rate on booked basis per night (excluding extra bed). 12 years and above considered as an adult. Extra bed $15 per night. Child meal rate 50% of the adult rate.",
+   "cancellation_text": "November – April: release period 21 days prior to arrival; 50% of the full booking value charged if cancelled within 21 days. May – October: release period 14 days prior to arrival; 50% of the full booking value charged if cancelled within 14 days. No-shows: 100% of the full stay / no refund (if payment is settled). An early departure fee applies for cancellations made after check-in.",
+   "payment_text": "Full payment to be settled 7 days prior to the date of arrival. Cheque payments must be banked and realised at least 10 days prior to arrival. Reservations made within 7 days of arrival: payment in full upon booking confirmation. Failure to settle in full by the above date: rooms released without prior notice. Hotel reserves the right to release bookings with unsettled payment (excluding credit agents) with advance notice of 14 days or more. Bank: DBI Ceylon (Pvt) Ltd, Commercial Bank Rajagiriya, A/C 1000580196. Quote travel agency / guest name / confirmation number as reference.",
+   "pricing_mode": "per_unit",
+   "notes": "Whole-villa price per night (RO / BB / HB) for the 5-room villa; the sheet does not print the villa pax capacity. No gala supplement printed.",
+   "currency": "USD",
+   "source_type": "email",
+   "source_file": "MOI HOTELS — Misty Villa WEF 01.02.2026.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Full Villa (5 rooms)",
+    "priced_as": "base",
+    "room_count": 1,
+    "description": "Entire villa: 2 junior suites + 2 executive suites + 1 family room; pax capacity not printed"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Feb – 30 Apr 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-02-01",
+      "to": "2026-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "RO",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 650
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 810
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 1050
+     }
+    ]
+   },
+   {
+    "name": "01 May – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "RO",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 566
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 726
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 966
+     }
+    ]
+   },
+   {
+    "name": "01 Nov – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "RO",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 706
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 866
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 1106
+     }
+    ]
+   },
+   {
+    "name": "20 Dec 2026 – 15 Jan 2027 (festive)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-15"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "RO",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 783
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 943
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 1183
+     }
+    ]
+   },
+   {
+    "name": "16 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-16",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "RO",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 706
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 866
+     },
+     {
+      "room_type": "Full Villa (5 rooms)",
+      "meal_plan": "HB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 1106
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 12,
+    "child": 6.0,
+    "note": "Dinner supplement (printed HB rows take precedence)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 10,
+    "child": 5.0,
+    "note": "Lunch supplement"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -8,
+    "child": -4.0,
+    "note": "Breakfast price (room-only derived)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 8,
+    "child": 4.0
+   },
+   {
+    "meal": "lunch",
+    "adult": 10,
+    "child": 5.0
+   },
+   {
+    "meal": "dinner",
+    "adult": 12,
+    "child": 6.0
+   }
+  ],
+  "supplements": [],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Free of charge sharing parents' bed on booked basis"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "adult_rate",
+    "note": "50% of the adult rate on booked basis per night (excluding extra bed)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "pct": 50,
+    "pct_basis": "adult_rate",
+    "note": "50% of the adult rate plus extra bed $15 per night"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 50,
+    "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+   },
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "No-show: 100% of the full stay, no refund"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 50,
+    "note": "Release period 14 days prior to arrival; 50% of the full booking value if cancelled within 14 days"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "No-show: 100% of the full stay, no refund"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 50,
+    "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "No-show: 100% of the full stay, no refund"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 7,
+    "pct": 100,
+    "note": "Full payment 7 days prior to arrival; reservations made within 7 days of arrival are paid in full on confirmation"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "days_before": 10,
+    "note": "Cheque payments must be banked and realised at least 10 days prior to arrival"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "other",
+    "days_before": 14,
+    "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "value": "HB",
+    "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+   },
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "value": "HB",
+    "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+   }
+  ],
+  "extras": []
+ }
+}

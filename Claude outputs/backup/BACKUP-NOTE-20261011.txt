@@ -1,0 +1,10 @@
+Avenir development system — full backup before installing tf-paydesk-r4 (11 Oct 2026, taken by Claude on Shantha's instruction)
+FILES:    C:\wamp64\www\avenir-backup-20261011-before-r4\  — app/ (963 files), public/ (1,481), vendor/ (3,379), .env, composer.*, spark, preload.php,
+          writable/ without cache, session, debugbar, tf_releases and tf_backups_prev_20261005. Verified: file counts equal; the 11 files the kit
+          changes are byte-identical to live (md5).
+DATABASE: MySQL database `avenir_backup_20261011` on the same WAMP MySQL server — a server-side copy of `avenir` made through phpMyAdmin:
+          217 base tables (CREATE TABLE ... LIKE + INSERT ... SELECT), 13 views, 3 triggers (driver_allocation_*). 372,229 rows, 164 MB.
+          Verified table by table: row counts equal for all 217; CHECKSUM TABLE identical for 215; the two that differ are session tables
+          (ci_sessions, user_sessions) whose contents change while a user is signed in — no financial table differs.
+RESTORE:  files — copy the backup folders back over C:\wamp64\www\avenir (or use apply.py rollback for the kit's 29 files only);
+          database — in phpMyAdmin: Operations → "Copy database to" avenir (or rename), or table by table: CREATE TABLE avenir.t LIKE avenir_backup_20261011.t; INSERT ... SELECT.

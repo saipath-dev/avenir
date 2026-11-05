@@ -1,0 +1,414 @@
+{
+ "key": "thema_ayurvie_weligama",
+ "hotel": {
+  "acc": "6-9-11-10613",
+  "name": "Ayurvie Weligama",
+  "location": "Weligama",
+  "chain": "Thema Collection"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10613",
+   "name": "Ayurvie Weligama"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contract (Ayurveda)",
+   "plan_type": "contract",
+   "contract_type": "DMC",
+   "contract_date": "2026-02-27",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "taxes_included": 1,
+   "tax_note": "Net inclusive of 10% service charge and applicable taxes (VAT registered entity)",
+   "received_at": "2026-09-11",
+   "min_stay": 7,
+   "child_policy_text": "Children are not encouraged; only children aged 13 years and above are allowed",
+   "guide_policy_text": "Accommodation is NOT provided for national guides or chauffeur guides",
+   "notes": "Accompanying person without treatment sharing a double: USD 25 reduction per person per day; extension without treatments: USD 25 reduction per person per day. AI = vegetarian meals, herbal drinks, Ayurveda treatments (max 2 h/day), yoga, temple visit, beach walk. No alcohol or carbonated drinks.",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "source_type": "email",
+   "source_file": "Thema Collection Travel Agent Contract - Winter 2026/27 (e-mail 2026, per-hotel PDF)"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "room_count": 22,
+    "size_sqm": 38,
+    "bed_config": "1 king (16) or 2 singles (6)",
+    "max_adults": 2
+   },
+   {
+    "name": "Courtyard",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe",
+    "room_count": 5,
+    "size_sqm": 40,
+    "bed_config": "1 queen",
+    "max_adults": 1
+   },
+   {
+    "name": "Garden Loft",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe",
+    "room_count": 2,
+    "size_sqm": 69,
+    "bed_config": "1 king",
+    "max_adults": 2
+   },
+   {
+    "name": "Master Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe",
+    "max_adults": 2
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "AI",
+      "sgl": 240,
+      "dbl": 340,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "20 Dec – 31 Mar (peak)",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "AI",
+      "sgl": 300,
+      "dbl": 400,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "AI",
+      "sgl": 240,
+      "dbl": 340,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Courtyard",
+    "amount": -40,
+    "note": "Reduction"
+   },
+   {
+    "room_type": "Garden Loft",
+    "amount": 60
+   },
+   {
+    "room_type": "Master Suite",
+    "amount": 175
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 8
+   },
+   {
+    "meal": "lunch",
+    "adult": 10
+   },
+   {
+    "meal": "dinner",
+    "adult": 15
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1
+   }
+  ],
+  "child_rates": [],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "other",
+    "name": "Accompanying person without treatment / extension nights without treatment",
+    "value_amount": 25,
+    "per": "person",
+    "conditions": "USD 25 reduction per person per day"
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "fit",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 14,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 14,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "group",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 60,
+    "days_to": 46,
+    "charge_pct": 50,
+    "min_pax": 15
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 30,
+    "pct": 100,
+    "note": "1-15 pax"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 60,
+    "pct": 100,
+    "note": "15+ pax"
+   },
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "date_from": "2026-12-20",
+    "date_to": "2027-03-31",
+    "note": "50% advance for festive bookings, credit and non-credit agents"
+   },
+   {
+    "applies": "all",
+    "kind": "interest",
+    "pct": 2,
+    "note": "Late payments 2% per month"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 3.25,
+    "note": "Credit card bank charge"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 2.5,
+    "note": "SSCL on LKR payments"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "min_stay",
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "value": "7",
+    "note": "Minimum stay 7 nights"
+   }
+  ],
+  "extras": []
+ }
+}

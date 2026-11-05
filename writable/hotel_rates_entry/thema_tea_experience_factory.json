@@ -1,0 +1,479 @@
+{
+ "key": "thema_tea_experience_factory",
+ "hotel": {
+  "acc": "6-9-11-10619",
+  "name": "Tea & Experience Factory",
+  "location": "Mandaramnuwara",
+  "chain": "Thema Collection"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10619",
+   "name": "Tea & Experience Factory"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contract",
+   "plan_type": "contract",
+   "contract_type": "DMC",
+   "contract_date": "2026-02-27",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "taxes_included": 1,
+   "tax_note": "Net inclusive of 10% service charge and applicable taxes (VAT registered entity)",
+   "received_at": "2026-09-11",
+   "extra_bed_adult": 20,
+   "notes": "Mixed dorm (6 bunk beds, 12 pax, separate bathrooms): USD 50 per guest BB, 60 HB, 70 FB; high tea not applicable for dorm clients",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "source_type": "email",
+   "source_file": "Thema Collection Travel Agent Contract - Winter 2026/27 (e-mail 2026, per-hotel PDF)"
+  },
+  "room_types": [
+   {
+    "name": "Sinna Dorai (Ground Floor)",
+    "priced_as": "base",
+    "room_count": 4,
+    "bed_config": "standard 28 m² king (3), family 50 m² king + single (1)",
+    "max_adults": 3
+   },
+   {
+    "name": "Periya Dorai (Upper Floor)",
+    "priced_as": "supplement",
+    "base_room_type": "Sinna Dorai (Ground Floor)",
+    "room_count": 12,
+    "size_sqm": 40,
+    "bed_config": "king (6), 2 singles (4), family king + single (2)",
+    "max_adults": 4,
+    "max_children": 2
+   },
+   {
+    "name": "Mixed Dorm bed",
+    "priced_as": "base",
+    "room_count": 12,
+    "size_sqm": 65,
+    "bed_config": "6 bunk beds",
+    "max_adults": 1,
+    "description": "Priced per guest"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "Winter 2026/27",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Sinna Dorai (Ground Floor)",
+      "meal_plan": "BB",
+      "sgl": 165,
+      "dbl": 180,
+      "tpl": 250,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Mixed Dorm bed",
+      "meal_plan": "BB",
+      "sgl": 50,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Per guest, dormitory"
+     },
+     {
+      "room_type": "Mixed Dorm bed",
+      "meal_plan": "HB",
+      "sgl": 60,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Mixed Dorm bed",
+      "meal_plan": "FB",
+      "sgl": 70,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Periya Dorai (Upper Floor)",
+    "amount": 20
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 25,
+    "note": "Dinner supplement"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 20,
+    "note": "Lunch supplement"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -18,
+    "note": "Breakfast price (room only derived)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 18
+   },
+   {
+    "meal": "lunch",
+    "adult": 20
+   },
+   {
+    "meal": "dinner",
+    "adult": 25
+   }
+  ],
+  "supplements": [
+   {
+    "type": "extra_adult",
+    "name": "4th person supplement (BB)",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 0
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (BB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 85,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (HB/FB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (BB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 85,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (HB/FB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1,
+    "child_pct": 50
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Sharing parents bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 45,
+    "note": "Inclusive of extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 55,
+    "note": "Inclusive of extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 65,
+    "note": "Inclusive of extra bed"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 80,
+    "per": "person",
+    "accommodation": "nearby"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 90,
+    "per": "person",
+    "accommodation": "nearby"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 100,
+    "per": "person",
+    "accommodation": "nearby"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "honeymoon",
+    "name": "Honeymoon / anniversary offer",
+    "min_nights": 2,
+    "conditions": "Booked on HB or FB: fruit basket & décor on arrival, one candlelit dinner per stay (some hotels add a 30-min spa treatment)"
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "fit",
+    "days_from": 15,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 16,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 15,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 16,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "group",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "fit",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "max_pax": 14
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 80,
+    "min_pax": 15
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "group",
+    "days_from": 60,
+    "days_to": 46,
+    "charge_pct": 50,
+    "min_pax": 15
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 30,
+    "pct": 100,
+    "note": "1-15 pax"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 60,
+    "pct": 100,
+    "note": "15+ pax"
+   },
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "note": "50% advance for festive bookings, credit and non-credit agents"
+   },
+   {
+    "applies": "all",
+    "kind": "interest",
+    "pct": 2,
+    "note": "Late payments 2% per month"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 3.25,
+    "note": "Credit card bank charge"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 2.5,
+    "note": "SSCL on LKR payments"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

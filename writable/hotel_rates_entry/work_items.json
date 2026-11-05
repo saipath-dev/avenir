@@ -1,0 +1,281 @@
+{
+  "items": [
+    {
+      "key": "merge:knuckles_gal_oya",
+      "kind": "merge_check",
+      "level": "red",
+      "title": "Merge to confirm: Wild Glamping Knuckles was merged into Wild Glamping Gal Oya",
+      "detail": "Two different properties of one brand (Knuckles, Kandy district / Gal Oya, Ampara). Supplier code 6-9-11-10621 now belongs to Gal Oya, so a Knuckles booking would be priced with Gal Oya rates. Undo it in Hotel Rates → the Gal Oya hotel → \"Undo merge\" unless the merge was intended. The transcribed Knuckles winter 2026/27 sheet is held back until this is settled.",
+      "hotel_acc": "6-9-11-10620",
+      "hotel_name": "Wild Glamping Gal Oya"
+    },
+    {
+      "key": "merge:anantaya_chilaw",
+      "kind": "merge_check",
+      "level": "red",
+      "title": "Merge to confirm: Anantaya Chilaw was merged into Anantaya Passikudah",
+      "detail": "Chilaw (west coast) and Passikudah (east coast) are two hotels. Undo the merge in Hotel Rates → Anantaya Passikudah → \"Undo merge\" unless it was intended; the preview shows 1 plan and 6 room types going back.",
+      "hotel_name": "Anantaya Passikudah"
+    },
+    {
+      "key": "merge:99_98_acres",
+      "kind": "merge_check",
+      "level": "amber",
+      "title": "Merge to confirm: 99 Acres Resort was merged into 98 Acres Resort",
+      "detail": "98 Acres (Ella) and 99 Acres (Ella) are two properties with similar names. Check which quotations used which code and undo the merge if they are separate.",
+      "hotel_name": "98 Acres Resort"
+    },
+    {
+      "key": "dup:blue_water",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Duplicate supplier record: The Blue Water Hotel & Spa (10715 and 10746)",
+      "detail": "Rates were entered on 6-9-11-10715. Decide which code is the live one; merge the duplicate in Hotel Rates → Duplicates so quotations on either code price correctly.",
+      "hotel_acc": "6-9-11-10715",
+      "hotel_name": "The Blue Water Hotel & Spa"
+    },
+    {
+      "key": "dup:earls_regency",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Duplicate supplier record: Earl's Regency (10582 and 10973)",
+      "detail": "The Aitken plans were entered on 6-9-11-10582 as briefed. Merge or retire 10973 so nothing is quoted on the stale code.",
+      "hotel_acc": "6-9-11-10582",
+      "hotel_name": "Earl's Regency"
+    },
+    {
+      "key": "dup:radisson_kandy",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Duplicate supplier record: Radisson Hotel Kandy (10852 and 10562)",
+      "detail": "Rates were entered on 6-9-11-10852. Merge or retire the duplicate.",
+      "hotel_acc": "6-9-11-10852",
+      "hotel_name": "Radisson Hotel Kandy"
+    },
+    {
+      "key": "dup:heritance",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Duplicate supplier records: Heritance Ahungalla (10971 / 10577) and Heritance Negombo (10972 / 10580)",
+      "detail": "The Aitken plans were entered on 10971 and 10972. Merge the duplicates in Hotel Rates → Duplicates, or retire them under Master Files → Supplier.",
+      "hotel_acc": "6-9-11-10971",
+      "hotel_name": "Heritance Ahungalla"
+    },
+    {
+      "key": "sheet:blue_water_triple35",
+      "kind": "sheet_query",
+      "level": "red",
+      "title": "Blue Water summer 2027 peak: the market-group triple is printed 35 (probably 135) — do not quote until the hotel confirms",
+      "detail": "Peak 01 Jul – 30 Aug 2027, Deluxe HB: 90 / 105 / 35. Every other table steps the triple 30–40 above the double. Entered exactly as printed and flagged; ask the hotel and correct the plan.",
+      "hotel_acc": "6-9-11-10715",
+      "hotel_name": "The Blue Water Hotel & Spa",
+      "ref_date": "2027-07-01",
+      "ref_date_to": "2027-08-30"
+    },
+    {
+      "key": "sheet:blue_water_peak_end",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Blue Water summer 2027: does the peak end 30 or 31 August?",
+      "detail": "The booklet prints \"1 Jul – 30 Aug\" in one row and \"1 Jul – 31 Oct\" in the next. Entered as peak 1 Jul – 30 Aug with low season 31 Aug – 31 Oct so every night carries one rate. Confirm; if the peak ends 31 Aug the low season restarts 1 Sep.",
+      "hotel_acc": "6-9-11-10715",
+      "hotel_name": "The Blue Water Hotel & Spa",
+      "ref_date": "2027-07-01",
+      "ref_date_to": "2027-10-31"
+    },
+    {
+      "key": "sheet:blue_water_codes",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Blue Water: the market rate codes are missing",
+      "detail": "The remarks require a rate code on every market / series booking (\"bookings without the specific market code will be billed on the all-other-market rate\") but no code is printed. Ask the hotel for the codes and put them on the five market plans (Rate code field).",
+      "hotel_acc": "6-9-11-10715",
+      "hotel_name": "The Blue Water Hotel & Spa"
+    },
+    {
+      "key": "sheet:blue_water_longstay",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Blue Water: the long-stay and destination-wedding grids promised on the cover are not in the booklet",
+      "detail": "The summer market booklet cover lists \"Market specific Group / Long stay Rates\" and wedding rates; only the market FIT and group tables are inside. Nothing was invented. Ask the hotel for the missing tables if Avenir needs them.",
+      "hotel_acc": "6-9-11-10715",
+      "hotel_name": "The Blue Water Hotel & Spa"
+    },
+    {
+      "key": "sheet:serendib_peak_dates",
+      "kind": "sheet_query",
+      "level": "red",
+      "title": "Grand Serendib: the peak period is printed with last season’s dates (21 Dec 2025 – 10 Jan 2026)",
+      "detail": "The rate period is 01 Apr 2026 – 31 Mar 2027, so the printed peak falls outside it. Entered as 21 Dec 2026 – 10 Jan 2027. Needs the hotel’s confirmation before the plan is used.",
+      "hotel_acc": "6-9-11-10873",
+      "hotel_name": "Grand Serendib Hotel",
+      "ref_date": "2026-12-21",
+      "ref_date_to": "2027-01-10"
+    },
+    {
+      "key": "sheet:perahera_dates",
+      "kind": "sheet_query",
+      "level": "red",
+      "title": "Perahera supplement nights are not printed on the Grand Serendib and Casamara sheets",
+      "detail": "Grand Serendib \"Esala Perahera (10 days) US$ 40 PRPN\" and Casamara \"Perahera Supplement 55 / 65 / 75\" are priced but no dates are given. Both are entered without dates (flagged) rather than guessed — add the 2026 Kandy Esala Perahera nights to both plans before they are used, otherwise the supplement reads as applying to every night.",
+      "hotel_acc": "6-9-11-10873",
+      "hotel_name": "Grand Serendib Hotel"
+    },
+    {
+      "key": "sheet:gala_child_price",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "No child price for the gala nights at Grand Serendib and Casamara",
+      "detail": "Both child policies say \"50 % on meals\", which may or may not be meant to cover the Christmas / New Year gala dinners. Not assumed. Ask the hotels and add the child amount or % to the gala supplements.",
+      "hotel_acc": "6-9-11-11047",
+      "hotel_name": "Hotel Casamara"
+    },
+    {
+      "key": "sheet:amaya_plan_type",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Amaya winter 2026/27: contract or special offer?",
+      "detail": "Entered as a contract (the document calls itself \"Local Travel Agent Rates Contract\"). Hayleys wrote \"special winter rates instead of the previously quoted rates\" — if it must override a standing Amaya contract, change the plan type to Tactical / special offer and give it priority 10.",
+      "hotel_acc": "6-9-11-11130",
+      "hotel_name": "Amaya Beach"
+    },
+    {
+      "key": "sheet:casamara_winter_missing",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Casamara: the current winter 2026/27 rates are missing",
+      "detail": "The folder only holds last winter’s letter (expired 30 Apr 2026), which was entered for historical quotations. Ask the hotel for the winter 2026/27 sheet.",
+      "hotel_acc": "6-9-11-11047",
+      "hotel_name": "Hotel Casamara"
+    },
+    {
+      "key": "sheet:aitken_supp_summary",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Aitken Spence: confirm the supplements summary is attached to the winter offers",
+      "detail": "The Early Bird / CJF / AME offers were entered with the shared supplements summary (galas, peak, extra bed, child policy) attached to every plan. Confirm, or the summary has to be detached from the offers and kept only on the base contracts.",
+      "hotel_acc": "6-9-11-10971",
+      "hotel_name": "Heritance Ahungalla"
+    },
+    {
+      "key": "sheet:aitken_market_exclusions",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Aitken Spence: French / German / Austrian / Swiss exclusions cannot be expressed as markets",
+      "detail": "Early Bird Ahungalla and Turyaa exclude \"Russia, CIS & French\"; Negombo excludes \"German, Austrian and Switzerland\"; Amethyst excludes \"French\". Russia is excluded properly; the rest live in the plan notes only, because there is no FR / DE / AT / CH market. Either add those markets under Hotel Rates → Settings → Markets, or accept that staff must apply the exclusion by hand.",
+      "hotel_acc": "6-9-11-10971",
+      "hotel_name": "Heritance Ahungalla"
+    },
+    {
+      "key": "sheet:aitken_ame_markets",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Aitken Spence AME offer: is \"Asia & Middle East\" India + South Asia + Middle East?",
+      "detail": "Entered as IN + SA + ME (China, Japan and the Far East have their own SPO1 plans). Confirm.",
+      "hotel_acc": "6-9-11-10972",
+      "hotel_name": "Sentido Heritance Negombo"
+    },
+    {
+      "key": "sheet:rainforest_meal_plan",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Rainforest Ecolodge CJF table prints no meal plan — entered as HB",
+      "detail": "The only table in the three Aitken documents without a meal-plan column. Entered as HB because the other two documents price this chalet on HB and the figures are of the same order. Confirm with the hotel.",
+      "hotel_acc": "6-9-11-10785",
+      "hotel_name": "The Rainforest Ecolodge – Deniyaya"
+    },
+    {
+      "key": "sheet:tea_factory_dec_bb",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Heritance Tea Factory CJF: the 01 – 21 Dec BB row looks like a typo, and \"31/04/2027\" does not exist",
+      "detail": "BB 153 / 180 / 252 sits below November (170 / 200 / 280) while its HB row is higher; the BB–HB gap is 30/35/49 here against 9/10/14 everywhere else on this hotel. Entered as printed. The last period printed \"06/01/2027 – 31/04/2027\" was entered to 30 Apr 2027. Ask the hotel.",
+      "hotel_acc": "6-9-11-10579",
+      "hotel_name": "Heritance Tea Factory",
+      "ref_date": "2026-12-01",
+      "ref_date_to": "2026-12-21"
+    },
+    {
+      "key": "sheet:ame_negombo_gap",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Sentido Heritance Negombo AME offer: 06 – 10 Jan 2027 is not priced",
+      "detail": "This document’s festive period ends 05 Jan while the next starts 11 Jan; the Early Bird and CJF documents run the Negombo festive period to 10 Jan. Left as a gap rather than guessed. Ask the hotel which rate applies.",
+      "hotel_acc": "6-9-11-10972",
+      "hotel_name": "Sentido Heritance Negombo",
+      "ref_date": "2027-01-06",
+      "ref_date_to": "2027-01-10"
+    },
+    {
+      "key": "sheet:earls_beruwala_identity",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Earl's Regent Beruwala and Earl's Reef Beruwala (6-9-11-10572) — the same rebranded property?",
+      "detail": "The sheet and the Earl's Hotels logo strip say \"Earl's Regent Beruwala\"; the live record is \"Earl's Reef Beruwala\", last plan 2023. The tactical plan was entered on that code as briefed. Confirm before approving, or create a new supplier record and move the plan.",
+      "hotel_acc": "6-9-11-10572",
+      "hotel_name": "Earl's Regent Beruwala"
+    },
+    {
+      "key": "sheet:earls_kandy_perahera",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Earl's Regent Kandy: Perahera dates are not printed on the tactical sheet",
+      "detail": "The Perahera supplement is priced but the nights are missing. Add the 2026 Kandy Esala Perahera nights when the plan is created (the plan itself is waiting for a supplier record).",
+      "hotel_name": "Earl's Regent Kandy"
+    },
+    {
+      "key": "sheet:club_palm_bay_room",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Club Palm Bay: the rate tables carry no room-category heading — entered as \"Standard Room\"",
+      "detail": "Sigiriya Village prints \"Superior\" and The Palms prints \"Deluxe\"; the Club Palm Bay booklet prints nothing. The name needs confirming with the hotel (the figures are unaffected); the hotel has no room types in the live system yet.",
+      "hotel_acc": "6-9-11-11341",
+      "hotel_name": "Club Palm Bay"
+    },
+    {
+      "key": "sheet:club_palm_bay_winter",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Club Palm Bay: no winter 2026/27 rates in the e-mail although the subject says \"WINTER /SUMMER\"",
+      "detail": "Only the summer table arrived. Ask Fort Resorts for the winter 2026/27 sheet, otherwise winter nights at this hotel will have no contract rate.",
+      "hotel_acc": "6-9-11-11341",
+      "hotel_name": "Club Palm Bay"
+    },
+    {
+      "key": "sheet:sigiriya_ai_gala",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Sigiriya Village: is the compulsory Christmas / New Year supplement charged on AI as well?",
+      "detail": "The supplement is labelled \"On HB | FB\" while the restriction line requires HB, FB or AI. Entered as HB,FB exactly as printed, so an AI guest would not pick it up on those nights. Confirm with the hotel.",
+      "hotel_acc": "6-9-11-10628",
+      "hotel_name": "Sigiriya Village"
+    },
+    {
+      "key": "sheet:palms_address",
+      "kind": "sheet_query",
+      "level": "blue",
+      "title": "The Palms: the supplier record says \"The Palms Resort, Bentota\", the sheet says Moragalla, Beruwala",
+      "detail": "Same hotel per the mapping used for entry (6-9-11-10932); worth tidying the name and address under Master Files → Supplier so staff pick the right hotel.",
+      "hotel_acc": "6-9-11-10932",
+      "hotel_name": "The Palms"
+    },
+    {
+      "key": "sheet:elephant_reach_room",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Elephant Reach Yala: the rate table prints no room category — entered as \"Standard Room\"",
+      "detail": "Confirm the category name with the hotel so the timeline shows the right room type.",
+      "hotel_acc": "6-9-11-10630",
+      "hotel_name": "Elephant Reach Hotel Yala"
+    },
+    {
+      "key": "sheet:morven_last_year",
+      "kind": "sheet_query",
+      "level": "amber",
+      "title": "Morven Hotel Colombo: the sheet in the folder is last year’s",
+      "detail": "Entered as supplied so historical quotations price, but the current rates are missing. Ask the hotel for the 2026/27 sheet.",
+      "hotel_acc": "6-9-11-11392",
+      "hotel_name": "Morven Hotel Colombo"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+New-generation regression battery — 2026-10-06 05:47:40 — /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir
+== Screen suites (Playwright)
+-- ui_1c
+  ok   the test administrator signs in
+  ok   bar: the work tabs read Tour Inquiry … Transport Operations (no 'Inquiries', no bare 'Transport')
+  ok   bar: the rest of the tabs are as they were
+  ok   bar: Tour Inquiry is lit on its own screen, with the open count
+  ok   sidebar: the entries say Tour Inquiry and Transport Operations (menu_list names unchanged by 1c)
+  ok   the reading layer is included exactly once (through the bar)
+  ok   Masters opens
+  ok   Masters: the four groups, in order
+  ok   Masters: every master sits in its group (Tour Photos stays pinned on the bar)
+  ok   Masters: the URLs are the same twelve (one menu URL = one privilege, nothing new)
+  ok   Masters: two columns
+  ok   Masters: no group is split across the two columns
+  ok   Masters: the dividers are gone (the headings do that work)
+  ok   Masters: a count on a menu entry sits inline beside its name
+  ok   lead: the Tour Inquiry lead folds to its first sentence with 'How this works'
+  ok   lead: the first sentence shows, the rest is hidden until opened
+  ok   lead: 'How this works' opens the whole lead and reads 'Less'; nothing of the text is lost
+  ok   lead: and closes again
+  ok   rail: an open inquiry gets a section rail with one entry per section
+  ok   rail: it sits in the sticky side column on this screen
+  ok   rail: the entries are the section titles, in page order
+  ok   rail: a click jumps to the section
+  ok   rail: the current section is lit (one entry 'on' after the jump)
+  ok   fold: a section's title folds its body (the title stays)
+  ok   fold: the folded body is hidden, nothing removed from the page
+  ok   fold: the fold is remembered for the screen after a reload
+  ok   fold: and opens again from the title
+  ok   rail: after the screen re-renders its cards, the rail binds again (every jump attached, every title foldable, one rail)
+  ok   rail: and a jump still lands after the re-render
+  ok   rail: no rebuild loop (still one rail after idling)
+  ok   help: long explanations fold behind 'more'; the short field hints are untouched
+  ok   print: everything folded prints in full, the toggles do not print
+  ok   the picture slot with nothing in it says 'No picture yet' (source)
+  ok   Transport Operations: the screen's title is its name
+  ok   Transport Operations: its tab is lit
+  ok   Drivers & Guides: the title is the menu's name, the master named after it
+  ok   Drivers & Guides: the Transport & Guide Services strip is there with Drivers & Guides lit
+  ok   Hotel Incomplete Work: the Tour Desk bar is on the screen (as on live), Masters lit
+  ok   Hotel Incomplete Work: the reading layer once, through the bar
+  ok   Hotel Incomplete Work: the long lead folds to its first sentence (the whole text still there)
+  ok   Hotel Incomplete Work: one heading row per kind, each with its count
+  ok   Hotel Incomplete Work: every item sits under its heading, never two headings in a row
+  ok   Hotel Incomplete Work: the count on each heading equals the rows under it
+  ok   Hotel Incomplete Work: the item rows carry a colour dot, the kind pill sits once on the heading
+  ok   Hotel Incomplete Work: the heading row is shaded
+  ok   Hotel Incomplete Work: long explanations on the rows fold behind 'more'
+  ok   Hotel Incomplete Work: a search with no match shows no heading either
+  ok   Hotel Incomplete Work: the list comes back
+  ok   Hotel Incomplete Work: the KPI tiles are as before (open total first)
+  ok   no JS errors on the screens visited (the workspace's blocked lordicon fetch set aside)
+  ok   quote desk: the bar shows only its own screens ['tour/intake', 'tour/intake/confirmed']
+  ok   quote desk: every other screen is refused by the route filter (no 200)
+  ok   quote desk: its own screen opens (200)
+  ok   transport desk: the bar shows only its own screens ['tour/intake', 'tour/intake/confirmed', 'tour/transport_ops', 'tour/ticket_stock']
+  ok   transport desk: every other screen is refused by the route filter (no 200)
+  ok   transport desk: its own screen opens (200)
+  ok   hotel desk: the bar shows only its own screens ['tour/hotel_bookings', 'master_files/hotel_rate_v2', 'master_files/hotel_work']
+  ok   hotel desk: every other screen is refused by the route filter (no 200)
+  ok   hotel desk: its own screen opens (200)
+59 ok, 0 failed
+-- ui_hotel_work_flow
+  ok   the open list shows, grouped
+  ok   an item added by hand appears, marked 'added by hand'
+  ok   it sits under its kind's heading (the heading names the kind and counts it)
+  ok   the search narrows the list to that item, one heading above it
+  ok   closing it with a note removes it from the open list (and its heading goes with it)
+  ok   under Done it shows with who closed it and the note
+  ok   it can be reopened
+  ok   Refresh runs every detector and reports
+  ok   the full open list is back as it was
+  ok   the export still lists the open items under their kinds
+  ok   no JS errors
+11 ok, 0 failed
+-- ui_desks
+  ok   quote: signs in
+  ok   quote: the header names the group
+  ok   quote: the sidebar's Tour / Master entries are exactly the group's grants
+  ok   quote: the Tour Desk bar shows its screens only
+  ok   quote: no Masters menu on the bar
+  ok   quote: New quote only for a desk that holds Tour Inquiry
+  ok   quote: every screen answers as the grants say (22 asked)
+  ok   quote: a driver-advance approval POST is refused
+  ok   transport: signs in
+  ok   transport: the header names the group
+  ok   transport: the sidebar's Tour / Master entries are exactly the group's grants
+  ok   transport: the Tour Desk bar shows its screens only
+  ok   transport: no Masters menu on the bar
+  ok   transport: New quote only for a desk that holds Tour Inquiry
+  ok   transport: every screen answers as the grants say (22 asked)
+  ok   transport: a driver-advance approval POST is refused
+  ok   hotel: signs in
+  ok   hotel: the header names the group
+  ok   hotel: the sidebar's Tour / Master entries are exactly the group's grants
+  ok   hotel: the Tour Desk bar shows its screens only
+  ok   hotel: no Masters menu on the bar
+  ok   hotel: New quote only for a desk that holds Tour Inquiry
+  ok   hotel: every screen answers as the grants say (22 asked)
+  ok   hotel: a driver-advance approval POST is refused
+  ok   signed out: Tour Inquiry sends the visitor to sign in
+  ok   signed out: a data endpoint does not answer with data
+26 ok, 0 failed
+-- ui_masters
+  ok   Places & Entrance Fees: one row per live place
+  ok   Places & Entrance Fees: the search narrows the list
+  ok   Places & Entrance Fees: 'Add a place' opens the form (a new place starts with no rate)
+  ok   Places & Entrance Fees: nothing was saved by opening it
+  ok   Meal Master: opens with its lead and settings
+  ok   Meal Master: the Half Board default is dinner (the master's setting)
+  ok   Free Visits: the title is the menu name
+  ok   Free Visits: the Tour Desk bar is there, Masters lit
+  ok   Free Visits: rows on the screen for the 6 records
+  ok   Paid Activities & Services: the title is the menu name
+  ok   Paid Activities & Services: the Tour Desk bar is there, Masters lit
+  ok   Excursion Rates: the title is the menu name
+  ok   Excursion Rates: the Tour Desk bar is there, Masters lit
+  ok   Excursion Rates: rows on the screen for the 9 records
+  ok   Tour Photos: the library shows its pictures
+  ok   Transport Rates: the Transport & Guide Services strip, this screen lit
+  ok   Mileage & Allowances: the Transport & Guide Services strip, this screen lit
+  ok   Drivers & Guides: the Transport & Guide Services strip, this screen lit
+  ok   Crew Roles & Quotation Costing: the Transport & Guide Services strip, this screen lit
+  ok   Transport Rates: Sedan at LKR 100
+  ok   Transport Rates: Van at LKR 130
+  ok   Transport Rates: Mini coach at LKR 275
+  ok   Transport Rates: Coach at LKR 350
+  ok   Drivers & Guides: the tabs All · JSD · JSCG · JSNTG · To classify
+  ok   Drivers & Guides: the All tab counts the 106 active people
+  ok   Drivers & Guides: the To classify tab counts the people without a category
+  ok   Drivers & Guides: the Standard figures strip shows LKR 4,000 and 7,500 and the overnight allowance unset
+  ok   Drivers & Guides: the bank column is offered to the System Administrator
+  ok   no JS errors on the master screens
+29 ok, 0 failed
+-- ui_tour_operations
+  ok   New quote offers 'Paste an email' and 'Start by hand'
+  ok   Start by hand opens the manual form
+  ok   the nights are counted from the two dates, never typed
+  ok   saving makes one inquiry record
+  ok   the new inquiry has a number and 4 nights from its dates
+  ok   the record opens with its group name and 'Still needed' list
+  ok   the section rail is there
+  ok   the costing names what blocks a quotation instead of guessing (room mix, hotel per night, pricing)
+  ok   the costing of an empty inquiry is nothing, not a guess
+  ok   no quotation version exists for it
+  ok   it is listed among the open inquiries
+  ok   the client quotation page opens with a per-person price in USD
+  ok   the quotation page shows no cost or margin column (client view)
+  ok   the quotation e-mail page opens
+  ok   Confirmed Tours: opens with its name
+  ok   Hotel Bookings: opens with its name
+  ok   Transport Operations: opens with its name
+  ok   Tour Board: opens with its name
+  ok   Ticket Stock: opens with its name
+  ok   Pricing: opens with its name
+  ok   Pricing: shows 'markup'
+  ok   Tour Payment Dashboard: opens with its name
+  ok   Transport Operations: with no confirmed tour it says no tour is waiting (nothing invented)
+  ok   the tour record opens with its number and history
+  ok   Admin: the backups list answers with the copies folder
+  ok   Admin: the page opens as Admin with the copies of the TourFlow tables
+  ok   Ticket Stock: the attractions under control are listed (or the screen says there are none)
+  ok   the inquiry made here is archived at the end, not deleted
+  ok   no JS errors on the Tour Operations screens
+29 ok, 0 failed
+-- ui_hotel_rates
+  ok   the hotel list shows the active hotels
+  ok   the Tour Desk bar is on the panel, Masters lit
+  ok   search by name narrows the list
+  ok   the detail opens with the hotel's name
+  ok   its plans are listed with their status
+  ok   the rate-on-a-date card answers for today: a grid, or 'no approved rate' with the next season named
+  ok   on 2024-05-01 (a plan's first day) the grid prices at least one room
+  ok   the approval queue opens
+  ok   the queue speaks of the drafts waiting
+  ok   the quotation readiness page opens
+  ok   readiness data answers
+  ok   the panel summary answers for the dashboard tiles
+  ok   the rate-review holds list answers to the System Administrator
+  ok   no JS errors
+14 ok, 0 failed
+-- ui_security
+  ok   sign-in refuses a wrong password (401)
+  ok   sign-in refuses an unknown user (400)
+  ok   sign-in refuses empty fields (400)
+  ok   the session cookie is HttpOnly
+  ok   the session cookie is SameSite Lax or Strict
+  ok   transport desk: a crew replacement is refused by the controller (403)
+  ok   transport desk: a driver-advance approval is refused (404)
+  ok   management tester signs in
+  ok   management: the Driver & Guide Master opens (200) but carries no bank column
+  ok   management: a person's record carries no bank details
+  ok   System Administrator: the bank column is offered
+  ok   quotation desk: tour/hotel_bookings/data gives no data (403)
+  ok   quotation desk: tour/board/data gives no data (403)
+  ok   quotation desk: tour/manage/backups gives no data (403)
+  ok   quotation desk: master_files/crew_people/data gives no data (403)
+  ok   quotation desk: master_files/transport_rates/board gives no data (403)
+  ok   after sign-out the session is gone
+  ok   eight wrong tries in a row end in a lock-out (429) or steady refusals, never a 200
+18 ok, 0 failed
+-- sweep_http
+  ok   System Administrator signs in
+  ok   98 requests made by the 29 screens (documents, XHR, fetch): none answered 4xx/5xx
+   documents 29, data requests 69, distinct endpoints 40
+  ok   every Tour Operations GET data endpoint the screens use answers valid JSON when asked again (42 asked)
+   application log lines of level CRITICAL/ERROR so far today (the copy's log): 
+  ok   guard: admin — 25 menu URLs answer exactly as the privileges table says (25 open)
+  ok   guard: quote — 25 menu URLs answer exactly as the privileges table says (2 open)
+  ok   guard: transport — 25 menu URLs answer exactly as the privileges table says (4 open)
+  ok   guard: hotel — 25 menu URLs answer exactly as the privileges table says (3 open)
+  ok   guard: signed out, no Tour Desk screen opens
+8 ok, 0 failed
+-- survey
+  01_inquiries               200 tour/intake                                    h  900 Tour Inquiry  All inquiries        folds  1 rail  0 
+  02_inquiry_working         200 tour/intake?id=36                              h 6979 Tour Inquiry  All inquiries        folds  8 rail 19 
+  03_costing                 200 tour/intake/intake/36/costing                  h 1126                                    folds  0 rail  0 
+  04_inquiry_toured          200 tour/intake?id=20                              h11635 Tour Inquiry  All inquiries        folds  8 rail 20 
+  05_client_quotation        200 tour/intake/intake/20/quote/9                  h 2250                                    folds  0 rail  0 
+  06_quote_email             200 tour/intake/intake/20/quote/9/email            h  900                                    folds  0 rail  0 
+  07_confirmed_tours         200 tour/intake/confirmed                          h  900 Confirmed Tours                    folds  1 rail  0 
+  08_hotel_bookings          200 tour/hotel_bookings                            h  900 Hotel Bookings                     folds  1 rail  0 
+  09_hotel_tour_work         404 tour/hotel_bookings/tour/4/work                h  900                                    folds  0 rail  0 
+  10_hotel_card              200 tour/hotel_bookings/card/14                    h 3829                                    folds  0 rail  0 
+  11_transport_list          200 tour/transport_ops                             h  900 Transport Operations               folds  1 rail  0 
+  13_tour_board              200 tour/board                                     h  900 Tour Board                         folds  1 rail  0 
+  14_tour_record             200 tour/board/tour/4/record                       h 8745                                    folds  0 rail  0 
+  15_ticket_stock            200 tour/ticket_stock                              h 1204 Ticket Stock · entrance tickets un folds  2 rail  0 
+  16_admin                   200 tour/manage                                    h  900 Admin Admin only                   folds  2 rail  0 
+  17_pricing                 200 tour/pricing                                   h 1435 Pricing Management only            folds  2 rail  0 
+  18_hotel_rates             200 master_files/hotel_rate_v2                     h 1197 Hotel Rates                        folds  0 rail  0 
+  19_hotel_work              200 master_files/hotel_work                        h24149 Hotel Incomplete Work              folds 102 rail  0 
+  20_entrance_master         200 master_files/entrance_master                   h 3694 Place to Visit / Entrance Fee Mast folds  6 rail  0 
+  21_meal_master             200 master_files/meal_master                       h  900 Meal Master                        folds  1 rail  0 
+  22_paid_services           200 master_files/paid_services                     h 4609 Paid Activities & Services         folds  8 rail  0 
+  23_free_visits             200 master_files/free_visits                       h  909 Free Visits                        folds  1 rail  0 
+  24_excursion_rates         200 master_files/excursion_rates                   h  984 Excursion Rates                    folds  1 rail  0 
+  25_tour_photos             200 master_files/tour_photos                       h 2441 Tour Photos · Admin                folds  3 rail  0 
+  27_payment_dashboard       200 tour/tour_payment_dashboard                    h  900 Tour Payment Dashboard             folds  0 rail  0 
+  28_crew_people             200 master_files/crew_people                       h 9311 Drivers & Guides · the Driver & Gu folds  1 rail  0 
+  29_transport_rates         200 master_files/transport_rates                   h 1489 Transport Rates · Transport & Guid folds  1 rail  0 
+  30_mileage_allowances      200 master_files/mileage_allowances                h 1338 Mileage & Allowances · Transport & folds  3 rail  0 
+  31_crew_bata               200 master_files/crew_bata                         h 1182 Crew Roles & Quotation Costing · A folds  2 rail  0 
+  32_masters_menu            200 tour/intake                                    h  900 Tour Inquiry  All inquiries        folds  1 rail  0 
+  33_dashboard               200 dashboard                                      h 2374 Good Morning                       folds  0 rail  0 ERR Cannot read properties of null (reading 'getAttribute')
+screens: 31 with a non-200, a JS error or a failure: 2
+    09_hotel_tour_work 404 None
+    33_dashboard 200 ["Cannot read properties of null (reading 'getAttribute')", "Cannot read properties of null (reading 'getAttribute')", "Cannot read properties of null (reading 'getAttribute')", "Cannot read properties of null (reading 'getAttribute')", "Cannot read properties of null (reading 'getAttribute')"]

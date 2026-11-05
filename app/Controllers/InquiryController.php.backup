@@ -1,0 +1,1015 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Libraries\MenuLoader;
+use App\Models\ApiInquiryModel;
+use App\Models\CustomerModel;
+use App\Models\InquiryModel;
+use App\Models\InquiryConsigneeModel;
+use App\Models\InquiryQuotationsModel;
+use App\Models\InquirySubLocationsModel;
+use App\Models\InquiryActivityModel;
+use App\Models\InquiryItineraryModel;
+use App\Models\InquiryPassengerDetailsModel;
+use App\Models\SupplierModel;
+use App\Models\HotelRateModel;
+use App\Models\RoomTypeModel;
+use App\Models\TransferMilageModel;
+use App\Models\CountryCodeModel;
+use App\Models\EntranceFeeModel;
+use App\Models\ExtraKilometersModels;
+use App\Models\InvoiceNumberModel;
+use App\Models\VehicleModel;
+use App\Controllers\Inquiry\InquirySubLocationsController;
+use App\Controllers\Inquiry\InquiryItineraryController;
+use App\Controllers\Inquiry\InquiryActivityController;
+use App\Controllers\MasterFiles\TransferMilageController;
+use CodeIgniter\RESTful\ResourceController;
+
+class InquiryController extends ResourceController
+{
+    public function __construct()
+    {
+        date_default_timezone_set('Asia/Colombo');
+    }
+
+    private function generateInquiryCode()
+    {
+        $today = date('dmY'); // Format: DDMMYYYY
+        $prefix = 'INQ';
+
+        $model = new InquiryModel();
+
+        // Find latest code for today with INQ prefix
+        $latestInquiry = $model->like('inquiry_code', $prefix . $today)
+                              ->orderBy('inquiry_code', 'DESC')
+                              ->first();
+
+        // Extract and increment sequence
+        if ($latestInquiry && !empty($latestInquiry['inquiry_code'])) {
+            $sequence = (int)substr($latestInquiry['inquiry_code'], -3) + 1;
+        } else {
+            $sequence = 1;
+        }
+
+        // Format as 3-digit sequence
+        $paddedSequence = str_pad($sequence, 3, '0', STR_PAD_LEFT);
+
+        return $prefix . $today . $paddedSequence;
+    }
+
+    public function index()
+    {
+                 $data = array();
+        
+        // Load menu data using the custom library
+        $menuLoader = new MenuLoader();
+        $data = $menuLoader->loadMenuData();
+        
+        $model = new InquiryModel();
+        $data['inquiries'] = $model
+            ->select('inquiry.*, customers.Name as agent')
+            ->join('customers', 'customers.Sup_Acc_No = inquiry.agent_name')
+            ->orderBy('is_accepted', 'ASC')
+            ->orderBy('record_time', 'DESC')
+            ->findAll();
+
+        return view('pages/tour/inquiry', $data);
+
+    }
+
+    public function all()
+    {
+        $data = array();
+
+        // Load menu data using the custom library
+        $menuLoader = new MenuLoader();
+        $data = $menuLoader->loadMenuData();
+
+        $model = new InquiryModel();
+        // Get system inquiries (internal) - these have agent_name field
+        $data['inquiries'] = $model
+            ->select('inquiry.*, customers.Name as agent')
+            ->join('customers', 'customers.Sup_Acc_No = inquiry.agent_name', 'left')
+            ->where('inquiry.agent_name IS NOT NULL')
+            ->where('inquiry.agent_name !=', '')
+            ->orderBy('is_accepted', 'ASC')
+            ->orderBy('record_time', 'DESC')
+            ->findAll();
+
+        // Get API inquiries (external) - these have Name, Email, etc. fields but no agent_name
+        $data['api_inquiries'] = $model
+            ->where('inquiry.agent_name IS NULL OR inquiry.agent_name = ""')
+            ->where('inquiry.Name IS NOT NULL')
+            ->orderBy('record_time', 'DESC')
+            ->findAll();
+
+        return view('pages/tour/inquiry_report', $data);
+    }
+
+    // New inquiry form view
+    public function form()
+    {
+        $data = array();
+
+        // Load menu data using the custom library
+        $menuLoader = new MenuLoader();
+        $data = $menuLoader->loadMenuData();
+
+        $consigneeModel = new InquiryConsigneeModel();
+        $consigneeModel->where('finalize', 0)->where('start_date !=', null)->where('end_date !=', null);
+        $data['rowCount'] = $consigneeModel->countAllResults();
+
+        $data['pending_quotations'] = $consigneeModel
+            ->where('finalize', 0)
+            ->where('start_date !=', null)
+            ->where('end_date !=', null)
+            ->orderBy('tour_id', 'ASC')->findAll();
+
+        $supplierModel = new SupplierModel();
+        $data['hotel'] = $supplierModel->where('sup_cat', 1)->orderBy('Name', 'ASC')->findAll();
+
+        $data['hotel_location'] = $supplierModel->select('Address')->where('sup_cat', 1)->groupBy('Address')->orderBy('Address', 'ASC')->findAll();
+
+        $hotelRateModel = new HotelRateModel();
+        $data['hotel_code'] = $hotelRateModel->select('hotel_code')->orderBy('hotel_code', 'ASC')->findAll();
+
+        $roomTypeModel = new RoomTypeModel();
+        $data['roomtype'] = $roomTypeModel->findAll();
+
+        $transferMilageModel = new TransferMilageModel();
+        $data['transfer_code'] = $transferMilageModel->findAll();
+
+        $countryCodeModel = new CountryCodeModel();
+        $data['countries'] = $countryCodeModel->findAll();
+
+        $customerModel = new CustomerModel();
+        $data['agents'] = $customerModel->findAll();
+
+        $SupplierModel = new SupplierModel();
+        $data['transport_agents'] = $SupplierModel->where('sup_cat', 2)->findAll();
+
+        // get is_accepted == 1 inquiries from main inquiry table
+        $model = new InquiryModel();
+        $data['inquiries'] = $model->where('is_accepted', 1)->where('is_created', 0)->findAll();
+        $data['rowCountitinerary'] = $model->countAllResults();
+
+        $id = $this->request->getGet('tour_id');
+        $start_date = $this->request->getGet('start');
+        $end_date = $this->request->getGet('end');
+
+        $data['quotation_id'] = $id;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+
+        if (!empty($id)) {
+            $InquiryQuotationsModel = new InquiryQuotationsModel();
+            $data['quotation_details'] = $InquiryQuotationsModel
+                ->select('inquiry_quotations.*, transfer_milage.transfer_code as code')
+                ->join('transfer_milage', 'transfer_milage.id = inquiry_quotations.transfer_code', 'left')
+                ->where('inquiry_quotations.quotation_id', $id)
+                ->findAll();
+        }
+
+        return view('pages/inquiry/inquiry_form', $data);
+    }
+
+    public function insert_consignee()
+    {
+        try {
+            $validation = \Config\Services::validation();
+
+            $validation->setRules([
+                'inquiry_id' => 'permit_empty|strip_tags',
+                'start_date' => 'required|strip_tags',
+                'end_date' => 'required|strip_tags',
+                'consignee' => 'required|strip_tags',
+                'email' => 'required|strip_tags',
+                'agent_ref' => 'required|strip_tags',
+                'country' => 'strip_tags',
+                'con_code' => 'strip_tags',
+                'contact' => 'required|strip_tags',
+                'vehicle' => 'permit_empty|strip_tags',
+                'vehicle_name' => 'permit_empty|strip_tags',
+                'vehicle_rate' => 'permit_empty|strip_tags',
+                'pass_count' => 'required|strip_tags',
+                'agent' => 'required|strip_tags',
+                'arrival_flight' => 'strip_tags',
+                'departure_flight' => 'strip_tags',
+                'manual_tour_id' => 'strip_tags',
+                'hotel_only' => 'permit_empty|strip_tags',
+                'transport_only' => 'permit_empty|strip_tags',
+            ]);
+
+            if ($validation->withRequest($this->request)->run()) {
+                $inquiry_id = $this->request->getVar('inquiry_id');
+                $start_date = $this->request->getVar('start_date');
+                $end_date = $this->request->getVar('end_date');
+                $consignee = $this->request->getVar('consignee');
+                $email = $this->request->getVar('email');
+                $agent_ref = $this->request->getVar('agent_ref');
+                $country = $this->request->getVar('country');
+                $con_code = $this->request->getVar('con_code');
+                $contact = $this->request->getVar('contact');
+                $vehicle = $this->request->getVar('vehicle');
+                $vehicle_name = $this->request->getVar('vehicle_name');
+                $vehicle_rate = $this->request->getVar('vehicle_rate');
+                $pass_count = $this->request->getVar('pass_count');
+                $agent = $this->request->getVar('agent');
+                $agent_name = $this->request->getVar('agent_name');
+                $agent_prefix = $this->request->getVar('agent_prefix');
+                $arr_flight = $this->request->getVar('arrival_flight');
+                $arr_flight_time = $this->request->getVar('arrival_flight_time');
+                $depart_flight = $this->request->getVar('departure_flight');
+                $depart_flight_time = $this->request->getVar('departure_flight_time');
+                $is_hotel = $this->request->getVar('hotel_only');
+                $is_transport = $this->request->getVar('transport_only');
+
+                $invoiceNumberModel = new InvoiceNumberModel();
+                $tour_id = $invoiceNumberModel->incrementTourNo();
+                $manual_id = $invoiceNumberModel->incrementManualTourId();
+
+                // add prefix to manual id
+                $manual_id = "INQ" . " " . $manual_id;
+
+                if ($is_hotel == 0) {
+                    if (empty($vehicle) || empty($vehicle_name) || empty($vehicle_rate)) {
+                        return $this->response->setJSON(["status" => 400, "message" => "Please provide valid data."]);
+                    }
+                }
+
+                // both is_hotel and is_transport can not be 1
+                if ($is_hotel == 1 && $is_transport == 1) {
+                    return $this->response->setJSON(["status" => 400, "message" => "Please provide valid data. Both Hotel and Transport Only can not be true."]);
+                }
+
+                // manual id must be unique
+                $consigneeModel = new InquiryConsigneeModel();
+                $manual_id_exists = $consigneeModel->where('manual_id', $manual_id)->first();
+                if (!empty($manual_id_exists)) {
+                    return $this->response->setJSON(["status" => 400, "message" => "Manual ID already exists. Please provide a unique manual ID."]);
+                }
+
+                $agent_ref_exists = $consigneeModel->where('agent_ref', $agent_ref)->first();
+                if (!empty($agent_ref_exists)) {
+                    return $this->response->setJSON(["status" => 400, "message" => "Agent Reference is already exists. Please provide a unique Reference."]);
+                }
+
+                // end date must be greater than start date
+                $start_date = date('Y-m-d', strtotime($start_date));
+                $end_date = date('Y-m-d', strtotime($end_date));
+                if ($start_date > $end_date) {
+                    return $this->response->setJSON(["status" => 400, "message" => "End date must be greater than start date."]);
+                }
+
+                $session = session();
+                $username = $session->get('username');
+
+                $ConsigneeModel = new InquiryConsigneeModel();
+                $data = [
+                    'tour_id' => $tour_id,
+                    'consignee' => $consignee,
+                    'country' => $country,
+                    'k_code' => $con_code,
+                    'mobile' => $contact,
+                    'email' => $email,
+                    'agent_ref' => $agent_ref,
+                    'vehicle' => $vehicle,
+                    'vehicle_name' => $vehicle_name,
+                    'vehicle_rate' => $vehicle_rate,
+                    'passenger_count' => $pass_count,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                    'create_user' => $username,
+                    'create_time' => date('Y-m-d H:i:s'),
+                    'manual_id' => $manual_id,
+                    'agent' => $agent,
+                    'agent_name' => $agent_name,
+                    'arrival_flight' => $arr_flight,
+                    'departure_flight' => $depart_flight,
+                    'arrival_flight_time' => $arr_flight_time,
+                    'departure_flight_time' => $depart_flight_time,
+                ];
+
+                if ($ConsigneeModel->insert($data)) {
+                    $this->add_remove_days_in_qt_table($tour_id);
+
+                    $inquiryModel = new InquiryModel();
+                    $inquiryModel->where('id', $inquiry_id)->set(['is_created' => 1])->update();
+
+                    return $this->response->setJSON(["status" => 200, "message" => "Successfully Added", "tour_id" => $tour_id]);
+                } else {
+                    return $this->response->setJSON(["status" => 500, "message" => "Something went wrong"]);
+                }
+            } else {
+                // Bad Request
+                return $this->response->setJSON(["status" => 400, "message" => "Please provide valid data.", "errors" => $validation->getErrors()]);
+            }
+        } catch (\Exception $e) {
+            log_message('critical', 'InquiryController::insert_consignee exception: ' . $e->getMessage() . ' on line ' . $e->getLine());
+            return $this->response->setJSON(["status" => 500, "message" => $e->getMessage()]);
+        }
+    }
+
+    public function timeline($tour_id = 0)
+    {
+        $data = array();
+
+        // Load menu data using the custom library
+        $menuLoader = new MenuLoader();
+        $data = $menuLoader->loadMenuData();
+
+        $data['tour_id'] = $tour_id;
+        $data['valid_tour'] = false;
+
+        // get url last segment
+        $last_segment = $this->request->getVar('edit');
+
+        if (!empty($tour_id) && $tour_id != 0) {
+            $data['valid_tour'] = true;
+
+            $consigneeModel = new InquiryConsigneeModel();
+            $data['consignee'] = $consigneeModel->where('tour_id', $tour_id)->first();
+
+            $start_date = $data['consignee']['start_date'];
+            $end_date = $data['consignee']['end_date'];
+
+            // if start date > end date
+            if ($start_date > $end_date) {
+                $data['valid_tour'] = false;
+            }
+
+            $entranceFeeModel = new EntranceFeeModel();
+            $data['places'] = $entranceFeeModel->findAll();
+            $data['activity_places'] = $entranceFeeModel->findAll();
+
+            $supplierModel = new SupplierModel();
+            $data['hotel_location'] = $supplierModel->select('Address')->where('sup_cat', 1)->groupBy('Address')->orderBy('Address', 'ASC')->findAll();
+            $data['hotels'] = $supplierModel->select('Sup_Acc_No as Hotel_Code, Name as Hotel_Name')->where('sup_cat', 1)->orderBy('Name', 'ASC')->findAll();
+
+            // Define meal codes
+            $data['meal_codes'] = [
+                ['meal_code' => 'RO'],
+                ['meal_code' => 'BB'],
+                ['meal_code' => 'HB'],
+                ['meal_code' => 'FB']
+            ];
+
+            $roomTypeModel = new RoomTypeModel();
+            $data['room_types'] = $roomTypeModel->findAll();
+
+            $countryCodeModel = new CountryCodeModel();
+            $data['countries'] = $countryCodeModel->findAll();
+
+            $customerModel = new CustomerModel();
+            $data['agents'] = $customerModel->findAll();
+
+            $SupplierModel = new SupplierModel();
+            $data['transport_agents'] = $SupplierModel->where('sup_cat', 2)->findAll();
+
+            $data['last_segment'] = $last_segment;
+        }
+
+        return view('pages/inquiry/inquiry_timeline', $data);
+    }
+
+    public function get_tour_details($tour_id)
+    {
+        if (!empty($tour_id) && $tour_id != 0) {
+            $consigneeModel = new InquiryConsigneeModel();
+            $consignee = $consigneeModel
+                ->where('tour_id', $tour_id)
+                ->first();
+
+            return $this->response->setJSON(['status' => 200, 'data' => $consignee]);
+        }
+
+        return $this->response->setJSON(['status' => 404, 'message' => 'Unable to find the inquiry details']);
+    }
+
+    public function get_tour_data($t_id)
+    {
+        $InquiryQuotationsModel = new InquiryQuotationsModel();
+        $consigneeModel = new InquiryConsigneeModel();
+
+        $data['quotation_details'] = $InquiryQuotationsModel
+            ->select('inquiry_quotations.*, transfer_milage.transfer_code as code, room_type.rtype, supplier.Address')
+            ->join('supplier', 'supplier.Sup_Acc_No = inquiry_quotations.hotel_acc', 'left')
+            ->join('transfer_milage', 'transfer_milage.id = inquiry_quotations.transfer_code', 'left')
+            ->join('room_type', 'room_type.id = inquiry_quotations.room_type', 'left')
+            ->where('inquiry_quotations.quotation_id', $t_id)
+            ->orderBy('inquiry_quotations.quotation_day', 'ASC')
+            ->findAll();
+
+        // Step 2: Get the quotation_id from the first result (assuming there is at least one result)
+        if (!empty($data['quotation_details'])) {
+            $quotation_id = $data['quotation_details'][0]['quotation_id'];
+
+            // Step 3: Get results from the consignee table where tour_id equals quotation_id
+            $consigneeResults = $consigneeModel->where('tour_id', $quotation_id)->findAll();
+
+            $inquirySubLocationsController = new InquirySubLocationsController();
+            $inquiryActivityController = new InquiryActivityController();
+
+            $last_saved_date = $this->get_last_saved_date($quotation_id);
+
+            // Step 4: Append the consignee results to the quotation details
+            foreach ($data['quotation_details'] as $key => $detail) {
+                // consignee -- NOT REQUIRED
+                $data['quotation_details'][$key]['consignee'] = $consigneeResults[0];
+
+                // if $detail['tour_date'] == $last_saved_date
+                $data['quotation_details'][$key]['last_saved_date'] = $detail['tour_date'] == $last_saved_date ? true : false;
+
+                // sub locations
+                $sub_locations = $inquirySubLocationsController->get_sub_locations($quotation_id, $detail['tour_date']);
+                if (!empty($sub_locations)) {
+                    $sub_locations = json_decode($sub_locations, true);
+                }
+                $data['quotation_details'][$key]['sub_locations'] = $sub_locations;
+
+                // tour activities
+                $tourActivities = $inquiryActivityController->get_tour_activities($quotation_id, $detail['tour_date']);
+                if (!empty($tourActivities)) {
+                    $tourActivities = json_decode($tourActivities, true);
+                    if ($tourActivities['status'] == 200) {
+                        $tourActivities = $tourActivities['activities'];
+                    } else {
+                        $tourActivities = [];
+                    }
+                }
+                $data['quotation_details'][$key]['tour_activities'] = $tourActivities;
+
+                // get itenaries
+                $itenaries = $this->itinerary_all($quotation_id, $detail['quotation_day'], $detail['tour_date']);
+                if (!empty($itenaries)) {
+                    $itenaries = json_decode($itenaries, true);
+                }
+                $data['quotation_details'][$key]['itenaries'] = $itenaries;
+            }
+        }
+
+        return $this->response->setJSON(['data' => $data['quotation_details']]);
+    }
+
+    public function get_last_saved_date($tour_id)
+    {
+        $InquiryQuotationsModel = new InquiryQuotationsModel();
+        $last_date = $InquiryQuotationsModel
+            ->select('tour_date')
+            ->where('quotation_id', $tour_id)
+            ->where('saved', 1)
+            ->orderBy('tour_date', 'DESC')
+            ->first();
+
+        return $last_date ? json_encode($last_date['tour_date']) : json_encode('');
+    }
+
+    public function itinerary_all($tour, $row, $date)
+    {
+        try {
+            // Create a new InquiryItineraryModel instance
+            $inquiryItineraryModel = new InquiryItineraryModel();
+            $itinerary = $inquiryItineraryModel->select('*')
+                ->where('tour_id', $tour)
+                ->where('tour_row', $row)
+                ->where('tour_date', $date)
+                ->orderBy('order_id', 'ASC')
+                ->findAll();
+
+            return json_encode($itinerary);
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function save_date()
+    {
+        try {
+            $validation = \Config\Services::validation();
+            $validation->setRules([
+                'trans_tour_id' => 'required',
+                'trans_row_id' => 'required',
+                't_date' => 'required',
+                'hotel' => 'permit_empty',
+                'room_type' => 'permit_empty',
+                'room_type_id' => 'permit_empty',
+                'meal_code' => 'permit_empty',
+                'up_flag' => 'required',
+                'slct_htl' => 'permit_empty',
+                'slct_htl_c' => 'permit_empty'
+            ]);
+
+            if ($validation->withRequest($this->request)->run()) {
+                $request = $this->request->getPost();
+
+                $tour_id = $request['trans_tour_id'];
+                $row_id = $request['trans_row_id'];
+                $t_date = $request['t_date'];
+                $transfer_code = isset($request['transfer_code']) ? strip_tags($request['transfer_code']) : null;
+                $hotel = isset($request['hotel']) ? strip_tags($request['hotel']) : null;
+                $hotel_code = isset($request['hotel_code']) ? strip_tags($request['hotel_code']) : null;
+
+                $room_type = isset($request['room_type']) ? strip_tags($request['room_type']) : null;
+                $room_type_id = isset($request['room_type_id']) ? strip_tags($request['room_type_id']) : null;
+
+                $meal_code = isset($request['meal_code']) ? strip_tags($request['meal_code']) : null;
+
+                $flag = strip_tags($request['up_flag']);
+                $slct_htl = $hotel;
+                $slct_htl_c = $hotel_code;
+
+                $hotel_only = strip_tags($request['is_hotel']);
+
+                $real_hotel = ($hotel !== null && $hotel !== '') ? $hotel : $slct_htl;
+                $real_hotel_code = ($hotel_code !== null && $hotel_code !== '') ? $hotel_code : $slct_htl_c;
+                $room_type = $room_type ?? '0';
+
+                $quotation_id = $tour_id;
+                $quotation_day = $row_id;
+
+                $session = session();
+                $username = $session->get('username');
+
+                // real hotel is required
+                if (empty($real_hotel)) {
+                    $real_hotel = '';
+                }
+
+                $inquirySubLocationsModel = new InquirySubLocationsModel();
+                $sub_locations = $inquirySubLocationsModel->where('quotation_id', $tour_id)->where('tour_row', $row_id)->where('date_id', $t_date)->findAll();
+
+                if (empty($sub_locations) && $hotel_only == 0) {
+                    $sub_locations = [];
+                }
+
+                // get from of first sub location
+                $pick_location = $sub_locations[0]['from'] ?? '';
+                // get to of last sub location
+                $drop_location = $sub_locations[count($sub_locations) - 1]['to'] ?? '';
+
+                // get total distance of all sub locations
+                $gdistance = 0;
+                $distance = 0;
+                $extrakm = 0;
+                if ($hotel_only == 0) {
+                    foreach ($sub_locations as $sub) {
+                        $gdistance += $sub['estimate_km'];
+                        $distance += $sub['km'];
+                        $extrakm += $sub['extra_km'];
+                    }
+                }
+
+                if (strpos($pick_location, ', Sri Lanka') !== false) {
+                    $pick_location = str_replace(', Sri Lanka', '', $pick_location);
+                }
+
+                if (strpos($drop_location, ', Sri Lanka') !== false) {
+                    $drop_location = str_replace(', Sri Lanka', '', $drop_location);
+                }
+
+                $supplierModel = new SupplierModel();
+                $hotel_name = $supplierModel->select('Name')->where('Sup_Acc_No', $real_hotel)->find();
+
+                $InquiryQuotationsModel = new InquiryQuotationsModel();
+                $exist_data = $InquiryQuotationsModel->select("*")->where('quotation_id', $quotation_id)->where('quotation_day', $quotation_day)->get()->getRowArray();
+
+                $hotel = isset($hotel_name[0]['Name']) ? $hotel_name[0]['Name'] : '';
+                $data = [
+                    'quotation_id' => $tour_id,
+                    'quotation_day' => $quotation_day,
+                    'distance_type' => 2,
+                    'transfer_code' => $transfer_code,
+                    'from_location' => $pick_location,
+                    'to_location' => $drop_location,
+                    'gdistance' => $gdistance,
+                    'distance' => $distance,
+                    'extra_kilo' => $extrakm,
+                    'hotel_code' => $real_hotel_code,
+                    'meal_code' => $meal_code,
+                    'hotel_acc' => $real_hotel,
+                    'hotel_name' => isset($hotel_name[0]['Name']) ? $hotel_name[0]['Name'] : '',
+                    'room_type' => $room_type,
+                    'room_type_id' => $room_type_id,
+                    'tour_date' => $t_date,
+                    "created_time" => date('Y-m-d H:i:s'),
+                    "created_user" => $username,
+                    "det_flag" => 1,
+                    'saved' => 1
+                ];
+
+                $consigneeModel = new InquiryConsigneeModel();
+
+                if (empty($exist_data) && ($flag == 0)) {
+                    if ($InquiryQuotationsModel->insert($data)) {
+                        // Call the new_create new_create method in Touting Registry after inserting
+                        if ($hotel_only == 0 && $distance > 0) {
+                            $TransferMilageController = new TransferMilageController();
+                            $cxf = $TransferMilageController->new_create($pick_location, $drop_location, $gdistance, $distance);
+                        }
+
+                        $ItineraryController = new InquiryItineraryController();
+                        $ItineraryController->add_itinerary($tour_id, $quotation_day, $t_date, $pick_location, $drop_location, 0, $hotel, $room_type, $meal_code, 0);
+
+                        return $this->response->setJSON(["status" => 200, "message" => "Successfully Added", "tour_id" => $tour_id, "row_id" => $row_id]);
+                    } else {
+                        log_message('critical', 'InquiryController::save_date insert failed for tour_id=' . $tour_id);
+                        return $this->response->setJSON(["status" => 500, "message" => "Something went wrong"]);
+                    }
+                } else if (!empty($exist_data) && ($flag == 1)) { // Edit Quatation
+                    if ($InquiryQuotationsModel->where('quotation_id', $quotation_id)->where('quotation_day', $quotation_day)->set($data)->update()) {
+                        // Call the new_create new_create method in Touting Registry after inserting
+                        if ($hotel_only == 0 && $distance > 0) {
+                            $TransferMilageController = new TransferMilageController();
+                            $TransferMilageController->new_create($pick_location, $drop_location, $gdistance, $distance);
+                        }
+
+                        $ItineraryController = new InquiryItineraryController();
+                        $ItineraryController->add_itinerary($tour_id, $quotation_day, $t_date, $pick_location, $drop_location, 0, $hotel, $room_type, $meal_code, 0);
+
+                        $con_up = $consigneeModel->where('tour_id', $tour_id)->set(['finalize_txt' => 1])->update();
+
+                        if ($con_up) {
+                            $max_confirm = $InquiryQuotationsModel->selectMax('confirm')->where('quotation_id', $tour_id)->first();
+                            if ($max_confirm['confirm'] == 1) {
+                                return $this->response->setJSON(["status" => 201, "message" => "Successfully updated!", "tour_id" => $tour_id]);
+                            } else {
+                                return $this->response->setJSON(["status" => 200, "message" => "Successfully Updated", "tour_id" => $tour_id, "row_id" => $row_id, "sub_locations" => $sub_locations]);
+                            }
+                        }
+                    } else {
+                        log_message('critical', 'InquiryController::save_date update failed for tour_id=' . $tour_id);
+                        return $this->response->setJSON(["status" => 500, "message" => "Something went wrong"]);
+                    }
+                }
+
+                return $this->response->setJSON(["status" => 400, "message" => "Something went wrong. Please try again. ERROR : NO UPFLAG FOUND"]);
+            } else {
+                // Bad Request
+                return $this->response->setJSON(["status" => 400, "message" => "Please provide valid data.", "errors" => $validation->getErrors()]);
+            }
+        } catch (\Exception $e) {
+            log_message('critical', 'InquiryController::save_date exception: ' . $e->getMessage() . ' on line ' . $e->getLine());
+            return $this->response->setJSON(["status" => 500, "message" => $e->getMessage()]);
+        }
+    }
+
+    private function add_remove_days_in_qt_table($tour_id)
+    {
+        // add empty rows to the inquiry_quotations table
+        $InquiryQuotationsModel = new InquiryQuotationsModel();
+        $ConsigneeModel = new InquiryConsigneeModel();
+        $consignee = $ConsigneeModel->where('tour_id', $tour_id)->first();
+        $start_date = $consignee['start_date'];
+        $end_date = $consignee['end_date'];
+
+        $days = [];
+
+        // loop through start date to end date
+        $x = 0;
+        for ($i = strtotime($start_date); $i <= strtotime($end_date); $i = strtotime('+1 day', $i)) {
+            $date = date('Y-m-d', $i);
+            $days[] = $date;
+            $x++;
+
+            // check if the date exists in the inquiry_quotations table
+            $exist = $InquiryQuotationsModel->where('quotation_id', $tour_id)->where('tour_date', $date)->countAllResults();
+
+            if (!$exist) {
+                // insert a new row
+                $InquiryQuotationsModel->insert([
+                    'quotation_id' => $tour_id,
+                    'quotation_day' => $x,
+                    'tour_date' => $date,
+                    'created_time' => date('Y-m-d H:i:s'),
+                    'created_user' => session()->get('username'),
+                    'is_sub' => 0,
+                    'saved' => 0
+                ]);
+            }
+        }
+        // if there any days with tour_id in quotation table where tour_date not in days array
+        $InquiryQuotationsModel->where('quotation_id', $tour_id)->whereNotIn('tour_date', $days)->delete();
+    }
+
+    // Additional methods for the inquiry functionality
+    public function load_vehicles()
+    {
+        try {
+            $VehicleModel = new VehicleModel();
+            $vehicle_details = $VehicleModel->select('*')
+                ->orderBy('passenger_count', 'ASC')->findAll();
+            return $this->response->setJSON(['status' => 200, 'data' => $vehicle_details]);
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function get_consignee_details($agent)
+    {
+        try {
+            $CustomerModel = new CustomerModel();
+            $agentdetail = $CustomerModel->where('Sup_Acc_No', $agent)->first();
+            return $this->response->setJSON(['status' => 200, 'data' => $agentdetail]);
+        } catch (\Exception $e) {
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function get_hotel_details()
+    {
+        $date = $this->request->getGet('date');
+
+        $supplierModel = new SupplierModel();
+        $data['hotels'] = $supplierModel
+            ->join('hotel_rate', 'hotel_rate.hotel = supplier.Sup_Acc_No', 'left')
+            ->where('supplier.sup_cat', 1)
+            ->groupBy('supplier.Name')
+            ->orderBy('supplier.Name', 'ASC')
+            ->findAll();
+
+        if (!empty($data)) {
+            return $this->response->setJSON(['status' => 200, 'data' => $data]);
+        } else {
+            return $this->response->setJSON(['status' => 404, 'message' => 'No data found']);
+        }
+    }
+
+    public function get_hotel_type()
+    {
+        $destination = $this->request->getGet('hotelId');
+        $date = $this->request->getGet('date');
+
+        if (empty($destination)) {
+            return $this->response->setJSON(['status' => 400, 'message' => 'Search location is required']);
+        }
+
+        $hotelrateModel = new HotelRateModel();
+        $data['hotels_type'] = $hotelrateModel->select('room_type.*')->join('room_type', 'room_type.id = hotel_rate.room_type')->where('hotel_rate.sdate <=', $date)->where('hotel_rate.edate >=', $date)->where('hotel_rate.hotel', $destination)->findAll();
+
+        if (!empty($data)) {
+            return $this->response->setJSON(['status' => 200, 'data' => $data]);
+        } else {
+            return $this->response->setJSON(['status' => 404, 'message' => 'No data found']);
+        }
+    }
+
+    public function get_meal_prices()
+    {
+        $hotel_code = $this->request->getGet('h_code');
+        $room_type = $this->request->getGet('room_type');
+        $meal_plan = $this->request->getGet('meal_plan');
+        $date = $this->request->getGet('date');
+
+        $hotelrateModel = new HotelRateModel();
+        $data = $hotelrateModel
+            ->select('*')
+            ->where('hotel', $hotel_code)
+            ->where('room_type', $room_type)
+            ->where('hotel_rate.sdate <=', $date)
+            ->where('hotel_rate.edate >=', $date)
+            ->first();
+
+        if (!empty($data)) {
+            return $this->response->setJSON(['status' => 200, 'data' => $data]);
+        } else {
+            return $this->response->setJSON(['status' => 404, 'message' => 'No data found']);
+        }
+    }
+
+    public function finalize($tour)
+    {
+        try {
+            $is_template = $this->request->getVar('is_template');
+
+            $ConsigneeModel = new InquiryConsigneeModel();
+            $consignee = $ConsigneeModel->where('tour_id', $tour)->first();
+
+            $data = [
+                'finalize' => 1,
+                'finalize_txt' => 0,
+                'is_template' => $is_template
+            ];
+
+            $InquiryQuotationsModel = new InquiryQuotationsModel();
+
+            // get records from inquiry_quotations table
+            $quotation_details = $InquiryQuotationsModel->where('quotation_id', $tour)->findAll();
+            // if empty return error
+            if (empty($quotation_details)) {
+                return $this->response->setJSON(["status" => 400, "message" => "No valid data found for the inquiry dates."]);
+            }
+
+            if (($InquiryQuotationsModel->set($data)->where('quotation_id', $tour)->update()) && ($ConsigneeModel->set($data)->where('tour_id', $tour)->update())) {
+                return $this->response->setJSON(["status" => 200, "message" => "Successfully Finalized!", "tour_id" => $tour]);
+            } else {
+                return $this->response->setJSON(["status" => 500, "message" => "Something went wrong"]);
+            }
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function delete_date()
+    {
+        try {
+            $date = $this->request->getPost('date');
+            $tour = $this->request->getPost('tour_id');
+            $row = $this->request->getPost('row');
+
+            $inquiryQuotationsModel = new InquiryQuotationsModel();
+            $inquirySubLocationsModel = new InquirySubLocationsModel();
+            $inquiryActivityModel = new InquiryActivityModel();
+            $inquiryItineraryModel = new InquiryItineraryModel();
+
+            // Get existing data before deletion
+            $existingData = $inquiryQuotationsModel->where('quotation_id', $tour)->where('tour_date', $date)->first();
+
+            if ($inquiryQuotationsModel->where('quotation_id', $tour)->where('tour_date', $date)->delete()) {
+                $inquirySubLocationsModel->where('quotation_id', $tour)->where('tour_row', $row)->where('date_id', $date)->delete();
+                $inquiryActivityModel->where('tour_id', $tour)->where('tour_row', $row)->where('tour_date', $date)->delete();
+                $inquiryItineraryModel->where('tour_id', $tour)->where('tour_row', $row)->where('tour_date', $date)->delete();
+
+                // add new empty row to the quotation table
+                $inquiryQuotationsModel->insert([
+                    'quotation_id' => $tour,
+                    'quotation_day' => $row,
+                    'tour_date' => $date,
+                    'created_time' => date('Y-m-d H:i:s'),
+                    'created_user' => session()->get('username'),
+                    'is_sub' => 0
+                ]);
+
+                return $this->response->setJSON(["status" => 200, "message" => "Delete successfully!"]);
+            }
+        } catch (\Exception $e) {
+            return $this->response->setJSON(["status" => 500, "message" => $e->getMessage()]);
+        }
+    }
+
+    public function update_passenger_count()
+    {
+        try {
+            $tour_id = $this->request->getPost('tour_id');
+            $passenger_count = $this->request->getPost('passenger_count');
+
+            // Validate inputs
+            if (empty($tour_id) || empty($passenger_count)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Tour ID and passenger count are required'
+                ]);
+            }
+
+            if (!is_numeric($passenger_count) || $passenger_count < 1) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Passenger count must be a positive number'
+                ]);
+            }
+
+            $consigneeModel = new InquiryConsigneeModel();
+
+            // Check if tour exists
+            $tour = $consigneeModel->where('tour_id', $tour_id)->first();
+            if (!$tour) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Tour not found'
+                ]);
+            }
+
+            // Update passenger count
+            $data = ['passenger_count' => $passenger_count];
+            $result = $consigneeModel->where('tour_id', $tour_id)->set($data)->update();
+
+            if ($result) {
+                return $this->response->setJSON([
+                    'success' => true,
+                    'message' => 'Passenger count updated successfully'
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Failed to update passenger count'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    // Passenger management methods
+    public function getPassengerDetails()
+    {
+        try {
+            $tour = $this->request->getVar('tour_id');
+            // Create a new PassengerDetailsModel instance
+            $PassengerModel = new InquiryPassengerDetailsModel();
+            // Get the passenger count
+            $passengercount = $PassengerModel->where('tour_id', $tour)->countAllResults();
+
+            $consigneeModel = new InquiryConsigneeModel();
+            $pax_count = $consigneeModel->select('passenger_count')->where('tour_id', $tour)->first();
+            $pssenger = $pax_count['passenger_count'];
+
+            $combined_result = [
+                'pax_count' => $pssenger,
+                'passenger' => $passengercount
+            ];
+
+            // Return the passenger data
+            return $this->response->setJSON(['status' => 200, 'data' => $combined_result]);
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function pax_create()
+    {
+        try {
+            $pax = $this->request->getPost('passenger');
+            $tour_id = $this->request->getPost('modal_tour_id');
+            $pax_count = $this->request->getPost('pax_coun');
+
+            // Validate the input data
+            $validation = service('validation');
+            $validation->setRules([
+                'passenger' => 'required',
+                'modal_tour_id' => 'required'
+            ]);
+
+            if (!$validation->withRequest($this->request)->run()) {
+                // Validation failed, return the validation errors
+                return $this->response->setStatusCode(400)->setJSON($validation->getErrors());
+            }
+
+            // Create a new PassengerDetailsModel instance
+            $PaxModel = new InquiryPassengerDetailsModel();
+
+            if ($pax_select = $PaxModel->where(['tour_id' => $tour_id])->countAllResults()) {
+                // Return an error response
+                if ($pax_select >= $pax_count) {
+                    return $this->response->setJSON(['status' => 400, 'message' => 'Passenger Count Exceeded']);
+                }
+            }
+
+            // Set the data for the new passenger
+            $data = [
+                'pass_name' => $pax,
+                'tour_id' => $tour_id
+            ];
+
+            // Insert
+            if ($PaxModel->insert($data)) {
+                // Return a success response
+                return $this->response->setJSON(['status' => 201, 'message' => 'Passenger created successfully']);
+            }
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function pax_delete()
+    {
+        try {
+            $id = $this->request->getGet('id');
+
+            $PassengerModel = new InquiryPassengerDetailsModel();
+
+            // Get passenger data before deletion
+            $oldData = $PassengerModel->find($id);
+
+            if ($PassengerModel->delete($id)) {
+                return $this->response->setJSON(["status" => 200, "message" => "Passenger Delete successfully!"]);
+            }
+        } catch (\Exception $e) {
+            return $this->response->setJSON(["status" => 500, "message" => $e->getMessage()]);
+        }
+    }
+
+    public function pax_all($tour)
+    {
+        try {
+            // Create a new PassengerDetailsModel instance
+            $PassengerModel = new InquiryPassengerDetailsModel();
+            // Get the passenger data
+            $passenger = $PassengerModel->where('tour_id', $tour)->findAll();
+
+            // Return the passenger data
+            return json_encode($passenger);
+        } catch (\Exception $e) {
+            // Return an error response
+            return $this->response->setJSON(['status' => 500, 'message' => $e->getMessage()]);
+        }
+    }
+}

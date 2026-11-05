@@ -1,0 +1,133 @@
+  ok   A set-up by the System Administrator: schema version 2 (tables, columns, claims)
+  ok   A set-up again changes nothing (idempotent)
+  ok   A requester: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A ops: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A transh: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A hotelres: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A quote: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A hotel: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A transport: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A mgmt: no access (page refused; data, opening candidates, changes and explanations 403)
+  ok   A view-only (bank authoriser) cannot propose (403)
+  ok   A a change without the CSRF token is refused (403)
+  ok   A four eyes: the proposer cannot confirm their own mapping, even as administrator (403)
+  ok   A the reviewer confirms the three mappings
+  ok   A changing a rate needs a reason (400) and the version it changes (409 without); then saved with old and new value
+  ok   A a draft line change without the version it changes is refused (400)
+  ok   A the draft line is corrected (version 0 → 1); the imported value is kept
+  ok   A the corrected LKR statement is accepted (closing 3,893,106.00)
+  ok   A USD (typed) and JPY (uploaded) statements accepted
+  ok   A the cheque from before the first day is suggested, marked "booked before the first day — not an opening item yet"
+  ok   A matching the cheque warns that clearing it does not explain the opening difference until it is an accepted opening item
+  ok   A D10: after the cheque of 30 Aug cleared, the opening difference 150,000.00 is still NOT explained (not an accepted opening item) → insufficient data
+  ok   A the cheque is proposed as an opening outstanding item (+150,000.00); the preparer cannot accept it (403); the reviewer accepts it
+  ok   A 5 Sep: opening difference explained by the accepted item (remaining 0.00); the item shows as cleared on 2 Sep (−150,000.00 cleared, 0.00 outstanding)
+  ok   A 1 Sep (first day): the same item is outstanding (150,000.00); the opening difference is explained; day 1 reconciles apart from the 25.00 charge
+  ok   A corrections proposed (charges 4,550.00; deposit 235,000.00); a second proposal for the same line is refused (409)
+  ok   A 5 Sep with corrections only PROPOSED: "All items explained — ledger not yet corrected — 2 correction(s) awaiting approval"
+  ok   A after APPROVAL (not posted): still "ledger not yet corrected — 2 approved but not posted (239,550.00)"; never "Reconciled"
+  ok   A the difference 345,451.00 is explained to 0.00 (230,450.00 + 115,000.00 + rounding 1.00)
+  ok   A the corrections list says where each stands: "Approved — not posted (ledger not corrected)"
+  ok   A the USD → LKR transfer is recorded with the day rate 301 and difference −10,000.00; recording it twice is refused (409)
+  ok   A USD: the remittance is SUGGESTED within the 1 % tolerance, but shown with its difference 2,500.00 "to explain"
+  ok   A an exchange-rate difference without an explanation is refused (400): the tolerance never explains it
+  ok   A USD lines matched with explained exchange-rate differences (+2,500.00, −10,000.00)
+  ok   A USD 5 Sep: differences visible (−7,500.00 in matches, 2 explained), revaluation 97,500.00 at 302 (TEST rate) shown; charge approved, not posted
+  ok   A a recorded exchange-rate difference without an explanation (as from r1) is shown "to explain" → items to explain
+  ok   A the view-only user cannot explain it (403); the preparer explains it → explained (pending the approved charge)
+  ok   A the USD daily record needs an explanation of the revaluation (400 without); prepared with it
+  ok   A USD record reviewed → "Reviewed — ledger not yet corrected" (the charge is approved but not posted)
+  ok   A JPY 5 Sep: matched exactly; revaluation 32,000.00 shown; status explained (nothing pending)
+  ok   A LKR record: the preparer cannot review (403); returned with a reason; prepared again and reviewed → "Reviewed — ledger not yet corrected"; the record keeps the 2 pending postings
+  ok   A undoing a match after review: kept as undone; the day falls back to "items to explain" and the reviewed record is flagged "changed since review"
+  ok   A matching the same items again with the same explanation makes the reviewed record current again (what was reviewed is what the data says)
+  ok   A void: preparer refused (403); reviewer refused while the statement has matches (409)
+  ok   A four eyes kept: the preparer cannot approve (403); the administrator cannot approve their own proposal (403)
+  ok   B verification account (dummy, inactive): mapping proposed and confirmed (first day 1 Sep)
+  ok   B statement 1 (1–3 Sep, 4 lines) accepted
+  ok   B 1 Sep before opening items: bank 499,975.00, book 450,000.00, opening difference 50,000.00 not explained → insufficient
+  ok   B candidates: the ledger rows booked in the 60 days before the first day, with their effect on bank − book (cheques +20,000.00 and +30,000.00)
+  ok   B both cheques proposed as opening items; the same row again is refused (409); a row dated on or after the first day is refused (400)
+  ok   B proposed items do not explain anything yet: still insufficient, "50,000.00 proposed, awaiting acceptance"
+  ok   B the preparer cannot accept (403); the reviewers accept both
+  ok   B D10 day 1 reconciles: opening difference explained by 2 outstanding opening items (remaining 0.00); only the 25.00 charge left
+  ok   B 1 Sep with the charge correction proposed → "All items explained — ledger not yet corrected — 1 correction(s) awaiting approval (25.00)"
+  ok   B 2 Sep: two timing items (−15,000.00, +90,000.00); bank − book −25,025.00 explained to 0.00
+  ok   B the cheque line is suggested for ledger row 99980302 ("opening item #… (accepted)")
+  ok   B the cheque is matched (no warning: it is an accepted opening item)
+  ok   B D9: a match that would clear a timing classification the user did not confirm is refused (409); confirmed, the partial match is recorded
+  ok   B undoing the partial match restores the timing classification of the receipt row (status active, as first recorded)
+  ok   B partial clearing: 50,000.00 of the 90,000.00 receipt; "other" without an explanation is refused (400); the partial match is recorded (rest −40,000.00 expected 5 Sep)
+  ok   B the receipt row's timing classification is cleared by the partial match (kept: status "matched", match noted)
+  ok   B two users at once — duplicate matches: 10 simultaneous requests (2 preparers) → exactly one match, 9 refused (409), one claim
+  ok   B 3 Sep: bank − book 4,975.00 = opening item 000202 outstanding 30,000.00 − charge 25.00 − partial rest 40,000.00 + timing 15,000.00; cheque 000201 cleared
+  ok   B 3 Sep reviewed while the charge correction is only proposed → "Reviewed — ledger not yet corrected — 1 correction(s) awaiting approval (25.00)"
+  ok   B approving the correction after the review does not make the review out of date (posting progress only), and the status now says "approved but not posted"
+  ok   B two users at once — duplicate acceptance: one 200, one 409; accepted once (one audit row)
+  ok   B D9: the timing item PV 90011 is offered in the suggestions (high), saying that accepting clears the classification
+  ok   B the second part of the XYZ receipt is suggested as completing the partial match
+  ok   B accepting it (second preparer) clears the timing classification: kept with the original classifier, time and expected date; event and audit recorded
+  ok   B undo restores the outstanding status: the same timing classification is active again (classifier, time, expected date unchanged); the claim is the classification again
+  ok   B reopening: matched again → cleared again (history: cleared, restored, cleared)
+  ok   B two users at once — one matches, the other classifies the same ledger row (as timing): exactly one succeeds; the match never clears a classification its user did not see
+  ok   B the reviewer cannot review a record whose data changed after it was prepared (409, audited); nothing is reviewed
+  ok   B the record shows "changed after it was prepared; prepare it again"
+  ok   B two users at once — daily-record review by two reviewers at the same instant: one 200, one 409; reviewed once
+  ok   B a matched ledger row changed after review → flagged "changed since review: ledger rows" (re-review needed); the day is insufficient; the reviewed snapshot is unchanged
+  ok   B the dummy row put back exactly → the review is current again
+  ok   B the partial match is completed by the 5 Sep line (new match; the partial one kept as superseded)
+  ok   B completing it later does not change the reviewed 3 Sep: same figures, the review stays current
+  ok   B undoing the completion makes the partial match active again
+  ok   B completed again ("Add selected" on the partial match)
+  ok   B opening items on 2026-09-01: cheque 000202 outstanding, cheque 000201 outstanding; bank − book 49975.00 explained to 0.00
+  ok   B opening items on 2026-09-02: cheque 000202 outstanding, cheque 000201 outstanding; bank − book -25025.00 explained to 0.00
+  ok   B opening items on 2026-09-03: cheque 000202 outstanding, cheque 000201 cleared; bank − book 4975.00 explained to 0.00
+  ok   B opening items on 2026-09-04: cheque 000202 outstanding, cheque 000201 cleared; bank − book -10025.00 explained to 0.00
+  ok   B opening items on 2026-09-05: cheque 000202 outstanding, cheque 000201 cleared; bank − book 29975.00 explained to 0.00
+  ok   B the reviewed 5 Sep record shows the pending posting kept at preparation (1 approved, not posted: 25.00) and now
+  ok   B recording a posting with an entry that does not match the approved lines is refused (409) and audited
+  ok   B the posted entry changes the ledger → the reviewed 5 Sep record is flagged for re-review (ledger rows)
+  ok   B the posted entry 99980399 matches the approved lines → linked and verified: "Posted — linked to a verified ledger entry"
+  ok   B 5 Sep after the verified posting: nothing pending; bank − book 30,000.00 (the outstanding cheque); "Reconciled — all items explained"
+  ok   B 1 Sep (before the posting date): the same correction is shown as not yet posted at that date
+  ok   B if the posted entry changes in the ledger afterwards: "Posted entry changed in the ledger — verify again"; the charge is no longer explained
+  ok   B prepared again and reviewed → "Reconciled — reviewed" with nothing pending
+  ok   B two users at once — conflicting edits: the second change based on the old version is refused (409); the first is kept
+  ok   B two users at once — two drafts of the same period accepted at the same instant: one accepted, the other refused (overlap)
+  ok   B a classification is made and cleared (kept as cleared; the claim released)
+  ok   B two users at once — conflicting rate edits: the change on the old version is refused (409)
+  ok   B a rate change after review → the reviewed USD record is flagged (rates; statement LKR values); the revaluation changes
+  ok   B the rate put back → the review is current again
+  ok   B four eyes on opening items: the proposer (administrator) cannot accept (403); only the proposer withdraws (403 for another; 200 for the proposer)
+  ok   B the reviewer cannot match (403); view-only cannot propose (403) but can read candidates and records (200)
+  ok   D7 old screen "update" on a row of the mapped verification account dated 2026-09-02 (≥ first day 2026-09-01) → refused 409, message names the first day; nothing changed
+  ok   D7 earlier dates stay available: "update" on the 2026-08-28 cheque row (before the first day) works (bank_rec 1), and unticking it puts it back (0)
+  ok   D7 "finalize selected" with one row before and one row after the first day → all refused (409); neither row changed
+  ok   D7 "reconcile up to" 2026-09-05 → refused (409); up to 2026-08-31 (before the first day) → allowed (200); no flag changed (no ticked rows before the first day)
+  ok   D7 moving a row to the unrealised account (409), moving one back (409), reposting a range that reaches the first day (409), and a row of the TEST LKR account (409) are all refused; nothing changed
+  ok   D7 every refusal is audited (7 "brc_legacy_refused" rows, by the signed-in user)
+  ok   D7 the new workflow warns about old-screen flags in the protected period: 2 rows (bank_rec on 99980306; 99980307 moved to the unrealised account), in the day and on the overview
+  ok   D7 the flags are left as they are by the new workflow (still set after the day and the overview were computed)
+  ok   D7 the test rows put back: no warning, the day as before
+  ok   P2 pending corrections per day (TEST LKR): approved, not posted = 25.00 (1 Sep), 50.00 (2 Sep), 1,050.00 (3 Sep), 236,050.00 (4 Sep), 239,550.00 (5 Sep); the full total (4,550.00 / 239,550.00) named separately when it differs; each correction once; unexplained 0.00
+  ok   P2 1 Sep: "1 approved but not posted (25.00 up to this day; correction total 4,550.00)" — the 4,550.00 charges correction covers 1–5 Sep
+  ok   P2 a daily record prepared for 3 Sep keeps "1,050.00 up to this day; correction total 4,550.00" in its snapshot
+  ok   P2 reviewed: "Reviewed — ledger not yet corrected — 1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)"
+  ok   R the V charge correction is posted and verified with dummy entry 99980399 (from the r2 suite)
+  ok   R the posted entry changes in the ledger (wording) → "Posted entry changed in the ledger — verify again"; the charge is no longer explained
+  ok   R a reviewer without the preparer privilege cannot verify again (403)
+  ok   R the preparer verifies again: the entry still matches the approved lines → posted and verified (its new state); audited
+  ok   R verifying again when nothing changed is refused (409)
+  ok   R the entry's amounts change (25 → 30): verifying again is refused (409, names the mismatch) and it stays "verify again"; audited
+  ok   R amounts put back → posted again; wording put back → "verify again" → verified again; the dummy entry is exactly as before
+  ok   U a user holding BOTH the preparer and the reviewer privilege (tcdual, not an administrator) proposes an opening item (200) and cannot accept it (403); withdraws it (200)
+  ok   U the same user proposes a correction (200), cannot approve it (403), withdraws it (200)
+  ok   U the same user prepares a daily record (200), cannot review it (403); another reviewer reviews it (200)
+  ok   U the same user may review a record someone else prepared (200)
+  ok   T two DIFFERENT users classify the same statement line at the same instant: exactly one succeeds (200), the other is refused (409)
+  ok   T two DIFFERENT reviewers review the same daily record at the same instant: one 200, one 409; reviewed once (one audit row)
+  ok   T in both races the two users' requests were in the server at the same time (overlapping)
+  ok   dummy ledger rows exactly as before the r3 part (every test change to a dummy row was put back; flags and unrealised moves included)
+  ok   the real ledger is unchanged: rows, sums and every row's reconciliation flags
+  ok   every audited action is attributed to an identifiable test login
+132/132 passed

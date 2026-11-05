@@ -1,0 +1,206 @@
+[
+ {
+  "test": 70,
+  "name": "approver: login sends to dashboard2/tiles",
+  "ok": true,
+  "detail": "dashboard2/tiles"
+ },
+ {
+  "test": 70,
+  "name": "requester: login sends to dashboard2/tiles",
+  "ok": true,
+  "detail": "dashboard2/tiles"
+ },
+ {
+  "test": 70,
+  "name": "accountant: login sends to dashboard2/tiles",
+  "ok": true,
+  "detail": "dashboard2/tiles"
+ },
+ {
+  "test": 70,
+  "name": "bank: login sends to dashboard2/tiles",
+  "ok": true,
+  "detail": "dashboard2/tiles"
+ },
+ {
+  "test": 70,
+  "name": "auditor: login sends to dashboard2/tiles",
+  "ok": true,
+  "detail": "dashboard2/tiles"
+ },
+ {
+  "test": 70,
+  "name": "quote: login sends to dashboard2/tiles",
+  "ok": true,
+  "detail": "dashboard2/tiles"
+ },
+ {
+  "test": 70,
+  "name": "admin: login sends to dashboard",
+  "ok": true,
+  "detail": "dashboard"
+ },
+ {
+  "test": 70,
+  "name": "requester: Pilot opens (200) even without the page's own menu (held: 0) and shows the department panel",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 70,
+  "name": "approver: Pilot opens (200) even without the page's own menu (held: 0) and shows the department panel",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 70,
+  "name": "accountant: Pilot opens (200) even without the page's own menu (held: 0) and shows the department panel",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 70,
+  "name": "bank: Pilot opens (200) even without the page's own menu (held: 0) and shows the department panel",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 70,
+  "name": "auditor: Pilot opens (200) even without the page's own menu (held: 0) and shows the department panel",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 70,
+  "name": "quote: Pilot opens (200) even without the page's own menu (held: 0) and shows the department panel",
+  "ok": true,
+  "detail": "(200, True)"
+ },
+ {
+  "test": 70,
+  "name": "the requester's Pilot lists only its own areas (payments) \u2014 no Accounts, Accounts Reports, Ground Handling, Settings",
+  "ok": true,
+  "detail": "['payments']"
+ },
+ {
+  "test": 70,
+  "name": "the requester's Pilot offers no Operations Allocation / Settings shortcut and no report list",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 71,
+  "name": "management sees \"Payment requests awaiting approval\" = 0 (the table says 0) and a Supplier Payables shortcut",
+  "ok": true,
+  "detail": "{'Payment requests awaiting approval': 0, 'Suppliers with approved payments awaiting a batch': 3}"
+ },
+ {
+  "test": 71,
+  "name": "the accountant sees \"Payment vouchers awaiting bank initiation\" = 1 and the Bank Payment Check shortcut; no approval line",
+  "ok": true,
+  "detail": "{'Payment vouchers awaiting bank initiation': 1, 'Bulk transfers awaiting initiation': 0}"
+ },
+ {
+  "test": 71,
+  "name": "the bank approver sees \"initiated, awaiting final authorisation (Paid)\" = 1; no initiation line",
+  "ok": true,
+  "detail": "{'Bank payments initiated, awaiting final authorisation (Paid)': 1}"
+ },
+ {
+  "test": 71,
+  "name": "the requester sees only its own requests awaiting approval = 0 (no approval / initiation / Paid lines)",
+  "ok": true,
+  "detail": "{'My payment requests awaiting approval': 0, 'My requests rejected in the last 30 days (to revise)': 1}"
+ },
+ {
+  "test": 71,
+  "name": "the auditor sees reports and no task of a doer (no approval, initiation, Paid or request line)",
+  "ok": true,
+  "detail": "{}"
+ },
+ {
+  "test": 72,
+  "name": "the accountant (pays) sees the full supplier account number; the requester sees the last four digits only; management and the auditor are not served by this endpoint at all (403)",
+  "ok": true,
+  "detail": "(('TEST1001001001', False, 200), ('\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20221001', True, 200), (None, None, 403), (None, None, 403))"
+ },
+ {
+  "test": 72,
+  "name": "the requester's desk shows every supplier account masked (20 lines)",
+  "ok": true,
+  "detail": "['\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20228008', '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20221001', '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20225005']"
+ },
+ {
+  "test": 72,
+  "name": "Supplier Payables for management: supplier accounts masked; the Avenir paying accounts offered masked (account_no_masked only)",
+  "ok": true,
+  "detail": "(3, ['id', 'label', 'bank_name', 'branch', 'account_name', 'account_no_masked', 'currency', 'ledger_code', 'is_default', 'entity', 'account_type', 'swift'])"
+ },
+ {
+  "test": 73,
+  "name": "every confidential page / data endpoint outside the role is refused (403): requester\u2192accounts/balance_sheet, requester\u2192dashboard/get_bank_balances, requester\u2192accounts/trial_balance, quote\u2192tour/tour_payment_dashboard/payables_data, quote\u2192report/bank_payment_check/finalized_records, quote\u2192master_files/supplier_bank/get, requester\u2192settings/user_account, approver\u2192report/bank_payment_check, accountant\u2192tour/tour_accounts/payment_approval_v2, auditor\u2192master_files/bank_accounts, auditor\u2192settings/group_privilege/0",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 73,
+  "name": "direct links and exports too: a voucher PDF / page and the finalized-payments export are refused (302 to the 403 page or 403) outside the role",
+  "ok": true,
+  "detail": "[('quote', 'tour/tour_payment_dashboard/voucher/635?pdf=1', 302), ('quote', 'tour/tour_payment_dashboard/voucher/635', 302), ('requester', 'report/bank_payment_check/finalized_records?from=2026-01-01&to=2026-12-31', 302)]"
+ },
+ {
+  "test": 73,
+  "name": "every refusal was recorded in the audit trail (access_denied rows: +15, e.g. tcpayreq | report/bank_payment_check/finalized_records | no privilege covers report/bank_payment_check/finalized_reco)",
+  "ok": true,
+  "detail": "(20, 35)"
+ },
+ {
+  "test": 73,
+  "name": "the permitted pages of each role still open (200) \u2014 the legacy Payment Approval page is not tested here: it uses a MySQL 8 collation the test database lacks",
+  "ok": true,
+  "detail": "[('accountant', 'report/bank_payment_check', 200), ('approver', 'tour/tour_payment_dashboard/payables', 200), ('bank', 'report/bank_payment_check', 200), ('auditor', 'report/bank_payment_check/finalized_records', 200), ('auditor', 'tour/tour_payment_dashboard/payables', 200), ('requester', 'tour/tour_payment_dashboard', 200)]"
+ },
+ {
+  "test": 74,
+  "name": "the auditor may read Supplier Payables (200) but every write is refused: POST dispute 403, POST legacy voucher cancel 403, GET privilege add 403",
+  "ok": true,
+  "detail": "(403, 403, 200, 403)"
+ },
+ {
+  "test": 74,
+  "name": "the refusals name the read-only profile in the audit trail",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 74,
+  "name": "nothing changed: the voucher flags and the dispute flag are exactly as before the attempts",
+  "ok": true,
+  "detail": "(('3|1', '0'), ('3|1', '0'))"
+ },
+ {
+  "test": 75,
+  "name": "administrator: dashboard, Pilot, Balance Sheet, User Accounts, Bank Payment Check, Supplier Payables all 200",
+  "ok": true,
+  "detail": "[('dashboard', 200), ('dashboard2/tiles', 200), ('accounts/balance_sheet', 200), ('settings/user_account', 200), ('report/bank_payment_check', 200), ('tour/tour_payment_dashboard/payables', 200)]"
+ },
+ {
+  "test": 75,
+  "name": "administrator sees full bank details",
+  "ok": true,
+  "detail": "('TEST1001001001', False, 200)"
+ },
+ {
+  "test": 75,
+  "name": "the administrator's Pilot panel shows the full report list and all task lines",
+  "ok": true,
+  "detail": "{'My payment requests awaiting approval': 0, 'My requests rejected in the last 30 days (to revise)': 0, 'Payment requests awaiting approval': 0, 'Suppliers with approved payments awaiting a batch': 3, 'Hotel rate approvals waiting': 0, 'Payment vouchers awaiting bank initiation': 1, 'Bulk transfers awaiting initiation': 0, 'Bank payments initiated, awaiting final authorisation (Paid)': 1, 'Inquiries awaiting a reply': 0, 'Quotations finalised, awaiting confirmation': 16, 'Tours starting within 1"
+ },
+ {
+  "test": 76,
+  "name": "the requester can still write request meta (200); management cannot (403)",
+  "ok": true,
+  "detail": ""
+ }
+]

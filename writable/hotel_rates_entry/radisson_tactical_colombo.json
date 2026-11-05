@@ -1,0 +1,618 @@
+{
+ "key": "radisson_tactical_colombo",
+ "hotel": {
+  "acc": "6-9-11-10996",
+  "name": "Radisson Hotel Colombo",
+  "location": "Colombo",
+  "chain": "Radisson Hotel Group"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10996",
+   "name": "Radisson Hotel Colombo"
+  },
+  "contract": {
+   "name": "Winter & Summer 2026/2027 Tactical Rates – Tier 2 (book 01 Sep – 31 Oct 2026)",
+   "plan_type": "tactical",
+   "rate_code": "Tier 2",
+   "tier": "all",
+   "priority": 10,
+   "valid_from": "2026-09-01",
+   "valid_to": "2027-10-31",
+   "book_from": "2026-09-01",
+   "book_to": "2026-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD per room per night; all supplements printed \"net\". The sheet does not say whether government taxes are included",
+   "source_type": "email",
+   "received_at": "2026-09-03",
+   "contract_date": "2026-08-28",
+   "contract_type": "Tactical offer",
+   "hotel_reference": "Winter & Summer 2026/2027 Tactical Rates – Tier 2",
+   "credit_facility": "unknown",
+   "child_policy_text": "CHILD SUPPLEMENT (BETWEEN 6 - 11.9 YEARS), rate with extra bed per night: BB USD 15, HB USD 25, FB USD 35. The sheet says nothing about children under 6 and nothing about a child price for the compulsory gala dinners — \"all other supplement and terms & conditions are as per the all market contracted rates\".",
+   "guide_policy_text": "Guide room rate will be provided at 50% of the single-room rate for bookings of a minimum of 6 rooms only. In case of high occupancy, the hotel reserves the right to cancel the guide room, and the travel agent will be responsible to find alternative accommodation.",
+   "foc_policy_text": "For every 7th paid room, 8th room will be provided on 50% of the room rate. For every 15th paid room, 16th room will be provided on 100% FOC basis.",
+   "cancellation_text": "01 Sep 2026 to 31 Oct 2026 — FIT: Radisson Hotel Colombo: 07 days prior to arrival free of charge. If not 100% charges will be applied. (Radisson Hotel Kandy & Radisson Blu Resort Galle: 21 days prior to arrival free of charge. If not 100% charges will be applied.) Group: 30 days prior to arrival free of charge. 14 days prior to arrival, 50% charges. If not 100% charges will be applied. 01 Nov 2026 to 24 Dec 2026 — FIT: 14 days prior to arrival, free of charge. 7 days prior to arrival, 50% charges, if not 100% charges will be applied. Group: 30 days prior to arrival free of charge. 14 days prior to arrival, 50% charges. If not 100% charges will be applied. 25 Dec 2026 to 31 Mar 2027 — FIT/Group: 45 days prior to arrival, free of charge. 30 days prior to arrival 50% charges, if not 100% charges will be applied. 01 Apr 2027 to 31 Oct 2027 — same wording as 01 Sep to 31 Oct 2026.",
+   "terms_text": "Above rates are valid for new bookings only. The rates are valid for all markets. Kindly mention above rates on the booking voucher, failing to do so contracted rates will be applied. All other supplement and terms & conditions are as per the all market contracted rates. The above rates cannot be combined with any other ongoing offers. Kindly note that the management of the hotel has the right to revise or withdraw from the above based on business circumstances with or without prior notice. The rates need to be strictly followed and the hotel reserves the right to reject the reservations which are not aligned with the above rates without any intimation to a particular travel agent. The agents are advised to kindly follow the stop sales which are sent out periodically and accordingly send the reservations. This offer supersedes all the other tactical/flash offers in the market for the said properties. We are continuously auditing our rate parity and incase our reservation is found which is due to a rate leakage then the respective travel agency would pay the differential amount vs the prevailing best available rate or the same will be charged to the guest. In case of high occupancy, the hotel has the right to provide rooms on run of the house basis. Room type/Bed type (King/Twin) will be provided based on availability and not confirmed in advance. For every 7th paid room, 8th room will be provided on 50% of the room rate. For every 15th paid room, 16th room will be provided on 100% FOC basis. Guide room rate will be provided at 50% of the single-room rate for bookings of a minimum of 6 rooms only. In case of high occupancy, the hotel reserves the right to cancel the guide room, and the travel agent will be responsible to find alternative accommodation. Early Check-In/Late Check-out will be provided based on availability and may subject to charge. For any requests exceeding the mentioned maximum number of rooms, please contact our sales team. RATE CONFIDENTIALITY & LIQUIDATED DAMAGES — Confidentiality of B2B Rates: the Travel Agent acknowledges that all B2B rates, net rates and promotional pricing provided by Radisson Hotel Colombo, Radisson Hotel Kandy and Radisson Blu Resort Galle are strictly confidential. The Recipient shall not disclose, publish, or make these rates available to the general public, via online travel agencies (OTAs), public-facing websites, or any unauthorized third party. Breach of Confidentiality: any unauthorized display of these rates in a public forum or searchable online environment shall constitute a material breach of this Agreement and the agreement will be terminated immediately.",
+   "voucher_note": "Kindly mention above rates on the booking voucher, failing to do so contracted rates will be applied.",
+   "notes": "\"Tier 2\" is the rate tier of this sheet (it is in the PDF file name and the e-mail, not inside the document body) — entered as the rate code; the sheet itself prints no rate code. Release date 28 Aug 2026, booking period 01 Sep – 31 Oct 2026, travel period 01 Sep 2026 – 31 Oct 2027 (one continuous table, no separate winter / summer tables). MAXIMUM ROOMS printed per period is on each season (\"for any requests exceeding the mentioned maximum number of rooms, please contact our sales team\"). \"All other supplement and terms & conditions are as per the all market contracted rates\" — that base contract is not in this folder, so this plan is not linked to a parent. Valid for all markets, new bookings only. Table 3.0, room types printed \"Superior Room/Premium Room\" — both are priced in the table (own rate rows), so both are entered as base rooms in the same four seasons. Superior Room triples are printed \"X\" (not offered) and no Full Board column is printed for this hotel. The third Premium Room period is printed \"05 Jan 2026 - 28 Feb 2027\" — an obvious typo for 05 Jan 2027 (the Superior Room row above it reads 05 Jan 2027 - 28 Feb 2027); entered as 2027. ROOM SUPPLEMENTS are headed \"additionally from Table 3.0 – SUPERIOR ROOM\", so Premium Sea View Room (+10) and Suite Sea View Room (+45) are supplements over the Superior Room. Gala dinners 24/31 Dec 2026 are printed as one price with no meal-plan basis, so they are entered for all meal plans; no child price is printed.",
+   "source_file": "FW: Radisson Hotels - Winter & Summer 2026/2027 tactical rates (Book before 31 Oct 2026) — Winter _ Summer Tactical Rates 2026_2027 - Radisson Hotels - book before 31 Oct 2026 - Tier 2.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Superior Room",
+    "priced_as": "base"
+   },
+   {
+    "name": "Premium Room",
+    "priced_as": "base"
+   },
+   {
+    "name": "Premium Sea View Room",
+    "priced_as": "supplement",
+    "base_room_type": "Superior Room"
+   },
+   {
+    "name": "Suite Sea View Room",
+    "priced_as": "supplement",
+    "base_room_type": "Superior Room"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Sep – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "RO",
+      "sgl": 65,
+      "dbl": 65,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "BB",
+      "sgl": 75,
+      "dbl": 85,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "HB",
+      "sgl": 90,
+      "dbl": 115,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "RO",
+      "sgl": 70,
+      "dbl": 70,
+      "tpl": 90,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "BB",
+      "sgl": 80,
+      "dbl": 90,
+      "tpl": 120,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "HB",
+      "sgl": 95,
+      "dbl": 120,
+      "tpl": 165,
+      "quad": null,
+      "unit": null
+     }
+    ],
+    "max_rooms": 15,
+    "notes": "MAXIMUM ROOMS 15 is printed per room type (15 Superior + 15 Premium), not 15 for the period"
+   },
+   {
+    "name": "01 Nov 2026 – 04 Jan 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-01-04"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "RO",
+      "sgl": 75,
+      "dbl": 75,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "BB",
+      "sgl": 85,
+      "dbl": 95,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "HB",
+      "sgl": 100,
+      "dbl": 125,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "RO",
+      "sgl": 80,
+      "dbl": 80,
+      "tpl": 100,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "BB",
+      "sgl": 90,
+      "dbl": 100,
+      "tpl": 130,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "HB",
+      "sgl": 105,
+      "dbl": 130,
+      "tpl": 175,
+      "quad": null,
+      "unit": null
+     }
+    ],
+    "max_rooms": 15,
+    "notes": "MAXIMUM ROOMS 15 is printed per room type (15 Superior + 15 Premium), not 15 for the period"
+   },
+   {
+    "name": "05 Jan – 28 Feb 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-05",
+      "to": "2027-02-28"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "RO",
+      "sgl": 80,
+      "dbl": 80,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "BB",
+      "sgl": 90,
+      "dbl": 100,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "HB",
+      "sgl": 105,
+      "dbl": 130,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "RO",
+      "sgl": 85,
+      "dbl": 85,
+      "tpl": 105,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "BB",
+      "sgl": 95,
+      "dbl": 105,
+      "tpl": 135,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "HB",
+      "sgl": 110,
+      "dbl": 135,
+      "tpl": 180,
+      "quad": null,
+      "unit": null
+     }
+    ],
+    "max_rooms": 15,
+    "notes": "MAXIMUM ROOMS 15 is printed per room type (15 Superior + 15 Premium), not 15 for the period"
+   },
+   {
+    "name": "01 Mar – 31 Oct 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-03-01",
+      "to": "2027-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "RO",
+      "sgl": 70,
+      "dbl": 70,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "BB",
+      "sgl": 80,
+      "dbl": 90,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Superior Room",
+      "meal_plan": "HB",
+      "sgl": 95,
+      "dbl": 120,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "RO",
+      "sgl": 75,
+      "dbl": 75,
+      "tpl": 95,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "BB",
+      "sgl": 85,
+      "dbl": 95,
+      "tpl": 125,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Room",
+      "meal_plan": "HB",
+      "sgl": 100,
+      "dbl": 125,
+      "tpl": 170,
+      "quad": null,
+      "unit": null
+     }
+    ],
+    "max_rooms": 15,
+    "notes": "MAXIMUM ROOMS 15 is printed per room type (15 Superior + 15 Premium), not 15 for the period"
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Premium Sea View Room",
+    "amount": 10,
+    "per": "room",
+    "note": "ROOM SUPPLEMENTS (additionally from Table 3.0 – Superior Room): USD 10 net per room per night"
+   },
+   {
+    "room_type": "Suite Sea View Room",
+    "amount": 45,
+    "per": "room",
+    "note": "ROOM SUPPLEMENTS (additionally from Table 3.0 – Superior Room): USD 45 net per room per night"
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "24th December Christmas Gala Dinner",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "RO,BB,HB,FB,AI",
+    "per": "person",
+    "amount": 50,
+    "compulsory": 1,
+    "note": "SPECIAL COMPULSORY SUPPLEMENTS: USD 50 net per person/night. No meal-plan basis and no child price are printed for this hotel"
+   },
+   {
+    "type": "gala",
+    "name": "31st December New Year Gala Dinner",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "RO,BB,HB,FB,AI",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1,
+    "note": "SPECIAL COMPULSORY SUPPLEMENTS: USD 60 net per person/night. No meal-plan basis and no child price are printed for this hotel"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Under 6 years is NOT priced on the sheet (it only prints \"CHILD SUPPLEMENT BETWEEN 6 - 11.9 YEARS\") — entered as free of charge sharing the parents' bed; confirm with the hotel"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 15,
+    "note": "Printed \"6 - 11.9 years\", rate with extra bed, per night (upper age entered as 11.99)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "note": "Printed \"6 - 11.9 years\", rate with extra bed, per night (upper age entered as 11.99)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 35,
+    "note": "Printed \"6 - 11.9 years\", rate with extra bed, per night (upper age entered as 11.99)"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "pct": 50,
+    "pct_of": "sgl",
+    "per": "room",
+    "min_rooms": 6,
+    "accommodation": "hotel_room",
+    "note": "Guide room at 50% of the single-room rate, minimum 06 rooms only; the hotel may cancel the guide room in high occupancy"
+   }
+  ],
+  "foc_rules": [
+   {
+    "basis": "rooms",
+    "every_n": 7,
+    "free_n": 1,
+    "discount_pct": 50,
+    "as_what": "any",
+    "note": "For every 7th paid room, the 8th room is charged at 50% of the room rate"
+   },
+   {
+    "basis": "rooms",
+    "every_n": 15,
+    "free_n": 1,
+    "discount_pct": 100,
+    "as_what": "any",
+    "note": "For every 15th paid room, the 16th room is 100% FOC"
+   }
+  ],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "fit",
+    "days_from": null,
+    "days_to": 7,
+    "charge_pct": 0,
+    "note": "FIT (Radisson Hotel Colombo): 07 days prior to arrival free of charge"
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "fit",
+    "days_from": 6,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"If not 100% charges will be applied\""
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "group",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "Group: 30 days prior to arrival free of charge"
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "group",
+    "days_from": 29,
+    "days_to": 14,
+    "charge_pct": 50,
+    "note": "Group: 14 days prior to arrival, 50% charges"
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "group",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"If not 100% charges will be applied\""
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-10-31",
+    "tier": "fit",
+    "days_from": null,
+    "days_to": 7,
+    "charge_pct": 0,
+    "note": "FIT (Radisson Hotel Colombo): 07 days prior to arrival free of charge"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-10-31",
+    "tier": "fit",
+    "days_from": 6,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"If not 100% charges will be applied\""
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-10-31",
+    "tier": "group",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "Group: 30 days prior to arrival free of charge"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-10-31",
+    "tier": "group",
+    "days_from": 29,
+    "days_to": 14,
+    "charge_pct": 50,
+    "note": "Group: 14 days prior to arrival, 50% charges"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-10-31",
+    "tier": "group",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"If not 100% charges will be applied\""
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-24",
+    "tier": "fit",
+    "days_from": null,
+    "days_to": 14,
+    "charge_pct": 0,
+    "note": "FIT: 14 days prior to arrival, free of charge"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-24",
+    "tier": "fit",
+    "days_from": 13,
+    "days_to": 7,
+    "charge_pct": 50,
+    "note": "FIT: 7 days prior to arrival, 50% charges"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-24",
+    "tier": "fit",
+    "days_from": 6,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"if not 100% charges will be applied\""
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-24",
+    "tier": "group",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "Group: 30 days prior to arrival free of charge"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-24",
+    "tier": "group",
+    "days_from": 29,
+    "days_to": 14,
+    "charge_pct": 50,
+    "note": "Group: 14 days prior to arrival, 50% charges"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-24",
+    "tier": "group",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"If not 100% charges will be applied\""
+   },
+   {
+    "date_from": "2026-12-25",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 45,
+    "charge_pct": 0,
+    "note": "FIT/Group: 45 days prior to arrival, free of charge"
+   },
+   {
+    "date_from": "2026-12-25",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 44,
+    "days_to": 30,
+    "charge_pct": 50,
+    "note": "FIT/Group: 30 days prior to arrival 50% charges"
+   },
+   {
+    "date_from": "2026-12-25",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 29,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"if not 100% charges will be applied\""
+   }
+  ],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

@@ -1,0 +1,352 @@
+{
+    "key": "centauria_lake_2026_27",
+    "hotel": {
+        "acc": "6-9-11-11786",
+        "name": "Centauria Lake",
+        "location": "Embilipitiya",
+        "chain": "Centauria Group of Hotels (Sarathchandra Hotels Company)",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:13"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Centauria Lake"
+        },
+        "contract": {
+            "name": "Contract rates summer 2026, winter 2026/2027 & summer 2027",
+            "plan_type": "contract",
+            "tier": "all",
+            "valid_from": "2026-05-01",
+            "valid_to": "2027-10-31",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "taxes_included": 1,
+            "tax_note": "Net including all government taxes and service charge, quoted in US $",
+            "source_type": "email",
+            "received_at": "2026-09-09",
+            "contract_date": "2026-08-17",
+            "contract_type": "Travel agent contract",
+            "hotel_reference": "Contract Rates summer 2026 & winter 2026/2027 & summer 2027",
+            "credit_facility": "unknown",
+            "release_days": 21,
+            "extra_bed_adult": 15,
+            "child_policy_text": "Under 5 years – free of charge (accommodation sharing with parents room and minimum 2 kids in one room). 6-12 years – 50% off on meals – breakfast, lunch and dinner – buffet style or set menu (accommodation sharing with parent's room and minimum 2 kids in one room). Extra bed – 15 US $. Baby cot – free on availability.",
+            "guide_policy_text": "Groups above 16 pax local tour guide – free of charge. Foreign tour leader will be given a room if the no of pax is 30 and above. If less number in pax the local guide and the foreign tour leader will be charged at a special rate of @ Rs.9500/- – single HB for the room for each respectively. Drivers: free meals and accommodation at the driver's quarters on availability.",
+            "cancellation_text": "Any cancellation of confirmed booking should be notified in writing, by fax or email. Cancellation 30 days prior to date of arrival – no cancellation fee. 14 days prior to the date of arrival – subject to a 50% of room charge. 07 days prior to the date of arrival – subject to a 75% of room charge. Less than 07 days & no show – 100% of room charge as cancellation fee will be charged. Release period for all allotment & reservations: 21 days prior to the arrival date.",
+            "payment_text": "Travel agents & tour operators who are not provided with credit facility should make the payments cash prior to the departure date to hotel direct or to the account number given below. The payment by cheque should be deposited within a minimum of seven (7) working days prior to the date of arrival and the deposit slip need to be faxed or scanned and sent to hotel via e-mail.",
+            "terms_text": "The rates are net including all government taxes and service charge and quoted in US $. The rates quoted are for holiday packaging and offline sales purposes only and should not be offered in the form of an online sale whether it be your own website, online travel agent or any other online distribution channel. Check in time at 14.00 Hrs and check out time 12.00 noon; early check in and checkout subject to availability and chargeable at 15 US $. Baby cot free on availability. In the event of high occupancy or over booking situation the hotel reserves the right to offer alternative accommodation closer to the hotel. Government taxes: the rates are subject to any revisions of existing taxes or any new taxes imposed by the Sri Lankan government. Bookings guarantee: each booking needs to be guaranteed by a voucher with contracted rates; the copy of the voucher should be sent by fax or e-mail which will be treated as the confirmation of the booking; the original voucher must be received either by post or by hand strictly prior to the arrival. Release period: the release period for all allotment & reservations would be 21 days prior to the arrival date; no show will be charged as full stay on basis booked and no refunds will be made. Drivers facilities: free meals and accommodation are provided at the driver's quarters on availability. Signed on behalf of Centauria Lake, Embilipitiya (Sanjaya Bandara, Head of Marketing, Centauria Group of Hotels) and Sarathchandra Hotels Company (Pvt) Ltd (Director Mr. Adisha Galgamuwa), 17.08.2026. Bank: Sarathchandra Hotels Company (Pvt) Ltd, Hatton National Bank, Embilipitiya, A/C 050010002465.",
+            "notes": "Signed contract letter addressed to Avenir Holidays (Pvt) Ltd, dated 17.08.2026, covering three periods. The hotel is **Centauria Lake, Embilipitiya** — a different property from \"Centuria Hill Hotel, Ratnapura\" (6-9-11-11210); there is no supplier record for it yet, so acc is None and the plan needs a supplier record before it can be saved. The rate table has no room-category heading; the priced category is entered as \"Standard Room\" — the only other category named is the Suite (+USD 40 net per room). Only BB and HB are printed; the HB → FB delta is the printed lunch price (11 US $ net per person) — note the printed BB → HB step is only 5 per room, so the extra-meal prices and the rate table do not agree; FB is therefore derived, not printed. The gala supplement is printed without a year (\"X'Mas & New Year Evening gala Dinner Supplement on HB / FB 35 US $ per person\") and entered on 24 and 31 December 2026; no child gala price is printed. Cancellation is printed as four steps with nothing between 30 and 14 days — entered exactly as printed (30+ free, 14 – 08 days 50%, 07 days 75%, less than 07 days and no-show 100%); the 29 – 15 day band is not covered by the sheet. Early check-in / check-out at 15 US $ is entered per room (the sheet does not say per room or per person).",
+            "source_file": "WINTER/SUMMER RATES 2026/2027 - CENTURIA LAKE — Avenir Holidays_Pvt_Ltd.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Standard Room",
+                "priced_as": "base",
+                "description": "Rate-table category — the letter prints no room-category name"
+            },
+            {
+                "name": "Suite",
+                "priced_as": "supplement",
+                "base_room_type": "Standard Room"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "Summer 2026 (01 May – 31 Oct 2026)",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-05-01",
+                        "to": "2026-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard Room",
+                        "meal_plan": "BB",
+                        "sgl": 60,
+                        "dbl": 70,
+                        "tpl": 85,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Room",
+                        "meal_plan": "HB",
+                        "sgl": 65,
+                        "dbl": 75,
+                        "tpl": 90,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "Winter 2026/2027 (01 Nov 2026 – 30 Apr 2027)",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard Room",
+                        "meal_plan": "BB",
+                        "sgl": 70,
+                        "dbl": 80,
+                        "tpl": 95,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Room",
+                        "meal_plan": "HB",
+                        "sgl": 75,
+                        "dbl": 85,
+                        "tpl": 100,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "Summer 2027 (01 May – 31 Oct 2027)",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-05-01",
+                        "to": "2027-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard Room",
+                        "meal_plan": "BB",
+                        "sgl": 65,
+                        "dbl": 75,
+                        "tpl": 90,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Standard Room",
+                        "meal_plan": "HB",
+                        "sgl": 70,
+                        "dbl": 80,
+                        "tpl": 95,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [
+            {
+                "room_type": "Suite",
+                "amount": 40,
+                "per": "room",
+                "note": "Suite Room Supplement 40 US $ net per room"
+            }
+        ],
+        "meal_deltas": [
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 11,
+                "note": "Derived from the printed meal rate Lunch 11 US $ net per person — the letter prices only BB and HB"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 9,
+                "note": "Meal rates per person, net"
+            },
+            {
+                "meal": "lunch",
+                "adult": 11,
+                "note": "Meal rates per person, net"
+            },
+            {
+                "meal": "dinner",
+                "adult": 13,
+                "note": "Meal rates per person, net"
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "X'Mas Evening gala dinner supplement",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB",
+                "per": "person",
+                "amount": 35,
+                "compulsory": 1,
+                "note": "X'Mas & New Year Evening gala Dinner Supplement on HB / FB 35 US $ per person (no year and no child price printed)"
+            },
+            {
+                "type": "gala",
+                "name": "New Year Evening gala dinner supplement",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB",
+                "per": "person",
+                "amount": 35,
+                "compulsory": 1,
+                "note": "X'Mas & New Year Evening gala Dinner Supplement on HB / FB 35 US $ per person (no year and no child price printed)"
+            },
+            {
+                "type": "early_checkin",
+                "name": "Early check in",
+                "per": "room",
+                "amount": 15,
+                "compulsory": 0,
+                "note": "Early check in subject to availability and chargeable at 15 US $"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check out",
+                "per": "room",
+                "amount": 15,
+                "compulsory": 0,
+                "note": "Late check out subject to availability and chargeable at 15 US $"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "max_children": 2,
+                "note": "Under 5 years – free of charge, sharing parents room (the sheet says \"minimum 2 kids in one room\")"
+            },
+            {
+                "age_from": 6,
+                "age_to": 12,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "meal_rate",
+                "max_children": 2,
+                "note": "6-12 years – 50% off on meals (breakfast, lunch and dinner) sharing parent's room"
+            }
+        ],
+        "guide_policies": [
+            {
+                "role": "guide",
+                "per": "room",
+                "free_from_pax": 17,
+                "accommodation": "hotel_room",
+                "note": "Groups above 16 pax – local tour guide free of charge"
+            },
+            {
+                "role": "tour_leader",
+                "per": "room",
+                "free_from_pax": 30,
+                "accommodation": "hotel_room",
+                "note": "Foreign tour leader will be given a room if the no of pax is 30 and above"
+            },
+            {
+                "role": "guide",
+                "meal_plan": "HB",
+                "amount": 9500,
+                "currency": "LKR",
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "With fewer pax the local guide is charged at a special rate of Rs. 9,500 – single HB for the room"
+            },
+            {
+                "role": "tour_leader",
+                "meal_plan": "HB",
+                "amount": 9500,
+                "currency": "LKR",
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "With fewer pax the foreign tour leader is charged at a special rate of Rs. 9,500 – single HB for the room"
+            },
+            {
+                "role": "driver",
+                "amount": 0,
+                "per": "person",
+                "accommodation": "guide_quarters",
+                "note": "Drivers: free meals and accommodation are provided at the driver's quarters on availability"
+            }
+        ],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2027-10-31",
+                "tier": "all",
+                "days_from": null,
+                "days_to": 30,
+                "charge_pct": 0,
+                "note": "Cancellation 30 days prior to date of arrival – no cancellation fee"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2027-10-31",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 8,
+                "charge_pct": 50,
+                "note": "14 days prior to the date of arrival – 50% of room charge"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2027-10-31",
+                "tier": "all",
+                "days_from": 7,
+                "days_to": 7,
+                "charge_pct": 75,
+                "note": "07 days prior to the date of arrival – 75% of room charge"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2027-10-31",
+                "tier": "all",
+                "days_from": 6,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Less than 07 days & no show – 100% of room charge"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "pct": 100,
+                "note": "Agents without credit facility pay cash prior to the departure date, to the hotel direct or to the bank account"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "days_before": 7,
+                "note": "Cheque payments to be deposited a minimum of 7 working days prior to arrival; deposit slip faxed or scanned to the hotel"
+            }
+        ],
+        "restrictions": [
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "value": "HB,FB",
+                "note": "Bookings will be confirmed only on HB & FB basis for 24th & 31st December"
+            },
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "value": "HB,FB",
+                "note": "Bookings will be confirmed only on HB & FB basis for 24th & 31st December"
+            }
+        ],
+        "extras": []
+    }
+}

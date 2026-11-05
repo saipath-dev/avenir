@@ -1,0 +1,26 @@
+  ok   old screen lists the TEST verification account (dummy) up to 2026-09-10 with its tick buttons
+  ok   old screen: ticking the 2026-09-02 row (on/after the first day 2026-09-01) is refused (409) and the reason is shown on screen
+  ok   old screen: the refused row is not marked (not green) and its flags in the database are unchanged
+  ok   old screen: the 2026-08-28 row (before the first day) can still be ticked (200, bank_rec 1, row green)
+  ok   old screen: unticking it puts it back (bank_rec 0); every dummy row's flags as before
+  ok   no script error on the old screen
+  ok   new workflow warns: "Old reconciliation screen: 2 ledger row(s) … carry its flags", naming row 99980306 (bank_rec) and 99980307 (moved to the unrealised account)
+  ok   overview: "Old-screen flags in the period: 2" on the TEST verification account
+  ok   the warning changed nothing: the simulated flags are still set
+  ok   the simulated flags put back (dummy rows as before)
+  ok   pending banner 2026-09-01: 25.00 LKR up to this day; correction total 4,550.00 LKR / : 25.00 of 4,550.00 falls up to this day
+  ok   pending banner 2026-09-04: 236,050.00 LKR up to this day; correction total 239,550.00 LKR / : 1,050.00 of 4,550.00 falls up to this day
+  ok   pending banner 2026-09-05: 239,550.00 (whole correction falls by this day: no split)
+  ok   corrections: the changed posted entry shows "verify again" with a Verify again button for the preparer
+  ok   Verify again on screen: the entry still matches the approved lines → posted and verified again (button gone)
+  ok   a correction the dual-role user withdrew reads "withdrawn by tcdual" (not as if reviewed)
+  ok   wording put back and verified again (the dummy entry as before the UI test)
+  ok   no script error on the preparer's pages
+  ok   dual-role user (preparer + reviewer, not administrator) prepares a daily record for 2 Sep
+  ok   their own record has no "Reviewed" or "Return" button
+  ok   forcing the review from the page is refused by the server (403) with the reason shown
+  ok   another reviewer reviews it (200)
+  ok   no script error on the dual-role user's or the reviewer's pages
+  ok   the real ledger is unchanged (rows, sums, every row's reconciliation flags)
+24/24 ok
+DONE

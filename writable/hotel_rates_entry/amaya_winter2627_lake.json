@@ -1,0 +1,339 @@
+{
+ "key": "amaya_winter2627_lake",
+ "hotel": {
+  "acc": "6-9-11-11312",
+  "name": "Amaya Lake",
+  "location": "Dambulla",
+  "chain": "Amaya Resorts & Spas (Hayleys Leisure)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11312",
+   "name": "Amaya Lake"
+  },
+  "contract": {
+   "name": "Winter 2026/27 local travel agent rates contract (Market 01 – all markets)",
+   "plan_type": "contract",
+   "tier": "all",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "HB",
+   "taxes_included": 1,
+   "tax_note": "Rates are inclusive of all government taxes & services; nett and non-commissionable",
+   "source_type": "email",
+   "received_at": "2026-09-09",
+   "contract_date": "2026-08-25",
+   "contract_type": "Local travel agent",
+   "hotel_reference": "Avenir Holidays – Winter SPL 26/27",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 15,
+   "child_policy_text": "Children below 2.99 years – Free of charge. 3-11.99 years sharing parent's room (Maximum 2 children) USD 30 per child (Extra bed is provided on request – Included in above rate).",
+   "guide_policy_text": "Guide Rates 40 USD per room per night HB. All Guides will be allocated at the Guides quarters or Other suitable alternate accommodation.",
+   "cancellation_text": "Cancellation Both Hotel (FIT Booking): 21 Days & above – No Cancellation fee; 15-20 Days – 50% charged on the basis booked; 14 Days and below – 100% charged on the basis booked. Cancellation Both Hotel (GIT Booking): 30-21 Days – 50% charged on the basis booked; 20 Days and below – 100% charged on the basis booked.",
+   "terms_text": "Rates are inclusive of all government taxes & services. The above rates are non-Commissionable. The above rates cannot be published on any WEB/ONLINE channels. The number of occupants in a room will depend on the social distancing policy given by the government. In the event of a change in the stipulated government Taxes & Services, the rates will be posted on the respective agent. All above rates are in US $, nett and non-commissionable, applicable for above market only.",
+   "notes": "Fax-style chain sheet for Avenir Holidays, one rate block per hotel per period; only Half Board is priced, with \"BB Reductions per person USD 05/-\" and \"Lunch Supplement per person USD 15 | Child 50% discount\" as the meal deltas (per person per night). The document subject prints \"WINTER 2025/26\" although the period line, the file name and the e-mail all say winter 2026/27 — a typo in the sheet, the dates inside the rate tables are unambiguous (01/11/2026 … 30/04/2027). Hayleys' covering e-mail of 25 Aug 2026 calls these \"special winter rates instead of the previously quoted rates\" and the PDF is named \"Winter SPL 26_27\"; entered as a contract because the document titles itself \"LOCAL TRAVEL AGENT RATES CONTRACT\" and carries the complete set of clauses. If it is meant to override a standing Amaya contract, switch plan_type to special_offer and raise the priority. The cancellation block is headed \"Both Hotel\" although the sheet covers three hotels — read as applying to all of them. The Christmas / New Year supplements are printed without dates; entered on the usual gala nights 24 and 31 December 2026. Amaya Lake – Dambulla, room category \"Standard Villas\"; the five higher villa / suite categories are priced as that villa plus a supplement per room per night.",
+   "source_file": "WINTER RATES 2026/2027 -AMAYA RESORTS & SPA CHAIN — Avenir Holidays_- Winter SPL 26_27.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Standard Villas",
+    "priced_as": "base"
+   },
+   {
+    "name": "Family Villa",
+    "priced_as": "supplement",
+    "base_room_type": "Standard Villas"
+   },
+   {
+    "name": "Deluxe Villa",
+    "priced_as": "supplement",
+    "base_room_type": "Standard Villas"
+   },
+   {
+    "name": "Signature Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Standard Villas"
+   },
+   {
+    "name": "Signature Family Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Standard Villas"
+   },
+   {
+    "name": "Deluxe Suite with Plunge pool",
+    "priced_as": "supplement",
+    "base_room_type": "Standard Villas"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 – 30 Nov 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-11-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Villas",
+      "meal_plan": "HB",
+      "sgl": 125,
+      "dbl": 130,
+      "tpl": 170,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-12-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Villas",
+      "meal_plan": "HB",
+      "sgl": 135,
+      "dbl": 140,
+      "tpl": 180,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "20 Dec 2026 – 10 Jan 2027",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Villas",
+      "meal_plan": "HB",
+      "sgl": 175,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "11 Jan – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Villas",
+      "meal_plan": "HB",
+      "sgl": 135,
+      "dbl": 140,
+      "tpl": 180,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Villas",
+      "meal_plan": "HB",
+      "sgl": 115,
+      "dbl": 120,
+      "tpl": 160,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Family Villa",
+    "amount": 40,
+    "per": "room",
+    "note": "Family Villa – per room per night USD 40 over the Standard Villas"
+   },
+   {
+    "room_type": "Deluxe Villa",
+    "amount": 40,
+    "per": "room",
+    "note": "Deluxe Villa – per room per night USD 40 over the Standard Villas"
+   },
+   {
+    "room_type": "Signature Suite",
+    "amount": 80,
+    "per": "room",
+    "note": "Signature Suite – per room per night USD 80 over the Standard Villas"
+   },
+   {
+    "room_type": "Signature Family Suite",
+    "amount": 100,
+    "per": "room",
+    "note": "Signature Family Suite – per room per night USD 100 over the Standard Villas"
+   },
+   {
+    "room_type": "Deluxe Suite with Plunge pool",
+    "amount": 250,
+    "per": "room",
+    "note": "Deluxe Suite with Plunge pool – per room per night USD 250 over the Standard Villas"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "BB",
+    "adult": -5,
+    "note": "BB reduction USD 05 per person per night (rates are quoted Half Board)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 15,
+    "child": 7.5,
+    "note": "Lunch supplement USD 15 per person per night, child 50% discount"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "lunch",
+    "adult": 15,
+    "child": 7.5,
+    "note": "Lunch Supplement per person USD 15 | Child 50% discount"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Supplement",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 70,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Christmas Supplement net per person USD 70 | Child 50% discount — the sheet prints no date, entered on 24 Dec 2026"
+   },
+   {
+    "type": "gala",
+    "name": "New year Supplement",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 95,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "New year Supplement net per person USD 95 | Child 50% discount — the sheet prints no date, entered on 31 Dec 2026"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 2.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Children below 2.99 years – free of charge"
+   },
+   {
+    "age_from": 3,
+    "age_to": 11.99,
+    "bed": "any",
+    "amount": 30,
+    "max_children": 2,
+    "note": "3-11.99 years sharing parent's room, max 2 children; extra bed on request is included in this rate"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 40,
+    "per": "room",
+    "accommodation": "guide_quarters",
+    "note": "Guide rate 40 USD per room per night HB; guides are allocated at the guide quarters or other suitable alternate accommodation"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": null,
+    "days_to": 21,
+    "charge_pct": 0,
+    "note": "FIT: 21 days & above – no cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 20,
+    "days_to": 15,
+    "charge_pct": 50,
+    "note": "FIT: 15-20 days – 50% charged on the basis booked"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "FIT: 14 days and below – 100% charged on the basis booked"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 21,
+    "charge_pct": 50,
+    "note": "GIT: 30-21 days – 50% charged on the basis booked"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 20,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "GIT: 20 days and below – 100% charged on the basis booked"
+   }
+  ],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

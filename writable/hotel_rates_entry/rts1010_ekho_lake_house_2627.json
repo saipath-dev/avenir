@@ -1,0 +1,329 @@
+{
+ "key": "rts1010_ekho_lake_house_2627",
+ "hotel": {
+  "acc": "6-9-11-10589",
+  "name": "EKHO Lakehouse",
+  "location": "Polonnaruwa",
+  "chain": "EKHO Hotels / Ceylon Hotels Corporation (CHC)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "acc": "6-9-11-10589",
+   "name": "EKHO Lakehouse"
+  },
+  "contract": {
+   "name": "Reservation Contract Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel agent / DMC contract",
+   "tier": "all",
+   "hotel_reference": "Reservation Contract Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "All quoted rates include any applicable tax in force at the time of signature of this agreement; an increase of any applicable indirect tax after signing (or a new tax, levy or charge) is added as applicable by law.",
+   "source_type": "manual",
+   "source_file": "EKHO LAKE HOUS WINTER 2026-2027.pdf",
+   "received_at": "2026-10-10",
+   "extra_bed_adult": 20,
+   "child_policy_text": "Child between 5 – 11.99 y: 50% on the parental meal rate applicable. Child below 4.99 y: FOC (sharing parents' accommodation). Children above 12 years are considered adults.",
+   "cancellation_text": "30 days or more: No cancellation fee. 29 – 21 days prior to arrival: 75% cancellation fee. 20 – 0 days prior to arrival: 100% cancellation fee.",
+   "payment_text": "With 15 – 21 days prior to arrival 50% advance payment is required to secure the booking. No show charges will be 100% chargeable.",
+   "terms_text": "Rates are subject to changes with government tax policy. Twin rooms are limited and subject to availability. Please mention the applicable special rate at the time of reservation; special rates are not valid for existing reservations or re-booking. The resort reserves the right to end the special offer within 3 working days. All reservations must be sent to the designated reservation e-mail IDs provided, unless otherwise specified. The agency cannot assign or grant any rights in this contract to third parties without written consent from the hotel. Non-distribution to other non-retail travel agencies (Spain reserved for the hotel / BGH). These rates are not valid until the signature of the contract.",
+   "notes": "Rates printed BB only, per room. HB / FB = BB + printed meal supplements (dinner USD 30, lunch USD 25 per person). CHECK WITH THE HOTEL: (1) 1 Feb – 30 Apr 2027 has NO Premier (King Parakramabahu Wing) row — the table lists \"King Nissankamalla Wing (Family Room)\" 420 / 430 instead, so Premier is not priced Feb – Apr. (2) The Family Room (2 interconnecting Superior rooms, 4AD / 2AD+2CH / 3AD+1CH) is printed only as Quadruple BB 420 (Nov – Jan) and 460 (Feb – Apr), plus the single/double 420 / 430 row for Feb – Apr. Triple only in the Premier (King Parakramabahu Wing). The sheet header reads \"CUSTOMER NAME: SUMMER 2026\" but the duration is 01.11.2026 – 30.04.2027. AI packages (per person over the booked room): BB + Local package USD 25, Premium USD 35; HB + Local USD 30, Premium USD 35. Excursions per person: dolomite figurine workshop 35, batik making 35, paddy harvesting 50, wooden craft 35, wellness 35 group / 50 private, bird watching & boat ride 50 group / 85 private, loris watching 45; monkey watching (incl. park entry) on request. Contacts: general line +94 572 228 655; Property Manager +94 766 474 902; corporate reservations +94 117 765 555 / +94 77 238 7777 / +94 77 328 5555, reservations@ekhohotels.com."
+  },
+  "room_types": [
+   {
+    "name": "Superior (King Nissankamalla Wing)",
+    "priced_as": "base",
+    "max_adults": 2,
+    "description": "Rooms 111, 112; 2AD"
+   },
+   {
+    "name": "Deluxe (King Vijayabahu Wing)",
+    "priced_as": "base",
+    "max_adults": 2,
+    "description": "2AD / 2AD + 1 child sharing parents bed"
+   },
+   {
+    "name": "Premier (King Parakramabahu Wing)",
+    "priced_as": "base",
+    "max_adults": 3,
+    "description": "2AD / 3AD / 2AD + 1 child sharing parents bed; the only rooms for triples"
+   },
+   {
+    "name": "The Royal Suite",
+    "priced_as": "base",
+    "max_adults": 2,
+    "description": "Room 110; 2AD / 2AD + 1 child sharing parents bed"
+   },
+   {
+    "name": "Family Room (King Nissankamalla Wing, interconnecting)",
+    "priced_as": "base",
+    "max_adults": 4,
+    "description": "Superior rooms 111 & 112 combined; 4AD / 2AD + 2CH / 3AD + 1CH"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov 2026 – 31 Jan 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-01-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (King Nissankamalla Wing)",
+      "meal_plan": "BB",
+      "sgl": 200,
+      "dbl": 210,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Deluxe (King Vijayabahu Wing)",
+      "meal_plan": "BB",
+      "sgl": 210,
+      "dbl": 220,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Premier (King Parakramabahu Wing)",
+      "meal_plan": "BB",
+      "sgl": 280,
+      "dbl": 290,
+      "tpl": 330,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "The Royal Suite",
+      "meal_plan": "BB",
+      "sgl": 550,
+      "dbl": 560,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Family Room (King Nissankamalla Wing, interconnecting)",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": 420,
+      "unit": null,
+      "note": "Only the Quadruple BB 420 is printed for this period"
+     }
+    ]
+   },
+   {
+    "name": "01 Feb – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-02-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (King Nissankamalla Wing)",
+      "meal_plan": "BB",
+      "sgl": 220,
+      "dbl": 230,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Deluxe (King Vijayabahu Wing)",
+      "meal_plan": "BB",
+      "sgl": 230,
+      "dbl": 240,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "The Royal Suite",
+      "meal_plan": "BB",
+      "sgl": 570,
+      "dbl": 580,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Family Room (King Nissankamalla Wing, interconnecting)",
+      "meal_plan": "BB",
+      "sgl": 420,
+      "dbl": 430,
+      "tpl": null,
+      "quad": 460,
+      "unit": null,
+      "note": "Printed as \"King Nissankamalla Wing (Family Room)\" 420 / 430 in the main table and Quadruple BB 460 in the family-room table"
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 30,
+    "note": "Dinner USD 30 per person (as printed)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 25,
+    "note": "Lunch USD 25 per person (as printed)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "lunch",
+    "adult": 25,
+    "note": "Per person (as printed)"
+   },
+   {
+    "meal": "dinner",
+    "adult": 30,
+    "note": "Per person (as printed)"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas (24th Dec.) — mandatory supplement",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "per": "person",
+    "amount": 65,
+    "compulsory": 1,
+    "note": "Mandatory supplement USD 65 per person (as printed); child amount not printed"
+   },
+   {
+    "type": "gala",
+    "name": "New Year Gala Dinner (31st Dec.) — mandatory supplement",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "per": "person",
+    "amount": 75,
+    "compulsory": 1,
+    "note": "Mandatory supplement USD 75 per person (as printed); child amount not printed"
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra bed",
+    "per": "person",
+    "amount": 20,
+    "compulsory": 0,
+    "note": "Extra bed USD 20 per person per night (as printed)"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "FOC (sharing parents' accommodation)"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "any",
+    "pct": 50,
+    "pct_basis": "meal_supplement",
+    "note": "50% on the parental meal rate applicable (as printed)"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "30 days or more: no cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 29,
+    "days_to": 21,
+    "charge_pct": 75,
+    "note": "29 – 21 days prior to arrival: 75% cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "20 – 0 days prior to arrival: 100% cancellation fee"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "note": "With 15 – 21 days prior to arrival 50% advance payment is required to secure the booking (as printed)"
+   }
+  ],
+  "restrictions": [],
+  "extras": [
+   {
+    "category": "activity",
+    "name": "Breakfast on the boat",
+    "per": "person",
+    "adult": 45,
+    "currency": "USD",
+    "note": "As printed"
+   },
+   {
+    "category": "activity",
+    "name": "Sundown cocktail on the boat (1 hr)",
+    "per": "person",
+    "adult": 75,
+    "currency": "USD",
+    "note": "Wine / beer or 3 selected cocktails (as printed)"
+   },
+   {
+    "category": "activity",
+    "name": "Boat ride morning & evening",
+    "per": "person",
+    "adult": 38,
+    "currency": "USD",
+    "note": "As printed"
+   }
+  ]
+ }
+}

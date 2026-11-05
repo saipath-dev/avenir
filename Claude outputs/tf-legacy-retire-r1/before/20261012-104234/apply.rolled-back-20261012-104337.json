@@ -1,0 +1,24 @@
+{
+ "changed": [
+  "app/Libraries/BankRec/LegacyGuard.php",
+  "app/Controllers/Settings/ManualUpdateController.php",
+  "app/Controllers/Accounts/BankUnrealisedValueController.php",
+  "app/Views/pages/settings/manual_update.php",
+  "app/Views/pages/accounts/bank_unrealised_value_change.php"
+ ],
+ "stamp": "20261012-104234",
+ "md5_new": {
+  "app/Libraries/BankRec/LegacyGuard.php": "93a621ca59f8e17ff88c9065e9ea830a",
+  "app/Controllers/Settings/ManualUpdateController.php": "45ddf8e81e1f254c09eb340fe9bd4cdf",
+  "app/Controllers/Accounts/BankUnrealisedValueController.php": "102e7d8a2d99aecbba31c515be4cd7e3",
+  "app/Views/pages/settings/manual_update.php": "616ab1584c8c0be629365ef0613a7185",
+  "app/Views/pages/accounts/bank_unrealised_value_change.php": "c3ca2a7354928e3318562b19b53ff311"
+ },
+ "md5_original": {
+  "app/Libraries/BankRec/LegacyGuard.php": "1d4cca93bf1f0ade3aafb99a793a421d",
+  "app/Controllers/Settings/ManualUpdateController.php": "d67ac130c88044ce95534b547fff2115",
+  "app/Controllers/Accounts/BankUnrealisedValueController.php": "280eb40fa6eae1137f4150514bd72d2d",
+  "app/Views/pages/settings/manual_update.php": "4f52f9b384b3df1155e974eb17738a8c",
+  "app/Views/pages/accounts/bank_unrealised_value_change.php": "3b8085088696425f803adcc664fe3cd8"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "root": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/www/avenir_rv",
+ "changed": [
+  "app/Config/Routes.php"
+ ],
+ "added": [
+  "app/Controllers/Accounts/DailyBankRecController.php",
+  "app/Libraries/BankRec/Access.php",
+  "app/Libraries/BankRec/Corrections.php",
+  "app/Libraries/BankRec/Matching.php",
+  "app/Libraries/BankRec/Rec.php",
+  "app/Libraries/BankRec/Schema.php",
+  "app/Libraries/BankRec/Statements.php",
+  "app/Views/pages/accounts/bankrec/_common.php",
+  "app/Views/pages/accounts/bankrec/account.php",
+  "app/Views/pages/accounts/bankrec/fx.php",
+  "app/Views/pages/accounts/bankrec/index.php"
+ ]
+}

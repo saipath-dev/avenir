@@ -1,0 +1,99 @@
+tf-paydesk-r4 — SAMPLE BALANCED POSTINGS RECONCILED TO THE BANK DEBIT (test copy, read back from account_runing through the batch page)
+Every entry id carries two rows (Dr and Cr). "payment" rows are the chain's own authorisation posting; "charges" and "fx" rows are the desk's, one balanced pair per tour line.
+
+A. USD batch, TWO tours, exchange LOSS and bank charges 300.00 — Cassamara Hotel (AH 2218 + AH 2290)
+----------------------------------------------------------------------------------------------------
+Batch SB-00005 · Payment Voucher No. 611 · paid 2026-10-11 · paying account 1-6-8-10380 Commercial Bank Account · USD 120.00 × 329.10
+Final LKR 39,492.00 (provisional at approval 39,000.00, difference +492.00) + bank charges 300.00 = TOTAL DEBITED 39,792.00
+
+ entry  kind      account          name                               tour            Dr           Cr  description
+  1371  payment   6-9-11-11047     Cassamara Hotel                    2325     19,746.00               VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2218 / Cassam
+  1371  payment   1-6-8-10380      Commercial Bank Account            2325                  19,746.00  VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2218 / Cassam
+  1372  payment   6-9-11-11047     Cassamara Hotel                    2390     19,746.00               VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2290 / Cassam
+  1372  payment   1-6-8-10380      Commercial Bank Account            2390                  19,746.00  VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2290 / Cassam
+  1375  charges   4-8-109-31903    TEST Bank Charges                  2325        150.00               Bank charges Payment Voucher No. 611 / AH 2218 (share 150.00 of 300.00
+  1375  charges   1-6-8-10380      Commercial Bank Account            2325                     150.00  Bank charges Payment Voucher No. 611 / AH 2218 (share 150.00 of 300.00
+  1376  charges   4-8-109-31903    TEST Bank Charges                  2390        150.00               Bank charges Payment Voucher No. 611 / AH 2290 (share 150.00 of 300.00
+  1376  charges   1-6-8-10380      Commercial Bank Account            2390                     150.00  Bank charges Payment Voucher No. 611 / AH 2290 (share 150.00 of 300.00
+  1373  fx        4-8-109-31902    TEST Realised Exchange Loss        2325        246.00               Exchange loss Payment Voucher No. 611 / AH 2218 (USD 60.00 @ 325.00 → 
+  1373  fx        6-9-11-11047     Cassamara Hotel                    2325                     246.00  Exchange loss Payment Voucher No. 611 / AH 2218 (USD 60.00 @ 325.00 → 
+  1374  fx        4-8-109-31902    TEST Realised Exchange Loss        2390        246.00               Exchange loss Payment Voucher No. 611 / AH 2290 (USD 60.00 @ 325.00 → 
+  1374  fx        6-9-11-11047     Cassamara Hotel                    2390                     246.00  Exchange loss Payment Voucher No. 611 / AH 2290 (USD 60.00 @ 325.00 → 
+                                   TOTALS                                      40,284.00    40,284.00
+
+  [ok] Payment credited to the paying account (1-6-8-10380): expected 39,492.00 — in the ledger 39,492.00
+  [ok] Bank charges credited to the paying account: expected 300.00 — in the ledger 300.00
+  [ok] Bank charges debited to the Bank Charges account (recorded once): expected 300.00 — in the ledger 300.00
+  [ok] Total credited to the paying account = total the bank debited: expected 39,792.00 — in the ledger 39,792.00
+  [ok] Every ledger entry balances (Dr = Cr): expected 6 entries — in the ledger all balanced
+  [ok] Exchange-rate difference posted (balanced pairs, loss): expected 492.00 — in the ledger 492.00
+  => RECONCILED: credits to 1-6-8-10380 = 39,792.00 = the bank debit 39,792.00
+  Charge share recorded on each tour's payment record (tpd_request_ext.charge_share): 2325 → 150.00 · 2390 → 150.00
+
+B. LKR batch, TWO tours with UNEQUAL lines, bank charges 75.55 allocated 48.35 / 27.20 — Gimanhala expenses
+-----------------------------------------------------------------------------------------------------------
+Batch SB-00008 · Payment Voucher No. 614 · paid 2026-10-11 · paying account 1-6-8-10380 Commercial Bank Account
+Final LKR 5,000.00 (provisional at approval 5,000.00, difference +0.00) + bank charges 75.55 = TOTAL DEBITED 5,075.55
+
+ entry  kind      account          name                               tour            Dr           Cr  description
+  1384  payment   6-9-11-11590     GIMANHALA LUNCH VOUCHER            2325      3,200.00               VOUCHER PAYMENT - Voucher Payment - Lunch or Other Fee AH 2218 / GIMAN
+  1384  payment   1-6-8-10380      Commercial Bank Account            2325                   3,200.00  VOUCHER PAYMENT - Voucher Payment - Lunch or Other Fee AH 2218 / GIMAN
+  1385  payment   6-9-11-11590     GIMANHALA LUNCH VOUCHER            2390      1,800.00               VOUCHER PAYMENT - Voucher Payment - Lunch or Other Fee AH 2290 / GIMAN
+  1385  payment   1-6-8-10380      Commercial Bank Account            2390                   1,800.00  VOUCHER PAYMENT - Voucher Payment - Lunch or Other Fee AH 2290 / GIMAN
+  1386  charges   4-8-109-31903    TEST Bank Charges                  2325         48.35               Bank charges Payment Voucher No. 614 / AH 2218 (share 48.35 of 75.55)
+  1386  charges   1-6-8-10380      Commercial Bank Account            2325                      48.35  Bank charges Payment Voucher No. 614 / AH 2218 (share 48.35 of 75.55)
+  1387  charges   4-8-109-31903    TEST Bank Charges                  2390         27.20               Bank charges Payment Voucher No. 614 / AH 2290 (share 27.20 of 75.55)
+  1387  charges   1-6-8-10380      Commercial Bank Account            2390                      27.20  Bank charges Payment Voucher No. 614 / AH 2290 (share 27.20 of 75.55)
+                                   TOTALS                                       5,075.55     5,075.55
+
+  [ok] Payment credited to the paying account (1-6-8-10380): expected 5,000.00 — in the ledger 5,000.00
+  [ok] Bank charges credited to the paying account: expected 75.55 — in the ledger 75.55
+  [ok] Bank charges debited to the Bank Charges account (recorded once): expected 75.55 — in the ledger 75.55
+  [ok] Total credited to the paying account = total the bank debited: expected 5,075.55 — in the ledger 5,075.55
+  [ok] Every ledger entry balances (Dr = Cr): expected 4 entries — in the ledger all balanced
+  => RECONCILED: credits to 1-6-8-10380 = 5,075.55 = the bank debit 5,075.55
+  Charge share recorded on each tour's payment record (tpd_request_ext.charge_share): 2325 → 48.35 · 2390 → 27.20
+
+C. USD single tour, exchange GAIN, charges 200.00, paid from the second Avenir account (Sampath) — Kassapa part 2
+-----------------------------------------------------------------------------------------------------------------
+Batch SB-00003 · Payment Voucher No. 609 · paid 2026-10-11 · paying account 1-6-8-10390 Sampath Bank Account · USD 70.00 × 325.00
+Final LKR 22,750.00 (provisional at approval 23,037.00, difference -287.00) + bank charges 200.00 = TOTAL DEBITED 22,950.00
+
+ entry  kind      account          name                               tour            Dr           Cr  description
+  1364  payment   6-9-11-11496     Kassapa Lions Rock                 2325     22,750.00               VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2218 / Kassap
+  1364  payment   1-6-8-10390      Sampath Bank Account               2325                  22,750.00  VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2218 / Kassap
+  1366  charges   4-8-109-31903    TEST Bank Charges                  2325        200.00               Bank charges Payment Voucher No. 609 / AH 2218
+  1366  charges   1-6-8-10390      Sampath Bank Account               2325                     200.00  Bank charges Payment Voucher No. 609 / AH 2218
+  1365  fx        6-9-11-11496     Kassapa Lions Rock                 2325        287.00               Exchange gain Payment Voucher No. 609 / AH 2218 (USD 70.00 @ 329.10 → 
+  1365  fx        4-8-109-31901    TEST Realised Exchange Gain        2325                     287.00  Exchange gain Payment Voucher No. 609 / AH 2218 (USD 70.00 @ 329.10 → 
+                                   TOTALS                                      23,237.00    23,237.00
+
+  [ok] Payment credited to the paying account (1-6-8-10390): expected 22,750.00 — in the ledger 22,750.00
+  [ok] Bank charges credited to the paying account: expected 200.00 — in the ledger 200.00
+  [ok] Bank charges debited to the Bank Charges account (recorded once): expected 200.00 — in the ledger 200.00
+  [ok] Total credited to the paying account = total the bank debited: expected 22,950.00 — in the ledger 22,950.00
+  [ok] Every ledger entry balances (Dr = Cr): expected 3 entries — in the ledger all balanced
+  [ok] Exchange-rate difference posted (balanced pairs, gain): expected 287.00 — in the ledger 287.00
+  => RECONCILED: credits to 1-6-8-10390 = 22,950.00 = the bank debit 22,950.00
+  Charge share recorded on each tour's payment record (tpd_request_ext.charge_share): 2325 → 200.00
+
+D. USD single tour, same-day rate (no difference), charges 150.00 — COVENRO
+---------------------------------------------------------------------------
+Batch SB-00001 · Payment Voucher No. 607 · paid 2026-10-11 · paying account 1-6-8-10380 Commercial Bank Account · USD 55.00 × 327.25
+Final LKR 17,998.75 (provisional at approval 17,998.75, difference +0.00) + bank charges 150.00 = TOTAL DEBITED 18,148.75
+
+ entry  kind      account          name                               tour            Dr           Cr  description
+  1358  payment   6-9-11-10626     COVENRO VEYANGODA                  2325     17,998.75               VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2218 / COVENR
+  1358  payment   1-6-8-10380      Commercial Bank Account            2325                  17,998.75  VOUCHER PAYMENT - Voucher Payment - Hotel Reservation AH 2218 / COVENR
+  1359  charges   4-8-109-31903    TEST Bank Charges                  2325        150.00               Bank charges Payment Voucher No. 607 / AH 2218
+  1359  charges   1-6-8-10380      Commercial Bank Account            2325                     150.00  Bank charges Payment Voucher No. 607 / AH 2218
+                                   TOTALS                                      18,148.75    18,148.75
+
+  [ok] Payment credited to the paying account (1-6-8-10380): expected 17,998.75 — in the ledger 17,998.75
+  [ok] Bank charges credited to the paying account: expected 150.00 — in the ledger 150.00
+  [ok] Bank charges debited to the Bank Charges account (recorded once): expected 150.00 — in the ledger 150.00
+  [ok] Total credited to the paying account = total the bank debited: expected 18,148.75 — in the ledger 18,148.75
+  [ok] Every ledger entry balances (Dr = Cr): expected 2 entries — in the ledger all balanced
+  => RECONCILED: credits to 1-6-8-10380 = 18,148.75 = the bank debit 18,148.75
+  Charge share recorded on each tour's payment record (tpd_request_ext.charge_share): 2325 → 150.00
+

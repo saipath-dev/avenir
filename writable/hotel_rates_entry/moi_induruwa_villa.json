@@ -1,0 +1,543 @@
+{
+    "key": "moi_induruwa_villa",
+    "hotel": {
+        "acc": "6-9-11-11781",
+        "name": "Moi Induruwa",
+        "location": "Induruwa",
+        "chain": "DBI Ceylon / Moi Hotels",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:03:58"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Moi Induruwa"
+        },
+        "contract": {
+            "name": "All market rates WEF 01 Feb 2026 (Winter/Summer 2026 – Winter 2026/27) – Full Villa (10 rooms)",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "valid_from": "2026-02-01",
+            "valid_to": "2027-04-30",
+            "taxes_included": 1,
+            "tax_note": "All room rates inclusive of all taxes; non-commissionable",
+            "received_at": "2026-09-03",
+            "credit_facility": "unknown",
+            "extra_bed_adult": 15,
+            "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+            "terms_text": "All room rates are inclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 11.00 am; early check-in / late check-out subject to availability, charges apply. No pets. Bookings are confirmed by e-mail, subject to written confirmation from the reservations department followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for any loss or damage to hotel property. DBI e-mail 24 Aug 2026: rates apply to new reservations only; only HB bookings are accepted on 24 and 31 Dec 2026; reservations / amendments / cancellations to info@dbihotels.lk, reservation@dbihotels.lk, sales3@dbihotels.lk.",
+            "child_policy_text": "Below 5.99 years free of charge sharing parent's bed on booked basis. 6 – 11 years 50% of the adult rate on booked basis per night (excluding extra bed). 12 years and above considered as an adult. Extra bed $15 per night. Child meal rate 50% of the adult rate.",
+            "cancellation_text": "November – April: release period 21 days prior to arrival; 50% of the full booking value charged if cancelled within 21 days. May – October: release period 14 days prior to arrival; 50% of the full booking value charged if cancelled within 14 days. No-shows: 100% of the full stay / no refund (if payment is settled). An early departure fee applies for cancellations made after check-in.",
+            "payment_text": "Full payment to be settled 7 days prior to the date of arrival. Cheque payments must be banked and realised at least 3 days prior to arrival. Reservations made within 7 days of arrival: payment in full upon booking confirmation. Failure to settle in full by the above date: rooms released without prior notice. Hotel reserves the right to release bookings with unsettled payment (excluding credit agents) with advance notice of 14 days or more. Bank: Moi Hotels (Pvt) Ltd, Nations Trust Bank (NTB) World Trade Center branch, A/C 200500050486. Quote travel agency / guest name / confirmation number as reference.",
+            "pricing_mode": "per_unit",
+            "guide_policy_text": "Group bookings with 15 or more paying guests: guide room provided FOC. Guide fee (per night) for less than 15 paying guests: USD 35 BB / USD 45 HB. If the hotel is fully booked, guide accommodation will be provided at a nearby suitable accommodation.",
+            "notes": "Whole-villa price per night (RO / BB / HB) for the 10-room villa; the sheet does not print the villa pax capacity. Chef charges optional $55 per night on RO. Offers exclude 20 Dec – 15 Jan.",
+            "currency": "USD",
+            "source_type": "email",
+            "source_file": "MOI HOTELS — Moi Induruwa WEF 01.02.2026.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Full Villa (10 rooms)",
+                "priced_as": "base",
+                "room_count": 1,
+                "description": "Entire villa: 4 deluxe double + 4 deluxe twin + 2 family rooms; pax capacity not printed"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Feb – 30 Apr 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-02-01",
+                        "to": "2026-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1246
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1526
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1946
+                    }
+                ]
+            },
+            {
+                "name": "01 May – 31 Oct 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-05-01",
+                        "to": "2026-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 566
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 846
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1266
+                    }
+                ]
+            },
+            {
+                "name": "01 Nov – 19 Dec 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-19"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 806
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1086
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1506
+                    }
+                ]
+            },
+            {
+                "name": "20 Dec 2026 – 15 Jan 2027 (festive)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-20",
+                        "to": "2027-01-15"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1636
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1916
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 2336
+                    }
+                ],
+                "min_stay": 3
+            },
+            {
+                "name": "16 Jan – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-16",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1366
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1646
+                    },
+                    {
+                        "room_type": "Full Villa (10 rooms)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 2066
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 20,
+                "child": 10,
+                "note": "Dinner supplement (printed HB rows take precedence)"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 15,
+                "child": 7.5,
+                "note": "Lunch supplement"
+            },
+            {
+                "from": "BB",
+                "to": "RO",
+                "adult": -10,
+                "child": -5,
+                "note": "Breakfast price (room-only derived)"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 10,
+                "child": 5
+            },
+            {
+                "meal": "lunch",
+                "adult": 15,
+                "child": 7.5
+            },
+            {
+                "meal": "dinner",
+                "adult": 20,
+                "child": 10
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (BB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 40,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (HB/FB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 40,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (BB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 40,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (HB/FB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 40,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "other",
+                "name": "Chef charges (optional) when the entire villa is reserved on room only",
+                "meal_plans": "RO",
+                "per": "night",
+                "amount": 55,
+                "compulsory": 0,
+                "note": "Optional; $55 per night when the whole villa is booked on RO"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Free of charge sharing parents' bed on booked basis"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "adult_rate",
+                "note": "50% of the adult rate on booked basis per night (excluding extra bed)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "pct": 50,
+                "pct_basis": "adult_rate",
+                "note": "50% of the adult rate plus extra bed $15 per night"
+            }
+        ],
+        "guide_policies": [
+            {
+                "role": "guide",
+                "meal_plan": "BB",
+                "amount": 35,
+                "per": "person",
+                "free_from_pax": 15,
+                "accommodation": "hotel_room",
+                "note": "Guide fee per night for less than 15 paying guests; groups of 15+ paying guests get the guide room FOC; if the hotel is full, nearby suitable accommodation"
+            },
+            {
+                "role": "guide",
+                "meal_plan": "HB",
+                "amount": 45,
+                "per": "person",
+                "free_from_pax": 15,
+                "accommodation": "hotel_room",
+                "note": "Guide fee per night for less than 15 paying guests; groups of 15+ paying guests get the guide room FOC; if the hotel is full, nearby suitable accommodation"
+            }
+        ],
+        "foc_rules": [],
+        "offers": [
+            {
+                "kind": "early_booking",
+                "name": "Book 30 days in advance: 5% discount",
+                "value_pct": 5,
+                "per": "booking",
+                "excludes_peak": 1,
+                "conditions": "Booked 30 or more days before arrival. Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "early_booking",
+                "name": "Book 60 days in advance: 10% discount",
+                "value_pct": 10,
+                "per": "booking",
+                "excludes_peak": 1,
+                "conditions": "Booked 60 or more days before arrival. Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "early_booking",
+                "name": "Book 90 days in advance: 15% discount",
+                "value_pct": 15,
+                "per": "booking",
+                "excludes_peak": 1,
+                "conditions": "Booked 90 or more days before arrival. Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 7 nights, pay for 6",
+                "min_nights": 7,
+                "free_nights": 1,
+                "per": "room",
+                "excludes_peak": 1,
+                "conditions": "Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 14 nights, pay for 12",
+                "min_nights": 14,
+                "free_nights": 2,
+                "per": "room",
+                "excludes_peak": 1,
+                "conditions": "Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 21 nights, pay for 17",
+                "min_nights": 21,
+                "free_nights": 4,
+                "per": "room",
+                "excludes_peak": 1,
+                "conditions": "Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            }
+        ],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-04-30",
+                "tier": "all",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 50,
+                "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+            },
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-04-30",
+                "tier": "all",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-10-31",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 50,
+                "note": "Release period 14 days prior to arrival; 50% of the full booking value if cancelled within 14 days"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-10-31",
+                "tier": "all",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 50,
+                "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "No-show: 100% of the full stay, no refund"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 7,
+                "pct": 100,
+                "note": "Full payment 7 days prior to arrival; reservations made within 7 days of arrival are paid in full on confirmation"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "days_before": 3,
+                "note": "Cheque payments must be banked and realised at least 3 days prior to arrival"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "other",
+                "days_before": 14,
+                "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+            }
+        ],
+        "restrictions": [
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "value": "HB",
+                "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+            },
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "value": "HB",
+                "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+            },
+            {
+                "kind": "min_stay",
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "value": "3",
+                "note": "Minimum 3 nights 20 Dec 2026 – 15 Jan 2027 (printed on the period header)"
+            }
+        ],
+        "extras": []
+    }
+}

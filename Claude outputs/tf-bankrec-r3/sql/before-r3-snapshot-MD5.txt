@@ -1,0 +1,17 @@
+444487e8802e99d0de5cdaadebb75715  d_account_posting.sql
+90bb61615bddda2bee9ada702e22d7c5  d_account_runing.sql
+2923da9cf9086c7925069ddc40fb72b1  d_brc_account_map.sql
+50d2ca13ef8156bd5ebf1ea3eb213214  d_brc_claim.sql
+c7cf30a18fdeea309a0e3ebe292f1a81  d_brc_correction.sql
+dd7f1d174a303ce2238d5c8f477b96ba  d_brc_day.sql
+e69712104aa9fe5531eba6a78137dcf2  d_brc_fx_rate.sql
+7064a08d27335407eb8b931857b4489c  d_brc_line.sql
+1dabec8bc61332480559bbc8e775517f  d_brc_mark.sql
+0e02c5ea3dcfcd41f602cbabf700b967  d_brc_mark_event.sql
+0d0aff90ffb87dfd176e74e6448e4534  d_brc_match.sql
+237ffac08b47f91935ca25c9df220720  d_brc_match_item.sql
+b54bf54d1c43201ce795f296fc8b6578  d_brc_opening.sql
+5c7c918f76cd81d92a396d02a1d29c40  d_brc_statement.sql
+4a72c2f79ccf7d9a1b198e42fcdf06f7  d_brc_transfer.sql
+d654d15fa599d64c0e6079d40f6303f5  d_tpd_bank_account.sql
+dfeb58ca64538b55b3def8ef77009376  d_tpd_meta.sql

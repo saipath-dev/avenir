@@ -1,0 +1,721 @@
+{
+ "key": "newburgh_ella_2627",
+ "hotel": {
+  "acc": "6-9-11-11637",
+  "name": "Newburgh Ella – The Tea Factory Resort",
+  "location": "Ella",
+  "chain": "Browns Hotels & Resorts"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11637",
+   "name": "Newburgh Ella – The Tea Factory Resort"
+  },
+  "contract": {
+   "name": "Travel agent contract 1 Feb 2026 – 30 Apr 2027 (BB)",
+   "plan_type": "contract",
+   "priority": 0,
+   "tier": "all",
+   "contract_type": "Travel Agent",
+   "contract_date": "2026-02-10",
+   "valid_from": "2026-02-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "billing_currency": "same",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "Per room per night, inclusive of taxes and service charge; non-commissionable. New taxes introduced by the Government of Sri Lanka are borne by the travel agent.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "credit_facility": "unknown",
+   "max_rooms_per_booking": 15,
+   "child_policy_text": "0 – 4.99 years: free of charge sharing parents' room on basis booked. 5 – 11.99 years: USD 30 on BB per night (extra bed included). Child meal-only rate: 50% of the adult meal rate. Extra bed-only rate: USD 20 per night. Baby cots are subject to availability.",
+   "guide_policy_text": "Guide rooms are subject to the regular single room rates mentioned herewith. Driver accommodation not provided.",
+   "cancellation_text": "Cancellation & no-show policy. Applicable periods Jan, Feb, March, April, Jul, Aug, Nov, Dec: 60 days or more prior to arrival – no cancellation fee; 59 – 45 days prior to arrival – 75% of the full stay will be charged; 44 – 0 days prior to arrival – 100% of the full stay will be charged. Applicable periods May, June, Sep, Oct: 21 days or more prior to arrival – no cancellation fee; 20 – 8 days prior to arrival – 75% of the full stay will be charged; 7 – 0 days prior to arrival – 100% of the full stay will be charged. The rooming list should be forwarded to the hotel 30 days prior to arrival (if not, it will be subject to cancellation).",
+   "payment_text": "Deposit: a non-refundable deposit of 50% of the total booking value is required at the time of confirmation to guarantee the reservation. Balance: the remaining balance must be settled 14 days prior to arrival. Late bookings (within 14 days of arrival): full payment at the time of booking. Group reservations (minimum of 8 rooms): advance payment before 45 days to arrival; other reservations (below 8 rooms): advance payment before 30 days to arrival. The hotel cannot guarantee retention if these payment conditions are not followed; bookings are released without prior notice if payment is not made before the deadline. Bank: Commercial Bank of Ceylon PLC, Foreign branch, current account No. 1000971734, currency LKR.",
+   "terms_text": "Sri Lankan Travel Agent Contract, STRICTLY CONFIDENTIAL. Newburgh Tea Estate, Passara Road, Ella. Period 1 February 2026 to 30 April 2027. Total inventory 40 rooms; room type Bronze Tip (base category – 6 rooms only); meal plan bed and breakfast; market all markets; currency USD. The agreement is subject to the terms & conditions on the following pages; sign and return the duplicate copy to Browns Hotels and Resorts to confirm acceptance and rates offered; the special rates are not valid until a signed acceptance is received from Browns Hotels and Resorts. Triple room rates are quoted for the Golden Tip room category; quadruple room rates for the Silver Tip Family room category. Group bookings above 3 rooms are accepted for the Golden Tip room category or above only (all group reservations above 3 rooms should be quoted for Golden Tip rooms); group bookings are limited to a maximum of 15 rooms per group per day. Booking procedure: the rooming list should be forwarded to the hotel 30 days prior to arrival (if not, it will be subject to cancellation); all booking requests are subject to written confirmation from the reservations department; the room rate must be indicated on the reservation voucher (a voucher without it is not an official reservation request). Terms and conditions: room rates are per room, per night, inclusive of taxes and service charge; room rates are non-commissionable; any new taxes introduced by the Government of Sri Lanka that result in additional costs shall be borne by the travel agent; all reservations should be sent to the provided reservation e-mail addresses unless otherwise specified; the hotel reserves the right to modify the rates at any time, such changes applying to all future bookings; original twin rooms are not available; baby cots are subject to availability; the agency cannot assign or grant any rights in this contract to third parties without written consent from the hotel; the contracted rates are confidential and cannot be published online or shared with any third-party operators; in instances where the hotel is overbooked, the hotel reserves the right to transfer reservations to alternate accommodation of similar rating; guide rooms are subject to the regular single room rates; driver accommodation not provided. Contacts: Central Reservations (corporate office) +94 11 4 790 500, reservations@brownshotels.com, 08:30–20:30 Mon–Fri; reservation agent Gayan Prasanna (Junior Executive – Central Reservations) salescoordinator@brownshotels.com; resort reception +94 57 233 3400, reception.newburgh@brownshotels.com; General Manager Gangadaran Velsamy +94 77 444 7312, GmNewburgh@brownshotels.com; Assistant Front Office Manager Neranjan Nanayakkara AfomNewburgh@brownshotels.com; F&B Manager Ruwan Digala fnb.Newburgh@brownshotels.com; sales: Dinuwi Yahampath dinuwiY@brownshotels.com, Dharsha Ganeshan dharshag@brownshotels.com, Namal Gangananda namal.g@brownshotels.com, Chathuranga Rajakaruna chathuranga@brownshotels.com, Kalum Konaduwage kelumko@brownshotels.com, Ishak Zainudeen (Head of Sales) ishakz@brownshotels.com. Signed for Browns Hotels & Resorts by Ishak Zainudeen, Head of Sales, dated 10.02.2026; the travel agent signature line is blank on this copy.",
+   "voucher_note": "The room rate must be indicated on the reservation voucher; a voucher without the applicable rate is not an official reservation request. Rooming list to the hotel 30 days prior to arrival.",
+   "notes": "Transcribed from \"Newburgh Ella - The Tea Factory Resort - Travel Agent Rates Agreement (USD) 2026-27.pdf\" (5 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Rate tables (page 2): SINGLE / DOUBLE = Bronze Tip (base, 6 rooms only); TRIPLE = Golden Tip room, supplement included; QUADRUPLE = Silver Tip Family room, supplement included (column header reads \"Silver Tip Rooms\", the bullet below the tables \"Silver Tip Family Room Category\"; the figures match the Silver Tip Family supplement of 150). Bronze Tip rows carry the printed SGL/DBL; Golden Tip rows the printed TPL with SGL/DBL = Bronze Tip + 50, Silver Tip Family rows the printed QUAD with SGL/DBL = Bronze Tip + 150 (derived from the printed supplements); the room supplement table (Golden Tip 50, Silver Tip 100, Silver Tip Family 150, Silver Tip Convertible Family Room 150, Presidential Suite 200, per room per night) is on the supplement rooms. Golden Tip and Silver Tip Family have their own rows (the engine uses a row before a supplement), so their SGL/DBL are written into the rows from the printed supplements rather than left to be quoted by hand. Triples / quads in the other categories are not priced on the sheet (implied extra person = TPL − DBL − 50 = 40, not printed). The 11 Jan – 30 Apr 2027 QUAD (590) is 10 above the pattern of the other periods (DBL + 230) — entered as printed, to be confirmed. Room counts on the supplement table + base = 39; the sheet says 40 rooms in total. Payment goes to an LKR account (Commercial Bank) although rates are in USD; conversion basis not stated (billing currency left \"same\"). Older plan \"Migrated from Hotel Rate screen\" (11 Jan – 30 Apr 2027, Golden Tip BB DBL 5 / HB DBL 450) is legacy data and should be superseded.",
+   "source_file": "Newburgh Ella - The Tea Factory Resort - Travel Agent Rates Agreement (USD) 2026-27.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Bronze Tip",
+    "priced_as": "base",
+    "room_count": 6,
+    "description": "Base category – 6 rooms only. SINGLE / DOUBLE columns of the rate tables. Groups above 3 rooms are not accepted in this category."
+   },
+   {
+    "name": "Golden Tip",
+    "priced_as": "supplement",
+    "base_room_type": "Bronze Tip",
+    "room_count": 22,
+    "description": "Room supplement USD 50 per room per night on Bronze Tip. The TRIPLE column of the rate tables is quoted for this category (supplement included)."
+   },
+   {
+    "name": "Silver Tip",
+    "priced_as": "supplement",
+    "base_room_type": "Bronze Tip",
+    "room_count": 5,
+    "description": "Room supplement USD 100 per room per night on Bronze Tip."
+   },
+   {
+    "name": "Silver Tip Family",
+    "priced_as": "supplement",
+    "base_room_type": "Bronze Tip",
+    "room_count": 1,
+    "description": "Room supplement USD 150 per room per night on Bronze Tip. The QUADRUPLE column of the rate tables is quoted for this category (supplement included)."
+   },
+   {
+    "name": "Silver Tip Convertible Family Room",
+    "priced_as": "supplement",
+    "base_room_type": "Bronze Tip",
+    "room_count": 4,
+    "description": "Room supplement USD 150 per room per night on Bronze Tip."
+   },
+   {
+    "name": "Presidential Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Bronze Tip",
+    "room_count": 1,
+    "description": "Room supplement USD 200 per room per night on Bronze Tip (1 suite)."
+   }
+  ],
+  "seasons": [
+   {
+    "name": "1 Feb – 30 Apr 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-02-01",
+      "to": "2026-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 240,
+      "dbl": 250,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 290,
+      "dbl": 300,
+      "tpl": 340,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 390,
+      "dbl": 400,
+      "tpl": null,
+      "quad": 480,
+      "unit": null,
+      "note": "QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 per room (printed room supplement)."
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2025/26 & Summer 2026 (1 Feb 2026 – 31 October 2026)\""
+   },
+   {
+    "name": "1 May – 30 Jun 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-06-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 190,
+      "dbl": 200,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 240,
+      "dbl": 250,
+      "tpl": 290,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 340,
+      "dbl": 350,
+      "tpl": null,
+      "quad": 430,
+      "unit": null,
+      "note": "QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 per room (printed room supplement)."
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2025/26 & Summer 2026 (1 Feb 2026 – 31 October 2026)\""
+   },
+   {
+    "name": "1 July – 31 Aug 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-07-01",
+      "to": "2026-08-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 240,
+      "dbl": 250,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 290,
+      "dbl": 300,
+      "tpl": 340,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 390,
+      "dbl": 400,
+      "tpl": null,
+      "quad": 480,
+      "unit": null,
+      "note": "QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 per room (printed room supplement)."
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2025/26 & Summer 2026 (1 Feb 2026 – 31 October 2026)\""
+   },
+   {
+    "name": "1 Sep – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 190,
+      "dbl": 200,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 240,
+      "dbl": 250,
+      "tpl": 290,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 340,
+      "dbl": 350,
+      "tpl": null,
+      "quad": 430,
+      "unit": null,
+      "note": "QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 per room (printed room supplement)."
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2025/26 & Summer 2026 (1 Feb 2026 – 31 October 2026)\""
+   },
+   {
+    "name": "1 Nov – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 290,
+      "dbl": 300,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 340,
+      "dbl": 350,
+      "tpl": 390,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 440,
+      "dbl": 450,
+      "tpl": null,
+      "quad": 530,
+      "unit": null,
+      "note": "QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 per room (printed room supplement)."
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)\""
+   },
+   {
+    "name": "20 Dec – 10 Jan 2027",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 390,
+      "dbl": 400,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 440,
+      "dbl": 450,
+      "tpl": 490,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 540,
+      "dbl": 550,
+      "tpl": null,
+      "quad": 630,
+      "unit": null,
+      "note": "QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 per room (printed room supplement)."
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)\""
+   },
+   {
+    "name": "11 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bronze Tip",
+      "meal_plan": "BB",
+      "sgl": 340,
+      "dbl": 350,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SINGLE / DOUBLE columns = Bronze Tip (base category, 6 rooms only)"
+     },
+     {
+      "room_type": "Golden Tip",
+      "meal_plan": "BB",
+      "sgl": 390,
+      "dbl": 400,
+      "tpl": 440,
+      "quad": null,
+      "unit": null,
+      "note": "TPL printed (TRIPLE column, \"Golden Tip Rooms – Supplement Included\"). SGL/DBL = Bronze Tip + USD 50 per room (printed room supplement), not printed as such."
+     },
+     {
+      "room_type": "Silver Tip Family",
+      "meal_plan": "BB",
+      "sgl": 490,
+      "dbl": 500,
+      "tpl": null,
+      "quad": 590,
+      "unit": null,
+      "note": "QUAD 590 as printed (QUAD − DBL = 240 here, 230 in every other period — confirm with hotel). QUAD printed (QUADRUPLE column; bullet: Silver Tip Family Room Category). SGL/DBL = Bronze Tip + USD 150 pe"
+     }
+    ],
+    "notes": "Table \"Travel Agent Rates – Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)\""
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Golden Tip",
+    "amount": 50,
+    "per": "room",
+    "note": "Golden Tip - 22 Rooms. Room Supplements - per room per night (page 2). The season rows (SGL/DBL = Bronze Tip + 50, TPL as printed) take precedence for Golden Tip."
+   },
+   {
+    "room_type": "Silver Tip",
+    "amount": 100,
+    "per": "room",
+    "note": "Silver Tip - 5 Rooms. Room Supplements - per room per night (page 2)"
+   },
+   {
+    "room_type": "Silver Tip Family",
+    "amount": 150,
+    "per": "room",
+    "note": "Silver Tip Family - 1 Room. Room Supplements - per room per night (page 2). The season rows (SGL/DBL = Bronze Tip + 150, QUAD as printed) take precedence for Silver Tip Family."
+   },
+   {
+    "room_type": "Silver Tip Convertible Family Room",
+    "amount": 150,
+    "per": "room",
+    "note": "Silver Tip Convertible Family Room - 4 Rooms. Room Supplements - per room per night (page 2)"
+   },
+   {
+    "room_type": "Presidential Suite",
+    "amount": 200,
+    "per": "room",
+    "note": "Presidential Suite - 1 Suite. Room Supplements - per room per night (page 2)"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 25,
+    "note": "Dinner supplement (\"Dinner/ Lunch 25\" per person)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 25,
+    "note": "Lunch supplement (\"Dinner/ Lunch 25\" per person)"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -18,
+    "note": "Breakfast price 18 per person (room only is not offered on the sheet; derived only)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "name": "Breakfast",
+    "adult": 18,
+    "note": "Per person. Child meal-only rate: 50% of the adult meal rate"
+   },
+   {
+    "meal": "lunch",
+    "name": "Dinner/ Lunch",
+    "adult": 25,
+    "note": "Per person (\"Dinner/ Lunch\" one price). Child meal-only rate: 50% of the adult meal rate"
+   },
+   {
+    "meal": "dinner",
+    "name": "Dinner/ Lunch",
+    "adult": 25,
+    "note": "Per person (\"Dinner/ Lunch\" one price). Child meal-only rate: 50% of the adult meal rate"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve Supplement (24 Dec)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB,HB,FB,AI",
+    "per": "person",
+    "amount": 125,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Listed under \"Meal Supplements - per person\"; compulsory, whatever the meal plan. Child share not printed: 50% taken from the child policy line \"Child Meal-only rate: 50% of the adult meal rate\"."
+   },
+   {
+    "type": "gala",
+    "name": "New Year Eve (31 Dec)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB,HB,FB,AI",
+    "per": "person",
+    "amount": 150,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Listed under \"Meal Supplements - per person\"; compulsory, whatever the meal plan. Child share not printed: 50% taken from the child policy line \"Child Meal-only rate: 50% of the adult meal rate\"."
+   },
+   {
+    "type": "other",
+    "name": "Extra bed only",
+    "per": "night",
+    "amount": 20,
+    "compulsory": 0,
+    "note": "Child policy table: \"Extra Bed-only rate USD 20 per night\" (no meals). The 5–11.99 child rate of USD 30 on BB already includes the extra bed."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Free of charge sharing parents' room on basis booked"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "note": "USD 30 on BB per night (extra bed included)"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Child meal-only rate: 50% of the adult meal rate (breakfast 18, dinner/lunch 25). Age band of this line not printed; 5–11.99 assumed."
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "pct": 100,
+    "pct_of": "sgl",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Guide rooms are subject to the regular single room rates mentioned herewith. Driver accommodation not provided."
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 60,
+    "charge_pct": 0,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 60 days or more prior to arrival – no cancellation fee"
+   },
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": 59,
+    "days_to": 45,
+    "charge_pct": 75,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 59 – 45 days prior to arrival – 75% of the full stay"
+   },
+   {
+    "date_from": "2026-02-01",
+    "date_to": "2026-04-30",
+    "tier": "all",
+    "days_from": 44,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 44 – 0 days prior to arrival (and no-show) – 100% of the full stay"
+   },
+   {
+    "date_from": "2026-07-01",
+    "date_to": "2026-08-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 60,
+    "charge_pct": 0,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 60 days or more prior to arrival – no cancellation fee"
+   },
+   {
+    "date_from": "2026-07-01",
+    "date_to": "2026-08-31",
+    "tier": "all",
+    "days_from": 59,
+    "days_to": 45,
+    "charge_pct": 75,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 59 – 45 days prior to arrival – 75% of the full stay"
+   },
+   {
+    "date_from": "2026-07-01",
+    "date_to": "2026-08-31",
+    "tier": "all",
+    "days_from": 44,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 44 – 0 days prior to arrival (and no-show) – 100% of the full stay"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 60,
+    "charge_pct": 0,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 60 days or more prior to arrival – no cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 59,
+    "days_to": 45,
+    "charge_pct": 75,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 59 – 45 days prior to arrival – 75% of the full stay"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 44,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Jan, Feb, Mar, Apr, Jul, Aug, Nov, Dec: 44 – 0 days prior to arrival (and no-show) – 100% of the full stay"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-06-30",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 21,
+    "charge_pct": 0,
+    "note": "May, June, Sep, Oct: 21 days or more prior to arrival – no cancellation fee"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-06-30",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 8,
+    "charge_pct": 75,
+    "note": "May, June, Sep, Oct: 20 – 8 days prior to arrival – 75% of the full stay"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-06-30",
+    "tier": "all",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "May, June, Sep, Oct: 7 – 0 days prior to arrival (and no-show) – 100% of the full stay"
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 21,
+    "charge_pct": 0,
+    "note": "May, June, Sep, Oct: 21 days or more prior to arrival – no cancellation fee"
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 8,
+    "charge_pct": 75,
+    "note": "May, June, Sep, Oct: 20 – 8 days prior to arrival – 75% of the full stay"
+   },
+   {
+    "date_from": "2026-09-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "May, June, Sep, Oct: 7 – 0 days prior to arrival (and no-show) – 100% of the full stay"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "note": "Deposit: a non-refundable deposit of 50% of the total booking value is required at the time of confirmation to guarantee the reservation"
+   },
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 14,
+    "pct": 100,
+    "note": "Balance payment: the remaining balance must be settled 14 days prior to arrival"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "days_before": 14,
+    "pct": 100,
+    "note": "Late bookings: reservations made within 14 days of arrival require full payment at the time of booking"
+   },
+   {
+    "applies": "group",
+    "kind": "advance",
+    "days_before": 45,
+    "note": "Group reservations (minimum of 8 rooms) require an advance payment before 45 days to the arrival (amount not stated)"
+   },
+   {
+    "applies": "fit",
+    "kind": "advance",
+    "days_before": 30,
+    "note": "Other reservations (below 8 rooms) require an advance payment before 30 days to the arrival (amount not stated)"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "other",
+    "date_from": "2026-02-01",
+    "date_to": "2027-04-30",
+    "value": "Groups above 3 rooms: Golden Tip or above only",
+    "note": "Group bookings above 3 rooms are accepted for the Golden Tip room category or above only; all group reservations above 3 rooms should be quoted for Golden Tip rooms."
+   },
+   {
+    "kind": "other",
+    "date_from": "2026-02-01",
+    "date_to": "2027-04-30",
+    "value": "Max 15 rooms per group per day",
+    "note": "To preserve the exclusivity, serenity and personalised service of the resort, group bookings are limited to a maximum of 15 rooms per group per day."
+   }
+  ],
+  "extras": []
+ }
+}

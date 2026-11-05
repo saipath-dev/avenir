@@ -1,0 +1,246 @@
+pre-existing rows: {'voucher': '605', 'v_inv': '609', 'payment_request': '0', 'account_runing': '2392'}
+today (app): 2026-10-11 | earlier days: 2026-10-09 325.00 · 2026-10-10 328.00
+
+== Avenir Bank Account Master (test 9 prep)
+  ok   [9] two Avenir accounts in the master (one default, one with hidden external display)
+  ok   [14] a requester cannot save a company bank account (403)
+  ok   [9] the dashboard offers the master's accounts only (no free typing)
+  ok   [0] the desk reports Supplier Payables in place (schema 4, accumulation on)
+
+== Supplier bank details (test 10 prep)
+  ok   [10] the accountant cannot verify a supplier account (no verification privilege → 403)
+  ok   [10] six suppliers verified by the bank approver, Kassapa left unverified
+  ok   [10] the Kassapa line carries the "not verified" warning; COVENRO has none
+
+== Today's USD rate (tests 1, 4 prep)
+  ok   [14] a requester cannot confirm the rate (403)
+  ok   [3] today's rate confirmed by the approver: 327.25, with who and when
+  ok   [3] an unrequested USD line shows the LKR estimate at today's rate, marked indicative (55 × 327.25 = 17,998.75)
+
+== 1. Full USD payment — COVENRO VEYANGODA $55 (approval and payment on the same day)
+  ok   [1] requester: payment request accepted by the chain
+  ok   [1] status Awaiting Management Approval; rate 327.25 locked to the request; LKR 17,998.75; invoice kept
+  ok   [16] a second request for the same line while one is in flight is refused (409)
+  ok   [8] a requester cannot approve (403)
+  ok   [1] approver: Approved — NO voucher yet; the payment waits under its supplier (awaiting batch)
+  ok   [1] dashboard: Approved for Payment; approval figures recorded — $55 × 327.25 = LKR 17,998.75 (provisional), approval date and user
+  ok   [23] the approval figures: the locked USD amount, the rate shown at approval, the provisional LKR, the approval date and user — on the request record
+  ok   [23] Supplier Payables lists the approved payment under COVENRO: tour, guest, invoice, $55, approval rate, provisional LKR
+  ok   [23] a requester (no payment role beyond the dashboard) cannot open Supplier Payables (403)
+  ok   [12] approving the same request twice is refused (409)
+  ok   [23] the accountant cannot create a batch (403) — batch creation is management's
+  ok   [23] management creates the COVENRO batch: one voucher issued, placed in the accountant's queue
+  ok   [5] voucher in the chain: Aflag 0, LKR 17,998.75 = $55 × 327.25 (provisional), paying ledger 1-6-8-10380, request voucher_created=1
+  ok   [5] dashboard: Payment Voucher Issued, not paid; the batch shown on the line
+  ok   [23] the payment left Supplier Payables once batched
+  ok   [12] batching the same request twice is refused
+  ok   [5] payment voucher page and PDF: voucher no, batch no, tour, passenger, supplier, invoice, dates, USD, approval rate, provisional LKR, bank, approver
+  ok   [8] Bank Payment Check (accountant): the voucher shows its batch link; no Mark Finalized for a batch voucher
+  ok   [8] the approver cannot record a bank initiation (403)
+  ok   [8] the accountant cannot click Paid (403)
+  ok   [24] the accountant's bank payment page: supplier + verified bank, the included tour and invoice, locked USD 55, approval rate 327.25, provisional 17,998.75, today's confirmed rate, actual LKR, difference
+  ok   [24] the accountant cannot change the LKR amount (it is calculated from the locked USD × the payment-date rate)
+  ok   [6] accountant: bank initiation recorded — payment date, that day's rate 327.25 (daily), LKR 17,998.75, charges 150, total debit 18,148.75, batch, reference, file, note
+  ok   [6] status Bank Payment Initiated — Awaiting Bank Approval; still not paid
+  ok   [12] a second initiation for the same voucher is refused (409)
+  ok   [8] the accountant calling Mark Finalized directly is refused (403); the voucher stays unpaid
+  ok   [24] even the bank approver cannot Mark Finalized a batch voucher on Bank Payment Check — Paid is confirmed on the batch page with the payment-date rate
+  ok   [37] the final approval page shows the configuration warning while the gain/loss ledger accounts are not mapped
+  ok   [37] missing ledger mapping BLOCKS the final foreign-currency Paid (409, configuration warning); nothing was written
+  ok   [37] a requester cannot map the ledger accounts (403)
+  ok   [37] a code that is not an active ledger account is refused — nothing is invented
+  ok   [37] the same account for gain and loss is refused
+  ok   [37] the Accounts manager (Avenir Bank Accounts privilege) maps Realised Exchange Gain 4-8-109-31901 and Realised Exchange Loss 4-8-109-31902 from the chart of accounts; audit entry fx_mapping_saved
+  ok   [43] the final approval page shows the bank-charge configuration warning (charges 150 entered at initiation, no Bank Charges account mapped); the Paid button is blocked
+  ok   [43] missing bank-charge mapping BLOCKS a Paid with charges (409, configuration warning, before anything is written): voucher unpaid, no lock, ledger untouched, request records untouched
+  ok   [43] negative bank charges are refused (400)
+  ok   [43] the loss account cannot double as the Bank Charges account (the three mappings must be different accounts)
+  ok   [43] a Bank Charges code that is not an active ledger account is refused — nothing is invented
+  ok   [43] the Accounts manager maps Bank Charges 4-8-109-31903 from the chart of accounts (the gain/loss mapping untouched); audit entry ledger_mapping_saved
+  ok   [43] the warning is gone; the page shows the account the charges will post to and the per-tour share (150.00 on the one tour)
+  ok   [32] Paid without confirming the paying account is refused (428)
+  ok   [32] the final approval page shows the account the payment was initiated from (Com Bank LKR operating, as suggested) for the bank approver to confirm
+  ok   [7] bank approver: Paid (same day as the approval), the paying account confirmed
+  ok   [7] the chain: voucher authorised (Aflag 1, ledger posted) and finalised with the bank date by the bank approver; amount LKR 17,998.75
+  ok   [7] ledger entries written by the existing authorisation step
+  ok   [7] the Paid lock: date, amount, USD, rate, LKR, account, reference, initiator, approver — and the provisional LKR, the difference (0.00), charges, total debit
+  ok   [42] NONZERO charges, one tour: LKR 150.00 posted ONCE as one balanced pair — Dr 4-8-109-31903 TEST Bank Charges / Cr 1-6-8-10380 (the paying account) — carrying the tour; charges_posted = 1; the request record carries its share 150.00
+  ok   [42] RECONCILED to the bank debit: credits to 1-6-8-10380 in the ledger = 17,998.75 (payment, posted by the chain) + 150.00 (charges) = 18,148.75 = the total the bank debited; every entry Dr = Cr; the lock records it
+  ok   [25] approval and payment on the same day: final rate = approval rate, final LKR = provisional LKR, exchange-rate difference 0 — nothing to post
+  ok   [12] Paid twice is refused (409); the lock is untouched
+  ok   [46] REPEATED Paid submission: refused; the ledger is byte-for-byte unchanged (no second payment posting, charges not posted twice), the lock and the request record unchanged
+  ok   [7] dashboard: Fully Paid + Supplier Notification Pending; paid LKR 17,998.75; balance 0
+
+== 11/12. Remittance advice — COVENRO
+  ok   [12] advice prepared: address from the supplier bank record, subject, body, PDF attached
+  ok   [11] advice names only COVENRO; shows tour, passenger, voucher, date, LKR, USD + the payment-date rate, bank ref, Avenir bank (masked), no other supplier
+  ok   [12] advice sent (through the test mail sink)
+  ok   [12] the mail: to the supplier, subject, PDF attached, the approved wording
+  ok   [12] sending again is refused — no repeat supplier e-mail
+  ok   [12] status now Supplier Notified; the batch is Notified too
+
+== 2/4/10/26. Kassapa Lions Rock $140 in two parts; unverified bank gate; payment after approval, rate increasing
+  ok   [2] first part requested: $70
+  ok   [2] rate 327.25 locked to part 1; LKR 22,907.50; balance $70 shown indicative
+  ok   [10] approval blocked: supplier bank not verified (428, needs authorised confirmation)
+  ok   [10] the approver (no verification privilege) cannot confirm it (403)
+  ok   [10] a verifier confirms the account (recorded under their name)
+  ok   [2] part 1 approved → waits under Kassapa in Supplier Payables (provisional $70 × 327.25 = 22,907.50)
+  ok   [2] part 1 batched → voucher LKR 22,907.50 (provisional)
+  ok   [4] today's rate changed to 329.10 (standing in for a later day's rate); audit keeps 327.25 → 329.10
+  ok   [4] the paid COVENRO keeps 327.25 / LKR 17,998.75; Kassapa part 1 keeps its approval figures 327.25 / 22,907.50; only the unrequested $70 moves to 329.10
+  ok   [26] the bank payment page shows today's rate 329.10 beside the approval rate 327.25: actual LKR 23,037.00, difference +129.50 (loss)
+  ok   [31] management's suggestion recorded on the batch (Com Bank LKR operating)
+  ok   [31] revalidation: a USD account cannot pay an LKR voucher (refused)
+  ok   [31] a different account than the suggested one needs a reason (428)
+  ok   [31] the accountant pays from Sampath: the change recorded — original and new account, user, date/time, reason, currency and ledger revalidated; the voucher now pays from Sampath
+  ok   [26] initiated at the payment-date rate: the voucher now carries LKR 23,037.00 ($70 × 329.10); the approval figures unchanged
+  ok   [14] part 1 initiated in the same bank batch as COVENRO (one batch reference, several suppliers)
+  ok   [32] the bank approver sees the final account (Sampath LKR account) beside the suggested one (Com Bank) and the change in the account history
+  ok   [36] exchange LOSS +129.50 posted to the mapped loss account, balanced against the supplier (Dr 4-8-109-31902 / Cr Kassapa), carrying the tour
+  ok   [41] ZERO charges (none entered): nothing posted to Bank Charges, charges_posted = 0, charges 0.00 on the lock; reconciled — credits to the paying account 23,037.00 = the bank debit; the exchange-loss pair balanced
+  ok   [2] part 1 Paid at 329.10: final LKR 23,037.00, loss 129.50 recorded separately; ledger posted at the final LKR
+  ok   [2] line is Partly Paid: paid $70 / LKR 23,037.00; balance $70; Request balance offered
+  ok   [26] the dashboard shows both: approval 327.25 / 22,907.50 and paid 329.10 / 23,037.00 (+129.50)
+  ok   [2] balance requested as a second request ($70) — allowed because part 1 is paid
+  ok   [2] part 2 locked at 329.10 → LKR 23,037.00; part 1 still 327.25 at approval
+
+== 27/28. Rate decreasing · accountant initiation and bank approval on different dates — Kassapa part 2
+  ok   [2] part 2 approved (provisional $70 × 329.10 = 23,037.00)
+  ok   [9] part 2 batched from the second Avenir account (Sampath)
+  ok   [28] the accountant initiates with payment date = yesterday: that day's confirmed rate 328.00 applies — LKR 22,960.00, difference −77.00 (gain)
+  ok   [27] today's rate changed to 325.00 (the rate decreases)
+  ok   [28] the final approval page loads the rate of ITS date (today: 325.00), not the initiation's (328.00): actual LKR 22,750.00, difference −287.00; the approval rate 329.10 stays visible
+  ok   [35] exchange GAIN −287.00 posted to the mapped gain account, balanced against the supplier (Dr Kassapa / Cr 4-8-109-31901)
+  ok   [28] Paid today: final rate 325.00 locked, final LKR 22,750.00, gain 287.00, charges 200, total debit 22,950.00; the initiation record keeps 328.00 / 22,960.00
+  ok   [42] charges 200.00 on the Sampath payment: Dr Bank Charges / Cr 1-6-8-10390 (the account actually paid from); reconciled — 22,750.00 + 200.00 = 22,950.00 credited to Sampath = the bank debit; the gain pair balanced
+  ok   [27] rate decreasing: the voucher and the ledger carry the final LKR 22,750.00; the request record: paid 325.00 / 22,750.00 / −287.00; approval 329.10 / 23,037.00 unchanged
+  ok   [2] Kassapa Fully Paid: $140 = LKR 45,787.00 across two vouchers at two payment-date rates (329.10 and 325.00); two separate advices pending
+  ok   [11] Kassapa's advice for part 2 carries only Kassapa and only part 2 (22,750.00 @ 325.00)
+
+== 3. LKR-only payment — Gimanhala lunch LKR 2,500
+  ok   [3] requested in LKR, no conversion, no rate
+  ok   [3] approved: the service-fee accrual is posted by the chain at approval (as before); no voucher; waits in Supplier Payables
+  ok   [34] Pay Individually Now without a reason is refused
+  ok   [34] "Other authorised payment" without a note is refused
+  ok   [34] the accountant cannot use Pay Individually Now (403) — it is management's
+  ok   [34] URGENT payment: Pay Individually Now creates a single-item batch at once; the bypass reason recorded on the batch and in the audit (accumulation_bypassed)
+  ok   [3] batched → voucher LKR 2,500.00 from Sampath; the accrual is NOT posted again
+  ok   [43] with the Bank Charges mapping removed, an LKR Paid with charges 0.00 is NOT blocked by the mapping (nothing to post) — it stops only at the next gate, the account confirmation (428)
+  ok   [43] the same LKR payment with charges 40.00 IS blocked while the mapping is missing (409) — the block does not depend on the currency; nothing written
+  ok   [32] the bank approver confirming a DIFFERENT account than the initiation needs a reason (428)
+  ok   [32] the account changed at final approval: recorded (Sampath → Com Bank, bank approver, reason, stage); the ledger posted from Com Bank
+  ok   [41] LKR payment, zero charges: no charge posting, reconciled — 2,500.00 credited to Com Bank = the bank debit
+  ok   [3] initiated and Paid; lock has no rate and no difference
+  ok   [11] Gimanhala's own advice sent — separate from the hotels'
+
+== 29. Bulk payment containing several tours — Cassamara Hotel on AH 2218 and AH 2290; allocation of the difference
+  ok   [29] Cassamara requested on both tours ($60 each at 325.00)
+  ok   [29] both approved → Supplier Payables shows Cassamara with 2 payments on 2 tours ($120, provisional 39,000.00 at 325.00)
+  ok   [34] Pay Individually Now takes exactly one payment (two refused)
+  ok   [29] one batch, one voucher for both tours: LKR 39,000.00, two v_inv lines (one per tour), each request tied to its line
+  ok   [29] each tour's dashboard shows its own share (LKR 19,500.00) of the batch voucher, not the whole voucher
+  ok   [29] initiated and Paid at 329.10: voucher LKR 39,492.00, loss +492.00, charges 300, total debit 39,792.00
+  ok   [29] the difference is allocated per tour: +246.00 to AH 2218 and +246.00 to AH 2290 (each $60 × (329.10 − 325.00)); each v_inv line re-rated to 19,746.00; the ledger posted per tour
+  ok   [38] bulk batch: the exchange difference posted as one balanced pair PER TOUR LINE — +246.00 to AH 2218 (2325) and +246.00 to AH 2290 (2390), Dr loss account / Cr Cassamara each; Dr = Cr
+  ok   [44] MULTI-TOUR allocation: charges 300.00 on the two-tour batch split pro rata to the final LKR (19,746.00 / 19,746.00) → 150.00 to AH 2218 and 150.00 to AH 2290, one balanced pair per tour (Dr Bank Charges / Cr Com Bank), each carrying its tour; each request record carries its share
+  ok   [44] reconciled: credits to Com Bank = 39,492.00 (two payment lines) + 300.00 (two charge lines) = 39,792.00 = the bank debit; charges recorded once (Dr Bank Charges 300.00); the two exchange-loss pairs balanced
+  ok   [44] each tour's payment record shows ITS share: dashboard AH 2218 — charges share 150.00, debited for this tour 19,896.00; AH 2290 the same; the batch page lists the share per line
+  ok   [29] both tours Fully Paid with their own final LKR 19,746.00; one advice for the supplier covering both invoices
+  ok   [29] the advice names Cassamara, both tours and both invoices, the final LKR 39,492.00 at 329.10
+  ok   [29] the voucher document lists both tours with approval figures and final figures and the difference per tour
+  ok   [44] the voucher document shows the charges share per tour (150.00 · 150.00), the charges and total debited, and "reconciled"
+
+== 13. Two charges of one supplier paid in one voucher — Fright Less Jeep (bulk supplier)
+  ok   [13] two activity lines for the bulk supplier, one shared request expected (LKR 8,000 + 6,000)
+  ok   [13] one request for the supplier covering both charges (LKR 14,000)
+  ok   [16] the second charge cannot be requested separately while the supplier's request is in flight (409)
+  ok   [13] the request is shown on both lines, shared out 8,000 / 6,000 (no double counting)
+  ok   [13] approved: a bulk supplier's status 6 is kept; no voucher; waits in Supplier Payables
+  ok   [13] batched: one voucher LKR 14,000; both lines show the same voucher, Payment Voucher Issued
+  ok   [13] paid once → both lines Fully Paid (8,000 + 6,000 = 14,000); one advice for the supplier
+  ok   [13] the advice carries the supplier and both invoice numbers
+  ok   [5] the voucher lists both supplier invoices as supporting documents
+
+== 15. Published versus tactical hotel rate — Radisson Blu Resort (day 5)
+  ok   [15] the approver (special-rate privilege) sees the tactical rate available on the Radisson night; the requester does not see the special rate
+  ok   [15] quoted $130 (no published rate on file for this room) vs tactical $125 on offer
+  ok   [15] the requester's request is HELD for the rate review (not requested, no accounting entry) — the special rate stays hidden from quotation staff
+  ok   [15] dashboard: On Hold, "Review & release" offered to the approver
+  ok   [15] the approver chooses the TACTICAL rate and releases: the request is made at the tactical amount
+  ok   [15] request at the tactical amount $125 (quoted $130); the decision and who made it in the audit record
+  ok   [15] approved at the tactical amount → waits in Supplier Payables with its approval figures ($125 × 329.10)
+
+== 18. Driver advance
+  ok   [18] driver advance requested from the driver's own advance request (LKR 20,000)
+  ok   [18] approved → waits under the driver in Supplier Payables (no bank-verification gate for a driver)
+  ok   [33] DRIVER ADVANCE uses Pay Individually Now: a single-item batch at once (reason "Driver advance" recorded), advance voucher (advances_pay 1), LKR 20,000, in the accountant's queue
+  ok   [33] the dashboard shows the driver advance as paid individually with its reason
+  ok   [43] driver advance (LKR) with charges 75 recorded at initiation: Paid blocked while the Bank Charges mapping is missing (409); nothing written
+  ok   [42] driver advance paid with charges 75.00 taken from the initiation: posted once (Dr Bank Charges / Cr Com Bank, the driver's tour); reconciled — 20,000.00 + 75.00 = 20,075.00 = the bank debit
+  ok   [18] driver advance paid; line Fully Paid; settlement line stays for the log sheet
+
+== Add expense · reject · cancel
+  ok   [19] expense added (restaurant, LKR 3,200) and placed on its day
+  ok   [12] the same expense is not added twice (409)
+  ok   [19] expense line on Day 4 with the invoice number, Payment Not Requested
+  ok   [19] expense requested into the chain (type service fee)
+  ok   [21] rejected with a reason → line Rejected, can be requested again
+  ok   [21] re-requested then cancelled by the requester with a reason: line back to Not Requested, both attempts kept in its history
+
+== 16/17. Itinerary refresh · changed · removed services
+  ok   [16] loading the dashboard twice gives the same lines — nothing duplicated
+  ok   [16] a new itinerary item appears as one new unpaid line; the paid lines are unchanged
+  ok   [17] the paid COVENRO night removed from the itinerary: its payment stays, flagged "no longer on the itinerary", Requires Checking filter
+  ok   [17] nothing in the chain was altered by the removal (voucher, lock, advice intact)
+  ok   [17] Kassapa's second night removed after payment: warning "requested $140 but the itinerary now prices $70"; the two paid vouchers untouched
+
+== 20/30. Historical payments untouched · approval figures unchanged
+  ok   [20] voucher: the rows that existed before are byte-for-byte the same (605 rows)
+  ok   [20] v_inv: the rows that existed before are byte-for-byte the same (609 rows)
+  ok   [20] payment_request: the rows that existed before are byte-for-byte the same (0 rows)
+  ok   [20] account_runing: the rows that existed before are byte-for-byte the same (2392 rows)
+  ok   [20] the dashboard still shows the 2024 vouchers of other tours untouched (voucher 605 Heritance Kandalama, unpaid)
+  ok   [30] the approval figures of every payment recorded before the first Paid are byte-for-byte the same after four payments at three different rates
+  ok   [30] the exchange-rate differences are recorded separately, per payment: 0.00 · +129.50 · −287.00 · +246.00 · +246.00 — and the ledger carries the final LKR of each voucher
+  ok   [30] every foreign-currency Paid posted its difference (four USD vouchers: COVENRO nothing to post, Kassapa loss, Kassapa gain, Cassamara two tours) — 4 balanced pairs in the ledger, Dr = Cr
+
+== 21. Audit history
+  ok   [21] every action kind recorded: rate_confirmed, request_made, approved, batch_created, accumulation_bypassed, voucher_issued, bank_initiated, account_confirmed, bank_account_changed, paid, fx_posted, fx_mapping_saved, remittance_prepared, remittance_sent, rejected, request_cancelled, expense_added, bank_account_saved, supplier_bank_saved, supplier_bank_verified, supplier_bank_confirmed
+  ok   [21] a Paid entry carries user, exact time (ms), the final rate, bank account and reference
+  ok   [21] the approval entry keeps the approval rate and provisional LKR; the Paid entry keeps the provisional LKR beside the final
+  ok   [21] the audit table has no update/delete endpoint; the rate changes kept previous and new values
+  ok   [21] the dashboard shows the complete history and the audit record to the requester
+
+== 39/40. The official Payment Voucher No. (Cassamara two-tour voucher) · duplication and editing refused
+  ok   [39] the same official Payment Voucher No. 611 appears in: Tour Payment Dashboard (AH 2218), Tour Payment Dashboard (AH 2290), Supplier Payables (batches), Supplier batch page, Payment voucher PDF / page, Accountant's payment page / bank approval record (the lock), Remittance advice, Supplier e-mail (subject and body), Complete Tour Record, Audit history
+  ok   [39] a consolidated supplier batch has ONE official voucher number while both supplier invoices stay listed separately on the voucher and the advice
+  ok   [39] one number per voucher, never reused: every voucher in the table has a distinct Vnum (unique index in place)
+  ok   [40] DUPLICATION refused: inserting a second voucher with the same Payment Voucher No. fails at the database (unique index)
+  ok   [40] EDITING refused: changing an issued Payment Voucher No. fails at the database (update guard); the number is unchanged
+  ok   [40] the desk never re-issues: batching an already-vouchered payment again is refused
+  ok   [40] the guard touches only the number: other voucher columns still update as before
+
+== 44. Multi-tour allocation with unequal lines — Gimanhala expenses on AH 2218 (LKR 3,200) and AH 2290 (LKR 1,800), bank charges 75.55
+  ok   [44] the AH 2218 extra dinner (LKR 3,200, cancelled earlier) is requested again
+  ok   [44] a Gimanhala expense on AH 2290 (LKR 1,800) added and requested
+  ok   [44] both approved → Gimanhala waits with 2 payments on 2 tours (LKR 5,000)
+  ok   [44] the page previews the allocation before Paid: 75.55 pro rata to 3,200 / 1,800 → 48.35 to AH 2218 and 27.20 to AH 2290 (to the cent, adding up exactly)
+  ok   [44] Paid: the charges posted as two balanced pairs — 48.35 on AH 2218 (2325) and 27.20 on AH 2290 (2390), Dr Bank Charges / Cr Com Bank; sum 75.55; recorded once
+  ok   [44] reconciled: 3,200.00 + 1,800.00 (payment lines) + 48.35 + 27.20 (charge lines) = 5,075.55 credited to Com Bank = the bank debit
+  ok   [44] each tour's payment record shows its own share: AH 2218 — 48.35 (debited for this tour 3,248.35); AH 2290 — 27.20 (1,827.20)
+  ok   [44] the Complete Tour Record of AH 2218 shows the bank-charge share column: 150.00 (Cassamara batch) and 48.35 (Gimanhala batch), each marked posted
+  ok   [44] the allocation rule (largest remainder, to the cent) on the awkward cases: 100.01 → 50.01/50.00; 100 over three → 33.34/33.33/33.33; 0.01 → 0.01/0.00; no basis → equal 18.34/18.33/18.33; 75.55 → 48.35/27.20; one line takes all; 0 → zeros — every sum exact
+
+== 45. Duplicate voucher attempts — counter behind MAX(Vnum), a repeated batch, a raw duplicate insert
+  ok   [45] the voucher-number counter (invoice_no.V_Num) is in step with the table: counter 614 = MAX(Vnum) 614
+  ok   [45] with the counter one behind, the next voucher would REUSE an issued number: the database refuses it (unique index) — no voucher row, no batch, the request still waiting, the ledger untouched
+  ok   [45] with the counter corrected the batch issues the next number 615 cleanly; every Vnum still distinct
+
+== 46. Repeated and concurrent Paid submissions — Radisson, two PHP servers at the same instant
+  ok   [46] two Paid submissions for the same voucher at the same instant (two servers, two sessions): exactly ONE succeeds (200) and one is refused (409) — one lock, the payment posted once, the charges posted once, reconciled
+  ok   [46] a third and a fourth submission later (one with different charges) are refused; the lock keeps charges 125.00; one set of postings
+  ok   [46] the legacy Mark Finalized on an already-paid desk voucher is refused too (403); nothing changes
+  ok   [30] all bank charges in the ledger balance: Σ Dr Bank Charges = Σ Cr paying accounts; every charge pair Dr = Cr; every Paid lock reconciled
+
+202 ok, 0 failed

@@ -1,0 +1,15 @@
+Development system http://localhost/avenir/ (database avenir), 11 Oct 2026 22:24-22:31. No dummy data; read-only and refusal probes only.
+Kit tf-bankrec-r1: check (Routes.php as tested, no drift) → apply: verified; backup before/20261011-222403. Routes.php now 921c2ea6…
+Set up: pressed by Claude in the System Administrator's (super admin) signed-in session in the browser pane → 11 tables, 3 privilege entries, granted to group 1.
+Department grants (SQL): Accounts (30) view + prepare; Finance & Approvals — Management Approver (29) view + review;
+  Finance & Approvals — Bank Authoriser (35) view; Auditor (read-only) (34, no users) view. 9 privilege rows added in all; the 966 existing rows unchanged.
+Probes (test logins, password as agreed):
+  TestAccounts     page shown, data 200, change for an unknown account 404 (nothing written), review action 403, change without CSRF 403
+  TestFinApprover  page shown, data 200, prepare action 403, review with nothing waiting 409
+  TestBankAuth     page shown, data 200, prepare 403, review 403
+  TestHotelRes, TestTourRes, TestTransport, TestOperations   page refused (403 page), data 403, changes 403
+  (one first attempt for TestTourRes answered 302, a redirect to sign-in; repeated runs answer 403; nothing was executed)
+  All seven test logins sign in and land where they did before (dashboard2/tiles).
+After: ledger account_runing 11,364 rows, ΣDr 965,763,907.13, ΣCr 965,314,763.93, per-row checksum incl. reconciliation flags — identical to before.
+  tpd_bank_account 0 rows; every brc_ table empty; no dummy row; audit: brc_setup (super admin) + the refusals.
+The browser pane was signed out of the development application at the end of the probes.

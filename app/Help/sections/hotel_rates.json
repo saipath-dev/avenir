@@ -1,0 +1,1395 @@
+{
+  "id": "hotel_rates",
+  "title": "Hotel Rates",
+  "order": 10,
+  "checked": "2026-10-10",
+  "pages": [
+    "master_files/hotel_rate_v2",
+    "master_files/hotel_rate_approval",
+    "master_files/hotel_work",
+    "master_files/hotel_rate",
+    "tour/intake"
+  ],
+  "home_pages": [
+    "master_files/hotel_rate_v2",
+    "master_files/hotel_rate_approval",
+    "master_files/hotel_work",
+    "master_files/hotel_rate"
+  ],
+  "intro": "Hotel Rates holds every hotel's rate plans. A quotation uses only **approved** published rates. Drafts are never used for a price. The hotels themselves (code, details, room types) are in the **Hotel Master** manual.",
+  "examples": [
+    "Where do I go to approve hotel rates?",
+    "How do I upload a hotel rate sheet?",
+    "How do I enter rates manually or correct a rate?",
+    "Why is a hotel rate not appearing in my inquiry?"
+  ],
+  "menus": {
+    "master_files/hotel_rate_v2": "Hotel Rates (new)",
+    "master_files/hotel_rate_approval": "Hotel Rate Approval",
+    "master_files/hotel_work": "Hotel Incomplete Work",
+    "tour/intake": "Tour Inquiry"
+  },
+  "guide": {
+    "title": "Hotel Rates step by step, A to Z",
+    "intro": "The hotel sends a rate sheet, the Hotel Desk puts it into the system as a draft, a manager checks and approves it, and then the inquiry can use the price.",
+    "stages": [
+      {
+        "title": "Stage 1 — Put the hotel's rates into the system",
+        "who": "Hotel Desk (permission: Hotel Rates (new))",
+        "steps": [
+          {
+            "title": "Open Hotel Rates",
+            "text": "Go to **Master Files → Hotel Rates (new)** (on the Tour Desk bar: **Hotel Rates**, or **Masters → Hotel Rates**). (1) the toolbar, (2) the red **RATE EXPIRY WARNING** box, (3) **Add rates**, (4) the search box.",
+            "image": "hotel_rates/01-main-screen.png"
+          },
+          {
+            "title": "Find the hotel",
+            "text": "Type part of the hotel name in **Search hotel, location, chain or code** (1) and click the hotel (2). Green **rate today** = the hotel has an approved price for today.",
+            "image": "hotel_rates/02-find-hotel.png"
+          },
+          {
+            "title": "Look at what the hotel already has",
+            "text": "The top of the hotel page shows today's price and **Watch out** (extra charges such as gala dinners). Scroll to **Published rates**: look at **Markets** (who the plan is for; empty = all markets) and **Status** (*draft*, *approved*, *superseded*). If the new sheet is already here as a draft, do not read it again — go to Stage 2.",
+            "image": "hotel_rates/04-plan-list.png"
+          },
+          {
+            "title": "Open Read a PDF",
+            "text": "Click **Add rates** (1), then **Read a PDF** (2).",
+            "image": "hotel_rates/05-add-rates.png"
+          },
+          {
+            "title": "Choose the PDF and press Preview",
+            "text": "(1) Under **Contract PDF / image** click **Choose file**, pick the PDF, then **Read**. (2) Check **Defaults for this file**: Hotel, Plan type *Contract*, Markets (empty = all), Pricing *Per room*, Currency. (3) Click **Preview**. Nothing is saved yet.",
+            "image": "hotel_rates/06-read-pdf.png"
+          },
+          {
+            "title": "Check the preview, then Save as drafts",
+            "text": "Compare the preview with the PDF: the right hotel, **one plan per market table**, every date band, the prices. This example is wrong — four market tables became one *All markets* plan — so the right action is **Close** and ask a manager. When the preview is right, tick **I have read the warnings** and click **Save as drafts**.",
+            "image": "hotel_rates/07-preview-wrong.png"
+          }
+        ]
+      },
+      {
+        "title": "Stage 2 — Check and approve the rates",
+        "who": "A manager with the Hotel Rate Approval permission",
+        "steps": [
+          {
+            "title": "Open the draft and compare it with the PDF",
+            "text": "On **Published rates**, click **Edit** on the draft (or **Open** in the **Approval queue**). (1) plan name and status, (2) the sections menu, (3) **Markets** — the purple ones are included.",
+            "image": "hotel_rates/08-plan-overview.png"
+          },
+          {
+            "title": "Check Seasons & rates",
+            "text": "(1) the season name is only a label, (2) the **dates** decide the price and must match the PDF, (3) room type, meal plan and SGL / DBL / TPL must match the PDF.",
+            "image": "hotel_rates/09-seasons-rates.png"
+          },
+          {
+            "title": "Read the Checks",
+            "text": "**Checks** shows errors (they stop approval) and warnings (read each one). A warning is fine when the PDF really says so.",
+            "image": "hotel_rates/10-checks.png"
+          },
+          {
+            "title": "Approve",
+            "text": "Click the green **Approve** on the draft's row. If **Warnings to confirm** opens, read it and click **Approve anyway** only if the sheet says so. If nothing seems to happen, look for that box.",
+            "image": "hotel_rates/11-approve.png"
+          },
+          {
+            "title": "Or approve from the Approval queue",
+            "text": "The **Approval queue** lists every draft from every hotel. (1) **Checks** shows *clean* or the number of warnings, (2) **Open** to check, then **Approve**.",
+            "image": "hotel_rates/13-approval-queue.png"
+          },
+          {
+            "title": "Retire old or duplicate plans",
+            "text": "Open **More** on the extra plan: (1) **Correct the approved plan** to fix it in place, (2) **Mark as superseded** to retire an old or duplicate copy. Keep the plan that inquiries already use.",
+            "image": "hotel_rates/12-more-menu.png"
+          }
+        ]
+      },
+      {
+        "title": "Stage 3 — Use the rates on the inquiry",
+        "who": "Quotation Desk (permission: Tour Inquiry)",
+        "steps": [
+          {
+            "title": "Open the inquiry",
+            "text": "Go to **Tour Inquiry**, find the inquiry and click **Open** (2). (1) **Nothing outstanding** = every night is priced; (3) **1 hotel unpriceable** = a night still has no approved rate.",
+            "image": "hotel_rates/14-inquiry-list.png"
+          },
+          {
+            "title": "Click Check hotels again",
+            "text": "At the bottom of the inquiry, in the row with **Back to list**, click **Check hotels again**. Nights with no price take the newest approved rate; nights with a price keep it. It does not confirm the tour.",
+            "image": "hotel_rates/15-check-hotels-again.png"
+          },
+          {
+            "title": "If asked, choose the room type",
+            "text": "If a night shows **Choose room type**, click it (or **Edit**). In the **Night** window pick (1) the **Room type** — normally *(the hotel's normal type)* — and check (2) the meal plan, then **Save**.",
+            "image": "hotel_rates/17-night-window.png"
+          },
+          {
+            "title": "Check every night shows Published rate",
+            "text": "Each night should show a green **Published rate** with the room type and price.",
+            "image": "hotel_rates/16-nights-priced.png"
+          }
+        ]
+      },
+      {
+        "title": "Stage 4 — Every morning",
+        "who": "Hotel Desk",
+        "steps": [
+          {
+            "title": "Morning check (5 minutes)",
+            "text": "Open **Hotel Rates (new)**. Red **RATE EXPIRY WARNING**: e-mail those hotels for new rates. **Approval queue** count: ask the manager to check the drafts. **Health check**: tours with a night without a rate. **Hotel Incomplete Work**: anything else missing.",
+            "image": "hotel_rates/01-main-screen.png"
+          }
+        ]
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": "hr-approve",
+      "title": "Approve hotel rates",
+      "questions": [
+        "Where do I go to approve hotel rates?",
+        "How do I approve a rate plan?",
+        "Where is the approval queue?",
+        "How do I sign off a hotel rate sheet?",
+        "Approve the rates a colleague uploaded"
+      ],
+      "keywords": {
+        "approve": 4,
+        "draft": 1,
+        "price": 0.5,
+        "hotel": 0.3,
+        "sheet": 0.5,
+        "approvedstate": 0.3
+      },
+      "pages": [
+        "master_files/hotel_rate_v2",
+        "master_files/hotel_rate_approval"
+      ],
+      "audience": "Managers with the Hotel Rate Approval permission",
+      "needs": [
+        "master_files/hotel_rate_approval"
+      ],
+      "needs_note": "Approving needs the **Hotel Rate Approval** permission. Ask a person who has it to approve, and tell them the hotel name and which plan.",
+      "summary": "Approve in **Hotel Rate Approval**: it opens Hotel Rates with the **Approval queue** — every draft from every hotel. Check each draft against the hotel's sheet, then click **Approve**.",
+      "steps": [
+        {
+          "text": "Open **Master Files → Hotel Rate Approval**. (Already in **Hotel Rates (new)**? Click **Approval queue** in the toolbar.)",
+          "link": {
+            "path": "master_files/hotel_rate_approval",
+            "label": "Open the Approval queue"
+          }
+        },
+        {
+          "text": "The **Approval queue** lists every draft. **Checks** shows *clean* or the number of warnings."
+        },
+        {
+          "text": "Click **Open** on a draft. Compare it with the hotel's PDF: **Markets**, every season's **dates** and the **SGL / DBL / TPL** prices."
+        },
+        {
+          "text": "When everything matches, click **Approve**."
+        },
+        {
+          "text": "If **Warnings to confirm** opens, read each line and click **Approve anyway** only if the sheet really says so. If **Cannot approve yet** opens, fix the line it names first."
+        },
+        {
+          "text": "Open each inquiry that uses this hotel and click **Check hotels again**. Inquiries do not update by themselves.",
+          "link": {
+            "path": "tour/intake",
+            "label": "Open Tour Inquiry"
+          }
+        }
+      ],
+      "notes": [
+        "Opening the queue approves nothing. Only the **Approve** button does.",
+        "Approving makes the price live for new quotations straight away."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/13-approval-queue.png",
+          "caption": "The Approval queue: (1) Checks, (2) Open and Approve"
+        }
+      ],
+      "related": [
+        "hr-review-draft",
+        "hr-warnings",
+        "hr-not-in-inquiry"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 2 (steps 7–12)",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Approval queue",
+            "Approve",
+            "Warnings to confirm",
+            "Approve anyway",
+            "Cannot approve yet"
+          ]
+        },
+        {
+          "route": "master_files/hotel_rate_approval"
+        },
+        {
+          "route": "master_files/hotel_rate_approval/contract/(:num)/approve",
+          "method": "post"
+        },
+        {
+          "menu": "master_files/hotel_rate_approval"
+        },
+        {
+          "view": "app/Views/pages/tour/intake.php",
+          "has": [
+            "Check hotels again"
+          ]
+        }
+      ],
+      "needs_note_partial": {
+        "if_allowed": "master_files/hotel_rate_v2",
+        "text": "You can still open the drafts in **Hotel Rates (new)** and check them against the hotel's sheet."
+      }
+    },
+    {
+      "id": "hr-upload-pdf",
+      "title": "Upload a hotel rate sheet (PDF)",
+      "questions": [
+        "How do I upload a hotel rate sheet?",
+        "How do I read a PDF rate sheet into the system?",
+        "Where do I add a new hotel contract?",
+        "The hotel sent new rates, how do I put them in?"
+      ],
+      "keywords": {
+        "upload": 4,
+        "pdf": 2,
+        "sheet": 2,
+        "price": 0.5,
+        "hotel": 0.3,
+        "new": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Hotel Desk",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Reading a rate sheet needs the **Hotel Rates (new)** permission. Ask the Hotel Desk to do it, or ask the System Administrator for access.",
+      "summary": "In **Hotel Rates (new)** use **Add rates → Read a PDF**. The system reads the sheet into a **draft**; you check the preview and click **Save as drafts**. A manager approves it later.",
+      "steps": [
+        {
+          "text": "Open **Master Files → Hotel Rates (new)** (Tour Desk bar: **Hotel Rates**).",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "Search for the hotel and click it. On **Published rates**, check the sheet is not already there as a draft. If it is, do not read it again — check that draft instead."
+        },
+        {
+          "text": "Click **Add rates → Read a PDF**."
+        },
+        {
+          "text": "Under **Contract PDF / image** click **Choose file**, pick the PDF, then click **Read** and wait."
+        },
+        {
+          "text": "Check **Defaults for this file**: **Hotel**, **Plan type** (*Contract*), **Markets** (empty = all markets), **Pricing** (*Per room*), **Currency**."
+        },
+        {
+          "text": "Click **Preview** and compare it with the PDF: the right hotel, **one plan per market table**, every date band, the prices."
+        },
+        {
+          "text": "Tick **I have read the warnings** and click **Save as drafts**."
+        }
+      ],
+      "notes": [
+        "Saving the same sheet twice makes a duplicate plan.",
+        "If the preview shows one *All markets* plan for a sheet with separate market tables, click **Close** and ask a manager.",
+        "**Save & approve** is shown only to people with Hotel Rate Approval. Use it only after checking every figure."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/06-read-pdf.png",
+          "caption": "Read a rate sheet PDF: (1) Choose file and Read, (2) Defaults, (3) Preview"
+        }
+      ],
+      "related": [
+        "hr-upload-excel",
+        "hr-review-draft",
+        "hr-approve",
+        "hr-duplicate"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 1 (steps 1–6)",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Add rates",
+            "Read a PDF",
+            "Contract PDF / image",
+            "Defaults for this file",
+            "Preview",
+            "I have read the warnings",
+            "Save as drafts",
+            "Close"
+          ]
+        },
+        {
+          "route": "master_files/hotel_rate_v2"
+        },
+        {
+          "route": "master_files/hotel_rate_v2/import/extract",
+          "method": "post"
+        },
+        {
+          "menu": "master_files/hotel_rate_v2"
+        }
+      ]
+    },
+    {
+      "id": "hr-upload-excel",
+      "title": "Import an Excel rate sheet",
+      "questions": [
+        "How do I import rates from Excel?",
+        "Can I upload an Excel file of hotel rates?",
+        "Where is the Excel template for hotel rates?"
+      ],
+      "keywords": {
+        "upload": 3,
+        "excel": 4,
+        "sheet": 1,
+        "price": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Hotel Desk",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Importing needs the **Hotel Rates (new)** permission.",
+      "summary": "Use **Add rates → Import an Excel sheet**. Three layouts are understood: the workbook from **Download template**, a long list, or the old wide upload.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)**.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "Click **Add rates → Import an Excel sheet** (or on the hotel: **New plan → Import from Excel…**)."
+        },
+        {
+          "text": "Under **Excel file** click **Choose file** and pick the workbook. To start from a clean layout, use **Download template** first."
+        },
+        {
+          "text": "Set **Defaults for this file** and click **Preview**."
+        },
+        {
+          "text": "Compare the preview with the hotel's sheet, tick **I have read the warnings**, then click **Save as drafts**."
+        }
+      ],
+      "notes": [
+        "Blank cells mean *not offered*. Never type 0."
+      ],
+      "related": [
+        "hr-upload-pdf",
+        "hr-approve"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Import an Excel sheet",
+            "Import from Excel…",
+            "Download template",
+            "Excel file",
+            "Save as drafts"
+          ]
+        },
+        {
+          "route": "master_files/hotel_rate_v2/import/preview",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "id": "hr-review-draft",
+      "title": "Check a draft before it is approved",
+      "questions": [
+        "How do I check a draft rate plan?",
+        "How do I review rates before approving?",
+        "What should I compare before approving?"
+      ],
+      "keywords": {
+        "review": 3,
+        "draft": 3,
+        "approve": 1,
+        "price": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2",
+        "master_files/hotel_rate_approval"
+      ],
+      "audience": "Hotel Desk and managers",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Opening a plan needs the **Hotel Rates (new)** permission.",
+      "summary": "Open the draft and go through its sections with the hotel's PDF beside you. Fix anything wrong and click **Save draft**.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)** and click the hotel.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "On **Published rates**, click **Edit** on the draft. (In the **Approval queue** it is **Open**.)"
+        },
+        {
+          "text": "**Overview**: name, stay dates (**Valid from / to**), **Markets** — the purple ones are included."
+        },
+        {
+          "text": "**Seasons & rates**: every season's **dates** and every **SGL / DBL / TPL** price must match the PDF. The season name is only a label."
+        },
+        {
+          "text": "**Checks**: errors must be fixed; warnings must be read."
+        },
+        {
+          "text": "If you changed anything, click **Save draft**. Then a manager approves it."
+        }
+      ],
+      "notes": [
+        "Dates decide which rate a night gets — not the season name."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/09-seasons-rates.png",
+          "caption": "Seasons & rates: (1) name, (2) dates, (3) prices"
+        }
+      ],
+      "related": [
+        "hr-approve",
+        "hr-correct",
+        "hr-warnings"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 2 (steps 7–9)",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Edit",
+            "Overview",
+            "Seasons & rates",
+            "Checks",
+            "Save draft",
+            "Open"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-manual-entry",
+      "title": "Enter hotel rates by hand",
+      "questions": [
+        "How do I enter rates manually?",
+        "How do I type in a rate plan without a PDF?",
+        "How do I create a new rate plan?",
+        "Add a new contract by hand"
+      ],
+      "keywords": {
+        "manualentry": 4,
+        "price": 1,
+        "new": 1,
+        "sheet": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Hotel Desk",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Entering rates needs the **Hotel Rates (new)** permission.",
+      "summary": "Open the hotel and use **New plan → Contract (season rates)**. Fill **Overview**, then **Seasons & rates**, then **Save draft**.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)** and click the hotel.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "Click **New plan → Contract (season rates)**."
+        },
+        {
+          "text": "**Overview**: plan name, **Valid from (stay)** and **Valid to (stay)**, **Markets** (none selected = all), currency and pricing."
+        },
+        {
+          "text": "**Seasons & rates**: season name and dates (**+ date range** for a second period). Add rows with **+ row** or **Fill grid**, or **Paste** cells copied from Excel. Type SGL / DBL / TPL exactly as printed."
+        },
+        {
+          "text": "Fill other sections the sheet covers: **Room supplements & meal deltas**, **Supplements & meals**, **Children & extra beds**, **Cancellation & payment**."
+        },
+        {
+          "text": "Click **Check**, fix any errors, then **Save draft**. A manager approves it."
+        }
+      ],
+      "notes": [
+        "Blank means *not offered*. Never type 0.",
+        "Enter each market table of a sheet as its own plan, with its markets set on **Overview**."
+      ],
+      "related": [
+        "hr-review-draft",
+        "hr-approve",
+        "hr-markets"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "New plan",
+            "Contract (season rates)",
+            "Overview",
+            "Seasons & rates",
+            "+ date range",
+            "+ row",
+            "Fill grid",
+            "Paste",
+            "Check",
+            "Save draft",
+            "Room supplements & meal deltas",
+            "Children & extra beds",
+            "Cancellation & payment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-correct",
+      "title": "Correct a wrong hotel rate",
+      "questions": [
+        "How do I correct a rate?",
+        "How do I fix a wrong price on an approved plan?",
+        "How do I change a hotel rate?",
+        "I entered the wrong rate, how do I edit it?"
+      ],
+      "keywords": {
+        "correct": 4,
+        "price": 1,
+        "approvedstate": 1,
+        "draft": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Hotel Desk (drafts) and managers (approved plans)",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Changing rates needs the **Hotel Rates (new)** permission.",
+      "summary": "A **draft**: open it with **Edit**, fix it, **Save draft**. An **approved** plan: **More → Correct the approved plan**, fix it, **Save correction**. Never delete or retype a second copy.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)**, click the hotel and find the plan on **Published rates**.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "If the plan is a **draft**: click **Edit**, fix the figure, click **Save draft**."
+        },
+        {
+          "text": "If the plan is **approved**: click **More → Correct the approved plan**, fix the figure, click **Save correction**. The fix applies at once.",
+          "needs": "master_files/hotel_rate_approval"
+        },
+        {
+          "text": "Inquiries that already copied the old figure show **Rate changed in Hotel Rates**. Click **Use the new rate** on a night only if the new price should apply to that tour."
+        }
+      ],
+      "notes": [
+        "Correcting keeps the plan's history. Use **More → Who changed it** to see it."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/12-more-menu.png",
+          "caption": "More menu: (1) Correct the approved plan, (2) Mark as superseded"
+        }
+      ],
+      "related": [
+        "hr-duplicate",
+        "hr-review-draft"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Edit",
+            "Save draft",
+            "More",
+            "Correct the approved plan",
+            "Save correction",
+            "Who changed it"
+          ]
+        },
+        {
+          "view": "app/Views/pages/tour/intake.php",
+          "has": [
+            "Rate changed in Hotel Rates",
+            "Use the new rate"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-duplicate",
+      "title": "Same sheet uploaded twice (duplicate plans)",
+      "questions": [
+        "I uploaded the same rate sheet twice",
+        "How do I remove a duplicate rate plan?",
+        "How do I retire an old rate plan?",
+        "How do I delete a draft?"
+      ],
+      "keywords": {
+        "duplicate": 4,
+        "retire": 3,
+        "delete": 3,
+        "draft": 0.5,
+        "sheet": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Hotel Desk (drafts) and managers (approved plans)",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Working with plans needs the **Hotel Rates (new)** permission.",
+      "summary": "Keep the plan that inquiries already use. An extra **draft**: **More → Delete draft**. An extra **approved** plan: **More → Mark as superseded**. Never delete an approved plan.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)** and click the hotel.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "On **Published rates**, compare the two plans: name, source file, stay dates, **Markets**, **Status**."
+        },
+        {
+          "text": "Find the one inquiries use: the inquiry night shows the plan name. Keep that one."
+        },
+        {
+          "text": "If the extra copy is a **draft**: **More → Delete draft**."
+        },
+        {
+          "text": "If the extra copy is **approved**: **More → Mark as superseded** and confirm **Supersede**.",
+          "needs": "master_files/hotel_rate_approval"
+        }
+      ],
+      "notes": [
+        "A superseded plan stays in history and no longer prices new nights.",
+        "A new sheet for dates already covered: approve the new plan, then **Mark as superseded** on the old one."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/12-more-menu.png",
+          "caption": "More menu"
+        }
+      ],
+      "related": [
+        "hr-correct",
+        "hr-upload-pdf"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 2 (step 12)",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "More",
+            "Delete draft",
+            "Mark as superseded",
+            "Supersede this plan?",
+            "Supersede"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-not-in-inquiry",
+      "title": "Why is a hotel rate not appearing in my inquiry?",
+      "questions": [
+        "Why is the hotel rate not showing in the inquiry?",
+        "The inquiry shows no rate for a hotel",
+        "I approved the rate but the inquiry still has no price",
+        "Why does it say published rate missing?",
+        "Hotel unpriceable on my inquiry"
+      ],
+      "keywords": {
+        "missing": 4,
+        "inquiry": 2,
+        "price": 1,
+        "hotel": 0.5,
+        "approvedstate": 0.5
+      },
+      "pages": [
+        "tour/intake",
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Quotation Desk and Hotel Desk",
+      "needs": [
+        "tour/intake"
+      ],
+      "needs_note": "Opening inquiries needs the **Tour Inquiry** permission.",
+      "summary": "Read the message on the night — it says why. Most often the rate was approved after the inquiry was checked (click **Check hotels again**), a draft is still waiting for approval, or the approved plan is for another market.",
+      "steps": [
+        {
+          "text": "Open the inquiry (**Tour Inquiry → Open**) and read the message on the hotel night.",
+          "link": {
+            "path": "tour/intake",
+            "label": "Open Tour Inquiry"
+          }
+        },
+        {
+          "text": "If the rate was approved recently: click **Check hotels again** at the bottom of the inquiry."
+        },
+        {
+          "text": "*… draft plan(s) cover … but are not approved yet*: a manager must check and approve the right draft in **Hotel Rate Approval**.",
+          "link": {
+            "path": "master_files/hotel_rate_approval",
+            "label": "Open the Approval queue"
+          }
+        },
+        {
+          "text": "*No approved plan covers …*: there is no approved rate for those dates. The Hotel Desk reads the hotel's new sheet; a manager approves it.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "*… covers … but not for market JP* (or another market): the approved plan is for other clients. Approve the plan whose **Markets** include the client's market."
+        },
+        {
+          "text": "*… has no season dated for it*: the dates fall in a gap. Add the season in the plan."
+        },
+        {
+          "text": "*Only … (tactical offer) covers …*: offers are never quoted. Enter the hotel's contract for those dates."
+        },
+        {
+          "text": "**Choose room type** on the night: click it and pick the room."
+        }
+      ],
+      "notes": [
+        "To see which plan prices each night: **Hotel Rates (new)** → the hotel → **Coverage** tab, choose the **Market**.",
+        "A night that already has a figure keeps it. If Hotel Rates changed later, the night shows **Rate changed in Hotel Rates** with **Use the new rate**."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/15-check-hotels-again.png",
+          "caption": "Check hotels again, at the bottom of the inquiry"
+        }
+      ],
+      "related": [
+        "hr-check-again",
+        "hr-approve",
+        "hr-markets",
+        "hr-room-type"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/tour/intake.php",
+          "has": [
+            "Check hotels again",
+            "Choose room type",
+            "Rate changed in Hotel Rates",
+            "Use the new rate"
+          ]
+        },
+        {
+          "file": "app/Libraries/TourFlow/IntakeService.php",
+          "has": [
+            "draft plan(s) cover",
+            "No approved plan covers",
+            "but not for market",
+            "has no season dated for it",
+            "never an offer or tactical rate",
+            "Published rate missing"
+          ]
+        },
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Coverage",
+            "Which plan prices each night"
+          ]
+        },
+        {
+          "route": "tour/intake"
+        }
+      ]
+    },
+    {
+      "id": "hr-check-again",
+      "title": "Update an inquiry with newly approved rates (Check hotels again)",
+      "questions": [
+        "Where is Check hotels again?",
+        "How do I refresh the hotel rates on an inquiry?",
+        "The new rate is approved, how do I get it into the inquiry?"
+      ],
+      "keywords": {
+        "refresh": 4,
+        "inquiry": 2,
+        "price": 0.5,
+        "hotel": 0.5
+      },
+      "pages": [
+        "tour/intake"
+      ],
+      "audience": "Quotation Desk",
+      "needs": [
+        "tour/intake"
+      ],
+      "needs_note": "Opening inquiries needs the **Tour Inquiry** permission.",
+      "summary": "Open the inquiry and click **Check hotels again** at the bottom, in the row with **Back to list**.",
+      "steps": [
+        {
+          "text": "Go to **Tour Inquiry** and click **Open** on the inquiry.",
+          "link": {
+            "path": "tour/intake",
+            "label": "Open Tour Inquiry"
+          }
+        },
+        {
+          "text": "Scroll to the bottom. Under the status buttons (**Mark as quoted**, **Confirm Tour** …) click **Check hotels again**."
+        },
+        {
+          "text": "Look at each hotel night: it should show a green **Published rate**."
+        }
+      ],
+      "notes": [
+        "Nights with no price take the newest approved rate; nights with a price keep it.",
+        "It does not confirm the tour or change its status."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/15-check-hotels-again.png",
+          "caption": "Check hotels again"
+        }
+      ],
+      "related": [
+        "hr-not-in-inquiry",
+        "hr-room-type"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 3 (step 14)",
+      "verify": [
+        {
+          "view": "app/Views/pages/tour/intake.php",
+          "has": [
+            "Check hotels again",
+            "Back to list",
+            "Mark as quoted",
+            "Published rate"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-room-type",
+      "title": "Choose the room type on an inquiry night",
+      "questions": [
+        "The inquiry says choose room type",
+        "How do I change the room type on a night?",
+        "Which room type should I pick?"
+      ],
+      "keywords": {
+        "roomtype": 4,
+        "choose": 2,
+        "inquiry": 1,
+        "correct": 0.5
+      },
+      "pages": [
+        "tour/intake"
+      ],
+      "audience": "Quotation Desk",
+      "needs": [
+        "tour/intake"
+      ],
+      "needs_note": "Opening inquiries needs the **Tour Inquiry** permission.",
+      "summary": "Click **Choose room type** (or **Edit**) on the night, pick the **Room type** in the **Night** window, then **Save**.",
+      "steps": [
+        {
+          "text": "Open the inquiry.",
+          "link": {
+            "path": "tour/intake",
+            "label": "Open Tour Inquiry"
+          }
+        },
+        {
+          "text": "On the night, click **Choose room type** (or **Edit**)."
+        },
+        {
+          "text": "In the **Night** window choose **Room type** — normally the one marked *(the hotel's normal type)*. Check the **Meal plan**."
+        },
+        {
+          "text": "Click **Save**. To only look, click **Cancel**."
+        }
+      ],
+      "notes": [
+        "Two names for the same room in Hotel Rates (for example *Standard* and *Standard Room*) make the inquiry ask. Tidy them on the hotel's **Room types** tab."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/17-night-window.png",
+          "caption": "Night window: (1) Room type, (2) Meal plan"
+        }
+      ],
+      "related": [
+        "hm-room-types",
+        "hr-not-in-inquiry"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 3 (step 15)",
+      "verify": [
+        {
+          "view": "app/Views/pages/tour/intake.php",
+          "has": [
+            "Choose room type",
+            "Room type",
+            "the hotel's normal type",
+            "Save",
+            "Cancel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-markets",
+      "title": "Markets: which clients a rate plan is for",
+      "questions": [
+        "Why is the rate not used for a Japanese client?",
+        "How do markets work on rate plans?",
+        "Which plan prices a night?"
+      ],
+      "keywords": {
+        "market": 4,
+        "price": 0.5,
+        "missing": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Hotel Desk and Quotation Desk",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Viewing plans needs the **Hotel Rates (new)** permission.",
+      "summary": "A plan prices a night only for the markets it includes. No market selected = all markets. The inquiry's market comes from the agent's country (Japan → JP).",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)** and click the hotel.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "On **Published rates**, read the **Markets · tier** column of each approved plan."
+        },
+        {
+          "text": "Open the **Coverage** tab and choose the **Market** to see **Which plan prices each night**."
+        },
+        {
+          "text": "If no approved plan includes the client's market, approve the plan for that market (for example the Asia plan that includes JP)."
+        }
+      ],
+      "notes": [
+        "On a plan's **Overview**, click a market once to include it, twice to exclude it, a third time to clear."
+      ],
+      "related": [
+        "hr-not-in-inquiry",
+        "hr-find-price"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Markets",
+            "Coverage",
+            "Which plan prices each night",
+            "No market selected = all markets"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-next-year",
+      "title": "The hotel has not sent new rates (use last year's)",
+      "questions": [
+        "The hotel has not sent new rates yet",
+        "How do I copy last year's rates to next year?",
+        "Use the same rates for next season"
+      ],
+      "keywords": {
+        "nextyear": 4,
+        "price": 0.5,
+        "expiry": 1
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Managers decide; Hotel Desk prepares",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Copying a plan needs the **Hotel Rates (new)** permission; approving it needs **Hotel Rate Approval**.",
+      "summary": "First ask the hotel. If a manager decides to keep last year's prices, use **More → Copy for next year (+1 year)** on last season's plan, check it and approve it. Replace it when the hotel's sheet arrives.",
+      "steps": [
+        {
+          "text": "Ask the hotel for the new rate sheet. Using old prices is a manager's decision.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "Open the hotel. On last season's plan click **More → Copy for next year (+1 year)**. A new draft opens with every date one year later and the same prices."
+        },
+        {
+          "text": "Put *carried forward* in the plan name, check the dates, click **Save draft**."
+        },
+        {
+          "text": "A manager approves it.",
+          "needs": "master_files/hotel_rate_approval"
+        },
+        {
+          "text": "When the hotel's sheet arrives, read it in, approve it and **Mark as superseded** on the carried-forward plan."
+        }
+      ],
+      "related": [
+        "hr-approve",
+        "hr-duplicate",
+        "hr-expiry"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Copy for next year (+1 year)",
+            "Save draft",
+            "Mark as superseded"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-find-price",
+      "title": "See a hotel's price for a date",
+      "questions": [
+        "How do I see the price of a hotel for a date?",
+        "How much is the hotel on a certain night?",
+        "Where is try a quote?"
+      ],
+      "keywords": {
+        "pricecheck": 4,
+        "price": 1,
+        "hotel": 0.5,
+        "season": 0.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2"
+      ],
+      "audience": "Everyone with Hotel Rates (new)",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Viewing rates needs the **Hotel Rates (new)** permission. Without it, ask the Hotel Desk.",
+      "summary": "Open the hotel: the **Rate on** card at the top shows every room and meal for a date. Change the date, **Nights** and **Market**. For a whole stay use **Try a quote**.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)** and click the hotel.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "In the **Rate on** card set the date, **Nights**, **Market** and **Rooms**."
+        },
+        {
+          "text": "Read the table (SGL / DBL / TPL for each room and meal) and **Watch out** (gala dinners, peak charges, minimum stays)."
+        },
+        {
+          "text": "For a stay priced night by night, click **Try a quote** in the toolbar."
+        }
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/03-rate-card.png",
+          "caption": "Rate on a date: (1) Watch out, (2) prices"
+        }
+      ],
+      "related": [
+        "hr-markets"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Rate on",
+            "Nights",
+            "Market",
+            "Watch out",
+            "Try a quote"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-warnings",
+      "title": "Approve does nothing / warnings and errors",
+      "questions": [
+        "I clicked approve and nothing happened",
+        "What does Warnings to confirm mean?",
+        "It says cannot approve yet",
+        "What is warning W09?"
+      ],
+      "keywords": {
+        "warning": 4,
+        "error": 2,
+        "approve": 1.5
+      },
+      "pages": [
+        "master_files/hotel_rate_v2",
+        "master_files/hotel_rate_approval"
+      ],
+      "audience": "Managers",
+      "needs": [
+        "master_files/hotel_rate_approval"
+      ],
+      "needs_note": "Approving needs the **Hotel Rate Approval** permission. Ask a person who has it.",
+      "summary": "**Warnings to confirm**: read each warning; click **Approve anyway** only if the hotel's sheet really says so. **Cannot approve yet**: an error must be fixed first.",
+      "steps": [
+        {
+          "text": "Look for a pop-up box after clicking **Approve** — the plan is not approved until you answer it."
+        },
+        {
+          "text": "**Warnings to confirm** (amber, codes W…): for example W09 = prices changed a lot against the latest approved plan. If the PDF says so, click **Approve anyway**."
+        },
+        {
+          "text": "**Cannot approve yet** (red, codes E…): open the plan with **Edit**, go to **Checks**, click the line to jump to it, fix it, **Save draft**, then approve again."
+        }
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/10-checks.png",
+          "caption": "Checks: errors stop approval, warnings must be read"
+        }
+      ],
+      "related": [
+        "hr-approve",
+        "hr-review-draft"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "Warnings to confirm",
+            "Approve anyway",
+            "Cannot approve yet",
+            "Checks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hr-expiry",
+      "title": "Rate expiry warning and the morning check",
+      "questions": [
+        "What is the rate expiry warning?",
+        "Which hotels' rates are ending soon?",
+        "What should I check every morning in hotel rates?"
+      ],
+      "keywords": {
+        "expiry": 4,
+        "warning": 1,
+        "hotel": 0.3
+      },
+      "pages": [
+        "master_files/hotel_rate_v2",
+        "master_files/hotel_work"
+      ],
+      "audience": "Hotel Desk",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "The warning is on **Hotel Rates (new)**.",
+      "summary": "The red **RATE EXPIRY WARNING** box lists hotels whose approved rate ends within the warning period with nothing approved after it. Ask those hotels for new rates.",
+      "steps": [
+        {
+          "text": "Open **Hotel Rates (new)** and read the red **RATE EXPIRY WARNING** box.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        },
+        {
+          "text": "E-mail each hotel listed for its new rate sheet. **Open quotation readiness** shows the detail.",
+          "link": {
+            "path": "master_files/hotel_rate_v2/readiness",
+            "label": "Open quotation readiness"
+          }
+        },
+        {
+          "text": "Check the **Approval queue** count and ask the manager to clear it."
+        },
+        {
+          "text": "Click **Health check** for tours with a night without a rate, and open **Hotel Incomplete Work** for anything else missing.",
+          "link": {
+            "path": "master_files/hotel_work",
+            "label": "Open Hotel Incomplete Work"
+          }
+        }
+      ],
+      "notes": [
+        "The warning clears by itself when an approved rate covers the night after."
+      ],
+      "images": [
+        {
+          "file": "hotel_rates/01-main-screen.png",
+          "caption": "(2) the RATE EXPIRY WARNING box"
+        }
+      ],
+      "related": [
+        "hr-next-year",
+        "hr-upload-pdf"
+      ],
+      "manual_ref": "Hotel Rates → Step by step, Stage 4 (step 17)",
+      "verify": [
+        {
+          "view": "app/Views/pages/master_files/hotel_rate_v2.php",
+          "has": [
+            "RATE EXPIRY WARNING",
+            "Open quotation readiness",
+            "Approval queue",
+            "Health check"
+          ]
+        },
+        {
+          "route": "master_files/hotel_rate_v2/readiness"
+        },
+        {
+          "route": "master_files/hotel_work"
+        }
+      ]
+    },
+    {
+      "id": "hr-permissions",
+      "title": "Who can upload, approve or correct hotel rates?",
+      "questions": [
+        "Who can approve hotel rates?",
+        "Why can't I see the Approve button?",
+        "What permission do I need for hotel rates?"
+      ],
+      "keywords": {
+        "permission": 4,
+        "approve": 1,
+        "price": 0.3
+      },
+      "pages": [
+        "master_files/hotel_rate_v2",
+        "master_files/hotel_rate_approval"
+      ],
+      "audience": "Everyone",
+      "needs": [],
+      "summary": "Three permissions (menu entries) control Hotel Rates. People without **Hotel Rate Approval** do not see the **Approve** buttons. The System Administrator has all three. Permissions are set under **Settings → Group Privileges**; log out and in again after a change.",
+      "steps": [
+        {
+          "text": "**Hotel Rates (new)**: open the screen, read PDFs and Excel **as drafts**, edit drafts, delete drafts, copy plans, room types, hotel details."
+        },
+        {
+          "text": "**Hotel Rate Approval**: **Approve**, **Save & approve**, **Correct the approved plan**, **Mark as superseded**, merge duplicate hotels, Settings."
+        },
+        {
+          "text": "**Hotel Incomplete Work**: the list of what is missing."
+        },
+        {
+          "text": "Your own access is shown at the top of every answer in this manual."
+        }
+      ],
+      "related": [
+        "hr-approve"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "menu": "master_files/hotel_rate_v2"
+        },
+        {
+          "menu": "master_files/hotel_rate_approval"
+        },
+        {
+          "menu": "master_files/hotel_work"
+        }
+      ]
+    },
+    {
+      "id": "hr-old-screen",
+      "title": "The old Hotel Rate screen is locked",
+      "questions": [
+        "Why can't I edit rates in the old Hotel Rate screen?",
+        "The old hotel rate page is locked"
+      ],
+      "keywords": {
+        "oldscreen": 4,
+        "correct": 0.5,
+        "price": 0.3
+      },
+      "pages": [
+        "master_files/hotel_rate"
+      ],
+      "audience": "Everyone",
+      "needs": [
+        "master_files/hotel_rate_v2"
+      ],
+      "needs_note": "Use **Hotel Rates (new)**; ask the Hotel Desk if you do not have it.",
+      "summary": "The old **Hotel Rate** screen is only for looking. Rates are entered and approved in **Hotel Rates (new)**; the old rows are rebuilt from approved plans automatically.",
+      "steps": [
+        {
+          "text": "Open **Master Files → Hotel Rates (new)** instead.",
+          "link": {
+            "path": "master_files/hotel_rate_v2",
+            "label": "Open Hotel Rates (new)"
+          }
+        }
+      ],
+      "related": [
+        "hr-upload-pdf",
+        "hr-correct"
+      ],
+      "manual_ref": "Hotel Rates → Questions and answers",
+      "verify": [
+        {
+          "menu": "master_files/hotel_rate"
+        },
+        {
+          "route": "master_files/hotel_rate_v2"
+        }
+      ]
+    }
+  ]
+}

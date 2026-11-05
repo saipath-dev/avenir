@@ -1,0 +1,204 @@
+method,address,handler,class,today: governing privilege,"today: groups holding it (plus Manage Accounts 1,17,25,30)",today: also reachable via (other modules),proposed requirement,read-only Auditor allowlist,change needed,calling views
+GET,accounts/acc_running_records,AccRunningController::index,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,0
+GET,accounts,ChartOfAccountsController::index,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,0
+GET,accounts/title_accounts,ChartOfAccountsController::title_accounts,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,1
+GET,accounts/heading_accounts,ChartOfAccountsController::heading_accounts,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,2
+GET,accounts/get_accounts_list,ChartOfAccountsController::getChartOfAccounts,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,0
+GET,accounts/heading_acc_transactions,ChartOfAccountsController::heading_acc_transactions,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,1
+GET,accounts/posting_acc_transactions,ChartOfAccountsController::posting_acc_transactions,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,2
+POST,accounts/create/title_account,ChartOfAccountsController::createTitleAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/create/heading_account,ChartOfAccountsController::createHeadingAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/create/posting_account,ChartOfAccountsController::createPostingAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/update/title_account,ChartOfAccountsController::updateTitleAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/update/heading_account,ChartOfAccountsController::updateHeadingAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/update/posting_account,ChartOfAccountsController::updatePostingAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/delete/title_account,ChartOfAccountsController::deleteTitleAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/delete/heading_account,ChartOfAccountsController::deleteHeadingAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+POST,accounts/delete/posting_account,ChartOfAccountsController::deletePostingAccount,WRITE,Manage Accounts (49),"1,17,25,30",,act:chart.maintain,no,POST + token + audit enforced,1
+GET,accounts/balance_sheet,BalanceSheetController::index,PAGE,Balance Sheet (51),"1,17,25,29,30,34",,view: Balance Sheet (51),yes,,7
+GET,accounts/outstanding_report,OutstandingController::index,PAGE,Outstanding Report (143),"1,17,25,30,34",,view: Outstanding Report (143),yes,,1
+GET,accounts/trial_balance,TrialBalanceController::index,PAGE,Trial Balance Report (100),"1,17,25,29,30,34",,view: Trial Balance Report (100),yes,,1
+GET,accounts/trial_balance/report,TrialBalanceController::load_report,PAGE,Trial Balance Report - Account (141),"1,17,25,30,34",,view: Trial Balance Report - Account (141),yes,,0
+GET,accounts/trial_balance/load_accountant_report,TrialBalanceController::load_accountant_report,PAGE,Trial Balance Report New (142),"25,30,34",,view: Trial Balance Report New (142),yes,,0
+GET,accounts/trial_balance/trial_balance_details/(:any),TrialBalanceController::trial_balance_details,PAGE,Trial Balance Report (100),"1,17,25,29,30,34",,view: Trial Balance Report (100),yes,,1
+GET,accounts/profit_loss,ProfitAndLossController::index,PAGE,Profit and Loss Report (103),"1,17,25,29,30,34",,view: Profit and Loss Report (103),yes,,1
+GET,accounts/creditor_invoice,CreditorInvoiceController::index,PAGE,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),no,,17
+POST,accounts/creditor_invoice/complete_payment,CreditorInvoiceController::complete_payment,WRITE,Payment Amendment (84),"1,25,30",,act:creditor_invoice.post,no,POST + token + audit enforced,1
+GET,accounts/creditor_invoice/report,CreditorInvoiceController::credit_invoice_report,PAGE,Creditor Invoice Report (91),"1,25,30,34",,view: Creditor Invoice Report (91),yes,,6
+GET,accounts/creditor_invoice/voucher_authentication,CreditorInvoiceController::voucher_authentication,PAGE,Payment Release (96),"1,17,23,25,29",,view: Payment Release (96),yes,,1
+GET,accounts/creditor_invoice/credited_report,CreditorInvoiceController::credited_invoice_report,PAGE,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),yes,,0
+POST,accounts/creditor_invoice/get_details,CreditorInvoiceController::get_details,READ,Payment Amendment (84),"1,25,30",Tour Management (76); Driver Expense (151),view: Payment Amendment (84),yes,,4
+POST,accounts/creditor_invoice/get_tour_paymets,CreditorInvoiceController::get_tour_paymets,READ,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),no,,1
+POST,accounts/creditor_invoice/get_tour_details,CreditorInvoiceController::get_tour_details,READ,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),yes,,1
+GET,accounts/creditor_invoice/view_expences,CreditorInvoiceController::get_expences,PAGE,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),no,,1
+GET,accounts/creditor_invoice/expenses_delete,CreditorInvoiceController::expenses_delete,WRITE via GET,Payment Amendment (84),"1,25,30",,act:records.delete,no,convert to POST + token + audit; GET answers 405 (audited),1
+GET,accounts/creditor_invoice/expenses_report,CreditorInvoiceController::expenses_report,PAGE,Operational PNL (95),"1,17,25,30,34",,view: Operational PNL (95),yes,,5
+GET,accounts/creditor_invoice/view_operational_expences,CreditorInvoiceController::view_operational_expences,PAGE,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),no,,1
+POST,accounts/creditor_invoice/search_voucher_number,CreditorInvoiceController::search_voucher_number,READ,Payment Amendment (84),"1,25,30",,view: Payment Amendment (84),no,,0
+GET,accounts/new_creditor_invoice,NewCreditorInvoiceController::index,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),no,,3
+POST,accounts/new_creditor_invoice/complete_payment,NewCreditorInvoiceController::complete_payment,dead (handler missing),Manage Accounts (49),"1,17,25,30",,deny — remove route (handler missing),no,remove route (handler does not exist),1
+GET,accounts/new_creditor_invoice/report,NewCreditorInvoiceController::credit_invoice_report,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,0
+GET,accounts/new_creditor_invoice/credited_report,NewCreditorInvoiceController::credited_invoice_report,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,0
+POST,accounts/new_creditor_invoice/get_details,NewCreditorInvoiceController::get_details,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,1
+POST,accounts/new_creditor_invoice/get_tour_details,NewCreditorInvoiceController::get_tour_details,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,1
+GET,accounts/new_creditor_invoice/view_expences,NewCreditorInvoiceController::get_expences,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),no,,0
+GET,accounts/new_creditor_invoice/expenses_delete,NewCreditorInvoiceController::expenses_delete,WRITE via GET,Manage Accounts (49),"1,17,25,30",,act:records.delete,no,convert to POST + token + audit; GET answers 405 (audited),1
+GET,accounts/new_creditor_invoice/expenses_report,NewCreditorInvoiceController::expenses_report,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,0
+GET,accounts/new_creditor_invoice/view_operational_expences,NewCreditorInvoiceController::view_operational_expences,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),no,,0
+GET,accounts/new_creditor_invoice/get_transaction_history,NewCreditorInvoiceController::get_transaction_history,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,1
+GET,accounts/creditor_payment,CreditorPaymentController::index,PAGE,Creditor Payment (56),"25,30",,view: Creditor Payment (56),no,,3
+POST,accounts/creditor_payment/complete_payment,CreditorPaymentController::complete_payment,WRITE,Creditor Payment (56),"25,30",,act:creditor_payment.post,no,POST + token + audit enforced,1
+GET,accounts/creditor_payment/get_transaction_history,CreditorPaymentController::get_transaction_history,READ,Creditor Payment (56),"25,30",,view: Creditor Payment (56),yes,,0
+GET,accounts/usd_withdrawal,UsdWithdrawalController::index,PAGE,USD Withdrawal (192),"1,17,25,30",,view: USD Withdrawal (192),no,,4
+POST,accounts/usd_withdrawal/process,UsdWithdrawalController::process,WRITE,USD Withdrawal (192),"1,17,25,30",,act:usd_withdrawal.post,no,POST + token + audit enforced,1
+GET,accounts/usd_withdrawal/print,UsdWithdrawalController::print,PAGE,USD Withdrawal (192),"1,17,25,30",,view: USD Withdrawal (192),yes,,1
+GET,accounts/usd_withdrawal/history,UsdWithdrawalController::history,PAGE,USD Withdrawal History (193),"1,17,25,30,34",,view: USD Withdrawal History (193),yes,,2
+GET,accounts/debtor_payment,DebtorPaymentController::index,PAGE,Debtor Payment (78),"1,17,18,20,25,30",,view: Debtor Payment (78),no,,7
+GET,accounts/debtor_payment/date_filter,DebtorPaymentController::date_filter,READ,Debtor Payment (78),"1,17,18,20,25,30",,view: Debtor Payment (78),no,,0
+POST,accounts/debtor_payment/complete_payment,DebtorPaymentController::complete_payment,WRITE,Debtor Payment (78),"1,17,18,20,25,30",,act:debtor_payment.post,no,POST + token + audit enforced,2
+GET,accounts/debtor_payment/report,DebtorPaymentController::debtor_receipt_report,PAGE,Debtor Receipt Report (145),"1,17,25,30,34",,view: Debtor Receipt Report (145),yes,,1
+GET,accounts/debtor_invoice,DebtorInvoiceController::index,PAGE,Debtor Invoice (86),"1,25,30",,view: Debtor Invoice (86),no,,25
+POST,accounts/debtor_invoice/get_advance_payment,DebtorInvoiceController::get_advance_payment,READ,Debtor Invoice (86),"1,25,30",,view: Debtor Invoice (86),no,,2
+GET,accounts/debtor_invoice/report,DebtorInvoiceController::debtor_invoice_report,PAGE,Debtor Invoice Report (92),"1,17,25,30,34",,view: Debtor Invoice Report (92),yes,,9
+GET,accounts/debtor_invoice/cancellation_request,DebtorInvoiceController::debtor_cancellation_request,WRITE via GET,Debtor Invoice (86),"1,25,30","Invoice Cancellation (187); Tour Inquiry / New Inquiry (79, 203)",act:amendment.request,no,convert to POST + token + audit; GET answers 405 (audited),11
+GET,accounts/debtor_invoice/cancellation,DebtorInvoiceController::debtor_cancellation,WRITE via GET,Debtor Invoice (86),"1,25,30",,act:amendment.decide,no,convert to POST + token + audit; GET answers 405 (audited),2
+POST,accounts/debtor_invoice/get,DebtorInvoiceController::get_details,READ,Debtor Invoice (86),"1,25,30",,view: Debtor Invoice (86),no,,5
+GET,accounts/debtor_invoice/get_cancellation_request,DebtorInvoiceController::cancellation_request_report,PAGE,Tour Amendment Approval (127),"1,25",,view: Tour Amendment Approval (127),yes,,1
+GET,accounts/debtor_invoice/get_cancellation_request_final,DebtorInvoiceController::cancellation_request_report_final,PAGE,Tour Amendment Finalize (147),"1,17,25",,view: Tour Amendment Finalize (147),yes,,0
+GET,accounts/debtor_invoice/get_cancellation,DebtorInvoiceController::cancellation_report,PAGE,Tour Amendment Report (128),"1,17,25,30,34",,view: Tour Amendment Report (128),yes,,1
+GET,accounts/debtor_invoice/arrival_report,DebtorInvoiceController::arrival_report,PAGE,Arrival Report (138),"1,13,17,25,30,34",,view: Arrival Report (138),yes,,1
+GET,accounts/debtor_invoice/arrival_report_print,DebtorInvoiceController::debtor_invoice_report_print,PAGE,Debtor Invoice (86),"1,25,30",,view: Debtor Invoice (86),yes,,1
+GET,accounts/debtor_invoice/print_deptor_invoice_report,DebtorInvoiceController::debtor_invoice_report_print_n,PAGE,Debtor Invoice (86),"1,25,30",,view: Debtor Invoice (86),yes,,2
+GET,accounts/debtor_invoice/cancellation_fee_print,DebtorInvoiceController::cancellation_fee_print,PAGE,Debtor Invoice (86),"1,25,30",,view: Debtor Invoice (86),yes,,0
+GET,accounts/service_invoice,ServiceInvoiceController::index,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),no,,0
+GET,accounts/debtor_invoice_new,DebtorInvoiceNewController::index,PAGE,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),view: Manage Accounts (49),no,,23
+POST,accounts/debtor_invoice_new/complete_payment,DebtorInvoiceNewController::complete_payment,WRITE,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),act:debtor_invoice.post,no,POST + token + audit enforced,3
+GET,accounts/debtor_invoice_new/tour_details,DebtorInvoiceNewController::get_tour_details,dead (handler missing),Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),deny — remove route (handler missing),no,remove route (handler does not exist),0
+GET,accounts/debtor_invoice_new/print,DebtorInvoiceNewController::print,PAGE,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),view: Manage Accounts (49),yes,,10
+GET,accounts/debtor_invoice_new/sent_mail,DebtorInvoiceNewController::sent,READ,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),view: Manage Accounts (49),no,,3
+GET,accounts/debtor_invoice_new/print,DebtorInvoiceNewController::print,PAGE,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),view: Manage Accounts (49),yes,,10
+POST,accounts/debtor_invoice_new/send_receipt,DebtorInvoiceNewController::send_receipt,WRITE,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117); Debtor Invoice (86),act:debtor_invoice.post,no,POST + token + audit enforced,3
+GET,accounts/debtor_invoice_new/additional_inv,DebtorInvoiceNewController::additional_inv,PAGE,Manage Accounts (49),"1,17,25,30",Tour Dashboard (110); Payment Forecast Report (132); Working Dashboard (117),view: Manage Accounts (49),no,,1
+GET,accounts/debit_note,DebitNoteController::index,PAGE,Debit Note (115),"1,25,30",,view: Debit Note (115),no,,3
+GET,accounts/debit_note/fetch/(:any),DebitNoteController::fetch,READ,Debit Note (115),"1,25,30",,view: Debit Note (115),no,,1
+POST,accounts/debit_note/complete_payment,DebitNoteController::complete_payment,WRITE,Debit Note (115),"1,25,30",,act:debit_note.post,no,POST + token + audit enforced,1
+GET,accounts/credit_note,CreditNoteController::index,PAGE,Credit Note (139),"1,25,30",,view: Credit Note (139),no,,3
+POST,accounts/credit_note/complete_payment,CreditNoteController::complete_payment,WRITE,Credit Note (139),"1,25,30",,act:credit_note.post,no,POST + token + audit enforced,1
+GET,accounts/bank_statement,BankStatementController::index,PAGE,Bank Statement (109),"1,17,25,29,30,34",,view: Bank Statement (109),yes,,1
+GET,accounts/bank_reconcil,BankReconsillationController::index,PAGE,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),no,,7
+POST,accounts/bank_reconcil/get_req_items,BankReconsillationController::get_req_items,READ,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),no,,1
+POST,accounts/bank_reconcil/get_realised_sum,BankReconsillationController::get_realised_sum,READ,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),no,,1
+POST,accounts/bank_reconcil/update,BankReconsillationController::update,WRITE,Bank Reconcillation (112),"1,17,25,30",,act:old_bankrec.change,no,POST + token + audit enforced,1
+POST,accounts/bank_reconcil/post_unrealised_entries,BankReconsillationController::post_unrealised_entries,WRITE,Bank Reconcillation (112),"1,17,25,30",,act:old_bankrec.change,no,POST + token + audit enforced,1
+POST,accounts/bank_reconcil/get_post_data,BankReconsillationController::get_post_data,READ,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),no,,1
+POST,accounts/bank_reconcil/repost_unrealised_entries,BankReconsillationController::repost_unrealised_entries,WRITE,Bank Reconcillation (112),"1,17,25,30",,act:old_bankrec.change,no,POST + token + audit enforced,1
+POST,accounts/bank_reconcil/get_opening_balance,BankReconsillationController::get_opening_balance,READ,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),no,,1
+POST,accounts/bank_reconcil/repost_single_entry,BankReconsillationController::repost_single_entry,WRITE,Bank Reconcillation (112),"1,17,25,30",,act:old_bankrec.change,no,POST + token + audit enforced,1
+GET,accounts/bank_reconcil/load_printview,BankReconsillationController::load_printview,PAGE,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),yes,,1
+GET,accounts/bank_reconcil/load_details_print,BankReconsillationController::load_details_print,PAGE,Bank Reconcillation (112),"1,17,25,30",,view: Bank Reconcillation (112),yes,,1
+POST,accounts/bank_reconcil/reconciliation,BankReconsillationController::reconciliation,WRITE,Bank Reconcillation (112),"1,17,25,30",,act:old_bankrec.change,no,POST + token + audit enforced,1
+GET,accounts/bank_reconcil/summary,BankReconsillationController::load_summary,PAGE,Bank Reconcillation Summary (123),"1,17,25,30,34",,view: Bank Reconcillation Summary (123),yes,,3
+GET,accounts/bank_reconcil/details,BankReconsillationController::load_details,PAGE,Bank Reconcillation Details (122),"1,17,25,30,34",,view: Bank Reconcillation Details (122),yes,,1
+POST,accounts/bank_reconcil/finalize_selected,BankReconsillationController::finalize_selected,WRITE,Bank Reconcillation (112),"1,17,25,30",,act:old_bankrec.change,no,POST + token + audit enforced,1
+GET,accounts/daily_bank_rec,DailyBankRecController::index,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,4
+GET,accounts/daily_bank_rec/account/(:num),'\App\Controllers\Accounts\DailyBankRecController::account/$,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,1
+GET,accounts/daily_bank_rec/fx,DailyBankRecController::fx,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,3
+GET,accounts/daily_bank_rec/api/accounts,DailyBankRecController::api_accounts,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/day,DailyBankRecController::api_day,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/statements,DailyBankRecController::api_statements,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/statement,DailyBankRecController::api_statement,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/open,DailyBankRecController::api_open,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/suggest,DailyBankRecController::api_suggest,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/rates,DailyBankRecController::api_rates,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/corrections,DailyBankRecController::api_corrections,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/days,DailyBankRecController::api_days,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/audit,DailyBankRecController::api_audit,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+POST,accounts/daily_bank_rec/setup,DailyBankRecController::setup,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/mapping/propose,DailyBankRecController::mapping_propose,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/mapping/decide,DailyBankRecController::mapping_decide,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/statement/preview,DailyBankRecController::statement_preview,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/statement/save,DailyBankRecController::statement_save,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/statement/accept,DailyBankRecController::statement_accept,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/statement/void,DailyBankRecController::statement_void,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/line/edit,DailyBankRecController::line_edit,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/line/category,DailyBankRecController::line_category,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/rate/save,DailyBankRecController::rate_save,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/match/create,DailyBankRecController::match_create,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/match/undo,DailyBankRecController::match_undo,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/mark/create,DailyBankRecController::mark_create,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/mark/clear,DailyBankRecController::mark_clear,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/transfer/create,DailyBankRecController::transfer_create,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/transfer/undo,DailyBankRecController::transfer_undo,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/correction/propose,DailyBankRecController::correction_propose,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/correction/charges,DailyBankRecController::correction_charges,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/correction/decide,DailyBankRecController::correction_decide,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/correction/withdraw,DailyBankRecController::correction_withdraw,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/correction/posted,DailyBankRecController::correction_posted,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/opening/propose,DailyBankRecController::opening_propose,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/opening/decide,DailyBankRecController::opening_decide,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/day/prepare,DailyBankRecController::day_prepare,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/day/review,DailyBankRecController::day_review,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+GET,accounts/daily_bank_rec/api/opening_candidates,DailyBankRecController::api_opening_candidates,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+GET,accounts/daily_bank_rec/api/day_record,DailyBankRecController::api_day_record,READ,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation view (unchanged),yes,,0
+POST,accounts/daily_bank_rec/match/explain,DailyBankRecController::match_explain,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+POST,accounts/daily_bank_rec/correction/reverify,DailyBankRecController::correction_reverify,WRITE,Daily Bank Reconciliation (253),"1,29,30,34,35",,Daily Bank Reconciliation privileges (unchanged),no,POST + token + audit enforced,0
+GET,accounts/bank_unrealised_value,BankUnrealisedValueController::index,PAGE,Bank Req Data Transfer (184),1,,view: Bank Req Data Transfer (184) — notice only,no,,1
+POST,accounts/bank_unrealised_value/process,BankUnrealisedValueController::process_unrealised_value_change,WRITE,Bank Req Data Transfer (184),1,,deny — retired tool,no,POST + token + audit enforced,1
+GET,accounts/journal_entry,JournalEntryController::index,PAGE,Journal Entry (81),"1,17,25,30",,view: Journal Entry (81),no,,11
+GET,accounts/journal_entry/fetch/(:any),JournalEntryController::fetch,READ,Journal Entry (81),"1,17,25,30",,view: Journal Entry (81),no,,3
+POST,accounts/journal_entry/save,JournalEntryController::save,WRITE,Journal Entry (81),"1,17,25,30",,act:journal.post,no,POST + token + audit enforced,2
+GET,accounts/journal_entry/report,JournalEntryController::report,PAGE,Journal Entry Report (102),"1,17,25,30,34",,view: Journal Entry Report (102),yes,,2
+GET,accounts/journal_entry/edit_report,JournalEntryController::edit_report,PAGE,Edit Journal Entry (120),"1,17,25",,view: Edit Journal Entry (120),yes,,2
+POST,accounts/journal_entry/reverse,JournalEntryController::reverse,WRITE,Journal Entry (81),"1,17,25,30",,act:journal.correct,no,POST + token + audit enforced,1
+POST,accounts/journal_entry/edit_date,JournalEntryController::edit_date,WRITE,Journal Entry (81),"1,17,25,30",,act:journal.correct,no,POST + token + audit enforced,1
+GET,accounts/voucher_payments/(:num),VoucherPaymentController::index,PAGE,Voucher Payments (82),"1,25,30",,view: Voucher Payments (82),no,,14
+GET,accounts/voucher_payments/voucher_cancel,VoucherPaymentController::voucher_cancel,PAGE,Pending Voucher Report (119),"1,17,25,30",,view: Pending Voucher Report (119),yes,,0
+GET,accounts/voucher_payments/voucher_reject,VoucherPaymentController::voucher_reject,PAGE,Voucher Payments (82),"1,25,30",,view: Voucher Payments (82),no,,1
+GET,accounts/voucher_payments/fetch/(:num)/(:any),VoucherPaymentController::fetch,READ,Voucher Payments (82),"1,25,30",,view: Voucher Payments (82),no,,3
+POST,accounts/voucher_payments/save,VoucherPaymentController::save,WRITE,Voucher Payments (82),"1,25,30",,act:vouchers.create,no,POST + token + audit enforced,3
+GET,accounts/voucher_payments/getSupplierDetails,VoucherPaymentController::getSupplierDetails,READ,Voucher Payments (82),"1,25,30",,view: Voucher Payments (82),yes,,4
+POST,accounts/voucher_payments/voucher_delete,VoucherPaymentController::voucher_delete,dead (handler missing),Voucher Payments (82),"1,25,30",,deny — remove route (handler missing),no,remove route (handler does not exist),1
+POST,accounts/voucher_payments/get_pc_accumulated_balance,VoucherPaymentController::pcaccumulatedbalance,READ,Voucher Payments (82),"1,25,30",voucher_auth (menu url accounts/voucher_auth); Bank Payment Check Report (189),view: Voucher Payments (82),no,,3
+GET,accounts/voucher_auth,VoucherPaymentController::auth,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),no,,7
+POST,accounts/voucher_auth/update,VoucherPaymentController::update,WRITE,Manage Accounts (49),"1,17,25,30",,act:vouchers.finalise,no,POST + token + audit enforced,2
+GET,accounts/voucher_auth/getVoucherDetails,VoucherPaymentController::getVoucherDetails,READ,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,2
+GET,accounts/voucher_audit,VoucherAuditController::index,PAGE,Voucher Audit (124),"1,25,29,30,34",,view: Voucher Audit (124),yes,,4
+GET,accounts/voucher_audit/auth,VoucherAuditController::auth,PAGE,Voucher Audit (124),"1,25,29,30,34",,view: Voucher Audit (124),yes,,1
+POST,accounts/voucher_audit/update,VoucherAuditController::update,WRITE,Voucher Audit (124),"1,25,29,30,34",,act:vouchers.audit_mark,no,POST + token + audit enforced,1
+POST,accounts/voucher_audit/update_tour,VoucherAuditController::update_tour,WRITE,Voucher Audit (124),"1,25,29,30,34",,act:vouchers.audit_mark,no,POST + token + audit enforced,1
+GET,accounts/voucher_print/(:any),VoucherPaymentController::print,PAGE,Manage Accounts (49),"1,17,25,30",,view: Manage Accounts (49),yes,,10
+GET,accounts/account_filter,AccountFilterController::index,PAGE,Ledger Accounts (108),"1,17,25,29,30,34",,view: Ledger Accounts (108),yes,,2
+GET,accounts/account_filter/fetch/(:any),AccountFilterController::fetch,READ,Ledger Accounts (108),"1,17,25,29,30,34",,view: Ledger Accounts (108),yes,,1
+GET,accounts/utility_bill,UtilityBillPaymentController::index,PAGE,Utility Bill Payment (113),"1,9,17,25,30",,view: Utility Bill Payment (113),no,,8
+GET,accounts/utility_bill/fetch/(:num)/(:any),UtilityBillPaymentController::fetch,READ,Utility Bill Payment (113),"1,9,17,25,30",,view: Utility Bill Payment (113),no,,1
+POST,accounts/utility_bill/save,UtilityBillPaymentController::save,WRITE,Utility Bill Payment (113),"1,9,17,25,30",,act:utility_bill.post,no,POST + token + audit enforced,1
+GET,accounts/utility_bill/report,UtilityBillPaymentController::report,PAGE,Utility Bills Report (114),"1,9,17,25,30,34",,view: Utility Bills Report (114),yes,,1
+GET,accounts/utility_bill/delete,UtilityBillPaymentController::delete,WRITE via GET,Utility Bill Payment (113),"1,9,17,25,30",,act:records.delete,no,convert to POST + token + audit; GET answers 405 (audited),2
+POST,accounts/utility_bill/update_status,UtilityBillPaymentController::update_status,WRITE,Utility Bill Payment (113),"1,9,17,25,30","Payment Approval V1 (185, no holders)",act:utility_bill.post,no,POST + token + audit enforced,3
+POST,accounts/utility_bill/pay,UtilityBillPaymentController::pay,WRITE,Utility Bill Payment (113),"1,9,17,25,30",,act:utility_bill.post,no,POST + token + audit enforced,1
+GET,accounts/utility_bill_entertainment,UtilityBillEntertainmentController::index,PAGE,Utility Bill Entertainment (181),"1,17,25,30",,view: Utility Bill Entertainment (181),no,,1
+POST,accounts/utility_bill_entertainment/save,UtilityBillEntertainmentController::save,WRITE,Utility Bill Entertainment (181),"1,17,25,30",,act:entertainment.post,no,POST + token + audit enforced,1
+GET,accounts/utility_bill_entertainment/report,UtilityBillEntertainmentController::report,PAGE,Utility Bill Entertainment Report (182),"1,17,25,30,34",,view: Utility Bill Entertainment Report (182),yes,,0
+GET,accounts/utility_bill_entertainment/delete,UtilityBillEntertainmentController::delete,dead (handler missing),Utility Bill Entertainment (181),"1,17,25,30",,deny — remove route (handler missing),no,remove route (handler does not exist),0
+POST,accounts/utility_bill_entertainment/upload_invoice,UtilityBillEntertainmentController::upload_invoice,WRITE,Utility Bill Entertainment (181),"1,17,25,30",,act:entertainment.post,no,POST + token + audit enforced,1
+POST,accounts/utility_bill_entertainment/update_expense,UtilityBillEntertainmentController::update_expense,WRITE,Utility Bill Entertainment (181),"1,17,25,30",,act:entertainment.post,no,POST + token + audit enforced,1
+POST,accounts/utility_bill_entertainment/delete_expense,UtilityBillEntertainmentController::delete_expense,WRITE,Utility Bill Entertainment (181),"1,17,25,30",,act:records.delete,no,POST + token + audit enforced,1
+GET,accounts/cash_book,CashBookController::index,PAGE,Cash In Hand (101),"1,17,25,30,34",,view: Cash In Hand (101),yes,,2
+GET,accounts/cash_book/petty_cash,CashBookController::petty_cash,PAGE,Cash In Hand (101),"1,17,25,30,34",,view: Cash In Hand (101),yes,,1
+GET,accounts/age_analysis,AgeAnalysisController::index,PAGE,Age Analysis Report (104),"1,17,25,30,34",,view: Age Analysis Report (104),yes,,2
+GET,accounts/age_analysis/creditor,AgeAnalysisController::creditor_analysis,PAGE,Creditor Age Analysis (105),"1,25,30,34",,view: Creditor Age Analysis (105),yes,,0
+GET,accounts/liability,LiabilityController::index,PAGE,Liability Report (88),"1,17,25,30,34",,view: Liability Report (88),yes,,2
+GET,accounts/advance_payment,PaymentController::index,PAGE,Advance Payments (90),"1,25,30",,view: Advance Payments (90),no,,3
+POST,accounts/advance_payment/get,PaymentController::get_details,READ,Advance Payments (90),"1,25,30",,view: Advance Payments (90),no,,1
+POST,accounts/advance_payment/add,PaymentController::add_amount,WRITE,Advance Payments (90),"1,25,30",,act:advance_payment.post,no,POST + token + audit enforced,1
+POST,accounts/advance_payment/payment_details,PaymentController::get_payment_details,READ,Advance Payments (90),"1,25,30",,view: Advance Payments (90),yes,,0
+GET,accounts/advance_payment/report,PaymentController::advance_payment_report,PAGE,Advance Payments Report (89),"1,25,30,34",,view: Advance Payments Report (89),yes,,1
+GET,accounts/expenses_chart,ExpensesChartController::index,PAGE,Expenses Chart (94),"1,30,34",,view: Expenses Chart (94),yes,,2
+GET,accounts/expenses_chart/report,ExpensesChartController::report,PAGE,Expenses Report (180),"1,17,25,30,34",,view: Expenses Report (180),yes,,1
+GET,accounts/other_invoice,OtherInvoiceController::index,PAGE,Service Provider Invoice (172),"1,9,17,25,30",,view: Service Provider Invoice (172),no,,3
+POST,accounts/other_invoice/add_invoice,OtherInvoiceController::add_invoice,WRITE,Service Provider Invoice (172),"1,9,17,25,30",,act:other_invoice.post,no,POST + token + audit enforced,1
+GET,accounts/other_invoice/report,OtherInvoiceController::report,PAGE,Service Provider Invoice Report (174),"1,9,17,25,30,34",,view: Service Provider Invoice Report (174),yes,,1
+GET,accounts/other_invoice/print,OtherInvoiceController::print,PAGE,Service Provider Invoice (172),"1,9,17,25,30",,view: Service Provider Invoice (172),yes,,2
+GET,accounts/service_provider_payment,ServiceProviderPaymentController::index,PAGE,Service Provider Payment (194),"1,9,17,25,30",,view: Service Provider Payment (194),no,,2
+POST,accounts/service_provider_payment/complete_payment,ServiceProviderPaymentController::complete_payment,WRITE,Service Provider Payment (194),"1,9,17,25,30",,act:service_provider_payment.post,no,POST + token + audit enforced,1
+GET,accounts/service_provider_payment/report,ServiceProviderPaymentController::report,PAGE,Service Provider Payment Receipt (195),"1,9,17,25,30,34",,view: Service Provider Payment Receipt (195),yes,,1

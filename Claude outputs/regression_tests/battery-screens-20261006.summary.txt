@@ -1,0 +1,12 @@
+New-generation regression battery — 2026-10-06 05:47:40 — /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir
+== Screen suites (Playwright)
+   ui_1c: 59 ok, 0 failed
+   ui_hotel_work_flow: 11 ok, 0 failed
+   ui_desks: 26 ok, 0 failed
+   ui_masters: 29 ok, 0 failed
+   ui_tour_operations: 29 ok, 0 failed
+   ui_hotel_rates: 14 ok, 0 failed
+   ui_security: 18 ok, 0 failed
+   sweep_http: 8 ok, 0 failed
+   survey: screens: 31 with a non-200, a JS error or a failure: 2
+== ALL GREEN — log /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir/tests/newgen/_work/battery-20261006-054740.log

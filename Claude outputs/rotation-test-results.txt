@@ -1,0 +1,78 @@
+Today: 2026-10-26
+
+== 0. Install and the registry section
+  PASS four rotation tables created
+  PASS registry lists JSD/JSCG drivers, inactive Indika included as inactive
+  PASS Dinesh: van, opted in to car-rate tours at LKR 95/km
+  PASS last tour end and free-from date: Chamara ended 22 Oct → free from 28 Oct — 2026-10-28
+
+== 1. Lanes and counts after confirmation
+  PASS 5 cards awaiting transport review (P1–P5) — {"awaiting_review":5,"pending":0,"confirming":0,"upcoming":1,"on_tour":2,"done":1}
+  PASS On Tour holds the tours already started with a driver engaged (TEST-ON from 24 Oct, TEST-G1 from 26 Oct) — {"awaiting_review":5,"pending":0,"confirming":0,"upcoming":1,"on_tour":2,"done":1}
+  PASS no card pending yet
+
+== 2. Driver Allocation button: review → Pending Allocations
+  PASS Transport Operations count down to 0, Pending Allocations up to 5 — {"awaiting_review":0,"pending":5,"confirming":0,"upcoming":1,"on_tour":2,"done":1}
+  PASS review history kept in the log (5 review events)
+
+== 3. P1 — 2 pax, 2–5 Nov: car class, fair rotation, van at car rate
+  PASS vehicle class from 2 pax = Sedan car
+  PASS waiting longest is Dinesh (van, opted in, last tour 1 Oct) → proposed — TEST Van Dinesh
+  PASS his proposal is marked van-at-car-rate with the car-rate amount — {"rate_km":95,"km":450,"amount":42750,"currency":"LKR","text":"Car-rate tour (1\u20132 passengers): paid at the agreed car rate of LKR 95.00 per km on 450 km = LKR 42,750.00, although the vehicle is a van. The van rate does not apply to this tour."}
+  PASS Janaka (van, not opted in) is out — van driver not opted in to car-rate tours
+  PASS Gamini is out: rest before his 8 Nov tour — rest before TEST-G2 (starts 2026-11-08, this tour would end 2026-11-05)
+  PASS Hasitha (JSCG) is out: the line needs a JSD — this tour's line needs a JSD; van driver not opted in to car-rate tours
+  PASS Fazal (not in pool, high-roof van) is out
+  PASS Indika (inactive) is not assessed at all
+  PASS eligible order: Dinesh (1 Oct), Amal (10 Oct), Bandara (15 Oct), Chamara (22 Oct) — TEST Van Dinesh,TEST Car Amal,TEST Car Bandara,TEST Car Chamara
+  OK: Record the driver's acceptance of the car-rate terms for this tour before confirming.
+  PASS Accept refused until the driver's car-rate acceptance is recorded
+  OK: The rotation proposes TEST Van Dinesh for this tour. To give it to another driver use Bypass Rotation and give the reason.
+  PASS Accepting someone other than the proposal is refused (needs Bypass)
+
+== 4. Not Available → automatic replacement
+  PASS next in turn proposed automatically: Amal — TEST Car Amal
+  PASS Dinesh now out: not available 2–5 Nov with the reason — not available 2026-11-02 – 2026-11-05 (Van in repair at the garage)
+  PASS Amal engaged on P1 through engageCrew — Fair rotation: waiting longest (last tour ended 2026-10-10)
+
+== 5. Double allocation and overlap protection
+  OK: A driver was engaged on this card a moment ago (TEST Car Amal) — nothing changed.
+  PASS a second allocation on the same card is refused (row lock)
+  PASS P4 (3–6 Nov): Amal out — already engaged on TEST-P1 — already engaged on TEST-P1 (2026-11-02 – 2026-11-05)
+
+== 6. P3 — 2 pax, 26–28 Oct: rest days and the car-rate acceptance
+  PASS Chamara out: rest after TEST-OLD3 (ended 22 Oct, free from 28 Oct) — rest after TEST-OLD3 (ends 2026-10-22, free from 2026-10-28)
+  PASS Amal out: rest before TEST-P1 (P3 would end 28 Oct, P1 starts 2 Nov) — rest before TEST-P1 (starts 2026-11-02, this tour would end 2026-10-28)
+  PASS Gamini out: already engaged 26–27 Oct — already engaged on TEST-G1 (2026-10-26 – 2026-10-27)
+  PASS Dinesh proposed (his Not Available is 2–5 Nov only) — TEST Van Dinesh
+  PASS Dinesh engaged at the CAR rate LKR 95/km (not the van rate 120) — Car-rate tour accepted by the driver — LKR 95.00/km (van TVAN-004). Fair rotation: waiting longest (last tour ended 2026-10-01) · car-rate terms accepted
+  PASS car-rate acceptance logged with amount (95 × 270 km = 25,650)
+
+== 7. P2 — 5 pax, 29 Oct–1 Nov: high-roof van, Bypass Rotation
+  PASS 5 pax → High roof van
+  PASS Eranga proposed (high-roof van, waiting since 5 Oct) — TEST HiRoof Eranga
+  PASS Dinesh out: flat-roof van cannot take 5 pax — no high roof van on his record; rest after TEST-P3 (ends 2026-10-28, free from 2026-11-03)
+  OK: Bypass Rotation needs the reason; it is recorded and reported.
+  PASS Bypass without a reason is refused
+  OK: Confirm that you have read the warning before bypassing the rotation.
+  PASS Bypass without acknowledging the warning is refused
+  OK: No high roof van on his record; rest before TEST-P1 (starts 2026-11-02, this tour would end 2026-11-01) — Bypass Rotation sets aside only whose turn it is; it cannot override this.
+  PASS Bypass cannot put a car driver on a 5-pax tour
+  PASS Bypass logged: who, reason, driver passed over (Eranga), warning acknowledged — Agent asked for Fazal by name (repeat guests)
+
+== 8. P5 — 9 pax: mini coach + separate guide; nobody eligible stays pending with reasons
+  PASS 9 pax → Mini coach, guide required
+  PASS nobody eligible (no mini coach in the pool) → no proposal
+  PASS reason shown for each driver, e.g. Amal: no mini coach on his record — no mini coach on his record
+
+== 9. Lanes: Upcoming only after all required confirmations, On Tour separate
+  PASS P5: driver engaged, guide not yet → Confirming (not Upcoming) — confirming
+  PASS P5: both engaged → Upcoming
+  PASS P1, P2 → Upcoming; P3 (starts today 26 Oct) and TEST-ON → On Tour — {"TEST-OLD3":"done","TEST-ON":"on_tour","TEST-G1":"on_tour","TEST-P3":"on_tour","TEST-P2":"upcoming","TEST-P1":"upcoming","TEST-P4":"pending","TEST-G2":"upcoming","TEST-P5":"upcoming"}
+  PASS counts: 1 pending (P4), 4 upcoming (P1, P2, P5, TEST-G2), 3 on tour (P3, TEST-ON, TEST-G1) — {"awaiting_review":0,"pending":1,"confirming":0,"upcoming":4,"on_tour":3,"done":1}
+
+== 10. Report
+  PASS report holds bypass 1, not_available 1, accepted 2, car_rate_accepted 1 — {"bypass":1,"car_rate_accepted":1,"accepted":2,"not_available":1}
+  PASS report filter: bypass only
+
+RESULT: 47 passed, 0 failed

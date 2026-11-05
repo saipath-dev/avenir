@@ -1,0 +1,366 @@
+{
+ "key": "morven_colombo_winter",
+ "hotel": {
+  "acc": "6-9-11-11392",
+  "name": "Morven Hotel Colombo",
+  "location": "Colombo",
+  "chain": null
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11392",
+   "name": "Morven Hotel Colombo"
+  },
+  "contract": {
+   "name": "DMC Room Rates – Winter 2025/26",
+   "plan_type": "contract",
+   "contract_type": "DMC",
+   "hotel_reference": "DMC Room Rates – Winter 2025/26",
+   "tier": "all",
+   "valid_from": "2025-11-01",
+   "valid_to": "2026-04-30",
+   "currency": "USD",
+   "billing_currency": "LKR",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "Quoted in USD per room per night, inclusive of 10% service charge & applicable government taxes; non-commissionable; billing in LKR at the day's conversion rate",
+   "source_type": "email",
+   "received_at": "2026-09-03",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 15,
+   "max_children_free": 2,
+   "child_policy_text": "Child 05 yrs & below, sharing with parents will be free of charge (maximum 02 children). Child between 06yrs-11yrs, sharing with parents will be charged 50% meal charges only. Child between 06yrs-11yrs can be provided with an extra bed at a supplement of USD 15.00 nett (inclusive of all taxes) and 50% meal charges will be applicable. Child above 12 years will be considered as an adult. Baby cot / cribs complimentary upon request and on availability. Fact sheet child meal policy: 0-5 years and below complimentary, 6-11 years 50% of the rates, 12 years and above full meal rates.",
+   "cancellation_text": "All cancellations should be made with a formal voucher as per the cancellation policy and would be acknowledged by the Reservations Department. Free of charge cancellation policies are as follows: 05 rooms & below — 15 days prior to the date of arrivals; 06 rooms – 20 rooms — 30 days prior to the date of arrivals; 21 rooms & above — 45 days prior to the date of arrivals. In the event of a no show or a last moment cancellation beyond the above durations, 01-night room charge will be applicable for each room. Complimentary last moment cancellation will be offered only on special considerations and will be totally on discreet of the hotel.",
+   "payment_text": "Billing: all billing will be done in local currency (LKR); the room rates can vary with the day's USD/LKR conversion rate. Credit policy: credit period as agreed and contracted with the hotel upon receival of the original invoice, or payments to be made prior to the departure of the guest. All DMCs with credit facility should pay within the credit period and limits approved by the Credit Division; company cheques are accepted only from credited DMCs, drawn in favour of \"Hotel Morven (Pvt) Ltd.\" (A/C payee only). All DMCs without credit facility should settle prior to the guest's departure; cheque payments only on management approval, 03 working days prior to departure. The scanned deposit / transfer slip quoting the confirmation number to be sent 03 working days prior to departure.",
+   "foc_policy_text": "Every 10 paying rooms, the 11th room is on complimentary.",
+   "terms_text": "The above rates are quoted in USD per room per night, inclusive of 10% service charge and applicable government taxes, non-commissionable, and fixed throughout the validity periods unless any rate changes are implemented by public / presidential directives. Valid from 01/11/2025 till 30/04/2026. Applicable markets: all markets. Check-in 14.00 hrs, check-out 12.00 hrs; early check-ins / late check-outs are provided at an applicable cost as per the time duration. Reservations: all reservations should be followed by an accurately detailed reservation voucher and would be re-confirmed by formal confirmations; any extraordinary rate offer applied to a booking should be clearly stated in the voucher to avoid rate parities with the contracted rates; final rooming list of group reservations with special requests to be sent with the latest amended voucher prior to arrival; preferred bedding types to be specified when booking; sea view / adjacent / same floor / king bed rooms are subject to availability; room upgrades are subject to a supplement and free upgrades only on availability. Every 10 paying rooms, the 11th room is complimentary. Visitors must produce valid identification and are allowed in rooms only till 22.00 hrs; visitors under 18 years are not allowed in the rooms and are to be met at the lobby; a meal-excluded joiner fee of USD 30.00 nett per person is charged for any stayover after 22.00 hrs. Allotments, released period, minimum room nights, guaranteed room nights and guaranteed revenue: none. Agreed key points: all rate information is private and confidential and must not be disclosed to third parties; the contract may not be quoted unpackaged and the rates may not be displayed or sold on any webpage, online platform, online brochure or leaflet; in an overbooking the hotel transfers guests to a similar or higher category hotel in the city on the same booked basis (with upgraded rooms and meal basis if only a 3-star is available), on prior approval and mutual understanding; the hotel may carry out repairs, renovations and preventive maintenance at its discretion and will inform DMCs in priority; force majeure relieves the hotel of liability.",
+   "notes": "THIS SHEET HAS EXPIRED: the attached DMC-Winter.pdf is headed \"Room Rates – Winter 2025/26\" and prints \"Valid from 01/11/2025 till 30/04/2026\". The hotel e-mail (Nadeeka Perera, Director of Sales, 14 Nov 2025, forwarded to us on 3 Sep 2026) says: \"Attached herewith the summer 2025 and winter 25/26 Rates. If you do need a rate for Summer 2026, you have to continue same rate of winter 25/26, until we issue the rates.\" — only the winter PDF was attached; ask the hotel for the 2026/27 rates. \"For the group bookings we can negotiate the rate always\" (e-mail). Rates are per room per night for the Deluxe room; Premier, Premier Plus and Junior Suite are the same rate plus a room supplement. No contract date is printed on the sheet (the \"Date:\" line is blank). The compulsory Christmas Eve / New Year Eve supplements are printed \"on HB/FB basis\" and no child price is given for them — the child policy (06-11 yrs pay 50% meal charges) may or may not apply to the gala; confirm with the hotel. Room counts, sizes, views, floors and maximum occupancy come from the Morven Colombo FACT SHEET (90 rooms in total: 78 deluxe, 7 premier, 4 premier plus, 1 junior suite; 48 sea view / 42 city view; all rooms non-smoking; king bedding 210x200 cm, twin bedding 90x110 cm). The fact sheet gives the deluxe room a maximum occupancy of 02 pax although the rate sheet prices a triple (extra bed USD 15) — max occupancy left empty for that category. MICE supplements, airport transfers and the joiner fee are entered under Extras.",
+   "voucher_note": "All reservations should be followed by an accurately detailed reservation voucher; any extraordinary rate offer applied to a booking must be clearly stated in the voucher",
+   "source_file": "FW: DMC rates-Morven Hotel Colombo — DMC-Winter.pdf (+ Morven Colombo FACT SHEET.pdf)"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe Room",
+    "priced_as": "base",
+    "room_count": 78,
+    "size_sqm": 23,
+    "bed_config": "King 210x200 cm or twin 90x110 cm (the fact sheet gives no split)",
+    "view": "Sea view (43) / City view (35)",
+    "description": "Fact sheet: 78 deluxe rooms, 23 sqm, available floors 2nd–6th, maximum occupancy 02 pax — although this rate sheet prices a triple (extra bed USD 15.00), so the maximum occupancy field is left empty. Non-smoking."
+   },
+   {
+    "name": "Premier Room",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Room",
+    "room_count": 7,
+    "size_sqm": 32,
+    "view": "Sea view (2) / City view (5)",
+    "description": "Fact sheet: 7 premier rooms, 32 sqm, 6th & 7th floors, maximum occupancy 03 pax, mini-bar",
+    "max_occupancy": 3
+   },
+   {
+    "name": "Premier Plus Room",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Room",
+    "room_count": 4,
+    "size_sqm": 39,
+    "view": "Sea view (2) / City view (2)",
+    "description": "Fact sheet: 4 premier plus rooms, 39 sqm, 6th & 7th floors, maximum occupancy 04 pax, mini-bar",
+    "max_occupancy": 4
+   },
+   {
+    "name": "Junior Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Room",
+    "room_count": 1,
+    "size_sqm": 47,
+    "bed_config": "King bed",
+    "view": "Sea view",
+    "description": "Fact sheet: 1 junior suite, 47 sqm, 7th floor, sea view, king bed, maximum occupancy 04 pax, mini-bar",
+    "max_occupancy": 4
+   }
+  ],
+  "seasons": [
+   {
+    "name": "Winter 2025/26 (01 Nov 2025 – 30 Apr 2026)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2025-11-01",
+      "to": "2026-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "RO",
+      "sgl": 55,
+      "dbl": 60,
+      "tpl": 70,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "BB",
+      "sgl": 60,
+      "dbl": 70,
+      "tpl": 85,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 70,
+      "dbl": 80,
+      "tpl": 100,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 80,
+      "dbl": 90,
+      "tpl": 125,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Premier Room",
+    "amount": 15,
+    "per": "room",
+    "note": "Room Supplements: Premier Room 15.00 (USD per room per night over the Deluxe rate)"
+   },
+   {
+    "room_type": "Premier Plus Room",
+    "amount": 25,
+    "per": "room",
+    "note": "Room Supplements: Premier Plus Rooms 25.00 (USD per room per night over the Deluxe rate)"
+   },
+   {
+    "room_type": "Junior Suite",
+    "amount": 50,
+    "per": "room",
+    "note": "Room Supplements: Junior Suite 50.00 (USD per room per night over the Deluxe rate)"
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 12,
+    "note": "Meal supplements: Breakfast 12.00 per person"
+   },
+   {
+    "meal": "lunch",
+    "adult": 15,
+    "note": "Meal supplements: Lunch 15.00 per person"
+   },
+   {
+    "meal": "dinner",
+    "adult": 15,
+    "note": "Meal supplements: Dinner 15.00 per person"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve compulsory supplement",
+    "date_from": "2025-12-24",
+    "date_to": "2025-12-24",
+    "meal_plans": "HB,FB",
+    "per": "person",
+    "amount": 30,
+    "compulsory": 1,
+    "note": "Compulsory supplements on HB/FB basis: Christmas Eve 30.00 per person. No child price and no price for RO / BB guests is printed."
+   },
+   {
+    "type": "gala",
+    "name": "New Year Eve compulsory supplement",
+    "date_from": "2025-12-31",
+    "date_to": "2025-12-31",
+    "meal_plans": "HB,FB",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "note": "Compulsory supplements on HB/FB basis: New Year Eve 40.00 per person. No child price and no price for RO / BB guests is printed."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Child 05 yrs & below, sharing with parents, free of charge (maximum 02 children)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Child between 06yrs-11yrs sharing with parents: 50% meal charges only"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "amount": 15,
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Child between 06yrs-11yrs with an extra bed: supplement USD 15.00 nett (inclusive of all taxes) PLUS 50% meal charges"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [
+   {
+    "basis": "rooms",
+    "every_n": 10,
+    "free_n": 1,
+    "discount_pct": 100,
+    "as_what": "any",
+    "note": "Every 10 paying rooms, the 11th room is on complimentary"
+   }
+  ],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "tier": "all",
+    "max_rooms": 5,
+    "days_from": null,
+    "days_to": 15,
+    "charge_pct": 0,
+    "note": "Free of charge cancellation: 05 rooms & below, 15 days prior to the date of arrivals"
+   },
+   {
+    "tier": "all",
+    "max_rooms": 5,
+    "days_from": 14,
+    "days_to": 0,
+    "charge_nights": 1,
+    "note": "No show or last moment cancellation beyond the free-cancellation duration: 01-night room charge for each room"
+   },
+   {
+    "tier": "all",
+    "min_rooms": 6,
+    "max_rooms": 20,
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "Free of charge cancellation: 06 rooms – 20 rooms, 30 days prior to the date of arrivals"
+   },
+   {
+    "tier": "all",
+    "min_rooms": 6,
+    "max_rooms": 20,
+    "days_from": 29,
+    "days_to": 0,
+    "charge_nights": 1,
+    "note": "No show or last moment cancellation beyond the free-cancellation duration: 01-night room charge for each room"
+   },
+   {
+    "tier": "all",
+    "min_rooms": 21,
+    "days_from": null,
+    "days_to": 45,
+    "charge_pct": 0,
+    "note": "Free of charge cancellation: 21 rooms & above, 45 days prior to the date of arrivals"
+   },
+   {
+    "tier": "all",
+    "min_rooms": 21,
+    "days_from": 44,
+    "days_to": 0,
+    "charge_nights": 1,
+    "note": "No show or last moment cancellation beyond the free-cancellation duration: 01-night room charge for each room"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Credit period as agreed & contracted with the hotel upon receival of the original invoice; payments within the credit period and limits approved by the Credit Division of the Finance Department. Company cheques accepted only from credited DMCs."
+   },
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "DMCs without credit facility settle the payment prior to the departure of the guest from the hotel (cash, remittance, credit card, bank draft or bank transfer)"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "other",
+    "days_before": 3,
+    "note": "Cheque payments from DMCs without credit facility only on management approval, to be made 03 working days prior to the guest's departure; the scanned deposit / transfer slip with the confirmation number to be sent 03 working days prior to departure"
+   }
+  ],
+  "restrictions": [],
+  "extras": [
+   {
+    "category": "mice",
+    "name": "Half-Day conference",
+    "per": "person",
+    "adult": 20,
+    "note": "MICE supplements: half-day conference 20.00 per person, inclusive of 01 tea break with lunch"
+   },
+   {
+    "category": "mice",
+    "name": "Full-Day conference",
+    "per": "person",
+    "adult": 25,
+    "note": "MICE supplements: full-day conference 25.00 per person, inclusive of 02 tea breaks with lunch"
+   },
+   {
+    "category": "mice",
+    "name": "Fine-Dining dinner",
+    "per": "person",
+    "adult": 25,
+    "note": "MICE supplements: fine-dining dinner 25.00 per person. Gala dinner is inclusive of 02 vegetarian + 02 non-vegetarian canapés with a free flow of soft drinks for 02 hours."
+   },
+   {
+    "category": "transfer",
+    "name": "Airport pick-up – Car (max 03 pax)",
+    "per": "booking",
+    "adult": 50,
+    "note": "USD per vehicle, inclusive of 10% service charge & applicable government taxes, non-commissionable"
+   },
+   {
+    "category": "transfer",
+    "name": "Airport drop – Car (max 03 pax)",
+    "per": "booking",
+    "adult": 45,
+    "note": "USD per vehicle"
+   },
+   {
+    "category": "transfer",
+    "name": "Airport pick-up – Van (max 05 pax)",
+    "per": "booking",
+    "adult": 65,
+    "note": "USD per vehicle"
+   },
+   {
+    "category": "transfer",
+    "name": "Airport drop – Van (max 05 pax)",
+    "per": "booking",
+    "adult": 60,
+    "note": "USD per vehicle"
+   },
+   {
+    "category": "other",
+    "name": "Visitor / joiner fee",
+    "per": "person",
+    "adult": 30,
+    "note": "A meal-excluded supplement of USD 30.00 nett per person is charged as a joiner fee for any stayover after 22.00 hrs, upon producing a valid identification"
+   }
+  ]
+ }
+}

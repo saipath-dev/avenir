@@ -1,0 +1,158 @@
+[
+ {
+  "test": 90,
+  "name": "hotelres: the number to its last four digits, the contacts kept",
+  "ok": true,
+  "detail": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20225678"
+ },
+ {
+  "test": 90,
+  "name": "ops: refused by its privileges (403) \u2014 nothing served",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "test": 90,
+  "name": "accountant: refused by its privileges (403) \u2014 nothing served",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "test": 90,
+  "name": "admin: the full number (pays / verifies, or a profile older than the departments \u2014 as before)",
+  "ok": true,
+  "detail": "TEST1001002345678"
+ },
+ {
+  "test": 90,
+  "name": "hotel: the full number (pays / verifies, or a profile older than the departments \u2014 as before)",
+  "ok": true,
+  "detail": "TEST1001002345678"
+ },
+ {
+  "test": 91,
+  "name": "hotelres: number masked, bank fields locked with the notice; the full number nowhere in the page",
+  "ok": true,
+  "detail": "(False, True)"
+ },
+ {
+  "test": 91,
+  "name": "transh: refused by its privileges (302)",
+  "ok": true,
+  "detail": "302"
+ },
+ {
+  "test": 91,
+  "name": "accountant: full number, fields editable (as before)",
+  "ok": true,
+  "detail": "(True, False)"
+ },
+ {
+  "test": 91,
+  "name": "admin: full number, fields editable (as before)",
+  "ok": true,
+  "detail": "(True, False)"
+ },
+ {
+  "test": 91,
+  "name": "hotel: full number, fields editable (as before)",
+  "ok": true,
+  "detail": "(True, False)"
+ },
+ {
+  "test": 92,
+  "name": "Hotel Reservations' attempt to change the bank: refused on the server (stored number unchanged) and recorded",
+  "ok": true,
+  "detail": "('TEST1001002345678', True)"
+ },
+ {
+  "test": 92,
+  "name": "the recorded attempt holds neither the stored number nor the attempted one in full (\u20265678, \u20261111 only)",
+  "ok": true,
+  "detail": "{\"posted\":{\"sup_bank_acc\":\"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20221111\",\"bank_id\":2,\"branch_id\":2},\"kept\":{\"sup_bank_acc\":\"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20225678\",\"bank_id\":1,\"bank_name\":\"Test Bank\",\"branch_id\":1,\"branch_name\":\"Test Branch\",\"acc_holder\":\"Gimanhala Holder\"}}"
+ },
+ {
+  "test": 92,
+  "name": "auditor: the audit trail opens (200) and shows no full account number",
+  "ok": true,
+  "detail": "(200, False)"
+ },
+ {
+  "test": 92,
+  "name": "admin: the audit trail opens (200) and shows no full account number",
+  "ok": true,
+  "detail": "(200, False)"
+ },
+ {
+  "test": 92,
+  "name": "an audit row written with a full number (as r2 did) reaches the auditor masked; the administrator sees it as stored",
+  "ok": true,
+  "detail": "(False, True)"
+ },
+ {
+  "test": 93,
+  "name": "the supplier lookup: full number (as before)",
+  "ok": true,
+  "detail": "TEST1001002345678"
+ },
+ {
+  "test": 93,
+  "name": "the edit form: full number, not locked",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 93,
+  "name": "it can still change the bank details (existing access unchanged)",
+  "ok": true,
+  "detail": "(200, 'TEST1001007777777')"
+ },
+ {
+  "test": 93,
+  "name": "the legacy dashboard data: not masked for it (as before r2) \u2014 or refused by its privileges",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "test": 94,
+  "name": "Hotel Reservations (test group: Supplier masters + dashboard): 1434 GET requests over every route, 255 answered 200 \u2014 full supplier bank numbers found: 0",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 94,
+  "name": "Hotel Reservations with the development system's menus: 1434 GET requests over every route, 255 answered 200 \u2014 full supplier bank numbers found: 0",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 94,
+  "name": "Tour Reservations with the development system's menus: 1434 GET requests over every route, 558 answered 200 \u2014 full supplier bank numbers found: 0",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 94,
+  "name": "Transport & Guide Handling with the development system's menus: 1434 GET requests over every route, 221 answered 200 \u2014 full supplier bank numbers found: 0",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 94,
+  "name": "Pilot / Operations Allocation with the development system's menus: 1434 GET requests over every route, 151 answered 200 \u2014 full supplier bank numbers found: 0",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 94,
+  "name": "Auditor (read-only) with the development system's menus: 1434 GET requests over every route, 158 answered 200 \u2014 full supplier bank numbers found: 0 (Avenir's own paying account shown on: batch_data)",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "test": 94,
+  "name": "Management Approver with the development system's menus: 1434 GET requests over every route, 422 answered 200 \u2014 full supplier bank numbers found: 0 (Avenir's own paying account shown on: batch_data, voucher)",
+  "ok": true,
+  "detail": "[]"
+ }
+]

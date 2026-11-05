@@ -1,0 +1,342 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Old tools retirement – development results</title><style>body{font-family:Segoe UI,Arial,sans-serif;max-width:1180px;margin:24px auto;padding:0 16px;color:#1f2937;line-height:1.45;background:#fff}
+h1{font-size:24px;color:#4a1d6b}h2{font-size:19px;color:#4a1d6b;margin-top:32px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}h3{font-size:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}th,td{border:1px solid #d1d5db;padding:6px 8px;vertical-align:top;text-align:left}th{background:#f3f4f6}
+code{background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:12.5px}
+img{max-width:100%;border:1px solid #d1d5db;border-radius:4px;margin:6px 0 18px}
+hr{border:0;border-top:1px solid #e5e7eb;margin:24px 0}</style></head><body><h1>Retirement of the two old tools — development results (12 Oct 2026)</h1>
+<p><strong>Summary</strong></p>
+<ul>
+<li><strong>Development:</strong> <code>tf-legacy-retire-r1</code> is <strong>installed</strong> (5 files). The ledger is identical before and after, and nothing was posted or corrected.</li>
+<li><strong>No database, login, group or permission change on development.</strong></li>
+<li>Your signed-in session was used only for two page views and eight refusal requests.</li>
+<li>Neither old tool ran, no other button was pressed, and you were not signed out.</li>
+<li><strong>Isolated test instance:</strong></li>
+<li>It was tested with a temporary TEST login. The login was then <strong>removed</strong>, and the user and permission tables were verified identical to the clean snapshot.</li>
+<li>Its five files were <strong>rolled back</strong> to the originals.</li>
+<li><strong>Live:</strong> not accessed; no package built. <strong>I have stopped for your approval.</strong></li>
+</ul>
+<p>Times are Sri Lanka time.</p>
+<hr />
+<h2>1. The five-file change (kit <code>Claude outputs\tf-legacy-retire-r1\</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+<th>md5 original → new</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/Libraries/BankRec/LegacyGuard.php</code></td>
+<td>Adds <code>RETIRED_TOOLS</code> and <code>refuseRetiredTool()</code>:<br>• security token checked first: missing or wrong → <strong>403</strong><br>• valid token → <strong>409</strong> "retired"<br>• one audit row per attempt</td>
+<td>1d4cca93 → 93a621ca</td>
+</tr>
+<tr>
+<td><code>app/Controllers/Settings/ManualUpdateController.php</code></td>
+<td><code>bank_recon_record_insert()</code> refuses before anything else. The original code stays below and is never reached.</td>
+<td>d67ac130 → 45ddf8e8</td>
+</tr>
+<tr>
+<td><code>app/Controllers/Accounts/BankUnrealisedValueController.php</code></td>
+<td><code>process_unrealised_value_change()</code> refuses in the same way.</td>
+<td>280eb40f → 102e7d8a</td>
+</tr>
+<tr>
+<td><code>app/Views/pages/settings/manual_update.php</code></td>
+<td>That one button → grey "<strong>Retired:</strong> Bank Not Reconciliation Record Insert…" notice</td>
+<td>4f52f9b3 → 616ab158</td>
+</tr>
+<tr>
+<td><code>app/Views/pages/accounts/bank_unrealised_value_change.php</code></td>
+<td>The Process button → grey "<strong>Retired:</strong> Bank Req Data Transfer…" notice</td>
+<td>3b808508 → c3ca2a73</td>
+</tr>
+</tbody>
+</table>
+<p>What stays the same:</p>
+<ul>
+<li><strong>No route, menu or database change.</strong> There is no run-once marker.</li>
+<li><strong>Both routes stay</strong>, so a page that is still open gets a proper 403 answer.</li>
+<li><strong>All other Manual Update buttons, actions and code are unchanged.</strong></li>
+</ul>
+<p><strong>The audit row</strong> (table <code>tpd_audit</code>, action <code>legacy_tool_refused</code>) records:</p>
+<ul>
+<li>the tool;</li>
+<li>the user and the time;</li>
+<li>the IP address;</li>
+<li>the answer (403 or 409) and the reason (token or retired);</li>
+<li>the bank posted, for Bank Req Data Transfer;</li>
+<li>"(nothing was changed)".</li>
+</ul>
+<p><strong>Kit hygiene.</strong> The ZIP is <code>tf-legacy-retire-r1-20261012.zip</code> (18 files, md5 501ef6e05e901ad6192498e069ce6656, without the <code>before\</code> backups). I scanned it, and it contains <strong>no password or credential value</strong>. The temporary-login scripts are kept <strong>outside</strong> the kit, in <code>TEST-ONLY-NEVER-LIVE-tf-legacy-retire-r1-fixture\</code>.</p>
+<h2>2. Test results</h2>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>What</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cloud test copy</strong></td>
+<td><strong>Positive control first.</strong> With the ORIGINAL code, both tools did write to the test copy's ledger. This proves the checks can detect a write. The copy was then restored from a snapshot.</td>
+<td>done</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Other Manual Update actions.</strong> The 9 other actions were run with the original code and then with the new code, each time on the same restored database. They gave the same answers, and every table ended the same.</td>
+<td><strong>9 / 9</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Refusals</strong> (a non-administrator TEST login and an administrator TEST login):<br>• no token 403, wrong token 403, valid token 409<br>• unprivileged user stopped by the permission check<br>• 12 audit rows, one per attempt<br>• ledger, entry counter and 2024 ledger unchanged<br>• every other table unchanged<br>• rollback gives the 5 originals</td>
+<td><strong>25 / 25</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>Regression with the change in: r3 suite; r3 screens</td>
+<td><strong>132 / 132; 24 / 24</strong></td>
+</tr>
+<tr>
+<td><strong>Isolated test instance</strong></td>
+<td>Browser checks with the temporary TEST login: pages and notices, the A and B refusals, the unprivileged user</td>
+<td><strong>7 / 7</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>Audit rows 478–485 (one per attempt); ledger and all other tables unchanged; rollback byte-identical</td>
+<td>all as expected</td>
+</tr>
+<tr>
+<td><strong>Development</strong></td>
+<td>Your session: pages, A and B refusals (403 / 403 / 409 each)</td>
+<td><strong>5 / 5</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>TestAccounts (own sign-in, separate browser address): A stopped by the permission check; B refused 403 without token and 409 with token (see finding 1)</td>
+<td>as expected</td>
+</tr>
+<tr>
+<td></td>
+<td>Rollback byte-identical; reinstall verified; final confirmation (A 409, B 409)</td>
+<td>as expected</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Other Manual Update actions on the isolated instance and development.</strong> I did not press them there, because they change data. On both, the page still shows the 8 other buttons and the 9 action addresses, and their code is byte-identical. Their behaviour was proven unchanged on the cloud copy.</p>
+<h2>3. Ledger integrity — development</h2>
+<p>Figures were taken at 16:12:14 before, at 16:13:08 after the tests, and at 16:13:59 at the end. <strong>All three are identical:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>account_runing</code> rows</td>
+<td>11,364</td>
+</tr>
+<tr>
+<td>Total debits</td>
+<td>965,763,907.13</td>
+</tr>
+<tr>
+<td>Total credits</td>
+<td>965,314,763.93</td>
+</tr>
+<tr>
+<td>Reconciliation flags (<code>bank_rec</code> / <code>bankst_flag</code>)</td>
+<td>2 / 2</td>
+</tr>
+<tr>
+<td>Checksum <code>account_runing</code></td>
+<td>633232719</td>
+</tr>
+<tr>
+<td>Checksum <code>invoice_no</code> (entry counter)</td>
+<td>2816037445</td>
+</tr>
+<tr>
+<td>Checksum <code>account_runing_2024</code></td>
+<td>2922173702</td>
+</tr>
+<tr>
+<td>Checksum <code>account_runing_bank_statetment</code></td>
+<td>843700953</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>241 tables compared.</strong> Only these changed:</li>
+<li><code>tpd_audit</code>: the rows listed below;</li>
+<li><code>a_log</code>, <code>ci_sessions</code>, <code>user_sessions</code>: page visits and sign-ins.</li>
+<li><strong>User, group, privilege and menu tables: unchanged.</strong></li>
+</ul>
+<p><strong>Audit rows on development</strong> (one per attempt, as expected):</p>
+<table>
+<thead>
+<tr>
+<th>Rows</th>
+<th>User</th>
+<th>Tool</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>412, 413, 414</td>
+<td>super admin (your session)</td>
+<td>Record Insert</td>
+<td>token 403, token 403, retired 409</td>
+</tr>
+<tr>
+<td>415, 416, 417</td>
+<td>super admin</td>
+<td>Bank Req Data Transfer (bank 1-6-8-10380)</td>
+<td>token 403, token 403, retired 409</td>
+</tr>
+<tr>
+<td>418</td>
+<td>TestAccounts</td>
+<td>Record Insert</td>
+<td>access_denied (permission check)</td>
+</tr>
+<tr>
+<td>419, 420</td>
+<td>TestAccounts</td>
+<td>Bank Req Data Transfer</td>
+<td>token 403, retired 409</td>
+</tr>
+<tr>
+<td>421, 422</td>
+<td>super admin</td>
+<td>both (final confirmation after reinstall)</td>
+<td>retired 409, 409</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Isolated instance:</strong> checked at 16:08:54, 16:09:53 and 16:11:57, all identical:</p>
+<ul>
+<li>11,390 rows; debits 989,263,607.13; credits 968,857,808.93; flags 2 / 2;</li>
+<li>checksums 141237580 / 2816037445 / 2922173702 / 843700953.</li>
+</ul>
+<p>Its ledger includes the dummy demonstration rows.</p>
+<h2>4. Rollback evidence</h2>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Rollback</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloud</td>
+<td><code>apply.py rollback</code></td>
+<td>5 files = originals (md5); pages show the original buttons; kit re-applied</td>
+</tr>
+<tr>
+<td>Isolated instance (16:11)</td>
+<td><code>apply.py rollback</code></td>
+<td><code>all_five_original: true</code>; each file <strong>byte-identical</strong> (<code>cmp</code>) to its backup copy <strong>and</strong> to development's original; the pages show the original buttons again. <strong>The isolated instance stays rolled back.</strong></td>
+</tr>
+<tr>
+<td>Development (16:13:37)</td>
+<td><code>apply.py rollback</code></td>
+<td><code>all_five_original: true</code>; each file <strong>byte-identical</strong> to its backup copy <strong>and</strong> to the isolated instance's original.</td>
+</tr>
+<tr>
+<td>Development (16:13:43)</td>
+<td><strong>Reinstalled</strong>, because the retirement is approved for development</td>
+<td>Verified by md5. <strong>Final status: installed.</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>5. The temporary test login (isolated test instance only) — record</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Time</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Created</td>
+<td>before 16:00</td>
+<td><code>TestLegacyTools</code> (user 124), its own TEST group 38, employee row 90, and 2 privilege rows: Manual Update (107) and Bank Req Data Transfer (184) only. Not an administrator.</td>
+</tr>
+<tr>
+<td>Corrected</td>
+<td>16:08</td>
+<td>The first version had copied TestAccounts' password hash. I replaced it with a <strong>new one-time password</strong>: its hash matches no other login, and the password is stored nowhere.</td>
+</tr>
+<tr>
+<td>Removed</td>
+<td>16:11:57</td>
+<td>Login, group, employee row and both privilege rows deleted. Nothing left.</td>
+</tr>
+<tr>
+<td>Verified</td>
+<td>16:11:57</td>
+<td><code>user_acc_tbl</code>, <code>group_profile</code>, <code>user_privileges</code>, <code>employee</code> are row-by-row and checksum <strong>identical to the clean pre-test snapshot</strong> (<code>avenir_rv_backup_20261012_before_r3</code>). Audit and log rows from the test remain as the record.</td>
+</tr>
+</tbody>
+</table>
+<p>There was no equivalent login or permission change on development or live.</p>
+<h2>6. Two findings from the testing (nothing changed for them)</h2>
+<ol>
+<li><strong>"Manage Accounts" opens every <code>accounts/…</code> address.</strong>
+   - <strong>What it is:</strong> menu 49, address <code>accounts</code>. The permission check treats every address that starts with an allowed menu address as allowed. So this one menu opens every <code>accounts/…</code> page and action, including Bank Req Data Transfer and the old Bank Reconciliation screen's actions.
+   - <strong>Who holds it on development:</strong><ul>
+<li>System Administrator;</li>
+<li>Auditor (group 17, 4 users; read-only on development only because of a development rule);</li>
+<li>Admin (group 25, no users);</li>
+<li>Accounts (group 30).</li>
+<li><strong>Effect:</strong> before this change, an Accounts user could run Bank Req Data Transfer directly. It is now refused for everyone.</li>
+<li><strong>Recommendation:</strong> review this rule as a separate item (proposed <strong>E8</strong>). It is probably the same on live (not verified).</li>
+</ul>
+</li>
+<li><strong>A correction to my earlier evidence.</strong>
+   - <strong>What I got wrong:</strong> I said Bank Req Data Transfer's page was "never opened between 27 March and 8 September". The activity log cannot support that. A visit made through "Manage Accounts" is logged only as <code>accounts</code>, and System Administrator requests are not logged by the current development code. I withdraw that point.
+   - <strong>What still stands:</strong> "no bank needs a run of Bank Req Data Transfer" still rests on the ledger evidence: no trace of its writes in the current ledger or in the 2025 copies. It remains <strong>strongly supported by development evidence but not verified on live</strong>.</li>
+</ol>
+<h2>7. D4 — entering the real bank accounts (clarified; nothing granted)</h2>
+<p><strong>How it works today (development)</strong></p>
+<ul>
+<li>The "Avenir Bank Accounts" screen (<code>master_files/bank_accounts</code>, menu 249) has its <strong>own privilege</strong>, <code>bank_master</code>, checked in the code. It is granted <strong>only to System Administrator</strong> (1 user).</li>
+<li>Every save is audited (<code>bank_account_saved</code>, with the previous and new values).</li>
+<li>There is <strong>no second-person check</strong> on the master itself.</li>
+<li>Accounts cannot enter accounts, and <strong>must not be given administrator access</strong>.</li>
+</ul>
+<p><strong>Recommended controlled process</strong></p>
+<ol>
+<li><strong>Accounts</strong> gathers and verifies the bank documents for each account (bank letter or statement header): bank, branch, account name, account number, currency, and the ledger account it belongs to.</li>
+<li><strong>An authorised administrator</strong> (System Administrator) enters the master details from those documents. <strong>Accounts then checks</strong> what was entered against the documents and signs off. The save is audited.</li>
+<li><strong>The Accounts preparer</strong> proposes the ledger mapping in Daily Bank Reconciliation. The first day is proposed only after D3 is decided.</li>
+<li><strong>The independent Management Approver</strong> confirms the mapping. The code refuses confirmation by the login that proposed it.</li>
+<li><strong>The administrator who entered the master does not confirm the mapping.</strong></li>
+</ol>
+<p><strong>Should a separate least-privilege "Maintain Bank Account Master" permission be created later? Yes.</strong></p>
+<ul>
+<li>The privilege already exists technically (menu 249, checked by the code).</li>
+<li>The later step is to give it to a dedicated group holding only that menu, assigned to one named person who is <strong>neither</strong> the Accounts preparer <strong>nor</strong> the Management Approver.</li>
+<li>At the same time, add a <strong>verification step</strong> for master changes (a second person confirms an entered or changed account before it can be mapped), like the existing supplier-bank verification.</li>
+<li>That needs a small code change, built and tested on the cloud copy and the isolated instance first. <strong>Not now:</strong> after D2 names the people.</li>
+</ul>
+<h2>8. Still stopped</h2>
+<ul>
+<li>No real bank account entry, mapping confirmation or first day.</li>
+<li>No old-tool run and no ledger correction.</li>
+<li>No real statement upload. A statement-format test, when approved, will use a <strong>sanitised</strong> CSV on the <strong>isolated test instance</strong> only.</li>
+<li>No live examination, package or installation.</li>
+</ul>
+<p>The Accounts Action Sheet is a separate document.</p></body></html>

@@ -1,0 +1,86 @@
+named function (v3 mock-up)	primary menu id	primary menu name	URL	also covered (ids)	note
+Tour Inquiry — open	222	Tour Inquiry	tour/intake		one entry tour/intake covers open, edit and cost; no separate right exists
+Tour Inquiry — edit	222	Tour Inquiry	tour/intake		same entry as open
+Tour Inquiry — cost	222	Tour Inquiry	tour/intake		same entry as open
+Quotation — Go for Quotation and Issue	222	Tour Inquiry	tour/intake	106,71,72	inside tour/intake today; legacy quotation pages listed as also-covered
+Recalculate saved costings	281	Recalculate saved costings	tour/intake/recalculate		
+Pricing (markup)	229	Pricing	tour/pricing		
+Mileage override	230	Mileage override	tour/intake/mileage		
+Tour Desk admin & mailboxes	231	Tour Desk Admin	tour/manage		
+Confirm Tour	76	Tour Management	tour/booking_confirm	74	tour/booking_confirm (Tour Management) carries confirm_tour; 74 Tour Search
+Confirmed Tours	166	Confirmed Tour Report	report/confirmed_tours		
+Tour Board	227	Tour Board	tour/board		
+Hotel Bookings desk (Hotel Planner)	225	Hotel Bookings	tour/hotel_bookings		
+Hotel Reservation	168	Hotel Reservation	dashboard2/hotel_management/hotel_reservation		
+Hotel Confirmation	169	Hotel Confirmation	dashboard2/hotel_management/hotel_booking		
+Hotel Payment	170	Hotel Payment	dashboard2/hotel_management/hotel_payment		
+Ticket Stock	239	Ticket Stock	tour/ticket_stock		
+Train Bookings					NO ENTRY — page does not exist (decision 3)
+Transport Operations	226	Transport Operations	tour/transport_ops		
+Crew replacement	233	Crew replacement	tour/transport_ops/crew_change		
+Driver advance	234	Driver advance	tour/transport_ops/driver_advance	150,157	TourFlow right 234; legacy Driver Advance page 150 and request page 157
+Driver allocation	149	Driver Allocation	dashboard2/transport/driver_allow/tour_transport	171,173	legacy Ground Handling; plus Pending / Allocated tours lists
+Driver logsheet	152	Driver Logsheet	dashboard2/transport/driver_logsheet	198	
+Driver settlement	153	Driver Settlement	dashboard2/transport/driver_settlement	162	
+Driver expense	151	Driver Expense	dashboard2/transport/driver_expense		
+Tour payment request — make	252	Tour payment requests (make / cancel)	tour/tour_payment_dashboard/request		one right covers make and cancel
+Tour payment request — cancel	252	Tour payment requests (make / cancel)	tour/tour_payment_dashboard/request		same right as make
+Tour Payment Dashboard (view)	200	Tour Payment Dashboard	tour/tour_payment_dashboard	245	Supplier Payables view 245 also
+Management Approval	244	Tour payment approval (management)	tour/tour_payment_dashboard/approve	216,185	role A; legacy Payment approval page 216 and V1 185 approve too
+Supplier payment batch — create	246	Supplier payment batch — create (management)	tour/tour_payment_dashboard/batch		preparation only (decision 18:09)
+Bank Payment Check (view)	189	Bank Payment Check Report	report/bank_payment_check	191	Finalized records 191
+Bank Payment Initiation	247	Bank payment initiation (accountant)	report/bank_payment_check/initiate		role B
+Final Authorisation (Paid release)	248	Bank payment approver (Paid)	report/bank_payment_check/approve		role C
+Daily Bank Reconciliation — prepare	254	Daily Bank Reconciliation — prepare (import, match, propose)	accounts/daily_bank_rec/prepare	253	253 is the page itself
+Daily Bank Reconciliation — review	255	Daily Bank Reconciliation — review (confirm mappings, approve, sign off)	accounts/daily_bank_rec/review	253	
+Bank reconciliation (legacy)	112	Bank Reconcillation	accounts/bank_reconcil	122,123,277	
+Journal entry	81	Journal Entry	accounts/journal_entry	259,258,102,120	act: rights post / correct; reports
+Creditor payment	56	Creditor Payment	accounts/creditor_payment	264	
+Debtor payment	78	Debtor Payment	accounts/debtor_payment	270,145	
+Debtor invoice	86	Debtor Invoice	accounts/debtor_invoice	271,92,138	
+Debit note	115	Debit Note	accounts/debit_note	272	
+Credit note	139	Credit Note	accounts/credit_note	273	
+Utility bills	113	Utility Bill Payment	accounts/utility_bill	268,114,181,269,182	includes entertainment bills
+Service provider invoices	172	Service Provider Invoice	accounts/other_invoice	265,174	
+Service provider payments	194	Service Provider Payment	accounts/service_provider_payment	266,195	
+USD withdrawal	192	USD Withdrawal	accounts/usd_withdrawal	274,193	
+Voucher payments	82	Voucher Payments	accounts/voucher_payments/0	260,119,111,135	
+Voucher authentication	97	Voucher Authentication Report	accounts/creditor_invoice/voucher_authentication	96,261,124,262	97 and 96 share one URL; 261/262 are SysAdmin-only rights
+Year-end	148	Year End Process	settings/year_end_process		Settings page — Super Admin only
+Customers & Agents	85	Conginee	master_files/customer		menu name reads "Conginee" (master_files/customer)
+Hotel Master	279	Hotel Master	master_files/hotel_master		
+Hotel Rates	219	Hotel Rates	master_files/hotel_rate_v2		
+Hotel Rate Approval	220	Hotel Rate Approval	master_files/hotel_rate_approval		
+Hotel Incomplete Work	221	Hotel Incomplete Work	master_files/hotel_work		
+Room Type	68	Room Type	master_files/room_type		
+Supplier	29	Supplier	master_files/supplier		
+Supplier Report	32	Supplier Report	master_files/supplier/all		
+Drivers & Guides	238	Drivers & Guides	master_files/crew_people		
+Driver & Guide bank details	243	Driver & Guide bank details	master_files/crew_people/bank		
+Driver registration	133	Driver	master_files/supplier/new_driver_index	134	
+Vehicle	77	Vehicle	master_files/vehicle		
+Transport Rates	223	Transport Rates	master_files/transport_rates		
+Mileage & Allowances	224	Mileage & Allowances	master_files/mileage_allowances		
+Routing Registry	73	Routing Registry	master_files/transfer_milages		
+Extra Kilometres	93	Extra Kilometers	master_files/extra_kilometers		
+Crew Roles & Costing	232	Crew Roles & Quotation Costing	master_files/crew_bata		
+Place to Visit / Entrance Fee Master	240	Place to Visit / Entrance Fee Master	master_files/entrance_master	66	
+Paid Activities & Services	237	Paid Activities & Services	master_files/paid_services		
+Meal Master	241	Meal Master	master_files/meal_master		
+Free Visits	236	Free Visits	master_files/free_visits		
+Tour Photos	235	Tour Photos	master_files/tour_photos		
+Shop Registration	164	Shop Registration	master_files/shop_registration		
+Daily USD Rate	217	Daily USD Rate	master_files/daily_usd_rate		
+Enter the daily USD rate	280	Enter the daily USD rate	home/usd_rate		
+Avenir Bank Accounts	249	Avenir Bank Accounts	master_files/bank_accounts		
+Supplier Bank Details	250	Supplier Bank Details	master_files/supplier_bank		
+Supplier bank verification	251	Supplier bank verification	master_files/supplier_bank/verify		
+Supplier Bank Account Registry	278	Supplier Bank Account Registry	master_files/supplier_accounts		
+Tactical / Early Bird selection	242	Tactical / Early Bird rate selection	master_files/offer_selection		
+Carrier	131	Carrier	master_files/carrier		
+Extra Charges Type	140	Extra Charges Type	master_files/extra_charges		
+User Accounts	5	User Accounts	settings/user_account		Super Admin only
+Group Privileges	4	Group Privileges	settings/group_privilege/0		Super Admin only
+Menu Lists	3	Menu Lists	settings/menu_list		Super Admin only
+Backup	87	Backup Database	settings/backup_database		Super Admin only
+Year End	148	Year End Process	settings/year_end_process		same entry as Year-end above

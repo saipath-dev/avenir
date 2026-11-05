@@ -1,0 +1,12 @@
+  ok   the open list shows, grouped
+  ok   an item added by hand appears, marked 'added by hand'
+  ok   it sits under its kind's heading (the heading names the kind and counts it)
+  ok   the search narrows the list to that item, one heading above it
+  ok   closing it with a note removes it from the open list (and its heading goes with it)
+  ok   under Done it shows with who closed it and the note
+  ok   it can be reopened
+  ok   Refresh runs every detector and reports
+  ok   the full open list is back as it was
+  ok   the export still lists the open items under their kinds
+  ok   no JS errors
+11 ok, 0 failed

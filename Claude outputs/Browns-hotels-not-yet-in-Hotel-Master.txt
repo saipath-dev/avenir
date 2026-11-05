@@ -1,0 +1,19 @@
+Browns Hotels & Resorts — two hotels from the contact list (Shantha, 10 Oct 2026) that are NOT in the Hotel Master yet.
+A hotel needs its supplier record first (Master Files -> Supplier). When it exists, these details go on the Hotel Master.
+
+The Eden Beruwala
+  Contact person: Ms. Dinithi | Ms. Piyumika
+  Email: reservations.eden@brownshotels.com
+  Mobile: 773167816 | 0773289675
+
+Dickwella Resort & Spa
+  Contact person: Mr. Sudesh | Mr. Nadun
+  Email: reservation_drs@brownshotels.com | afom_dickwella@brownshotels.com
+  Mobile: 0762477621 | 0742912267
+
+For all Browns hotels
+  Reservation Manager: Ms. Kumari 0771739576, ManagerReservations@brownshotels.com
+  Copy to: namal.g@brownshotels.com
+
+Saved on the Hotel Master on 10 Oct 2026: Club Hotel Dolphin, Thaala Bentota, Hotel Sigiriya, Newburgh Hotel Ella,
+Occidental Paradise Dambulla (= The Paradise Dambulla), calm resort pasikudah (= The Calm Resort & Spa).

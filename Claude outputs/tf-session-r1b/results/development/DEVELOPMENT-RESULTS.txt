@@ -1,0 +1,50 @@
+tf-bankrec-r3-dev + tf-session-r1b on DEVELOPMENT (http://localhost/avenir/, database avenir) — results, 12 Oct 2026
+(times Sri Lanka). Live was not touched. No real bank account, mapping, first day, statement or entry was created.
+
+1. Backups taken before anything changed (kept, none deleted)
+   Files     C:\wamp64\www\avenir-backup-20261012-before-r3\  (app\ + public\; MD5-avenir-app-public.txt, 2481 lines; README.txt)
+   Database  avenir_backup_20261012_before_r3  (239 tables; CHECKSUM TABLE equal to avenir table by table, except sessions)
+   Kits      tf-bankrec-r3-dev\before\20261012-083346\ (the 13 r1 files) and tf-session-r1b\before\20261012-083352\ (4 files)
+
+2. Install, tested rollback, re-install
+   - apply.py check/apply (bankrec r1 -> r3, 13 files + LegacyGuard.php); schema script v1 -> v2 (brc_schema_version 1 -> 2,
+     2 new empty tables brc_claim, brc_mark_event); tf-session-r1b apply (4 files incl. the plugins.js version mark).
+   - Rollback tested: both kits rolled back + schema script v2 -> v1. Files then md5-identical to the backup; database
+     identical to the backup apart from logs, sessions, audit rows and the automatic hotel work-item scan.
+   - Re-installed (before\20261012-083346 / 083352). Now: all 18 kit files md5-identical on development (SOURCE-MD5.txt).
+   - Audit (tpd_audit, action brc_setup): 3 rows — upgrade 13:54, rollback, re-upgrade 14:03.
+
+3. Checks on development (no reconciliation data exists there and none was added — D11)
+   dev_check_r3.js, TEST logins only, 127.0.0.1 tab (its own sign-in, not Shantha's session)
+     run 1 (after the first install)            18/18
+     run 2 (after rollback + re-install, 14:05) 18/18   {vm: 1791793440, old screen: 7 r3 handlers, 4 Swal.fire handlers}
+     covers: who may see the pages/data (preparer, reviewer, view-only: 200; four other departments: refused);
+     every action refused by role before anything is written (view-only, preparer, reviewer); request without the
+     security token refused (403); r3 "verify again" route installed (409 with nothing to verify); old Bank
+     Reconciliation screen opens for its users and carries the r3 refusal messages; still closed to others;
+     pages load plugins.js?v=<modification time>.
+   Sign-out fix, TEST login, 14:13 (cookie-free requests + one TEST sign-in)                               5/5
+     S0 TEST login signs in, data 200 | S1 background request without a session -> 401 JSON session_ended (no redirect)
+     S2 page request without a session -> sign-in page (unchanged) | S3 opening the sign-in page while signed in keeps
+     the session (200 -> 200) | S5 after sign-out the data request is refused quietly (401)
+     Not run on development: S4 (the red "session ended" notice) — the browser pane blocks the page's scripts on the
+     127.0.0.1 address, and the localhost tab holds Shantha's own session. Passed on the isolated instance and in the cloud.
+   Concurrency (two users at the same instant): NOT run on development — it needs reconciliation records, development has
+     none and no dummy data may be added. Same code (md5) passed on the isolated instance (2/2) and in the cloud (true
+     parallel races inside the 132/132 r3 suite).
+
+4. Data integrity (14:14, avenir vs avenir_backup_20261012_before_r3, CHECKSUM TABLE on all 239 tables)
+   Ledger account_runing         unchanged  11364 rows | Dr 965,763,907.13 | Cr 965,314,763.93 | bank_rec 2 | bankst_flag 2
+   account_runing_bank_statetment unchanged
+   brc_* reconciliation tables   empty before and after (13 tables incl. the 2 new ones)
+   Tables that differ (all explained):
+     tpd_meta        brc_schema_version 1 -> 2 (intended)
+     tpd_audit       3 brc_setup rows + access_denied refusals of the TEST logins (intended / legitimate)
+     a_log           page visits of the 7 TEST logins
+     user_sessions, ci_sessions   sign-ins of the TEST logins (uid 116-122)
+     hr2_meta, hr2_work_item      the system's automatic hotel work-item scan (work_scan_at 14:01:10)
+     tf_activity, tf_intake       one edit of inquiry 21 by "super admin" at 13:56:58 (Shantha's own work, not mine)
+
+5. Cloud battery on the identical code (see cloud_battery_on_dev_code.txt)
+   regression 202/71/36/33/26/10 | r2 suite 108/108 | r2 screens 20/20 | r3 suite 132/132 | r3 screens 24/24 |
+   sign-out fix 18/18 | version mark 4/4

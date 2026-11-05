@@ -1,0 +1,394 @@
+{
+ "key": "thema_scottish_planter",
+ "hotel": {
+  "acc": "6-9-11-10618",
+  "name": "Scottish Planter Bungalow",
+  "location": "Nuwara Eliya",
+  "chain": "Thema Collection"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10618",
+   "name": "Scottish Planter Bungalow"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contract",
+   "plan_type": "contract",
+   "contract_type": "DMC",
+   "contract_date": "2026-02-27",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "taxes_included": 1,
+   "tax_note": "Net inclusive of 10% service charge and applicable taxes (VAT registered entity)",
+   "received_at": "2026-09-11",
+   "extra_bed_adult": 20,
+   "notes": "Entire villa: 9 pax USD 670, 10 pax 715, 11 pax 760 per night BB (01 Nov – 30 Apr); peak supplement 20 Dec – 15 Jan USD 100 per night for the villa",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "source_type": "email",
+   "source_file": "Thema Collection Travel Agent Contract - Winter 2026/27 (e-mail 2026, per-hotel PDF)"
+  },
+  "room_types": [
+   {
+    "name": "Bungalow Room",
+    "priced_as": "base",
+    "room_count": 3,
+    "bed_config": "Macnaughton 2 singles (32 m²), Crawford king (53 m²), Farquharson king (39 m²)",
+    "max_adults": 3,
+    "max_children": 1
+   },
+   {
+    "name": "Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Bungalow Room",
+    "room_count": 1,
+    "size_sqm": 66,
+    "bed_config": "Steuart: 1 king + 2 singles",
+    "max_adults": 4,
+    "max_children": 2
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 – 30 Nov 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-11-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bungalow Room",
+      "meal_plan": "BB",
+      "sgl": 130,
+      "dbl": 145,
+      "tpl": 195,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-12-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bungalow Room",
+      "meal_plan": "BB",
+      "sgl": 140,
+      "dbl": 155,
+      "tpl": 205,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "20 Dec – 10 Jan (festive)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bungalow Room",
+      "meal_plan": "BB",
+      "sgl": 165,
+      "dbl": 180,
+      "tpl": 230,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "11 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Bungalow Room",
+      "meal_plan": "BB",
+      "sgl": 140,
+      "dbl": 155,
+      "tpl": 205,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Suite",
+    "amount": 70
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 20,
+    "note": "Dinner supplement"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 18,
+    "note": "Lunch supplement"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -15,
+    "note": "Breakfast price (room only derived)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 15
+   },
+   {
+    "meal": "lunch",
+    "adult": 18
+   },
+   {
+    "meal": "dinner",
+    "adult": 20
+   }
+  ],
+  "supplements": [
+   {
+    "type": "extra_adult",
+    "name": "4th person supplement (BB)",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 50,
+    "compulsory": 0
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (BB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 80,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve gala (HB/FB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (BB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 80,
+    "compulsory": 1,
+    "child_pct": 50
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve gala (HB/FB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 60,
+    "compulsory": 1,
+    "child_pct": 50
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Sharing parents bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 45,
+    "note": "Inclusive of extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 55,
+    "note": "Inclusive of extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 65,
+    "note": "Inclusive of extra bed"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "honeymoon",
+    "name": "Honeymoon / anniversary offer",
+    "min_nights": 2,
+    "conditions": "Booked on HB or FB: fruit basket & décor on arrival, one candlelit dinner per stay (some hotels add a 30-min spa treatment)"
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 80
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-19",
+    "tier": "all",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 80
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "all",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 80
+   },
+   {
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "tier": "all",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 30,
+    "pct": 100,
+    "note": "1-4 pax"
+   },
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 45,
+    "pct": 100,
+    "note": "4+ pax"
+   },
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "date_from": "2026-12-20",
+    "date_to": "2027-01-10",
+    "note": "50% advance for festive bookings, credit and non-credit agents"
+   },
+   {
+    "applies": "all",
+    "kind": "interest",
+    "pct": 2,
+    "note": "Late payments 2% per month"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 3.25,
+    "note": "Credit card bank charge"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "pct": 2.5,
+    "note": "SSCL on LKR payments"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

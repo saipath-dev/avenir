@@ -1,0 +1,21 @@
+  ok   undo of the PV 90011 match restores the timing item (for the picture)
+  ok   D9 on screen: the timing item is in the suggestions with "accepting clears the classification"
+  ok   accepting it on screen clears the classification (status matched; classified by tcaccount kept)
+  ok   the history shows the timing classification cleared, restored and cleared again, with users and times
+  ok   partial clearing on screen: "Partly cleared (rest outstanding)" −40,000.00 expected 2026-09-05
+  ok   the 5 Sep line is suggested as completing the partial match
+  ok   completed on screen (the partial match superseded)
+  ok   D10 on screen, 1 Sep: both cheques outstanding; opening difference explained (not yet explained 0.00)
+  ok   D10 on screen, 3 Sep: cheque 000201 cleared 2026-09-03, cheque 000202 still outstanding
+  ok   the ledger rows booked before the first day are listed with their effect and opening-item state
+  ok   pending postings on screen: "Pending postings — the ledger is NOT corrected … approved but not posted" on the reviewed day
+  ok   the corrections say "Approved — not posted (ledger not corrected)"
+  ok   daily records show what was not posted when prepared, and the record's state now
+  ok   changed since review on screen: red banner "Changed since review — re-review needed … ledger rows"
+  ok   the reviewed snapshot is shown as it was, with "re-review needed" and the data now
+  ok   overview: "Ledger not corrected" and "Re-review needed" flags per account
+  ok   the reviewer's list shows "Re-review needed" for the changed record
+  ok   no script error on the reviewer's pages
+  ok   USD on screen: each exchange-rate difference with its explanation; the revaluation with its rate and source
+  ok   no script error on the preparer's pages
+20/20 ok

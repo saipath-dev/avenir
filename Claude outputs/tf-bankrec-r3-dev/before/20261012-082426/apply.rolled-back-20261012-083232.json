@@ -1,0 +1,37 @@
+{
+ "changed": [
+  "app/Config/Routes.php",
+  "app/Controllers/Accounts/BankReconsillationController.php",
+  "app/Controllers/Accounts/DailyBankRecController.php",
+  "app/Libraries/BankRec/Corrections.php",
+  "app/Libraries/BankRec/Matching.php",
+  "app/Libraries/BankRec/Rec.php",
+  "app/Libraries/BankRec/Schema.php",
+  "app/Libraries/BankRec/Statements.php",
+  "app/Views/pages/accounts/bank_reconcillation.php",
+  "app/Views/pages/accounts/bankrec/_common.php",
+  "app/Views/pages/accounts/bankrec/account.php",
+  "app/Views/pages/accounts/bankrec/fx.php",
+  "app/Views/pages/accounts/bankrec/index.php"
+ ],
+ "added": [
+  "app/Libraries/BankRec/LegacyGuard.php"
+ ],
+ "stamp": "20261012-082426",
+ "md5": {
+  "app/Config/Routes.php": "261fa427ec8b0b172db4c7916ebc7d64",
+  "app/Controllers/Accounts/BankReconsillationController.php": "88a7bdcbfe060685d0d7819165dedc02",
+  "app/Controllers/Accounts/DailyBankRecController.php": "076f1be55d0547587d263517f071c60c",
+  "app/Libraries/BankRec/Corrections.php": "0d73f66c528ca8f93da6f44927cb42c8",
+  "app/Libraries/BankRec/Matching.php": "9f481901a738eacb7c526bf863716576",
+  "app/Libraries/BankRec/Rec.php": "d075cb2c34becfa8d1a63ef61b65349c",
+  "app/Libraries/BankRec/Schema.php": "1e6fc0535e01ed4f949169d77391059b",
+  "app/Libraries/BankRec/Statements.php": "31b0ac8c6431873b14322499195ce3fb",
+  "app/Views/pages/accounts/bank_reconcillation.php": "739e9ba331513e2e74d984962ca1f76f",
+  "app/Views/pages/accounts/bankrec/_common.php": "bbc382935ff7aec0fd5896cb40756ef1",
+  "app/Views/pages/accounts/bankrec/account.php": "2c296d4cad02ac6d311d9136f55dd1d7",
+  "app/Views/pages/accounts/bankrec/fx.php": "259b86839fd9b07036bd0a7b5f517479",
+  "app/Views/pages/accounts/bankrec/index.php": "871d13f3bfa1ac2d12762a55a2af0683",
+  "app/Libraries/BankRec/LegacyGuard.php": "1d4cca93bf1f0ade3aafb99a793a421d"
+ }
+}

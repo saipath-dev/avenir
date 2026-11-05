@@ -1,0 +1,4 @@
+New-generation regression battery — 2026-10-06 05:45:07 — /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir
+== PHP side (PHPUnit)
+   phpunit: OK (64 tests, 602 assertions) (exit 0)
+== ALL GREEN — log /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir/tests/newgen/_work/battery-20261006-054507.log

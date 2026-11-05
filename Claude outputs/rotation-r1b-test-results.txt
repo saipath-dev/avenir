@@ -1,0 +1,158 @@
+tf-rotation-r1b test results — 26 Oct 2026 05:20 Colombo
+
+PART A — the original 47 checks (retained)
+Today: 2026-10-26
+
+== 0. Install and the registry section
+  PASS four rotation tables created
+  PASS registry lists JSD/JSCG drivers, inactive Indika included as inactive
+  PASS Dinesh: van, opted in to car-rate tours at LKR 95/km
+  PASS last tour end and free-from date: Chamara ended 22 Oct → free from 28 Oct — 2026-10-28
+
+== 1. Lanes and counts after confirmation
+  PASS 5 cards awaiting transport review (P1–P5) — {"awaiting_review":5,"pending":0,"confirming":0,"upcoming":1,"on_tour":2,"done":1}
+  PASS On Tour holds the tours already started with a driver engaged (TEST-ON from 24 Oct, TEST-G1 from 26 Oct) — {"awaiting_review":5,"pending":0,"confirming":0,"upcoming":1,"on_tour":2,"done":1}
+  PASS no card pending yet
+
+== 2. Driver Allocation button: review → Pending Allocations
+  PASS Transport Operations count down to 0, Pending Allocations up to 5 — {"awaiting_review":0,"pending":5,"confirming":0,"upcoming":1,"on_tour":2,"done":1}
+  PASS review history kept in the log (5 review events)
+
+== 3. P1 — 2 pax, 2–5 Nov: car class, fair rotation, van at car rate
+  PASS vehicle class from 2 pax = Sedan car
+  PASS waiting longest is Dinesh (van, opted in, last tour 1 Oct) → proposed — TEST Van Dinesh
+  PASS his proposal is marked van-at-car-rate with the car-rate amount — {"basis":"car_rate","rate_km":95,"source":"agreed car rate (van at the car rate)","km_route":420,"km_local":30,"km_payable":450,"km":450,"vehicles":1,"amount":42750,"currency":"LKR","km_text":"420 km route + 30 km local = 450 payable km","missing":false,"text":"Car-rate tour (1\u20132 guests) in a van: paid at the agreed car rate LKR 95.00\/km \u00d7 420 km route + 30 km local = 450 payable km = LKR 42,750.00. The van rate does not apply to this tour."}
+  PASS Janaka (van, not opted in) is out — van driver not opted in to car-rate tours
+  PASS Gamini is out: rest before his 8 Nov tour — rest before TEST-G2 (starts 2026-11-08, this tour would end 2026-11-05)
+  PASS Hasitha (JSCG) is out: the line needs a JSD — this tour's line needs a JSD; van driver not opted in to car-rate tours
+  PASS Fazal (not in pool, high-roof van) is out
+  PASS Indika (inactive) is not assessed at all
+  PASS eligible order: Dinesh (1 Oct), Amal (10 Oct), Bandara (15 Oct), Chamara (22 Oct) — TEST Van Dinesh,TEST Car Amal,TEST Car Bandara,TEST Car Chamara
+  OK: Record the driver's acceptance of the car-rate terms for this tour before confirming.
+  PASS Accept refused until the driver's car-rate acceptance is recorded
+  OK: The rotation proposes TEST Van Dinesh for this tour. To give it to another suitable driver use Bypass Rotation and give the reason.
+  PASS Accepting someone other than the proposal is refused (needs Bypass)
+
+== 4. Not Available → automatic replacement
+  PASS next in turn proposed automatically: Amal — TEST Car Amal
+  PASS Dinesh now out: not available 2–5 Nov with the reason — not available 2026-11-02 – 2026-11-05 (Van in repair at the garage)
+  PASS Amal engaged on P1 through engageCrew — Fair rotation: waiting longest (last tour ended 2026-10-10)
+
+== 5. Double allocation and overlap protection
+  OK: A driver was engaged on this card a moment ago (TEST Car Amal) — nothing changed.
+  PASS a second allocation on the same card is refused (row lock)
+  PASS P4 (3–6 Nov): Amal out — already engaged on TEST-P1 — already engaged on TEST-P1 (2026-11-02 – 2026-11-05)
+
+== 6. P3 — 2 pax, 26–28 Oct: rest days and the car-rate acceptance
+  PASS Chamara out: rest after TEST-OLD3 (ended 22 Oct, free from 28 Oct) — rest after TEST-OLD3 (ends 2026-10-22, free from 2026-10-28)
+  PASS Amal out: rest before TEST-P1 (P3 would end 28 Oct, P1 starts 2 Nov) — rest before TEST-P1 (starts 2026-11-02, this tour would end 2026-10-28)
+  PASS Gamini out: already engaged 26–27 Oct — already engaged on TEST-G1 (2026-10-26 – 2026-10-27)
+  PASS Dinesh proposed (his Not Available is 2–5 Nov only) — TEST Van Dinesh
+  PASS Dinesh engaged at the CAR rate LKR 95/km (not the van rate 120) — Car-rate tour accepted by the driver — LKR 95.00/km (van TVAN-004). Fair rotation: waiting longest (last tour ended 2026-10-01) · car-rate terms accepted
+  PASS car-rate acceptance logged with amount (95 × 270 km = 25,650)
+
+== 7. P2 — 5 pax, 29 Oct–1 Nov: high-roof van, Bypass Rotation
+  PASS 5 pax → High roof van
+  PASS Eranga proposed (high-roof van, waiting since 5 Oct) — TEST HiRoof Eranga
+  PASS Dinesh out: flat-roof van cannot take 5 pax — no high roof van on his record; rest after TEST-P3 (ends 2026-10-28, free from 2026-11-03)
+  OK: Bypass Rotation needs the reason; it is recorded and reported.
+  PASS Bypass without a reason is refused
+  OK: Confirm that you have read the warning before bypassing the rotation.
+  PASS Bypass without acknowledging the warning is refused
+  OK: No high roof van on his record; rest before TEST-P1 (starts 2026-11-02, this tour would end 2026-11-01) — Bypass Rotation changes only rotation order or pool membership; it cannot override vehicle suitability, capacity, language/category, availability, overlap, rest days or car-rate consent.
+  PASS Bypass cannot put a car driver on a 5-pax tour
+  PASS Bypass logged: who, reason, driver passed over (Eranga), warning acknowledged — Agent asked for Fazal by name (repeat guests)
+
+== 8. P5 — 9 pax: mini coach + separate guide; nobody eligible stays pending with reasons
+  PASS 9 pax → Mini coach, guide required
+  PASS nobody eligible (no mini coach in the pool) → no proposal
+  PASS reason shown for each driver, e.g. Amal: no mini coach on his record — no mini coach on his record
+
+== 9. Lanes: Upcoming only after all required confirmations, On Tour separate
+  PASS P5: driver engaged, guide not yet → Confirming (not Upcoming) — confirming
+  PASS P5: both engaged → Upcoming
+  PASS P1, P2 → Upcoming; P3 (starts today 26 Oct) and TEST-ON → On Tour — {"TEST-OLD3":"done","TEST-ON":"on_tour","TEST-G1":"on_tour","TEST-P3":"on_tour","TEST-P2":"upcoming","TEST-P1":"upcoming","TEST-P4":"pending","TEST-G2":"upcoming","TEST-P5":"upcoming"}
+  PASS counts: 1 pending (P4), 4 upcoming (P1, P2, P5, TEST-G2), 3 on tour (P3, TEST-ON, TEST-G1) — {"awaiting_review":0,"pending":1,"confirming":0,"upcoming":4,"on_tour":3,"done":1}
+
+== 10. Report
+  PASS report holds bypass 1, not_available 1, accepted 2, car_rate_accepted 1 — {"bypass":1,"car_rate_accepted":1,"accepted":2,"not_available":1}
+  PASS report filter: bypass only
+
+RESULT: 47 passed, 0 failed
+
+PART B — 56 focused checks for the nine review points
+Today: 2026-10-26
+
+== 1. Passenger limits — 7 and 8 guests, recorded capacity, van limit, guide
+  PASS 7 guests → High roof van (up to 7)
+  PASS Eranga (high van, 7 guests recorded) eligible
+  PASS Mahesh: 10 recorded on a van → capped at 7 → eligible for 7
+  PASS Lal: van recorded for 6 guests → out for 7 — vehicle THI-012 carries 6 guests, the booking has 7
+  PASS Sunil: guest capacity not recorded → out (never assumed) — guest capacity not recorded for THI-017
+  PASS 8 guests (quotation said high-roof van) → Mini coach required, guide required — Mini coach · card High roof van
+  PASS 8 guests: Mahesh (van, 10 recorded) out — no van above 7 — no mini coach on his record
+  PASS 8 guests: Kumara (mini coach, 13 guests) proposed — TEST Coach Kumara
+  PASS ladder edited to "high roof van up to 9": 8 guests still → Mini coach; van shown as up to 7 — MINICOACH / 7
+  PASS 8 guests with NO guide line: the card is blocked, nobody proposed — 8 guests need a separate guide, and this card has no guide line. Add the guide line on the card first; the driver is not allocated until then.
+  PASS 8 guests with NO guide line: allocation refused — 8 guests need a separate guide, and this card has no guide line. Add the guide line on the card first; the driver is not allocated until then.
+  PASS …and Bypass is refused too — 8 guests need a separate guide, and this card has no guide line. Add the guide line on the card first; the driver is not allocated until then.
+  PASS Bypass cannot put a van on an 8-guest tour — No mini coach on his record — Bypass Rotation changes only rotation order or pool membership; it cannot override vehicle suitability, capacity, language/category, availability, overlap, rest days or car-rate consent.
+  PASS Bypass cannot exceed a vehicle's recorded capacity (Lal, 6, on 7 guests) — Vehicle THI-012 carries 6 guests, the booking has 7 — Bypass Rotation changes only rotation order or pool membership; it cannot override vehicle suitability, capacity, language/category, availability, overlap, rest days or car-rate consent.
+
+== 7. Mini coach flow: nobody → driver by rotation → guide by hand → Upcoming (safeguards kept)
+  PASS Kumara out of the pool: nobody eligible, the 8-guest tour stays pending
+  PASS no-eligible: nobody can be bypassed in except a suitable driver outside the pool (Kumara) — TEST Coach Kumara
+  PASS Kumara back in the pool → proposed, with every check passed
+  PASS driver allocated by rotation, vehicle TMC-011 on the card, desk step Allocated — TMC-011 allocated
+  PASS guide not yet engaged → Confirming, "Driver engaged — guide … to confirm", not Upcoming — Driver engaged — guide GUIDE_JP to confirm
+  PASS guide engaged by hand (JSNTG on the GUIDE_JP line) → Allocation complete → Upcoming — Allocation complete
+
+== 2. Kilometres and the payment basis — one figure everywhere
+  PASS TEST-CR proposal is Dinesh, van at the car rate
+  PASS breakdown: 300 km route + 25 km local = 325 payable km — 300 km route + 25 km local = 325 payable km
+  PASS car-rate amount = 95 × 325 × 1 vehicle = LKR 30,875.00 — Car-rate tour (1–2 guests) in a van: paid at the agreed car rate LKR 95.00/km × 300 km route + 25 km local = 325 payable km = LKR 30,875.00. The van rate does not apply to this tour.
+  PASS acceptance record: car rate 95, 300 + 25 = 325 km, LKR 30,875.00, accepted
+  PASS the crew line carries the same rate (95, not the van rate 120)
+  PASS the report carries the same basis (95 × 325 = 30,875)
+  PASS two vehicles: 80 × (200 + 10) × 2 = LKR 33,600.00 (the desk's own formula) — Paid at the Drivers & Guides master rate (special) LKR 80.00/km × 200 km route + 10 km local = 210 payable km × 2 vehicles = LKR 33,600.00 (scheduled; settled on actual km).
+  PASS a normal tour is paid at the master rate (Mahesh 108 × 540 km) — Paid at the Drivers & Guides master rate (special) LKR 108.00/km × 500 km route + 40 km local = 540 payable km = LKR 58,320.00 (scheduled; settled on actual km).
+
+== 3 & 4. Allocation stage, tour stage, required class and actual vehicle
+  PASS TEST-CR: desk step "Allocated" (not to_allocate) once driver + vehicle are set — allocated
+  PASS TEST-CR: Allocation complete · tour not started · lane Upcoming — Starts in 43 days
+  PASS TEST-CR: required Sedan car, actual vehicle Van TVAN-004 on the card and in the record
+  PASS TEST-CR: car payment basis kept on the record although the vehicle is a van
+  PASS a tour that started today with no driver is flagged urgent, stays in Pending (not On Tour) — On tour — day 1 of 4
+  PASS counts are computed from the same lanes as the lists — {"awaiting_review":5,"pending":7,"confirming":0,"upcoming":3,"on_tour":2,"done":1}
+
+== 5. Driver Master: vehicle details and payment details are separate questions
+  PASS Dinesh: vehicle details complete, payment details MISSING (no master rate per km) — rate per km on the Drivers & Guides master (needed to pay any tour)
+  PASS Dinesh: agreed car rate, agreed van rate and the opt-in kept separately
+  PASS Eranga: agreed van rate 120 differs from the master rate 110 → flagged — agreed van rate LKR 120.00 differs from the master rate LKR 110.00 that a normal tour is paid at — correct one of them
+  PASS Sunil: guest capacity missing; Ruwan: category not confirmed
+  PASS …no rate → amount null, "NOT ON FILE" in the text — Payment basis: Drivers & Guides master rate — NOT ON FILE. 100 km route + 0 km local = 100 payable km. The rate must be supplied before this allocation can be paid.
+
+== 6. Language and role
+  PASS non-Japanese driver (Nuwan, no category) excluded even though he is in the pool with a suitable van — not a Japanese-speaking driver on the master (category not set)
+  PASS unconfirmed category (Ruwan) excluded
+  PASS ESD (English-speaking driver) line: outside automatic allocation, no JSD substituted, nobody proposed — The quotation's driver line is ESD — automatic allocation covers only Japanese-speaking driver lines (JSD, JSCG). Allocate this line by hand on the card; no category is substituted.
+  PASS ESD line: Bypass refused as well — The quotation's driver line is ESD — automatic allocation covers only Japanese-speaking driver lines (JSD, JSCG). Allocate this line by hand on the card; no category is substituted.
+  PASS JSCG line: JSD drivers are not substituted (all "line needs a JSCG") — this tour's line needs a JSCG; rest before AH 5077 (starts 2026-12-20, this tour would end 2026-12-18)
+  PASS tour job 301: nobody but JSD/JSCG is ever eligible
+  PASS tour job 302: nobody but JSD/JSCG is ever eligible
+  PASS tour job 306: nobody but JSD/JSCG is ever eligible
+  PASS tour job 308: nobody but JSD/JSCG is ever eligible
+
+== 8. The earlier Pending Driver Allocation page — shared protection
+  PASS Bandara out of TEST-LOVR (15–16 Nov): allocated on the earlier page for AH 5001 (14–17 Nov) — already engaged on AH 5001 (2026-11-14 – 2026-11-17) on the earlier allocation page
+  PASS TEST-LDUP is the same tour as AH 5077, allocated on the earlier page → blocked, not allocated twice — This tour is already allocated on the earlier Pending Driver Allocation page (TEST Car Amal, AH 5077). It is not allocated twice.
+  PASS earlier page refuses AH 5088 — the same tour as TEST-CR, whose driver is engaged on the Transport Desk — This tour (TEST-CR) already has its driver allocated on the Transport Desk: TEST Van Dinesh. It is not allocated twice.
+  PASS earlier page refuses Kumara for AH 5090 (26–27 Nov): engaged on TEST-8G (25–28 Nov) — This driver is already engaged on the Transport Desk for TEST-8G (2026-11-25 – 2026-11-28), which overlaps this tour. He is not allocated twice.
+  PASS earlier page goes on unchanged when there is no clash
+  PASS summary of the earlier page: 3 pending there, of which 1 is also on the Transport Desk (TEST-CR, its driver engaged) — {"available":true,"pending":3,"on_transport_desk":1,"desk_driver_engaged":1,"legacy_driver_allocated":0,"only_on_earlier_page":2}
+
+== 9. Report
+  PASS report: accepted 2 (Kumara, Dinesh), car-rate accepted 1, no bypass made — {"car_rate_accepted":1,"accepted":2}
+  PASS report row shows required class and actual vehicle — Van TVAN-004
+
+RESULT: 56 passed, 0 failed

@@ -1,0 +1,36 @@
+{
+ "root": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/avenir",
+ "changed": [
+  "app/Config/Routes.php",
+  "app/Controllers/Report/BankPaymentCheckController.php",
+  "app/Controllers/Tour/TourAccountsCheckController.php",
+  "app/Controllers/Tour/TourAccountsController.php",
+  "app/Controllers/Tour/TourPaymentDashboardController.php",
+  "app/Filters/UserPermissionFilter.php",
+  "app/Libraries/TourFlow/TourRecord.php",
+  "app/Views/pages/report/bank_payment_check.php",
+  "app/Views/pages/tour/payment_approval_v2.php",
+  "app/Views/pages/tour/tour_payment_dashboard.php",
+  "app/Views/pages/tour/tour_record.php"
+ ],
+ "added": [
+  "app/Controllers/MasterFiles/TourPaymentMastersController.php",
+  "app/Controllers/Tour/TourPaymentDeskController.php",
+  "app/Libraries/TourPayments/Audit.php",
+  "app/Libraries/TourPayments/BankAccounts.php",
+  "app/Libraries/TourPayments/Batches.php",
+  "app/Libraries/TourPayments/Documents.php",
+  "app/Libraries/TourPayments/PayDesk.php",
+  "app/Libraries/TourPayments/Perms.php",
+  "app/Libraries/TourPayments/Schema.php",
+  "app/Libraries/TourPayments/SupplierBank.php",
+  "app/Views/pages/master_files/tpd_bank_accounts.php",
+  "app/Views/pages/master_files/tpd_supplier_bank.php",
+  "app/Views/pages/tour/tpd_batch.php",
+  "app/Views/pages/tour/tpd_payables.php",
+  "app/Views/pages/tour/tpd_remittance.php",
+  "app/Views/pages/tour/tpd_settings.php",
+  "app/Views/pages/tour/tpd_sheet.php",
+  "app/Views/pages/tour/tpd_voucher.php"
+ ]
+}

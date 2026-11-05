@@ -1,0 +1,25 @@
+"winter RTS" desktop folder — sheets saved there on 10 Oct 2026, checked and loaded 10 Oct 2026 on Shantha's request
+("update ... the hotel rates which is not updated ... add as drafts for approval").
+6 plan files added here (rts1010_*.json); each one loaded on the test copy first (E0), approved THERE ONLY to price
+18 sample nights (all matched the sheets), then the test copy was put back.
+
+Loaded as DRAFTS on live (Setup step load_plans, only these 6 keys) — NOTHING APPROVED:
+  #410 EKHO Ella                Winter 2026/27, BB rates (HB/FB = BB + dinner 30 / lunch 25)         E0 W2
+  #411 EKHO Lakehouse           Winter 2026/27, BB rates                                              E0 W3
+  #412 Ekho Safari Tissa Hotel  Winter 2026/27, BB + HB rates                                         E0 W5
+  #413 EKHO SIGIRIYA            Winter 2026/27, HB rates (BB = HB - 5 pp)                             E0 W5
+  #414 EKHO Surf                Winter 2026/27, BB + HB rates                                         E0 W2
+  #415 SUISSE HOTEL KANDY       Winter 2026/27, HB rates 1 Nov 2026 - 31 Mar 2027                     E0 W2
+
+Points to check with the hotels before approving (also in each plan's notes):
+  EKHO Lakehouse: 1 Feb - 30 Apr 2027 has no Premier (King Parakramabahu) row; a "Family Room" 420/430 row instead;
+                  family room Nov - Jan printed only as quad 420 (Feb - Apr quad 460).
+  EKHO Safari:    1 - 30 Apr 2027 HB single lower than BB single (Deluxe 130 vs 150, Suite 190 vs 240) — as printed.
+  EKHO Sigiriya / Surf: last period printed "... 31st Apr 2027" — entered to 30 Apr.
+  EKHO Surf:      AI supplement USD 45 pp printed without its basis (not entered as a meal step).
+  Suisse Kandy:   agreement says to 30 Apr 2027 but the rate table ends 31 Mar 2027 — April not priced.
+  All:            gala dinners (24 / 31 Dec) are compulsory per person; the sheets give no child amount.
+
+Not loaded (already in the system): Cinnamon tactical (1) (#355 / #357, same file), DTW 2027 contract (= DoubleTree
+Weerawila #359), "Hilton Colombo tactical.jpeg" (= DoubleTree flash offer #360), Mirage x3, Shangri-La x4, Kassapa,
+Queens, The Palms (fort_palms_2627_*), Jetwing Ayurveda Pavilions (staff-edited copy), Jie Jie (waiting for a supplier).

@@ -1,0 +1,405 @@
+{
+ "results": [
+  [
+   "ok",
+   "start: the 5 files on the test copy are the originals (same md5 as development and the isolated instance)",
+   ""
+  ],
+  [
+   "ok",
+   "P positive control, ORIGINAL code: \"Bank Not Reconciliation Record Insert\" writes (ledger rows 2596→2598, entry counter 1445→1731); \"Bank Req Data Transfer\" writes (2598→2600) — so the checks below can see a write",
+   ""
+  ],
+  [
+   "ok",
+   "P the test copy is restored to the snapshot: ledger, entry counter and 2024 ledger as before; all tables as before",
+   ""
+  ],
+  [
+   "ok",
+   "O ORIGINAL page: Manual Update opens (200) with the 8 visible buttons + \"Bank Not Reconciliation Record Insert\"",
+   ""
+  ],
+  [
+   "ok",
+   "apply: apply.py apply → the 5 files copied and verified by md5; originals backed up",
+   ""
+  ],
+  [
+   "ok",
+   "O NEW code: the 9 other Manual Update actions answer exactly as before (des_update 200/Successfully; des_other_update 200/Successfully; hotel_voucher_accept 200/Successfully; entrance_update 200/Successfully; other_update 200/Successfully; transport_update 200/Successfully; voucher_date_update 200/Successfully; verify_tour 200/Successfully; debtor_receipt_generate 200/Successfully)",
+   ""
+  ],
+  [
+   "ok",
+   "O NEW code: after running all 9 other actions, every table is the same as after running them with the ORIGINAL code (audit, activity log and sessions aside)",
+   ""
+  ],
+  [
+   "ok",
+   "O the test copy is restored to the snapshot again",
+   ""
+  ],
+  [
+   "ok",
+   "R [tclegacy] Manual Update opens (200): the retired button is replaced by the \"Retired\" notice; the 8 other buttons and their actions are still there",
+   ""
+  ],
+  [
+   "ok",
+   "R [tclegacy] Bank Req Data Transfer opens (200): the Process button is replaced by the \"Retired\" notice; nothing else on the page changed",
+   ""
+  ],
+  [
+   "ok",
+   "R [tclegacy] \"Bank Not Reconciliation Record Insert\": no token → 403, wrong token → 403 (\"Security token missing or expired — reload the page. Nothing was changed.\"); valid token → 409 with the retirement message",
+   ""
+  ],
+  [
+   "ok",
+   "R [tclegacy] \"Bank Req Data Transfer\": no token → 403, wrong token → 403; valid token → 409 with the retirement message",
+   ""
+  ],
+  [
+   "ok",
+   "R [tcadmin] Manual Update opens (200): the retired button is replaced by the \"Retired\" notice; the 8 other buttons and their actions are still there",
+   ""
+  ],
+  [
+   "ok",
+   "R [tcadmin] Bank Req Data Transfer opens (200): the Process button is replaced by the \"Retired\" notice; nothing else on the page changed",
+   ""
+  ],
+  [
+   "ok",
+   "R [tcadmin] \"Bank Not Reconciliation Record Insert\": no token → 403, wrong token → 403 (\"Security token missing or expired — reload the page. Nothing was changed.\"); valid token → 409 with the retirement message",
+   ""
+  ],
+  [
+   "ok",
+   "R [tcadmin] \"Bank Req Data Transfer\": no token → 403, wrong token → 403; valid token → 409 with the retirement message",
+   ""
+  ],
+  [
+   "ok",
+   "R a user WITHOUT the two privileges (tcaccount) is stopped by the permission filter (403) before the tool: the retirement message is never reached",
+   ""
+  ],
+  [
+   "ok",
+   "R every attempt is audited: 12 \"legacy_tool_refused\" rows, one per attempt, with the user, the tool, the reason (token / retired) and the answer (403 / 409)",
+   ""
+  ],
+  [
+   "ok",
+   "R the audit rows carry the IP address, the posted bank for Bank Req Data Transfer, ref_type legacy_tool and a reason ending \"(nothing was changed)\"",
+   ""
+  ],
+  [
+   "ok",
+   "R the permission filter audited the unprivileged user's two attempts (access_denied)",
+   ""
+  ],
+  [
+   "ok",
+   "R ledger unchanged: account_runing 2594|86961963.20|67005308.20|0|0 (rows|ΣDr|ΣCr|Σbank_rec|Σbankst_flag), checksums of account_runing / invoice_no (entry counter) / account_runing_2024 identical",
+   ""
+  ],
+  [
+   "ok",
+   "R every other table identical (only the audit trail, the activity log and sessions changed)",
+   ""
+  ],
+  [
+   "ok",
+   "B rollback: apply.py rollback restores the 5 original files exactly (md5 = the originals); the pages show the original buttons again (not pressed)",
+   ""
+  ],
+  [
+   "ok",
+   "B the kit applied again after the rollback (verified by md5) — the test copy ends with the change in, like development will",
+   ""
+  ],
+  [
+   "ok",
+   "B ledger still unchanged at the end",
+   ""
+  ]
+ ],
+ "other_actions_before": {
+  "des_update": [
+   200,
+   200,
+   "Successfully",
+   0.1
+  ],
+  "des_other_update": [
+   200,
+   200,
+   "Successfully",
+   0.1
+  ],
+  "hotel_voucher_accept": [
+   200,
+   200,
+   "Successfully",
+   0.2
+  ],
+  "entrance_update": [
+   200,
+   200,
+   "Successfully",
+   0.3
+  ],
+  "other_update": [
+   200,
+   200,
+   "Successfully",
+   0.2
+  ],
+  "transport_update": [
+   200,
+   200,
+   "Successfully",
+   0.0
+  ],
+  "voucher_date_update": [
+   200,
+   200,
+   "Successfully",
+   0.2
+  ],
+  "verify_tour": [
+   200,
+   200,
+   "Successfully",
+   0.1
+  ],
+  "debtor_receipt_generate": [
+   200,
+   200,
+   "Successfully",
+   0.0
+  ]
+ },
+ "other_actions_after": {
+  "des_update": [
+   200,
+   200,
+   "Successfully",
+   0.1
+  ],
+  "des_other_update": [
+   200,
+   200,
+   "Successfully",
+   0.0
+  ],
+  "hotel_voucher_accept": [
+   200,
+   200,
+   "Successfully",
+   0.2
+  ],
+  "entrance_update": [
+   200,
+   200,
+   "Successfully",
+   0.2
+  ],
+  "other_update": [
+   200,
+   200,
+   "Successfully",
+   0.2
+  ],
+  "transport_update": [
+   200,
+   200,
+   "Successfully",
+   0.0
+  ],
+  "voucher_date_update": [
+   200,
+   200,
+   "Successfully",
+   0.3
+  ],
+  "verify_tour": [
+   200,
+   200,
+   "Successfully",
+   0.1
+  ],
+  "debtor_receipt_generate": [
+   200,
+   200,
+   "Successfully",
+   0.0
+  ]
+ },
+ "ledger": {
+  "account_runing": "2594|86961963.20|67005308.20|0|0",
+  "checksums": [
+   "1313397659",
+   "913668651",
+   "0"
+  ]
+ },
+ "audit_rows": [
+  [
+   "tclegacy",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_recon_record_insert",
+   "token",
+   "403",
+   "",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Not Reconciliation Record Insert (nothing was changed)"
+  ],
+  [
+   "tclegacy",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_recon_record_insert",
+   "token",
+   "403",
+   "",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Not Reconciliation Record Insert (nothing was changed)"
+  ],
+  [
+   "tclegacy",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_recon_record_insert",
+   "retired",
+   "409",
+   "",
+   "127.0.0.1",
+   "retired tool: Bank Not Reconciliation Record Insert (nothing was changed)"
+  ],
+  [
+   "tclegacy",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_unrealised_value",
+   "token",
+   "403",
+   "1-6-8-10380",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Req Data Transfer (nothing was changed)"
+  ],
+  [
+   "tclegacy",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_unrealised_value",
+   "token",
+   "403",
+   "1-6-8-10380",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Req Data Transfer (nothing was changed)"
+  ],
+  [
+   "tclegacy",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_unrealised_value",
+   "retired",
+   "409",
+   "1-6-8-10380",
+   "127.0.0.1",
+   "retired tool: Bank Req Data Transfer (nothing was changed)"
+  ],
+  [
+   "tcadmin",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_recon_record_insert",
+   "token",
+   "403",
+   "",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Not Reconciliation Record Insert (nothing was changed)"
+  ],
+  [
+   "tcadmin",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_recon_record_insert",
+   "token",
+   "403",
+   "",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Not Reconciliation Record Insert (nothing was changed)"
+  ],
+  [
+   "tcadmin",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_recon_record_insert",
+   "retired",
+   "409",
+   "",
+   "127.0.0.1",
+   "retired tool: Bank Not Reconciliation Record Insert (nothing was changed)"
+  ],
+  [
+   "tcadmin",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_unrealised_value",
+   "token",
+   "403",
+   "1-6-8-10380",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Req Data Transfer (nothing was changed)"
+  ],
+  [
+   "tcadmin",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_unrealised_value",
+   "token",
+   "403",
+   "1-6-8-10380",
+   "127.0.0.1",
+   "security token missing or wrong; retired tool: Bank Req Data Transfer (nothing was changed)"
+  ],
+  [
+   "tcadmin",
+   "legacy_tool_refused",
+   "legacy_tool",
+   "bank_unrealised_value",
+   "retired",
+   "409",
+   "1-6-8-10380",
+   "127.0.0.1",
+   "retired tool: Bank Req Data Transfer (nothing was changed)"
+  ],
+  [
+   "tcaccount",
+   "access_denied",
+   "route",
+   "settings/manual_update/bank_recon_record_insert",
+   "no privilege covers settings/manual_update/bank_recon_record_insert",
+   "NULL",
+   "",
+   "127.0.0.1",
+   "no privilege covers settings/manual_update/bank_recon_record_insert"
+  ],
+  [
+   "tcaccount",
+   "access_denied",
+   "route",
+   "accounts/bank_unrealised_value/process",
+   "no privilege covers accounts/bank_unrealised_value/process",
+   "NULL",
+   "",
+   "127.0.0.1",
+   "no privilege covers accounts/bank_unrealised_value/process"
+  ]
+ ]
+}

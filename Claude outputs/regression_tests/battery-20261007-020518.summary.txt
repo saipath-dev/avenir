@@ -1,0 +1,20 @@
+New-generation regression battery — 2026-10-07 02:05:18 — /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir
+== PHP side (PHPUnit)
+   phpunit: OK (126 tests, 2859 assertions) (exit 0)
+== Screen suites (Playwright)
+   ui_1c: 59 ok, 0 failed
+   ui_hotel_work_flow: 11 ok, 0 failed
+   ui_desks: 26 ok, 0 failed
+   ui_masters: 29 ok, 0 failed
+   ui_tour_operations: 29 ok, 0 failed
+   ui_hotel_rates: 14 ok, 0 failed
+   ui_hotel_codes: 14 ok, 0 failed
+   ui_rates_pending: 6 ok, 0 failed
+   ui_hotel_contacts: 59 ok, 0 failed
+   ui_tour_booking: 73 ok, 0 failed
+   ui_mail: 49 ok, 0 failed
+   ui_mail_hosting: 11 ok, 0 failed
+   ui_security: 18 ok, 0 failed
+   sweep_http: 8 ok, 0 failed
+   survey: screens: 30 with a non-200, a JS error or a failure: 0 | known legacy items: 0
+== ALL GREEN — log /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tc/avenir/tests/newgen/_work/battery-20261007-020518.log

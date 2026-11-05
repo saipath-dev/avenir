@@ -1,0 +1,119 @@
+ 1. Full USD payment: PASS (3/3 checks)
+       - ok   requester: payment request accepted by the chain
+       - ok   status Awaiting Management Approval; rate 327.25 locked to the request; LKR 17,998.75; invoice kept
+       - ok   approver: Approved → voucher issued and placed in Bank Payment Check
+ 2. Partial USD payments on different dates and exchange rates: PASS (9/9 checks)
+       - ok   first part requested: $70
+       - ok   rate 327.25 locked to part 1; LKR 22,907.50; balance $70 shown indicative
+       - ok   part 1 approved → voucher
+       - ok   part 1 Paid
+       - ok   line is Partly Paid: paid $70 / LKR 22,907.50; balance $70; Request balance offered
+       - ok   balance requested as a second request ($70) — allowed because part 1 is paid
+       - ok   part 2 locked at 329.10 → LKR 23,037.00; part 1 still 327.25
+       - ok   part 2 initiated and Paid
+       - ok   Kassapa Fully Paid: $140 = LKR 45,944.50 across two vouchers at two rates; two separate advices pending
+ 3. LKR-only payment: PASS (5/5 checks)
+       - ok   today's rate confirmed by the approver: 327.25, with who and when
+       - ok   an unrequested USD line shows the LKR estimate at today's rate, marked indicative (55 × 327.25 = 17,998.75)
+       - ok   requested in LKR, no conversion, no rate
+       - ok   approved → voucher LKR 2,500.00 from Sampath
+       - ok   initiated and Paid; lock has no rate
+ 4. Exchange-rate locking: PASS (2/2 checks)
+       - ok   today's rate changed to 329.10 (standing in for the next day's rate); audit keeps 327.25 → 329.10
+       - ok   the paid part keeps 327.25 / LKR 22,907.50 and COVENRO keeps its lock; only the unrequested $70 moves to 329.10
+ 5. Payment voucher generation: PASS (4/4 checks)
+       - ok   voucher in the chain: Aflag 0, LKR 17,998.75 = $55 × 327.25, paying ledger 1-6-8-10380
+       - ok   dashboard: Payment Voucher Issued, not paid
+       - ok   payment voucher page and PDF: voucher no, tour, passenger, supplier, invoice, dates, USD, rate, LKR, bank, approver
+       - ok   the voucher lists both supplier invoices as supporting documents
+ 6. Accountant payment initiation: PASS (2/2 checks)
+       - ok   accountant: bank initiation recorded with account, time, batch, reference, charges, file, note
+       - ok   status Bank Payment Initiated — Awaiting Bank Approval; still not paid
+ 7. Final bank approval: PASS (5/5 checks)
+       - ok   bank approver: Paid
+       - ok   the chain: voucher authorised (Aflag 1, ledger posted) and finalised with the bank date by the bank approver
+       - ok   ledger entries written by the existing authorisation step
+       - ok   the Paid lock: date, amount, USD, rate, LKR, account, reference, initiator, approver
+       - ok   dashboard: Fully Paid + Supplier Notification Pending; paid LKR 17,998.75; balance 0
+ 8. Permission separation between accountant and bank approver: PASS (5/5 checks)
+       - ok   a requester cannot approve (403)
+       - ok   the approver cannot record a bank initiation (403)
+       - ok   the accountant cannot click Paid (403)
+       - ok   the accountant's Bank Payment Check shows initiations and "Paid: bank approver only" instead of Mark Finalized
+       - ok   the accountant calling Mark Finalized directly is refused (403); the voucher stays unpaid
+ 9. Selecting different Avenir bank accounts: PASS (3/3 checks)
+       - ok   two Avenir accounts in the master (one default, one with hidden external display)
+       - ok   the dashboard offers the master's accounts only (no free typing)
+       - ok   part 2 approved from the second Avenir account (Sampath)
+10. Verified and unverified supplier bank details: PASS (6/6 checks)
+       - ok   the accountant cannot verify a supplier account (no verification privilege → 403)
+       - ok   six suppliers verified by the bank approver, Kassapa left unverified
+       - ok   the Kassapa line carries the "not verified" warning; COVENRO has none
+       - ok   approval blocked: supplier bank not verified (428, needs authorised confirmation)
+       - ok   the approver (no verification privilege) cannot confirm it (403)
+       - ok   a verifier confirms the account (recorded under their name)
+11. Separate remittance advice for each supplier: PASS (3/3 checks)
+       - ok   advice names only COVENRO; shows tour, passenger, voucher, date, LKR, USD + rate, bank ref, Avenir bank (masked), no other supplier
+       - ok   Kassapa's advice for part 2 carries only Kassapa and only part 2 (23,037.00 @ 329.10)
+       - ok   Gimanhala's own advice sent — separate from the hotels'
+12. Supplier email preparation and sending: PASS (9/9 checks)
+       - ok   approving the same request twice is refused (no duplicate voucher)
+       - ok   a second initiation for the same voucher is refused (409)
+       - ok   Paid twice is refused (409); the lock is untouched
+       - ok   advice prepared: address from the supplier bank record, subject, body, PDF attached
+       - ok   advice sent (through the test mail sink)
+       - ok   the mail: to the supplier, subject, PDF attached, the approved wording
+       - ok   sending again is refused — no repeat supplier e-mail
+       - ok   status now Supplier Notified
+       - ok   the same expense is not added twice (409)
+13. Multiple invoices paid in one supplier payment: PASS (7/7 checks)
+       - ok   two activity lines for the bulk supplier, one shared request expected (LKR 8,000 + 6,000)
+       - ok   one request for the supplier covering both charges (LKR 14,000)
+       - ok   the request is shown on both lines, shared out 8,000 / 6,000 (no double counting)
+       - ok   approved: the chain issues the service voucher at approval (a bulk supplier's status 6 is kept): one voucher LKR 14,000
+       - ok   both lines show the same voucher, Payment Voucher Issued
+       - ok   paid once → both lines Fully Paid (8,000 + 6,000 = 14,000); one advice for the supplier
+       - ok   the advice carries the supplier and both invoice numbers
+14. One bank batch containing several suppliers: PASS (3/3 checks)
+       - ok   a requester cannot save a company bank account (403)
+       - ok   a requester cannot confirm the rate (403)
+       - ok   part 1 initiated in the same bank batch as COVENRO (one batch, several suppliers)
+15. Published versus tactical hotel rates: PASS (7/7 checks)
+       - ok   the approver (special-rate privilege) sees the tactical rate available on the Radisson night; the requester does not see the special rate
+       - ok   quoted $130 (no published rate on file for this room) vs tactical $125 on offer
+       - ok   the requester's request is HELD for the rate review (not requested, no accounting entry) — the special rate stays hidden from quotation staff
+       - ok   dashboard: On Hold, "Review & release" offered to the approver
+       - ok   the approver chooses the TACTICAL rate and releases: the request is made at the tactical amount
+       - ok   request at the tactical amount $125 (quoted $130); the decision and who made it in the audit record
+       - ok   approved → voucher at the tactical amount × locked rate
+16. Itinerary refresh without duplicates: PASS (4/4 checks)
+       - ok   a second request for the same line while one is in flight is refused (409)
+       - ok   the second charge cannot be requested separately while the supplier's request is in flight (409)
+       - ok   loading the dashboard twice gives the same lines — nothing duplicated
+       - ok   a new itinerary item appears as one new unpaid line; the paid lines are unchanged
+17. Changed or removed service after payment: PASS (3/3 checks)
+       - ok   the paid COVENRO night removed from the itinerary: its payment stays, flagged "no longer on the itinerary", Requires Checking filter
+       - ok   nothing in the chain was altered by the removal (voucher, lock, advice intact)
+       - ok   Kassapa's second night removed after payment: warning "requested $140 but the itinerary now prices $70"; the two paid vouchers untouched
+18. Driver advance and settlement: PASS (3/3 checks)
+       - ok   driver advance requested from the driver's own advance request (LKR 20,000)
+       - ok   approved → advance voucher (advances_pay 1)
+       - ok   driver advance paid; line Fully Paid; settlement line stays for the log sheet
+19. Hotels, restaurants, tickets and activities: PASS (3/3 checks)
+       - ok   expense added (restaurant, LKR 3,200) and placed on its day
+       - ok   expense line on Day 4 with the invoice number, Payment Not Requested
+       - ok   expense requested into the chain (type service fee)
+20. Historical payment protection: PASS (5/5 checks)
+       - ok   voucher: the rows that existed before are byte-for-byte the same (605 rows)
+       - ok   v_inv: the rows that existed before are byte-for-byte the same (609 rows)
+       - ok   payment_request: the rows that existed before are byte-for-byte the same (0 rows)
+       - ok   account_runing: the rows that existed before are byte-for-byte the same (2392 rows)
+       - ok   the dashboard still shows the 2024 vouchers of other tours untouched (voucher 605 Heritance Kandalama, unpaid)
+21. Complete audit history: PASS (6/6 checks)
+       - ok   rejected with a reason → line Rejected, can be requested again
+       - ok   re-requested then cancelled by the requester with a reason: line back to Not Requested, both attempts kept in its history
+       - ok   every action kind recorded: rate_confirmed, request_made, approved, voucher_issued, bank_initiated, paid, remittance_prepared, remittance_sent, rejected, request_cancelled, expense_added, bank_account_saved, supplier_bank_saved, supplier_bank_verified, supplier_bank_confirmed
+       - ok   a Paid entry carries user, exact time (ms), rate, bank account and reference
+       - ok   the audit table has no update/delete endpoint; the rate change kept previous and new values
+       - ok   the dashboard shows the complete history and the audit record to the requester
+22. Mobile and desktop layouts: shown by the screenshots (shots/01…26: desktop 1440 px, phone 390 px) — checked visually

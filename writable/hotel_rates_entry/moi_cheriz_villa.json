@@ -1,0 +1,649 @@
+{
+    "key": "moi_cheriz_villa",
+    "hotel": {
+        "acc": "6-9-11-11784",
+        "name": "The CheRiz",
+        "location": "Nuwara Eliya",
+        "chain": "DBI Ceylon / Moi Hotels",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:10"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "The CheRiz"
+        },
+        "contract": {
+            "name": "DMC rate sheet WEF 01 Feb 2026 – 7 bedroom villa (14 pax)",
+            "plan_type": "contract",
+            "contract_type": "DMC",
+            "valid_from": "2026-02-01",
+            "valid_to": "2027-04-30",
+            "taxes_included": 1,
+            "tax_note": "All room rates inclusive of all taxes; non-commissionable",
+            "received_at": "2026-09-03",
+            "credit_facility": "unknown",
+            "extra_bed_adult": 15,
+            "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+            "terms_text": "All room rates are inclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 10.00 am; early check-in / late check-out subject to availability, charges apply. No pets. Bookings are confirmed by e-mail, subject to written confirmation from the reservations department followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for any loss or damage to hotel property. DBI e-mail 24 Aug 2026: rates apply to new reservations only; only HB bookings are accepted on 24 and 31 Dec 2026; reservations / amendments / cancellations to info@dbihotels.lk, reservation@dbihotels.lk, sales3@dbihotels.lk.",
+            "child_policy_text": "Below 5.99 years free of charge sharing parent's bed on booked basis. 6 – 11 years 50% of the adult rate on booked basis per night (excluding extra bed). 12 years and above considered as an adult. Extra bed $15 per night. Child meal rate 50% of the adult rate.",
+            "cancellation_text": "1 May – 30 Jun: release period 14 days prior to arrival, 100% of the full booking value if cancelled within 14 days. 1 Jul – 31 Aug: release 28 days, 100% within 28 days. 1 Sep – 30 Nov: release 14 days, 100% within 14 days. 1 Dec – 31 Jan: release 60 days, 100% within 60 days. 1 Feb – 31 Mar: release 14 days, 100% within 14 days. 1 Apr – 30 Apr: release 28 days, 100% within 28 days. No-shows 100% of the full stay / no refund. Early departure fee applies after check-in.",
+            "payment_text": "Full payment to be settled within the free cancellation period. Cheque payments must be banked and realised at least 10 days prior to arrival. Reservations made within 7 days of arrival: payment in full upon booking confirmation. Unsettled bookings released without prior notice; hotel may release bookings with unsettled payment (excluding credit agents) with 14 days or more advance notice. Bank: CheRiz Boutique Resorts & Hotels (Pvt) Ltd, Hatton National Bank – IBU (Islamic Banking Unit), A/C 250010021070.",
+            "pricing_mode": "per_unit",
+            "notes": "Whole-villa price per night (RO / BB / HB), 7 bedrooms, 14 pax. No. 04, 2nd Lane, Toppass, Nuwara Eliya. The sheet is headed \"DMC Rate sheet WEF 01.02.2026\" and its first period starts 11 Jan 2026 — entered from 01 Feb 2026. No compulsory (gala) supplement and no guide policy printed. Whole villa priced separately (plan moi_cheriz_villa).",
+            "currency": "USD",
+            "source_type": "email",
+            "source_file": "MOI HOTELS — The CheRiz - DMC Rate sheet WEF 01.02.2026.pdf"
+        },
+        "room_types": [
+            {
+                "name": "7 bedroom villa (14 pax)",
+                "priced_as": "base",
+                "room_count": 1,
+                "unit_pax_max": 14,
+                "description": "Entire 7-bedroom villa, up to 14 pax"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "11 Jan – 31 Mar 2026 (entered from 01 Feb)",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-02-01",
+                        "to": "2026-03-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 665
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 875
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1155
+                    }
+                ]
+            },
+            {
+                "name": "01 – 30 Apr 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-04-01",
+                        "to": "2026-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 735
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 945
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1225
+                    }
+                ]
+            },
+            {
+                "name": "01 May – 30 Jun 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-05-01",
+                        "to": "2026-06-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 490
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 700
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 980
+                    }
+                ]
+            },
+            {
+                "name": "01 Jul – 31 Aug 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-07-01",
+                        "to": "2026-08-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 770
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 980
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1260
+                    }
+                ]
+            },
+            {
+                "name": "01 Sep – 30 Nov 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-09-01",
+                        "to": "2026-11-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 560
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 770
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1050
+                    }
+                ]
+            },
+            {
+                "name": "01 – 19 Dec 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-12-01",
+                        "to": "2026-12-19"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 700
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 910
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1190
+                    }
+                ]
+            },
+            {
+                "name": "20 Dec 2026 – 10 Jan 2027 (festive)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-20",
+                        "to": "2027-01-10"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 840
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1050
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1330
+                    }
+                ]
+            },
+            {
+                "name": "11 Jan – 31 Mar 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-11",
+                        "to": "2027-03-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 735
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 945
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1225
+                    }
+                ]
+            },
+            {
+                "name": "01 – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-04-01",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 805
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1015
+                    },
+                    {
+                        "room_type": "7 bedroom villa (14 pax)",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 1295
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 20,
+                "child": 10,
+                "note": "Dinner supplement (printed HB rows take precedence)"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 20,
+                "child": 10,
+                "note": "Lunch supplement"
+            },
+            {
+                "from": "BB",
+                "to": "RO",
+                "adult": -15,
+                "child": -7.5,
+                "note": "Breakfast price (room-only derived)"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 15,
+                "child": 7.5
+            },
+            {
+                "meal": "lunch",
+                "adult": 20,
+                "child": 10
+            },
+            {
+                "meal": "dinner",
+                "adult": 20,
+                "child": 10
+            }
+        ],
+        "supplements": [],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Free of charge sharing parents' bed on booked basis"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "adult_rate",
+                "note": "50% of the adult rate on booked basis per night (excluding extra bed)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "pct": 50,
+                "pct_basis": "adult_rate",
+                "note": "50% of the adult rate plus extra bed $15 per night"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-03-31",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 14 days prior to arrival; 100% of the full booking value if cancelled within 14 days (no-show 100%)"
+            },
+            {
+                "date_from": "2026-04-01",
+                "date_to": "2026-04-30",
+                "tier": "all",
+                "days_from": 28,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 28 days prior to arrival; 100% of the full booking value if cancelled within 28 days (no-show 100%)"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-06-30",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 14 days prior to arrival; 100% of the full booking value if cancelled within 14 days (no-show 100%)"
+            },
+            {
+                "date_from": "2026-07-01",
+                "date_to": "2026-08-31",
+                "tier": "all",
+                "days_from": 28,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 28 days prior to arrival; 100% of the full booking value if cancelled within 28 days (no-show 100%)"
+            },
+            {
+                "date_from": "2026-09-01",
+                "date_to": "2026-11-30",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 14 days prior to arrival; 100% of the full booking value if cancelled within 14 days (no-show 100%)"
+            },
+            {
+                "date_from": "2026-12-01",
+                "date_to": "2027-01-31",
+                "tier": "all",
+                "days_from": 60,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 60 days prior to arrival; 100% of the full booking value if cancelled within 60 days (no-show 100%)"
+            },
+            {
+                "date_from": "2027-02-01",
+                "date_to": "2027-03-31",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 14 days prior to arrival; 100% of the full booking value if cancelled within 14 days (no-show 100%)"
+            },
+            {
+                "date_from": "2027-04-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 28,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Release period 28 days prior to arrival; 100% of the full booking value if cancelled within 28 days (no-show 100%)"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 14,
+                "pct": 100,
+                "date_from": "2026-02-01",
+                "date_to": "2026-03-31",
+                "note": "Full payment within the free cancellation period (14 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 28,
+                "pct": 100,
+                "date_from": "2026-04-01",
+                "date_to": "2026-04-30",
+                "note": "Full payment within the free cancellation period (28 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 14,
+                "pct": 100,
+                "date_from": "2026-05-01",
+                "date_to": "2026-06-30",
+                "note": "Full payment within the free cancellation period (14 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 28,
+                "pct": 100,
+                "date_from": "2026-07-01",
+                "date_to": "2026-08-31",
+                "note": "Full payment within the free cancellation period (28 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 14,
+                "pct": 100,
+                "date_from": "2026-09-01",
+                "date_to": "2026-11-30",
+                "note": "Full payment within the free cancellation period (14 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 60,
+                "pct": 100,
+                "date_from": "2026-12-01",
+                "date_to": "2027-01-31",
+                "note": "Full payment within the free cancellation period (60 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 14,
+                "pct": 100,
+                "date_from": "2027-02-01",
+                "date_to": "2027-03-31",
+                "note": "Full payment within the free cancellation period (14 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 28,
+                "pct": 100,
+                "date_from": "2027-04-01",
+                "date_to": "2027-04-30",
+                "note": "Full payment within the free cancellation period (28 days before arrival for this window)"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "days_before": 10,
+                "note": "Cheque payments must be banked and realised at least 10 days prior to arrival; bookings within 7 days of arrival paid in full on confirmation"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "other",
+                "days_before": 14,
+                "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+            }
+        ],
+        "restrictions": [
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "value": "HB",
+                "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+            },
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "value": "HB",
+                "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+            }
+        ],
+        "extras": []
+    }
+}

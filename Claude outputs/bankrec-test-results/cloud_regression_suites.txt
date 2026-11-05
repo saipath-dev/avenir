@@ -1,0 +1,14 @@
+=== r4 suite ===
+202 ok, 0 failed
+snapshot: db_after_suite.sql (14M)
+=== bulk ===
+71 ok, 0 failed
+=== pilot ===
+36 ok, 0 failed
+=== ops/conf ===
+33 ok, 0 failed
+LG_DONE
+=== r3 ===
+26/26 passed
+=== ledger guard (cloud) ===
+10/10 passed

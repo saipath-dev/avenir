@@ -1,0 +1,283 @@
+{
+ "key": "jetwing_lagoon_shortstay_w2627",
+ "hotel": {
+  "acc": "6-9-11-10597",
+  "name": "Jetwing Lagoon Wellness, A Luxury Reserve",
+  "location": "Negombo",
+  "chain": "Jetwing Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10597",
+   "name": "Jetwing Lagoon Wellness, A Luxury Reserve"
+  },
+  "contract": {
+   "name": "Short Stay Packages – Winter 2026/2027 (maximum 2 nights)",
+   "plan_type": "special_offer",
+   "priority": 10,
+   "contract_type": "Short stay offer",
+   "tier": "all",
+   "hotel_reference": "Special Short Stay Offer – Winter 2026/2027",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "child_policy_text": "The hotel maintains a policy that only individuals aged 18 years and above are eligible for accommodation. Guests under the age of 18 will not be permitted to stay at the property, and all guests aged 18 and over will be considered as adults for booking purposes.",
+   "guide_policy_text": "Foreign Tour Leader – 20% discount on guest room rate for a Single. 01 room free of charge on the basis booked for minimum of 15 Pax up to 45 Pax. If less the following rates apply in USD: BB – USD 70 | HB – USD 90 | FB – USD 105. Alternate accommodations will be given in case of a full-house situation, if the guide accommodation is required on guaranteed basis, the guest room rate will be charged. The Hotel has the authority to double up guide at any given time. Please note that in a full-house situation, we will be compelled to transfer the guide.",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+   "payment_text": "Travels agents are required to make 50% of the payment upon confirmation to secure the rooms. Travel agents are required to make the balance payment of 50%, 07 days prior to the arrival of guests. For Short notice / Last minute bookings, 100% of the payment is to be made on confirmation.",
+   "terms_text": "SPECIAL SHORT STAY OFFER (01st November 2026 – 30th April 2027, USD nett per room per night): Luxury Room on Double Bed and Breakfast Basis + Treatment - USD 225; Luxury Room on Double Half Board Basis + Treatment - USD 275. Applicable for a maximum of 02-night stays. Single reduction - USD 20 | Triple Supplement - USD 60 (On Double BB Basis); Single reduction - USD 20 | Triple Supplement - USD 100 (On Double HB Basis). Room supplements (per room/per night): Luxury Room with Terrace – USD 25; Garden Suite – USD 100; Lagoon Suite – USD 200. Adults only (18 years and above). | WELLNESS PACKAGES – package inclusions: Wellness consultation with Ayurveda doctor. 90 minutes of treatments per day (including medicine and supplements if included in the package). Treatments and sessions are dependent on the package booked. Access to daily wellness activities. Access to pool and fitness center facilities. Entitled for one herbal beverage per day. PACKAGES (no separate prices printed): Customized treatment packages – Relax and rejuvenate (90 minutes Ayurveda or relaxing Spa treatments per day: Authentic Ayurveda treatment 90 min or Aromatherapy treatment 90 min); Detox and revitalize (90 minutes of exfoliating Ayurveda or Spa treatments per day: Herbal powder massage 60 min + steam bath 30 min, or Aromatherapy treatment 60 min + body scrub 30 min); De-stress and energize (90 minutes of therapeutic Ayurveda or Spa treatments per day: Herbal fomentation 90 min or Deep tissue muscle massage 90 min); Anti-aging (90 minutes of rejuvenating Ayurveda or relaxing Spa treatments per day: Beauty body massage 60 min + herbal bath 30 min, or Facial treatment 60 min + foot ritual 30 min). Yoga for dina charya – Yoga for wellness and wellbeing - be inspired with yoga in your daily routine (60 minutes yoga session, 30 minutes of Ayurveda or Spa treatment: Shiro abyanga 30 min or Foot ritual 30 min). All packages: wellness consultation with Ayurveda Doctor; daily yoga session and daily meditation session; one herbal beverage per day. * Packages can be booked for a maximum of 2 nights. BAWA TOUR (no price printed): guided walk through Geoffrey Bawa's first purpose-built resort (1965, formerly The Blue Lagoon); duration 30 - 40 minutes; morning tour 9 am, evening tour 2 - 4 pm. | RATES: Rates are in USD and are non-commissionable. In case of an increase in taxes or any additional taxes, the hotel reserve the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate. | Contact: +94 114 709 400, +94 312 233 777, resv.lagoon@jetwinghotels.com, fo.lagoon@jetwinghotels.com.",
+   "notes": "Transcribed from \"Jetwing Lagoon Wellness, A Luxury Reserve - Short Stay Packages - Winter 2026-2027.pdf\" (6 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Whole document is a short-stay special offer (no normal rate beside it): maximum 2 nights, entered as a restriction (value \"max 2 nights\") — the rate lookup does not enforce it, staff check. Priority 10 as an offer. No booking window, rate code, gala dinner, FB rate or base contract is in the folder. \"Treatment\" in the package price is not quantified on the rate line; the wellness-package page lists 90 minutes of treatments per day and the package menu (no separate prices). Adults only (18+). Market list: domestic market excluded.",
+   "source_file": "Jetwing Lagoon Wellness, A Luxury Reserve - Short Stay Packages - Winter 2026-2027.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Luxury Room",
+    "priced_as": "base",
+    "max_children": 0
+   },
+   {
+    "name": "Luxury Room with Terrace",
+    "priced_as": "supplement",
+    "base_room_type": "Luxury Room",
+    "max_children": 0
+   },
+   {
+    "name": "Garden Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Luxury Room",
+    "max_children": 0
+   },
+   {
+    "name": "Lagoon Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Luxury Room",
+    "max_children": 0
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov 2026 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Luxury Room",
+      "meal_plan": "BB",
+      "sgl": 205,
+      "dbl": 225,
+      "tpl": 285,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 225; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 60; BB + Treatment"
+     },
+     {
+      "room_type": "Luxury Room",
+      "meal_plan": "HB",
+      "sgl": 255,
+      "dbl": 275,
+      "tpl": 375,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 275; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 100; HB + Treatment"
+     }
+    ],
+    "notes": "Special short stay offer: Luxury Room on double BB / HB basis + Treatment; maximum 02-night stays"
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Luxury Room with Terrace",
+    "amount": 25,
+    "per": "room",
+    "note": "Room supplement per room per night"
+   },
+   {
+    "room_type": "Garden Suite",
+    "amount": 100,
+    "per": "room",
+    "note": "Room supplement per room per night"
+   },
+   {
+    "room_type": "Lagoon Suite",
+    "amount": 200,
+    "per": "room",
+    "note": "Room supplement per room per night"
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [],
+  "guide_policies": [
+   {
+    "role": "tour_leader",
+    "pct_of": "sgl",
+    "pct": 80,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Foreign Tour Leader – 20% discount on guest room rate for a Single (entered as 80% of the single rate)"
+   },
+   {
+    "role": "any",
+    "free_from_pax": 15,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "01 room free of charge on the basis booked for minimum of 15 Pax up to 45 Pax; hotel may double up guides / transfer them in a full house"
+   },
+   {
+    "role": "any",
+    "meal_plan": "BB",
+    "amount": 70,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "If less than 15 pax: BB – USD 70"
+   },
+   {
+    "role": "any",
+    "meal_plan": "HB",
+    "amount": 90,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "If less than 15 pax: HB – USD 90"
+   },
+   {
+    "role": "any",
+    "meal_plan": "FB",
+    "amount": 105,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "If less than 15 pax: FB – USD 105"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "advance",
+    "pct": 50,
+    "note": "50% of the payment upon confirmation to secure the rooms"
+   },
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 7,
+    "pct": 50,
+    "note": "Balance payment of 50%, 07 days prior to the arrival of guests"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Short notice / last minute bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "other",
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "value": "max 2 nights",
+    "note": "Applicable for a maximum of 02-night stays; packages can be booked for a maximum of 2 nights. The rate lookup does not enforce this — staff check."
+   }
+  ],
+  "extras": []
+ }
+}

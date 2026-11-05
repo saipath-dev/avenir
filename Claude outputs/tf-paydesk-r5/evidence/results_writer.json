@@ -1,0 +1,192 @@
+[
+ {
+  "name": "12 approved, unvouchered lunches for 6-9-11-11590 on 2 tours (LKR 31,000.00)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S1 batch created, one voucher, number = counter + 1",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Batch SB-00010 created \u2014 Payment Voucher No. 616 for GIMANHALA LUNCH VOUCHER (12 payment(s), 2 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 616, 'payment_voucher_no': 616, 'batch_id': 10, 'batch_no': 'SB-00010', 'individual': False}"
+ },
+ {
+  "name": "S1 legacy voucher: Amount = \u03a3 lines = 31,000.00; 12 v_inv lines; 12 requests flagged; counter advanced by 1",
+  "ok": true,
+  "detail": "('31000.00', 12, '616')"
+ },
+ {
+  "name": "S2 batch created by the prototype, one voucher, the same number",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Batch SB-00010 created \u2014 Payment Voucher No. 616 for GIMANHALA LUNCH VOUCHER (12 payment(s), 2 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 616, 'payment_voucher_no': 616, 'batch_id': 10, 'batch_no': 'SB-00010', 'individual': False}"
+ },
+ {
+  "name": "S2 voucher row identical column by column (all 69 columns except the row id and the timestamps)",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "name": "S2 the 12 v_inv lines identical column by column (28 columns each)",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "name": "S2 payment_request flags, tpd_request_ext links and the batch row identical; counter identical",
+  "ok": true,
+  "detail": "([['SB-00010', 'LKR', 'NULL', '31000.00', '12', '2', 'issued', '616']], [['SB-00010', 'LKR', 'NULL', '31000.00', '12', '2', 'issued', '616']])"
+ },
+ {
+  "name": "S2 the prototype wrote nothing the chain does not write: row counts of voucher, v_inv, payment_request, tpd_batch, tpd_request_ext, tpd_audit, account_runing equal to the legacy run",
+  "ok": true,
+  "detail": "(('615', '632', '25', '10', '25', '206', '2482'), ('615', '632', '25', '10', '25', '206', '2482'))"
+ },
+ {
+  "name": "S3 12 vouchers issued with consecutive numbers 616\u2013627 under one batch SB-00010",
+  "ok": true,
+  "detail": "{'status': 200, 'message': '12 vouchers issued (616\u2013627) under batch SB-00010', 'vnum': 616, 'vnums': [616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627], 'batch_id': 10, 'batch_no': 'SB-00010', 'writer': 'proto'}"
+ },
+ {
+  "name": "S3 \u03a3 of the 12 vouchers = 31,000.00 = the single voucher total; each voucher carries its own tour (ref_po / C_Number) and amount",
+  "ok": true,
+  "detail": "(31000.0, ['2325', '2390', '2325', '2390', '2325', '2390', '2325', '2390', '2325', '2390', '2325', '2390'])"
+ },
+ {
+  "name": "S3 exactly one v_inv line per voucher, line amount = voucher amount, description names the tour and the restaurant",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S3 every request flagged vouchered and linked to ITS voucher number; counter advanced by exactly 12",
+  "ok": true,
+  "detail": "('627', ['616', '617', '618', '619', '620', '621', '622', '623', '624', '625', '626', '627'])"
+ },
+ {
+  "name": "S3 the per-item vouchers have the same column values as the single voucher apart from number, amount, tour and dollar figure",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S3 audit: a bulk_issued record with the 12 numbers",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S4 refused with a clear message, nothing created: vouchers, lines, counter, request flags and batches all unchanged",
+  "ok": true,
+  "detail": "('Nothing issued: TEST HOOK: failure injected after voucher 3 of 12', ('614', '620', '615', '0', '9'), ('614', '620', '615', '0', '9'))"
+ },
+ {
+  "name": "S4 the 12 lunches still wait in Supplier Payables and can be batched afterwards",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S4 audit: voucher_issue_failed recorded with the reason",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S4 retried without the fault: the same 12 numbers 616\u2013627 are issued (no gap left by the failed run)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': '12 vouchers issued (616\u2013627) under batch SB-00010', 'vnum': 616, 'vnums': [616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627], 'batch_id': 10, 'batch_no': 'SB-00010', 'writer': 'proto'}"
+ },
+ {
+  "name": "S5 refused BEFORE writing, naming the counter and the last issued number; nothing changed",
+  "ok": true,
+  "detail": "The voucher could not be issued: the voucher-number counter (invoice_no.V_Num = 613) is behind the voucher table (last Payment Voucher No. 615), so the next number 614 is already issued. Nothing was written. Accounts must bring the counter back in step (set invoice_no.V_Num to 615) and then create the batch again."
+ },
+ {
+  "name": "S5 the r4 legacy path refuses the same situation the same way (r4 counter pre-check)",
+  "ok": true,
+  "detail": "The voucher could not be issued: the voucher-number counter (invoice_no.V_Num = 613) is behind the voucher table (last Payment Voucher No. 615), so the next number 614 is already issued. Nothing was written. Accounts must bring the counter back in step (set invoice_no.V_Num to 615) and then create the batch again."
+ },
+ {
+  "name": "S6 DEMONSTRATED RISK: the run was refused, but on MyISAM the ROLLBACK cannot undo the rows \u2014 3 voucher(s) ['616', '617', '618'], their lines, 3 request flags and the counter remained",
+  "ok": true,
+  "detail": "(('614', '620', '615', '0'), ('617', '623', '618', '3'), [['616', '2500.00'], ['617', '1800.00'], ['618', '3200.00']])"
+ },
+ {
+  "name": "S7 initiation and Paid (charges LKR 155.00) succeed on the prototype voucher; voucher finalized with the bank date",
+  "ok": true,
+  "detail": "('Bank payment initiated \u2014 awaiting bank approval. LKR 31,000.00. Bank charges LKR 155.00 (total debit 31,155.00). The bank approver can now confirm Paid.', \"Paid. Payment Voucher No. 616 is locked: LKR 31,000.00; bank charges 155.00 posted to 4-8-109-31903 TEST Bank Charges (12 tour line(s)); total debited 31,155.00; ledger reconciled: credits to 1-6-8-10380 = LKR 31,155.00 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepare "
+ },
+ {
+  "name": "S7 charges allocated across the 12 lines to the cent (\u03a3 = 155.00) and the ledger check passes: credits to the paying account = 31,000.00 + 155.00 = 31,155.00 = the bank debit, every entry balanced",
+  "ok": true,
+  "detail": "(155.0, {'final_lkr': 31000, 'charges': 155, 'total_debit': 31155, 'bank_credit': 31155, 'payment_credit': 31000, 'charge_credit': 155, 'charge_debit': 155, 'dr': 31155, 'cr': 31155}, [])"
+ },
+ {
+  "name": "S7 ledger: 12 balanced bank-charge pairs (Dr Bank Charges / Cr paying account) named with the voucher number; payment credits present",
+  "ok": true,
+  "detail": "('24', {'final_lkr': 31000, 'charges': 155, 'total_debit': 31155, 'bank_credit': 31155, 'payment_credit': 31000, 'charge_credit': 155, 'charge_debit': 155, 'dr': 31155, 'cr': 31155})"
+ },
+ {
+  "name": "S7 legacy/desk page renders with the prototype voucher: report/bank_payment_check/finalized_records",
+  "ok": true,
+  "detail": "(200, '616')"
+ },
+ {
+  "name": "S7 legacy/desk page renders with the prototype voucher: report/voucher_report",
+  "ok": true,
+  "detail": "(200, 'oucher')"
+ },
+ {
+  "name": "S7 legacy/desk page renders with the prototype voucher: tour/board/tour/4/record",
+  "ok": true,
+  "detail": "(200, 'Complete record')"
+ },
+ {
+  "name": "S7 legacy/desk page renders with the prototype voucher: tour/tour_payment_dashboard/voucher/616",
+  "ok": true,
+  "detail": "(200, '616')"
+ },
+ {
+  "name": "S7 the voucher document shows all 12 lines with both tours and the restaurant",
+  "ok": true,
+  "detail": "(1, 13)"
+ },
+ {
+  "name": "S7 legacy Voucher Cancellation behaves identically on a fresh legacy voucher and on a fresh per-item prototype voucher (HTTP status, Aflag|flag = 3|1, ledger rows) \u2014 the legacy screen answers HTTP 500 on an unauthorised voucher in both cases, a pre-existing quirk, not a writer difference",
+  "ok": true,
+  "detail": "((500, '3|1', '0'), (500, '3|1', '0'))"
+ },
+ {
+  "name": "S7 cancelling ONE per-item voucher (620) leaves the other 11 issued and untouched",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "S7 the legacy Bank Payment Check lists the 11 open per-item vouchers individually",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "name": "S7 each of the 12 requests is linked to its own voucher number in the desk's request record (12 distinct numbers over 2 tours) \u2014 the desk/record screens read this link in r5",
+  "ok": true,
+  "detail": "[['3163', '616', 'AH 2218'], ['3164', '617', 'AH 2290'], ['3165', '618', 'AH 2218'], ['3166', '619', 'AH 2290'], ['3167', '620', 'AH 2218'], ['3168', '621', 'AH 2290'], ['3169', '622', 'AH 2218'], ['3170', '623', 'AH 2290'], ['3171', '624', 'AH 2218'], ['3172', '625', 'AH 2290'], ['3173', '626', 'AH 2218'], ['3174', '627', 'AH 2290']]"
+ },
+ {
+  "name": "S7 historical vouchers (\u2264 615) untouched by every scenario: count and checksum equal to the prep snapshot",
+  "ok": true,
+  "detail": "('614|cfa41c7df545d1d44092ee8843c2e7cb|616|2482', '614|cfa41c7df545d1d44092ee8843c2e7cb|616|2482')"
+ },
+ {
+  "name": "S8 legacy authorisation gives the same result on both: HTTP status, Aflag / authorising user / date, and the ledger rows posted (count, Dr, Cr)",
+  "ok": true,
+  "detail": "((200, '1|tcadmin|1', '24|31000.00|31000.00'), (200, '1|tcadmin|1', '24|31000.00|31000.00'))"
+ },
+ {
+  "name": "S8 the legacy voucher screens (New Voucher Report, Voucher Audit, Payment Release, Voucher Payments) render identically and show / omit the voucher the same way for both writers",
+  "ok": true,
+  "detail": "({'report/voucher_report/voucher_details_new': (200, False), 'accounts/voucher_audit': (200, True), 'accounts/creditor_invoice/voucher_authentication': (200, False), 'accounts/voucher_payments/0': (200, False)}, {'report/voucher_report/voucher_details_new': (200, False), 'accounts/voucher_audit': (200, True), 'accounts/creditor_invoice/voucher_authentication': (200, False), 'accounts/voucher_payments/0': (200, False)})"
+ },
+ {
+  "name": "S8 legacy authorisation of ONE per-item voucher posts that voucher's own amount only (Dr = Cr = its amount), the other 11 untouched",
+  "ok": true,
+  "detail": "(200, '1|tcadmin|1', '2|2500.00|2500.00')"
+ },
+ {
+  "name": "S8 tpd audit trail per writer: batch_created recorded for both; bulk_issued only for per-item runs; voucher_issue_failed only for failed runs",
+  "ok": true,
+  "detail": "batch_created\t10\nbulk_issued\t1"
+ }
+]

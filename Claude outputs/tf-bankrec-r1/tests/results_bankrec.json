@@ -1,0 +1,427 @@
+[
+ {
+  "name": "set-up by the System Administrator creates the tables and privileges (admin only)",
+  "ok": true,
+  "detail": "(200, 'Privilege \"Daily Bank Reconciliation\" (accounts/daily_bank_rec) added and granted to the System Administrator only. Privilege \"Daily Bank Reconciliation \u2014 prepare (import, match, propose)\" (accounts/daily_bank_rec/prepare) added and granted to the System Administrator only. Privilege \"Daily Bank Reconciliation \u2014 review (confirm mappings, approve, sign off)\" (accounts/daily_bank_rec/review) "
+ },
+ {
+  "name": "set-up again changes nothing (idempotent)",
+  "ok": true,
+  "detail": "Already in place; nothing to do."
+ },
+ {
+  "name": "three dummy TEST bank accounts exist in the Avenir Bank Accounts master (inactive, so payments never offer them)",
+  "ok": true,
+  "detail": "{'LKR': 4, 'USD': 5, 'JPY': 6}"
+ },
+ {
+  "name": "requester: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "ops: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "transh: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "hotelres: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "quote: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "hotel: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "transport: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "mgmt: no access (page refused, data 403, change 403)",
+  "ok": true,
+  "detail": "(302, 403, 403)"
+ },
+ {
+  "name": "view-only profile (bank authoriser) sees the accounts, masked",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "view-only profile cannot propose a mapping (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "a change without the CSRF token is refused (403)",
+  "ok": true,
+  "detail": "(403, 'The security token is missing or out of date; reload the page and try again.')"
+ },
+ {
+  "name": "LKR: preparer proposes the mapping (first day 1 Sep 2026)",
+  "ok": true,
+  "detail": "(200, 'Mapping proposed. Another user with the review privilege must confirm it.')"
+ },
+ {
+  "name": "USD: preparer proposes the mapping (first day 1 Sep 2026)",
+  "ok": true,
+  "detail": "(200, 'Mapping proposed. Another user with the review privilege must confirm it.')"
+ },
+ {
+  "name": "the preparer cannot confirm (no review privilege, 403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "four eyes: the proposer cannot confirm their own mapping, even as administrator (403)",
+  "ok": true,
+  "detail": "(403, 'A mapping must be confirmed by someone other than the person who proposed it.')"
+ },
+ {
+  "name": "a rejection needs a reason (400)",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "LKR: reviewer confirms the mapping",
+  "ok": true,
+  "detail": "(200, 'Mapping confirmed.')"
+ },
+ {
+  "name": "USD: reviewer confirms the mapping",
+  "ok": true,
+  "detail": "(200, 'Mapping confirmed.')"
+ },
+ {
+  "name": "JPY: reviewer confirms the mapping",
+  "ok": true,
+  "detail": "(200, 'Mapping confirmed.')"
+ },
+ {
+  "name": "before any statement the day is \"Unreconciled \u2014 insufficient data\"",
+  "ok": true,
+  "detail": "Unreconciled \u2014 insufficient data"
+ },
+ {
+  "name": "changing an existing rate needs a reason (400)",
+  "ok": true,
+  "detail": "400"
+ },
+ {
+  "name": "a rate change is kept with the old and new value",
+  "ok": true,
+  "detail": "(200, 'brc_rate_changed|1|1')"
+ },
+ {
+  "name": "preview recognises the columns and reports the balance break, keeping nothing",
+  "ok": true,
+  "detail": "(200, ['Line 4: printed balance 749970.00 but opening + lines give 749975.00.'], {'date': 0, 'value_date': 1, 'description': 2, 'reference': 3, 'money_out': 4, 'money_in': 5, 'balance': 6})"
+ },
+ {
+  "name": "categories recognised: 4 bank charges, 1 transfer, receipts and payments",
+  "ok": true,
+  "detail": "{'payment': 5, 'charge': 4, 'transfer': 1, 'receipt': 1}"
+ },
+ {
+  "name": "the statement is kept as a draft (nothing posted)",
+  "ok": true,
+  "detail": "(200, 'Statement kept as a draft (11 lines). Nothing is posted to the ledger. It has 1 check error(s) to resolve before it can be accepted.')"
+ },
+ {
+  "name": "a draft with a balance break cannot be accepted (409)",
+  "ok": true,
+  "detail": "(409, 'The statement does not pass its checks: Line 4: printed balance 749970.00 but opening + lines give 749975.00.')"
+ },
+ {
+  "name": "a draft line is corrected with a reason; the imported value is kept",
+  "ok": true,
+  "detail": "(200, '749970.00')"
+ },
+ {
+  "name": "the corrected statement is accepted (closing 3,893,106.00)",
+  "ok": true,
+  "detail": "(200, 'Statement accepted. Its lines can now be matched. (Nothing was posted to the ledger.)')"
+ },
+ {
+  "name": "a line of an accepted statement cannot be changed (409)",
+  "ok": true,
+  "detail": "409"
+ },
+ {
+  "name": "importing the same statement again is flagged (duplicate-looking lines, overlapping period)",
+  "ok": true,
+  "detail": "('11 line(s) look the same as lines already kept in another statement of this account (possible double import).', 'The period overlaps accepted statement 25 (2026-09-01 to 2026-09-05).')"
+ },
+ {
+  "name": "the overlapping copy cannot be accepted (409)",
+  "ok": true,
+  "detail": "409"
+ },
+ {
+  "name": "the duplicate draft is voided by the preparer (kept for the record)",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "name": "USD statement typed in and accepted; each line keeps USD and its LKR value at the day rate",
+  "ok": true,
+  "detail": "(200, 200, '300.5*5000.00=1502500.00,301*-10000.00=-3010000.00,302*-15.00=-4530.00')"
+ },
+ {
+  "name": "JPY statement (one amount column, no balances) accepted; LKR value 404,000.00",
+  "ok": true,
+  "detail": "(200, 200, 'Statement kept as a draft (1 lines). Nothing is posted to the ledger. It can now be accepted.', 'Statement accepted. Its lines can now be matched. (Nothing was posted to the ledger.)')"
+ },
+ {
+  "name": "LKR 5 Sep: bank 3,893,106.00 and book 3,547,655.00 shown separately; difference 345,451.00",
+  "ok": true,
+  "detail": "({'opening': '1000000.00', 'closing': '3893106.00', 'opening_rate': '1', 'closing_rate': '1', 'closing_rate_source': 'LKR', 'opening_lkr': '1000000.00', 'closing_lkr': '3893106.00'}, {'opening': '850000.00', 'closing': '3547655.00', 'currency': 'LKR', 'account_last_entered': '2026-10-11 19:31:00', 'ledger_last_entered': '2026-10-11 19:31:00'}, {'difference_lkr': '345451.00', 'opening_difference_lk"
+ },
+ {
+  "name": "the opening difference 150,000.00 on 1 Sep is \"Unreconciled \u2014 insufficient data\" until explained",
+  "ok": true,
+  "detail": "('150000.00', ['The opening difference of 150,000.00 LKR on 2026-09-01 is not yet explained (opening items to be entered and accepted).'])"
+ },
+ {
+  "name": "the explanation adds up: unexplained remainder 0.00",
+  "ok": true,
+  "detail": "{'difference_lkr': '345451.00', 'opening_difference_lkr': '150000.00', 'opening_explained_by_earlier_book_items': '0.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_remaining': '150000.00', 'bank_items_not_in_book': '2893106.00', 'book_items_not_on_statement': '-2697655.00', 'match_differences': '0.00', 'revaluation': '0.00', 'unexplained_lkr': '0.00'}"
+ },
+ {
+  "name": "suggestions: PV 90001 one-to-one (high), PV 90002 one line to two ledger rows (high), the cheque from before the first day, the transfer",
+  "ok": true,
+  "detail": "[('AH 9901 - TEST HOTEL A - 90001', 'high', ['99980003.1']), ('CHQ 000123 TEST CHEQUE', 'high', ['99980002.1']), ('AH 9902 - TEST SUPPLIER B - 90002', 'high', ['99980004.1', '99980005.1']), ('TRF FROM TEST-USD-0002', 'medium', ['99980006.1']), ('AH 9903 - TEST GUIDE C - 90003', 'low', ['99980007.1'])]"
+ },
+ {
+  "name": "the two identical 75,000 ledger rows are not auto-suggested as a sure match; they are flagged duplicate-looking",
+  "ok": true,
+  "detail": "({'line': {'id': 164, 'date': '2026-09-03', 'description': 'AH 9903 - TEST GUIDE C - 90003', 'amount': '-75000.00', 'amount_lkr': '-75000.00'}, 'book': [{'key': '99980007.1', 'date': '2026-09-03', 'amount': '-75000.00', 'description': 'VOUCHER PAYMENT - TEST GUIDE C (dummy)', 'pv': '90003', 'payee': 'TEST GUIDE C'}], 'confidence': 'low', 'why': ['PV 90003 in the wording', 'tour AH 9903', 'same day"
+ },
+ {
+  "name": "accepted suggestion: AH 9901 - TEST HOTEL A - 90001",
+  "ok": true,
+  "detail": "(200, 'Matched.')"
+ },
+ {
+  "name": "accepted suggestion: AH 9902 - TEST SUPPLIER B - 90002",
+  "ok": true,
+  "detail": "(200, 'Matched.')"
+ },
+ {
+  "name": "accepted suggestion: CHQ 000123 TEST CHEQUE",
+  "ok": true,
+  "detail": "(200, 'Matched.')"
+ },
+ {
+  "name": "accepted suggestion: TRF FROM TEST-USD-0002",
+  "ok": true,
+  "detail": "(200, 'Matched.')"
+ },
+ {
+  "name": "a line already matched cannot be matched again (409)",
+  "ok": true,
+  "detail": "409"
+ },
+ {
+  "name": "a match with a difference (12,344 vs 12,345) needs a reason (400)",
+  "ok": true,
+  "detail": "The two sides differ by 1.00 LKR. Say why: exchange rate, rounding or other."
+ },
+ {
+  "name": "matched with the 1.00 rounding difference recorded",
+  "ok": true,
+  "detail": "Matched (difference 1.00 LKR: rounding)."
+ },
+ {
+  "name": "manual match: the 75,000 payment with the first ledger row",
+  "ok": true,
+  "detail": "Matched."
+ },
+ {
+  "name": "the second 75,000 ledger row is classified duplicate-looking (not deleted, not changed)",
+  "ok": true,
+  "detail": "Classified as duplicate-looking."
+ },
+ {
+  "name": "the 40,000 ledger row is a timing item (expected 8 Sep)",
+  "ok": true,
+  "detail": "Classified as timing."
+ },
+ {
+  "name": "after matching the cheque from 30 Aug the opening difference is fully explained (remaining 0.00)",
+  "ok": true,
+  "detail": "{'difference_lkr': '345451.00', 'opening_difference_lkr': '150000.00', 'opening_explained_by_earlier_book_items': '150000.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '230450.00', 'book_items_not_on_statement': '115000.00', 'match_differences': '1.00', 'revaluation': '0.00', 'unexplained_lkr': '0.00'}"
+ },
+ {
+  "name": "still \"items to explain\": 4 charges and the cash deposit have no correction yet",
+  "ok": true,
+  "detail": "('Unreconciled \u2014 items to explain', {'bank_lines': 11, 'book_rows': 8, 'matched': 6, 'bank_unmatched': 5, 'book_unmatched': 2, 'timing': 1, 'duplicate': 1, 'excluded': 0, 'charges': 4, 'matched_later': 0, 'unexplained_items': 5})"
+ },
+ {
+  "name": "bank charges (4 lines, 4,550.00) proposed as a correction: Dr the bank-charges account, Cr the bank ledger",
+  "ok": true,
+  "detail": "(200, 'Correction proposed for review. It will not be posted by the system.', [{'ledger_code': '4-8-109-31903', 'ledger_name': 'TEST Bank Charges', 'dr': '4550.00', 'cr': '0.00', 'narration': 'Bank charges 2026-09-01 to 2026-09-05'}, {'ledger_code': '1-6-8-29901', 'ledger_name': 'TEST Bank LKR (dummy)', 'dr': '0.00', 'cr': '4550.00', 'narration': 'Bank charges 2026-09-01 to 2026-09-05'}])"
+ },
+ {
+  "name": "an entry that does not balance is refused (400)",
+  "ok": true,
+  "detail": "The proposed entry does not balance: debits 235,000.00, credits 230,000.00."
+ },
+ {
+  "name": "the cash deposit is proposed as a correction",
+  "ok": true,
+  "detail": "Correction proposed for review. It will not be posted by the system."
+ },
+ {
+  "name": "proposing corrections wrote nothing to the ledger (real rows unchanged, dummy rows still 15)",
+  "ok": true,
+  "detail": "('2570|63467938.20|63467938.20|5568362018990', '2570|63467938.20|63467938.20|5568362018990', '15')"
+ },
+ {
+  "name": "the preparer cannot approve (no review privilege, 403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "four eyes: the administrator cannot approve their own proposal (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "reviewer approves correction 28; the message says it is not posted",
+  "ok": true,
+  "detail": "Approved. The system does not post it: Accounts posts it by hand in the accounting module if they agree, then records the ledger entry here."
+ },
+ {
+  "name": "reviewer approves correction 29; the message says it is not posted",
+  "ok": true,
+  "detail": "Approved. The system does not post it: Accounts posts it by hand in the accounting module if they agree, then records the ledger entry here."
+ },
+ {
+  "name": "recording a posting for a ledger entry that does not exist is refused (404)",
+  "ok": true,
+  "detail": "(404, 'No ledger entry with that ID.')"
+ },
+ {
+  "name": "approving corrections wrote nothing to the ledger",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "LKR 5 Sep: every item explained \u2192 \"Reconciled \u2014 all items explained (awaiting review)\"",
+  "ok": true,
+  "detail": "('Reconciled \u2014 all items explained (awaiting review)', [], {'bank_lines': 11, 'book_rows': 8, 'matched': 6, 'bank_unmatched': 5, 'book_unmatched': 2, 'timing': 1, 'duplicate': 1, 'excluded': 0, 'charges': 4, 'matched_later': 0, 'unexplained_items': 0})"
+ },
+ {
+  "name": "the difference 345,451.00 = statement items not in the ledger 230,450.00 + ledger items not on the statement 115,000.00 + rounding 1.00",
+  "ok": true,
+  "detail": "{'difference_lkr': '345451.00', 'opening_difference_lkr': '150000.00', 'opening_explained_by_earlier_book_items': '150000.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '230450.00', 'book_items_not_on_statement': '115000.00', 'match_differences': '1.00', 'revaluation': '0.00', 'unexplained_lkr': '0.00'}"
+ },
+ {
+  "name": "3 Sep (earlier day): the 40,000 row is not yet due, the deposit not yet in; status explained",
+  "ok": true,
+  "detail": "('Reconciled \u2014 all items explained (awaiting review)', [])"
+ },
+ {
+  "name": "the USD \u2192 LKR transfer is suggested (USD 10,000 out on 3 Sep, LKR 3,000,000 in on 3 Sep, implied 300.00)",
+  "ok": true,
+  "detail": "[{'from': {'line_id': 180, 'account': 'TEST USD account (dummy)', 'date': '2026-09-03', 'amount': '10000.00', 'currency': 'USD', 'description': 'TRF TO TEST-LKR-0001'}, 'to': {'line_id': 162, 'account': 'TEST LKR account (dummy)', 'date': '2026-09-03', 'amount': '3000000.00', 'currency': 'LKR', 'description': 'TRF FROM TEST-USD-0002'}, 'implied_rate': '300'}]"
+ },
+ {
+  "name": "transfer recorded on both sides with the day rate 301.00 and the difference \u221210,000.00 LKR",
+  "ok": true,
+  "detail": "(200, '300|301|-10000.00', 'Transfer recorded at 300 (day rate 301, difference -10,000.00 LKR). Each side is still matched to the ledger in its own account.')"
+ },
+ {
+  "name": "USD lines matched to the LKR ledger with their exchange-rate differences (+2,500.00, \u221210,000.00)",
+  "ok": true,
+  "detail": "('Matched (difference 2,500.00 LKR: exchange rate).', 'Matched (difference -10,000.00 LKR: exchange rate).')"
+ },
+ {
+  "name": "USD 5 Sep: bank USD 44,985.00 (LKR 13,585,470.00 at 302.00), book LKR 13,500,000.00, difference 85,470.00",
+  "ok": true,
+  "detail": "({'opening': '50000.00', 'closing': '44985.00', 'opening_rate': '300.000000', 'closing_rate': '302.000000', 'closing_rate_source': 'TEST rate (dummy)', 'opening_lkr': '15000000.00', 'closing_lkr': '13585470.00'}, {'opening': '15000000.00', 'closing': '13500000.00', 'currency': 'LKR', 'account_last_entered': '2026-10-11 19:31:00', 'ledger_last_entered': '2026-10-11 19:31:00'})"
+ },
+ {
+  "name": "USD: explained by rate differences \u22127,500.00, the charge \u22124,530.00 and the revaluation 97,500.00; status explained",
+  "ok": true,
+  "detail": "({'difference_lkr': '85470.00', 'opening_difference_lkr': '0.00', 'opening_explained_by_earlier_book_items': '0.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '-4530.00', 'book_items_not_on_statement': '0.00', 'match_differences': '-7500.00', 'revaluation': '97500.00', 'unexplained_lkr': '0.00'}, [])"
+ },
+ {
+  "name": "JPY 5 Sep: matched exactly; revaluation 32,000.00 explains the difference; status explained",
+  "ok": true,
+  "detail": "('Matched.', {'difference_lkr': '32000.00', 'opening_difference_lkr': '0.00', 'opening_explained_by_earlier_book_items': '0.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '0.00', 'book_items_not_on_statement': '0.00', 'match_differences': '0.00', 'revaluation': '32000.00', 'unexplained_lkr': '0.00'}, [])"
+ },
+ {
+  "name": "the preparer records the LKR day",
+  "ok": true,
+  "detail": "Daily record prepared: Reconciled \u2014 all items explained (awaiting review)."
+ },
+ {
+  "name": "the preparer cannot review (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "the reviewer returns the record with a reason",
+  "ok": true,
+  "detail": "Daily record returned to the preparer."
+ },
+ {
+  "name": "prepared again and reviewed \u2192 \"Reconciled \u2014 reviewed\"",
+  "ok": true,
+  "detail": "('Daily record reviewed.', 'Reconciled \u2014 reviewed')"
+ },
+ {
+  "name": "undoing a match keeps it (status undone) and the day falls back to \"items to explain\"",
+  "ok": true,
+  "detail": "('Match undone (kept in the record).', 'Unreconciled \u2014 items to explain')"
+ },
+ {
+  "name": "the preparer cannot void an accepted statement (403: reviewer only)",
+  "ok": true,
+  "detail": "(403, 'An accepted statement can be voided only by a reviewer.')"
+ },
+ {
+  "name": "an accepted statement with matches cannot be voided until they are undone (409)",
+  "ok": true,
+  "detail": "(409, 'Undo the matches, classifications and transfers on its lines first (6 matched, 0 classified, 1 transfers).')"
+ },
+ {
+  "name": "every kind of change is in the audit trail with user, time and values",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "name": "the line change is audited with user, date, the value before (as imported) and after, and the reason",
+  "ok": true,
+  "detail": "tcaccount|2026-10-11|1|1|typed wrongly in the test file"
+ },
+ {
+  "name": "refusals are audited too (42 rows)",
+  "ok": true,
+  "detail": "42"
+ },
+ {
+  "name": "the real ledger is unchanged: rows, sums and every row's reconciliation flags (aflag, bank_rec, bankst_flag, BankFlg)",
+  "ok": true,
+  "detail": "('2570|63467938.20|63467938.20|5568362018990', '2570|63467938.20|63467938.20|5568362018990')"
+ },
+ {
+  "name": "the dummy ledger rows are unchanged too (15 rows; the module only reads the ledger)",
+  "ok": true,
+  "detail": "15|22904000.00|3452345.00"
+ }
+]

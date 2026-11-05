@@ -1,0 +1,182 @@
+[
+ {
+  "test": 47,
+  "name": "A1 the live-equivalent copy matches the files the kit was tested on (11 to change, 18 to add, none drifted)",
+  "ok": true,
+  "detail": "{'mode': 'check', 'root': '/tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/tl', 'changed': 11, 'added': 18, 'same': 0, 'changed_since_tested': 0}"
+ },
+ {
+  "test": 47,
+  "name": "A2 apply: backup taken, 29 files in place, verified",
+  "ok": true,
+  "detail": "/tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/kit/tf-paydesk-r4/before/20261011-000429"
+ },
+ {
+  "test": 47,
+  "name": "A3 check after apply: nothing left to do (29 same)",
+  "ok": true,
+  "detail": "29"
+ },
+ {
+  "test": 47,
+  "name": "A4 rollback before any payment: the 11 live files restored byte-for-byte, the 18 added files moved aside (none left in app/)",
+  "ok": true,
+  "detail": "(True, 0, '20261011-000429')"
+ },
+ {
+  "test": 47,
+  "name": "A5 apply again after the rollback works (fresh backup)",
+  "ok": true,
+  "detail": "/tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/kit/tf-paydesk-r4/before/20261011-000438"
+ },
+ {
+  "test": 47,
+  "name": "B1 Setup on a database the kit was never in: 11 tables created, columns, 8 privileges, the unique index and update guard on voucher.Vnum",
+  "ok": true,
+  "detail": "(200, ['Table tpd_meta created.', 'Table tpd_bank_account created.', 'Table tpd_supplier_bank created.'])"
+ },
+ {
+  "test": 47,
+  "name": "B2 ledger mapping saved (gain, loss, bank charges)",
+  "ok": true,
+  "detail": "Exchange-rate differences will be posted: gains to 4-8-109-31901 TEST Realised Exchange Gain, losses to 4-8-109-31902 TEST Realised Exchange Loss. Bank charges will be posted to 4-8-109-31903 TEST Bank Charges (Dr) against the paying account (Cr), per tour line."
+ },
+ {
+  "test": 47,
+  "name": "B3 COVENRO $55: request \u2192 approval \u2192 batch \u2192 voucher 607 \u2192 initiation (charges 150) \u2192 PAID, reconciled",
+  "ok": true,
+  "detail": "[(200, 'Payment Request saved successfully'), (200, 'Approved for payment. It now waits under COVENRO VEYANGODA in Supplier Payables '), (200, 'Batch SB-00001 created \u2014 Payment Voucher No. 607 for COVENRO VEYANGODA (1 paymen'), (200, 'Bank payment initiated \u2014 awaiting bank approval. USD 55.00 \u00d7 327.25 (2026-10-11)'), (200, 'Paid. Payment Voucher No. 607 is locked: USD 55.00 \u00d7 327.25 (2026-10-11) ="
+ },
+ {
+  "test": 47,
+  "name": "B4 driver advance LKR 20,000 paid individually: voucher 608 PAID (zero charges)",
+  "ok": true,
+  "detail": "[(200, 'Payment Request saved successfully'), (200, 'Approved for payment. It now waits under MR. UDAYA KUMARA in Supplier Payables u'), (200, 'Paid individually (Driver advance): batch SB-00002 created \u2014 Payment Voucher No.'), (200, 'Bank payment initiated \u2014 awaiting bank approval. LKR 20,000.00. The bank approve'), (200, 'Paid. Payment Voucher No. 608 is locked: LKR 20,000.00; no bank charges; t"
+ },
+ {
+  "test": 47,
+  "name": "B5 Kassapa $70 approved and WAITING in Supplier Payables (no voucher yet) \u2014 the state a rollback could catch",
+  "ok": true,
+  "detail": "(200, \"Approved for payment. It now waits under Kassapa Lions Rock in Supplier Payables until management creates the supplier's payment batch \u2014 provisional LKR 22,907.50 at 327.25 (the final LKR follows the rate of the actual payment date).\")"
+ },
+ {
+  "test": 47,
+  "name": "B6 financial records in place before the rollback: 2 paid vouchers, batches, locks, request figures, FX/charge rows, audit",
+  "ok": true,
+  "detail": "{'voucher': '607', 'v_inv': '611', 'payment_request': '3', 'account_runing': '2402', 'tpd_batch': '2', 'tpd_bank_approval': '2', 'tpd_request_ext': '3', 'tpd_audit': '34', 'tpd_bank_initiation': '2', 'tpd_remittance': '2'}"
+ },
+ {
+  "test": 47,
+  "name": "C1 rollback: the 11 live files restored byte-for-byte; the 18 added files moved aside; the backup folder marked undone",
+  "ok": true,
+  "detail": "(True, 0)"
+ },
+ {
+  "test": 47,
+  "name": "C2 the DATABASE is untouched by the rollback: every financial table byte-for-byte the same (vouchers, lines, requests, ledger, batches, locks, request figures, audit, initiations, remittances)",
+  "ok": true,
+  "detail": "{}"
+ },
+ {
+  "test": 47,
+  "name": "C3 the voucher-number index and update guard remain (they are part of the database, not of the files) \u2014 reversible with DROP INDEX / DROP TRIGGER if ever wanted",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 47,
+  "name": "C4 the PREVIOUS application opens every page that touches these records without error: dashboard, Bank Payment Check, Finalized records, Voucher report, Liability, Trial balance, Complete Tour Record, Bank statement, Accounts filtering (Payment Approval is not opened here: the live page uses the MySQL 8 collation utf8mb4_0900_ai_ci in a raw query, which the MariaDB test server does not have \u2014 a test-server artefact, unchanged by the kit)",
+  "ok": true,
+  "detail": "{}"
+ },
+ {
+  "test": 47,
+  "name": "C5 Finalized records (legacy page) lists both paid vouchers with their bank dates \u2014 the Paid made on the batch page is a normal finalized voucher to the old application",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 47,
+  "name": "C6 Bank Payment Check (legacy page) shows nothing pending for them (both are finalized) and does not error on the desk tables it does not know",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 47,
+  "name": "C7 the legacy dashboard shows COVENRO \"Fully Paid\" (its voucher finalized), the driver advance \"Advance Paid\", and the approved-but-unbatched Kassapa request as \"Pending Payment\" (the old wording for approved, no voucher)",
+  "ok": true,
+  "detail": "{'6-9-11-10626': 'Fully Paid', '6-9-11-11496': 'Pending Payment', '6-9-11-10639': 'Advance Paid'}"
+ },
+ {
+  "test": 47,
+  "name": "C8 the supplier payment, the bank-charge pair and (none here) the exchange pairs are ordinary balanced ledger rows the old reports read (liability / account filtering / trial balance)",
+  "ok": true,
+  "detail": "6-9-11-10626:17998.75:0.00;1-6-8-10380:0.00:17998.75;4-8-109-31903:150.00:0.00;1-6-8-10380:0.00:150.00"
+ },
+ {
+  "test": 47,
+  "name": "C9 a new Cassamara request (made by the administrator \u2014 the old permission filter has no alias for the requester role) approved the LEGACY way creates its voucher at once with the NEXT number (609 = max + 1): the unique index accepts it because the counter is in step",
+  "ok": true,
+  "detail": "(200, 200, 'Payment request accepted successfully', 608, '609')"
+ },
+ {
+  "test": 47,
+  "name": "C10 the legacy authorisation (ledger posted) and legacy Mark Finalized work on it with the update guard in place (the guard only refuses a CHANGE of the number)",
+  "ok": true,
+  "detail": "(200, 'Invoice saved successfully!', 200, 'Marked as finalized')"
+ },
+ {
+  "test": 47,
+  "name": "C11 the legacy voucher cancel (Aflag 3 + reversal rows) runs on it too \u2014 the guard refuses only a change of the number, not other columns",
+  "ok": true,
+  "detail": "(200, 'Voucher and related records processed successfully!', '3')"
+ },
+ {
+  "test": 47,
+  "name": "C12 KNOWN LIMITATION demonstrated: the Kassapa item approved under the kit but not yet batched has no voucher, so the old Bank Payment Check cannot see it (it waits for the kit, or is re-approved \u2014 README \u00a7 Recovery)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 47,
+  "name": "C13 the recovery query (README) lists exactly the stranded item(s): 3152",
+  "ok": true,
+  "detail": "3152"
+ },
+ {
+  "test": 47,
+  "name": "D1 apply again + Setup: files in place, schema already at 6 (\"nothing to do\"), no row touched",
+  "ok": true,
+  "detail": "('/tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/kit/tf-paydesk-r4/before/20261011-000518', {'status': 200, 'notes': ['Already in place; nothing to do.'], 'state': {'version': 6, 'target': 6, 'tables': {'tpd_meta': True, 'tpd_bank_account': True, 'tpd_supplier_bank': True, 'tpd_request_ext': True, 'tpd_bank_initiation': True, 'tpd_bank_approval': True, 'tpd_remittance':"
+ },
+ {
+  "test": 47,
+  "name": "D2 re-applying changes no financial row: the desk tables are byte-for-byte as before (the audit gained only the Setup entry); the rows the legacy screens added meanwhile (1 voucher, 1 line, 1 request, the accrual, the posting and the reversal) are kept",
+  "ok": true,
+  "detail": "{'voucher': ('607|da4c54', '608|2321e3'), 'v_inv': ('611|7fb1f4', '612|bd29d9'), 'payment_request': ('3|2efaddc0', '4|c50d31e7'), 'account_runing': ('2402|395fb', '2408|f0c96'), 'tpd_audit': ('34|464f0ef', '35|01ffdd8')}"
+ },
+ {
+  "test": 47,
+  "name": "D3 the desk shows the paid COVENRO batch with its lock, charges and reconciliation intact",
+  "ok": true,
+  "detail": "('paid', '150.00')"
+ },
+ {
+  "test": 47,
+  "name": "D4 the Kassapa item is back in Supplier Payables, waiting for its batch (the kit restored its flow; nothing was lost or re-created)",
+  "ok": true,
+  "detail": "['6-9-11-11496']"
+ },
+ {
+  "test": 47,
+  "name": "D5 the voucher created the legacy way during the rollback window is shown by the desk as a legacy voucher (cancelled / reversed state), not as a desk batch",
+  "ok": true,
+  "detail": "(609, 'paid')"
+ },
+ {
+  "test": 47,
+  "name": "D6 the Complete Tour Record lists Payment Voucher No. 607 with its bank-charge share again",
+  "ok": true,
+  "detail": ""
+ }
+]

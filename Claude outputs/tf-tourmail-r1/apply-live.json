@@ -1,0 +1,27 @@
+{
+ "mode": "apply",
+ "root": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/avenir",
+ "files": [],
+ "changed": [
+  "app/Config/Routes.php",
+  "app/Controllers/Mail/SendController.php",
+  "app/Controllers/Tour/TourIntakeController.php",
+  "app/Views/layouts/header.php",
+  "app/Views/pages/tour/hotel_bookings.php",
+  "app/Views/pages/tour/hotel_document.php",
+  "app/Views/pages/tour/intake.php"
+ ],
+ "added": [
+  "app/Config/Routes.tourmail.php",
+  "app/Controllers/Tour/TourMailController.php",
+  "app/Libraries/TourFlow/TourMailer.php",
+  "app/Views/layouts/_mail_alert.php",
+  "app/Views/pages/tour/sent_mails.php",
+  "public/assets/tourmail/tour-mails.js"
+ ],
+ "same": [],
+ "changed_since_tested": [],
+ "backup": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/avenir/Claude outputs/tf-tourmail-r1/before/20261010-084209",
+ "verified": true,
+ "differing": []
+}

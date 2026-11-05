@@ -1,0 +1,67 @@
+tf-newgen-1c (Avenir New Generation, step 1c: the reading layer, the grouped Masters menu, the screen names,
+Hotel Incomplete Work in groups) installed 2026-10-06 10:14 (Sri Lanka time), hotfix 1 at 10:19 —
+approved for go-live by Shantha on 6 Oct 2026 ("please deploy all completed and tested work to my local Avenir
+installation, including the full tf-newgen-1c release. Before applying anything, take fresh backups and verify
+checksums. Keep staff permissions unchanged for now").
+
+Seven files (six replaced, one added), each verified by md5 before and after:
+  app/Libraries/TourFlow/Desks.php                   replaced  13774216cd88e21c93d193f016e113c2 -> f8f304bc293cf88203bee3e3c8e5951e  (comments only)
+  app/Views/layouts/tf_ux.php                        added     (new) -> dd633b199da93f4abc4bc60f14bccf99, then hotfix 1 -> ef3053ca4777a5b6e813742c8dfa1ee6
+  app/Views/layouts/tourdesk_bar.php                 replaced  eeaba9427f012d36f0691337c340ac2b -> 8e991b6c775c05535a66b56cb69cc672
+  app/Views/pages/master_files/crew_people.php       replaced  895aa5a26a96ddbe701d0e2dbefdcfb0 -> 235ef292f07bc147e4a6dff3734924ac
+  app/Views/pages/master_files/hotel_work.php        replaced  9562d6ae29d3e5b27f0c06d958c72c0d -> 91508bf14903ef7cfce89aa9bbc01b77
+  app/Views/pages/tour/intake.php                    replaced  24c51f61cce7e9da6480372042d73ad8 -> db408b701c9ede95284257686709d3dc
+  app/Views/pages/tour/transport_ops.php             replaced  af60139454cc1f15974ad6ec5cb6de3b -> bdcf2994565fe2a547dd2fbfa379e920
+No table, column, row, menu entry, privilege or setting was changed. Install now was not needed (schema stays 44,
+desks version 9). No log-out is needed: the bar and the screens changed on the next page load.
+
+Checked before going live (read-only, 10:10):
+  - app\ had 908 files; the six files to replace were exactly the kit's before\ copies; tf_ux.php absent; no 1c kit on
+    the server; no application log since 3 October.
+  - Settings -> Group Privileges recorded for every group: 573 grants in all (System Administrator 165, Management 22,
+    Quotation Desk 1 [Tour Inquiry], Hotel Desk 9, Transport & Crew Guide Allocation Desk 3 [Tour Inquiry, Transport
+    Operations, Ticket Stock], the rest as they were).
+Backups first:
+  - writable\app_backups\app-before-tf-newgen-1c-20261006-044139.tar.gz — the whole app folder, 908 files, 4,422,679
+    bytes, md5 6b174942b69ca17497c9b633dc8a4400, with its .md5 list; unpacked and verified file by file against that list
+    (the six files inside carry the before md5s above). A new folder, nothing copied into writable\tf_backups.
+  - writable\tf_backups\tf-20261006-101238-manual.sql — Admin -> copy of every TourFlow table and the menu / privilege
+    rows at schema 44 (1,582 rows, 793,402 bytes, md5 4ece6ab2a2040e1a1f10d2aa31de187d), written by Avenir itself.
+    (The folder had gone "not writable" again; it was renamed to tf_backups_prev_20261006b — the 05:46 installer copy
+    is in there — and Avenir created tf_backups afresh. Same rule as before: nothing is copied into it from outside.)
+  - A whole-database export was not taken from here (phpMyAdmin is closed to this session); none was needed for a
+    release that changes no data.
+The kit: writable\tf_releases\tf-newgen-1c (22 files, then 23 with DEPLOYED.txt) and tf-newgen-1c.zip, every file
+verified by md5 against the workspace copy (zip md5 8d78e66e325b0e4b924767faf029164e after hotfix 1).
+The change: the seven files copied from the verified kit at 10:14; read back with the release md5s; app\ 909 files;
+the whole-tree md5 list compared with the pre-deployment list: exactly the seven paths differ
+(writable\app_backups\app-after-tf-newgen-1c-20261006-044417.md5 and ...-hotfix1-...md5).
+Read-only checks after install (System Administrator's session in the browser pane):
+  - Tour Inquiry: the bar reads Tour Inquiry · Confirmed Tours · Hotel Bookings · Transport Operations · Tour Board ·
+    Ticket Stock · Admin · Tour Photos · Masters; Tour Inquiry lit with 3 open; the reading layer included once; the lead
+    folded behind "How this works"; no error text, no "not installed".
+  - The Masters menu: Hotels (Hotel Rates, Incomplete Work) · Places, activities & meals (Places & Entrance Fees, Meal
+    Master, Free Visits, Paid Activities & Services, Excursion Rates) · Transport & Guide Services (Transport Rates,
+    Mileage & Allowances, Drivers & Guides, Crew Roles & Quotation Costing) · Pricing (Pricing).
+  - Transport Operations titled "Transport Operations"; Drivers & Guides titled "Drivers & Guides · the Driver & Guide
+    Master · Transport & Guide Services"; Confirmed Tours, Hotel Bookings, Tour Board, Ticket Stock, Admin, Pricing,
+    Hotel Rates, the masters, Tour Payment Dashboard: all 200, no error text, the layer on each Tour Desk screen.
+  - An open inquiry (INQ 1019): the section rail in the side column with 19 sections, 8 folds.
+    HOTFIX 1: on live this screen re-renders its cards after loading its data, and the rail — built before that — pointed
+    at the replaced elements (only 5 of 19 jumps attached, no title foldable). tf_ux.php was corrected so the rail binds
+    again after a re-render (a check for it added to the screen suite: 59 checks, 0 failures on the test copy), the kit
+    updated, the first version kept in the kit's reapplied_over\hotfix1-20261006-044916\, the one file copied at 10:19
+    and read back (ef3053ca…). After it: 19 of 19 jumps attached, 19 titles foldable, one rail.
+  - Hotel Incomplete Work: 313 open items on live in 8 groups, each heading with its count (40 + 1 + 17 + 126 + 27 + 3 +
+    71 + 28 = 313), the red kinds first; the rows with a colour dot, 221 explanations folded behind "more"; the KPI tiles
+    as before; Masters lit on the bar.
+  - Settings -> Group Privileges after: 573 grants, every group identical to the record taken before; the three desks
+    exactly as set this morning. No privilege was granted or removed.
+  - No application log written (writable\logs unchanged); no "not installed" notice anywhere.
+Left for Shantha (unchanged by this release): the Hotel Desk group's five legacy hotel screens (no members today); Tour
+Inquiry on the Transport & Crew Guide Allocation Desk (confirm); the two sidebar entries both named "Tour Inquiry"
+(legacy id 79 and TourFlow id 222); every master, Tour Board, Pricing, special rates, mileage override, crew replacement,
+driver advance approval, bank details and Tour Desk Admin still ungranted to the desks; the two inactive driver records
+to archive after the ledger check; the overnight allowance; 75 driver records to classify; legacy screens kept until told.
+Rollback: writable\tf_releases\tf-newgen-1c\ROLLBACK.bat (the six files back exactly, tf_ux.php aside; nothing in the
+database to undo).

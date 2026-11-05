@@ -1,0 +1,122 @@
+[
+ [
+  "old screen lists the TEST verification account (dummy) up to 2026-09-10 with its tick buttons",
+  true,
+  "(8, '99980302,99980303,99980305,99980306,99980307,99980399,99980301,99980304')"
+ ],
+ [
+  "old screen: ticking the 2026-09-02 row (on/after the first day 2026-09-01) is refused (409) and the reason is shown on screen",
+  true,
+  "(409, '!\\nThe old Bank Reconciliation screen cannot change ledger row 99980305 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Dates before 2026-09-01 can still be reconciled here. Nothing was changed."
+ ],
+ [
+  "old screen: the refused row is not marked (not green) and its flags in the database are unchanged",
+  true,
+  "('rgba(0, 0, 0, 0)', '99980302:1-6-8-29904::0:0,99980303:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-29904::0:0')"
+ ],
+ [
+  "old screen: the 2026-08-28 row (before the first day) can still be ticked (200, bank_rec 1, row green)",
+  true,
+  "(200, '1', 'rgba(52, 179, 10, 0.24)')"
+ ],
+ [
+  "old screen: unticking it puts it back (bank_rec 0); every dummy row's flags as before",
+  true,
+  "(200, '99980302:1-6-8-29904::0:0,99980303:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-29904::0:0', '99980302:1-6-8-29904::0:0,99980303:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,9998"
+ ],
+ [
+  "no script error on the old screen",
+  true,
+  "[]"
+ ],
+ [
+  "new workflow warns: \"Old reconciliation screen: 2 ledger row(s) \u2026 carry its flags\", naming row 99980306 (bank_rec) and 99980307 (moved to the unrealised account)",
+  true,
+  " Old reconciliation screen: 2 ledger row(s) of this account dated from the first day carry its flags.\nThey were set outside this workflow and are left as they are; the old screen now refuses changes for these dates. row 99980306 (2026-09-03, \u22128,000.00: bank_rec); row 99980307 (2026-09-04, \u221212,000.00"
+ ],
+ [
+  "overview: \"Old-screen flags in the period: 2\" on the TEST verification account",
+  true,
+  ""
+ ],
+ [
+  "the warning changed nothing: the simulated flags are still set",
+  true,
+  ""
+ ],
+ [
+  "the simulated flags put back (dummy rows as before)",
+  true,
+  "('99980302:1-6-8-29904::0:0,99980303:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-29904::0:0', '99980302:1-6-8-29904::0:0,99980303:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:"
+ ],
+ [
+  "pending banner 2026-09-01: 25.00 LKR up to this day; correction total 4,550.00 LKR / : 25.00 of 4,550.00 falls up to this day",
+  true,
+  " Pending postings \u2014 the ledger is NOT corrected for this date: 1 approved but not posted (25.00 LKR up to this day; correction total 4,550.00 LKR).\nCorrections covering several days: #23: 25.00 of 4,550.00 falls up to this day. Each correction is counted once; the rest belongs to later days.\nSome it"
+ ],
+ [
+  "pending banner 2026-09-04: 236,050.00 LKR up to this day; correction total 239,550.00 LKR / : 1,050.00 of 4,550.00 falls up to this day",
+  true,
+  " Pending postings \u2014 the ledger is NOT corrected for this date: 2 approved but not posted (236,050.00 LKR up to this day; correction total 239,550.00 LKR).\nCorrections covering several days: #23: 1,050.00 of 4,550.00 falls up to this day. Each correction is counted once; the rest belongs to later day"
+ ],
+ [
+  "pending banner 2026-09-05: 239,550.00 (whole correction falls by this day: no split)",
+  true,
+  " Pending postings \u2014 the ledger is NOT corrected for this date: 2 approved but not posted (239,550.00 LKR).\nSome items are explained only by corrections that are not yet posted. A proposed or approved correction does not change the ledger; Accounts posts it by hand and records the entry here, where i"
+ ],
+ [
+  "corrections: the changed posted entry shows \"verify again\" with a Verify again button for the preparer",
+  true,
+  "#\tKIND / DESCRIPTION\tPROPOSED ENTRY\tAMOUNT\tWHERE IT STANDS\tPROPOSED\tREVIEWED\t\n28\tReceipt on the statement, not in the ledger\nTEST interest credit 6 Sep not in the ledger (dual-role test, dummy)\n\t\nDr TEST Bank LKR verification (dummy) 1-6-8-29904 1,000.00\n\u00a0\u00a0\u00a0Cr TEST Suspense (dummy) 2-9-99-29909 1,00"
+ ],
+ [
+  "Verify again on screen: the entry still matches the approved lines \u2192 posted and verified again (button gone)",
+  true,
+  "('verified', '#\\tKIND / DESCRIPTION\\tPROPOSED ENTRY\\tAMOUNT\\tWHERE IT STANDS\\tPROPOSED\\tREVIEWED\\t\\n28\\tReceipt on the statement, not in the ledger\\nTEST interest credit 6 Sep not in the ledger (dual-role test, dummy)\\n\\t\\nDr TEST Bank LKR verification (dummy) 1-6-8-29904 1,000.00\\n\\xa0\\xa0\\xa0Cr TE"
+ ],
+ [
+  "a correction the dual-role user withdrew reads \"withdrawn by tcdual\" (not as if reviewed)",
+  true,
+  "#\tKIND / DESCRIPTION\tPROPOSED ENTRY\tAMOUNT\tWHERE IT STANDS\tPROPOSED\tREVIEWED\t\n28\tReceipt on the statement, not in the ledger\nTEST interest credit 6 Sep not in the ledger (dual-role test, dummy)\n\t\nDr TEST Bank LKR verification (dummy) 1-6-8-29904 1,000.00\n\u00a0\u00a0\u00a0Cr TEST Suspense (dummy) 2-9-99-29909 1,00"
+ ],
+ [
+  "wording put back and verified again (the dummy entry as before the UI test)",
+  true,
+  "{'status': 200, 'message': 'Ledger entry 99980399 (2026-09-05) was checked again: it still matches the approved correction, and its current state is now the verified one.', 'csrf': '30aeb99711be2c31c62e88c06fc91cda'}"
+ ],
+ [
+  "no script error on the preparer's pages",
+  true,
+  "[]"
+ ],
+ [
+  "dual-role user (preparer + reviewer, not administrator) prepares a daily record for 2 Sep",
+  true,
+  "{'status': 200, 'message': 'Daily record prepared: All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00) \u2014 1 of them posted after this date.', 'csrf': 'cb50cde5ef7224ba87f3ab1e432ef5a7', 'id': 58}"
+ ],
+ [
+  "their own record has no \"Reviewed\" or \"Return\" button",
+  true,
+  "<td>58</td><td class=\"mono small2 text-nowrap\">2026-09-02</td><td><span class=\"pill s-prepared\">current</span><div class=\"small2 warn\">not posted now: 1 approved but not posted (25.00) \u2014 1 of them posted after this date</div></td><td><span title=\"All items explained \u2014 ledger not yet corrected (await"
+ ],
+ [
+  "forcing the review from the page is refused by the server (403) with the reason shown",
+  true,
+  "({'status': 403, 'message': 'The daily record must be reviewed by someone other than the person who prepared it.', 'csrf': '6cfecc1a7ffa181044495f2dd798d331'}, 'Not done\\nThe daily record must be reviewed by someone other than the person who prepared it.\\nOK')"
+ ],
+ [
+  "another reviewer reviews it (200)",
+  true,
+  "{'status': 200, 'message': 'Daily record reviewed. Note: the ledger is not yet corrected for the corrections listed on it.', 'csrf': '05b81d835bb4d1471177b622fe0efde7'}"
+ ],
+ [
+  "no script error on the dual-role user's or the reviewer's pages",
+  true,
+  "([], [])"
+ ],
+ [
+  "the real ledger is unchanged (rows, sums, every row's reconciliation flags)",
+  true,
+  "('2570|63467938.20|63467938.20|5549154554938', '2570|63467938.20|63467938.20|5549154554938')"
+ ]
+]

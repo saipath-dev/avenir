@@ -1,0 +1,11 @@
+  ok   System Administrator signs in
+  ok   98 requests made by the 29 screens (documents, XHR, fetch): none answered 4xx/5xx
+   documents 29, data requests 69, distinct endpoints 40
+  ok   every Tour Operations GET data endpoint the screens use answers valid JSON when asked again (42 asked)
+   application log lines of level CRITICAL/ERROR so far today (the copy's log): 3
+  ok   guard: admin — 25 menu URLs answer exactly as the privileges table says (25 open)
+  ok   guard: quote — 25 menu URLs answer exactly as the privileges table says (2 open)
+  ok   guard: transport — 25 menu URLs answer exactly as the privileges table says (4 open)
+  ok   guard: hotel — 25 menu URLs answer exactly as the privileges table says (3 open)
+  ok   guard: signed out, no Tour Desk screen opens
+8 ok, 0 failed

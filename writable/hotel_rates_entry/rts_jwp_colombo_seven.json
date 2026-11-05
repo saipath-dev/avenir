@@ -1,0 +1,449 @@
+{
+ "key": "rts_jwp_colombo_seven",
+ "hotel": {
+  "acc": "6-9-11-10592",
+  "name": "Jetwing Colombo Seven",
+  "location": "Colombo",
+  "chain": "Jetwing Hotels (Premium)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10592",
+   "name": "Jetwing Colombo Seven"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contracted rates – Premium Hotels (revised)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel Agent",
+   "tier": "all",
+   "hotel_reference": "Premium Hotels – Travel Agent Contracted Rates – Winter 2026-2027 (Revised)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "child_policy_text": "Child Policy - (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 23 (Per kid/Per night on BB including extra bed), USD 35 (Per kid/Per night on HB including extra bed), USD 47 (Per kid/Per night on FB including extra bed) (Not Applicable for Triple Occupancy); USD 8 (Per kid/Per night on BB excluding extra bed), USD 20 (Per kid/Per night on HB excluding extra bed), USD 32 (Per kid/Per night on FB excluding extra bed). Baby cot on request can be provided free of charge. (Up to one cot per room)",
+   "guide_policy_text": "Driver Accommodation – Not Available. The Guide/Tour leader policy on the terms page is only applicable at Jetwing Blue / Beach / Sea / Lake / St. Andrew's — no guide rate for this hotel.",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+   "terms_text": "JETWING COLOMBO SEVEN (Colombo): Deluxe (64 Rooms), Super Deluxe (16 Rooms), Studio Rooms (21 Rooms). Single Reduction – USD 15 / Triple Supplement – USD 30 (On BB). Single Reduction – USD 40 / Triple Supplement – USD 55 (On HB). Single Reduction – USD 63 / Triple Supplement – USD 78 (On FB). No special offers or value additions printed. Driver Accommodation – Not Available. Reservations +94 112 550 200 / +94 707 130 384, resv.colomboseven@jetwinghotels.com. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | VALUE ADDITIONS POLICY: A maximum of 03 value adds can be used at each property. Experiences like Tours/Walks/Demonstrations etc. will be arranged in common groups depending on the occupancy for the day. Meal upgrade offers are valid only for FIT bookings. Food & Beverage discounts are not combinable with other promotions, offers, vouchers, outlets or seasonal deals. Food & Beverage discounts will not be applicable for liquor & tobacco. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+   "notes": "Transcribed from \"Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf\" (20 pages), saved to the winter RTS folder on 2 Oct 2026. Currency \"USD nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy; single/triple derived from the printed reductions/supplements (see row notes). Market clause \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner or rate code is printed. Early-bird / value-addition / meal-upgrade offers are in Offers (chosen by staff, never applied automatically). Two periods: 01 Nov – 25 Dec 2026 & 11 Jan – 30 Apr 2027, and the 26 Dec – 10 Jan Super Peak. Hotel-specific single reductions / triple supplements (15/30 BB, 40/55 HB, 63/78 FB) and child rates (23/35/47 with extra bed, 8/20/32 without). Room names: \"Deluxe (64 Rooms)\" → existing \"Deluxe\" (the hotel also has a \"Deluxe Rooms\" record), \"Studio Rooms (21 Rooms)\" → existing \"Studio Rooms\", \"Super Deluxe (16 Rooms)\" is new. No early-bird or value-addition offers. Standard Jetwing cancellation and payment (no peak terms for this hotel).",
+   "source_file": "Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "room_count": 64,
+    "max_children": 2,
+    "description": "Printed \"Deluxe (64 Rooms)\""
+   },
+   {
+    "name": "Super Deluxe",
+    "priced_as": "base",
+    "room_count": 16,
+    "max_children": 2,
+    "description": "Printed \"Super Deluxe (16 Rooms)\""
+   },
+   {
+    "name": "Studio Rooms",
+    "priced_as": "base",
+    "room_count": 21,
+    "max_children": 2,
+    "description": "Printed \"Studio Rooms (21 Rooms)\""
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 25 Dec 2026 & 11 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-25"
+     },
+     {
+      "from": "2027-01-11",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 105,
+      "dbl": 120,
+      "tpl": 150,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 120; SGL = DBL − single reduction USD 15; TPL = DBL + triple supplement USD 30"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 130,
+      "dbl": 170,
+      "tpl": 225,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 170; SGL = DBL − single reduction USD 40; TPL = DBL + triple supplement USD 55"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 153,
+      "dbl": 216,
+      "tpl": 294,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 216; SGL = DBL − single reduction USD 63; TPL = DBL + triple supplement USD 78"
+     },
+     {
+      "room_type": "Super Deluxe",
+      "meal_plan": "BB",
+      "sgl": 120,
+      "dbl": 135,
+      "tpl": 165,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 135; SGL = DBL − single reduction USD 15; TPL = DBL + triple supplement USD 30"
+     },
+     {
+      "room_type": "Super Deluxe",
+      "meal_plan": "HB",
+      "sgl": 145,
+      "dbl": 185,
+      "tpl": 240,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 185; SGL = DBL − single reduction USD 40; TPL = DBL + triple supplement USD 55"
+     },
+     {
+      "room_type": "Super Deluxe",
+      "meal_plan": "FB",
+      "sgl": 168,
+      "dbl": 231,
+      "tpl": 309,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 231; SGL = DBL − single reduction USD 63; TPL = DBL + triple supplement USD 78"
+     },
+     {
+      "room_type": "Studio Rooms",
+      "meal_plan": "BB",
+      "sgl": 140,
+      "dbl": 155,
+      "tpl": 185,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 155; SGL = DBL − single reduction USD 15; TPL = DBL + triple supplement USD 30"
+     },
+     {
+      "room_type": "Studio Rooms",
+      "meal_plan": "HB",
+      "sgl": 165,
+      "dbl": 205,
+      "tpl": 260,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 205; SGL = DBL − single reduction USD 40; TPL = DBL + triple supplement USD 55"
+     },
+     {
+      "room_type": "Studio Rooms",
+      "meal_plan": "FB",
+      "sgl": 188,
+      "dbl": 251,
+      "tpl": 329,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 251; SGL = DBL − single reduction USD 63; TPL = DBL + triple supplement USD 78"
+     }
+    ]
+   },
+   {
+    "name": "26 Dec 2026 – 10 Jan 2027 (Super Peak Period)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-26",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 120,
+      "dbl": 135,
+      "tpl": 165,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 135; SGL = DBL − single reduction USD 15; TPL = DBL + triple supplement USD 30"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 145,
+      "dbl": 185,
+      "tpl": 240,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 185; SGL = DBL − single reduction USD 40; TPL = DBL + triple supplement USD 55"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 168,
+      "dbl": 231,
+      "tpl": 309,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 231; SGL = DBL − single reduction USD 63; TPL = DBL + triple supplement USD 78"
+     },
+     {
+      "room_type": "Super Deluxe",
+      "meal_plan": "BB",
+      "sgl": 135,
+      "dbl": 150,
+      "tpl": 180,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 150; SGL = DBL − single reduction USD 15; TPL = DBL + triple supplement USD 30"
+     },
+     {
+      "room_type": "Super Deluxe",
+      "meal_plan": "HB",
+      "sgl": 160,
+      "dbl": 200,
+      "tpl": 255,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 200; SGL = DBL − single reduction USD 40; TPL = DBL + triple supplement USD 55"
+     },
+     {
+      "room_type": "Super Deluxe",
+      "meal_plan": "FB",
+      "sgl": 183,
+      "dbl": 246,
+      "tpl": 324,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 246; SGL = DBL − single reduction USD 63; TPL = DBL + triple supplement USD 78"
+     },
+     {
+      "room_type": "Studio Rooms",
+      "meal_plan": "BB",
+      "sgl": 155,
+      "dbl": 170,
+      "tpl": 200,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 170; SGL = DBL − single reduction USD 15; TPL = DBL + triple supplement USD 30"
+     },
+     {
+      "room_type": "Studio Rooms",
+      "meal_plan": "HB",
+      "sgl": 180,
+      "dbl": 220,
+      "tpl": 275,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 220; SGL = DBL − single reduction USD 40; TPL = DBL + triple supplement USD 55"
+     },
+     {
+      "room_type": "Studio Rooms",
+      "meal_plan": "FB",
+      "sgl": 203,
+      "dbl": 266,
+      "tpl": 344,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 266; SGL = DBL − single reduction USD 63; TPL = DBL + triple supplement USD 78"
+     }
+    ],
+    "notes": "Super Peak Period"
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Free of charge (maximum up to 02 children). Baby cot on request free of charge (up to one cot per room)."
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 23,
+    "max_children": 2,
+    "note": "Per kid per night on BB including extra bed; not applicable for triple occupancy"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 35,
+    "max_children": 2,
+    "note": "Per kid per night on HB including extra bed; not applicable for triple occupancy"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 47,
+    "max_children": 2,
+    "note": "Per kid per night on FB including extra bed; not applicable for triple occupancy"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 8,
+    "max_children": 2,
+    "note": "Per kid per night on BB excluding extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 20,
+    "max_children": 2,
+    "note": "Per kid per night on HB excluding extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "FB",
+    "amount": 32,
+    "max_children": 2,
+    "note": "Per kid per night on FB excluding extra bed"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 5,
+    "pct": 100,
+    "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

@@ -1,0 +1,22 @@
+Isolated test instance http://localhost/avenir_rv/ (database avenir_restore_verify_20261011, MySQL 8.4.7, WAMP PHP), 11 Oct 2026 22:20.
+Dummy data only (accounts TEST LKR/USD/JPY, ledger rows 99980001-99980202). Test logins only. 56/56 passed.
+ok login / no access (data 403, change 403): TestHotelRes, TestTourRes, TestTransport, TestOperations
+ok Bank Authoriser: view only — sees the accounts, masked; cannot propose (403)
+ok a change without the CSRF token is refused (403)
+ok LKR, USD, JPY: mapping proposed by Accounts; Accounts cannot confirm (403); confirmed by the Management Approver
+ok LKR statement uploaded (CSV) and kept as a draft, then accepted; USD statement typed in and accepted; JPY statement uploaded and accepted
+ok LKR before matching: bank 3,893,106.00, book 3,547,655.00, opening difference 150,000.00 → "Unreconciled — insufficient data"
+ok suggestions found for PV 90001, PV 90002 (two rows), the cheque of 30 Aug and the transfer; all four matched
+ok matched with the 1.00 rounding difference; matched the 75,000 payment
+ok second 75,000 row classified duplicate-looking; 40,000 row classified timing
+ok 4 bank charges proposed as one correction (4,550.00); cash deposit proposed as a correction; Accounts cannot approve (403)
+ok the USD → LKR transfer is suggested and recorded: rate obtained 300, day rate 301, difference −10,000.00
+ok JPY line matched exactly
+ok corrections 1, 2, 3 approved by the Management Approver; not posted by the system
+ok LKR 5 Sep: difference 345,451.00 fully explained → "Reconciled — all items explained (awaiting review)"
+ok USD 5 Sep: difference 85,470.00 fully explained (rate differences −7,500.00, charge −4,530.00, revaluation 97,500.00)
+ok JPY 5 Sep: difference 32,000.00 fully explained (revaluation)
+ok Accounts prepares the LKR daily record; Accounts cannot review it (403); the Management Approver reviews it → "Reconciled — reviewed"
+ok an accepted statement with matches cannot be voided (409)
+After the run: the real ledger rows of the test database unchanged (count, sums and a checksum of every row incl. aflag, bank_rec, bankst_flag, BankFlg);
+dummy ledger rows unchanged (15 rows, Dr 22,904,000.00, Cr 3,452,345.00); every action and refusal in tpd_audit by the test login that did it.

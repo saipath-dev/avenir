@@ -1,0 +1,685 @@
+{
+    "key": "thema_deewara",
+    "hotel": {
+        "acc": "6-9-11-11788",
+        "name": "Deewara Tangalle",
+        "location": "Tangalle",
+        "chain": "Thema Collection",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:21"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Deewara Tangalle"
+        },
+        "contract": {
+            "name": "Summer 2026 & Winter 2026/27 travel agent contract",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "contract_date": "2026-08-15",
+            "valid_from": "2026-08-20",
+            "valid_to": "2027-04-30",
+            "taxes_included": 1,
+            "tax_note": "Net inclusive of 10% service charge and applicable taxes (NOT a VAT registered entity)",
+            "received_at": "2026-09-11",
+            "notes": "Deewara Gedara = whole house of 3 garden deluxe rooms, priced per night for 5 / 6 / 7 pax (UNIT column = 5 pax; see row note)",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "source_type": "email",
+            "source_file": "WINTER 2026/2027 RATES - DEEWARA TANGALLA - THEMA COLLECTION (e-mail), Deewara Tangalle - Summer 2026 Winter 2026-27 - Travel Agents.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Garden Deluxe",
+                "priced_as": "base",
+                "room_count": 3,
+                "bed_config": "queen (18.5–24.5 m²); one 29 m² with extra single",
+                "max_adults": 3,
+                "max_children": 1
+            },
+            {
+                "name": "Courtyard",
+                "priced_as": "base",
+                "room_count": 2,
+                "size_sqm": 44,
+                "bed_config": "1 queen + 1 single",
+                "max_adults": 3,
+                "max_children": 1
+            },
+            {
+                "name": "Deluxe",
+                "priced_as": "base",
+                "room_count": 3,
+                "bed_config": "queen (26.5–29.5 m²) or 2 singles (38 m²)",
+                "max_adults": 2
+            },
+            {
+                "name": "Super Deluxe Sea View",
+                "priced_as": "base",
+                "room_count": 2,
+                "bed_config": "1 king (27–34 m²)",
+                "max_adults": 2
+            },
+            {
+                "name": "Suite with Attic Sea View",
+                "priced_as": "base",
+                "room_count": 1,
+                "size_sqm": 66.7,
+                "bed_config": "1 king + 2 singles",
+                "max_adults": 4,
+                "max_children": 2
+            },
+            {
+                "name": "Deewara Gedara (3 garden deluxe rooms, 5–7 pax)",
+                "priced_as": "base",
+                "room_count": 1,
+                "unit_pax_max": 7,
+                "description": "Whole house; UNIT price at 5 pax"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "20 Aug – 31 Oct 2026 (summer)",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-08-20",
+                        "to": "2026-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Garden Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 120,
+                        "dbl": 130,
+                        "tpl": 170,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Courtyard",
+                        "meal_plan": "BB",
+                        "sgl": 145,
+                        "dbl": 155,
+                        "tpl": 195,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 165,
+                        "dbl": 175,
+                        "tpl": 215,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Super Deluxe Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 200,
+                        "dbl": 210,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Suite with Attic Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 220,
+                        "dbl": 230,
+                        "tpl": 270,
+                        "quad": 310,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deewara Gedara (3 garden deluxe rooms, 5–7 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 340,
+                        "note": "5 pax 340, 6 pax 360, 7 pax 380 per night"
+                    }
+                ]
+            },
+            {
+                "name": "01 Nov – 19 Dec 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-19"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Garden Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 200,
+                        "dbl": 210,
+                        "tpl": 275,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Courtyard",
+                        "meal_plan": "BB",
+                        "sgl": 225,
+                        "dbl": 235,
+                        "tpl": 300,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 245,
+                        "dbl": 255,
+                        "tpl": 320,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Super Deluxe Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 280,
+                        "dbl": 290,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Suite with Attic Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 300,
+                        "dbl": 310,
+                        "tpl": 375,
+                        "quad": 415,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deewara Gedara (3 garden deluxe rooms, 5–7 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 560,
+                        "note": "5 pax 560, 6 pax 580, 7 pax 600 per night"
+                    }
+                ]
+            },
+            {
+                "name": "20 Dec – 15 Jan (festive)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-20",
+                        "to": "2027-01-15"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Garden Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 240,
+                        "dbl": 250,
+                        "tpl": 315,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Courtyard",
+                        "meal_plan": "BB",
+                        "sgl": 265,
+                        "dbl": 275,
+                        "tpl": 340,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 285,
+                        "dbl": 295,
+                        "tpl": 360,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Super Deluxe Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 320,
+                        "dbl": 330,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Suite with Attic Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 340,
+                        "dbl": 350,
+                        "tpl": 415,
+                        "quad": 455,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deewara Gedara (3 garden deluxe rooms, 5–7 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 670,
+                        "note": "5 pax 670, 6 pax 690, 7 pax 710 per night"
+                    }
+                ]
+            },
+            {
+                "name": "16 Jan – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-16",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Garden Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 200,
+                        "dbl": 210,
+                        "tpl": 275,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Courtyard",
+                        "meal_plan": "BB",
+                        "sgl": 225,
+                        "dbl": 235,
+                        "tpl": 300,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 245,
+                        "dbl": 255,
+                        "tpl": 320,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Super Deluxe Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 280,
+                        "dbl": 290,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Suite with Attic Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 300,
+                        "dbl": 310,
+                        "tpl": 375,
+                        "quad": 415,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deewara Gedara (3 garden deluxe rooms, 5–7 pax)",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 560,
+                        "note": "5 pax 560, 6 pax 580, 7 pax 600 per night"
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 25,
+                "note": "Dinner supplement"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 22,
+                "note": "Lunch supplement"
+            },
+            {
+                "from": "BB",
+                "to": "RO",
+                "adult": -18,
+                "note": "Breakfast price (room only derived)"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 18
+            },
+            {
+                "meal": "lunch",
+                "adult": 22
+            },
+            {
+                "meal": "dinner",
+                "adult": 25
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (BB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 95,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (HB/FB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 70,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (BB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 95,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (HB/FB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 70,
+                "compulsory": 1,
+                "child_pct": 50
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Sharing parents bed"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "meal_plan": "BB",
+                "amount": 30,
+                "note": "Inclusive of extra bed"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "meal_plan": "HB",
+                "amount": 40,
+                "note": "Inclusive of extra bed"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "meal_plan": "FB",
+                "amount": 50,
+                "note": "Inclusive of extra bed"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [
+            {
+                "kind": "honeymoon",
+                "name": "Honeymoon / anniversary offer",
+                "min_nights": 2,
+                "conditions": "Booked on HB or FB: fruit basket & décor on arrival, one candlelit dinner per stay (some hotels add a 30-min spa treatment)"
+            }
+        ],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-08-20",
+                "date_to": "2026-12-19",
+                "tier": "fit",
+                "days_from": 15,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-08-20",
+                "date_to": "2026-12-19",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 16,
+                "charge_pct": 80,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-08-20",
+                "date_to": "2026-12-19",
+                "tier": "fit",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 50,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2027-01-16",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 15,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2027-01-16",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 16,
+                "charge_pct": 80,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2027-01-16",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 50,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-08-20",
+                "date_to": "2026-12-19",
+                "tier": "group",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-08-20",
+                "date_to": "2026-12-19",
+                "tier": "group",
+                "days_from": 29,
+                "days_to": 22,
+                "charge_pct": 80,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-08-20",
+                "date_to": "2026-12-19",
+                "tier": "group",
+                "days_from": 45,
+                "days_to": 30,
+                "charge_pct": 50,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2027-01-16",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2027-01-16",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 29,
+                "days_to": 22,
+                "charge_pct": 80,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2027-01-16",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 45,
+                "days_to": 30,
+                "charge_pct": 50,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "tier": "fit",
+                "days_from": 30,
+                "days_to": 22,
+                "charge_pct": 80,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "tier": "fit",
+                "days_from": 45,
+                "days_to": 31,
+                "charge_pct": 50,
+                "max_pax": 14
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "tier": "group",
+                "days_from": 45,
+                "days_to": 31,
+                "charge_pct": 80,
+                "min_pax": 15
+            },
+            {
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "tier": "group",
+                "days_from": 60,
+                "days_to": 46,
+                "charge_pct": 50,
+                "min_pax": 15
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 30,
+                "pct": 100,
+                "note": "1-14 pax"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 45,
+                "pct": 100,
+                "note": "14+ pax"
+            },
+            {
+                "applies": "all",
+                "kind": "advance",
+                "pct": 50,
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "note": "50% advance for festive bookings, credit and non-credit agents"
+            },
+            {
+                "applies": "all",
+                "kind": "interest",
+                "pct": 2,
+                "note": "Late payments 2% per month"
+            },
+            {
+                "applies": "all",
+                "kind": "surcharge",
+                "pct": 3.25,
+                "note": "Credit card bank charge"
+            },
+            {
+                "applies": "all",
+                "kind": "surcharge",
+                "pct": 2.5,
+                "note": "SSCL on LKR payments"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

@@ -1,0 +1,6 @@
+Test copy only (workspace database avenir_test, host 127.0.0.1:8080). These accounts do not exist on live.
+tcadmin / tc-admin-2026        group 1 System Administrator, user_role 1
+tcquote / tc-desk-2026         group 26 Quotation Desk
+tctransport / tc-desk-2026     group 28 Transport & Crew Guide Allocation Desk
+tchotel / tc-desk-2026         group 27 Hotel Desk
+tcmgmt / tc-desk-2026         group 21 Management (holds the Tour Desk screens and masters, not the bank details)

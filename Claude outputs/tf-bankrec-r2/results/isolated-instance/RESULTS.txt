@@ -1,0 +1,95 @@
+tf-bankrec-r2 - isolated test instance (http://localhost/avenir_rv/, database avenir_restore_verify_20261011), 12 Oct 2026
+Run with the department test logins in two browser sessions (localhost and 127.0.0.1); dummy data only.
+
+Before: demonstration data equal to sql/demo-snapshot-r1-20261012 (row counts of all 13 tables); schema version 1.
+Upgrade (sql/upgrade-v2-test-bed.sql): schema version 2; claims 21 = matched/classified items 21.
+Dummy data (sql/dummy-data-r2-verification.sql): verification account id 4, 7 dummy ledger rows.
+
+  ok   A LKR 5 Sep under r2 (D10): the cheque of 30 Aug cleared but is not an accepted opening item → "Unreconciled — insufficient data"
+  ok   A the record reviewed under r1 (#1) is flagged "changed since review — re-review needed"; its snapshot is kept
+  ok   A USD 5 Sep: the two exchange-rate differences recorded under r1 without an explanation are "to explain" → items to explain
+  ok   A JPY 5 Sep: still explained (revaluation 32,000.00 shown)
+  ok   A the approved corrections are shown "Approved — not posted (ledger not corrected)"
+  ok   A overview: "Re-review needed" flag on the LKR account
+  ok   C1 D10: the cheque of 30 Aug is listed among the ledger rows before the first day (effect +150,000.00; cleared 2 Sep)
+  ok   C1 the preparer proposes it as an opening outstanding item
+  ok   C1 the reviewer accepts it
+  ok   C1 day 1 now reconciles: opening difference explained (remaining 0.00, 150,000.00 outstanding); 5 Sep: cleared on 2 Sep; both "ledger not yet corrected"
+  ok   C2 Check: no errors; categories payment 2, charge 1, receipt 1; closing 3,893,081.00; nothing kept
+  ok   C2 kept as a draft and accepted (statement 4)
+  ok   C3 D9: the 6 Sep payment PV 90004 is suggested (high) for the timing item 99980009 — no need to clear it first
+  ok   C3 accepted: matched; the timing classification is cleared by the match (kept in the record)
+  ok   C4 8 Sep: bank 3,893,081.00, book 3,547,655.00, difference 345,426.00 explained to 0.00; 3 items to explain (charge 25, receipt 100,000, payment 60,000)
+  ok   C5 the three items explained: charge and receipt proposed as corrections, the payment classified as timing
+  ok   C5 8 Sep → "All items explained — ledger not yet corrected — 2 correction(s) awaiting approval (100,025.00); 2 approved but not posted (239,550.00)"
+  ok   C6 the preparer prepares the 8 Sep record
+  ok   C6 the preparer cannot review it (403)
+  ok   C6 the reviewer approves both corrections (not posted) and reviews the record → "Reviewed — ledger not yet corrected — 4 approved but not posted (339,575.00)"
+  ok   C7 5 Sep prepared again and re-reviewed → review current
+  ok   C8 USD: the two exchange-rate differences explained; the record needs the revaluation explained (400 without); reviewed → "Reviewed — ledger not yet corrected" (USD charge approved, not posted)
+  ok   B verification account: mapping proposed and confirmed
+  ok   B statement 1 (1–3 Sep) accepted
+  ok   B 1 Sep: opening difference 50,000.00 not explained → insufficient
+  ok   B both cheques proposed; the same row again refused (409); a row on/after the first day refused (400); the preparer cannot accept (403)
+  ok   B partial clearing: refused while the timing classification is not confirmed (409); recorded once confirmed (rest −40,000.00)
+  ok   B 2026-09-01: bank − book 49975.00 explained to 0.00; cheques outstanding/outstanding
+  ok   B 2026-09-02: bank − book -25025.00 explained to 0.00; cheques outstanding/outstanding
+  ok   B 3 Sep: 4,975.00 = cheque 000202 outstanding 30,000.00 − charge 25.00 − partial rest 40,000.00 + timing 15,000.00; cheque 000201 cleared
+  ok   B 3 Sep reviewed while the charge correction is only proposed → "Reviewed — ledger not yet corrected — 1 correction(s) awaiting approval (25.00)"
+  ok   B approving the correction afterwards keeps the review current (posting progress only); now "approved but not posted"
+  ok   B statement 2 (4–5 Sep) kept as a draft (to be accepted by two sessions at once)
+  ok   B D9: the timing item PV 90011 is suggested (high) with "accepting clears the classification"; the 5 Sep line completes the partial match
+  ok   B D9: matching without confirming the timing classification is refused (409); accepted with it → cleared by the match
+  ok   B undo restores the timing classification as first recorded (same classification, classifier, time, expected 2026-09-04)
+  ok   B reopening: matched again; the history reads cleared → restored → cleared
+  ok   B the reviewer cannot review a record whose data changed after it was prepared (409); nothing reviewed
+  ok   B prepared again (record 7, to be reviewed by two sessions at once)
+  ok   B 4 Sep reviewed once; review current
+  ok   B a matched ledger row changed after review → "changed since review: ledger rows" (re-review needed); day insufficient; the reviewed snapshot unchanged
+  ok   B the dummy row put back exactly → the review is current again
+  ok   B the partial match is completed by the 5 Sep line; the reviewed 3 Sep stays current with the same figures
+  ok   B undoing the completion makes the partial match active again; completed again
+  ok   B opening items 2026-09-01: cheque 000202 outstanding, cheque 000201 outstanding; bank − book 49975.00 explained to 0.00
+  ok   B opening items 2026-09-02: cheque 000202 outstanding, cheque 000201 outstanding; bank − book -25025.00 explained to 0.00
+  ok   B opening items 2026-09-03: cheque 000202 outstanding, cheque 000201 cleared; bank − book 4975.00 explained to 0.00
+  ok   B opening items 2026-09-04: cheque 000202 outstanding, cheque 000201 cleared; bank − book -10025.00 explained to 0.00
+  ok   B opening items 2026-09-05: cheque 000202 outstanding, cheque 000201 cleared; bank − book 29975.00 explained to 0.00
+  ok   B the reviewed 5 Sep record keeps the pending posting (1 approved, not posted: 25.00) and shows it now
+  ok   B recording a posting with an entry that does not match the approved lines is refused (409); nothing recorded
+  ok   B four eyes: the proposer cannot accept (403); the reviewer cannot withdraw (403) or match (403); the proposer withdraws (200)
+  ok   B view-only: cannot propose (403) or explain (403); can read candidates (200)
+  ok   TestHotelRes: no access (403 on data, candidates and explanations)
+  ok   TestTourRes: no access (403 on data, candidates and explanations)
+  ok   TestTransport: no access (403 on data, candidates and explanations)
+  ok   TestOperations: no access (403 on data, candidates and explanations)
+57/57 passed
+
+Two sessions at once:
+  duplicate matches (2 sessions × 5)               [200, 409, 409, 409, 409, 409, 409, 409, 409, 409]
+  duplicate acceptance                             [200, 409]
+  match vs classify                                [200, 409]
+  two reviewers at once                            [200, 409]
+  conflicting edits (version 0 twice)              [200, 409]
+  two drafts of the same period accepted at once   [200, 409]
+  conflicting rate edits                           [200, 409]
+
+First attempt of the 6-8 Sep demonstration (test-script URL with a trailing slash; WAMP redirect; no security token):
+  ok C1 D10: the cheque of 30 Aug is listed among the ledger rows before the first day (effect +150,000.00; cleared 2 Sep)
+  FAIL C1 the preparer proposes it as an opening outstanding item
+  FAIL C1 the reviewer accepts it
+  FAIL C1 day 1 now reconciles: opening difference explained (remaining 0.00, 150,000.00 outstanding); 5 Sep: cleared on 2 Sep; both "ledger not yet corrected"
+  FAIL C2 Check: no errors; categories payment 2, charge 1, receipt 1; closing 3,893,081.00; nothing kept
+  FAIL C2 kept as a draft and accepted (statement undefined)
+  FAIL C3 D9: the 6 Sep payment PV 90004 is suggested (high) for the timing item 99980009 — no need to clear it first
+  -> all its changes were refused (nothing saved); script fixed; demonstration re-run, all passed.
+
+Ledger check values (count | sum Dr | sum Cr | sum of CRC32 over ID, L_Code, Dr, Cr, Discription, Date, aflag, bank_rec, bankst_flag, BankFlg, Recpt_No, Chk_No):
+  export (reference), real rows:                    11364|965763907.13|965314763.93|24383521306171
+  development avenir, before and after:             11364|965763907.13|965314763.93|24383521306171
+  isolated instance, real rows, before and after:   11364|965763907.13|965314763.93|24383521306171
+  isolated instance, all but the 7 new dummy rows:  11383|988673607.13|968772808.93|24425814230570 (before = after)
+  the 7 verification dummy rows at the end:          7|590000.00|85000.00|14102896273 (= the same SQL loaded in the cloud copy)
+
+Database checks at the end: claims 34 = matched/classified items 34; no statement line or ledger row in two active matches;
+one "accepted" audit row per statement; one "reviewed" audit row for record 7; audit rows only by the test logins and the
+upgrade (claude-technical, run in phpMyAdmin in the signed-in session); development unchanged (r1 files, schema 1, no rows).

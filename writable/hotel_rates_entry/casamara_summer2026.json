@@ -1,0 +1,217 @@
+{
+ "key": "casamara_summer2026",
+ "hotel": {
+  "acc": "6-9-11-11047",
+  "name": "Hotel Casamara",
+  "location": "Kandy",
+  "chain": "Senkadagala Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11047",
+   "name": "Hotel Casamara"
+  },
+  "contract": {
+   "name": "Summer 2026 – all market rates",
+   "plan_type": "contract",
+   "tier": "all",
+   "valid_from": "2026-05-01",
+   "valid_to": "2026-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "All above rates are nett, non-commissionable & are in US Dollars",
+   "source_type": "email",
+   "received_at": "2026-09-03",
+   "contract_date": "2025-08-01",
+   "contract_type": "Travel agent rates",
+   "hotel_reference": "SUMMER 2026 - ALL MARKET RATES",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 12,
+   "child_policy_text": "Child policy: 0-04 Years FOC & 05-11 Years 50% Discount on Meals.",
+   "guide_policy_text": "Guide Policy: Above 15 paying pax, LTG or FTL free of charge. Guide Rates: BB – $35.00, HB – $40.00, FB – $45.00.",
+   "payment_text": "Payment: Full payment to be made prior to guest arrival, unless you are a credit approved partner.",
+   "terms_text": "SUMMER 2026 - ALL MARKET RATES. Extra Meals: Breakfast – $10.00, Lunch – $12.00, Dinner - $14.00, Extra Bed - $12.00. Child policy: 0-04 Years FOC & 05-11 Years 50% Discount on Meals. Perahera Supplement SGL – $55.00, DBL – $65.00, TPL - $75.00. Guide Policy: Above 15 paying pax, LTG or FTL free of charge. Guide Rates: BB – $35.00, HB – $40.00, FB – $45.00. All above rates are nett, non-commissionable & are in US Dollars. Payment: Full payment to be made prior to guest arrival, unless you are a credit approved partner.",
+   "notes": "Letter of 01 Aug 2025 from Dulip de Alwis, Group General Manager – Hotels, \"SUMMER 2026 - ALL MARKET RATES\"; rooms: Deluxe only. Two printed periods: 01 May – 31 Jul & 01 Sep – 31 Oct 2026 (one season, two ranges) and 01 – 31 Aug 2026 (the Perahera month, priced higher). BB / HB / FB are all printed, so the extra-meal prices are entered as meal prices only, not as meal deltas (the difference between the printed bases is USD 5-15, not the USD 12/14 extra-meal price). The Perahera supplement is printed by occupancy (SGL 55 / DBL 65 / TPL 75) but WITHOUT dates — entered without dates; the Esala Perahera nights must be filled in before the plan is used, otherwise it reads as applying to every night. The sheet does not say the Perahera supplement is compulsory; entered as compulsory because it is charged on those nights.",
+   "source_file": "CASAMARA HOTEL RATES — Avenir holidays - Summer - 2026 _1_.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 May – 31 Jul 2026 & 01 Sep – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-07-31"
+     },
+     {
+      "from": "2026-09-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 55,
+      "dbl": 60,
+      "tpl": 70,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 60,
+      "dbl": 65,
+      "tpl": 75,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 70,
+      "dbl": 75,
+      "tpl": 90,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 – 31 Aug 2026",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 65,
+      "dbl": 70,
+      "tpl": 80,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 70,
+      "dbl": 75,
+      "tpl": 85,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 75,
+      "dbl": 85,
+      "tpl": 100,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 10
+   },
+   {
+    "meal": "lunch",
+    "adult": 12
+   },
+   {
+    "meal": "dinner",
+    "adult": 14
+   }
+  ],
+  "supplements": [
+   {
+    "type": "festival",
+    "name": "Perahera Supplement",
+    "per": "room",
+    "amount_sgl": 55,
+    "amount_dbl": 65,
+    "amount_tpl": 75,
+    "compulsory": 1,
+    "note": "Perahera Supplement SGL $55.00, DBL $65.00, TPL $75.00 — the sheet prints no dates for the Perahera nights"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "0-04 years free of charge"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "any",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "05-11 years: 50% discount on meals (the sheet prices no separate child bed rate)"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 35,
+    "per": "person",
+    "accommodation": "unknown",
+    "free_from_pax": 16,
+    "note": "Above 15 paying pax, LTG or FTL free of charge; otherwise the printed guide rate per person per night"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 40,
+    "per": "person",
+    "accommodation": "unknown",
+    "free_from_pax": 16,
+    "note": "Above 15 paying pax, LTG or FTL free of charge; otherwise the printed guide rate per person per night"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 45,
+    "per": "person",
+    "accommodation": "unknown",
+    "free_from_pax": 16,
+    "note": "Above 15 paying pax, LTG or FTL free of charge; otherwise the printed guide rate per person per night"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Full payment to be made prior to guest arrival, unless you are a credit approved partner"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

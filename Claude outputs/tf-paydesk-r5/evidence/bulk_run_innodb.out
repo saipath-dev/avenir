@@ -1,0 +1,99 @@
+
+== 48 eligibility: reasons, currencies, disputed, unverified bank
+  ok   [48] GIMANHALA: the 12 approved lunches are eligible (LKR 31,000.00 of this run) and the disputed one is excluded with its reason
+  ok   [48] a disputed item needs a reason (400) and cannot be disputed by a requester (403)
+  ok   [48] a supplier with USD and LKR items is shown as two currency groups (USD 65.00 · LKR 4,500.00) — one bulk batch is one currency
+  ok   [48] Kassapa: approved while verified, then its bank account changed on the master → the verification is void and the item is excluded (status unverified → reason bank_unverified)
+
+== 49 selection is re-validated on the server
+  ok   [49] a selection that includes the disputed item is refused as a whole — nothing created
+  ok   [49] a selection mixing currencies is refused — nothing created
+  ok   [49] a confirmation without a valid one-time token is refused
+  ok   [49] the accountant cannot create a bulk payment (needs the batch-creation privilege → 403)
+
+== 50 bulk issue: 12 vouchers, one batch
+  ok   [50] 12 vouchers issued, consecutive 616–627, under bulk batch SB-00010; one transfer LKR 31,000.00
+  ok   [50] parent + 12 children: each child is a single-voucher batch with its own voucher, tour, service, invoice and amount; Σ = transfer
+  ok   [50] every request flagged vouchered, linked to its own voucher and to the bulk batch; counter advanced by exactly 12
+  ok   [50] each voucher row and its single v_inv line carry the tour (ref_po / Invoice), the restaurant and the amount
+  ok   [50] audit: bulk_issued with the 12 numbers, who confirmed, the token; one voucher_issued per tour line; batch recorded as atomic
+  ok   [50] the eligibility list no longer offers the 12 (they are batched)
+
+== 53 duplicate submission
+  ok   [53] the same confirmation token again returns the existing batch and creates nothing
+  ok   [53] a new confirmation for the same items is refused (already batched) — nothing created
+
+== 51 failure mid-run · 52 counter behind
+  ok   [51] a failure after voucher 1 of 2: refused, NOTHING created (vouchers, batches, flags, counter unchanged); audit voucher_issue_failed; items still eligible
+  ok   [52] counter behind the table: refused BEFORE writing, naming counter and last number; nothing changed
+
+== 54 the ONE bank transfer initiated for the batch
+  ok   [54] a child voucher cannot be initiated on its own (409, names the bulk batch)
+  ok   [54] management cannot initiate (403)
+  ok   [54] all 12 initiated in one operation: 12 initiation rows, the same date / account / reference, transfer LKR 31,000.00, charges 217.00 allocated to the cent (Σ shares = 217.00)
+  ok   [54] shares pro rata to each voucher (largest: 4,100 → 28.70; smallest: 1,800 → 12.60), each Σ(amount+share) = total_debit per voucher
+  ok   [54] the parent records the transfer: payment date, reference, charges 217.00, total debit 31,217.00, initiated by the accountant; status initiated
+  ok   [54] initiating again changes nothing (0 initiated now, still complete)
+
+== 55 Paid for the whole transfer
+  ok   [55] a child voucher cannot be marked Paid on its own (409)
+  ok   [55] the legacy Mark Finalized is blocked for a bulk child voucher (403)
+  ok   [55] the accountant cannot mark Paid (403)
+  ok   [55] all 12 marked Paid in one operation; every voucher finalized with the bank date; 12 Paid locks
+  ok   [55] bank charges: one balanced Dr Bank Charges / Cr paying account pair per voucher (12 pairs, Σ Dr = Σ Cr = 217.00), posted once
+  ok   [55] batch ledger check: Σ credits to the paying account = 31,000.00 + 217.00 = 31,217.00 = the one bank debit; every voucher balanced; parent reconciled
+  ok   [55] the message says plainly that this is not a bank-statement match
+  ok   [55] Paid again: nothing posted twice (0 marked now, ledger row count unchanged)
+  ok   [55] the desk / tour record: each tour shows its own lunches with their own voucher numbers (6 + 6)
+
+== 56 resumable Paid (USD batch) and an incomplete batch
+  ok   [56] USD bulk batch (2 vouchers, USD 65.00) initiated at the payment-date rate 327.25 → transfer LKR 21271.25
+  ok   [56] one child cancelled by the legacy screen: Paid marks the other and reports INCOMPLETE (207), the batch is "paid_partial" and NOT reconciled — no silent success
+  ok   [56] the remittance advice is refused while the batch is incomplete
+
+== 57 one itemised remittance advice for the whole transfer
+  ok   [57] prepared: one advice listing all 12 vouchers, to the supplier's remittance e-mail, subject names vouchers 616–627 and the batch
+  ok   [57] the advice page lists every voucher with tour, guest, service, invoice and amount, the one transfer total 31,000.00 and the bank reference
+  ok   [57] the per-voucher advice of a bulk child is refused (409, names the batch) — the supplier gets ONE itemised advice
+  ok   [57] sent once (sink received 1 message with the PDF attached); all 12 vouchers marked Notified; a second send is refused
+
+== 58 legacy screens with bulk vouchers
+  ok   [58] renders: report/bank_payment_check/finalized_records
+  ok   [58] renders: report/voucher_report
+  ok   [58] renders: accounts/voucher_audit
+  ok   [58] renders: tour/board/tour/4/record
+  ok   [58] renders: tour/tour_payment_dashboard/voucher/618
+  ok   [58] renders: tour/tour_payment_dashboard/batch/13
+  ok   [58] renders: tour/tour_payment_dashboard/bulk/10
+  ok   [58] renders: tour/tour_payment_dashboard/payables
+  ok   [58] the legacy Bank Payment Check listed the 12 children individually before Paid (now in Finalized); the batches listing shows the bulk parent with its roll-up and no child as a top-level batch
+
+== 59 separation of duties — server side
+  ok   [59] the administrator makes a request (allowed)
+  ok   [59] the administrator cannot approve their OWN request (403, separation); audit separation_blocked
+  ok   [59] another user (management) approves it
+  ok   [59] the administrator cannot batch their own request (403)
+  ok   [59] …nor bulk-batch it (403)
+  ok   [59] management batches it (voucher 630)
+  ok   [59] the administrator cannot initiate the payment of their own request (403)
+  ok   [59] the accountant initiates it
+  ok   [59] the administrator cannot finally authorise their own request (403)
+  ok   [59] the bank approver marks it Paid
+  ok   [59] the administrator initiates a payment requested by someone else (allowed)
+  ok   [59] the user who INITIATED cannot finally authorise it (403, separation)
+  ok   [59] a different bank approver marks it Paid
+  ok   [59] bulk: the user who initiated the transfer cannot mark it Paid (403 on the first voucher, 0 paid)
+  ok   [59] the bank approver marks the bulk batch Paid (3 vouchers, charges 30.00 allocated)
+
+== 60/61 dashboard visibility ≠ request authority
+  ok   [60] management (dashboard, no request privilege) can READ the desk and sees requester=false, approver=true
+  ok   [60] management cannot add an expense, write request meta, or post the legacy payment request (server refuses all three)
+  ok   [60] the requester (holds the request privilege) can still request; the accountant (dashboard only) cannot
+  ok   [61] Setup created the separate privilege "Tour payment requests (make / cancel)" (menu 258), granted to System Administrator only until an administrator grants it
+
+== 62 legacy voucher cancellation (Aflag 3) recognised by the desk
+  ok   [62] a single-item batch voucher (635) cancelled on the legacy screen: Aflag 3, flag 1, not finalized
+  ok   [62] the desk refuses to initiate (409) and to mark Paid (409) a cancelled voucher — the voucher stays unfinalized, no Paid lock, no ledger posting
+  ok   [62] the batches listing shows the batch as Cancelled; the tour history records "Voucher cancelled (Voucher Cancellation screen)"; the item is NOT offered for a bulk payment again
+
+71 ok, 0 failed

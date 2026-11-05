@@ -1,0 +1,239 @@
+{
+ "key": "casamara_winter2526",
+ "hotel": {
+  "acc": "6-9-11-11047",
+  "name": "Hotel Casamara",
+  "location": "Kandy",
+  "chain": "Senkadagala Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11047",
+   "name": "Hotel Casamara"
+  },
+  "contract": {
+   "name": "Winter 2025/2026 – Special Rate Offer",
+   "plan_type": "contract",
+   "tier": "all",
+   "valid_from": "2025-11-01",
+   "valid_to": "2026-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "All above rates are nett, non-commissionable & are in US Dollars",
+   "source_type": "email",
+   "received_at": "2026-09-03",
+   "contract_date": "2025-10-27",
+   "contract_type": "Travel agent rates",
+   "hotel_reference": "WINTER 2025/2026 – Special Rate Offer",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 12,
+   "child_policy_text": "Child policy: 0-04 Years FOC & 05-11 Years 50% Discount on Meals.",
+   "guide_policy_text": "Guide Policy: Above 15 paying pax, LTG or FTL free of charge. Guide Rates: BB – $35.00, HB – $40.00, FB – $45.00.",
+   "payment_text": "Payment: Full payment to be made prior to guest arrival, unless you are a credit approved partner.",
+   "terms_text": "WINTER 2025/2026 – Special Rate Offer. Extra Meals: Breakfast – $10.00, Lunch – $12.00, Dinner - $14.00, Extra Bed - $12.00. Child policy: 0-04 Years FOC & 05-11 Years 50% Discount on Meals. Peak period supplement $10.00 per room per night (20.12.2025 -10.01.2026). X' Mas Eve Supplement – $40.00 & New Year Eve Supplement: $45.00 per person. Guide Policy: Above 15 paying pax, LTG or FTL free of charge. Guide Rates: BB – $35.00, HB – $40.00, FB – $45.00. All above rates are nett, non-commissionable & are in US Dollars. Payment: Full payment to be made prior to guest arrival, unless you are a credit approved partner.",
+   "notes": "LAST winter — letter of 27 Oct 2025, validity 01 Nov 2025 – 30 Apr 2026, already expired; entered for the coordinator to decide whether to keep it for historical quotations. The letter calls itself a \"Special Rate Offer\" but is the hotel's full winter travel-agent rate letter (same shape as the summer one), so it is entered as a contract. Two printed periods: 01 Nov – 20 Dec 2025 & 01 – 30 Apr 2026 (one season, two ranges) and 21 Dec 2025 – 31 Mar 2026. BB / HB / FB are all printed, so the extra-meal prices are entered as meal prices only, not as meal deltas. The peak-period supplement (20.12.2025 - 10.01.2026, $10 per room per night) overlaps the start of the second season — that is how the sheet reads. No Perahera supplement on the winter sheet.",
+   "source_file": "CASAMARA HOTEL RATES — Avenir Holidays Winter  - 2025 - 2026.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 20 Dec 2025 & 01 – 30 Apr 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2025-11-01",
+      "to": "2025-12-20"
+     },
+     {
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 60,
+      "dbl": 65,
+      "tpl": 80,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 65,
+      "dbl": 75,
+      "tpl": 90,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 70,
+      "dbl": 85,
+      "tpl": 100,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "21 Dec 2025 – 31 Mar 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2025-12-21",
+      "to": "2026-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 65,
+      "dbl": 70,
+      "tpl": 85,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 70,
+      "dbl": 80,
+      "tpl": 95,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 75,
+      "dbl": 90,
+      "tpl": 105,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 10
+   },
+   {
+    "meal": "lunch",
+    "adult": 12
+   },
+   {
+    "meal": "dinner",
+    "adult": 14
+   }
+  ],
+  "supplements": [
+   {
+    "type": "peak",
+    "name": "Peak period supplement",
+    "date_from": "2025-12-20",
+    "date_to": "2026-01-10",
+    "per": "room",
+    "amount": 10,
+    "compulsory": 1,
+    "note": "Peak period supplement $10.00 per room per night (20.12.2025 -10.01.2026)"
+   },
+   {
+    "type": "gala",
+    "name": "X' Mas Eve Supplement",
+    "date_from": "2025-12-24",
+    "date_to": "2025-12-24",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 1,
+    "note": "X' Mas Eve Supplement $40.00 per person; the sheet prints no date and no child price"
+   },
+   {
+    "type": "gala",
+    "name": "New Year Eve Supplement",
+    "date_from": "2025-12-31",
+    "date_to": "2025-12-31",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 45,
+    "compulsory": 1,
+    "note": "New Year Eve Supplement $45.00 per person; the sheet prints no date and no child price"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "0-04 years free of charge"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "any",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "05-11 years: 50% discount on meals (the sheet prices no separate child bed rate)"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 35,
+    "per": "person",
+    "accommodation": "unknown",
+    "free_from_pax": 16,
+    "note": "Above 15 paying pax, LTG or FTL free of charge; otherwise the printed guide rate per person per night"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 40,
+    "per": "person",
+    "accommodation": "unknown",
+    "free_from_pax": 16,
+    "note": "Above 15 paying pax, LTG or FTL free of charge; otherwise the printed guide rate per person per night"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 45,
+    "per": "person",
+    "accommodation": "unknown",
+    "free_from_pax": 16,
+    "note": "Above 15 paying pax, LTG or FTL free of charge; otherwise the printed guide rate per person per night"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Full payment to be made prior to guest arrival, unless you are a credit approved partner"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "instance": "http://localhost/avenir_rv/ (isolated test instance), 12 Oct 2026, test login TestAccounts",
+ "installed": "tf-session-r1 via apply.py (backup before/20261012-061856), then rolled back (original files back, md5 checked)",
+ "before": [
+  [
+   "ok",
+   "S1 PROBLEM: a background request without a session is redirected to the sign-in page (302)",
+   ""
+  ],
+  [
+   "ok",
+   "S2 a page request without a session is still sent to the sign-in page (302, unchanged)",
+   ""
+  ],
+  [
+   "ok",
+   "S3 PROBLEM: opening the sign-in page while signed in ends the session (api 200 → 302)",
+   ""
+  ],
+  [
+   "ok",
+   "S4 (before) a background request after sign-out gets the sign-in page (200 HTML after the redirect); no notice",
+   ""
+  ],
+  [
+   "ok",
+   "S5 PROBLEM: HTML with plugins.js inserted after the page loaded (what a page does when it receives the sign-in page) blanks the page (text 3541 → -1 characters)",
+   ""
+  ]
+ ],
+ "after": [
+  [
+   "note",
+   "S0 after installing, the browser must load the new plugins.js once (Ctrl+F5 or cache expiry): the first run used the cached old file and showed no notice (S4 failed); after refreshing it, the run below",
+   ""
+  ],
+  [
+   "ok",
+   "S1 a background request without a session gets a quiet 401 JSON \"session ended\" (no redirect to the sign-in page, which used to end sessions)",
+   ""
+  ],
+  [
+   "ok",
+   "S2 a page request without a session is still sent to the sign-in page (302, unchanged)",
+   ""
+  ],
+  [
+   "ok",
+   "S3 opening the sign-in page while signed in keeps the session (api 200 before and after)",
+   ""
+  ],
+  [
+   "ok",
+   "S4 the page shows the red notice \"Your session has ended … Sign in again\" when a background request is answered 401",
+   ""
+  ],
+  [
+   "ok",
+   "S4b signed in again: the next background request succeeds (200) and the notice goes away",
+   "[200,false]"
+  ],
+  [
+   "ok",
+   "S5 HTML with plugins.js inserted after the page loaded leaves the page as it was (text 3541 → 3551 characters; before the fix the page went blank)",
+   ""
+  ]
+ ]
+}

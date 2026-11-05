@@ -1,0 +1,22 @@
+tf-backups-fix-r1 (the tf_backups "not writable" error, fixed for good) installed 2026-10-06 10:41 (Sri Lanka time) —
+on Shantha's instruction of 6 Oct 2026 ("fix the recurring tf_backups permission issue permanently … Nothing else should change").
+
+One file, verified by md5 before and after:
+  app/Libraries/TourFlow/Installer.php   8e9dafbe2fdaede0f7a985846c42975a -> cd795b0f7d0d6683725e4840840eb8ad
+No table, row, menu entry, privilege or setting changed; no Install now; app\ stays at 909 files; the whole-tree md5 list
+compared with the post-1c list differs on this one path only (writable\app_backups\app-after-tf-backups-fix-r1-*.md5).
+
+The fault and the fix: before writing a copy of the TourFlow tables, the code asked PHP's is_writable() about
+writable\tf_backups. On Windows that function does not try to write — it answers from the folder's read-only attribute
+and an access-rights check of its own — and it said "no" three times (5 Oct, 6 Oct 05:44, 6 Oct 10:12) for a folder
+Apache wrote to without trouble each time it was recreated. The check is now a real probe: a file is opened, written
+and removed in the folder (Installer::assertWritableDir); a folder that truly refuses a file still stops the copy, with
+the system's reason in the message. Tested on the copy (A01_InstallerSchemaTest: passes on a normal folder and leaves
+nothing behind, refuses a missing folder, a copy is written whole with its checksum).
+
+Proof on live, from the System Administrator's session (read-only otherwise):
+  - Admin -> copy, 10:44:00 -> writable\tf_backups\tf-20261006-104400-manual.sql written (1,583 rows, md5 a427b82c…).
+  - A file was then written into the folder from outside Avenir (the very thing that used to break it), and
+    Admin -> copy at 10:44:12 -> tf-20261006-104412-manual.sql written again. The outside file was moved out afterwards
+    (writable\tf_releases\_extracted_kits_safe_to_delete\_to_delete\_bridge_touch.txt — delete at leisure).
+The previous Installer.php is kept in the kit's reapplied_over\ folder; ROLLBACK.bat puts it back.

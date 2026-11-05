@@ -1,0 +1,771 @@
+{
+ "key": "hilton_yala_w26_s27",
+ "hotel": {
+  "acc": "6-9-11-11121",
+  "name": "Hilton Yala Resort",
+  "location": "Yala",
+  "chain": "Hilton"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11121",
+   "name": "Hilton Yala Resort"
+  },
+  "contract": {
+   "name": "Wholesale contract Winter 2026 / Summer 2027 – all markets",
+   "plan_type": "contract",
+   "contract_type": "Intermediary Agreement",
+   "hotel_reference": "Wholesale Contract Winter 2026 - Summer 2027",
+   "tier": "fit",
+   "tier_max_rooms": 4,
+   "max_rooms_per_booking": 4,
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "Rates are inclusive of service charge and government taxes at 34.34%; the hotel may amend the rates if taxes, service charge or operating costs change",
+   "source_type": "email",
+   "received_at": "2026-09-07",
+   "contract_date": "2026-08-31",
+   "credit_facility": "no",
+   "child_policy_text": "Hotel child policy applicable. Children aged 0 to 5 years (no charge); children aged 6 to 11 years enjoy a 50% reduction [on the] Christmas Eve and New Year's Eve mandatory dinners; no further reductions apply on the above supplements. CHILDREN aged 0 to 5 years: complimentary breakfast, lunch and dinner as designated by the hotel, when accompanied by paying adults staying at the hotel; will be able to choose from the children's menu or will be served children's portions. CHILDREN aged 6 - 11.99 years: child supplement per day is applicable as per below, including the extra bed — AI per child USD 135.00, FB per child USD 86.00, HB per child USD 75.00.",
+   "cancellation_text": "HOTEL CANCELLATIONS AND NO SHOW: 50% of booked room rate for the length of stay for cancellation received within 22 - 30 days. 100% of booked room rate for the length of stay for cancellation received less than 21 days. Guests departing before their booked checkout date will be charged for the remaining nights. The Hotel has the right to charge for no-shows / cancellation fees automatically as per the conditions above. Cancellation fees will be waived as long as the Company has cancelled the room in advance (as per above dates) in writing and has received a confirmation from the hotel of receipt of the cancellation.",
+   "payment_text": "PAYMENT – PREPAYMENT. The Operator must make all payments to the hotel in the currency agreed as per signed contract. All payments by the Operator to Hilton shall be made without deduction or short payment for any reason whatsoever. All bookings must be prepaid. Advance payments to be received by the hotel and clear in the bank no later than 14 working days prior to the date of arrival of guests. This can be done either by bank transfer or credit card payment plus bank fee. Invoices will be deemed to have been accepted as presented unless disputed within 7 days of receipt.",
+   "terms_text": "Above rates are applicable for the bookings received from local travel agents only; please add your own mark up before quoting the rates to the guests. Rates are inclusive of service charge and government taxes at 34.34% (in the event of any change to applicable taxes, service charge, promulgated and legislated changes as well as any exceptional changes to operating costs linked to inflation and other fiduciary exchanges, the hotel reserves the right to amend the rates accordingly and inform the trade of this). NET RATES FOR PACKAGES IF NOT DIRECTLY CONNECTED: rooms must be provided in a package (bundled with a flight, car etc.); rates cannot be sold unbundled and any operator doing so is deemed to be in violation of the contract and the hotel has the right to remove the company from sale. Static rates (not directly connected) may never be sold as room-only inventory and may only be shown as a package rate; package components may not be itemized. Wildlife / Safari Park disclaimer: as the resort lies within the confines of a safari park, the safety briefing will be conducted on property and disclaimers will be signed on site. The hotel reserves the right to extend minimum length of stay restrictions for peak seasons. Supplements are to be applied on top of all room types; special offers are NOT applicable to any supplement; festive season supplements will be charged back to the operator. Check in 15h00 / check out 12h00; early check-in and late check-out subject to availability and charge. For guaranteed early check-in the previous night is charged at the full contracted rate; the late departure charge (after 16:00) is 50% of the rate of the day. GROUP BOOKING: the rates listed do not apply for group reservations — for any booking of 5 rooms or more call the hotel directly (KDWYA_RES@hilton.com). Preferred placement, exchange-rate adjustment, 30 days' termination notice, force majeure, product amendment on 60 days' notice and the Hilton General Terms and Conditions (hiltondistribution.com/globaltc/ukstdterms.php) apply. Bookings on a sell-and-report basis to KDWYA_RES@hilton.com; during stop-sale periods the hotel may decline a booking on contracted rates. Agreement valid for ALL MARKETS, stay dates 01.11.2026 – 31.10.2027; signed for the hotel by Danushka De Alwis (Assistant Director of Sales) on 31/08/2026.",
+   "notes": "Hotel-level Intermediary Agreement between Avenir Holidays (Pvt) Ltd and Wild Beach Resorts (Private) Limited trading as Hilton Yala Resort; validity 01.11.26 – 31.10.27, all markets, USD. The document prices only HALF BOARD, FULL BOARD and ALL INCLUSIVE — there is no RO or BB rate, so the mandatory gala supplements (\"mandatory for BB, HB, FB & AI guests\") are entered for BB,HB,FB,AI even though BB is not priced here. The six periods are one continuous table per basis (winter 2026 and summer 2027 share all conditions) → one plan. Rates are per room per night for SGL / DBL / TPL. The rate table names three categories; the room-capacity list also shows 2 x KING ACCESSIBLE ROOMS (141 sqm) which carry no separate price (entered in the Deluxe room description). AI package includes the daily shared safari to Block 1 with a certified ranger, park tickets, bento box, guided sand dune walks, breakfast at Dhira, 3-course lunch and dinner at Sandali or Dhira, free-flow soft drinks / local brews / house wines during lunch and dinner (90 min, no alcohol at breakfast), selected mini-bar items replenished daily (2 Lion Lagers, 2 Coca Cola, 2 Sprites, 1 salted chips), 10% off other mini-bar items and 15% off spa treatments. FB and HB include the sand dune walks, breakfast and 3-course lunch and dinner (HB: lunch OR dinner), the same mini-bar and spa discounts. Tier is entered as FIT with a maximum of 4 rooms because the sheet says the rates do not apply to group reservations of 5 rooms or more. The hotel also wrote on 28 Aug 2026 that Yala Blocks 01 and 02 are closed 14 Sep – 15 Oct 2026 and that confirmed All Inclusive safaris will be run in Blocks 05 & 06 at no additional cost — that closure ends before this contract starts, so it is not entered as a restriction.",
+   "voucher_note": "It is the tour operator's responsibility to ensure the guest has the original voucher for presentation on check-in; without a voucher the hotel may request payment on arrival",
+   "source_file": "FW: Winter 26-27 — Hilton Yala Resort - Wholesale Contract Winter 2026-Summer 2027-Avenir Holidays _Pvt_ Ltd.pdf"
+  },
+  "room_types": [
+   {
+    "name": "King/Twin Deluxe Room",
+    "priced_as": "base",
+    "room_count": 14,
+    "size_sqm": 86,
+    "bed_config": "1 king size bed (9 rooms) or 2 twin beds (5 rooms) + 1 extra bed or 1 baby cot",
+    "max_adults": 3,
+    "max_children": 1,
+    "description": "9 x KING DELUXE ROOMS + 5 x TWIN DELUXE ROOMS (86 sqm). With Jacuzzi, bath tub, mini bar, coffee machine, safe, iron and ironing board, sofa seating. Max. occupancy 3 adults or 2 adults & 1 child. The capacity list also shows 2 x KING ACCESSIBLE ROOMS (141 sqm, same features and occupancy) which are not priced as a separate category on this contract.",
+    "max_occupancy": 3
+   },
+   {
+    "name": "King/Twin Premium Suite",
+    "priced_as": "base",
+    "room_count": 12,
+    "size_sqm": 141,
+    "bed_config": "1 king size bed (11 suites) or twin (1 suite) + 1 extra bed or 1 baby cot",
+    "max_adults": 3,
+    "max_children": 1,
+    "description": "11 x KING PREMIUM SUITES + 1 x TWIN PREMIUM SUITE (141 sqm). With dipping pool, Jacuzzi, bath tub, mini bar, coffee machine, safe, iron and ironing board, sofa seating. Max. occupancy 3 adults or 2 adults & 1 child (the sheet prints \"1 king size bed + 1 extra bed\" for the twin suite as well).",
+    "max_occupancy": 3
+   },
+   {
+    "name": "Premium Pool Villa",
+    "priced_as": "base",
+    "room_count": 14,
+    "size_sqm": 175,
+    "bed_config": "1 king size bed + 1 extra bed or 1 baby cot",
+    "max_adults": 3,
+    "max_children": 1,
+    "description": "14 x PREMIUM POOL VILLAS (175 sqm). With plunge pool, Jacuzzi, bath tub, mini bar, coffee machine, safe, iron and ironing board, sofa seating. Max. occupancy 3 adults or 2 adults & 1 child.",
+    "max_occupancy": 3
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 595,
+      "dbl": 635,
+      "tpl": 725,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 605,
+      "dbl": 670,
+      "tpl": 785,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "AI",
+      "sgl": 695,
+      "dbl": 855,
+      "tpl": 1065,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "HB",
+      "sgl": 660,
+      "dbl": 700,
+      "tpl": 790,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "FB",
+      "sgl": 675,
+      "dbl": 740,
+      "tpl": 855,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "AI",
+      "sgl": 760,
+      "dbl": 920,
+      "tpl": 1130,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "HB",
+      "sgl": 860,
+      "dbl": 900,
+      "tpl": 990,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "FB",
+      "sgl": 875,
+      "dbl": 940,
+      "tpl": 1055,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "AI",
+      "sgl": 965,
+      "dbl": 1125,
+      "tpl": 1335,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "20 Dec 2026 – 15 Jan 2027 (festive)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-15"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 897,
+      "dbl": 940,
+      "tpl": 1030,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 920,
+      "dbl": 985,
+      "tpl": 1097,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "AI",
+      "sgl": 1042,
+      "dbl": 1205,
+      "tpl": 1415,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "HB",
+      "sgl": 977,
+      "dbl": 1020,
+      "tpl": 1110,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "FB",
+      "sgl": 1000,
+      "dbl": 1065,
+      "tpl": 1177,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "AI",
+      "sgl": 1122,
+      "dbl": 1285,
+      "tpl": 1495,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "HB",
+      "sgl": 1217,
+      "dbl": 1260,
+      "tpl": 1350,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "FB",
+      "sgl": 1240,
+      "dbl": 1305,
+      "tpl": 1417,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "AI",
+      "sgl": 1362,
+      "dbl": 1525,
+      "tpl": 1735,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "16 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-16",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 582,
+      "dbl": 625,
+      "tpl": 715,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 605,
+      "dbl": 670,
+      "tpl": 782,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "AI",
+      "sgl": 707,
+      "dbl": 870,
+      "tpl": 1080,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "HB",
+      "sgl": 662,
+      "dbl": 705,
+      "tpl": 795,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "FB",
+      "sgl": 680,
+      "dbl": 745,
+      "tpl": 857,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "AI",
+      "sgl": 782,
+      "dbl": 945,
+      "tpl": 1155,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "HB",
+      "sgl": 882,
+      "dbl": 925,
+      "tpl": 1015,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "FB",
+      "sgl": 905,
+      "dbl": 970,
+      "tpl": 1082,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "AI",
+      "sgl": 1007,
+      "dbl": 1170,
+      "tpl": 1380,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 May – 14 Jul 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-05-01",
+      "to": "2027-07-14"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 529,
+      "dbl": 580,
+      "tpl": 675,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 545,
+      "dbl": 620,
+      "tpl": 740,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "AI",
+      "sgl": 637,
+      "dbl": 815,
+      "tpl": 1042,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "HB",
+      "sgl": 605,
+      "dbl": 650,
+      "tpl": 745,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "FB",
+      "sgl": 621,
+      "dbl": 695,
+      "tpl": 810,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "AI",
+      "sgl": 715,
+      "dbl": 886,
+      "tpl": 1112,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "HB",
+      "sgl": 821,
+      "dbl": 865,
+      "tpl": 967,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "FB",
+      "sgl": 837,
+      "dbl": 910,
+      "tpl": 1026,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "AI",
+      "sgl": 929,
+      "dbl": 1105,
+      "tpl": 1328,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "15 Jul – 31 Aug 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-07-15",
+      "to": "2027-08-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 588,
+      "dbl": 645,
+      "tpl": 750,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 606,
+      "dbl": 685,
+      "tpl": 822,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "AI",
+      "sgl": 708,
+      "dbl": 910,
+      "tpl": 1158,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "HB",
+      "sgl": 675,
+      "dbl": 720,
+      "tpl": 828,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "FB",
+      "sgl": 690,
+      "dbl": 770,
+      "tpl": 900,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "AI",
+      "sgl": 795,
+      "dbl": 984,
+      "tpl": 1236,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "HB",
+      "sgl": 912,
+      "dbl": 960,
+      "tpl": 1074,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "FB",
+      "sgl": 930,
+      "dbl": 1000,
+      "tpl": 1140,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "AI",
+      "sgl": 1032,
+      "dbl": 1225,
+      "tpl": 1476,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 Sep – 31 Oct 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-09-01",
+      "to": "2027-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "HB",
+      "sgl": 475,
+      "dbl": 525,
+      "tpl": 621,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "FB",
+      "sgl": 491,
+      "dbl": 565,
+      "tpl": 686,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Deluxe Room",
+      "meal_plan": "AI",
+      "sgl": 583,
+      "dbl": 765,
+      "tpl": 988,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "HB",
+      "sgl": 551,
+      "dbl": 595,
+      "tpl": 691,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "FB",
+      "sgl": 567,
+      "dbl": 640,
+      "tpl": 756,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "King/Twin Premium Suite",
+      "meal_plan": "AI",
+      "sgl": 660,
+      "dbl": 832,
+      "tpl": 1058,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "HB",
+      "sgl": 767,
+      "dbl": 815,
+      "tpl": 907,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "FB",
+      "sgl": 783,
+      "dbl": 855,
+      "tpl": 972,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Premium Pool Villa",
+      "meal_plan": "AI",
+      "sgl": 875,
+      "dbl": 1050,
+      "tpl": 1274,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Gala dinner 24th Dec (mandatory)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB,HB,FB,AI",
+    "per": "person",
+    "amount": 110,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Mandatory Festive Supplement: supplement for Christmas Gala dinner on 24th Dec (mandatory for BB, HB, FB & AI guests) USD 110.00 per person. Children 0-5 no charge, children 6-11 enjoy a 50% reduction; no further reductions apply. Charged back to the operator."
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve Gala dinner 31st Dec (mandatory)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB,HB,FB,AI",
+    "per": "person",
+    "amount": 140,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Mandatory Festive Supplement: supplement for New Year's Eve Gala dinner on 31st Dec (mandatory for BB, HB, FB & AI guests) USD 140.00 per person. Children 0-5 no charge, children 6-11 enjoy a 50% reduction; no further reductions apply. Charged back to the operator."
+   },
+   {
+    "type": "early_checkin",
+    "name": "Guaranteed early check-in",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "Check in 15h00. Early check-in is subject to space availability and an additional charge; for a GUARANTEED early check-in the previous night is charged at the full contracted rate."
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late departure after 16:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "Check out 12h00. Late check-out is subject to availability and charge; the late departure charge (Hilton Yala 16:00 hours) is 50% of the rate of the day and is settled by the guest on departure."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "CHILDREN aged 0 to 5 years: no charge — complimentary breakfast, lunch and dinner as designated by the hotel when accompanied by paying adults; children's menu or children's portions"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 75,
+    "note": "Child supplement per day, including the extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 86,
+    "note": "Child supplement per day, including the extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "AI",
+    "amount": 135,
+    "note": "Child supplement per day, including the extra bed"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "honeymoon",
+    "name": "Honeymooners offer / Wedding anniversary inclusions",
+    "min_nights": 2,
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-10-31",
+    "conditions": "With our compliments: special bed turn down with F&B amenity, 15% discount off all booked spa treatments, 15% off Lantharuma Destination dining. Valid throughout the contract season, applicable on ALL room categories, minimum stay 2 consecutive nights, booking code Honeymoon/Anniversary must be quoted at the time of reservation."
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": null,
+    "date_to": null,
+    "tier": "all",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50,
+    "note": "50% of booked room rate for the length of stay for cancellation received within 22 - 30 days"
+   },
+   {
+    "date_from": null,
+    "date_to": null,
+    "tier": "all",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "100% of booked room rate for the length of stay for cancellation received less than 21 days; no-shows are charged automatically"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 14,
+    "pct": 100,
+    "note": "All bookings must be prepaid; advance payments to be received by the hotel and clear in the bank no later than 14 WORKING days prior to the date of arrival, by bank transfer or credit card payment plus bank fee"
+   },
+   {
+    "applies": "all",
+    "kind": "surcharge",
+    "note": "Credit card payments carry the bank fee; the sheet does not print a percentage. Invoices are deemed accepted unless disputed within 7 days of receipt."
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "min_stay",
+    "date_from": "2026-12-22",
+    "date_to": "2027-01-01",
+    "value": "2",
+    "note": "FESTIVE PERIOD MINIMUM NIGHT STAY: a minimum of 2 nights stay is required during the festive period, 22nd December 2026 until 1st January 2027"
+   }
+  ],
+  "extras": []
+ }
+}

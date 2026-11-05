@@ -1,0 +1,67 @@
+{
+  "id": "general",
+  "title": "Using this manual",
+  "order": 1,
+  "checked": "2026-10-10",
+  "pages": ["*"],
+  "intro": "The **User Manual** button is on every screen. Ask a question in your own words, or open the help for the screen you are on. Help only shows the way — it never changes anything.",
+  "menus": { "settings/group_privilege": "Group Privileges" },
+  "topics": [
+    {
+      "id": "gen-how",
+      "title": "How to use the User Manual",
+      "questions": [ "How do I use this help?", "What can I ask the user manual?" ],
+      "keywords": { "help": 3 },
+      "pages": ["*"],
+      "audience": "Everyone",
+      "needs": [],
+      "summary": "Click **User Manual** (bottom right of every screen). Type a question such as *Where do I approve hotel rates?* and press **Ask**. The answer gives numbered steps and a button that opens the right screen.",
+      "steps": [
+        { "text": "Click **User Manual** at the bottom right of the screen." },
+        { "text": "Type your question in plain words and press **Ask** (or Enter)." },
+        { "text": "Follow the numbered steps. **Bold** words are the exact names of screens and buttons." },
+        { "text": "Use the blue button in the answer to open the right screen. Opening a screen changes nothing by itself." },
+        { "text": "Under **Help for this screen** you see the topics for the page you are on." }
+      ],
+      "notes": [
+        "If the manual has no checked answer, it says so instead of guessing.",
+        "So far the manual covers **Hotel Rates**. Other sections are being added."
+      ],
+      "related": ["gen-pdf", "gen-access"],
+      "verify": []
+    },
+    {
+      "id": "gen-pdf",
+      "title": "Printable manual (PDF)",
+      "questions": [ "Where is the printable user manual?", "Can I download the manual as a PDF?", "How do I print the user manual?" ],
+      "keywords": { "manualdoc": 4 },
+      "pages": ["*"],
+      "audience": "Everyone",
+      "needs": [],
+      "summary": "The printable manual is made from the same instructions as this help, so both always match. Open it from the bottom of the **User Manual** panel: **View PDF** or **Download PDF**.",
+      "steps": [
+        { "text": "Click **User Manual**, then **View PDF** at the bottom of the panel to read or print it.", "link": { "path": "help/manual", "label": "View the PDF" } },
+        { "text": "Click **Download PDF** to save a copy.", "link": { "path": "help/manual?download=1", "label": "Download the PDF" } }
+      ],
+      "related": ["gen-how"],
+      "verify": [ { "route": "help/manual" } ]
+    },
+    {
+      "id": "gen-access",
+      "title": "I cannot open a screen (no permission)",
+      "questions": [ "I do not have access to a screen", "Why do I get forbidden or 403?", "How do I get permission for a menu?" ],
+      "keywords": { "permission": 3, "help": 0.3 },
+      "pages": ["*"],
+      "audience": "Everyone",
+      "needs": [],
+      "summary": "Each menu entry is a permission given to your user group. Ask your manager; the System Administrator gives it under **Settings → Group Privileges**. Log out and in again afterwards.",
+      "steps": [
+        { "text": "Note the screen name you need (the manual shows it, for example **Hotel Rate Approval**)." },
+        { "text": "Ask your manager. If it is agreed, the System Administrator adds it under **Settings → Group Privileges**.", "link": { "path": "settings/group_privilege/0", "label": "Open Group Privileges" } },
+        { "text": "Log out and log in again so the new permission takes effect." }
+      ],
+      "related": ["hr-permissions"],
+      "verify": [ { "menu": "settings/group_privilege/0" } ]
+    }
+  ]
+}

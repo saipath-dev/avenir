@@ -1,0 +1,513 @@
+{
+ "key": "fort_sigiriya_village_2627_europe_au",
+ "hotel": {
+  "acc": "6-9-11-10628",
+  "name": "Sigiriya Village",
+  "location": "Sigiriya",
+  "chain": "Fort Resorts (York Hotel Management Services Ltd)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10628",
+   "name": "Sigiriya Village"
+  },
+  "contract": {
+   "name": "Summer 2026 & Winter 26/27 Sri Lankan DMC contract rates – EUROPE / AUSTRALIA",
+   "plan_type": "contract",
+   "tier": "all",
+   "valid_from": "2026-05-01",
+   "valid_to": "2027-03-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "Rates Include Tax: YES — per room per night, inclusive of all taxes and non-commissionable",
+   "source_type": "email",
+   "received_at": "2026-09-09",
+   "contract_type": "Sri Lankan DMC",
+   "hotel_reference": "Sri Lankan DMC Contract Rates – Summer 2026 & Winter 26/27",
+   "credit_facility": "no",
+   "extra_bed_adult": 15,
+   "markets": [
+    {
+     "code": "EU",
+     "mode": "include"
+    },
+    {
+     "code": "UK",
+     "mode": "include"
+    },
+    {
+     "code": "NL",
+     "mode": "include"
+    },
+    {
+     "code": "ES",
+     "mode": "include"
+    },
+    {
+     "code": "EE",
+     "mode": "include"
+    },
+    {
+     "code": "AU",
+     "mode": "include"
+    }
+   ],
+   "child_policy_text": "Children up to 5 years will be FOC. Children between 6 to 11 years will be charged as mentioned above — i.e. the \"Child Supplement Sharing Bed\" column of the rate table (per child per night, entered on every rate row as child_no_bed).",
+   "guide_policy_text": "GUIDE RATES per room per night. Please note in the event the hotel is full, we will be compelled to transfer the guide, an alternate accommodation to be arranged by the Agent.",
+   "foc_policy_text": "Every 16 paying Pax will get 16th Pax on FOC as half a double or Single Guide room on FOC (not as a single Guest room or Tour Leader Room).",
+   "payment_text": "All payments to be made prior 7 days to arrival. If a booking is made within 7 days of the date of arrival, payment must be made in full upon booking confirmation; bookings will be released without prior notice if payment is not made before the deadline.",
+   "terms_text": "Room rates quoted are per room, per night, inclusive of all taxes and are non-commissionable. Any new taxes introduced by the Government of Sri Lanka that result in additional costs shall be borne by the travel agent. The hotel reserves the right to modify the rates at any time; such changes will apply to all future bookings. All reservations should be sent to the provided reservation email addresses, unless otherwise specified. The agency cannot assign or grant any rights in this contract to third parties without written consent from the hotel. The rates in the agreement are strictly confidential and must not be disclosed to third parties. The use or publication of these rates in electronics distribution system (websites, OTAs, GDS, etc) is prohibited without prior agreement of the hotel. Full payment must be settled 7 days prior to the date of arrival. If a booking is made within 7 days of the date of arrival, payment must be made in full upon booking confirmation. Bookings will be released without prior notice if payment is not made before the deadline. In instances where the hotel is overbooked, the hotel reserves the right to transfer reservations to alternate accommodation facilities of similar rating. Booking procedure: the rooming list should be forwarded to the hotel 30 days prior to arrival (if not, it will be subject to cancellation); all booking requests are subject to written confirmation from the reservations department; the room rate must be indicated on the reservation voucher and if any special rates given to be mentioned. Check in 1400 hours / check out 1200 hours. Overbooking: in the event the hotel is oversold, hotel will provide accommodation at a comparable hotel. The exchange rates given by the Tourist Hotels Association of Sri Lanka to be applied on the date of departure.",
+   "voucher_note": "The room rate must be indicated on the reservation voucher and if any special rates given to be mentioned.",
+   "notes": "The booklet prices the same room category in a separate table per source market; each market table is a plan of its own (one plan cannot hold two rates for the same room type on the same night). Cover page: \"STRICTLY CONFIDENTIAL – Sri Lankan DMC Contract Rates, Sigiriya Village Hotel, P.O.Box 1, Sigiriya, Sri Lanka, 01st May 2026 to 31st March 2027\". One continuous table per market covers summer 2026 AND winter 26/27, so this is one plan per market, not one per season; the two printed cancellation ladders (summer 01 May – 31 Oct 2026, winter 01 Nov 2026 – 31 Mar 2027) are entered as date-scoped cancellation rows. \"Credit Facilities: No\", \"August Supplement: YES\" (USD 10 per room per day, 18 – 28 August 2026 — entered as a compulsory peak supplement). Only the Superior is priced; Deluxe / Super Deluxe / Junior Suite are that rate plus USD 20 / 40 / 60 per room per night (ROOM SUPPLEMENTS, PRPN). The \"Child Supplement Sharing Bed\" column is entered as child_no_bed on every rate row (per child per night, 6 – 11 years). Only BB and HB are printed; \"Full board Supplement $10 PP from above given HB rates\" is the HB → FB meal delta, and the Extra Meal Rates (breakfast 18 / lunch 20 / dinner 25 per person) are entered as extra-meal prices, not as deltas — the printed BB → HB step is 5 – 10 per room, far less than the printed dinner price. Bank: Sigiriya Village Hotel PLC, A/C 002930026738, Sampath Bank, Head Office Branch, SWIFT BSAMLKLX. This plan is the \"SIGIRIYA VILLAGE – SUPERIOR – EUROPE / AUSTRALIA\" table. VAT Registration No 104052584 – 7000.",
+   "source_file": "WINTER /SUMMER RATES 2026/2027 - FORT RESORT CHAIN — Fort Resorts Sigiriya Village Summer 2026 and Winter 2026-2027 Rates.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Superior",
+    "priced_as": "base"
+   },
+   {
+    "name": "Deluxe",
+    "priced_as": "supplement",
+    "base_room_type": "Superior"
+   },
+   {
+    "name": "Super Deluxe",
+    "priced_as": "supplement",
+    "base_room_type": "Superior"
+   },
+   {
+    "name": "Junior Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Superior"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 May – 30 Jun 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-06-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 75,
+      "dbl": 85,
+      "tpl": 120,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 21
+     },
+     {
+      "room_type": "Superior",
+      "meal_plan": "HB",
+      "sgl": 80,
+      "dbl": 90,
+      "tpl": 125,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 23
+     }
+    ]
+   },
+   {
+    "name": "01 Jul – 31 Aug 2026",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-07-01",
+      "to": "2026-08-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 90,
+      "dbl": 100,
+      "tpl": 135,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 25
+     },
+     {
+      "room_type": "Superior",
+      "meal_plan": "HB",
+      "sgl": 95,
+      "dbl": 105,
+      "tpl": 140,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 26
+     }
+    ]
+   },
+   {
+    "name": "01 Sep – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 75,
+      "dbl": 85,
+      "tpl": 120,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 21
+     },
+     {
+      "room_type": "Superior",
+      "meal_plan": "HB",
+      "sgl": 80,
+      "dbl": 90,
+      "tpl": 125,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 23
+     }
+    ]
+   },
+   {
+    "name": "01 Nov – 20 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-20"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 95,
+      "dbl": 105,
+      "tpl": 140,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 26
+     },
+     {
+      "room_type": "Superior",
+      "meal_plan": "HB",
+      "sgl": 105,
+      "dbl": 115,
+      "tpl": 150,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 29
+     }
+    ]
+   },
+   {
+    "name": "21 Dec 2026 – 15 Jan 2027",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-21",
+      "to": "2027-01-15"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 145,
+      "dbl": 155,
+      "tpl": 190,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 39
+     },
+     {
+      "room_type": "Superior",
+      "meal_plan": "HB",
+      "sgl": 155,
+      "dbl": 165,
+      "tpl": 200,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 41
+     }
+    ]
+   },
+   {
+    "name": "16 Jan – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-16",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 130,
+      "dbl": 140,
+      "tpl": 175,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 35
+     },
+     {
+      "room_type": "Superior",
+      "meal_plan": "HB",
+      "sgl": 140,
+      "dbl": 150,
+      "tpl": 185,
+      "quad": null,
+      "unit": null,
+      "child_no_bed": 38
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Deluxe",
+    "amount": 20,
+    "per": "room",
+    "note": "ROOM SUPPLEMENTS: Deluxe 20 PRPN over the Superior"
+   },
+   {
+    "room_type": "Super Deluxe",
+    "amount": 40,
+    "per": "room",
+    "note": "ROOM SUPPLEMENTS: Super Deluxe 40 PRPN over the Superior"
+   },
+   {
+    "room_type": "Junior Suite",
+    "amount": 60,
+    "per": "room",
+    "note": "ROOM SUPPLEMENTS: Junior Suite 60 PRPN over the Superior"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 10,
+    "note": "Full board Supplement $10 PP from above given HB rates"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 18,
+    "note": "Extra Meal Rates per person"
+   },
+   {
+    "meal": "lunch",
+    "adult": 20,
+    "note": "Extra Meal Rates per person"
+   },
+   {
+    "meal": "dinner",
+    "adult": 25,
+    "note": "Extra Meal Rates per person"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "peak",
+    "name": "August Supplement",
+    "date_from": "2026-08-18",
+    "date_to": "2026-08-28",
+    "per": "room",
+    "amount": 10,
+    "compulsory": 1,
+    "note": "August Supplement $10 per room per day from the above given rates (18th to 28th August 2026)"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check out until 1800 hours",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "Late Check out: 50% of normal room rate until 1800 hours"
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve compulsory supplement",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB",
+    "per": "person",
+    "amount": 75.0,
+    "compulsory": 1,
+    "child_amount": 37.5,
+    "note": "Compulsory Supplement on HB|FB: Christmas Eve USD 75.00 nett per person, per child (5 – 11 years old) USD 37.50 nett per child"
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve compulsory supplement",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB",
+    "per": "person",
+    "amount": 85.0,
+    "compulsory": 1,
+    "child_amount": 42.5,
+    "note": "Compulsory Supplement on HB|FB: New Year's Eve USD 85.00 nett per person, per child (5 – 11 years old) USD 42.50 nett per child"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Children up to 5 years will be FOC"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 40,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "GUIDE RATES BB 40 PRPN (per room per night). Please note in the event the hotel is full, we will be compelled to transfer the guide, an alternate accommodation to be arranged by the Agent"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 50,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "GUIDE RATES HB 50 PRPN (per room per night). Please note in the event the hotel is full, we will be compelled to transfer the guide, an alternate accommodation to be arranged by the Agent"
+   }
+  ],
+  "foc_rules": [
+   {
+    "basis": "pax",
+    "every_n": 16,
+    "free_n": 1,
+    "as_what": "half_double",
+    "note": "Every 16 paying Pax will get 16th Pax on FOC as half a double or Single Guide room on FOC (not as a single Guest room or Tour Leader Room)."
+   }
+  ],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 21,
+    "charge_pct": 0,
+    "note": "Summer: 21 days or more – no cancellation fee"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 15,
+    "charge_pct": 25,
+    "note": "Summer: 20 – 15 days prior to arrival – 25% of the full stay"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "note": "Summer: 14 – 08 days prior to arrival – 50% of the full stay"
+   },
+   {
+    "date_from": "2026-05-01",
+    "date_to": "2026-10-31",
+    "tier": "all",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Summer: 07 – 0 days prior to arrival (incl. no-show) – 100% of the full stay"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "Winter: 30 days or more – no cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 29,
+    "days_to": 21,
+    "charge_pct": 25,
+    "note": "Winter: 29 – 21 days prior to arrival – 25% of the full stay"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 15,
+    "charge_pct": 50,
+    "note": "Winter: 20 – 15 days prior to arrival – 50% of the full stay"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Winter: 14 – 0 days prior to arrival (incl. no-show) – 100% of the full stay"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 7,
+    "pct": 100,
+    "note": "All payments to be made prior 7 days to arrival"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "note": "Booking made within 7 days of arrival: payment in full upon booking confirmation; bookings released without prior notice if payment is not made before the deadline"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "value": "HB,FB,AI",
+    "note": "All Guest Must Stay on HB, FB or AI Basis on 24th and 31st December 2026"
+   },
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "value": "HB,FB,AI",
+    "note": "All Guest Must Stay on HB, FB or AI Basis on 24th and 31st December 2026"
+   }
+  ],
+  "extras": []
+ }
+}

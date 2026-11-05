@@ -1,0 +1,294 @@
+{
+ "key": "mirage_kings_cottage_2627",
+ "hotel": {
+  "acc": "6-9-11-10864",
+  "name": "Mirage Kings Cottage",
+  "location": "Nuwara Eliya",
+  "chain": "Mirage Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10864",
+   "name": "Mirage Kings Cottage"
+  },
+  "contract": {
+   "name": "Exclusive All Market Promotional Rate – Winter-Summer 2026/27",
+   "plan_type": "contract",
+   "contract_type": "Local travel agent",
+   "tier": "all",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "credit_facility": "unknown",
+   "cancellation_text": "Cancelation policy: Group bookings one-month prior notice. FIT bookings seven days prior notice.",
+   "payment_text": "Payment terms: payments on booked basis to be settled prior to guest arrival if not credit approved.",
+   "notes": "Transcribed from \"Mirage Kings Cottage New rate 2026 - 2027 Winter Summer new rate.pdf\" (2 pages), saved to the HOTEL RATES folder on 2 Oct 2026. No date printed on the sheet (PDF file created 16 Feb 2026). Travel Agent – Local Travel Agents; Market – All Market FIT & GIT; Period – Winter-Summer 2026/27; \"4-star properties\". The sheet calls itself an \"Exclusive All Market Promotional Rate\" but it is the full 12-month rate with all terms and no booking window, so it is entered as the contract. SGL/DBL is one price per room (entered in both SGL and DBL); TPL = DBL + the printed TPL BB / HB supplement (US$35); N/A = no triple rate. FB is derived (HB + lunch US$13 p.p.). Extra bed US$25 per night. If required, set dinner for Indian national guests US$13 pp at a separate location.",
+   "tax_note": "Sheet does not say whether taxes are included (no tax line); treated as nett/inclusive. Non-commissionable; any tax changes made by the government apply.",
+   "extra_bed_adult": 25,
+   "max_children_free": 1,
+   "child_policy_text": "Child meal policy: 1 Child below 05 years sharing with parents FOC. Children between 06 to 11 years sharing with parents 50% of adult meal rate chargeable. Children at the age 12 & above Adult meal rate chargeable and count as Adult.",
+   "guide_policy_text": "Local Guide Room Rate USD 60 on booked basis.",
+   "foc_policy_text": "FOC policy: Every 11th room 1 room FOC on booked basics [basis]. Every 16th person ½ a double FOC (Guest or tour leader or local guide). Local Guide Room Rate USD 60 on booked basis.",
+   "terms_text": "Please note that above non-commissionable rates and any tax changes made by the government will be applicable for the above.",
+   "source_file": "Mirage Kings Cottage New rate 2026 - 2027 Winter Summer new rate.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "room_count": 34,
+    "description": "\"DELUXE ROOM\" on the sheet (34 rooms)"
+   },
+   {
+    "name": "Deluxe Family",
+    "priced_as": "base",
+    "room_count": 5,
+    "description": "\"DELUXE FAMILY\" (5 rooms); occupancy not stated, TPL supplement N/A"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov 2026 – 30 Apr 2027 (winter)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 110,
+      "dbl": 110,
+      "tpl": 145,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL = DBL + US$35 TPL supplement"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 125,
+      "dbl": 125,
+      "tpl": 160,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL = DBL + US$35 TPL supplement"
+     },
+     {
+      "room_type": "Deluxe Family",
+      "meal_plan": "BB",
+      "sgl": 140,
+      "dbl": 140,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL supplement N/A"
+     },
+     {
+      "room_type": "Deluxe Family",
+      "meal_plan": "HB",
+      "sgl": 180,
+      "dbl": 180,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL supplement N/A"
+     }
+    ]
+   },
+   {
+    "name": "01 May – 31 Oct 2027 (summer)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-05-01",
+      "to": "2027-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 100,
+      "dbl": 100,
+      "tpl": 135,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL = DBL + US$35 TPL supplement"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 115,
+      "dbl": 115,
+      "tpl": 150,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL = DBL + US$35 TPL supplement"
+     },
+     {
+      "room_type": "Deluxe Family",
+      "meal_plan": "BB",
+      "sgl": 130,
+      "dbl": 130,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL supplement N/A"
+     },
+     {
+      "room_type": "Deluxe Family",
+      "meal_plan": "HB",
+      "sgl": 170,
+      "dbl": 170,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "SGL/DBL one price per room; TPL supplement N/A"
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 13,
+    "note": "FB is not printed: HB + lunch at the meal-only rate US$13 p.p."
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 10,
+    "note": "Meal only rate, p.p."
+   },
+   {
+    "meal": "lunch",
+    "adult": 13,
+    "note": "Meal only rate, p.p."
+   },
+   {
+    "meal": "dinner",
+    "adult": 15,
+    "note": "Meal only rate, p.p."
+   },
+   {
+    "meal": "other",
+    "name": "Set dinner for Indian national guests (separate location)",
+    "adult": 13,
+    "note": "If required; at a separate location"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas dinner supplement",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 35,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "US$35 per person. Child % from the sheet's child meal policy (50% of adult meal rate); no separate child gala price printed. Sheet says \"Christmas Dinner Supplement (Compulsory)\" without a date; entered on 24 Dec (Christmas Eve)."
+   },
+   {
+    "type": "gala",
+    "name": "New Year dinner supplement",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 35,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "US$35 per person. Child % from the sheet's child meal policy (50% of adult meal rate); no separate child gala price printed. Sheet says \"New Year Dinner Supplement (Compulsory)\" without a date; entered on 31 Dec (New Year's Eve)."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "no_bed",
+    "amount": 0,
+    "max_children": 1,
+    "note": "1 child below 05 years sharing with parents FOC"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Children 06 to 11 years sharing with parents: 50% of adult meal rate; 12 & above adult meal rate and count as adult"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "amount": 60,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Local guide room rate USD 60 on booked basis (meal plan as booked)"
+   }
+  ],
+  "foc_rules": [
+   {
+    "basis": "rooms",
+    "every_n": 10,
+    "free_n": 1,
+    "as_what": "any",
+    "note": "Every 11th room 1 room FOC on booked basis"
+   },
+   {
+    "basis": "pax",
+    "every_n": 15,
+    "free_n": 1,
+    "as_what": "half_double",
+    "note": "Every 16th person ½ a double FOC (guest or tour leader or local guide)"
+   }
+  ],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-10-31",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Group bookings: one-month prior notice (taken as 30 days). No charge % printed — 100% assumed inside the notice period. Group size not defined on the sheet."
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-10-31",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "FIT bookings: seven days prior notice. No charge % printed — 100% assumed inside the notice period."
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Payments on booked basis to be settled prior to guest arrival if not credit approved (no number of days given)"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

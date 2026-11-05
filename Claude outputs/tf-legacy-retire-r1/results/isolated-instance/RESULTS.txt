@@ -1,0 +1,38 @@
+tf-legacy-retire-r1 — isolated test instance (http://localhost/avenir_rv/, database avenir_restore_verify_20261011), 12 Oct 2026, Sri Lanka time.
+No password or credential value is recorded here.
+
+Temporary TEST fixture (TEST ONLY — NEVER LIVE; scripts in ..\TEST-ONLY-NEVER-LIVE-tf-legacy-retire-r1-fixture\)
+  created  before 16:00  TestLegacyTools (user id 124), TEST group 38 "TEST Legacy tools holder (isolated test instance)",
+                   employee row 90, privilege rows 1472/1473 (menus 107 Manual Update, 184 Bank Req Data Transfer only).
+                   First version copied the password hash of TestAccounts — corrected at 16:08 on Shantha's instruction:
+                   a new one-time password was set (its hash matches no other login); the password is not stored anywhere.
+  removed  16:11:57  login, group, employee row and both privilege rows deleted; nothing left (0/0/0/0).
+  verified           user_acc_tbl, group_profile, user_privileges, employee: row by row and CHECKSUM TABLE identical to the
+                     clean pre-test snapshot (database avenir_rv_backup_20261012_before_r3): 78 / 31 / 975 / 82 rows.
+                     Audit, activity-log and session rows written during the test stay as the record.
+
+Ledger before (16:08:54) and after (16:09:53, and again 16:11:57)
+  account_runing  11,390 rows | Dr 989,263,607.13 | Cr 968,857,808.93 | bank_rec 2 | bankst_flag 2   (identical)
+  CHECKSUM TABLE  account_runing 141237580 | invoice_no (entry counter) 2816037445 | account_runing_2024 2922173702 |
+                  account_runing_bank_statetment 843700953                                              (identical)
+  All 241 tables compared: only a_log, tpd_audit and user_sessions changed.
+  (This test-bed ledger contains the dummy demonstration rows; the real development ledger is reported separately.)
+
+Install 16:09  apply.py apply → 5 files, verified by md5; originals backed up in before\20261012-103912\
+Browser checks (TestLegacyTools, own sign-in, 16:09:39–16:09:42)                                      7 / 7
+  - Manual Update opens; "Bank Not Reconciliation Record Insert" → Retired notice; 8 other buttons and 9 other actions present
+  - Bank Req Data Transfer opens; Process button → Retired notice
+  - A: no token 403, wrong token 403, valid token 409 (retired message)
+  - B: no token 403, wrong token 403, valid token 409 (retired message)
+  - TestAccounts (no Manual Update / Bank Req Data Transfer privilege): both refused (403)
+Audit rows 478–485 (one per attempt)
+  478 479 480  TestLegacyTools  bank_recon_record_insert  token 403, token 403, retired 409
+  481 482 483  TestLegacyTools  bank_unrealised_value     token 403, token 403, retired 409   (bank 1-6-8-10380)
+  484          TestAccounts     access_denied (permission filter, Manual Update)
+  485          TestAccounts     bank_unrealised_value     token 403 — reached the tool through "Manage Accounts" (see finding)
+Other Manual Update actions: unchanged code and buttons (checked on the page; the actions themselves were not pressed here —
+  they change data; their unchanged behaviour was proven on the cloud copy, 9/9 same answers and same tables).
+
+Rollback 16:11  apply.py rollback → "all_five_original": true; each file byte-identical (cmp) to the backup copy and to
+  development's original file; the pages show the original buttons again (opened, not pressed).
+Final state of the isolated instance: the 5 ORIGINAL files (rolled back), fixture removed, ledger unchanged.

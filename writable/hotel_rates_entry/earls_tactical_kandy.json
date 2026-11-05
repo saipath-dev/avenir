@@ -1,0 +1,131 @@
+{
+    "key": "earls_tactical_kandy",
+    "hotel": {
+        "acc": "6-9-11-11787",
+        "name": "Earl's Regent Kandy",
+        "location": "Kandy",
+        "chain": "Earl's Hotels",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:14"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Earl's Regent Kandy"
+        },
+        "contract": {
+            "name": "Tactical offer Earl's Hotels – Summer 2026 (book 1 Jun – 30 Jul, stay 1 Jun – 31 Oct 2026)",
+            "plan_type": "tactical",
+            "priority": 10,
+            "valid_from": "2026-06-01",
+            "valid_to": "2026-10-31",
+            "book_from": "2026-06-01",
+            "book_to": "2026-07-30",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "taxes_included": 1,
+            "tax_note": "USD per room per night with prevailing tax and 10% service charge; non-commissionable",
+            "received_at": "2026-09-07",
+            "credit_facility": "unknown",
+            "terms_text": "The above rates are quoted in USD, per room, per night with prevailing tax and 10% service charge. Rates are non-commissionable. In the event of changes to government taxes (+/-), rates will be adjusted accordingly to reflect any changes. The above offer and room allocation are subject to stop sales at any given time. Rates are for new bookings only; existing bookings cannot be amended. Please copy all vouchers to sales@earlshotels.lk. All other conditions as per the original contract. Sender: Meelaka Niwunhella, Cluster Sales Manager, Earl's Court Hotel Management (Pvt) Ltd, sales@earlshotels.lk, +94 76 279 0760.",
+            "voucher_note": "Please copy all vouchers to sales@earlshotels.lk",
+            "notes": "Booking window 1 Jun – 30 Jul 2026 (closed), stay period 1 Jun – 31 Oct 2026 (Deluxe category). The per-hotel tables print \"VALID PERIOD – 1st May to 31st October 2026\" but the offer's stay period starts 1 Jun — validity entered from 1 Jun 2026. All other conditions (cancellation, children, supplements) as per the original Earl's contract, which is not in the folder. Original e-mail Iqbaal Jaldin, 2 Jun 2026; forwarded 7 Sep 2026. Sheet name \"EARL'S REGENT KANDY – 4*\" (not the 5* Earl's Regency) — no supplier record. Perahera supplement USD 50 per room per night on the perahera dates (dates not printed — supplement entered without dates; add the Kandy Esala Perahera dates before use).",
+            "source_type": "email",
+            "source_file": "FW: Tactical offer Earls Hotels — TACTICAL OFFER - EARL_S HOTELS.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Deluxe",
+                "priced_as": "base"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Jun – 31 Jul & 01 Sep – 31 Oct 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-06-01",
+                        "to": "2026-07-31"
+                    },
+                    {
+                        "from": "2026-09-01",
+                        "to": "2026-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 65,
+                        "dbl": 70,
+                        "tpl": 95,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 70,
+                        "dbl": 75,
+                        "tpl": 105,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "01 – 31 Aug 2026",
+                "kind": "peak",
+                "dates": [
+                    {
+                        "from": "2026-08-01",
+                        "to": "2026-08-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 85,
+                        "tpl": 110,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 85,
+                        "dbl": 95,
+                        "tpl": 125,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [],
+        "meal_prices": [],
+        "supplements": [
+            {
+                "type": "peak",
+                "name": "Perahera supplement (on the perahera dates)",
+                "per": "room",
+                "amount": 50,
+                "compulsory": 1,
+                "note": "USD 50 per room per night on the perahera dates — the dates are not printed on the sheet; add them (Kandy Esala Perahera 2026) before this row is used"
+            }
+        ],
+        "child_rates": [],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [],
+        "payment_rules": [],
+        "restrictions": [],
+        "extras": []
+    }
+}

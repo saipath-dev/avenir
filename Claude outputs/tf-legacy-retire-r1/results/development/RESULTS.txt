@@ -1,0 +1,31 @@
+tf-legacy-retire-r1 — DEVELOPMENT (http://localhost/avenir/, database avenir), 12 Oct 2026, Sri Lanka time.
+Refusal tests only. No database, login, group or permission change. No other button pressed; neither old tool run.
+
+Ledger before (16:12:14) — after the tests (16:13:08) — final (16:13:59)
+  account_runing  11,364 rows | Dr 965,763,907.13 | Cr 965,314,763.93 | bank_rec 2 | bankst_flag 2   (identical all three times)
+  CHECKSUM TABLE  account_runing 633232719 | invoice_no (entry counter) 2816037445 | account_runing_2024 2922173702 |
+                  account_runing_bank_statetment 843700953                                              (identical)
+  All 241 tables compared: only tpd_audit (the expected rows below), a_log, ci_sessions and user_sessions changed.
+  user_acc_tbl, group_profile, user_privileges, menu_list: unchanged.
+
+Install 16:12:36  apply.py apply → 5 files, verified by md5 (backup before\20261012-104234\)
+Refusal requests from Shantha's signed-in session ("super admin"), 16:12:45–16:12:47: 2 pages opened, 6 refusals   5 / 5
+  - Manual Update: Retired notice; 8 other buttons and 9 other actions present.  Bank Req Data Transfer: Retired notice.
+  - A: no token 403, wrong token 403, valid token 409.   B: no token 403, wrong token 403, valid token 409.
+TEST login TestAccounts (own sign-in, separate browser address), 16:12:56–57
+  - A → 403 by the permission filter (no Manual Update privilege)
+  - B → the page opens through "Manage Accounts" (menu 49, url "accounts"); no token 403; valid token 409 (retired)
+Audit rows 412–420
+  412 413 414  super admin   bank_recon_record_insert  token 403, token 403, retired 409   (IP ::1)
+  415 416 417  super admin   bank_unrealised_value     token 403, token 403, retired 409   (bank 1-6-8-10380)
+  418          TestAccounts  access_denied (permission filter)
+  419 420      TestAccounts  bank_unrealised_value     token 403, retired 409
+
+Rollback 16:13:37  apply.py rollback → "all_five_original": true; each file byte-identical (cmp) to the backup copy and to
+  the isolated instance's original file (md5 1d4cca93… d67ac130… 280eb40f… 4f52f9b3… 3b808508…).
+Reinstall 16:13:43 (required: the retirement is approved for development) → verified by md5 (backup before\20261012-104343\).
+Final confirmation 16:13:5x: both pages show the Retired notice; A valid token 409, B valid token 409 (audit 421, 422).
+
+FINAL DEVELOPMENT STATUS: tf-legacy-retire-r1 INSTALLED (5 files: 93a621ca… 45ddf8e8… 102e7d8a… 616ab158… c3ca2a73…).
+Note: a valid token rotates the session's security token; a Daily Bank Reconciliation page left open in that session needs
+a reload before its next change.

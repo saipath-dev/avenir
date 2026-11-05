@@ -1,0 +1,662 @@
+[
+ {
+  "name": "A set-up by the System Administrator: schema version 2 (tables, columns, claims)",
+  "ok": true,
+  "detail": "(200, 'Already in place; nothing to do.')"
+ },
+ {
+  "name": "A set-up again changes nothing (idempotent)",
+  "ok": true,
+  "detail": "Already in place; nothing to do."
+ },
+ {
+  "name": "A requester: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A ops: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A transh: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A hotelres: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A quote: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A hotel: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A transport: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A mgmt: no access (page refused; data, opening candidates, changes and explanations 403)",
+  "ok": true,
+  "detail": "(302, 403, 403, 403, 403)"
+ },
+ {
+  "name": "A view-only (bank authoriser) cannot propose (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "A a change without the CSRF token is refused (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "A four eyes: the proposer cannot confirm their own mapping, even as administrator (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "A the reviewer confirms the three mappings",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "A changing a rate needs a reason (400) and the version it changes (409 without); then saved with old and new value",
+  "ok": true,
+  "detail": "(400, 409, 200, 'Rate changed. Daily records already reviewed for the days it affects are flagged for re-review.')"
+ },
+ {
+  "name": "A a draft line change without the version it changes is refused (400)",
+  "ok": true,
+  "detail": "(400, 'Reload the statement and change the line from there (the change must say which version of the line it changes).')"
+ },
+ {
+  "name": "A the draft line is corrected (version 0 \u2192 1); the imported value is kept",
+  "ok": true,
+  "detail": "(200, 'Line changed; the original is kept.')"
+ },
+ {
+  "name": "A the corrected LKR statement is accepted (closing 3,893,106.00)",
+  "ok": true,
+  "detail": "Statement accepted. Its lines can now be matched. (Nothing was posted to the ledger.)"
+ },
+ {
+  "name": "A USD (typed) and JPY (uploaded) statements accepted",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "A the cheque from before the first day is suggested, marked \"booked before the first day \u2014 not an opening item yet\"",
+  "ok": true,
+  "detail": "['cheque / reference 000123', '3 day(s) apart', 'booked before the first day \u2014 not an opening item yet']"
+ },
+ {
+  "name": "A matching the cheque warns that clearing it does not explain the opening difference until it is an accepted opening item",
+  "ok": true,
+  "detail": "Matched. Note: ledger row(s) 99980002.1 were booked before the first day and are not accepted opening items; clearing them does not explain the opening difference until they are."
+ },
+ {
+  "name": "A D10: after the cheque of 30 Aug cleared, the opening difference 150,000.00 is still NOT explained (not an accepted opening item) \u2192 insufficient data",
+  "ok": true,
+  "detail": "({'difference_lkr': '345451.00', 'opening_difference_lkr': '150000.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '0.00', 'opening_items_outstanding': '0.00', 'pre_start_cleared_not_accepted': '-150000.00', 'opening_remaining': '150000.00', 'bank_items_not_in_book': '230450.00', 'book_items_not_on_statement': '115000.00', 'match_differences': '1.00', 'partial_remainders': '0.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_"
+ },
+ {
+  "name": "A the cheque is proposed as an opening outstanding item (+150,000.00); the preparer cannot accept it (403); the reviewer accepts it",
+  "ok": true,
+  "detail": "('Proposed as an opening outstanding item (150,000.00 LKR of bank \u2212 book at the start). A reviewer accepts or rejects it; until then it does not explain the opening difference.', 403, 200)"
+ },
+ {
+  "name": "A 5 Sep: opening difference explained by the accepted item (remaining 0.00); the item shows as cleared on 2 Sep (\u2212150,000.00 cleared, 0.00 outstanding)",
+  "ok": true,
+  "detail": "({'difference_lkr': '345451.00', 'opening_difference_lkr': '150000.00', 'opening_items_accepted': '150000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '-150000.00', 'opening_items_outstanding': '0.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '230450.00', 'book_items_not_on_statement': '115000.00', 'match_differences': '1.00', 'partial_remainders': '0.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_"
+ },
+ {
+  "name": "A 1 Sep (first day): the same item is outstanding (150,000.00); the opening difference is explained; day 1 reconciles apart from the 25.00 charge",
+  "ok": true,
+  "detail": "({'difference_lkr': '149975.00', 'opening_difference_lkr': '150000.00', 'opening_items_accepted': '150000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '0.00', 'opening_items_outstanding': '150000.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '-25.00', 'book_items_not_on_statement': '0.00', 'match_differences': '0.00', 'partial_remainders': '0.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_source': "
+ },
+ {
+  "name": "A corrections proposed (charges 4,550.00; deposit 235,000.00); a second proposal for the same line is refused (409)",
+  "ok": true,
+  "detail": "('Correction proposed for review. It will not be posted by the system; until Accounts posts it by hand and the entry is verified here, the reconciliation shows the ledger as not corrected.', 'Correction proposed for review. It will not be posted by the system; until Accounts posts it by hand and the entry is verified here, the reconciliation shows the ledger as not corrected.', 'Statement line 109 is already in correction #24 (proposed or approved).')"
+ },
+ {
+  "name": "A 5 Sep with corrections only PROPOSED: \"All items explained \u2014 ledger not yet corrected \u2014 2 correction(s) awaiting approval\"",
+  "ok": true,
+  "detail": "('All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 2 correction(s) awaiting approval (239,550.00)', '2 correction(s) awaiting approval (239,550.00)')"
+ },
+ {
+  "name": "A after APPROVAL (not posted): still \"ledger not yet corrected \u2014 2 approved but not posted (239,550.00)\"; never \"Reconciled\"",
+  "ok": true,
+  "detail": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 2 approved but not posted (239,550.00)"
+ },
+ {
+  "name": "A the difference 345,451.00 is explained to 0.00 (230,450.00 + 115,000.00 + rounding 1.00)",
+  "ok": true,
+  "detail": "{'difference_lkr': '345451.00', 'opening_difference_lkr': '150000.00', 'opening_items_accepted': '150000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '-150000.00', 'opening_items_outstanding': '0.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '230450.00', 'book_items_not_on_statement': '115000.00', 'match_differences': '1.00', 'partial_remainders': '0.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_s"
+ },
+ {
+  "name": "A the corrections list says where each stands: \"Approved \u2014 not posted (ledger not corrected)\"",
+  "ok": true,
+  "detail": "{24: ('approved', False), 23: ('approved', False)}"
+ },
+ {
+  "name": "A the USD \u2192 LKR transfer is recorded with the day rate 301 and difference \u221210,000.00; recording it twice is refused (409)",
+  "ok": true,
+  "detail": "('Transfer recorded at 300 (day rate 301, difference -10,000.00 LKR). Each side is still matched to the ledger in its own account, where an exchange-rate difference must be explained.', 409)"
+ },
+ {
+  "name": "A USD: the remittance is SUGGESTED within the 1 % tolerance, but shown with its difference 2,500.00 \"to explain\"",
+  "ok": true,
+  "detail": "{'type': 'match', 'line': {'id': 112, 'date': '2026-09-02', 'description': 'TEST AGENT REMITTANCE ABC TRAVEL', 'amount': '5000.00', 'amount_lkr': '1502500.00', 'timing': None}, 'book': [{'key': '99980102.1', 'date': '2026-09-02', 'amount': '1500000.00', 'description': 'TEST AGENT REMITTANCE (dummy)', 'pv': '0', 'payee': '', 'timing': None, 'before_start': False, 'opening_item': None}], 'confidence': 'medium', 'why': ['same day'], 'alternatives': 0, 'difference_lkr': '2500.00', 'needs_explanation"
+ },
+ {
+  "name": "A an exchange-rate difference without an explanation is refused (400): the tolerance never explains it",
+  "ok": true,
+  "detail": "Explain the exchange-rate difference of 2,500.00 LKR in the note (e.g. the rate the bank applied against the day's rate). A tolerance never explains it by itself."
+ },
+ {
+  "name": "A USD lines matched with explained exchange-rate differences (+2,500.00, \u221210,000.00)",
+  "ok": true,
+  "detail": "('Matched (difference 2,500.00 LKR: exchange rate, explained).', 'Matched (difference \u221210,000.00 LKR: exchange rate, explained).')"
+ },
+ {
+  "name": "A USD 5 Sep: differences visible (\u22127,500.00 in matches, 2 explained), revaluation 97,500.00 at 302 (TEST rate) shown; charge approved, not posted",
+  "ok": true,
+  "detail": "({'difference_lkr': '85470.00', 'opening_difference_lkr': '0.00', 'opening_items_accepted': '0.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '0.00', 'opening_items_outstanding': '0.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '-4530.00', 'book_items_not_on_statement': '0.00', 'match_differences': '-7500.00', 'partial_remainders': '0.00', 'revaluation': '97500.00', 'revaluation_rate': '302.000000', 'revaluation_rate_source"
+ },
+ {
+  "name": "A a recorded exchange-rate difference without an explanation (as from r1) is shown \"to explain\" \u2192 items to explain",
+  "ok": true,
+  "detail": "('Unreconciled \u2014 items to explain', {'bank_lines': 3, 'book_rows': 2, 'matched': 2, 'bank_unmatched': 1, 'book_unmatched': 0, 'timing': 0, 'duplicate': 0, 'excluded': 0, 'charges': 1, 'matched_later': 0, 'partial': 0, 'differences': 2, 'differences_unexplained': 1, 'opening_outstanding': 0, 'unexplained_items': 1})"
+ },
+ {
+  "name": "A the view-only user cannot explain it (403); the preparer explains it \u2192 explained (pending the approved charge)",
+  "ok": true,
+  "detail": "(403, 200, 'All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (4,530.00)')"
+ },
+ {
+  "name": "A the USD daily record needs an explanation of the revaluation (400 without); prepared with it",
+  "ok": true,
+  "detail": "(\"The USD balance has a revaluation of 97,500.00 LKR at the day's rate 302.000000. Explain it in the record (e.g. unrealised exchange difference; month-end entry to be posted by Accounts).\", 'Daily record prepared: All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (4,530.00).')"
+ },
+ {
+  "name": "A USD record reviewed \u2192 \"Reviewed \u2014 ledger not yet corrected\" (the charge is approved but not posted)",
+  "ok": true,
+  "detail": "Daily record reviewed. Note: the ledger is not yet corrected for the corrections listed on it."
+ },
+ {
+  "name": "A JPY 5 Sep: matched exactly; revaluation 32,000.00 shown; status explained (nothing pending)",
+  "ok": true,
+  "detail": "Reconciled \u2014 all items explained (awaiting review)"
+ },
+ {
+  "name": "A LKR record: the preparer cannot review (403); returned with a reason; prepared again and reviewed \u2192 \"Reviewed \u2014 ledger not yet corrected\"; the record keeps the 2 pending postings",
+  "ok": true,
+  "detail": "(403, 200, 409, 200, 'Reviewed \u2014 ledger not yet corrected \u2014 2 approved but not posted (239,550.00)', {'record_id': 47, 'review_status': 'reviewed', 'prepared_by': 'tcaccount', 'prepared_at': '2026-10-12 11:05:11', 'reviewed_by': 'tcpayappr', 'reviewed_at': '2026-10-12 11:05:11', 'tracked': True, 'changed': [], 'changed_labels': [], 'postings_progressed': False, 'result_changed': False, 'recorded_status': 'All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 2 approved but not poste"
+ },
+ {
+  "name": "A undoing a match after review: kept as undone; the day falls back to \"items to explain\" and the reviewed record is flagged \"changed since review\"",
+  "ok": true,
+  "detail": "('Unreconciled \u2014 items to explain', 'Changed since review #47 (reviewed by tcpayappr): matches or their explanations, how unmatched items are explained \u2014 re-review needed. The reviewed snapshot is kept.')"
+ },
+ {
+  "name": "A matching the same items again with the same explanation makes the reviewed record current again (what was reviewed is what the data says)",
+  "ok": true,
+  "detail": "Reviewed #47 by tcpayappr \u2014 current."
+ },
+ {
+  "name": "A void: preparer refused (403); reviewer refused while the statement has matches (409)",
+  "ok": true,
+  "detail": "(403, 409)"
+ },
+ {
+  "name": "A four eyes kept: the preparer cannot approve (403); the administrator cannot approve their own proposal (403)",
+  "ok": true,
+  "detail": "(403, 403)"
+ },
+ {
+  "name": "B verification account (dummy, inactive): mapping proposed and confirmed (first day 1 Sep)",
+  "ok": true,
+  "detail": "('Mapping proposed. Another user with the review privilege must confirm it.', 'Mapping confirmed.')"
+ },
+ {
+  "name": "B statement 1 (1\u20133 Sep, 4 lines) accepted",
+  "ok": true,
+  "detail": "('Statement kept as a draft (4 lines). Nothing is posted to the ledger. It can now be accepted.', 'Statement accepted. Its lines can now be matched. (Nothing was posted to the ledger.)')"
+ },
+ {
+  "name": "B 1 Sep before opening items: bank 499,975.00, book 450,000.00, opening difference 50,000.00 not explained \u2192 insufficient",
+  "ok": true,
+  "detail": "({'opening': '500000.00', 'closing': '499975.00', 'opening_rate': '1', 'opening_rate_source': 'LKR', 'closing_rate': '1', 'closing_rate_source': 'LKR', 'opening_lkr': '500000.00', 'closing_lkr': '499975.00'}, {'opening': '450000.00', 'closing': '450000.00', 'currency': 'LKR', 'account_last_entered': '2026-09-06 10:00:00', 'ledger_last_entered': '2026-10-12 11:04:57'}, ['The opening difference of 50,000.00 LKR on 2026-09-01 is not yet explained by accepted opening items.'])"
+ },
+ {
+  "name": "B candidates: the ledger rows booked in the 60 days before the first day, with their effect on bank \u2212 book (cheques +20,000.00 and +30,000.00)",
+  "ok": true,
+  "detail": "['99980303.1', '99980302.1', '99980301.1']"
+ },
+ {
+  "name": "B both cheques proposed as opening items; the same row again is refused (409); a row dated on or after the first day is refused (400)",
+  "ok": true,
+  "detail": "(200, 200, 409, 'Ledger row 99980302.1 is already opening item #20 (proposed).', 400, 'Ledger row 99980304.1 is dated 2026-09-02, on or after the first day 2026-09-01; it is reconciled by matching, not as an opening item.')"
+ },
+ {
+  "name": "B proposed items do not explain anything yet: still insufficient, \"50,000.00 proposed, awaiting acceptance\"",
+  "ok": true,
+  "detail": "['The opening difference of 50,000.00 LKR on 2026-09-01 is not yet explained by accepted opening items (50,000.00 proposed, awaiting acceptance).']"
+ },
+ {
+  "name": "B the preparer cannot accept (403); the reviewers accept both",
+  "ok": true,
+  "detail": "(403, 200, 200)"
+ },
+ {
+  "name": "B D10 day 1 reconciles: opening difference explained by 2 outstanding opening items (remaining 0.00); only the 25.00 charge left",
+  "ok": true,
+  "detail": "({'difference_lkr': '49975.00', 'opening_difference_lkr': '50000.00', 'opening_items_accepted': '50000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '0.00', 'opening_items_outstanding': '50000.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '-25.00', 'book_items_not_on_statement': '0.00', 'match_differences': '0.00', 'partial_remainders': '0.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_source': 'LKR"
+ },
+ {
+  "name": "B 1 Sep with the charge correction proposed \u2192 \"All items explained \u2014 ledger not yet corrected \u2014 1 correction(s) awaiting approval (25.00)\"",
+  "ok": true,
+  "detail": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 correction(s) awaiting approval (25.00)"
+ },
+ {
+  "name": "B 2 Sep: two timing items (\u221215,000.00, +90,000.00); bank \u2212 book \u221225,025.00 explained to 0.00",
+  "ok": true,
+  "detail": "({'difference_lkr': '-25025.00', 'opening_difference_lkr': '50000.00', 'opening_items_accepted': '50000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '0.00', 'opening_items_outstanding': '50000.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '-25.00', 'book_items_not_on_statement': '-75000.00', 'match_differences': '0.00', 'partial_remainders': '0.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_source'"
+ },
+ {
+  "name": "B the cheque line is suggested for ledger row 99980302 (\"opening item #\u2026 (accepted)\")",
+  "ok": true,
+  "detail": "['cheque / reference 000201', '6 day(s) apart', 'booked before the first day \u2014 opening item #20 (accepted)']"
+ },
+ {
+  "name": "B the cheque is matched (no warning: it is an accepted opening item)",
+  "ok": true,
+  "detail": "Matched."
+ },
+ {
+  "name": "B D9: a match that would clear a timing classification the user did not confirm is refused (409); confirmed, the partial match is recorded",
+  "ok": true,
+  "detail": "('Ledger row 99980304.1 is classified as timing (by tcaccount at 2026-10-12 11:05:21, expected 2026-09-05). Reload and confirm that the match clears this timing classification; nothing was saved.', 'Partly matched: 40,000.00 LKR still to clear; it stays outstanding until a later match completes it. The timing classification of 1 item(s) is cleared by this match (kept in the record; an undo restores it).')"
+ },
+ {
+  "name": "B undoing the partial match restores the timing classification of the receipt row (status active, as first recorded)",
+  "ok": true,
+  "detail": "('Match undone (kept in the record). The timing classification of 1 item(s) is restored, as first recorded.', 'active|-')"
+ },
+ {
+  "name": "B partial clearing: 50,000.00 of the 90,000.00 receipt; \"other\" without an explanation is refused (400); the partial match is recorded (rest \u221240,000.00 expected 5 Sep)",
+  "ok": true,
+  "detail": "(\"Explain the difference of \u221240,000.00 LKR in the note (e.g. the rate the bank applied against the day's rate). A tolerance never explains it by itself.\", 'Partly matched: 40,000.00 LKR still to clear (expected 2026-09-05); it stays outstanding until a later match completes it. The timing classification of 1 item(s) is cleared by this match (kept in the record; an undo restores it).')"
+ },
+ {
+  "name": "B the receipt row's timing classification is cleared by the partial match (kept: status \"matched\", match noted)",
+  "ok": true,
+  "detail": "matched|94"
+ },
+ {
+  "name": "B two users at once \u2014 duplicate matches: 10 simultaneous requests (2 preparers) \u2192 exactly one match, 9 refused (409), one claim",
+  "ok": true,
+  "detail": "([200, 409, 409, 409, 409, 409, 409, 409, 409, 409], '1')"
+ },
+ {
+  "name": "B 3 Sep: bank \u2212 book 4,975.00 = opening item 000202 outstanding 30,000.00 \u2212 charge 25.00 \u2212 partial rest 40,000.00 + timing 15,000.00; cheque 000201 cleared",
+  "ok": true,
+  "detail": "({'difference_lkr': '4975.00', 'opening_difference_lkr': '50000.00', 'opening_items_accepted': '50000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '-20000.00', 'opening_items_outstanding': '30000.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '-25.00', 'book_items_not_on_statement': '15000.00', 'match_differences': '0.00', 'partial_remainders': '-40000.00', 'revaluation': '0.00', 'revaluation_rate': '1', 'revaluation_rate_"
+ },
+ {
+  "name": "B 3 Sep reviewed while the charge correction is only proposed \u2192 \"Reviewed \u2014 ledger not yet corrected \u2014 1 correction(s) awaiting approval (25.00)\"",
+  "ok": true,
+  "detail": "Reviewed \u2014 ledger not yet corrected \u2014 1 correction(s) awaiting approval (25.00)"
+ },
+ {
+  "name": "B approving the correction after the review does not make the review out of date (posting progress only), and the status now says \"approved but not posted\"",
+  "ok": true,
+  "detail": "({'record_id': 48, 'review_status': 'reviewed', 'prepared_by': 'tcaccount', 'prepared_at': '2026-10-12 11:05:34', 'reviewed_by': 'tcpayappr', 'reviewed_at': '2026-10-12 11:05:34', 'tracked': True, 'changed': [], 'changed_labels': [], 'postings_progressed': True, 'result_changed': False, 'recorded_status': 'All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 correction(s) awaiting approval (25.00)', 'state': 'reviewed', 'label': 'Reviewed #48 by tcpayappr \u2014 current. Corrections h"
+ },
+ {
+  "name": "B two users at once \u2014 duplicate acceptance: one 200, one 409; accepted once (one audit row)",
+  "ok": true,
+  "detail": "([200, 409], ['Statement accepted. Its lines can now be matched. (Nothing was posted to the ledger.)', 'Only a draft statement can be accepted (it was accepted by tcaccount at 2026-10-12 11:05:34).'])"
+ },
+ {
+  "name": "B D9: the timing item PV 90011 is offered in the suggestions (high), saying that accepting clears the classification",
+  "ok": true,
+  "detail": "{'type': 'match', 'line': {'id': 120, 'date': '2026-09-04', 'description': 'AH 9910 - TEST VENDOR J - 90011', 'amount': '-15000.00', 'amount_lkr': '-15000.00', 'timing': None}, 'book': [{'key': '99980305.1', 'date': '2026-09-02', 'amount': '-15000.00', 'description': 'VOUCHER PAYMENT - TEST VENDOR J (dummy)', 'pv': '90011', 'payee': 'TEST VENDOR J', 'timing': {'id': 26, 'mark': 'timing', 'expected_date': '2026-09-04', 'note': 'PV 90011 sent 2 Sep, clears 4 Sep', 'created_by': 'tcaccount', 'creat"
+ },
+ {
+  "name": "B the second part of the XYZ receipt is suggested as completing the partial match",
+  "ok": true,
+  "detail": "{'type': 'complete', 'match_id': 94, 'line': {'id': 122, 'date': '2026-09-05', 'description': 'CEFT RECEIPT - TEST AGENT XYZ', 'amount': '40000.00', 'amount_lkr': '40000.00', 'timing': None}, 'book': [], 'confidence': 'high', 'why': ['completes partial match #94 (40,000.00 still to clear)'], 'alternatives': 0, 'difference_lkr': '0.00', 'needs_explanation': False, 'clears_timing': 0, 'timing_ids': []}"
+ },
+ {
+  "name": "B accepting it (second preparer) clears the timing classification: kept with the original classifier, time and expected date; event and audit recorded",
+  "ok": true,
+  "detail": "('matched|96|tcaccount2|tcaccount|2026-10-12 11:05:21|2026-09-04', 'tcaccount|2026-10-12 11:05:21|2026-09-04', 'cleared_by_match:96:tcaccount2', '1', 'Matched. The timing classification of 1 item(s) is cleared by this match (kept in the record; an undo restores it).')"
+ },
+ {
+  "name": "B undo restores the outstanding status: the same timing classification is active again (classifier, time, expected date unchanged); the claim is the classification again",
+  "ok": true,
+  "detail": "('active|-|-|tcaccount|2026-10-12 11:05:21|2026-09-04', 'tcaccount|2026-10-12 11:05:21|2026-09-04', 'Match undone (kept in the record). The timing classification of 1 item(s) is restored, as first recorded.')"
+ },
+ {
+  "name": "B reopening: matched again \u2192 cleared again (history: cleared, restored, cleared)",
+  "ok": true,
+  "detail": "cleared_by_match,restored_by_undo,cleared_by_match"
+ },
+ {
+  "name": "B two users at once \u2014 one matches, the other classifies the same ledger row (as timing): exactly one succeeds; the match never clears a classification its user did not see",
+  "ok": true,
+  "detail": "([200, 409], ['Matched.', 'That ledger row is already matched (match #98).'])"
+ },
+ {
+  "name": "B the reviewer cannot review a record whose data changed after it was prepared (409, audited); nothing is reviewed",
+  "ok": true,
+  "detail": "The data changed after this record was prepared (matches or their explanations, how unmatched items are explained). The preparer must prepare it again; nothing was reviewed."
+ },
+ {
+  "name": "B the record shows \"changed after it was prepared; prepare it again\"",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "B two users at once \u2014 daily-record review by two reviewers at the same instant: one 200, one 409; reviewed once",
+  "ok": true,
+  "detail": "([200, 409], ['Daily record reviewed. Note: the ledger is not yet corrected for the corrections listed on it.', 'That daily record is not waiting for review (reviewed by tcpayappr).'])"
+ },
+ {
+  "name": "B a matched ledger row changed after review \u2192 flagged \"changed since review: ledger rows\" (re-review needed); the day is insufficient; the reviewed snapshot is unchanged",
+  "ok": true,
+  "detail": "({'record_id': 50, 'review_status': 'reviewed', 'prepared_by': 'tcaccount', 'prepared_at': '2026-10-12 11:05:35', 'reviewed_by': 'tcpayappr', 'reviewed_at': '2026-10-12 11:05:45', 'tracked': True, 'changed': ['ledger'], 'changed_labels': ['ledger rows (book side)'], 'postings_progressed': False, 'result_changed': True, 'recorded_status': 'All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00)', 'state': 'reviewed_outdated', 'label': 'Changed since re"
+ },
+ {
+  "name": "B the dummy row put back exactly \u2192 the review is current again",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "B the partial match is completed by the 5 Sep line (new match; the partial one kept as superseded)",
+  "ok": true,
+  "detail": "('Partial match #94 completed (kept in the record).',)"
+ },
+ {
+  "name": "B completing it later does not change the reviewed 3 Sep: same figures, the review stays current",
+  "ok": true,
+  "detail": "('Reviewed #48 by tcpayappr \u2014 current. Corrections have progressed since (approved or posted).', {'difference_lkr': '4975.00', 'opening_difference_lkr': '50000.00', 'opening_items_accepted': '50000.00', 'opening_items_proposed': '0.00', 'opening_items_cleared': '-20000.00', 'opening_items_outstanding': '30000.00', 'pre_start_cleared_not_accepted': '0.00', 'opening_remaining': '0.00', 'bank_items_not_in_book': '49975.00', 'book_items_not_on_statement': '-75000.00', 'match_differences': '0.00', 'p"
+ },
+ {
+  "name": "B undoing the completion makes the partial match active again",
+  "ok": true,
+  "detail": "Match undone (kept in the record). Partial match #94 is active again."
+ },
+ {
+  "name": "B completed again (\"Add selected\" on the partial match)",
+  "ok": true,
+  "detail": "Partial match #94 completed (kept in the record)."
+ },
+ {
+  "name": "B opening items on 2026-09-01: cheque 000202 outstanding, cheque 000201 outstanding; bank \u2212 book 49975.00 explained to 0.00",
+  "ok": true,
+  "detail": "('2026-09-01', '49975.00', '0.00', '50000.00', 'outstanding', 'outstanding', '0.00', 'explained_pending')"
+ },
+ {
+  "name": "B opening items on 2026-09-02: cheque 000202 outstanding, cheque 000201 outstanding; bank \u2212 book -25025.00 explained to 0.00",
+  "ok": true,
+  "detail": "('2026-09-02', '-25025.00', '0.00', '50000.00', 'outstanding', 'outstanding', '0.00', 'explained_pending')"
+ },
+ {
+  "name": "B opening items on 2026-09-03: cheque 000202 outstanding, cheque 000201 cleared; bank \u2212 book 4975.00 explained to 0.00",
+  "ok": true,
+  "detail": "('2026-09-03', '4975.00', '0.00', '30000.00', 'cleared', 'outstanding', '0.00', 'reviewed_pending')"
+ },
+ {
+  "name": "B opening items on 2026-09-04: cheque 000202 outstanding, cheque 000201 cleared; bank \u2212 book -10025.00 explained to 0.00",
+  "ok": true,
+  "detail": "('2026-09-04', '-10025.00', '0.00', '30000.00', 'cleared', 'outstanding', '0.00', 'reviewed_pending')"
+ },
+ {
+  "name": "B opening items on 2026-09-05: cheque 000202 outstanding, cheque 000201 cleared; bank \u2212 book 29975.00 explained to 0.00",
+  "ok": true,
+  "detail": "('2026-09-05', '29975.00', '0.00', '30000.00', 'cleared', 'outstanding', '0.00', 'explained_pending')"
+ },
+ {
+  "name": "B the reviewed 5 Sep record shows the pending posting kept at preparation (1 approved, not posted: 25.00) and now",
+  "ok": true,
+  "detail": "{'id': 51, 'bank_account_id': 7, 'rec_date': '2026-09-05', 'currency': 'LKR', 'bank_closing': '534975.00', 'bank_closing_lkr': '534975.00', 'closing_rate': '1.000000', 'book_closing': '505000.00', 'difference_lkr': '29975.00', 'unexplained_lkr': '0.00', 'status_code': 'explained_pending', 'status_label': 'All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00)', 'prepared_by': 'tcaccount', 'prepared_at': '2026-10-12 11:05:45', 'prepare_note': 'r2 test"
+ },
+ {
+  "name": "B recording a posting with an entry that does not match the approved lines is refused (409) and audited",
+  "ok": true,
+  "detail": "Ledger entry 99980301 does not match the approved correction; approved line(s) not found in it: 1-6-8-29904 Cr 25.00, 4-8-109-31903 Dr 25.00; row(s) in it that are not in the approved correction: 1-6-8-29904 Dr 500,000.00. Nothing was recorded."
+ },
+ {
+  "name": "B the posted entry changes the ledger \u2192 the reviewed 5 Sep record is flagged for re-review (ledger rows)",
+  "ok": true,
+  "detail": "{'record_id': 51, 'review_status': 'reviewed', 'prepared_by': 'tcaccount', 'prepared_at': '2026-10-12 11:05:45', 'reviewed_by': 'tcpayappr', 'reviewed_at': '2026-10-12 11:05:45', 'tracked': True, 'changed': ['ledger', 'items'], 'changed_labels': ['ledger rows (book side)', 'how unmatched items are explained'], 'postings_progressed': False, 'result_changed': True, 'recorded_status': 'All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00)', 'state': 'r"
+ },
+ {
+  "name": "B the posted entry 99980399 matches the approved lines \u2192 linked and verified: \"Posted \u2014 linked to a verified ledger entry\"",
+  "ok": true,
+  "detail": "('Ledger entry 99980399 (2026-09-05) matches the approved correction and is now linked to it. Match the statement line(s) to the posted ledger row(s) as usual.', 'Posted \u2014 linked to a verified ledger entry')"
+ },
+ {
+  "name": "B 5 Sep after the verified posting: nothing pending; bank \u2212 book 30,000.00 (the outstanding cheque); \"Reconciled \u2014 all items explained\"",
+  "ok": true,
+  "detail": "('Reconciled \u2014 all items explained (awaiting review)', '30000.00')"
+ },
+ {
+  "name": "B 1 Sep (before the posting date): the same correction is shown as not yet posted at that date",
+  "ok": true,
+  "detail": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00) \u2014 1 of them posted after this date"
+ },
+ {
+  "name": "B if the posted entry changes in the ledger afterwards: \"Posted entry changed in the ledger \u2014 verify again\"; the charge is no longer explained",
+  "ok": true,
+  "detail": "('Unreconciled \u2014 items to explain', '1 posted entry changed in the ledger')"
+ },
+ {
+  "name": "B prepared again and reviewed \u2192 \"Reconciled \u2014 reviewed\" with nothing pending",
+  "ok": true,
+  "detail": "Reconciled \u2014 reviewed"
+ },
+ {
+  "name": "B two users at once \u2014 conflicting edits: the second change based on the old version is refused (409); the first is kept",
+  "ok": true,
+  "detail": "('Line changed; the original is kept.', 'This line was changed by someone else after you opened it; reload the statement and check it before changing it.')"
+ },
+ {
+  "name": "B two users at once \u2014 two drafts of the same period accepted at the same instant: one accepted, the other refused (overlap)",
+  "ok": true,
+  "detail": "([200, 409], ['Statement accepted. Its lines can now be matched. (Nothing was posted to the ledger.)', 'The statement does not pass its checks: The period overlaps accepted statement 35 (2026-09-06 to 2026-09-06).'])"
+ },
+ {
+  "name": "B a classification is made and cleared (kept as cleared; the claim released)",
+  "ok": true,
+  "detail": "('Classified as excluded.', 'Classification cleared.')"
+ },
+ {
+  "name": "B two users at once \u2014 conflicting rate edits: the change on the old version is refused (409)",
+  "ok": true,
+  "detail": "('Rate changed; LKR equivalents of 1 statement line(s) recalculated. Daily records already reviewed for the days it affects are flagged for re-review.', 'This rate was changed by tcaccount2 at 2026-10-12 11:05:46 after you opened it (now 302.1). Reload and check before changing it.')"
+ },
+ {
+  "name": "B a rate change after review \u2192 the reviewed USD record is flagged (rates; statement LKR values); the revaluation changes",
+  "ok": true,
+  "detail": "(['statement lines or their LKR values', 'exchange rates'], '102000.00')"
+ },
+ {
+  "name": "B the rate put back \u2192 the review is current again",
+  "ok": true,
+  "detail": "Rate changed; LKR equivalents of 1 statement line(s) recalculated. Daily records already reviewed for the days it affects are flagged for re-review."
+ },
+ {
+  "name": "B four eyes on opening items: the proposer (administrator) cannot accept (403); only the proposer withdraws (403 for another; 200 for the proposer)",
+  "ok": true,
+  "detail": "(200, 403, 403, 200)"
+ },
+ {
+  "name": "B the reviewer cannot match (403); view-only cannot propose (403) but can read candidates and records (200)",
+  "ok": true,
+  "detail": "(403, 403, 200, 200)"
+ },
+ {
+  "name": "D7 old screen \"update\" on a row of the mapped verification account dated 2026-09-02 (\u2265 first day 2026-09-01) \u2192 refused 409, message names the first day; nothing changed",
+  "ok": true,
+  "detail": "(409, {'status': 409, 'message': 'The old Bank Reconciliation screen cannot change ledger row 99980305 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Dates before 2026-09-01 can still be reconciled here. Nothing was changed.', 'protected_period': True}, '99980003:1-6-8-29901::0:0,99980302:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-"
+ },
+ {
+  "name": "D7 earlier dates stay available: \"update\" on the 2026-08-28 cheque row (before the first day) works (bank_rec 1), and unticking it puts it back (0)",
+  "ok": true,
+  "detail": "(200, {'status': 200, 'message': 'Invoice saved successfully!'}, '1', 200, '99980003:1-6-8-29901::0:0,99980302:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-29904::0:0')"
+ },
+ {
+  "name": "D7 \"finalize selected\" with one row before and one row after the first day \u2192 all refused (409); neither row changed",
+  "ok": true,
+  "detail": "(409, {'status': 409, 'message': 'The old Bank Reconciliation screen cannot change ledger row 99980306 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Dates before 2026-09-01 can still be reconciled here. Nothing was changed.', 'protected_period': True}, '99980003:1-6-8-29901::0:0,99980302:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-"
+ },
+ {
+  "name": "D7 \"reconcile up to\" 2026-09-05 \u2192 refused (409); up to 2026-08-31 (before the first day) \u2192 allowed (200); no flag changed (no ticked rows before the first day)",
+  "ok": true,
+  "detail": "(409, 'The old Bank Reconciliation screen cannot change dates on or after 2026-09-01 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Dates before 2026-09-01 can still be reconciled here. Nothing was changed.', 200, {'status': 200, 'message': 'Reconciliation successful!'}, '99980003:1-6-8-29901::0:0,99980302:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0"
+ },
+ {
+  "name": "D7 moving a row to the unrealised account (409), moving one back (409), reposting a range that reaches the first day (409), and a row of the TEST LKR account (409) are all refused; nothing changed",
+  "ok": true,
+  "detail": "(409, 409, 409, 409, '99980003:1-6-8-29901::0:0,99980302:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-29904::0:0')"
+ },
+ {
+  "name": "D7 every refusal is audited (7 \"brc_legacy_refused\" rows, by the signed-in user)",
+  "ok": true,
+  "detail": "7"
+ },
+ {
+  "name": "D7 the new workflow warns about old-screen flags in the protected period: 2 rows (bank_rec on 99980306; 99980307 moved to the unrealised account), in the day and on the overview",
+  "ok": true,
+  "detail": "({'count': 2, 'rows': [{'id': 99980306, 'date': '2026-09-03', 'amount': '-8000.00', 'description': 'VOUCHER PAYMENT - TEST VENDOR K (dummy)', 'flags': ['bank_rec']}, {'id': 99980307, 'date': '2026-09-04', 'amount': '-12000.00', 'description': 'VOUCHER PAYMENT - TEST VENDOR L (dummy)', 'flags': ['moved to the unrealised account 1-6-112-10782']}]}, ['2 ledger row(s) of this account dated from the first day (2026-09-01) carry flags of the old Bank Reconciliation screen (rows 99980306, 99980307). Th"
+ },
+ {
+  "name": "D7 the flags are left as they are by the new workflow (still set after the day and the overview were computed)",
+  "ok": true,
+  "detail": "1|1-6-8-29904\n0|1-6-112-10782"
+ },
+ {
+  "name": "D7 the test rows put back: no warning, the day as before",
+  "ok": true,
+  "detail": "({'count': 0, 'rows': []}, '99980003:1-6-8-29901::0:0,99980302:1-6-8-29904::0:0,99980304:1-6-8-29904::0:0,99980305:1-6-8-29904::0:0,99980306:1-6-8-29904::0:0,99980307:1-6-8-29904::0:0', 'reviewed', 'reviewed')"
+ },
+ {
+  "name": "P2 pending corrections per day (TEST LKR): approved, not posted = 25.00 (1 Sep), 50.00 (2 Sep), 1,050.00 (3 Sep), 236,050.00 (4 Sep), 239,550.00 (5 Sep); the full total (4,550.00 / 239,550.00) named separately when it differs; each correction once; unexplained 0.00",
+  "ok": true,
+  "detail": "{'2026-09-01': ('25.00', '4550.00', '1 approved but not posted (25.00 up to this day; correction total 4,550.00)', 'explained_pending', '0.00'), '2026-09-02': ('50.00', '4550.00', '1 approved but not posted (50.00 up to this day; correction total 4,550.00)', 'explained_pending', '0.00'), '2026-09-03': ('1050.00', '4550.00', '1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)', 'explained_pending', '0.00'), '2026-09-04': ('236050.00', '239550.00', '2 approved but not p"
+ },
+ {
+  "name": "P2 1 Sep: \"1 approved but not posted (25.00 up to this day; correction total 4,550.00)\" \u2014 the 4,550.00 charges correction covers 1\u20135 Sep",
+  "ok": true,
+  "detail": "('All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00 up to this day; correction total 4,550.00)', {'id': 23, 'status': 'approved', 'state': 'approved', 'label': 'Approved \u2014 not posted (ledger not corrected)', 'amount': '4550.00', 'posted_ref': None, 'posted_entry_date': None, 'attributable': '25.00', 'full_amount': '4550.00'})"
+ },
+ {
+  "name": "P2 a daily record prepared for 3 Sep keeps \"1,050.00 up to this day; correction total 4,550.00\" in its snapshot",
+  "ok": true,
+  "detail": "(200, 'Daily record prepared: All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (1,050.00 up to this day; correction total 4,550.00).', '1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)')"
+ },
+ {
+  "name": "P2 reviewed: \"Reviewed \u2014 ledger not yet corrected \u2014 1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)\"",
+  "ok": true,
+  "detail": "Reviewed \u2014 ledger not yet corrected \u2014 1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)"
+ },
+ {
+  "name": "R the V charge correction is posted and verified with dummy entry 99980399 (from the r2 suite)",
+  "ok": true,
+  "detail": "Posted \u2014 linked to a verified ledger entry"
+ },
+ {
+  "name": "R the posted entry changes in the ledger (wording) \u2192 \"Posted entry changed in the ledger \u2014 verify again\"; the charge is no longer explained",
+  "ok": true,
+  "detail": "('Posted entry changed in the ledger \u2014 verify again', 'Unreconciled \u2014 items to explain')"
+ },
+ {
+  "name": "R a reviewer without the preparer privilege cannot verify again (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "name": "R the preparer verifies again: the entry still matches the approved lines \u2192 posted and verified (its new state); audited",
+  "ok": true,
+  "detail": "(200, 'Ledger entry 99980399 (2026-09-05) was checked again: it still matches the approved correction, and its current state is now the verified one.', 'posted')"
+ },
+ {
+  "name": "R verifying again when nothing changed is refused (409)",
+  "ok": true,
+  "detail": "(409, 'Ledger entry 99980399 has not changed since it was verified; there is nothing to verify again.')"
+ },
+ {
+  "name": "R the entry's amounts change (25 \u2192 30): verifying again is refused (409, names the mismatch) and it stays \"verify again\"; audited",
+  "ok": true,
+  "detail": "(409, 'Ledger entry 99980399 as it is now does not match the approved correction; approved line(s) not found in it: 1-6-8-29904 Cr 25.00, 4-8-109-31903 Dr 25.00; row(s) in it that are not in the approved correction: 1-6-8-29904 Cr 30.00, 4-8-109-31903 Dr 30.00. Nothing was recorded; it stays \"verify again\".', 'posted_changed')"
+ },
+ {
+  "name": "R amounts put back \u2192 posted again; wording put back \u2192 \"verify again\" \u2192 verified again; the dummy entry is exactly as before",
+  "ok": true,
+  "detail": "('posted', 'posted_changed', 200, 'posted', True)"
+ },
+ {
+  "name": "U a user holding BOTH the preparer and the reviewer privilege (tcdual, not an administrator) proposes an opening item (200) and cannot accept it (403); withdraws it (200)",
+  "ok": true,
+  "detail": "(200, 403, 200, 'An opening item must be reviewed by someone other than the person who proposed it.')"
+ },
+ {
+  "name": "U the same user proposes a correction (200), cannot approve it (403), withdraws it (200)",
+  "ok": true,
+  "detail": "(200, 'Correction proposed for review. It will not be posted by the system; until Accounts posts it by hand and the entry is verified here, the reconciliation shows the ledger as not corrected.', 403, 'A correction must be reviewed by someone other than the person who proposed it.', 200, 'Withdrawn.')"
+ },
+ {
+  "name": "U the same user prepares a daily record (200), cannot review it (403); another reviewer reviews it (200)",
+  "ok": true,
+  "detail": "(200, 403, 'The daily record must be reviewed by someone other than the person who prepared it.', 200)"
+ },
+ {
+  "name": "U the same user may review a record someone else prepared (200)",
+  "ok": true,
+  "detail": "(200, 200, 'Daily record reviewed. Note: the ledger is not yet corrected for the corrections listed on it.')"
+ },
+ {
+  "name": "T two DIFFERENT users classify the same statement line at the same instant: exactly one succeeds (200), the other is refused (409)",
+  "ok": true,
+  "detail": "[(409, 'That line is already classified.'), (200, 'Classified as excluded.')]"
+ },
+ {
+  "name": "T two DIFFERENT reviewers review the same daily record at the same instant: one 200, one 409; reviewed once (one audit row)",
+  "ok": true,
+  "detail": "[(409, 'That daily record is not waiting for review (reviewed by tcdual).'), (200, 'Daily record reviewed. Note: the ledger is not yet corrected for the corrections listed on it.')]"
+ },
+ {
+  "name": "T in both races the two users' requests were in the server at the same time (overlapping)",
+  "ok": true,
+  "detail": "[{'path': 'mark/create', 'users': ['accountant', 'dual'], 'requests': 2, 'first_requests_overlapped': True, 'span_ms': 19, 'codes': [409, 200]}, {'path': 'day/review', 'users': ['approver', 'dual'], 'requests': 2, 'first_requests_overlapped': True, 'span_ms': 25, 'codes': [409, 200]}]"
+ },
+ {
+  "name": "dummy ledger rows exactly as before the r3 part (every test change to a dummy row was put back; flags and unrealised moves included)",
+  "ok": true,
+  "detail": "('24|23494025.00|3537370.00|52238957585', '24|23494025.00|3537370.00|52238957585')"
+ },
+ {
+  "name": "the real ledger is unchanged: rows, sums and every row's reconciliation flags",
+  "ok": true,
+  "detail": "('2570|63467938.20|63467938.20|5549154554938', '2570|63467938.20|63467938.20|5549154554938')"
+ },
+ {
+  "name": "every audited action is attributed to an identifiable test login",
+  "ok": true,
+  "detail": "0"
+ }
+]

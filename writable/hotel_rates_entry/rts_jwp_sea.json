@@ -1,0 +1,863 @@
+{
+ "key": "rts_jwp_sea",
+ "hotel": {
+  "acc": "6-9-11-10875",
+  "name": "Jetwing Sea",
+  "location": "Negombo",
+  "chain": "Jetwing Hotels (Premium)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10875",
+   "name": "Jetwing Sea"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contracted rates – Premium Hotels (revised)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel Agent",
+   "tier": "all",
+   "hotel_reference": "Premium Hotels – Travel Agent Contracted Rates – Winter 2026-2027 (Revised)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "child_policy_text": "Child Policy - (Maximum Up to 02 Children) – Not applicable for Sea Residence: Age of 0-5 Free of Charge. Age of 6-11.99: USD 30 (Per kid/Per night on BB including extra bed), USD 45 (Per kid/Per night on HB including extra bed), USD 58 (Per kid/Per night on FB including extra bed) (Not Applicable for Triple Occupancy); USD 10 (Per kid/Per night on BB excluding extra bed), USD 25 (Per kid/Per night on HB excluding extra bed), USD 38 (Per kid/Per night on FB excluding extra bed). Baby Cot on request can be provided free of charge. (Up to one cot per room except Sea Residence)",
+   "guide_policy_text": "Guide/Tour leader Policy (Not Applicable from 20th December 2026 to 15th March 2027; only applicable at Jetwing Blue / Beach / Sea / Lake / St. Andrew's): Foreign Tour Leader – 20% discount on guest room rate for a Single room. 01 SGL room free of charge on the basis booked for minimum of 15 Pax up to 45 pax. If less the following rates apply in USD: BB – USD 70 | HB – USD 90 | FB – USD 105. Alternate accommodation in a full house; guaranteed guide accommodation is charged at the guest room rate. The hotel may double up / transfer guides. Driver Accommodation – Not Available.",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+   "terms_text": "JETWING SEA (Negombo): Deluxe (53 Rooms), Suite (02 Rooms), Sea Residence (01 Room). Single Reduction – USD 20 / Triple Supplement – USD 40 (On BB). Single Reduction – USD 50 / Triple Supplement – USD 70 (On HB). Single Reduction – USD 75 / Triple Supplement – USD 95 (On FB). Special Offers – Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. Value Additions (Minimum 04 nights and above): Complimentary High tea on the last Night (Once per stay); Fruit basket (Once per stay); 10% off on spa treatments throughout the stay; 10% Discount coupon at Seaside Social (Once per stay). Driver Accommodation – Not Available. Reservations +94 314 933 433 / +94 70 738 6706, resv.sea@jetwinghotels.com. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | VALUE ADDITIONS POLICY: A maximum of 03 value adds can be used at each property. Experiences like Tours/Walks/Demonstrations etc. will be arranged in common groups depending on the occupancy for the day. Meal upgrade offers are valid only for FIT bookings. Food & Beverage discounts are not combinable with other promotions, offers, vouchers, outlets or seasonal deals. Food & Beverage discounts will not be applicable for liquor & tobacco. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+   "notes": "Transcribed from \"Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf\" (20 pages), saved to the winter RTS folder on 2 Oct 2026. Currency \"USD nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy; single/triple derived from the printed reductions/supplements (see row notes). Market clause \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner or rate code is printed. Early-bird / value-addition / meal-upgrade offers are in Offers (chosen by staff, never applied automatically). Room names: \"Suite (02 Rooms)\" entered as the existing \"SUITE\"; \"Sea Residence (01 Room)\" is new. February is printed as its own period with the super-peak figures → kind peak. No Peak Period payment / cancellation box on this page and the terms page limits those peak terms to Blue / Beach / St. Andrew's / Lake → standard Jetwing cancellation and payment all season. The child policy is \"Not applicable for Sea Residence\": child rows are entered for Deluxe and SUITE only; the triple supplement is printed without a room restriction and is applied to all three rooms.",
+   "source_file": "Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "room_count": 53,
+    "max_children": 2
+   },
+   {
+    "name": "SUITE",
+    "priced_as": "base",
+    "room_count": 2,
+    "max_children": 2,
+    "description": "Printed \"Suite (02 Rooms)\""
+   },
+   {
+    "name": "Sea Residence",
+    "priced_as": "base",
+    "room_count": 1,
+    "description": "Printed \"Sea Residence (01 Room)\". Child policy and baby cot not applicable for Sea Residence (sheet)"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 25 Dec 2026 & 01 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-25"
+     },
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 125,
+      "dbl": 145,
+      "tpl": 185,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 145; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 155,
+      "dbl": 205,
+      "tpl": 275,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 205; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 180,
+      "dbl": 255,
+      "tpl": 350,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 255; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "BB",
+      "sgl": 225,
+      "dbl": 245,
+      "tpl": 285,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 245; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "HB",
+      "sgl": 255,
+      "dbl": 305,
+      "tpl": 375,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 305; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "FB",
+      "sgl": 280,
+      "dbl": 355,
+      "tpl": 450,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 355; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "BB",
+      "sgl": 325,
+      "dbl": 345,
+      "tpl": 385,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 345; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "HB",
+      "sgl": 355,
+      "dbl": 405,
+      "tpl": 475,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 405; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "FB",
+      "sgl": 380,
+      "dbl": 455,
+      "tpl": 550,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 455; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ]
+   },
+   {
+    "name": "26 Dec 2026 – 10 Jan 2027 (Super Peak Period)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-26",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 160,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 180; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 190,
+      "dbl": 240,
+      "tpl": 310,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 240; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 215,
+      "dbl": 290,
+      "tpl": 385,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 290; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "BB",
+      "sgl": 260,
+      "dbl": 280,
+      "tpl": 320,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 280; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "HB",
+      "sgl": 290,
+      "dbl": 340,
+      "tpl": 410,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 340; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "FB",
+      "sgl": 315,
+      "dbl": 390,
+      "tpl": 485,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 390; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "BB",
+      "sgl": 360,
+      "dbl": 380,
+      "tpl": 420,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 380; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "HB",
+      "sgl": 390,
+      "dbl": 440,
+      "tpl": 510,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 440; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "FB",
+      "sgl": 415,
+      "dbl": 490,
+      "tpl": 585,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 490; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ],
+    "notes": "Super Peak Period"
+   },
+   {
+    "name": "11 – 31 Jan 2027 & 01 – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-01-31"
+     },
+     {
+      "from": "2027-03-01",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 150,
+      "dbl": 170,
+      "tpl": 210,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 170; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 180,
+      "dbl": 230,
+      "tpl": 300,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 230; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 205,
+      "dbl": 280,
+      "tpl": 375,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 280; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "BB",
+      "sgl": 250,
+      "dbl": 270,
+      "tpl": 310,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 270; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "HB",
+      "sgl": 280,
+      "dbl": 330,
+      "tpl": 400,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 330; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "FB",
+      "sgl": 305,
+      "dbl": 380,
+      "tpl": 475,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 380; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "BB",
+      "sgl": 350,
+      "dbl": 370,
+      "tpl": 410,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 370; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "HB",
+      "sgl": 380,
+      "dbl": 430,
+      "tpl": 500,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 430; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "FB",
+      "sgl": 405,
+      "dbl": 480,
+      "tpl": 575,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 480; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ]
+   },
+   {
+    "name": "01 – 28 Feb 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2027-02-01",
+      "to": "2027-02-28"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 160,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 180; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 190,
+      "dbl": 240,
+      "tpl": 310,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 240; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "FB",
+      "sgl": 215,
+      "dbl": 290,
+      "tpl": 385,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 290; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "BB",
+      "sgl": 260,
+      "dbl": 280,
+      "tpl": 320,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 280; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "HB",
+      "sgl": 290,
+      "dbl": 340,
+      "tpl": 410,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 340; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "SUITE",
+      "meal_plan": "FB",
+      "sgl": 315,
+      "dbl": 390,
+      "tpl": 485,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 390; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "BB",
+      "sgl": 360,
+      "dbl": 380,
+      "tpl": 420,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 380; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "HB",
+      "sgl": 390,
+      "dbl": 440,
+      "tpl": 510,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 440; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "Sea Residence",
+      "meal_plan": "FB",
+      "sgl": 415,
+      "dbl": 490,
+      "tpl": 585,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 490; SGL = DBL − single reduction USD 75; TPL = DBL + triple supplement USD 95"
+     }
+    ],
+    "notes": "Printed as its own period with the Super Peak figures; February is named with the super peak in the early-bird exclusions (no peak payment / cancellation terms at Jetwing Sea)"
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Free of charge (maximum up to 02 children). Baby cot on request free of charge (up to one cot per room except Sea Residence).",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "max_children": 2,
+    "note": "Per kid per night on BB including extra bed; not applicable for triple occupancy",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 45,
+    "max_children": 2,
+    "note": "Per kid per night on HB including extra bed; not applicable for triple occupancy",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 58,
+    "max_children": 2,
+    "note": "Per kid per night on FB including extra bed; not applicable for triple occupancy",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 10,
+    "max_children": 2,
+    "note": "Per kid per night on BB excluding extra bed",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "max_children": 2,
+    "note": "Per kid per night on HB excluding extra bed",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "FB",
+    "amount": 38,
+    "max_children": 2,
+    "note": "Per kid per night on FB excluding extra bed",
+    "room_type": "Deluxe"
+   },
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Free of charge (maximum up to 02 children). Baby cot on request free of charge (up to one cot per room except Sea Residence).",
+    "room_type": "SUITE"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "max_children": 2,
+    "note": "Per kid per night on BB including extra bed; not applicable for triple occupancy",
+    "room_type": "SUITE"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 45,
+    "max_children": 2,
+    "note": "Per kid per night on HB including extra bed; not applicable for triple occupancy",
+    "room_type": "SUITE"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "FB",
+    "amount": 58,
+    "max_children": 2,
+    "note": "Per kid per night on FB including extra bed; not applicable for triple occupancy",
+    "room_type": "SUITE"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 10,
+    "max_children": 2,
+    "note": "Per kid per night on BB excluding extra bed",
+    "room_type": "SUITE"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "max_children": 2,
+    "note": "Per kid per night on HB excluding extra bed",
+    "room_type": "SUITE"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "FB",
+    "amount": 38,
+    "max_children": 2,
+    "note": "Per kid per night on FB excluding extra bed",
+    "room_type": "SUITE"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "tour_leader",
+    "pct_of": "sgl",
+    "pct": 80,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Foreign Tour Leader – 20% discount on guest room rate for a Single room (entered as 80% of SGL). Not applicable 20 Dec 2026 – 15 Mar 2027 (applies 01 Nov – 19 Dec 2026 and 16 Mar – 30 Apr 2027)"
+   },
+   {
+    "role": "any",
+    "free_from_pax": 15,
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "01 SGL room free of charge on the basis booked for minimum of 15 Pax up to 45 pax. Not applicable 20 Dec 2026 – 15 Mar 2027 (applies 01 Nov – 19 Dec 2026 and 16 Mar – 30 Apr 2027)"
+   },
+   {
+    "role": "any",
+    "meal_plan": "BB",
+    "amount": 70,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Guide/tour leader if less than 15 pax: BB – USD 70. Not applicable 20 Dec 2026 – 15 Mar 2027 (applies 01 Nov – 19 Dec 2026 and 16 Mar – 30 Apr 2027)"
+   },
+   {
+    "role": "any",
+    "meal_plan": "HB",
+    "amount": 90,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Guide/tour leader if less than 15 pax: HB – USD 90. Not applicable 20 Dec 2026 – 15 Mar 2027 (applies 01 Nov – 19 Dec 2026 and 16 Mar – 30 Apr 2027)"
+   },
+   {
+    "role": "any",
+    "meal_plan": "FB",
+    "amount": 105,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Guide/tour leader if less than 15 pax: FB – USD 105. Not applicable 20 Dec 2026 – 15 Mar 2027 (applies 01 Nov – 19 Dec 2026 and 16 Mar – 30 Apr 2027)"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 75 days prior to arrival – 15% discount",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "value_pct": 15,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 45 days prior to arrival – 10% discount",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "value_pct": 10,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 75 days prior to arrival – 15% discount",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-01-31",
+    "value_pct": 15,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 45 days prior to arrival – 10% discount",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-01-31",
+    "value_pct": 10,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 75 days prior to arrival – 15% discount",
+    "stay_from": "2027-03-01",
+    "stay_to": "2027-04-30",
+    "value_pct": 15,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 45 days prior to arrival – 10% discount",
+    "stay_from": "2027-03-01",
+    "stay_to": "2027-04-30",
+    "value_pct": 10,
+    "per": "booking",
+    "excludes_peak": 1,
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird (Super Peak / February) – booked 75 days prior to arrival – 10% discount",
+    "stay_from": "2026-12-26",
+    "stay_to": "2027-01-10",
+    "value_pct": 10,
+    "per": "booking",
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird (Super Peak / February) – booked 75 days prior to arrival – 10% discount",
+    "stay_from": "2027-02-01",
+    "stay_to": "2027-02-28",
+    "value_pct": 10,
+    "per": "booking",
+    "conditions": "Early Bird Offers: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. \"Days prior to arrival\" = booking lead time (no calendar booking window printed)."
+   },
+   {
+    "kind": "other",
+    "name": "Value additions (minimum 04 nights and above)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 4,
+    "per": "booking",
+    "conditions": "Value Additions (Minimum 04 nights and above): Complimentary High tea on the last Night (Once per stay); Fruit basket (Once per stay); 10% off on spa treatments throughout the stay; 10% Discount coupon at Seaside Social (Once per stay). No money value printed. Value Additions Policy: max 03 value adds per property; tours/walks/demonstrations arranged in common groups depending on occupancy; meal upgrade offers FIT only; F&B discounts not combinable with other promotions/offers/vouchers/outlets/seasonal deals and not for liquor & tobacco."
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 5,
+    "pct": 100,
+    "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

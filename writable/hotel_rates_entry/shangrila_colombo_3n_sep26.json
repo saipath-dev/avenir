@@ -1,0 +1,263 @@
+{
+ "key": "shangrila_colombo_3n_sep26",
+ "hotel": {
+  "acc": "6-9-11-11005",
+  "name": "Shangri-La Colombo",
+  "location": "Colombo",
+  "chain": "Shangri-La"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11005",
+   "name": "Shangri-La Colombo"
+  },
+  "contract": {
+   "name": "Wholesale All Market 3 Night Offer Sep 2026 (WSLTL3-B)",
+   "plan_type": "special_offer",
+   "rate_code": "WSLTL3-B",
+   "tier": "fit",
+   "tier_max_rooms": 9,
+   "priority": 10,
+   "valid_from": "2026-09-01",
+   "valid_to": "2026-12-19",
+   "book_from": "2026-07-01",
+   "book_to": "2026-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "USD incl. tax* (\"inclusive of all taxes\"); make-up not printed, incl./excl. = 1.3435 (the 34.35% SC+VAT+TDL+SSCL rate). Excl.-tax figures in each rate row note. Non-commissionable.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "contract_date": "2026-08-24",
+   "contract_type": "Wholesale 3-night offer",
+   "credit_facility": "unknown",
+   "min_stay": 3,
+   "child_policy_text": "Extra person(s) allowed as per the \"Bedding Configuration and Maximum Occupancy\" chart; one additional (rollaway) bed can be added to all room categories. Infant 0 – 5 years: complimentary for buffet while dining with adult. Child 6 – 11 years: extra bed is complimentary and 50% discount on food & beverage. Rollaway beds US$ 27.25 + taxes = USD 36.61 incl. tax. Children = 11.99 years and under (up to 12th birthday); infants = 0 – 2.99 years (up to 3rd birthday); 12 years and above = adult. One extra bed OR one baby cot only in a King / Twin room; baby cot set up for children 2 years and under. Children 11.99 and under do not get a credit in à la carte restaurants but receive a special children's menu. Child meal rates (6 – 11.99, incl. tax): breakfast 9.40, lunch 12.09, dinner 13.44.",
+   "cancellation_text": "Not printed on this offer (\"Rest of the supplements will be as per the original contract valid for the relevant season\"; the original contract is not in the folder).",
+   "payment_text": "Not printed on this offer.",
+   "terms_text": "Rates are valid only for minimum 3-night stays. Rates along with rate codes must be mentioned in the booking vouchers to apply the rates. Rates are non-commissionable. Rest of the supplements will be as per the original contract valid for the relevant season. Early check-in and late check-out on availability. All rates are on a Bed & Breakfast basis with daily breakfast at the Central restaurant, based on Single/Double/Twin occupancy. Room rates apply to FIT bookings up to 09 rooms and below; for 10 rooms and above contact the resort's sales team (csteam.slcb@shangri-la.com). All rates are in USD and inclusive of all taxes. Valid for all markets. Meals cannot be booked individually, and no discounts or offers apply to meal rates; minimum board basis BB, room only cannot be sold; in-room dining at a charge as per consumption. Subject to restrictions, blackout dates, stop sales and availability; the hotel reserves the right to change or remove the offer with prior notice. The special offer applies only to new bookings made after 30 June 2026. 3rd person supplement USD 35.78 Nett (BB basis).",
+   "voucher_note": "Rates along with rate code WSLTL3-B must be mentioned in the booking voucher to apply these rates; minimum stay 3 nights.",
+   "notes": "Transcribed from \"WSL- Shangri-la Colombo - 2026 All market 3N offer 01st September.pdf\" (3 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Stay period printed only as \"Until 19th December 2026\" (no start date); 01 Sep 2026 taken from the document title (\"01st September\") — confirm with the hotel. Booking window: \"applicable only for all new bookings made after 30th June 2026\" (book_from 01 Jul 2026) and \"Book Before: Until 31st October 2026\". WHOLE OFFER IS MINIMUM 3 NIGHTS (\"Rate are valid only for minimum 3-night stays\"): min_stay 3 + a min_stay restriction, but the rate lookup does NOT enforce the 3-night minimum — staff check (priority 10 like other offers, so for 1–2-night stays it would still outrank a base contract). Valid for all markets; FIT up to 09 rooms (tier fit, max 9 rooms). Rates: \"Single / Double on Bed & Breakfast\" — one price, entered in both SGL and DBL; INCLUDING-tax figures entered. Excluding-tax figures: Deluxe Lake-view 123.95, Deluxe Ocean-view 130.65, Premier Ocean-view 137.35, Premier Balcony 137.35, Horizon Club Lake-view 164.15. No triple rate printed: \"3rd person supplement: USD 35.78 Nett (BB basis)\" entered as an extra_adult supplement; the rollaway bed (US$ 27.25 + taxes = USD 36.61 incl. tax) as an \"other\" supplement — the sheet does not say whether a 3rd adult pays both. Room names matched to the hotel's existing room types: Deluxe Room Lake-view → \"Deluxe-Lake-view\" (228 rooms), Deluxe Room Ocean-view → \"Deluxe-Ocean-view\" (20), Premier Room Ocean-view → \"Premier-Ocean-view\" (134), Premier Room Balcony → \"Premier Balcony King Room\" (23; King bed only per the occupancy chart), Horizon Club Lake-view → \"Horizon Club-Lake-view\" (46). All 42 m²; occupancy chart: max 3 persons (no 4-person combination). Suites in the chart (Executive 84 m², Specialty 126 m², Shangri-La Suite 210 m²) are not part of this offer. Meal rates (\"Leisure Static\" bookings), incl. tax: adult breakfast 18.81 / lunch 24.18 / dinner 26.87 (excl. 14 / 18 / 20); child 6 – 11.99 9.40 / 12.09 / 13.44 (excl. 7 / 9 / 10). HB and FB derived through meal_deltas (dinner, lunch). The meal note says \"nett rates are inclusive of government tax and service charges\" while the table prints separate excl./incl. columns — incl. figures used. \"Rest of the supplements will be as per the original contract valid for the relevant season\" — original contract not in the folder; no galas within the stay period (ends 19 Dec). Cancellation and payment terms are not printed.",
+   "source_file": "WSL- Shangri-la Colombo - 2026 All market 3N offer 01st September.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe-Lake-view",
+    "priced_as": "base",
+    "room_count": 228,
+    "size_sqm": 42,
+    "bed_config": "King or twin (twin subject to availability)",
+    "max_adults": 3,
+    "view": "Lake",
+    "max_occupancy": 3,
+    "extra_bed_allowed": 1
+   },
+   {
+    "name": "Deluxe-Ocean-view",
+    "priced_as": "base",
+    "room_count": 20,
+    "size_sqm": 42,
+    "bed_config": "King or twin (twin subject to availability)",
+    "max_adults": 3,
+    "view": "Ocean",
+    "max_occupancy": 3,
+    "extra_bed_allowed": 1
+   },
+   {
+    "name": "Premier-Ocean-view",
+    "priced_as": "base",
+    "room_count": 134,
+    "size_sqm": 42,
+    "bed_config": "King or twin (twin subject to availability)",
+    "max_adults": 3,
+    "view": "Ocean",
+    "max_occupancy": 3,
+    "extra_bed_allowed": 1
+   },
+   {
+    "name": "Premier Balcony King Room",
+    "priced_as": "base",
+    "room_count": 23,
+    "size_sqm": 42,
+    "bed_config": "King",
+    "max_adults": 3,
+    "max_occupancy": 3,
+    "extra_bed_allowed": 1
+   },
+   {
+    "name": "Horizon Club-Lake-view",
+    "priced_as": "base",
+    "room_count": 46,
+    "size_sqm": 42,
+    "bed_config": "King or twin (twin subject to availability)",
+    "max_adults": 3,
+    "view": "Lake",
+    "max_occupancy": 3,
+    "extra_bed_allowed": 1
+   }
+  ],
+  "seasons": [
+   {
+    "name": "Stay until 19 Dec 2026 – min 3 nights",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe-Lake-view",
+      "meal_plan": "BB",
+      "sgl": 166.53,
+      "dbl": 166.53,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTL3-B; minimum 3 nights. Sheet: Deluxe Room – Lake-view. Excl. tax: SGL/DBL 123.95"
+     },
+     {
+      "room_type": "Deluxe-Ocean-view",
+      "meal_plan": "BB",
+      "sgl": 175.53,
+      "dbl": 175.53,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTL3-B; minimum 3 nights. Sheet: Deluxe Room – Ocean-view. Excl. tax: SGL/DBL 130.65"
+     },
+     {
+      "room_type": "Premier-Ocean-view",
+      "meal_plan": "BB",
+      "sgl": 184.53,
+      "dbl": 184.53,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTL3-B; minimum 3 nights. Sheet: Premier Room – Ocean-view. Excl. tax: SGL/DBL 137.35"
+     },
+     {
+      "room_type": "Premier Balcony King Room",
+      "meal_plan": "BB",
+      "sgl": 184.53,
+      "dbl": 184.53,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTL3-B; minimum 3 nights. Sheet: Premier Room – Balcony. Excl. tax: SGL/DBL 137.35"
+     },
+     {
+      "room_type": "Horizon Club-Lake-view",
+      "meal_plan": "BB",
+      "sgl": 220.54,
+      "dbl": 220.54,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTL3-B; minimum 3 nights. Sheet: Horizon Club – Lake-view. Excl. tax: SGL/DBL 164.15"
+     }
+    ],
+    "min_stay": 3,
+    "notes": "Sheet: \"Stay Period: Until 19th December 2026\" — start 01 Sep 2026 from the title; minimum 3-night stays"
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 26.87,
+    "child": 13.44,
+    "note": "Dinner, incl. tax (excl. 20 / 10); per person per night"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 24.18,
+    "child": 12.09,
+    "note": "Lunch, incl. tax (excl. 18 / 9); per person per night"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 18.81,
+    "child": 9.4,
+    "note": "Incl. tax (excl. 14 / 7); per person per meal; child 6 – 11.99; \"Leisure Static\" bookings"
+   },
+   {
+    "meal": "lunch",
+    "adult": 24.18,
+    "child": 12.09,
+    "note": "Incl. tax (excl. 18 / 9); per person per meal; child 6 – 11.99; \"Leisure Static\" bookings"
+   },
+   {
+    "meal": "dinner",
+    "adult": 26.87,
+    "child": 13.44,
+    "note": "Incl. tax (excl. 20 / 10); per person per meal; child 6 – 11.99; \"Leisure Static\" bookings"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "extra_adult",
+    "name": "3rd person supplement (BB)",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 35.78,
+    "compulsory": 0,
+    "note": "As printed: \"3rd person supplement: USD 35.78 Nett (BB basis)\". No triple rate on the sheet."
+   },
+   {
+    "type": "other",
+    "name": "Rollaway bed",
+    "per": "room",
+    "amount": 36.61,
+    "compulsory": 0,
+    "note": "US$ 27.25 + taxes = USD 36.61 incl. tax; child 6 – 11 extra bed complimentary. Not stated whether charged on top of the 3rd person supplement."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Infant 0 – 5 years: complimentary for buffet while dining with adult; baby cot for children 2 years and under"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "any",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Child 6 – 11 years: extra bed complimentary and 50% discount on food & beverage (child meal rates B 9.40 / L 12.09 / D 13.44 incl. tax)"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [],
+  "restrictions": [
+   {
+    "kind": "min_stay",
+    "date_from": "2026-09-01",
+    "date_to": "2026-12-19",
+    "value": "3",
+    "note": "Rates valid only for minimum 3-night stays — the lookup does not enforce it, staff check"
+   },
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-09-01",
+    "date_to": "2026-12-19",
+    "value": "BB,HB,FB",
+    "note": "Minimum board basis is BB; room only cannot be sold"
+   }
+  ],
+  "extras": []
+ }
+}

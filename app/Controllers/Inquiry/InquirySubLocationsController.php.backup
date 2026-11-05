@@ -1,0 +1,264 @@
+<?php
+
+namespace App\Controllers\Inquiry;
+
+use App\Libraries\MenuLoader;
+use App\Controllers\BaseController;
+use App\Models\InquiryConsigneeModel;
+use App\Models\InquirySubLocationsModel;
+use App\Models\InquiryQuotationsModel;
+use App\Models\InquiryItineraryModel;
+
+class InquirySubLocationsController extends BaseController
+{
+    public function index($quotation_id = 0)
+    {
+        $data = array();
+
+        // Load menu data using the custom library
+        $menuLoader = new MenuLoader();
+        $data = $menuLoader->loadMenuData();
+
+        $data['quotation_id'] = $quotation_id;
+        $data['dates'] = array();
+
+        if ($quotation_id > 0) {
+            $inquiryQuotationModel = new InquiryQuotationsModel();
+            $data['dates'] = $inquiryQuotationModel->where('quotation_id', $quotation_id)->findAll();
+
+            foreach ($data['dates'] as $key => $date) {
+                $inquirySubLocationsModel = new InquirySubLocationsModel();
+                $data['dates'][$key]['sub_locations'] = $inquirySubLocationsModel->where('date_id', $date['id'])->findAll();
+            }
+        }
+
+        return view('pages/inquiry/inquiry_sub_locations', $data);
+    }
+
+    public function add_sub_location($sub_location = null)
+    {
+        try {
+            // Get the form data
+            $quotation_id = '';
+            $date_id = '';
+            $t_row = 0;
+            $from = '';
+            $to = '';
+            $estimate_km = 0;
+            $actual_km = 0;
+            $extra_km = 0;
+
+            if (!empty($sub_location)) {
+                $quotation_id = $sub_location['tour'];
+                $date_id = $sub_location['date'];
+                $t_row = $sub_location['row'];
+                $from = $sub_location['from'];
+                $to = $sub_location['to'];
+                $estimate_km = $sub_location['estimate_km'];
+                $actual_km = $sub_location['km'];
+                $extra_km = $sub_location['extra_km'];
+            } else {
+                $quotation_id = $this->request->getPost('tour');
+                $date_id = $this->request->getPost('date');
+                $t_row = $this->request->getPost('row');
+                $from = $this->request->getPost('pick_location');
+                $to = $this->request->getPost('drop_location');
+                $estimate_km = $this->request->getPost('gdistance');
+                $actual_km = $this->request->getPost('distance');
+                $extra_km = $this->request->getPost('extrakm');
+
+                // validation
+                $validation = \Config\Services::validation();
+                $validation->setRules([
+                    'pick_location' => 'required',
+                    'drop_location' => 'required',
+                    'distance' => 'required',
+                    'tour' => 'required',
+                    'date' => 'required'
+                ]);
+
+                if ($validation->withRequest($this->request)->run() == false) {
+                    return json_encode(array('status' => 400, 'message' => 'Please fill all the fields'));
+                }
+            }
+
+            $pick_location = $from;
+            if (strpos(strval($from), ', Sri Lanka') !== false) {
+                $pick_location = str_replace(', Sri Lanka', '', $from);
+            }
+
+            $drop_location = $to;
+            if (strpos(strval($to), ', Sri Lanka') !== false) {
+                $drop_location = str_replace(', Sri Lanka', '', $to);
+            }
+
+            // Get Ref No in Consignee Table
+            $consigneeModel = new InquiryConsigneeModel();
+            $Ref_no = $consigneeModel->incrementRefno($quotation_id);
+
+            $inquirySubLocationsModel = new InquirySubLocationsModel();
+            $inquirySubLocationsModel->insert([
+                'quotation_id' => $quotation_id,
+                'date_id' => $date_id,
+                'tour_row' => $t_row,
+                'from' => $pick_location,
+                'to' => $drop_location,
+                'km' => $actual_km,
+                'extra_km' => $extra_km,
+                'estimate_km' => $estimate_km,
+                'ref_no' => $Ref_no
+            ]);
+
+            // get hotel_only value from consignee table
+            $consignee = $consigneeModel->where('tour_id', $quotation_id)->first();
+            $hotel_only = $consignee['hotel_only'];
+
+            // get all sub locations
+            $sub_locations = $inquirySubLocationsModel->where('date_id', $date_id)->where('quotation_id', $quotation_id)->where('tour_row', $t_row)->findAll();
+            // sum of all km
+            $total_km = 0;
+            $total_extra_km = 0;
+            if ($hotel_only == 0) {
+                foreach ($sub_locations as $sub_location) {
+                    $total_km += $sub_location['km'];
+                    $total_extra_km += $sub_location['extra_km'];
+                }
+            }
+            // update total km in inquiry_quotations table
+            $inquiryQuotationModel = new InquiryQuotationsModel();
+            $inquiryQuotationModel->update($date_id, [
+                'distance' => $total_km,
+                'extra_kilo' => $total_extra_km
+            ]);
+
+            $itineraryController = new InquiryItineraryController();
+            $itineraryController->add_itinerary_location($quotation_id, $t_row, $date_id, $from, $to, $to, '', '', '', $Ref_no);
+
+            $sub_locations = $this->get_sub_locations($quotation_id, $date_id);
+            if (!empty($sub_locations)) {
+                $sub_locations = json_decode($sub_locations, true);
+            }
+
+            return json_encode(array('status' => 200, 'message' => 'Sub location added successfully', 'sub_locations' => $sub_locations));
+        } catch (\Exception $e) {
+            return json_encode(["status" => 500, "message" => $e->getMessage()]);
+        }
+    }
+
+    public function get_sub_locations($tour_id, $date)
+    {
+        $inquirySubLocationsModel = new InquirySubLocationsModel();
+        $sub_locations = $inquirySubLocationsModel
+            ->where('quotation_id', $tour_id)
+            ->where('date_id', $date)
+            ->orderBy('id', 'asc')
+            ->findAll();
+        foreach ($sub_locations as $key => $s_loc) {
+            $ref = $s_loc['ref_no'];
+            $activities = $this->get_sub_location_activities($ref, $tour_id, $date);
+            $sub_locations[$key]['sub_activities'] = $activities;
+        }
+        return json_encode($sub_locations);
+    }
+
+    public function get_next_location()
+    {
+        $quotation_id = $this->request->getPost('tour');
+        $quotation_row = $this->request->getPost('row');
+        $quotation_day = $this->request->getPost('date');
+
+        $inquirySubLocationsModel = new InquirySubLocationsModel();
+        $sub_locations = $inquirySubLocationsModel
+            ->where('quotation_id', $quotation_id)
+            ->where('date_id', $quotation_day)
+            ->where('tour_row', $quotation_row)
+            ->orderBy('id', 'asc')
+            ->findAll();
+
+        $mergedData = [];
+        $mergedData = $sub_locations;
+
+        foreach ($sub_locations as $key => $sub_location) {
+            $ref = $sub_location['ref_no'];
+
+            $inquiryItineraryModel = new InquiryItineraryModel();
+            $location_wise_activities = $inquiryItineraryModel->where('loc_ref', $ref)
+                ->where('tour_id', $quotation_id)
+                ->where('tour_row', $quotation_row)
+                ->where('tour_date', $quotation_day)
+                ->findAll();
+
+            $mergedData[$key]['activity'] = $location_wise_activities ?? null;
+        }
+
+        return json_encode(array('status' => 200, 'sub_locations' => $mergedData));
+    }
+
+    public function get_sub_location_activities($ref, $quotation_id, $quotation_day)
+    {
+        $inquiryItineraryModel = new InquiryItineraryModel();
+        $location_wise_activities = $inquiryItineraryModel->where('loc_ref', $ref)
+            ->where('tour_id', $quotation_id)
+            ->where('tour_date', $quotation_day)
+            ->orderBy('id', 'asc')
+            ->findAll();
+
+        return $location_wise_activities ?? [];
+    }
+
+    public function location_delete()
+    {
+        try {
+            $id = $this->request->getGet('id');
+            $ref_no = $this->request->getGet('ref_no');
+
+            $inquirySubLocationsModel = new InquirySubLocationsModel();
+
+            $sub_locations = $inquirySubLocationsModel->where('id', $id)->findAll();
+
+            $km = $sub_locations[0]['km'];
+            $extra_km = $sub_locations[0]['extra_km'];
+            $date_id = $sub_locations[0]['date_id'];
+            $quotation_id = $sub_locations[0]['quotation_id'];
+            $tour_row = $sub_locations[0]['tour_row'];
+
+            $inquiryQuotationModel = new InquiryQuotationsModel();
+            $quotation = $inquiryQuotationModel->select('distance,extra_kilo')->where('quotation_id', $quotation_id)->where('quotation_day', $tour_row)->where('tour_date', $date_id)->findAll();
+
+            // get hotel_only value from consignee table
+            $consigneeModel = new InquiryConsigneeModel();
+            $consignee = $consigneeModel->where('tour_id', $quotation_id)->first();
+            $hotel_only = $consignee['hotel_only'];
+
+            if (count($quotation) != 0) {
+                $total_km = 0;
+                $extra_kilo = 0;
+
+                if ($hotel_only == 0) {
+                    $total_km = $quotation[0]['distance'] - $km;
+                    $extra_kilo = $quotation[0]['extra_kilo'] - $extra_km;
+                }
+
+                $inquiryQuotationModel->where('quotation_id', $quotation_id)->where('quotation_day', $tour_row)->where('tour_date', $date_id)->set(['distance' => $total_km, 'extra_kilo' => $extra_kilo])->update();
+            }
+
+            if ($inquirySubLocationsModel->delete($id)) {
+                $inquiryItineraryModel = new InquiryItineraryModel();
+                $inquiryItineraryModel->where('tour_id', $quotation_id)->where('tour_row', $tour_row)->where('tour_date', $date_id)->where('ref_no', $ref_no)->delete();
+                $inquiryItineraryModel->where('tour_id', $quotation_id)->where('tour_row', $tour_row)->where('tour_date', $date_id)->where('loc_ref', $ref_no)->delete();
+                return $this->response->setJSON(["status" => 200, "message" => "Location Delete successfully!"]);
+            }
+        } catch (\Exception $e) {
+            return $this->response->setJSON(["status" => 500, "message" => $e->getMessage()]);
+        }
+    }
+
+    public function get_last_sublocation_of_date($tour_id, $date)
+    {
+        // get date before the given date
+        $date = date('Y-m-d', strtotime($date . ' -1 day'));
+        $inquirySubLocationsModel = new InquirySubLocationsModel();
+        $sub_locations = $inquirySubLocationsModel->where('quotation_id', $tour_id)->where('date_id', $date)->orderBy('id', 'desc')->first();
+        return json_encode($sub_locations);
+    }
+}

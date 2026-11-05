@@ -1,0 +1,72 @@
+[
+ [
+  "overview lists the three dummy accounts with their mapping and status",
+  true,
+  "Back\nDashboard\nAccountant tester\nTPD Accountant (test)\nDaily Bank Reconciliation\nEach Avenir bank account is compared, day by day, with its ledger account. Bank and book balances are kept separate. Nothing here is posted to the ledger: differences are listed and explained, and any correction is prop"
+ ],
+ [
+  "LKR summary shows bank and book separately, the difference and the status",
+  true,
+  "['Reconciled \u2014 reviewed', 'Reconciled \u2014 all items explained prepared by tcaccount at 2026-10-11 19:31:16 \u00b7 review: reviewed by tcpayappr']"
+ ],
+ [
+  "upload preview: columns recognised, balance break reported in red, nothing kept",
+  true,
+  "Period\n2026-09-01 \u2192 2026-09-05\nOpening\n1,000,000.00 LKR\nMoney in\n3,235,000.00\nMoney out\n341,894.00\nClosing\n3,893,106.00 LKR\nLines\n11\nCategories: payment 5, charge 4, transfer 1, receipt 1\nMust be resolved before acceptance:\nLine 4: printed balance 749970.00 but opening + lines give 749975.00.\nThe pe"
+ ],
+ [
+  "suggestions are listed with confidence and reasons; nothing matched until accepted",
+  true,
+  "Suggested matches (2) \u2014 nothing is matched until you accept\nAccept all high-confidence\nSTATEMENT LINE\tLEDGER ROW(S)\tCONFIDENCE\tWHY\t\n2026-09-01 \u221250,000.00\nAH 9901 - TEST HOTEL A - 90001\n\t2026-09-01 \u221250,000.00 99980003.1 TEST HOTEL A\thigh\n1 other candidate(s)\n\tPV 90001 in the wording; tour AH 9901; sa"
+ ],
+ [
+  "\"Accept all high-confidence\" matched them again",
+  true,
+  "6"
+ ],
+ [
+  "bank charges are listed separately with their type and correction",
+  true,
+  "Bank charges on the statements (first day to the as-at date)\nPropose a correction for the selected charges\nBank charges not matched to the ledger: 4 line(s) \u00b7 2 \u00d7 CEFT transfer fee \u221250.00 \u00b7 1 \u00d7 Fund t"
+ ],
+ [
+  "USD summary shows USD and LKR side by side and the revaluation",
+  true,
+  ""
+ ],
+ [
+  "rates & transfers: the USD \u2192 LKR transfer with rate obtained 300.0000, day rate 301.0000, difference \u221210,000.00",
+  true,
+  ""
+ ],
+ [
+  "no script error on the preparer's pages",
+  true,
+  "[]"
+ ],
+ [
+  "the reviewer sees \"Waiting for review\" with the pending correction",
+  true,
+  ""
+ ],
+ [
+  "the reviewer gets Approve / Reject on the correction proposed by someone else",
+  true,
+  "1"
+ ],
+ [
+  "no script error on the reviewer's pages",
+  true,
+  "[]"
+ ],
+ [
+  "view-only: no Prepare / Upload / Match buttons",
+  true,
+  ""
+ ],
+ [
+  "Hotel Reservations is refused the page",
+  true,
+  "http://127.0.0.1:8081/avenir/403"
+ ]
+]

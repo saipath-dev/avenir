@@ -1,0 +1,78 @@
+tf-bankrec-r3 - ISOLATED TEST INSTANCE (http://localhost/avenir_rv/, database avenir_restore_verify_20261011), 12 Oct 2026
+Run on your computer (WAMP, MySQL 8.4.7) with TEST logins only (TestAccounts, TestFinApprover, TestBankAuth, TestHotelRes,
+TestOperations, and the TEST login TestRecDual added for the dual-role test), in two browser sessions (localhost and 127.0.0.1).
+
+Before: real ledger 11364|965763907.13|965314763.93|24383521306171 (rows | Dr | Cr | checksum incl. bank_rec, bankst_flag) - same on development.
+Backups before any change: app\ + public\ (1,725 files, md5 list) in C:\wamp64\www\avenir_rv-backup-20261012-before-r3\;
+  the whole database copied to avenir_rv_backup_20261012_before_r3 (241 tables; every table's checksum equal to the original);
+  the reconciliation test data snapshot (17 parts) in C:\wamp64\tmp\brc_r3_backup_20261012\ = kit sql/before-r3-snapshot/.
+Installed: python apply.py apply (8 files + LegacyGuard.php; r2 files backed up in before/20261012-055949/); sql/setup-r3-test-login.sql.
+
+Browser checks (two sessions): 32/32
+  ok   D7 TestAccounts opens the old Bank Reconciliation screen (200)
+  ok   D7 "update" on dummy row 99980305 (2026-09-02, on/after the first day 2026-09-01 of the verification account) → refused 409 with the reason (names the first day and Daily Bank Reconciliation)
+  ok   D7 earlier dates stay available: dummy row 99980302 (2026-08-28, before the first day) ticked (200) and unticked again (200)
+  ok   D7 "finalize selected" with one row before and one on/after the first day → all refused (409)
+  ok   D7 "reconcile up to" 2026-09-05 refused (409); up to 2026-08-31 allowed (200)
+  ok   D7 moving a row to the unrealised account, moving one back, reposting a range reaching the first day, and a TEST LKR row → all refused (409)
+  ok   F the new workflow warns about the old-screen flags in the protected period: 2 rows (bank_rec on 99980306; 99980307 moved to the unrealised account), on the day and on the overview
+  ok   F flags put back: no warning on the day or the overview
+  ok   P each day lists each correction once; the day's total = the sum of the amounts up to that day; the full total = the sum of the correction totals; "up to this day; correction total" shown exactly when they differ
+  ok   P a correction covering several days is counted only for the part up to the day (found: correction 1, 25.00 of 4550.00 on 2026-09-01)
+  ok   P that correction's amount grows day by day and equals its total once all its days have passed (25 → 50 → 1050 → 1050 → 4550 → 4550 → 4550 → 4550)
+  ok   P a daily record prepared for 2026-09-01 keeps "… up to this day; correction total …" in its snapshot
+  ok   P reviewed: "Reviewed — ledger not yet corrected — … approved but not posted (… up to this day; correction total …)"
+  ok   R the dummy ledger entry 99980399 (test database only) is recorded as the posting of correction 6: checked against the approved lines → "posted and verified", linked to the entry
+  ok   R the 5 Sep pending postings no longer include it (the ledger is corrected for that item)
+  ok   R the entry's wording changed in the ledger (SQL, dummy row) → "Posted entry changed in the ledger — verify again"
+  ok   R the reviewer (no preparer privilege) cannot verify again (403); the preparer verifies again → the entry still matches → posted and verified; verifying again with nothing changed is refused (409)
+  ok   R the entry's amounts changed (25 → 30): verifying again is refused (409, "does not match") and it stays "verify again"
+  ok   R amounts put back → posted and verified again without any action (the entry is as verified)
+  ok   R wording put back → "verify again" → verified again; the correction is posted and verified
+  ok   U TestRecDual (preparer AND reviewer privilege, not an administrator) proposes an opening item (200), cannot accept their own (403), withdraws it (200)
+  ok   U the same user proposes a correction (200), cannot approve it (403), withdraws it (200)
+  ok   U the same user prepares a daily record (200), cannot review it (403); the reviewer reviews it (200)
+  ok   U the same user may review a record someone else prepared (200)
+  ok   T two DIFFERENT users (TestAccounts in the localhost session, TestRecDual in the 127.0.0.1 session) classify the same statement line at the same instant: one 200, one 409 ("already classified")
+  ok   T two DIFFERENT reviewers (TestFinApprover, TestRecDual) review the same daily record at the same instant: one 200, one 409 ("not waiting for review")
+  ok   T in both races the two requests were in the server at the same time (overlapping)
+  ok   U on screen: TestRecDual's own record #13 has no Review button; forcing the review from the page is refused by the server (403) with the reason shown
+  ok   U on screen: what TestRecDual withdrew reads "withdrawn by TestRecDual" (not as if reviewed)
+  ok   U the reviewer TestFinApprover reviews record #13 (200)
+  ok   D7 on screen (old screen, TestAccounts): ticking dummy row 99980305 (2 Sep) shows the refusal with its reason; the row is not marked
+  ok   D7 on screen: the 28 Aug dummy row (before the first day) is ticked as before (row green) and unticked again
+
+Safeguards re-checked after r3: 6/6
+  ok   S opening outstanding items still work after r3: each day 1–5 Sep the opening difference is fully explained (remaining 0.00); cheque 000202 outstanding throughout; cheque 000201 outstanding 1–2 Sep, cleared from 3 Sep
+  ok   S partial clearing and undo still work after r3: undoing the completion makes the partial match (50,000 of 90,000; rest −40,000.00) active again; completing it again works; the reviewed 3 Sep record stays as it was
+  ok   S exchange-rate explanations still required and kept after r3: USD 5 Sep has no unexplained exchange-rate difference and its reviewed record is current
+  ok   S pending vs posted after r3: TEST LKR 8 Sep "Reviewed — ledger not yet corrected — 4 approved but not posted (339,575.00)"; the verification account 5 Sep has no pending posting (its correction is posted and verified)
+  ok   S changes after review still flagged after r3: a matched dummy ledger row edited after review → "Changed since review — re-review needed: ledger rows"; put back exactly → the review is current again
+  ok   S permissions after r3: other departments (TestHotelRes, TestOperations) have no access (403) to the data or to "verify again"; view-only TestBankAuth can read (200) but cannot verify again (403)
+
+Database checks and the tested rollback: 16/16
+  ok   DB D7: every dummy row's flags (bank_rec, bankst_flag, unrealised moves) exactly as before the old-screen calls
+  ok   DB D7: the 7 refusals audited ("brc_legacy_refused", user TestAccounts)
+  ok   DB F: after the day and the overview were computed, the simulated flags are still set (the new workflow changed nothing)
+  ok   DB F: the simulated flags put back; every dummy row exactly as before
+  ok   DB R: correction 6 linked to the dummy entry: status approved, posting_state verified, posted_ref 99980399, by TestAccounts
+  ok   DB R: "verified again" audited (brc_correction_posting_reverified, correction 6, TestAccounts)
+  ok   DB R: the refused "verify again" attempts (amounts 30) are audited (brc_correction_reverify_refused: 2) and nothing was recorded (posted fingerprint unchanged)
+  ok   DB T: record 12 reviewed once (one "brc_day_reviewed" audit row, by TestFinApprover)
+  ok   DB T: the race's classification cleared afterwards; no active classification or claim left on line 27
+  ok   DB every audit row of the r3 run is by a TEST login (or the setup script): TestAccounts,TestFinApprover,TestRecDual
+  ok   DB D7 (screen): after the on-screen refusal and the tick/untick of the 28 Aug row, every dummy row's flags are as before
+  ok   DB D7 (screen): the on-screen refusal audited (1 more brc_legacy_refused row)
+  ok   DB the real ledger (every row outside the dummy range): rows, sums and every row's reconciliation flags unchanged — 11364|965763907.13|965314763.93|24383521306171
+  ok   ROLLBACK files: python apply.py rollback put the 8 r2 files back and moved LegacyGuard.php out (deleting is not allowed here); all 1,725 files of app\ and public\ identical to the backup taken before r3
+  ok   ROLLBACK data: sql/reset-to-before-r3.sql (guarded) — every table of the test-bed database has the checksum it had before r3, except the append-only audit trail, the activity log a_log and the session tables; TestRecDual and its TEST group removed; 22 dummy rows; real ledger 11364|965763907.13|965314763.93|24383521306171
+  ok   ROLLBACK behaviour: r2 is back (LKR 1 Sep counts the whole 4,550.00 again; no old-screen warning; "verify again" route gone 404; the old screen ticks a 2 Sep row again — ticked and unticked on a dummy row to show it, flags as before)
+
+Two DIFFERENT users at the same instant (localhost session / 127.0.0.1 session):
+  two DIFFERENT users classify the same statement line (27) at the same instant: TestAccounts 200 (Classified as timing.); TestRecDual 409 (That line is already classified.); overlap True
+  two DIFFERENT reviewers review the same daily record (12) at the same instant: TestFinApprover 200 (Daily record reviewed.); TestRecDual 409 (That daily record is not waiting for review (reviewed by TestFinApprover).); overlap True
+
+After the rollback (files + reset SQL): every table equal to before r3 except the append-only tpd_audit, a_log (activity log) and the session tables;
+  real ledger 11364|965763907.13|965314763.93|24383521306171; development 11364|965763907.13|965314763.93|24383521306171 (r1 files, schema 1, empty reconciliation tables, no dummy rows).
+Then r3 files applied again (before/20261012-061644) and left installed for your review, with the data as it was before r3
+(no TEST login TestRecDual, no dummy posting). Total: 54/54 checks passed.

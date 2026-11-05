@@ -1,0 +1,275 @@
+{
+ "key": "shangrila_hambantota_tac_all_sep26",
+ "hotel": {
+  "acc": "6-9-11-10805",
+  "name": "Shangri-La Hambantota",
+  "location": "Hambantota",
+  "chain": "Shangri-La"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10805",
+   "name": "Shangri-La Hambantota"
+  },
+  "contract": {
+   "name": "Wholesale All Market FIT Tactical Offer Sep 2026",
+   "plan_type": "tactical",
+   "rate_code": "WSLTAM40-B (BB) / WSLTAM40-H (HB)",
+   "tier": "fit",
+   "tier_max_rooms": 9,
+   "priority": 10,
+   "valid_from": "2026-09-01",
+   "valid_to": "2026-12-19",
+   "book_to": "2026-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "Incl. 10% service charge + 18% VAT + 1.01% TDL + 2.5% SSCL = 34.35% effective. Excl.-tax figures in each rate row note and in Notes. Non-commissionable.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "contract_date": "2026-08-24",
+   "contract_type": "Wholesale tactical offer",
+   "credit_facility": "unknown",
+   "child_policy_text": "Extra person charges: Infant under 2 years — baby cot is complimentary. Child 2 – 11 years — one extra bed is complimentary. The extra person (adult) charges are subject to the discount for all seasons and the HB upgrade excluding the peak. Meal rates for children 6 – 11.99 years (per person per meal, incl. tax): breakfast 9.40, lunch 10.75, dinner 14.78, Half board Plus 26.87, Full board Plus 49.71. Half board Plus / Full board Plus: children below 11.99 years get unlimited soft drinks and PET juices during meals. Adult = 12 years and above.",
+   "cancellation_text": "Not printed on this offer — \"Terms & conditions applicable as per usual contract shared\" (the usual contract is not in the folder).",
+   "payment_text": "Not printed on this offer — \"Terms & conditions applicable as per usual contract shared\" (the usual contract is not in the folder).",
+   "terms_text": "Rate code and relevant price must be mentioned in the booking vouchers to apply the rates. This offer cannot be combined with any other available offers. All rates are based on bed & breakfast or half board served at Bojunhala (or equivalent). Room rates apply to FIT bookings up to 09 rooms and below; group rates are available by contacting the sales team. Rates are non-commissionable. Meals cannot be booked individually; minimum board basis is BB and room only cannot be sold; meals at the all-day dining Bojunhala (or equivalent); in-room dining at a charge as per consumption; no meal rates are entitled to further discounts or offers. Subject to restrictions, stop sales and availability; the hotel reserves the right to change or remove the offer with prior notice. Seasonal supplements will be applicable during peak season as per the contract. Terms & conditions applicable as per usual contract shared. Inventory subject to stop sales and availability. Room and rate information is confidential and must not be passed to any third party or channel other than the authorised channel, packaged or unpackaged; distribution of rates into B2C channels is strictly prohibited and rate leakage results in financial penalties and stop sales. Golf packages (green fees only; caddie paid directly at the pro shop; one round per day, not carried forward or transferred; proshop.slht@shangri-la.com / +94 47 788 8888 ext. 6627) — see extras. Reservations: csteam.lk@shangri-la.com.",
+   "notes": "Transcribed from \"WSL - Shangri-La Hambantota - All Market FIT Tactical Offer Sep 2026.pdf\" (3 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Stay period printed only as \"Until 19th December 2026\" (no start date); 01 Sep 2026 taken from the document title \"Sep 2026\" — confirm with the hotel. Book before 31 Oct 2026; valid for all markets; FIT up to 09 rooms (tier fit, max 9 rooms). The third rate line, \"HB (minimum stay of 3 nights)\" WSLTAM30-H, is in its own plan shangrila_hambantota_tac_all_hb3n_sep26 (priority 5, min_stay 3) so that it never outranks these rates — the rate lookup does not enforce minimum stays. Excluding-tax figures (SGL-DBL/TPL): BB Deluxe 111.00/138.00, Premier Ocean 132.00/159.00, Premier Ocean Suite 213.00/240.00, Araliya/Manel Suite 351.00/378.00; HB Deluxe 146.73/173.73, Premier Ocean 167.73/194.73, Premier Ocean Suite 248.73/275.73, Araliya/Manel Suite 386.73/413.73. The HB rate is the BB rate + USD 48.00 per room incl. tax (35.73 excl.) at every occupancy. SGL/DBL is one printed price (entered in both SGL and DBL). Rates entered INCLUDING tax (34.35%). Room names: \"Araliya/Manel Suite\" entered as the hotel's existing room type \"Araliya /Manel Suite\". FB is derived as the printed HB rate + lunch (USD 21.49 pp incl. tax) through meal_deltas; room only cannot be sold. \"Seasonal supplements will be applicable during peak season as per the contract\" — no amounts or dates printed, nothing entered. Cancellation, payment terms and gala dinners are not printed (T&C \"as per usual contract shared\"). \"The extra person (adult) charges are subject to the discount for all seasons and the HB upgrade excluding the peak\" — no amounts printed. Child policy: the sheet does not say whether children 6 – 11.99 pay meals on BB/HB (meal-rate table gives child prices) — confirm. Golf packages (page 3) are in extras; their printed validity is 06 Jan 2025 – 05 Jan 2026 — confirm current golf rates.",
+   "voucher_note": "Rate code (WSLTAM40-B for BB, WSLTAM40-H for HB) and the relevant price must be mentioned in the booking voucher to apply these rates.",
+   "source_file": "WSL - Shangri-La Hambantota - All Market FIT Tactical Offer Sep 2026.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base"
+   },
+   {
+    "name": "Premier Ocean",
+    "priced_as": "base"
+   },
+   {
+    "name": "Premier Ocean Suite",
+    "priced_as": "base"
+   },
+   {
+    "name": "Araliya /Manel Suite",
+    "priced_as": "base"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "Stay until 19 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-09-01",
+      "to": "2026-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 149.13,
+      "dbl": 149.13,
+      "tpl": 185.4,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-B. Excl. tax: SGL/DBL 111.00, TPL 138.00"
+     },
+     {
+      "room_type": "Premier Ocean",
+      "meal_plan": "BB",
+      "sgl": 177.34,
+      "dbl": 177.34,
+      "tpl": 213.62,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-B. Excl. tax: SGL/DBL 132.00, TPL 159.00"
+     },
+     {
+      "room_type": "Premier Ocean Suite",
+      "meal_plan": "BB",
+      "sgl": 286.17,
+      "dbl": 286.17,
+      "tpl": 322.44,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-B. Excl. tax: SGL/DBL 213.00, TPL 240.00"
+     },
+     {
+      "room_type": "Araliya /Manel Suite",
+      "meal_plan": "BB",
+      "sgl": 471.57,
+      "dbl": 471.57,
+      "tpl": 507.84,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-B. Excl. tax: SGL/DBL 351.00, TPL 378.00"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 197.13,
+      "dbl": 197.13,
+      "tpl": 233.4,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-H. Excl. tax: SGL/DBL 146.73, TPL 173.73"
+     },
+     {
+      "room_type": "Premier Ocean",
+      "meal_plan": "HB",
+      "sgl": 225.34,
+      "dbl": 225.34,
+      "tpl": 261.62,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-H. Excl. tax: SGL/DBL 167.73, TPL 194.73"
+     },
+     {
+      "room_type": "Premier Ocean Suite",
+      "meal_plan": "HB",
+      "sgl": 334.17,
+      "dbl": 334.17,
+      "tpl": 370.44,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-H. Excl. tax: SGL/DBL 248.73, TPL 275.73"
+     },
+     {
+      "room_type": "Araliya /Manel Suite",
+      "meal_plan": "HB",
+      "sgl": 519.57,
+      "dbl": 519.57,
+      "tpl": 555.84,
+      "quad": null,
+      "unit": null,
+      "note": "Rate code WSLTAM40-H. Excl. tax: SGL/DBL 386.73, TPL 413.73"
+     }
+    ],
+    "notes": "Sheet: \"Stay Period: Until 19th December 2026\" — start 01 Sep 2026 from the title \"Sep 2026\""
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 21.49,
+    "child": 10.75,
+    "note": "Lunch, incl. tax (excl. 16 / 8); Full board = breakfast + lunch + dinner"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 18.81,
+    "child": 9.4,
+    "note": "Incl. tax (excl. 14 / 7); per person per meal; child 6 – 11.99"
+   },
+   {
+    "meal": "lunch",
+    "adult": 21.49,
+    "child": 10.75,
+    "note": "Incl. tax (excl. 16 / 8); per person per meal; child 6 – 11.99"
+   },
+   {
+    "meal": "dinner",
+    "adult": 29.56,
+    "child": 14.78,
+    "note": "Incl. tax (excl. 22 / 11); per person per meal; child 6 – 11.99"
+   },
+   {
+    "meal": "other",
+    "name": "Half board Plus (on BB rate)",
+    "adult": 53.74,
+    "child": 26.87,
+    "note": "Incl. tax (excl. 40 / 20). Unlimited beer and house wine by the glass during dinner; children unlimited soft drinks & PET juices"
+   },
+   {
+    "meal": "other",
+    "name": "Full board Plus (on BB rate)",
+    "adult": 99.42,
+    "child": 49.71,
+    "note": "Incl. tax (excl. 74 / 37). Unlimited beer and house wine by the glass during lunch & dinner; children soft drinks & PET juices"
+   }
+  ],
+  "supplements": [],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 1.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Infant under 2 years: baby cot is complimentary"
+   },
+   {
+    "age_from": 2,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "amount": 0,
+    "max_children": 1,
+    "note": "Child 2 – 11 years: one extra bed is complimentary. The sheet does not say whether the child's meals are charged; child meal rates (6 – 11.99) B 9.40 / L 10.75 / D 14.78 incl. tax"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [],
+  "restrictions": [
+   {
+    "kind": "meal_plan_required",
+    "date_from": "2026-09-01",
+    "date_to": "2026-12-19",
+    "value": "BB,HB,FB",
+    "note": "Minimum board basis is BB; room only cannot be sold"
+   }
+  ],
+  "extras": [
+   {
+    "category": "other",
+    "name": "Golf 9 holes (A-GOLF 9)",
+    "per": "person",
+    "adult": 55.08,
+    "currency": "USD",
+    "note": "Incl. tax (excl. 41.00). Green fees only, single person; caddie paid directly at the pro shop. Golf rates printed as \"valid from 06-Jan-2025 – 05 Jan 2026 and subject to change\""
+   },
+   {
+    "category": "other",
+    "name": "Golf 18 holes (A-GOLF-18)",
+    "per": "person",
+    "adult": 79.27,
+    "currency": "USD",
+    "note": "Incl. tax (excl. 59.00). Green fees only, single person; caddie paid directly at the pro shop. Golf rates printed as \"valid from 06-Jan-2025 – 05 Jan 2026 and subject to change\""
+   },
+   {
+    "category": "other",
+    "name": "Golf 3 days, 18 holes (A-GOLF-18-3DYS)",
+    "per": "person",
+    "adult": 200.18,
+    "currency": "USD",
+    "note": "Incl. tax (excl. 149.00); one round per day. Green fees only, single person; caddie paid directly at the pro shop. Golf rates printed as \"valid from 06-Jan-2025 – 05 Jan 2026 and subject to change\""
+   },
+   {
+    "category": "other",
+    "name": "Golf 5 days, 18 holes (A-GOLF-18-5DYS)",
+    "per": "person",
+    "adult": 313.04,
+    "currency": "USD",
+    "note": "Incl. tax (excl. 233.00); one round per day. Green fees only, single person; caddie paid directly at the pro shop. Golf rates printed as \"valid from 06-Jan-2025 – 05 Jan 2026 and subject to change\""
+   },
+   {
+    "category": "other",
+    "name": "Golf caddie (paid directly at the pro shop)",
+    "per": "person",
+    "adult": 14.78,
+    "currency": "USD",
+    "note": "From USD 14.78 incl. tax (USD 11 excl.), depending on the caddie's rating and the number of holes played"
+   }
+  ]
+ }
+}

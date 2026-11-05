@@ -1,0 +1,687 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Tour Payments Preview</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: navy app bar → control-centre header → attention banner → 8 summary cards → numbered workflow stages → pill tabs → work queue (filters + table) + detail panel (inline ≥1600px, slide-over drawer below). */
+:root {
+  --navy:#172443; --navy-2:#223360; --purple:#842484; --purple-2:#6d1c6d; --purple-soft:#f4e9f4; --magenta:#e90c8b;
+  --bg:#f3f4f8; --surface:#ffffff; --surface-2:#f8f8fb; --line:#e2e5ee; --line-2:#cfd4e0;
+  --ink:#1c2434; --ink-2:#3d4759; --muted:#67718a; --on-dark:#ffffff; --on-dark-2:rgba(255,255,255,.72);
+  --done:#0d8a6e; --done-bg:#e0f4ee; --pending:#b25e00; --pending-bg:#fff1dc; --progress:#4d4bb3; --progress-bg:#e9e8fb;
+  --blocked:#c5281c; --blocked-bg:#fde7e5; --neutral:#5b6577; --neutral-bg:#eceef3; --hold:#8a6d00; --hold-bg:#fff7cc;
+  --focus:#842484; --shadow:0 1px 2px rgba(23,36,67,.06), 0 4px 14px rgba(23,36,67,.06);
+  --font:"Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r:14px; --r-sm:9px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --navy:#0e1527; --navy-2:#16213a; --purple:#c257c2; --purple-2:#a73fa7; --purple-soft:#2e1f33; --magenta:#f04aa8;
+  --bg:#0f141f; --surface:#171d2b; --surface-2:#1d2433; --line:#2a3245; --line-2:#394257;
+  --ink:#eef1f7; --ink-2:#c9d0de; --muted:#9aa4b8; --on-dark:#ffffff; --on-dark-2:rgba(255,255,255,.7);
+  --done:#4fd1ae; --done-bg:#133a31; --pending:#f3b35b; --pending-bg:#3c2a10; --progress:#a9a6ff; --progress-bg:#272650;
+  --blocked:#ff7b70; --blocked-bg:#44201d; --neutral:#aab3c5; --neutral-bg:#262d3d; --hold:#ffd95c; --hold-bg:#3d3410;
+  --focus:#c257c2; --shadow:0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --navy:#0e1527; --navy-2:#16213a; --purple:#c257c2; --purple-2:#a73fa7; --purple-soft:#2e1f33; --magenta:#f04aa8;
+  --bg:#0f141f; --surface:#171d2b; --surface-2:#1d2433; --line:#2a3245; --line-2:#394257;
+  --ink:#eef1f7; --ink-2:#c9d0de; --muted:#9aa4b8; --on-dark:#ffffff; --on-dark-2:rgba(255,255,255,.7);
+  --done:#4fd1ae; --done-bg:#133a31; --pending:#f3b35b; --pending-bg:#3c2a10; --progress:#a9a6ff; --progress-bg:#272650;
+  --blocked:#ff7b70; --blocked-bg:#44201d; --neutral:#aab3c5; --neutral-bg:#262d3d; --hold:#ffd95c; --hold-bg:#3d3410;
+  --focus:#c257c2; --shadow:0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font); font-size:14px; line-height:1.45; -webkit-font-smoothing:antialiased; }
+button, input, select { font:inherit; color:inherit; }
+button { cursor:pointer; }
+a { color:var(--purple); }
+:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
+.num { font-variant-numeric:tabular-nums; }
+.muted { color:var(--muted); }
+h1, h2, h3 { text-wrap:balance; }
+.heading { color:var(--navy); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .heading { color:var(--ink); } }
+:root[data-theme="dark"] .heading { color:var(--ink); }
+
+/* ---------- app bar ---------- */
+.appbar { background:var(--navy); color:var(--on-dark); position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; }
+.appbar-in { display:flex; align-items:center; gap:14px; padding:0 20px; min-height:54px; flex-wrap:wrap; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.01em; white-space:nowrap; }
+.brand .leaf { width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--magenta), var(--purple)); display:grid; place-items:center; font-size:13px; font-weight:800; }
+.crumb { color:var(--on-dark-2); font-weight:600; font-size:13px; white-space:nowrap; }
+.crumb b { color:#fff; }
+.navlinks { display:flex; gap:4px; flex-wrap:wrap; }
+.navlinks a { color:var(--on-dark-2); text-decoration:none; padding:7px 10px; border-radius:8px; font-weight:600; font-size:13px; }
+.navlinks a:hover { background:rgba(255,255,255,.1); color:#fff; }
+.appbar .right { margin-left:auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.role { display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--on-dark-2); }
+.role select { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); color:#fff; border-radius:8px; padding:5px 8px; font-size:12.5px; }
+.role select option { color:#1c2434; }
+.user { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; }
+.user .av { width:28px; height:28px; border-radius:50%; background:var(--purple); display:grid; place-items:center; font-size:12px; font-weight:800; }
+.preview-tag { background:var(--magenta); color:#fff; font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px; letter-spacing:.04em; text-transform:uppercase; }
+
+/* ---------- page ---------- */
+.page { max-width:1800px; margin:0 auto; padding-block:18px 40px; padding-inline:20px; display:grid; gap:16px; }
+.page > * { min-width:0; }
+.head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px 24px; align-items:end; }
+.eyebrow { font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--purple); margin:0 0 4px; }
+.head h1 { margin:0; font-size:28px; font-weight:800; letter-spacing:-.015em; line-height:1.15; }
+.head p { margin:4px 0 0; color:var(--muted); max-width:70ch; }
+.controls { display:flex; gap:10px; flex-wrap:wrap; align-items:end; }
+.search { display:flex; align-items:center; background:var(--surface); border:1.5px solid var(--line-2); border-radius:10px; min-width:320px; flex:1; box-shadow:var(--shadow); }
+.search:focus-within { border-color:var(--purple); }
+.search svg { margin-left:12px; color:var(--muted); flex:none; }
+.search input { flex:1; min-width:0; border:0; background:transparent; padding:10px 10px; font-size:14px; outline:none; }
+.search button { border:0; background:var(--purple); color:#fff; font-weight:700; padding:0 16px; align-self:stretch; border-radius:0 8px 8px 0; }
+.search button:hover { background:var(--purple-2); }
+.field { display:grid; gap:3px; font-size:11px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+.field input, .field select { border:1px solid var(--line-2); background:var(--surface); border-radius:8px; padding:8px 10px; font-size:13.5px; font-weight:500; text-transform:none; letter-spacing:0; color:var(--ink); }
+.refresh { display:flex; align-items:center; gap:10px; font-size:12.5px; color:var(--muted); }
+.btn { border:1px solid var(--line-2); background:var(--surface); border-radius:9px; padding:8px 13px; font-weight:700; font-size:13px; display:inline-flex; align-items:center; gap:6px; color:var(--ink); white-space:nowrap; }
+.btn:hover { border-color:var(--purple); color:var(--purple); }
+.btn.primary { background:var(--purple); border-color:var(--purple); color:#fff; }
+.btn.primary:hover { background:var(--purple-2); color:#fff; }
+.btn.sm { padding:5px 10px; font-size:12.5px; }
+.btn[disabled] { opacity:.55; cursor:not-allowed; }
+.btn[disabled]:hover { border-color:var(--line-2); color:var(--ink); }
+
+/* ---------- attention banner ---------- */
+.banner { background:var(--pending-bg); border:1px solid rgba(178,94,0,.35); border-radius:12px; padding:12px 16px; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:4px 12px; align-items:center; }
+.banner .i { font-size:16px; color:var(--pending); grid-row:1 / span 2; grid-column:1; }
+.banner b { font-size:14.5px; grid-column:2; grid-row:1; }
+.banner span { color:var(--ink-2); font-size:13px; grid-column:2; grid-row:2; }
+.banner .btn { grid-row:1 / span 2; grid-column:3; }
+
+/* ---------- summary cards ---------- */
+.tiles { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; }
+.tile { background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--stripe, var(--navy)); border-radius:var(--r); padding:12px 14px 12px 15px; display:grid; gap:3px; text-align:left; box-shadow:var(--shadow); position:relative; min-width:0; }
+.tile:hover { border-color:var(--purple); border-left-color:var(--stripe, var(--navy)); }
+.tile .l { font-size:13px; font-weight:700; color:var(--ink-2); line-height:1.3; padding-right:30px; }
+.tile .v { font-size:28px; font-weight:800; line-height:1.1; }
+.tile .s { font-size:12.5px; color:var(--muted); }
+.tile.purple { --stripe:var(--purple); }
+.tile.amber { --stripe:var(--pending); }
+.tile.teal { --stripe:var(--done); }
+.tile.red { --stripe:var(--blocked); background:var(--blocked-bg); }
+.tile.red .v, .tile.red .l { color:var(--blocked); }
+.tile.amber .v { color:var(--pending); }
+.tile.teal .v { color:var(--done); }
+.tile .ico { position:absolute; right:12px; top:12px; width:26px; height:26px; border-radius:7px; background:var(--purple-soft); color:var(--purple); display:grid; place-items:center; font-size:13px; }
+.tile.red .ico { background:transparent; color:var(--blocked); }
+
+/* ---------- workflow ---------- */
+.flow { background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; box-shadow:var(--shadow); }
+.flow .t { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.flow .t h2 { margin:0; font-size:16px; font-weight:800; }
+.flow .t .hint { font-size:12.5px; color:var(--muted); display:block; }
+.stages { display:grid; grid-template-columns:repeat(6, minmax(0,1fr)); gap:8px; }
+.stage { position:relative; border:1.5px solid var(--line); background:var(--surface-2); border-radius:12px; padding:10px 12px; display:grid; gap:2px; text-align:left; min-width:0; }
+.stage .k { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:800; }
+.stage .k i { font-style:normal; width:22px; height:22px; border-radius:7px; background:var(--surface); border:1px solid var(--line-2); display:grid; place-items:center; font-size:11.5px; font-weight:800; color:var(--ink-2); flex:none; }
+.stage .n { font-size:24px; font-weight:800; line-height:1.1; margin-top:2px; }
+.stage .m { font-size:12px; color:var(--muted); }
+.stage .who { font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:700; }
+.stage:hover { border-color:var(--purple); }
+.stage.on { background:var(--navy); color:#fff; border-color:var(--navy); }
+.stage.on .m, .stage.on .who { color:rgba(255,255,255,.8); }
+.stage.on .k i { background:#fff; color:var(--navy); border-color:#fff; }
+.stage.paid.on { background:var(--done); border-color:var(--done); }
+.stage.paid.on .k i { color:var(--done); }
+.stage::after { content:"›"; position:absolute; right:-9px; top:50%; transform:translateY(-50%); width:16px; height:16px; border-radius:50%; background:var(--surface); border:1px solid var(--line-2); color:var(--muted); font-size:12px; line-height:14px; text-align:center; z-index:1; }
+.stage:last-child::after { display:none; }
+
+/* ---------- tabs ---------- */
+.tabs { display:flex; gap:6px; overflow-x:auto; padding:4px 0; }
+.tab { border:1px solid transparent; background:transparent; padding:8px 14px; font-weight:700; color:var(--muted); border-radius:10px; white-space:nowrap; display:inline-flex; gap:8px; align-items:center; }
+.tab:hover { color:var(--ink); background:var(--surface); }
+.tab.on { color:#fff; background:var(--purple); }
+.tab .c { background:var(--neutral-bg); color:var(--neutral); font-size:11.5px; font-weight:800; padding:1px 8px; border-radius:999px; }
+.tab.on .c { background:rgba(255,255,255,.22); color:#fff; }
+.tab .c.alert { background:var(--pending-bg); color:var(--pending); }
+.tab.on .c.alert { background:#fff; color:var(--purple); }
+
+/* ---------- work area ---------- */
+.work { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; align-items:start; }
+@media (min-width: 1600px) { .work { grid-template-columns:minmax(0,1fr) 380px; } }
+.panel { background:var(--surface); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); min-width:0; }
+.panel-h { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.panel-h h2 { margin:0; font-size:16px; font-weight:800; }
+.panel-h .sub { font-size:12.5px; color:var(--muted); }
+.qfilters { display:flex; gap:8px; flex-wrap:wrap; padding:10px 16px; border-bottom:1px solid var(--line); background:var(--surface-2); }
+.qfilters .search { min-width:220px; flex:1 1 240px; box-shadow:none; }
+.qfilters .search input { padding:8px 10px; font-size:13px; }
+.qfilters select { border:1px solid var(--line-2); background:var(--surface); border-radius:8px; padding:8px 10px; font-size:13px; font-weight:600; min-width:150px; flex:0 1 auto; }
+@media (max-width: 760px) { .qfilters select { flex:1 1 140px; min-width:0; } }
+.qfilters .sum { margin-left:auto; align-self:center; font-size:12.5px; color:var(--muted); white-space:nowrap; }
+
+/* table */
+.tbl-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:12.5px; }
+th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:800; padding:9px 8px; border-bottom:1px solid var(--line); background:var(--surface-2); white-space:nowrap; }
+td { padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:middle; }
+#tours .chip { white-space:normal; line-height:1.35; padding-block:3px; max-width:170px; text-align:left; }
+tr.row { cursor:pointer; }
+tr.row:hover td { background:var(--surface-2); }
+tr.row.sel td { background:var(--purple-soft); }
+tr.row.sel td:first-child { box-shadow:inset 3px 0 0 var(--purple); }
+td.r, th.r { text-align:right; }
+.tid { font-weight:800; color:var(--purple); white-space:nowrap; }
+.pax-name { font-size:12px; color:var(--ink-2); font-weight:500; }
+.dates { white-space:nowrap; font-weight:600; }
+.countdown { display:block; font-size:11.5px; color:var(--muted); font-weight:500; }
+.countdown.soon { color:var(--pending); font-weight:700; }
+.item b { display:block; font-weight:700; }
+.item span { color:var(--muted); font-size:11.5px; }
+.amt { font-weight:800; white-space:nowrap; }
+.amt .cur { font-size:11px; color:var(--muted); font-weight:700; margin-right:3px; }
+.amt .fx { display:block; font-size:11px; color:var(--muted); font-weight:500; }
+.owner { white-space:nowrap; font-size:12.5px; }
+.owner b { display:block; font-weight:700; }
+.owner span { color:var(--muted); font-size:11.5px; }
+.due { white-space:nowrap; font-weight:600; }
+.due.today { color:var(--pending); font-weight:800; }
+.due.late { color:var(--blocked); font-weight:800; }
+.due.late::before { content:"⚠ "; }
+
+/* chips + progress */
+.chip { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:800; white-space:nowrap; line-height:1.6; border:1px solid transparent; }
+.chip::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; flex:none; }
+.chip.done { background:var(--done-bg); color:var(--done); }
+.chip.pending { background:var(--pending-bg); color:var(--pending); }
+.chip.progress { background:var(--progress-bg); color:var(--progress); }
+.chip.blocked { background:var(--blocked-bg); color:var(--blocked); }
+.chip.neutral { background:var(--neutral-bg); color:var(--neutral); }
+.chip.hold { background:var(--hold-bg); color:var(--hold); }
+.chip.outline { background:transparent; border-color:var(--line-2); color:var(--muted); }
+.prog { display:grid; gap:3px; min-width:104px; }
+.prog .lab { font-size:12px; font-weight:700; display:flex; justify-content:space-between; gap:6px; white-space:nowrap; }
+.prog .lab small { color:var(--muted); font-weight:500; }
+.prog .bar { height:6px; border-radius:6px; background:var(--neutral-bg); overflow:hidden; display:flex; }
+.prog .bar i { display:block; height:100%; }
+.prog .bar .d { background:var(--done); }
+.prog .bar .p { background:var(--progress); }
+.prog .bar .w { background:var(--pending); }
+.tip { position:relative; }
+.tip[data-tip]:hover::after, .tip[data-tip]:focus-visible::after { content:attr(data-tip); position:absolute; left:0; top:calc(100% + 6px); z-index:9; background:var(--navy); color:#fff; font-size:11.5px; font-weight:500; padding:6px 9px; border-radius:7px; white-space:pre-line; width:max-content; max-width:260px; box-shadow:var(--shadow); }
+
+/* ---------- detail: inline column on wide screens, slide-over drawer below 1600px ---------- */
+.detail { position:sticky; top:calc(env(safe-area-inset-top, 0px) + 64px); max-height:calc(100vh - 80px); overflow:auto; }
+.detail .panel-h { position:sticky; top:0; background:var(--surface); z-index:1; }
+.detail .close { display:none; }
+.scrim { display:none; }
+@media (max-width: 1599px) {
+  .detail { position:fixed; top:0; right:0; bottom:0; width:min(460px, 100%); max-height:none; border-radius:0; z-index:40; padding-top:env(safe-area-inset-top, 0px); display:none; box-shadow:-8px 0 30px rgba(23,36,67,.18); }
+  .detail.open { display:block; }
+  .detail .close { display:inline-flex; }
+  .scrim.open { display:block; position:fixed; inset:0; background:rgba(23,36,67,.35); z-index:30; }
+}
+.d-sec { padding:12px 16px; border-bottom:1px solid var(--line); display:grid; gap:8px; }
+.d-sec:last-child { border-bottom:0; }
+.d-sec h3 { margin:0; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:800; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+.kv { display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 12px; font-size:12.5px; }
+.kv dt { color:var(--muted); margin:0; }
+.kv dd { margin:0; font-weight:600; min-width:0; overflow-wrap:anywhere; }
+.steps { display:grid; position:relative; }
+.step { display:grid; grid-template-columns:18px minmax(0,1fr); gap:10px; font-size:12.5px; padding:0 0 10px; position:relative; }
+.step::before { content:""; position:absolute; left:8px; top:16px; bottom:-2px; width:2px; background:var(--line); }
+.step:last-child::before { display:none; }
+.step .dot { width:16px; height:16px; border-radius:50%; border:2px solid var(--line-2); background:var(--surface); margin-top:1px; display:grid; place-items:center; font-size:9px; font-weight:800; color:#fff; }
+.step.done .dot { background:var(--done); border-color:var(--done); }
+.step.now .dot { background:var(--pending); border-color:var(--pending); }
+.step b { display:block; font-weight:700; }
+.step span { color:var(--muted); font-size:11.5px; }
+.step.now b { color:var(--pending); }
+.sup { width:100%; font-size:12.5px; }
+.sup td, .sup th { padding:6px 4px; }
+.sup th { background:transparent; }
+.sup .chip { white-space:normal; line-height:1.35; padding-block:3px; }
+.sup td:last-child { min-width:0; }
+.next { background:var(--surface-2); border:1px dashed var(--line-2); border-radius:10px; padding:10px 12px; display:grid; gap:6px; font-size:12.5px; }
+.next b { font-size:13px; }
+.audit { font-size:12px; display:grid; gap:5px; }
+.audit div { display:grid; grid-template-columns:110px minmax(0,1fr); gap:8px; }
+.audit span { color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+/* supplier cards / batch cards */
+.cards { display:grid; gap:10px; padding:12px 16px; }
+.scard { border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:grid; gap:8px; background:var(--surface); }
+.scard .top { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
+.scard .top b { font-size:14.5px; }
+.scard .meta { font-size:12.5px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.scard .tours { display:flex; gap:6px; flex-wrap:wrap; }
+.scard .tours span { background:var(--neutral-bg); border-radius:6px; padding:2px 7px; font-size:12px; font-weight:700; }
+.scard .bulk { display:flex; gap:8px; flex-wrap:wrap; align-items:center; border-top:1px dashed var(--line); padding-top:8px; font-size:12.5px; }
+.scard .bulk .sel { font-weight:700; }
+.scard .bulk .go { margin-left:auto; }
+.legend { display:flex; gap:8px 10px; flex-wrap:wrap; padding:12px 16px; align-items:center; font-size:12.5px; }
+.legend .h { font-weight:800; color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; margin-right:4px; }
+.empty { padding:40px 16px; text-align:center; color:var(--muted); }
+#view-cards table td, #view-cards table th { white-space:nowrap; }
+.note { font-size:12px; color:var(--muted); padding:10px 16px; border-top:1px solid var(--line); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1280px) {
+  .stages { grid-template-columns:repeat(3, minmax(0,1fr)); }
+  .stage:nth-child(3)::after { display:none; }
+}
+@media (max-width: 1100px) { .stage .who { display:none; } }
+@media (max-width: 1400px) { .crumb { display:none; } .role { font-size:0; } .role select { font-size:12.5px; } }
+@media (max-width: 1024px) {
+  .head { grid-template-columns:1fr; }
+  .search { min-width:0; flex:1 1 100%; }
+  /* table → cards (4 fields per row on tablet, 2 on phone) */
+  #view-table { overflow:visible; }
+  table.cardify, table.cardify tbody, table.cardify tr, table.cardify td { display:block; }
+  table.cardify thead { display:none; }
+  table.cardify tr.row { border-bottom:1px solid var(--line); padding:10px 14px; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px 12px; }
+  table.cardify tr.row.sel { background:var(--purple-soft); }
+  table.cardify tr.row.sel td:first-child { box-shadow:none; }
+  table.cardify td { padding:0; border:0; min-width:0; }
+  table.cardify td.full { grid-column:1 / -1; }
+  table.cardify td.r { text-align:left; }
+  table.cardify td[data-l]::before { content:attr(data-l); display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:800; }
+  table.cardify tr.row:hover td { background:transparent; }
+  table.cardify .chip { white-space:normal; line-height:1.4; padding-block:3px; max-width:none; }
+  .prog { min-width:0; }
+}
+@media (max-width: 760px) {
+  .appbar-in { padding:0 16px; gap:8px; }
+  .navlinks a { padding:6px 8px; }
+  .crumb { display:none; }
+  .user span { display:none; }
+  .page { padding-inline:16px; gap:12px; }
+  .tiles { grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; }
+  .tile .v { font-size:24px; }
+  .stages { grid-template-columns:1fr 1fr; gap:6px; }
+  .stage::after { display:none; }
+  .banner { grid-template-columns:auto minmax(0,1fr); }
+  .banner .btn { grid-row:auto; grid-column:2; justify-self:start; }
+  table.cardify tr.row { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6px 12px; }
+  .qfilters .sum { margin-left:0; }
+  .scard .bulk .go { margin-left:0; }
+  .tip[data-tip]:hover::after { max-width:200px; }
+}
+@media (max-width: 420px) {
+  .controls .field { flex:1 1 40%; }
+  .controls .refresh { flex:1 1 100%; justify-content:space-between; }
+}
+@media (prefers-reduced-motion: no-preference) { .stage, .tab, .btn, .tile { transition:background-color .12s, border-color .12s, color .12s; } }
+</style>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <div class="brand"><span class="leaf">A</span>Avenir Holidays</div>
+    <span class="crumb">Finance / <b>Tour Payments</b></span>
+    <nav class="navlinks" aria-label="System">
+      <a href="#" title="Main system dashboard">⌂ Dashboard</a>
+      <a href="#" title="Back to the previous page">← Back</a>
+      <a href="#" title="User Manual — Tour Payments">? User Manual</a>
+    </nav>
+    <div class="right">
+      <span class="preview-tag">Design preview · sample data</span>
+      <label class="role">Viewing as
+        <select id="role" aria-label="Role for this preview">
+          <option value="ops">Operational staff</option>
+          <option value="mgmt">Management (approver)</option>
+          <option value="acc" selected>Accounts (accountant)</option>
+          <option value="bank">Bank approver / System Administrator</option>
+        </select>
+      </label>
+      <div class="user"><span class="av">RS</span><span>Ravishan · Accountant</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- 1. Header -->
+  <section class="head">
+    <div>
+      <p class="eyebrow">Payment control centre</p>
+      <h1 class="heading">Tour Payments</h1>
+      <p>Priorities, approvals and bank payments in one operational view. Request, approve, batch, bank-check and pay every supplier for every tour.</p>
+    </div>
+    <div class="controls">
+      <form class="search" role="search" onsubmit="event.preventDefault()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Open a tour — ID (AH 2290), passenger or voucher (PV 8021)" aria-label="Open a tour">
+        <button type="submit">Open</button>
+      </form>
+      <label class="field">From <input type="date" id="from" value="2026-10-11"></label>
+      <label class="field">To <input type="date" id="to" value="2026-11-30"></label>
+      <div class="refresh"><span>Last refreshed <b class="num" id="refreshed">11 Oct 2026, 14:32</b></span><button class="btn" type="button" id="refresh">↻ Refresh</button></div>
+      <button class="btn primary" type="button" id="newreq">+ New payment request</button>
+    </div>
+  </section>
+
+  <!-- 2. Attention banner -->
+  <section class="banner" id="banner">
+    <span class="i">⚠</span>
+    <b>4 payments need attention today</b>
+    <button class="btn sm" type="button" data-go="f-48h">Show them</button>
+    <span>Two supplier payments are due within 48 hours, one is overdue, and one USD entrance fee is waiting for today's rate confirmation.</span>
+  </section>
+
+  <!-- 3. Summary cards -->
+  <section class="tiles" aria-label="Summary">
+    <button class="tile purple" data-go="tab-action" type="button"><span class="ico">!</span><span class="l">Action required</span><span class="v num heading">9</span><span class="s">4 due today or overdue · 9 payments on 7 tours</span></button>
+    <button class="tile amber" data-go="st-requested" type="button"><span class="ico">✓</span><span class="l">Awaiting approval</span><span class="v num">3</span><span class="s num">LKR 52,000 · USD 1,240 requested</span></button>
+    <button class="tile purple" data-go="st-payables" type="button"><span class="ico">▦</span><span class="l">Supplier payables</span><span class="v num heading">7</span><span class="s num">3 suppliers · LKR 75,000 approved</span></button>
+    <button class="tile purple" data-go="st-batched" type="button"><span class="ico">⇄</span><span class="l">Bank action</span><span class="v num heading">2</span><span class="s">1 batch to initiate · 1 to mark Paid</span></button>
+    <button class="tile amber" data-go="f-rate" type="button"><span class="ico">$</span><span class="l">Waiting for rate</span><span class="v num">2</span><span class="s">today's USD rate not confirmed</span></button>
+    <button class="tile red" data-go="f-late" type="button"><span class="ico">⚠</span><span class="l">Overdue or blocked</span><span class="v num">2</span><span class="s">1 overdue · 1 blocked (bank not verified)</span></button>
+    <button class="tile teal" data-go="tab-completed" type="button"><span class="ico">✓</span><span class="l">Paid this month</span><span class="v num">12</span><span class="s num">LKR 1.84m reconciled · 0 open items</span></button>
+    <div class="tile"><span class="l">Due in range (approved + requested)</span><span class="v num heading" style="font-size:21px;">LKR 1,284,300</span><span class="s num">USD 9,640 at approval rates · provisional until Paid</span></div>
+  </section>
+
+  <!-- 4. Workflow -->
+  <section class="flow" aria-label="Payment workflow">
+    <div class="t"><div><h2>Payment workflow</h2><span class="hint">Select a stage to focus the work queue. Counts are items in the selected date range.</span></div><span class="chip pending">USD rate not confirmed today</span></div>
+    <div class="stages" id="stages">
+      <button class="stage" data-stage="requested" type="button"><span class="k"><i>1</i>Requested</span><span class="n num">3</span><span class="m">awaiting management approval</span><span class="who">Ops → Management</span></button>
+      <button class="stage" data-stage="approved" type="button"><span class="k"><i>2</i>Approved</span><span class="n num">7</span><span class="m">approved for payment</span><span class="who">Management</span></button>
+      <button class="stage" data-stage="payables" type="button"><span class="k"><i>3</i>Supplier Payables</span><span class="n num">3</span><span class="m">suppliers ready to batch</span><span class="who">Management</span></button>
+      <button class="stage" data-stage="batched" type="button"><span class="k"><i>4</i>Batched</span><span class="n num">1</span><span class="m">voucher issued · to initiate</span><span class="who">Accounts</span></button>
+      <button class="stage" data-stage="bankcheck" type="button"><span class="k"><i>5</i>Bank Check</span><span class="n num">1</span><span class="m">initiated · awaiting Paid</span><span class="who">Bank approver</span></button>
+      <button class="stage paid" data-stage="paid" type="button"><span class="k"><i>6</i>Paid</span><span class="n num">12</span><span class="m">this month · locked</span><span class="who">Done</span></button>
+    </div>
+  </section>
+
+  <!-- 5. Tabs -->
+  <nav class="tabs" id="tabs" aria-label="Views">
+    <button class="tab on" data-tab="action" type="button">Action required <span class="c alert">9</span></button>
+    <button class="tab" data-tab="upcoming" type="button">Upcoming tours <span class="c">18</span></button>
+    <button class="tab" data-tab="payables" type="button">Supplier payables <span class="c">3</span></button>
+    <button class="tab" data-tab="batches" type="button">Payment batches <span class="c">2</span></button>
+    <button class="tab" data-tab="completed" type="button">Completed payments <span class="c">12</span></button>
+  </nav>
+
+  <!-- 6. Work queue + detail -->
+  <section class="work">
+    <div class="panel" id="list">
+      <div class="panel-h">
+        <div><h2 id="list-title">Action required</h2><div class="sub" id="list-sub">Every payment that someone must act on, soonest due first. Click a row for the tour's payment detail.</div></div>
+      </div>
+      <div class="qfilters" id="qfilters">
+        <form class="search" role="search" onsubmit="event.preventDefault()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="qq" placeholder="Search tour, passenger, supplier" aria-label="Search the queue"></form>
+        <select id="period" aria-label="Period"><option>Next 30 days</option><option>Next 7 days</option><option>Next 14 days</option><option>Selected date range</option></select>
+        <select id="prio" aria-label="Priority">
+          <option value="all">All priorities</option>
+          <option value="late">Overdue &amp; blocked</option>
+          <option value="48h">Due within 48 hours</option>
+          <option value="rate">Waiting for rate confirmation</option>
+          <option value="mine">My desk only</option>
+        </select>
+        <span class="sum num" id="qsum"></span>
+      </div>
+      <div class="tbl-wrap" id="view-table">
+        <table class="cardify" id="tours">
+          <thead></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div id="view-cards" hidden></div>
+      <div class="legend" id="legend">
+        <span class="h">Statuses</span>
+        <span class="chip done">Fully Paid</span><span class="chip done">Supplier Notified</span><span class="chip progress">Advance Paid</span><span class="chip progress">Partly Paid</span><span class="chip progress">Payment on Process</span><span class="chip progress">Bank Payment Initiated</span><span class="chip progress">Voucher Issued</span><span class="chip progress">Approved for Payment</span><span class="chip pending">Awaiting Management Approval</span><span class="chip pending">Payment Requested</span><span class="chip pending">Pending Payment</span><span class="chip pending">Waiting Rate Confirmation</span><span class="chip pending">Supplier Notification Pending</span><span class="chip hold">On Hold</span><span class="chip hold">Requires Checking</span><span class="chip neutral">Not Paid</span><span class="chip neutral">Payment Not Requested</span><span class="chip neutral">Cancelled</span><span class="chip blocked">Overdue</span><span class="chip blocked">Rejected</span><span class="chip blocked">Reversed</span><span class="chip blocked">Blocked</span>
+      </div>
+      <div class="note" id="legend-note">Labelled statuses replace the colour-only squares; every status the current dashboard uses keeps its name. Every row has one clear next action. Red is reserved for overdue, blocked, rejected and reversed items; ordinary unpaid items are grey or amber.</div>
+    </div>
+
+    <div class="scrim" id="scrim"></div>
+    <aside class="panel detail" id="detail" aria-label="Tour detail">
+      <div class="panel-h"><div><h2 id="d-title">AH 2290 · HAYASHI/KEIKO MS</h2><div class="sub" id="d-sub">14 – 19 Oct 2026 · 2 pax · STW · starts in 3 days</div></div><div style="display:flex;gap:6px;"><button class="btn sm" type="button">Open tour ↗</button><button class="btn sm close" type="button" id="d-close" aria-label="Close details">✕</button></div></div>
+
+      <div class="d-sec">
+        <h3>Payment timeline <span class="chip progress">Voucher Issued</span></h3>
+        <div class="steps">
+          <div class="step done"><span class="dot">✓</span><div><b>Requested</b><span class="num">iqbaal · 08 Oct 2026 17:25 · LKR 48,000 hotel + LKR 20,000 driver advance</span></div></div>
+          <div class="step done"><span class="dot">✓</span><div><b>Approved for payment</b><span class="num">Ravishan · 09 Oct 2026 12:03 · approval rate USD 1 = LKR 302.50</span></div></div>
+          <div class="step done"><span class="dot">✓</span><div><b>Batched · voucher issued</b><span class="num">PV 8021 · batch B-2026-031 · Cassamara Hotel, 2 tours · 10 Oct 2026 09:40</span></div></div>
+          <div class="step now"><span class="dot">●</span><div><b>Bank initiation — your action</b><span>Accounts records the bank reference and bank date. Paying from Com Bank LKR 1-6-8-10380.</span></div></div>
+          <div class="step"><span class="dot"></span><div><b>Bank check · Paid</b><span>Bank approver confirms the debit; figures lock at the payment-date rate.</span></div></div>
+          <div class="step"><span class="dot"></span><div><b>Supplier notified</b><span>Remittance advice sent from the batch page.</span></div></div>
+        </div>
+      </div>
+
+      <div class="d-sec">
+        <h3>Supplier breakdown <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:700;">2 of 4 paid</span></h3>
+        <table class="sup">
+          <thead><tr><th>Supplier · service</th><th class="r">Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Cassamara Hotel · 2 nights HB<br><span class="muted">Day 1–2 · invoice CAS-1187</span></td><td class="r num">LKR 48,000.00</td><td><span class="chip progress">Voucher Issued</span></td></tr>
+            <tr><td>Heritance Kandalama · 2 nights HB<br><span class="muted">Day 3–4 · prepaid</span></td><td class="r num">USD 420.00</td><td><span class="chip done">Fully Paid</span></td></tr>
+            <tr><td>Sigiriya entrance · 2 pax<br><span class="muted">Day 2</span></td><td class="r num">USD 60.00</td><td><span class="chip done">Fully Paid</span></td></tr>
+            <tr><td>Driver advance · Mr Asanga<br><span class="muted">Day 1</span></td><td class="r num">LKR 20,000.00</td><td><span class="chip pending">Awaiting Management Approval</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-sec">
+        <h3>Approval history</h3>
+        <dl class="kv">
+          <dt>Requested</dt><dd class="num">iqbaal · 08 Oct 2026 17:25</dd>
+          <dt>Approved</dt><dd class="num">Ravishan · 09 Oct 2026 12:03 · Com Bank LKR</dd>
+          <dt>Rate review</dt><dd>Hotel rate matched contract (Cassamara HB 2026) · System Administrator</dd>
+        </dl>
+      </div>
+
+      <div class="d-sec">
+        <h3>Voucher &amp; batch</h3>
+        <dl class="kv">
+          <dt>Voucher</dt><dd><a href="#">PV 8021</a> · 2 tours (AH 2290, AH 2284)</dd>
+          <dt>Batch</dt><dd><a href="#">B-2026-031</a> · Cassamara Hotel · LKR 96,000.00</dd>
+          <dt>Documents</dt><dd>Invoice CAS-1187 attached · remittance advice not yet sent</dd>
+        </dl>
+      </div>
+
+      <div class="d-sec">
+        <h3>Bank account &amp; rate</h3>
+        <dl class="kv">
+          <dt>Paying from</dt><dd>Com Bank LKR · 1-6-8-10380</dd>
+          <dt>Supplier bank</dt><dd><span class="chip done">Verified</span> Cassamara Hotel · Commercial Bank</dd>
+          <dt>Approval rate</dt><dd class="num">USD 1 = LKR 302.50 (09 Oct)</dd>
+          <dt>Today's rate</dt><dd><span class="chip pending">Not confirmed today</span> <span class="muted">Daily USD Rate → confirm before Paid</span></dd>
+        </dl>
+      </div>
+
+      <div class="d-sec">
+        <h3>Bank charges</h3>
+        <dl class="kv">
+          <dt>Batch charges</dt><dd class="num">LKR 1,050.00 · entered at Paid</dd>
+          <dt>This tour's share</dt><dd class="num">LKR 525.00 (50.0% of batch value)</dd>
+          <dt>Ledger</dt><dd>Bank Charges 4-8-37-10818 <span class="chip done">mapped</span></dd>
+          <dt>Reconciliation</dt><dd><span class="chip neutral">After Paid</span> payments + charges = bank debit</dd>
+        </dl>
+      </div>
+
+      <div class="d-sec">
+        <h3>Audit trail <a href="#" style="font-size:11.5px;text-transform:none;letter-spacing:0;">Full record</a></h3>
+        <div class="audit">
+          <div><span class="num">10 Oct 09:40</span><div>Batch B-2026-031 created, PV 8021 issued · Ravishan</div></div>
+          <div><span class="num">09 Oct 12:03</span><div>Approved for payment · Com Bank LKR · Ravishan</div></div>
+          <div><span class="num">09 Oct 11:50</span><div>Hotel rate reviewed · contract rate · System Administrator</div></div>
+          <div><span class="num">08 Oct 17:25</span><div>Payment requested · iqbaal</div></div>
+        </div>
+      </div>
+
+      <div class="d-sec">
+        <div class="next" id="next">
+          <b>Next permitted action</b>
+          <span id="next-text">Record the bank initiation for PV 8021 (bank reference, bank date, charges if any).</span>
+          <div><button class="btn primary" type="button" id="next-btn">Record bank initiation →</button></div>
+          <span class="muted" id="next-note">Only Accounts and System Administrator can do this. Paid stays with the bank approver.</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (s, el) => (el || document).querySelector(s);
+  const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  // ---- sample data: payment items that need an action (representative dummy values only) ----
+  const ITEMS = [
+    {tour:'AH 2290', pax:'HAYASHI/KEIKO MS', dates:'14 – 19 Oct 2026', n:2, days:3, item:'Cassamara Hotel · 2 nights HB', kind:'Supplier payment · hotel', amt:'LKR 48,000', fx:'', due:'12 Oct', when:'48h', status:'Voucher Issued', sc:'progress', stage:'batched', owner:'Accounts', who:'Ravishan', by:'acc', act:'Record bank initiation', tags:['mine']},
+    {tour:'AH 2284', pax:'OKADA/TAKESHI MR', dates:'13 – 17 Oct 2026', n:4, days:2, item:'Sigiriya entrance · 4 pax', kind:'Entrance fee · USD', amt:'USD 120', fx:'≈ LKR 36,300 at approval rate', due:'Today', when:'today', status:'Waiting Rate Confirmation', sc:'pending', stage:'bankcheck', owner:'System Administrator', who:'Daily USD Rate', by:'bank', act:'Confirm today\'s rate', tags:['rate']},
+    {tour:'AH 2284', pax:'OKADA/TAKESHI MR', dates:'13 – 17 Oct 2026', n:4, days:2, item:'Heritance Kandalama · 2 nights HB', kind:'Supplier payment · hotel · PV 8020', amt:'USD 840', fx:'provisional LKR 254,100', due:'11 Oct', when:'late', status:'Bank Payment Initiated', sc:'progress', stage:'bankcheck', owner:'Bank approver', who:'Mr Dilan', by:'bank', act:'Mark Paid', tags:['late','rate']},
+    {tour:'AH 2290', pax:'HAYASHI/KEIKO MS', dates:'14 – 19 Oct 2026', n:2, days:3, item:'Driver advance · Mr Asanga', kind:'Driver advance', amt:'LKR 20,000', fx:'', due:'13 Oct', when:'48h', status:'Awaiting Management Approval', sc:'pending', stage:'requested', owner:'Management', who:'approver', by:'mgmt', act:'Review request', tags:[]},
+    {tour:'AH 2301', pax:'SATO/MIHO MS', dates:'16 – 22 Oct 2026', n:2, days:5, item:'Jetwing Lighthouse · 3 nights HB', kind:'Supplier payment · hotel', amt:'USD 1,240', fx:'≈ LKR 375,100 provisional', due:'13 Oct', when:'48h', status:'Awaiting Management Approval', sc:'pending', stage:'requested', owner:'Management', who:'approver', by:'mgmt', act:'Review request', tags:['rate']},
+    {tour:'ST 1274', pax:'FUJITA/HARUKA MS', dates:'18 – 21 Oct 2026', n:1, days:7, item:'Driver advance · L R Thushara', kind:'Driver advance · approved', amt:'LKR 20,000', fx:'', due:'15 Oct', when:'', status:'Blocked — bank not verified', sc:'blocked', stage:'approved', owner:'Accounts', who:'Ravishan', by:'acc', act:'Verify supplier bank', tags:['late','mine']},
+    {tour:'AH 2310', pax:'KOBAYASHI/REN MR', dates:'28 Oct – 02 Nov 2026', n:2, days:17, item:'Flower Drum · lunch × 2', kind:'Supplier payment · restaurant', amt:'LKR 5,000', fx:'', due:'24 Oct', when:'', status:'Approved for Payment', sc:'progress', stage:'approved', owner:'Management', who:'batch creator', by:'mgmt', act:'Create batch', tags:[]},
+    {tour:'AH 2297', pax:'NAKAMURA/SHO MR', dates:'20 – 26 Oct 2026', n:3, days:9, item:'Cinnamon Lodge · 2 nights HB', kind:'Supplier payment · hotel', amt:'LKR 212,000', fx:'', due:'17 Oct', when:'', status:'Payment Not Requested', sc:'neutral', stage:'none', owner:'Operations', who:'iqbaal', by:'ops', act:'Request payment', tags:[]},
+    {tour:'AH 2305', pax:'MORI/AYUMI MS', dates:'22 – 25 Oct 2026', n:2, days:11, item:'Lucky Jeep Safaris · Yala · 1 jeep', kind:'Supplier payment · activity', amt:'LKR 32,000', fx:'', due:'19 Oct', when:'', status:'Payment Requested', sc:'pending', stage:'requested', owner:'Management', who:'approver', by:'mgmt', act:'Review request', tags:[]},
+  ];
+  // upcoming tours (one row per tour)
+  const TOURS = [
+    {id:'AH 2284', pax:'OKADA/TAKESHI MR', dates:'13 – 17 Oct 2026', days:2, n:4, hotels:[1,2,0], acts:[1,1,0], drv:'done', drvLabel:'Fully Paid', amount:'LKR 96,500', fx:'USD 840 initiated', stage:'Bank Payment Initiated', sc:'progress', owner:'Bank approver', who:'Mr Dilan'},
+    {id:'AH 2290', pax:'HAYASHI/KEIKO MS', dates:'14 – 19 Oct 2026', days:3, n:2, hotels:[2,1,1], acts:[2,0,0], drv:'pending', drvLabel:'Awaiting approval', amount:'LKR 68,000', fx:'USD 480 paid', stage:'Voucher Issued', sc:'progress', owner:'Accounts', who:'Ravishan'},
+    {id:'AH 2301', pax:'SATO/MIHO MS', dates:'16 – 22 Oct 2026', days:5, n:2, hotels:[0,0,3], acts:[0,0,2], drv:'none', drvLabel:'Not requested', amount:'USD 1,240', fx:'≈ LKR 375,100 provisional', stage:'Awaiting Management Approval', sc:'pending', owner:'Management', who:'approver'},
+    {id:'ST 1274', pax:'FUJITA/HARUKA MS', dates:'18 – 21 Oct 2026', days:7, n:1, hotels:[1,0,1], acts:[0,0,1], drv:'blocked', drvLabel:'Blocked — bank not verified', amount:'LKR 41,000', fx:'', stage:'Approved for Payment', sc:'progress', owner:'Accounts', who:'Ravishan'},
+    {id:'AH 2297', pax:'NAKAMURA/SHO MR', dates:'20 – 26 Oct 2026', days:9, n:3, hotels:[0,0,4], acts:[0,0,1], drv:'none', drvLabel:'Not requested', amount:'LKR 212,000', fx:'USD 310 provisional', stage:'Payment Not Requested', sc:'neutral', owner:'Operations', who:'iqbaal'},
+    {id:'AH 2305', pax:'MORI/AYUMI MS', dates:'22 – 25 Oct 2026', days:11, n:2, hotels:[0,1,1], acts:[0,0,0], drv:'pending', drvLabel:'Payment Requested', amount:'LKR 54,000', fx:'', stage:'Payment Requested', sc:'pending', owner:'Management', who:'approver'},
+    {id:'AH 2310', pax:'KOBAYASHI/REN MR', dates:'28 Oct – 02 Nov 2026', days:17, n:2, hotels:[4,0,0], acts:[2,0,0], drv:'done', drvLabel:'Fully Paid', amount:'LKR 5,000', fx:'restaurant only', stage:'Approved for Payment', sc:'progress', owner:'Management', who:'batch creator'},
+  ];
+  const DRV_CHIP = {done:'done', pending:'pending', none:'neutral', blocked:'blocked'};
+  const DESK = {ops:'Operations', mgmt:'Management', acc:'Accounts', bank:'bank approver'};
+
+  function prog(cnt, label) { // [paid, in process, waiting]
+    const [d, p, w] = cnt, tot = d + p + w;
+    if (!tot) return '<span class="chip outline">None</span>';
+    const tip = label + ': ' + d + ' paid · ' + p + ' in process · ' + w + ' waiting';
+    return '<div class="prog tip" tabindex="0" data-tip="' + esc(tip) + '"><div class="lab"><span>' + d + ' of ' + tot + ' paid</span><small>' + (w ? w + ' waiting' : p ? p + ' in process' : 'done') + '</small></div>' +
+      '<div class="bar"><i class="d" style="width:' + (d / tot * 100) + '%"></i><i class="p" style="width:' + (p / tot * 100) + '%"></i><i class="w" style="width:' + (w / tot * 100) + '%"></i></div></div>';
+  }
+  function actionBtn(by, act, role) {
+    const mine = by === role;
+    return '<button class="btn sm ' + (mine ? 'primary' : '') + '" type="button" ' + (mine ? '' : 'disabled') + '>' + esc(mine ? act + ' →' : 'Waiting for ' + DESK[by]) + '</button>';
+  }
+  function amount(a, fx) { const [cur, ...rest] = a.split(' '); return '<span class="amt num"><span class="cur">' + esc(cur) + '</span>' + esc(rest.join(' ')) + (fx ? '<span class="fx">' + esc(fx) + '</span>' : '') + '</span>'; }
+  function itemRow(t, role) {
+    const dueCls = t.when === 'late' ? 'late' : t.when === 'today' ? 'today' : '';
+    return '<tr class="row" data-id="' + esc(t.tour) + '">' +
+      '<td class="full"><span class="tid">' + esc(t.tour) + '</span><div class="pax-name">' + esc(t.pax) + '</div></td>' +
+      '<td class="full" data-l="Departure"><span class="dates num">' + esc(t.dates) + '</span><span class="countdown ' + (t.days <= 3 ? 'soon' : '') + '">' + t.n + ' passenger' + (t.n === 1 ? '' : 's') + ' · starts in ' + t.days + ' day' + (t.days === 1 ? '' : 's') + '</span></td>' +
+      '<td class="full" data-l="Payment item"><div class="item"><b>' + esc(t.item) + '</b><span>' + esc(t.kind) + '</span></div></td>' +
+      '<td class="r" data-l="Amount">' + amount(t.amt, t.fx) + '</td>' +
+      '<td data-l="Due"><span class="due num ' + dueCls + '">' + esc(t.due) + (t.when === 'late' ? ' · overdue' : '') + '</span></td>' +
+      '<td data-l="Status"><span class="chip ' + t.sc + '">' + esc(t.status) + '</span></td>' +
+      '<td data-l="Responsible"><div class="owner"><b>' + esc(t.owner) + '</b><span>' + esc(t.who) + '</span></div></td>' +
+      '<td class="full" data-l="Next action">' + actionBtn(t.by, t.act, role) + '</td></tr>';
+  }
+  function tourRow(t) {
+    return '<tr class="row" data-id="' + esc(t.id) + '">' +
+      '<td class="full"><span class="tid">' + esc(t.id) + '</span><div class="pax-name">' + esc(t.pax) + ' · ' + t.n + ' pax · STW</div></td>' +
+      '<td data-l="Dates"><span class="dates num">' + esc(t.dates) + '</span><span class="countdown ' + (t.days <= 3 ? 'soon' : '') + '">starts in ' + t.days + ' days</span></td>' +
+      '<td data-l="Hotels">' + prog(t.hotels, 'Hotels') + '</td>' +
+      '<td data-l="Activities">' + prog(t.acts, 'Activities & entrances') + '</td>' +
+      '<td data-l="Driver advance"><span class="chip ' + DRV_CHIP[t.drv] + '">' + esc(t.drvLabel) + '</span></td>' +
+      '<td class="r" data-l="Amount due">' + amount(t.amount, t.fx) + '</td>' +
+      '<td data-l="Stage"><span class="chip ' + t.sc + '">' + esc(t.stage) + '</span></td>' +
+      '<td data-l="Responsible"><div class="owner"><b>' + esc(t.owner) + '</b><span>' + esc(t.who) + '</span></div></td>' +
+      '<td class="full" data-l="Open"><button class="btn sm" type="button">Open tour →</button></td></tr>';
+  }
+
+  let state = {tab:'action', stage:null, prio:'all', role:'acc', sel:'AH 2290'};
+  const SUBS = {
+    action:['Action required', 'Every payment that someone must act on, soonest due first. Click a row for the tour\'s payment detail.'],
+    upcoming:['Upcoming tours', 'Every tour starting in the date range, with hotels, activities and driver advance at a glance.'],
+    payables:['Supplier payables', 'Approved payments grouped by supplier. Management reviews the items and rates, selects all eligible, confirms once; Accounts receives the voucher(s).'],
+    batches:['Payment batches', 'Vouchers issued and waiting for bank initiation or the Paid confirmation.'],
+    completed:['Completed payments', 'Paid and locked at the payment-date rate. Read-only.'],
+  };
+  const STAGE_SUB = {requested:'Requested — awaiting management approval', approved:'Approved — not yet batched', payables:'Supplier payables — approved items grouped by supplier', batched:'Batched — voucher issued, awaiting bank initiation', bankcheck:'Bank check — initiated, awaiting Paid', paid:'Paid — locked'};
+
+  function render() {
+    const table = $('#view-table'), cards = $('#view-cards');
+    $('#list-title').textContent = state.stage ? STAGE_SUB[state.stage].split(' — ')[0] : SUBS[state.tab][0];
+    $('#list-sub').textContent = state.stage ? STAGE_SUB[state.stage] : SUBS[state.tab][1];
+    $$('#stages .stage').forEach(b => b.classList.toggle('on', b.dataset.stage === state.stage));
+    $$('#tabs .tab').forEach(b => b.classList.toggle('on', !state.stage && b.dataset.tab === state.tab));
+    $('#prio').value = state.prio;
+    const view = state.stage ? (state.stage === 'payables' ? 'payables' : state.stage === 'batched' || state.stage === 'bankcheck' ? 'batches' : state.stage === 'paid' ? 'completed' : 'table') : (state.tab === 'payables' || state.tab === 'batches' || state.tab === 'completed' ? state.tab : 'table');
+    table.hidden = view !== 'table'; cards.hidden = view === 'table';
+    $('#legend').hidden = view !== 'table'; $('#legend-note').hidden = view !== 'table'; $('#qfilters').hidden = view !== 'table';
+    if (view === 'table') {
+      const upcoming = state.tab === 'upcoming' && !state.stage;
+      $('#tours thead').innerHTML = upcoming
+        ? '<tr><th>Tour</th><th>Dates</th><th>Hotels</th><th>Activities</th><th>Driver advance</th><th class="r">Amount due</th><th>Stage</th><th>Responsible</th><th></th></tr>'
+        : '<tr><th>Tour</th><th>Departure</th><th>Payment item</th><th class="r">Amount</th><th>Due</th><th>Status</th><th>Responsible</th><th>Next action</th></tr>';
+      let list, html;
+      if (upcoming) { list = TOURS.slice(); html = list.map(tourRow).join(''); $('#qsum').textContent = list.length + ' tours shown · 18 in range'; }
+      else {
+        list = ITEMS.slice();
+        if (state.stage) list = list.filter(t => t.stage === state.stage);
+        if (state.prio === 'late') list = list.filter(t => t.tags.includes('late'));
+        if (state.prio === '48h') list = list.filter(t => t.when === 'today' || t.when === '48h' || t.when === 'late');
+        if (state.prio === 'rate') list = list.filter(t => t.tags.includes('rate'));
+        if (state.prio === 'mine') list = list.filter(t => t.by === state.role);
+        html = list.map(t => itemRow(t, state.role)).join('');
+        const mine = list.filter(t => t.by === state.role).length;
+        $('#qsum').textContent = list.length + ' payments · ' + mine + ' for your desk';
+      }
+      $('#rows').innerHTML = html || '<tr><td colspan="9"><div class="empty">Nothing here for this filter.</div></td></tr>';
+      $$('#rows tr.row').forEach(tr => { tr.classList.toggle('sel', tr.dataset.id === state.sel); tr.addEventListener('click', e => { if (e.target.closest('button')) return; state.sel = tr.dataset.id; $$('#rows tr.row').forEach(x => x.classList.toggle('sel', x.dataset.id === state.sel)); const t = TOURS.find(x => x.id === state.sel); $('#d-title').textContent = state.sel + ' · ' + (t ? t.pax : ''); openDetail(); }); });
+    } else if (view === 'payables') {
+      const canBatch = state.role === 'mgmt' || state.role === 'bank';
+      cards.innerHTML = '<div class="cards">' + [
+        ['Flower Drum – Warehouse', '6-9-11-11733', '6 approved payments · 6 tours · all LKR', 'LKR 35,000.00', ['AH 2083','AH 1952','AH 2098','AH 1892','AH 1929','AH 2310'], 'done', 'Bank verified', 'bulk-payment supplier (restaurant)', 5, 1, 'LKR 30,000.00'],
+        ['Cassamara Hotel', '6-9-11-10422', '2 approved payments · 2 tours · all LKR', 'LKR 96,000.00', ['AH 2290','AH 2284'], 'done', 'Bank verified', 'invoice attached', 2, 0, 'LKR 96,000.00'],
+        ['Mr Asanga (driver)', '6-9-11-11048', '1 approved payment · 1 tour', 'LKR 25,000.00', ['AH 2018'], 'blocked', 'Blocked — bank not verified', 'driver advance', 0, 1, 'LKR 0.00'],
+      ].map(s => '<div class="scard"><div class="top"><div><b>' + esc(s[0]) + '</b> <span class="muted num">' + esc(s[1]) + '</span></div><span class="amt num">' + esc(s[3]) + '</span></div>' +
+        '<div class="meta"><span>' + esc(s[2]) + '</span><span class="chip ' + s[5] + '">' + esc(s[6]) + '</span><span>' + esc(s[7]) + '</span></div><div class="tours">' + s[4].map(x => '<span>' + esc(x) + '</span>').join('') + '</div>' +
+        '<div class="bulk"><button class="btn sm" type="button" ' + (s[8] && canBatch ? '' : 'disabled') + '>☑ Select all eligible (' + s[8] + ')</button><span class="sel num">' + s[8] + ' selected · ' + esc(s[10]) + '</span>' + (s[9] ? '<span class="chip ' + (s[8] ? 'hold' : 'blocked') + '">' + s[9] + ' excluded — ' + (s[8] ? 'on hold (disputed invoice)' : 'bank not verified') + '</span>' : '') + '<button class="btn sm primary go" type="button" ' + (s[8] && canBatch ? '' : 'disabled') + '>Review &amp; confirm payment →</button></div></div>').join('') +
+        '</div><div class="note">Bulk payment (proposed for r5): one batch, one bank transfer, one voucher per item with its own voucher number, all linked to the batch. Cancelled, held, disputed, already-vouchered or paid items are excluded and listed with the reason. The confirmation step shows the item count and total before anything is created; if any voucher fails, none is created.</div>';
+    } else if (view === 'batches') {
+      cards.innerHTML = '<div class="cards">' + [
+        ['B-2026-031', 'PV 8021', 'Cassamara Hotel', '2 tours · LKR 96,000.00', 'progress', 'Voucher Issued — awaiting bank initiation', 'Com Bank LKR 1-6-8-10380', 'Record bank initiation', 'acc'],
+        ['B-2026-030', 'PV 8020', 'Heritance Kandalama', '1 tour · USD 840.00 · provisional LKR 254,100', 'progress', 'Bank Payment Initiated — awaiting Paid', 'Com Bank USD 1-6-8-10898 · ref CB-77120 · 10 Oct', 'Mark Paid', 'bank'],
+      ].map(b => '<div class="scard"><div class="top"><div><b>' + esc(b[0]) + '</b> <span class="muted">· ' + esc(b[1]) + ' · ' + esc(b[2]) + '</span></div>' + actionBtn(b[8], b[7], state.role) + '</div><div class="meta"><span class="num">' + esc(b[3]) + '</span><span class="chip ' + b[4] + '">' + esc(b[5]) + '</span><span class="num">' + esc(b[6]) + '</span></div></div>').join('') + '</div>';
+    } else {
+      cards.innerHTML = '<div class="tbl-wrap"><table><thead><tr><th>Paid</th><th>Voucher</th><th>Supplier</th><th>Tours</th><th class="r">Amount</th><th class="r">Rate</th><th class="r">Charges</th><th>Bank</th><th>Status</th></tr></thead><tbody>' + [
+        ['09 Oct 2026', 'PV 8019', 'Gimanhala Hotel', 'AH 2271, AH 2275', 'LKR 50,000.00', '—', 'LKR 350.00', 'Com Bank LKR', 'Fully Paid · reconciled'],
+        ['08 Oct 2026', 'PV 8018', 'Heritance Kandalama', 'AH 2266', 'USD 420.00 · LKR 127,260.00', '303.00', '0.00', 'Com Bank USD', 'Fully Paid · reconciled'],
+        ['07 Oct 2026', 'PV 8017', 'Lucky Jeep Safaris', 'AH 2260', 'LKR 32,000.00', '—', 'LKR 350.00', 'Com Bank LKR', 'Supplier Notified'],
+      ].map(r => '<tr>' + r.slice(0, 8).map((c, i) => '<td class="' + (i >= 4 && i <= 6 ? 'r ' : '') + 'num">' + esc(c) + '</td>').join('') + '<td><span class="chip done">' + esc(r[8]) + '</span></td></tr>').join('') + '</tbody></table></div><div class="note">Completed payments are read-only: amounts, rates and charges are locked at the Paid date. Historical records are shown exactly as posted.</div>';
+    }
+  }
+
+  const NEXT = {
+    acc:['Record the bank initiation for PV 8021 (bank reference, bank date, charges if any).', 'Record bank initiation →', 'Only Accounts and System Administrator can do this. Paid stays with the bank approver.', true],
+    mgmt:['The driver advance (LKR 20,000) is waiting for your approval. The hotel payment is already with Accounts.', 'Review request →', 'Management approves; Accounts initiates; the bank approver marks Paid.', true],
+    ops:['Nothing for Operations on this tour right now. The hotel payment is with Accounts and the driver advance is with Management.', 'Waiting for Accounts', 'You can attach an invoice or add an expense; approvals and payments stay with Accounts and Management.', false],
+    bank:['The batch has not been initiated yet. You will be able to mark it Paid after Accounts records the bank initiation.', 'Waiting for initiation', 'Paid needs today\'s USD rate confirmed for USD vouchers; this one is LKR.', false],
+  };
+  function roleChanged() {
+    state.role = $('#role').value;
+    const n = NEXT[state.role];
+    $('#next-text').textContent = n[0]; $('#next-btn').textContent = n[1]; $('#next-note').textContent = n[2]; $('#next-btn').disabled = !n[3];
+    $('#newreq').hidden = state.role !== 'ops' && state.role !== 'bank';
+    render();
+  }
+  function openDetail() { $('#detail').classList.add('open'); $('#scrim').classList.add('open'); }
+  function closeDetail() { $('#detail').classList.remove('open'); $('#scrim').classList.remove('open'); }
+  $('#d-close').addEventListener('click', closeDetail);
+  $('#scrim').addEventListener('click', closeDetail);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+  $('#role').addEventListener('change', roleChanged);
+  $('#prio').addEventListener('change', () => { state.prio = $('#prio').value; render(); });
+  $$('#tabs .tab').forEach(b => b.addEventListener('click', () => { state.tab = b.dataset.tab; state.stage = null; render(); }));
+  $$('#stages .stage').forEach(b => b.addEventListener('click', () => { state.stage = state.stage === b.dataset.stage ? null : b.dataset.stage; state.tab = 'action'; render(); }));
+  $$('[data-go]').forEach(b => b.addEventListener('click', () => {
+    const g = b.dataset.go; state.stage = null; state.prio = 'all';
+    if (g.startsWith('tab-')) state.tab = g.slice(4);
+    else if (g.startsWith('st-')) { state.stage = g.slice(3); state.tab = 'action'; }
+    else if (g === 'f-rate') { state.tab = 'action'; state.prio = 'rate'; }
+    else if (g === 'f-late') { state.tab = 'action'; state.prio = 'late'; }
+    else if (g === 'f-48h') { state.tab = 'action'; state.prio = '48h'; }
+    render(); $('#list').scrollIntoView({block:'start'});
+  }));
+  $('#refresh').addEventListener('click', () => { const d = new Date(); $('#refreshed').textContent = d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}) + ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}); });
+  roleChanged();
+})();
+</script>
+</body></html>

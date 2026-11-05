@@ -1,0 +1,333 @@
+{
+ "key": "rts1010_suisse_kandy_2627",
+ "hotel": {
+  "acc": "6-9-11-10969",
+  "name": "SUISSE HOTEL KANDY",
+  "location": "Kandy",
+  "chain": "Ceylon Hotels Corporation (CHC) — Kandy Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "acc": "6-9-11-10969",
+   "name": "SUISSE HOTEL KANDY"
+  },
+  "contract": {
+   "name": "Reservation Contract Winter 2026/27 (rates 1 Nov 2026 – 31 Mar 2027)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel agent / DMC contract",
+   "tier": "all",
+   "hotel_reference": "Reservation Contract Winter 2026/27 (rates 1 Nov 2026 – 31 Mar 2027)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-03-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "HB",
+   "taxes_included": 1,
+   "tax_note": "All quoted rates include any applicable tax in force at the time of signature of this agreement; an increase of any applicable indirect tax after signing (or a new tax, levy or charge) is added as applicable by law.",
+   "source_type": "manual",
+   "source_file": "SUISSE HOTEL KANDY WINTER 2026-2027.pdf",
+   "received_at": "2026-10-10",
+   "extra_bed_adult": 20,
+   "child_policy_text": "Child between 6 – 11.99 y: 50% of the per person rate including extra bed on the booked basis (extra bed is included in the child supplement). Child below 6 y: FOC (sharing parents' accommodation). Children above 12 years are considered adults.",
+   "cancellation_text": "30 days or more: No cancellation fee. 29 – 21 days prior to arrival: 75% cancellation fee. 20 – 0 days prior to arrival: 100% cancellation fee.",
+   "payment_text": "Group reservations (minimum 8 rooms) require an advance payment within 10 days of reservation. The hotel cannot guarantee retention without the specified payment.",
+   "terms_text": "Rates are subject to changes with government tax policy. Twin rooms are limited and subject to availability. Please mention the applicable special rate at the time of reservation; special rates are not valid for existing reservations or re-booking. The resort reserves the right to end the special offer within 3 working days. All reservations must be sent to the designated reservation e-mail IDs provided, unless otherwise specified. The agency cannot assign or grant any rights in this contract to third parties without written consent from the hotel. Non-distribution to other non-retail travel agencies (Spain reserved for the hotel / BGH). These rates are not valid until the signature of the contract.",
+   "notes": "Base meal plan Half Board, all markets, per room. BB = HB − USD 5 per person; FB = HB + lunch USD 20 per person. Room supplements per room per night over Heritage: Colonial priced in its own rows; Vintage USD 50; Tropical Garden Studios USD 160; Suites USD 180. CHECK WITH THE HOTEL: the agreement duration reads 01.11.2026 to 30.04.2027, but the season table runs 01 Nov 2026 to 31 Mar 2027 — April 2027 has no rates (plan entered to 31 Mar 2027). Rooms: Heritage 51, Colonial 15, Vintage 12, Tropical Garden Studios 5, Suites 3. Maximum occupancy: Heritage 2AD / 2AD+1CH; Colonial, Vintage, Tropical Garden Studios 2AD / 3AD / 3AD+1CH / 2AD+2CH. Contacts: general line +94 772 105 158; Front Office Manager +94 763 686 839, reservations.suisse@kandyhotels.lk; reservations +94 772 387 777 (the second e-mail is printed \"reservations.suisse@kandyhohotels.lk\" — likely a typo); corporate +94 117 765 555 / +94 779 910 395."
+  },
+  "room_types": [
+   {
+    "name": "Heritage",
+    "priced_as": "base",
+    "max_adults": 2,
+    "room_count": 51,
+    "description": "2AD / 2AD + 1 child sharing parents bed"
+   },
+   {
+    "name": "Colonial",
+    "priced_as": "base",
+    "max_adults": 3,
+    "room_count": 15,
+    "description": "2AD / 3AD / 3AD+1CH / 2AD+2CH"
+   },
+   {
+    "name": "Vintage",
+    "priced_as": "supplement",
+    "base_room_type": "Heritage",
+    "max_adults": 3,
+    "room_count": 12
+   },
+   {
+    "name": "Tropical Garden Studio",
+    "priced_as": "supplement",
+    "base_room_type": "Heritage",
+    "max_adults": 3,
+    "room_count": 5
+   },
+   {
+    "name": "Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Heritage",
+    "room_count": 3
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 15 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-15"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Heritage",
+      "meal_plan": "HB",
+      "sgl": 130,
+      "dbl": 140,
+      "tpl": 180,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Colonial",
+      "meal_plan": "HB",
+      "sgl": 150,
+      "dbl": 160,
+      "tpl": 200,
+      "quad": null,
+      "unit": null,
+      "note": null
+     }
+    ]
+   },
+   {
+    "name": "16 Dec 2026 – 05 Jan 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-12-16",
+      "to": "2027-01-05"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Heritage",
+      "meal_plan": "HB",
+      "sgl": 150,
+      "dbl": 160,
+      "tpl": 200,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Colonial",
+      "meal_plan": "HB",
+      "sgl": 170,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null,
+      "note": null
+     }
+    ]
+   },
+   {
+    "name": "06 Jan – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-06",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Heritage",
+      "meal_plan": "HB",
+      "sgl": 170,
+      "dbl": 180,
+      "tpl": 220,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Colonial",
+      "meal_plan": "HB",
+      "sgl": 190,
+      "dbl": 200,
+      "tpl": 240,
+      "quad": null,
+      "unit": null,
+      "note": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Vintage",
+    "amount": 50,
+    "per": "room",
+    "note": "Vintage – 12 rooms: USD 50 per room per night (over Heritage, as printed)"
+   },
+   {
+    "room_type": "Tropical Garden Studio",
+    "amount": 160,
+    "per": "room",
+    "note": "Tropical Garden Studios – 5 rooms: USD 160 per room per night (as printed)"
+   },
+   {
+    "room_type": "Suite",
+    "amount": 180,
+    "per": "room",
+    "note": "Suites – 3: USD 180 per room per night (as printed)"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "BB",
+    "adult": -5,
+    "note": "Bed & breakfast reduction USD 5 per person (as printed)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 20,
+    "note": "Lunch USD 20 per person (as printed)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "lunch",
+    "adult": 20,
+    "note": "Per person (as printed)"
+   },
+   {
+    "meal": "dinner",
+    "adult": 25,
+    "note": "Per person (as printed)"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas (24th Dec.) — mandatory supplement",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "per": "person",
+    "amount": 75,
+    "compulsory": 1,
+    "note": "Mandatory supplement USD 75 per person (as printed); child amount not printed"
+   },
+   {
+    "type": "gala",
+    "name": "New Year Gala Dinner (31st Dec.) — mandatory supplement",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 1,
+    "note": "Mandatory supplement USD 100 per person (as printed); child amount not printed"
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra bed",
+    "per": "person",
+    "amount": 20,
+    "compulsory": 0,
+    "note": "Extra bed USD 20 per person per night (as printed)"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "FOC (sharing parents' accommodation)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "pct": 50,
+    "pct_basis": "adult_rate",
+    "note": "Child between 6 – 11.99 y: 50% of the per person rate including extra bed on the booked basis"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 40,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide rate per night (BB), as printed on SUISSE HOTEL KANDY WINTER 2026-2027.pdf"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 45,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide rate per night (HB), as printed on SUISSE HOTEL KANDY WINTER 2026-2027.pdf"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 55,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide rate per night (FB), as printed on SUISSE HOTEL KANDY WINTER 2026-2027.pdf"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "30 days or more: no cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 29,
+    "days_to": 21,
+    "charge_pct": 75,
+    "note": "29 – 21 days prior to arrival: 75% cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "20 – 0 days prior to arrival: 100% cancellation fee"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "group",
+    "kind": "advance",
+    "note": "Group reservations (minimum 8 rooms) require an advance payment within 10 days of reservation (as printed)"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

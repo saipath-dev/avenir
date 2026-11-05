@@ -1,0 +1,234 @@
+{
+    "key": "jetwing_xaviers_cottage_villa_w2627",
+    "hotel": {
+        "acc": "6-9-11-11806",
+        "name": "Xavier's Cottage",
+        "location": "Nuwara Eliya",
+        "chain": "Jetwing Hotels (Select)",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:55"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Xavier's Cottage"
+        },
+        "contract": {
+            "name": "Winter 2026/27 travel agent contracted rates – Select Hotels (revised) – whole villa",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "tier": "all",
+            "hotel_reference": "Select Hotels – Travel Agent Contracted Rates – Winter 2026/2027 (Revised)",
+            "valid_from": "2026-11-01",
+            "valid_to": "2027-04-30",
+            "currency": "USD",
+            "pricing_mode": "per_unit",
+            "taxes_included": 1,
+            "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+            "source_type": "manual",
+            "received_at": "2026-10-02",
+            "markets": [
+                {
+                    "code": "DOM",
+                    "mode": "exclude"
+                }
+            ],
+            "guide_policy_text": "Driver Accommodation – Not Available (no guide accommodation terms printed).",
+            "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+            "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+            "terms_text": "XAVIER'S COTTAGE: Single Reduction – USD 20 / Triple Supplement (Only applicable for Suite Room) – USD 40 (On BB). Rates per room: Deluxe (01 Room), Suite (02 Rooms); Whole Villa (Maximum 06 Pax). Driver Accommodation – Not available. Reservations +94 52 222 2445, resv.villas@jetwinghotels.com. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+            "notes": "Transcribed from \"Jetwing Hotels - Select Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf\" (8 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Currency \"USD Nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy. Market list: \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner or guide rate is printed. No supplier record in the live system yet. Whole Villa column only (per villa per night, BB, maximum 06 pax); the Deluxe / Suite room rates are in jetwing_xaviers_cottage_w2627. The single reduction / triple supplement are room terms and do not apply to the villa. The child policy is printed once for the property; whether children count towards the 06-pax maximum is not stated.",
+            "child_policy_text": "Child Policy (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 30 (Per kid/Per night on BB including extra bed) – Not applicable for Deluxe Category and Triple Occupancy; USD 10 (Per kid/Per night on BB excluding extra bed). Baby cot on request can be provided free of charge. (Up to one cot per room)",
+            "source_file": "Jetwing Hotels - Select Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf"
+        },
+        "room_types": [
+            {
+                "name": "Whole Villa",
+                "priced_as": "base",
+                "room_count": 1,
+                "unit_pax_max": 6,
+                "description": "Entire cottage (the sheet lists Deluxe ×1 and Suite ×2 rooms), maximum 06 pax"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Nov – 25 Dec 2026 & 01 – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-25"
+                    },
+                    {
+                        "from": "2027-04-01",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Whole Villa",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 200,
+                        "note": "Whole Villa (Maximum 06 Pax), per villa per night, BB"
+                    }
+                ]
+            },
+            {
+                "name": "26 Dec 2026 – 10 Jan 2027 (Peak Period)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-26",
+                        "to": "2027-01-10"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Whole Villa",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 280,
+                        "note": "Whole Villa (Maximum 06 Pax), per villa per night, BB"
+                    }
+                ]
+            },
+            {
+                "name": "11 Jan – 31 Mar 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-11",
+                        "to": "2027-03-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Whole Villa",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": 225,
+                        "note": "Whole Villa (Maximum 06 Pax), per villa per night, BB"
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [],
+        "meal_prices": [],
+        "supplements": [
+            {
+                "type": "early_checkin",
+                "name": "Early check-in within 04 hours of the 14:00 check-in",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% charge of the room rate"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out up to 04 hours past 12:00",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% room rate charge"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out past 04 hours",
+                "per": "room",
+                "pct_of_rate": 100,
+                "compulsory": 0,
+                "note": "100% room rate"
+            }
+        ],
+        "child_rates": [],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 15,
+                "charge_pct": 25,
+                "max_rooms": 8,
+                "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 8,
+                "charge_pct": 50,
+                "max_rooms": 8,
+                "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 8,
+                "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 8,
+                "charge_pct": 50,
+                "min_rooms": 9,
+                "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_rooms": 9,
+                "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 5,
+                "pct": 100,
+                "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+            },
+            {
+                "applies": "credit",
+                "kind": "credit_period",
+                "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "pct": 100,
+                "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

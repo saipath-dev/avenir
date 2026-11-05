@@ -1,0 +1,604 @@
+{
+ "log": [
+  [
+   "ok",
+   "D7 tcadmin opens the old Bank Reconciliation screen (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 \"update\" on dummy row 99980305 (2026-09-02, on/after the first day 2026-09-01 of the verification account) \u2192 refused 409 with the reason (names the first day and Daily Bank Reconciliation)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 earlier dates stay available: dummy row 99980302 (2026-08-28, before the first day) ticked (200) and unticked again (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 \"finalize selected\" with one row before and one on/after the first day \u2192 all refused (409)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 \"reconcile up to\" 2026-09-05 refused (409); up to 2026-08-31 allowed (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 moving a row to the unrealised account, moving one back, reposting a range reaching the first day, and a TEST LKR row \u2192 all refused (409)",
+   ""
+  ],
+  [
+   "ok",
+   "F the new workflow warns about the old-screen flags in the protected period: 2 rows (bank_rec on 99980306; 99980307 moved to the unrealised account), on the day and on the overview",
+   ""
+  ],
+  [
+   "ok",
+   "F flags put back: no warning on the day or the overview",
+   ""
+  ],
+  [
+   "ok",
+   "P each day lists each correction once; the day's total = the sum of the amounts up to that day; the full total = the sum of the correction totals; \"up to this day; correction total\" shown exactly when they differ",
+   ""
+  ],
+  [
+   "ok",
+   "P a correction covering several days is counted only for the part up to the day (found: correction 1, 25.00 of 4550.00 on 2026-09-01)",
+   ""
+  ],
+  [
+   "ok",
+   "P that correction's amount grows day by day and equals its total once all its days have passed (25 \u2192 50 \u2192 1050 \u2192 1050 \u2192 4550 \u2192 4550 \u2192 4550 \u2192 4550)",
+   ""
+  ],
+  [
+   "ok",
+   "P a daily record prepared for 2026-09-01 keeps \"\u2026 up to this day; correction total \u2026\" in its snapshot",
+   ""
+  ],
+  [
+   "ok",
+   "P reviewed: \"Reviewed \u2014 ledger not yet corrected \u2014 \u2026 approved but not posted (\u2026 up to this day; correction total \u2026)\"",
+   ""
+  ],
+  [
+   "ok",
+   "R the dummy ledger entry 99980399 (test database only) is recorded as the posting of correction 6: checked against the approved lines \u2192 \"posted and verified\", linked to the entry",
+   ""
+  ],
+  [
+   "ok",
+   "R the 5 Sep pending postings no longer include it (the ledger is corrected for that item)",
+   ""
+  ],
+  [
+   "ok",
+   "R the entry's wording changed in the ledger (SQL, dummy row) \u2192 \"Posted entry changed in the ledger \u2014 verify again\"",
+   ""
+  ],
+  [
+   "ok",
+   "R the reviewer (no preparer privilege) cannot verify again (403); the preparer verifies again \u2192 the entry still matches \u2192 posted and verified; verifying again with nothing changed is refused (409)",
+   ""
+  ],
+  [
+   "ok",
+   "R the entry's amounts changed (25 \u2192 30): verifying again is refused (409, \"does not match\") and it stays \"verify again\"",
+   ""
+  ],
+  [
+   "ok",
+   "R amounts put back \u2192 posted and verified again without any action (the entry is as verified)",
+   ""
+  ],
+  [
+   "ok",
+   "R wording put back \u2192 \"verify again\" \u2192 verified again; the correction is posted and verified",
+   ""
+  ],
+  [
+   "ok",
+   "U tcdual (preparer AND reviewer privilege, not an administrator) proposes an opening item (200), cannot accept their own (403), withdraws it (200)",
+   ""
+  ],
+  [
+   "ok",
+   "U the same user proposes a correction (200), cannot approve it (403), withdraws it (200)",
+   ""
+  ],
+  [
+   "ok",
+   "U the same user prepares a daily record (200), cannot review it (403); the reviewer reviews it (200)",
+   ""
+  ],
+  [
+   "ok",
+   "U the same user may review a record someone else prepared (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 every dummy row's flags (bank_rec, bankst_flag, unrealised moves) exactly as before the old-screen calls",
+   ""
+  ],
+  [
+   "ok",
+   "D7 the 7 refusals are audited (\"brc_legacy_refused\", by the old-screen login)",
+   ""
+  ],
+  [
+   "ok",
+   "F the simulated flags put back exactly",
+   ""
+  ],
+  [
+   "ok",
+   "T two DIFFERENT users (tcaccount, tcdual) classify the same line at the same instant: one 200, one 409",
+   ""
+  ],
+  [
+   "ok",
+   "T two DIFFERENT reviewers (tcpayappr, tcdual) review the same record at the same instant: one 200, one 409; one audit row",
+   ""
+  ],
+  [
+   "ok",
+   "T in both races the two requests were in the server at the same time",
+   ""
+  ],
+  [
+   "ok",
+   "the real ledger is unchanged (rows, sums, every row's reconciliation flags)",
+   ""
+  ],
+  [
+   "ok",
+   "reset: every part of the snapshot is back byte for byte (17 parts)",
+   ""
+  ],
+  [
+   "ok",
+   "reset: every table of the database has the checksum it had before r3 (the audit trail, the activity log a_log and the session tables excepted)",
+   ""
+  ],
+  [
+   "ok",
+   "reset: the real ledger is still unchanged",
+   ""
+  ]
+ ],
+ "facts": {
+  "D7": {
+   "update_protected": [
+    409,
+    "The old Bank Reconciliation screen cannot change ledger row 99980305 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Date",
+    true
+   ],
+   "update_earlier": [
+    200,
+    "Invoice saved successfully!",
+    false
+   ],
+   "update_earlier_back": [
+    200,
+    "Invoice saved successfully!",
+    false
+   ],
+   "finalize_mixed": [
+    409,
+    "The old Bank Reconciliation screen cannot change ledger row 99980306 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Date",
+    true
+   ],
+   "reconcile_protected": [
+    409,
+    "The old Bank Reconciliation screen cannot change dates on or after 2026-09-01 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliat",
+    true
+   ],
+   "reconcile_earlier": [
+    200,
+    "Reconciliation successful!",
+    false
+   ],
+   "unrealised_move": [
+    409,
+    "The old Bank Reconciliation screen cannot change ledger row 99980306 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Date",
+    true
+   ],
+   "unrealised_back_one": [
+    409,
+    "The old Bank Reconciliation screen cannot change ledger row 99980304 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Date",
+    true
+   ],
+   "unrealised_back_range": [
+    409,
+    "The old Bank Reconciliation screen cannot change dates on or after 2026-09-01 of TEST LKR verification account (dummy) (ledger 1-6-8-29904): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliat",
+    true
+   ],
+   "update_lkr_dummy": [
+    409,
+    "The old Bank Reconciliation screen cannot change ledger row 99980003 of TEST LKR account (dummy) (ledger 1-6-8-29901): from 2026-09-01 this account is reconciled in Accounts \u2192 Daily Bank Reconciliation. Dates before 2026",
+    true
+   ]
+  },
+  "flags_2": {
+   "count": 2,
+   "rows": [
+    [
+     99980306,
+     "2026-09-03",
+     "-8000.00",
+     "bank_rec"
+    ],
+    [
+     99980307,
+     "2026-09-04",
+     "-12000.00",
+     "moved to the unrealised account 1-6-112-10782"
+    ]
+   ],
+   "warnings": [
+    "2 ledger row(s) of this account dated from the first day (2026-09-01) carry flags of the old Bank Reconciliation screen (rows 99980306, 99980307). They were set outside this workflow and are left as they are; the old screen now refuses changes for these dates. Check them with Accounts."
+   ],
+   "overview": 2,
+   "status": "Unreconciled \u2014 insufficient data"
+  },
+  "flags_0": {
+   "count": 0,
+   "rows": [],
+   "warnings": [],
+   "overview": 0,
+   "status": "Reviewed \u2014 ledger not yet corrected \u2014 1 approved but not posted (25.00)"
+  },
+  "pending": {
+   "2026-09-01": {
+    "total": "25.00",
+    "full_total": "4550.00",
+    "summary": "1 approved but not posted (25.00 up to this day; correction total 4,550.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "25.00",
+      "4550.00"
+     ]
+    ],
+    "status": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00 up to this day; correction total 4,550.00)"
+   },
+   "2026-09-02": {
+    "total": "50.00",
+    "full_total": "4550.00",
+    "summary": "1 approved but not posted (50.00 up to this day; correction total 4,550.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "50.00",
+      "4550.00"
+     ]
+    ],
+    "status": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (50.00 up to this day; correction total 4,550.00)"
+   },
+   "2026-09-03": {
+    "total": "1050.00",
+    "full_total": "4550.00",
+    "summary": "1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "1050.00",
+      "4550.00"
+     ]
+    ],
+    "status": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (1,050.00 up to this day; correction total 4,550.00)"
+   },
+   "2026-09-04": {
+    "total": "236050.00",
+    "full_total": "239550.00",
+    "summary": "2 approved but not posted (236,050.00 up to this day; correction total 239,550.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "1050.00",
+      "4550.00"
+     ],
+     [
+      2,
+      "approved",
+      "235000.00",
+      "235000.00"
+     ]
+    ],
+    "status": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 2 approved but not posted (236,050.00 up to this day; correction total 239,550.00)"
+   },
+   "2026-09-05": {
+    "total": "239550.00",
+    "full_total": "239550.00",
+    "summary": "2 approved but not posted (239,550.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "4550.00",
+      "4550.00"
+     ],
+     [
+      2,
+      "approved",
+      "235000.00",
+      "235000.00"
+     ]
+    ],
+    "status": "Reviewed \u2014 ledger not yet corrected \u2014 2 approved but not posted (239,550.00)"
+   },
+   "2026-09-06": {
+    "total": "239575.00",
+    "full_total": "239575.00",
+    "summary": "3 approved but not posted (239,575.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "4550.00",
+      "4550.00"
+     ],
+     [
+      2,
+      "approved",
+      "235000.00",
+      "235000.00"
+     ],
+     [
+      4,
+      "approved",
+      "25.00",
+      "25.00"
+     ]
+    ],
+    "status": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 3 approved but not posted (239,575.00)"
+   },
+   "2026-09-07": {
+    "total": "339575.00",
+    "full_total": "339575.00",
+    "summary": "4 approved but not posted (339,575.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "4550.00",
+      "4550.00"
+     ],
+     [
+      2,
+      "approved",
+      "235000.00",
+      "235000.00"
+     ],
+     [
+      4,
+      "approved",
+      "25.00",
+      "25.00"
+     ],
+     [
+      5,
+      "approved",
+      "100000.00",
+      "100000.00"
+     ]
+    ],
+    "status": "All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 4 approved but not posted (339,575.00)"
+   },
+   "2026-09-08": {
+    "total": "339575.00",
+    "full_total": "339575.00",
+    "summary": "4 approved but not posted (339,575.00)",
+    "each": [
+     [
+      1,
+      "approved",
+      "4550.00",
+      "4550.00"
+     ],
+     [
+      2,
+      "approved",
+      "235000.00",
+      "235000.00"
+     ],
+     [
+      4,
+      "approved",
+      "25.00",
+      "25.00"
+     ],
+     [
+      5,
+      "approved",
+      "100000.00",
+      "100000.00"
+     ]
+    ],
+    "status": "Reviewed \u2014 ledger not yet corrected \u2014 4 approved but not posted (339,575.00)"
+   }
+  },
+  "pending_multi": {
+   "id": 1,
+   "day": "2026-09-01",
+   "attributable": "25.00",
+   "full": "4550.00"
+  },
+  "pending_series": [
+   25,
+   50,
+   1050,
+   1050,
+   4550,
+   4550,
+   4550,
+   4550
+  ],
+  "pending_record": {
+   "id": 9,
+   "prepared": 200,
+   "message": "Daily record prepared: All items explained \u2014 ledger not yet corrected (awaiting review) \u2014 1 approved but not posted (25.00 up to this day; correction total 4,550.00).",
+   "kept": null
+  },
+  "pending_reviewed": {
+   "code": 200,
+   "status": "Reviewed \u2014 ledger not yet corrected \u2014 1 approved but not posted (25.00 up to this day; correction total 4,550.00)"
+  },
+  "cV": {
+   "id": 6,
+   "status": "approved",
+   "state": "approved",
+   "amount": "25.00",
+   "entry_date": "2026-09-01",
+   "lines": [
+    {
+     "ledger_code": "4-8-109-31903",
+     "ledger_name": "TEST Bank Charges",
+     "dr": "25.00",
+     "cr": "0.00",
+     "narration": "Bank charges 2026-09-01 to 2026-09-01"
+    },
+    {
+     "ledger_code": "1-6-8-29904",
+     "ledger_name": "TEST Bank LKR verification (dummy)",
+     "dr": "0.00",
+     "cr": "25.00",
+     "narration": "Bank charges 2026-09-01 to 2026-09-01"
+    }
+   ],
+   "description": "Bank charges on the statement not in the ledger: 1 \u00d7 CEFT transfer fee (2026-09-01 to 2026-09-01)."
+  },
+  "posted": {
+   "code": 200,
+   "message": "Ledger entry 99980399 (2026-09-01) matches the approved correction and is now linked to it. Match the statement line(s) to the posted ledger row(s) as usual.",
+   "state": "posted",
+   "label": "Posted \u2014 linked to a verified ledger entry",
+   "posted_ref": "99980399",
+   "by": "tcaccount",
+   "pending_before": "1 approved but not posted (25.00)",
+   "pending_after": "none",
+   "status_after": "Reconciled \u2014 all items explained (awaiting review)"
+  },
+  "changed_wording": {
+   "state": "posted_changed",
+   "label": "Posted entry changed in the ledger \u2014 verify again"
+  },
+  "reverify": {
+   "reviewer": 403,
+   "preparer": [
+    200,
+    "Ledger entry 99980399 (2026-09-01) was checked again: it still matches the approved correction, and its current state is now the verified one."
+   ],
+   "state": "posted",
+   "again": [
+    409,
+    "Ledger entry 99980399 has not changed since it was verified; there is nothing to verify again."
+   ]
+  },
+  "changed_amount": {
+   "state": "posted_changed",
+   "label": "Posted entry changed in the ledger \u2014 verify again"
+  },
+  "reverify_amount": [
+   409,
+   "Ledger entry 99980399 as it is now does not match the approved correction; approved line(s) not found in it: 1-6-8-29904 Cr 25.00, 4-8-109-31903 Dr 25.00; row(s) in it that are not in the approved correction: 1-6-8-29904 Cr 30.00, 4-8-109-31903 Dr 30.00. Nothing was recorded; it stays \"verify again\".",
+   "posted_changed"
+  ],
+  "changed_amount-back": {
+   "state": "posted",
+   "label": "Posted \u2014 linked to a verified ledger entry"
+  },
+  "changed_all-back": {
+   "state": "posted_changed",
+   "label": "Posted entry changed in the ledger \u2014 verify again"
+  },
+  "l3": 27,
+  "dual": {
+   "opening": 5,
+   "correction": 7,
+   "own_record": 10,
+   "other_record": 11
+  }
+ },
+ "races": [
+  [
+   "two users classify the same statement line",
+   [
+    200,
+    409
+   ],
+   [
+    {
+     "user": "tcaccount",
+     "code": 200,
+     "message": "Classified as timing.",
+     "id": 7,
+     "t0": 1791787193434,
+     "t1": 1791787193471
+    },
+    {
+     "user": "tcdual",
+     "code": 409,
+     "message": "That line is already classified.",
+     "id": null,
+     "t0": 1791787193435,
+     "t1": 1791787193470
+    }
+   ]
+  ],
+  [
+   "two users review the same daily record",
+   [
+    200,
+    409
+   ],
+   [
+    {
+     "user": "tcpayappr",
+     "code": 200,
+     "message": "Daily record reviewed.",
+     "id": null,
+     "t0": 1791787199234,
+     "t1": 1791787199267
+    },
+    {
+     "user": "tcdual",
+     "code": 409,
+     "message": "That daily record is not waiting for review (reviewed by tcpayappr).",
+     "id": null,
+     "t0": 1791787199234,
+     "t1": 1791787199268
+    }
+   ]
+  ]
+ ],
+ "snapshot_md5": {
+  "brc_account_map": "6e793f194f516d002551c44fc49034d8",
+  "brc_statement": "bf231cfcbaf92097418bfaf0ac094fd9",
+  "brc_line": "be338fa721afb53292f0e3d454a7fd1f",
+  "brc_fx_rate": "73704df2ee6eb7e5bee7daa3b5649948",
+  "brc_match": "ea15cfc2046ebea513753e795081d198",
+  "brc_match_item": "75fb79923a0bada4b6d5ae8a8596303a",
+  "brc_mark": "4a84b08fda0f173eaaee3e670d26b752",
+  "brc_mark_event": "4842e674750c42cc3f5ff3ba9e375019",
+  "brc_claim": "df7a09621a94c6a5b3e66fd377c7876d",
+  "brc_transfer": "29b7b36ce05abea4192bc5b57095ad83",
+  "brc_opening": "af268433f33749aba7e571e2d2160657",
+  "brc_correction": "be617e3eb63d0fa1dc26442b4a04d956",
+  "brc_day": "2a5026136c70b58ff78e05d061527b89",
+  "account_runing": "90bb61615bddda2bee9ada702e22d7c5",
+  "tpd_bank_account": "d07feb3ee6044926ee8acc74e284fdad",
+  "account_posting": "0553b9da00937a0c05d8dc7bf216ddd2",
+  "tpd_meta": "dfeb58ca64538b55b3def8ef77009376"
+ },
+ "changed_tables_after_reset": []
+}

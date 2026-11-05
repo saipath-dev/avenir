@@ -1,0 +1,295 @@
+{
+ "key": "rts_jwx_lagoon_wellness_packages",
+ "hotel": {
+  "acc": "6-9-11-10597",
+  "name": "Jetwing Lagoon Wellness, A Luxury Reserve",
+  "location": "Negombo",
+  "chain": "Jetwing Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10597",
+   "name": "Jetwing Lagoon Wellness, A Luxury Reserve"
+  },
+  "contract": {
+   "name": "Wellness Packages – Winter 2026/2027 (Luxury Room, full board + wellness package)",
+   "plan_type": "special_offer",
+   "priority": 10,
+   "contract_type": "Wellness package",
+   "tier": "all",
+   "hotel_reference": "Wellness Packages - Winter 2026/2027",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "FB",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "child_policy_text": "The hotel maintains a policy that only individuals aged 18 years and above are eligible for accommodation. Guests under the age of 18 will not be permitted to stay at the property, and all guests aged 18 and over will be considered as adults for booking purposes.",
+   "guide_policy_text": "No guide / driver accommodation terms are printed in the wellness-package document (the Luxury Reserves all-market contract carries the Lagoon guide / tour-leader policy).",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For Short notice / Last minute bookings, 100% of the payment is to be made on confirmation.",
+   "terms_text": "PERIOD – 01ST NOVEMBER 2026 - 30TH APRIL 2027, CURRENCY - USD NETT (PER ROOM/PER NIGHT): Luxury Room on Single Full Board Basis + Wellness Package - USD 290; Luxury Room on Double Full Board Basis + Wellness Package - USD 410; Luxury Room on Triple Full Board Basis + Wellness Package - USD 510. ROOM SUPPLEMENTS (PER ROOM/PER NIGHT): Luxury Room with Terrace – USD 25; Garden Suite – USD 100; Lagoon Suite – USD 200. CHILD POLICY: adults only (18 years and above). | PACKAGE INCLUSIONS ARE AS FOLLOWS: Wellness consultation and progress consultation. 90 minutes of treatments per day (including medicine and supplements if included in the package). Treatments and sessions are dependent on the package booked. 3 meals + beverages (excluding alcohol) per day. Daily wellness activities. Access to pool and fitness center facilities. This mainly highlights the wellness packages and their inclusions, while the common daily/weekly activities have been mentioned at the latter part. The inclusions of each wellness package have been defined based on the number of nights per booking. Guests who book on a wellness package will be entitled to all meals. While the suggested meal type will be discussed with the guest during the consultation, guests will have freedom of choice when selecting their meal options. | WELLNESS PACKAGES (one rate for every package; durations printed per package): SHANTHI RETREAT - STRESS MANAGEMENT (p.4; nights 3/5/7/14; counts per stay of 3/5/7/14 nights, – = not included): Wellness Consultation (45 min) 1/1/1/1 (Body type analysis, scheduling treatments); Progress consultation (45 mins) 1/1/1/1 (Final consultation); Nature Walk 1/1/1/1 (Herbal garden visit, pluck leaves for fomentation); Authentic pharmacy demonstration (60 min) 1/1/1/1 (Preparation of herbal balls for pindasweda); Traditional hand craft practical session –/1/1/1; Traditional dancing training session –/1/1/1; Healthy cuisine demonstration with chef –/1/1/1; Colour therapy –/–/1/1; Sound therapy –/–/–/1; Authentic abyanga (90 min) 1/1/1/1 (Full body massage with steam box); Aromatherapy body retreat (90 min) 1/1/1/1 (SPA massage); Head massage (30 min) 1/1/1/1 (Ayurvedic oil massage); Sauna (30 min) 1/1/1/1 (Herbal wet sauna/dry sauna); Relaxing paada abyanga (60 min) 1/1/1/1 (Foot massage with herbal foot soak); Personal meditation/pranayama (60 min) 1/1/2/3; Traditional herbal body compress (90 min) –/1/1/1 (Pindasweda); Shirodhara (60 min) –/1/3/5; Relaxing face massage (30 min) –/–/1/2; Signature greeva kati abyanga (90 min) –/–/1/1 (Neck, shoulder, and back massage); Reflexology (90 min) –/–/1/1 (SPA treatment); Udvarthana (60 min) –/–/1/1 (Herbal powder massage); Soothing herbal bath (30 min) –/–/1/1 (Herbal/floral/milk bath); Herbal facial (60 min) –/–/–/1; Yoga nidra (60 min) –/–/–/1; Meals: Ayurvedic meal/ Healthy meal. || BALANCE & BLISS - A WELLNESS WELCOME (p.5; nights 1/2/3/5; counts per stay of 1/2/3/5 nights, – = not included): Wellness consultation (45 min) 1/1/1/1 (Body type analysis, metabolism analysis); Ayurvedic lifestyle guide with doctor (60 min) 1/1/1/1 (Lifestyle modifications to start wellness journey); Internal medicine –/–/–/5 (Maintain health in healthy level); Progress consultation (45 mins) 1/1/1/1 (Final consultation); Nature walk –/–/1/1 (Herbal garden visit); Healthy cuisine demonstration with chef –/–/–/1; Authentic abyanga (90 min)* 1/1/1/1 (Full body massage with steam box); Aromatherapy body retreat (90 min)* 1/1/1/1 (SPA massage); Traditional head massage (30 min)* 1/1/1/1 (Ayurvedic head massage); Traditional foot massage (30 min)* 1/1/1/1 (Ayurvedic foot massage); Sauna (30 min) –/–/2/4 (Dry sauna/wet sauna); Pranayama (60 min) –/–/1/2 (Nadi shodana, bhrahmari, sheethali, kapala bhathi); Traditional hand and foot massage (90 min) –/–/–/1 (Ayurvedic foot and palm reflexology treatment); Signature greeva kati abyanga (90 min) –/–/–/1 (Ayurvedic neck, shoulder and back massage); Traditional herbal body compress (90 min) –/–/–/1 (Pindasweda); Kati vasthi (60 min) –/–/–/1 (Kati vasthi with back massage); Meals: Ayurvedic meal/healthy meal. * For 1 night guests inclusions are one 90 minute treatment (authentic abyanga or aromatherapy body retreat) and one 30 minute treatment (traditional head massage or traditional foot massage). * For 2 night guests inclusions are two 90 minute treatments (authentic abyanga and aromatherapy body retreat) or one 90 minute treatment (authentic abyanga or aromatherapy body retreat) and two 30 minute treatments (traditional head massage and traditional foot massage). || SHODHANI - DETOXIFICATION (p.6; nights 5/7/10/14; counts per stay of 5/7/10/14 nights, – = not included): Wellness consultation (45 min) 1/1/1/1 (Body type analysis, metabolism analysis); Awareness on ayurveda (60 min) 1/1/1/1 (Explain about detoxification procedures and treatments); Internal medicine 5/7/10/14 (Shodana, shamana and tharpana); Progress consultation (45 mins) 1/1/1/1 (Final consultation); Nature Walk 1/1/1/1 (Herbal garden visit); Authentic pharmacy demonstration (60 min) 1/1/1/1; Healthy cuisine demonstration with chef –/1/1/1; Authentic abyanga (90 min) 1/2/3/4 (Full body massage with steam box); Aromatherapy body retreat (90 min) 1/1/1/1 (SPA massage); Head massage (30 min) 1/1/1/1 (Ayurvedic oil massage); Shodini face massage (60 min) 1/1/1/1 (Lymphatic drainage face massage); Cleansing preparation (60 min) 1/1/1/1 (Inhalation, face massage and pindasweda); Pranayama (60 min) 1/2/3/4; Traditional herbal body compress (90 min) 1/1/1/1 (Pindasweda); Nasya (Nasal cleansing) (60 mins) 1/1/1/1 (Decided by the doctor after the consultation, according to dosha imbalance); Signature greeva kati abyanga (90 min) –/1/1/1 (Neck, shoulder and back massage); Shirodara (60 min) –/1/2/3; Kati vasthi/Greeva vasthi (60 min) –/1/1/1 (Kati vasthi with back massage); Therapeutic purgation (one day) –/1/1/1 (Decided by the doctor after the consultation, according to dosha imbalance); Therapeutic Enema (60 min) –/–/1/1 (Decided by the doctor after the consultation, according to dosha imbalance); Udvarthana (60 min) –/–/1/1 (Herbal powder massage); Traditional eye treatment (60 min) –/–/1/1 (Akshi tharpana with face massage); Traditional hasthapada thala abyanga (90min) –/–/1/1 (Hand & feet reflexology); Shashtika shali pindasweda (90 min) –/–/1/1 (Hot compress with medicinal milk rice balls); Lepana (60 min) –/–/–/1 (Herbal body wrap); Herbal bath –/–/–/1 (Herbal bath/Flower bath or milk bath); Meals: Ayurvedic meal/healthy meal. || YOGA RETREAT: SATHI YOGA - MINDFUL YOGA (p.7; nights 3/5/7; counts per stay of 3/5/7 nights, – = not included): Wellness consultation (45 min) 1/1/1 (Body type analysis, metabolism analysis); Progress consultation (45 mins) 1/1/1 (Final consultation); Personal yoga session (90 min) 2/4/6 (Personalized yoga); Nature walk 1/1/1 (Herbal garden visit); Healthy cuisine demonstration with chef –/1/1; Yoga nidra –/1/1 (Relaxing session to regain energy); Authentic abyanga (90 min) 1/1/1 (Full body massage with steam box); Aromatherapy body retreat (90 min) 1/1/1 (SPA massage); Traditional head massage (30 min) 1/1/1; Traditional foot massage (30 min) 1/1/1; Sauna (30 min) 2/4/6 (Dry sauna/Wet sauna); Pranayama (60 min) 1/2/3; Signature greeva kati abyanga (90 min) –/1/1 (Neck, shoulder and back massage); Traditional herbal body compress (90 min) –/1/1 (Pindasweda); Shirodara (60 min) –/1/1; Reflexology treatment (60 min) –/–/1 (SPA treatment for stimulation of pressure points); Relaxing face massage (30 min) –/–/1; Herbal bath (30 min) –/–/1 (Herbal bath/floral bath/milk bath); Meals: Ayurvedic meal/healthy meal. || HARMONY YOGA - ENERGIZE WITH YOGA (p.8; nights 3/5/7; counts per stay of 3/5/7 nights, – = not included): Wellness Consultation (45 min) 1/1/1 (Body type analysis, metabolism analysis); Progress consultation (45 mins) 1/1/1 (Final consultation); Personal yoga session (90 min) 2/4/6 (Vinyasa yoga according to body condition); Nature walk 1/1/1 (Herbal garden visit); Healthy cuisine demonstration with chef –/1/1; Yoga nidra –/1/1 (Relaxing session to regain energy); Authentic abyanga (90 min) 1/1/1 (Full body massage with steam box); Aromatherapy body retreat (90 min) 1/1/1 (SPA massage); Deep tissue massage (90 min) 1/1/1 (Deep massage for tissue recovery); Traditional head massage (30 min) 1/1/1; Traditional foot massage (30 min) 1/1/1; Sauna (30 min) 2/4/6 (Dry sauna/wet sauna); Udvarthana (60 min) –/1/1 (Herbal powder massage); Lepana (60 min) –/–/1 (Herbal body wrap); Herbal bath (30 min) –/–/1 (Herbal bath/floral bath/milk bath); Meals: Ayurvedic meal/healthy meal. || REVITALIZE RETREAT (p.9; nights 3/5/7/10/14; counts per stay of 3/5/7/10/14 nights, – = not included): Wellness consultation (45 min) 1/1/1/1/1 (Body type analysis, metabolism analysis); Internal medicine –/5/7/10/14 (Shodana, shamana and tharpana); Progress consultation (45 mins) 1/1/1/1/1 (Final consultation); Nature Walk 1/1/1/1/1 (Herbal garden visit); Authentic pharmacy demonstration (60 min) 1/1/1/1/1; Healthy cuisine demonstration with chef –/1/1/1/1; Face yoga session (30 min) 1/1/1/1/1; Authentic abyanga (90 min) 1/1/2/3/4 (Full body massage with steam box); Aromatherapy body retreat (90 min) 1/1/1/1/1 (SPA massage); Signature body detox (90 min) 1/1/1/1/1 (Herbal scrub with herbal body wrap); Traditional head massage (30 min) 1/1/1/1/1; Shodini face massage (60 min) 1/1/1/1/1 (Lymphatic drainage face massage); Herbal bath (30 min) 1/1/1/1/1; Traditional herbal body compress (90 min) –/1/1/1/1 (Pindasweda); Signature greeva kati abyanga (90 min) –/1/1/1/1 (Neck, shoulder, and back massage); Kati vasthi/Greeva vasthi (60 min) –/1/1/1/1 (Kati vasthi with back massage); Udvarthana (60 min) –/–/1/1/1 (Herbal powder massage); Reflexology (90 min) –/–/1/1/1 (SPA treatment); Hot stone treatment (60 min) –/–/–/1/1; Manicure pedicure (90 min) –/–/–/1/1; Herbal facial (60 min) –/–/–/–/1; Meals: Ayurvedic meal/healthy meal. || SLEEP RETREAT (p.10; nights 3/5/7/10; counts per stay of 3/5/7/10 nights, – = not included): Wellness consultation (45 min) 1/1/1/1 (Body type analysis, metabolism analysis); Sleep cycle analysis (45 min) 1/1/1/1 (Understand the pattern and schedule the program); Progress consultation (45 mins) –/1/1/1 (Final consultation); Herbal supplements –/5/7/10 (Shodana, shamana and tharpana); Nature Walk 1/1/1/1 (Herbal garden visit); Authentic pharmacy demonstration (60 min) –/1/1/1; Healthy cuisine demonstration with chef –/1/1/1; Yoga nidra session (30 min) –/1/1/1; Relaxing aromatherapy massage (90min) 1/1/1/1 (Soothing SPA treatment); Authentic abyanga (90 min) 1/1/1/1 (Full body massage with steam box); Foot ritual (30 min) 1/1/1/1 (SPA foot massage); Relaxing face massage (30 min) 1/1/1/1 (SPA face massage); Sauna (30 min) 2/2/2/2 (Dry sauna/ Wet sauna); Signature greeva kati abyanga (90 min) –/1/1/1 (Neck shoulder back massage); Shirodara (60 min) –/1/2/3; Reflexology (90 min) –/1/1/1 (SPA treatment); Herbal bath (30 min) –/1/1/1 (Special herbal bath/Milk bath); Shiro lepa (60 min) –/–/1/1 (Traditional paste to head); Herbal facial (60 min) –/–/–/1; Meals: Ayurvedic meal/healthy meal. || WEIGHT RETREAT - BODY LIGHTNESS (p.11; nights 7/14; counts per stay of 7/14 nights, – = not included): Wellness Consultation (45 min) 1/1 (Body type analysis, metabolism analysis); Lifestyle guide (45 min) 1/1 (Lifestyle modification for weight management); Progress consultation (45 mins) 1/1 (Final consultation); Herbal supplements 7/14 (Metabolic correction with digestive medicines to augment fat metabolism); Nature Walk 1/1 (Herbal garden visit); Authentic pharmacy demonstration (60 min) 1/1; Healthy cuisine demonstration with chef 2/4; Yoga nidra session (30 min) 1/1; Vinyasa yoga session (60 min) 2/4 (Special yoga sequence for body lightness); Deep tissue muscle massage (90 min) 1/2 (SPA treatment); Authentic abyanga (90 min) 2/4 (Full body massage with steam box); Signature greeva kati abyanga (90 min) 1/1 (Neck, shoulder, and back massage); Reflexology (90 min) 1/1 (SPA treatment); Traditional herbal body compress (90 min) 1/1 (Pindasweda); Udvarthana (90 min) 1/2 (Special traditional powder massage followed by steam/sauna); Therapeutic purgation (one day) 1/1 (Detoxification); Mud therapy (90 min) –/1 (Skin tightening treatment); Traditional Lepana (90 min) –/1; Meals: Special weight management meal/Ayurvedic meal. | COMMON ACTIVITIES/EVENTS AVAILABLE FOR GUESTS (p.12): Daily – Hatha yoga (60 mins daily); Meditation (60 mins daily). Weekly – Cooking demonstrations (on chargeable basis, no price printed); Water aerobics; Sound healing; Hand crafts (weaving palm leaves; knots and nets); Traditional dancing session. Workshops and discussions – Food instead of medicine; Ayurvedic lifestyle. | BAWA TOUR (p.3, no price printed): guided walk through Geoffrey Bawa's first purpose-built resort (1965, formerly The Blue Lagoon); duration 30 - 40 minutes; morning tour 9 am | evening tour 2 - 4pm. | RATES: Rates are in USD and are non-commissionable. In case of an increase in taxes or any additional taxes, the hotel reserve the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate. | Contact: +94 114 709 400, +94 312 233 777, resv.lagoon@jetwinghotels.com, fo.lagoon@jetwinghotels.com.",
+   "notes": "Transcribed from \"Jetwing Lagoon Wellness, A Luxury Reserve - Wellness Packages - Winter 2026-2027.pdf\" (14 pages), saved to the winter RTS folder on 2 Oct 2026. One rate block for the whole document (01 Nov 2026 – 30 Apr 2027): Luxury Room on single / double / triple Full Board basis + Wellness Package, USD 290 / 410 / 510 per room per night (all three printed — no reduction arithmetic), plus room supplements Luxury Room with Terrace +25, Garden Suite +100, Lagoon Suite +200 per room per night. The same rate applies to every package; the package only decides the inclusions, which depend on the length of stay. Durations printed per package (nights): Shanthi Retreat - Stress Management 3/5/7/14; Balance & Bliss - A wellness welcome 1/2/3/5; Shodhani - Detoxification 5/7/10/14; Yoga Retreat: Sathi Yoga - Mindful yoga 3/5/7; Harmony Yoga - Energize with yoga 3/5/7; Revitalize Retreat 3/5/7/10/14; Sleep Retreat 3/5/7/10; Weight Retreat - Body Lightness 7/14. Each package is an offer row whose min_nights is the shortest printed duration — the rate lookup does NOT enforce it, staff check; Balance & Bliss starts at 1 night, so the plan itself carries no minimum stay. Stays of a length not printed for a package (e.g. 4 or 6 nights) are not described — confirm the inclusions with the hotel. Special offer, priority 10: customer quotations walk past special offers to the contract, so this FB package price does not replace the all-market FB room rate (rts_jwl_lagoon_wellness) in quotations; the existing Short Stay offer (#344, BB/HB + treatment, maximum 2 nights) is a separate plan. Whether the wellness package (treatments) is for every guest in the room is not stated (the double and triple rates suggest per guest). Adults only (18+). No booking window, rate code, gala dinner, contract date or guide policy is printed. Market list: \"Rates cannot be extended to the domestic market\" → DOM excluded. Payment terms here are the standard Jetwing ones (not the Short Stay document's 50% on confirmation).",
+   "source_file": "Jetwing Lagoon Wellness, A Luxury Reserve - Wellness Packages - Winter 2026-2027.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Luxury Room",
+    "priced_as": "base",
+    "max_children": 0
+   },
+   {
+    "name": "Luxury Room with Terrace",
+    "priced_as": "supplement",
+    "base_room_type": "Luxury Room",
+    "max_children": 0
+   },
+   {
+    "name": "Garden Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Luxury Room",
+    "max_children": 0
+   },
+   {
+    "name": "Lagoon Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Luxury Room",
+    "max_children": 0
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov 2026 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Luxury Room",
+      "meal_plan": "FB",
+      "sgl": 290,
+      "dbl": 410,
+      "tpl": 510,
+      "quad": null,
+      "unit": null,
+      "note": "Printed SGL 290 / DBL 410 / TPL 510 — Luxury Room + Full Board + Wellness Package (consultations, 90 min treatments/day, 3 meals + non-alcoholic beverages, activities)"
+     }
+    ],
+    "notes": "Luxury Room on single / double / triple Full Board basis + Wellness Package (one rate for every package)"
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Luxury Room with Terrace",
+    "amount": 25,
+    "per": "room",
+    "note": "Room supplement per room per night (wellness packages)"
+   },
+   {
+    "room_type": "Garden Suite",
+    "amount": 100,
+    "per": "room",
+    "note": "Room supplement per room per night (wellness packages)"
+   },
+   {
+    "room_type": "Lagoon Suite",
+    "amount": 200,
+    "per": "room",
+    "note": "Room supplement per room per night (wellness packages)"
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "other",
+    "name": "Wellness package: Shanthi Retreat - Stress Management",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "conditions": "Printed for stays of 3 / 5 / 7 / 14 nights (p.4); shortest 3 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 3-night inclusions: Wellness Consultation (45 min); Progress consultation (45 mins); Nature Walk; Authentic pharmacy demonstration (60 min); Authentic abyanga (90 min); Aromatherapy body retreat (90 min); Head massage (30 min); Sauna (30 min); Relaxing paada abyanga (60 min); Personal meditation/pranayama (60 min). Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Balance & Bliss - A wellness welcome",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 1,
+    "per": "booking",
+    "conditions": "Printed for stays of 1 / 2 / 3 / 5 nights (p.5); shortest 1 night (not enforced by the rate lookup — staff check). Same room rate as every package. 1-night inclusions: Wellness consultation (45 min); Ayurvedic lifestyle guide with doctor (60 min); Progress consultation (45 mins); one 90 minute treatment (authentic abyanga or aromatherapy body retreat) and one 30 minute treatment (traditional head massage or traditional foot massage) — sheet footnote. Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Shodhani - Detoxification",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 5,
+    "per": "booking",
+    "conditions": "Printed for stays of 5 / 7 / 10 / 14 nights (p.6); shortest 5 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 5-night inclusions: Wellness consultation; Awareness on ayurveda; Internal medicine ×5; Progress consultation; Nature Walk; Authentic pharmacy demonstration; Authentic abyanga; Aromatherapy body retreat; Head massage; Shodini face massage; Cleansing preparation; Pranayama; Traditional herbal body compress; Nasya (Nasal cleansing). Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Yoga Retreat: Sathi Yoga - Mindful yoga",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "conditions": "Printed for stays of 3 / 5 / 7 nights (p.7); shortest 3 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 3-night inclusions: Wellness consultation (45 min); Progress consultation (45 mins); Personal yoga session (90 min) ×2; Nature walk; Authentic abyanga (90 min); Aromatherapy body retreat (90 min); Traditional head massage (30 min); Traditional foot massage (30 min); Sauna (30 min) ×2; Pranayama (60 min). Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Harmony Yoga - Energize with yoga",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "conditions": "Printed for stays of 3 / 5 / 7 nights (p.8); shortest 3 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 3-night inclusions: Wellness Consultation (45 min); Progress consultation (45 mins); Personal yoga session (90 min) ×2; Nature walk; Authentic abyanga (90 min); Aromatherapy body retreat (90 min); Deep tissue massage (90 min); Traditional head massage (30 min); Traditional foot massage (30 min); Sauna (30 min) ×2. Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Revitalize Retreat",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "conditions": "Printed for stays of 3 / 5 / 7 / 10 / 14 nights (p.9); shortest 3 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 3-night inclusions: Wellness consultation (45 min); Progress consultation (45 mins); Nature Walk; Authentic pharmacy demonstration (60 min); Face yoga session (30 min); Authentic abyanga (90 min); Aromatherapy body retreat (90 min); Signature body detox (90 min); Traditional head massage (30 min); Shodini face massage (60 min); Herbal bath (30 min). Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Sleep Retreat",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "conditions": "Printed for stays of 3 / 5 / 7 / 10 nights (p.10); shortest 3 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 3-night inclusions: Wellness consultation (45 min); Sleep cycle analysis (45 min); Nature Walk; Relaxing aromatherapy massage (90min); Authentic abyanga (90 min); Foot ritual (30 min); Relaxing face massage (30 min); Sauna (30 min) ×2. Full table in Other terms."
+   },
+   {
+    "kind": "other",
+    "name": "Wellness package: Weight Retreat - Body Lightness",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 7,
+    "per": "booking",
+    "conditions": "Printed for stays of 7 / 14 nights (p.11); shortest 7 nights (not enforced by the rate lookup — staff check). Same room rate as every package. 7-night inclusions: Wellness Consultation; Lifestyle guide; Progress consultation; Herbal supplements ×7; Nature Walk; Authentic pharmacy demonstration; Healthy cuisine demonstration with chef ×2; Yoga nidra session; Vinyasa yoga session ×2; Deep tissue muscle massage; Authentic abyanga ×2; Signature greeva kati abyanga; Reflexology; Traditional herbal body compress; Udvarthana; Therapeutic purgation. Full table in Other terms."
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 5,
+    "pct": 100,
+    "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Short notice / last minute bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

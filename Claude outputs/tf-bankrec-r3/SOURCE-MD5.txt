@@ -1,0 +1,9 @@
+261fa427ec8b0b172db4c7916ebc7d64  app/Config/Routes.php
+88a7bdcbfe060685d0d7819165dedc02  app/Controllers/Accounts/BankReconsillationController.php
+076f1be55d0547587d263517f071c60c  app/Controllers/Accounts/DailyBankRecController.php
+0d73f66c528ca8f93da6f44927cb42c8  app/Libraries/BankRec/Corrections.php
+1d4cca93bf1f0ade3aafb99a793a421d  app/Libraries/BankRec/LegacyGuard.php
+d075cb2c34becfa8d1a63ef61b65349c  app/Libraries/BankRec/Rec.php
+739e9ba331513e2e74d984962ca1f76f  app/Views/pages/accounts/bank_reconcillation.php
+2c296d4cad02ac6d311d9136f55dd1d7  app/Views/pages/accounts/bankrec/account.php
+871d13f3bfa1ac2d12762a55a2af0683  app/Views/pages/accounts/bankrec/index.php

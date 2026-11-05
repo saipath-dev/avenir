@@ -1,0 +1,381 @@
+{
+ "key": "rts1010_ekho_ella_2627",
+ "hotel": {
+  "acc": "6-9-11-10588",
+  "name": "EKHO Ella",
+  "location": "Ella",
+  "chain": "EKHO Hotels / Ceylon Hotels Corporation (CHC)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "acc": "6-9-11-10588",
+   "name": "EKHO Ella"
+  },
+  "contract": {
+   "name": "Reservation Contract Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel agent / DMC contract",
+   "tier": "all",
+   "hotel_reference": "Reservation Contract Winter 2026/27 (1 Nov 2026 – 30 Apr 2027)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "All quoted rates include any applicable tax in force at the time of signature of this agreement; an increase of any applicable indirect tax after signing (or a new tax, levy or charge) is added as applicable by law.",
+   "source_type": "manual",
+   "source_file": "EKHO ELLA WINTER 2026-2027.pdf",
+   "received_at": "2026-10-10",
+   "extra_bed_adult": 20,
+   "child_policy_text": "Child below 11.99 years (between 5 – 11.99 y) will be charged 50% of the per person rate including extra bed on the booked basis. Child below 4.99 y: FOC (sharing parents' accommodation). Children above 12 years are considered adults.",
+   "cancellation_text": "30 days or more: No cancellation fee. 29 – 21 days prior to arrival: 75% cancellation fee. 20 – 0 days prior to arrival: 100% cancellation fee.",
+   "payment_text": null,
+   "terms_text": "Rates are subject to changes with government tax policy. Twin rooms are limited and subject to availability. Please mention the applicable special rate at the time of reservation; special rates are not valid for existing reservations or re-booking. The resort reserves the right to end the special offer within 3 working days. All reservations must be sent to the designated reservation e-mail IDs provided, unless otherwise specified. The agency cannot assign or grant any rights in this contract to third parties without written consent from the hotel. Non-distribution to other non-retail travel agencies (Spain reserved for the hotel / BGH). These rates are not valid until the signature of the contract.",
+   "notes": "Rates printed BB only, per room. HB / FB are the BB rate + the printed meal supplements (dinner USD 30, lunch USD 25 per person). Maximum occupancy (sheet): Superior 2AD; Premier 2AD (rooms 103-105 2AD/3AD — triple rooms limited to 103, 104 & 105); Odyssey (junior) suites 2AD. Original twin rooms limited (rooms 111 & 112). No group payment terms printed. Hotel contacts: general line +94 572 228 655; Residence Manager Mr Senevirathna +94 74 159 6574, wm.senevirathna@ekhohotels.com; corporate reservations +94 117 765 555 / +94 77 328 5555, reservations@ekhohotels.com."
+  },
+  "room_types": [
+   {
+    "name": "Superior (Ella Station Wing)",
+    "priced_as": "base",
+    "max_adults": 2,
+    "description": "Ella Station Wing (rooms 101, 102); 2AD"
+   },
+   {
+    "name": "Premier (Demodara / Kithal Ella Wing)",
+    "priced_as": "base",
+    "max_adults": 3,
+    "description": "Demodara / Kithal Ella Station wings; 2AD (rooms 103-105 2AD/3AD)"
+   },
+   {
+    "name": "Odyssey Suite",
+    "priced_as": "base",
+    "max_adults": 2,
+    "description": "Junior suites (rooms 109, 110); 2AD"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 30 Nov 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-11-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (Ella Station Wing)",
+      "meal_plan": "BB",
+      "sgl": 230,
+      "dbl": 240,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     },
+     {
+      "room_type": "Premier (Demodara / Kithal Ella Wing)",
+      "meal_plan": "BB",
+      "sgl": 250,
+      "dbl": 260,
+      "tpl": 300,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Odyssey Suite",
+      "meal_plan": "BB",
+      "sgl": 370,
+      "dbl": 380,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     }
+    ]
+   },
+   {
+    "name": "01 Dec – 20 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-12-01",
+      "to": "2026-12-20"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (Ella Station Wing)",
+      "meal_plan": "BB",
+      "sgl": 260,
+      "dbl": 270,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     },
+     {
+      "room_type": "Premier (Demodara / Kithal Ella Wing)",
+      "meal_plan": "BB",
+      "sgl": 300,
+      "dbl": 310,
+      "tpl": 350,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Odyssey Suite",
+      "meal_plan": "BB",
+      "sgl": 400,
+      "dbl": 410,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     }
+    ]
+   },
+   {
+    "name": "21 Dec 2026 – 10 Jan 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-12-21",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (Ella Station Wing)",
+      "meal_plan": "BB",
+      "sgl": 350,
+      "dbl": 360,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     },
+     {
+      "room_type": "Premier (Demodara / Kithal Ella Wing)",
+      "meal_plan": "BB",
+      "sgl": 370,
+      "dbl": 380,
+      "tpl": 420,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Odyssey Suite",
+      "meal_plan": "BB",
+      "sgl": 490,
+      "dbl": 500,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     }
+    ]
+   },
+   {
+    "name": "11 Jan – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (Ella Station Wing)",
+      "meal_plan": "BB",
+      "sgl": 310,
+      "dbl": 320,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     },
+     {
+      "room_type": "Premier (Demodara / Kithal Ella Wing)",
+      "meal_plan": "BB",
+      "sgl": 370,
+      "dbl": 380,
+      "tpl": 420,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Odyssey Suite",
+      "meal_plan": "BB",
+      "sgl": 490,
+      "dbl": 500,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     }
+    ]
+   },
+   {
+    "name": "01 Apr – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior (Ella Station Wing)",
+      "meal_plan": "BB",
+      "sgl": 290,
+      "dbl": 300,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     },
+     {
+      "room_type": "Premier (Demodara / Kithal Ella Wing)",
+      "meal_plan": "BB",
+      "sgl": 330,
+      "dbl": 340,
+      "tpl": 370,
+      "quad": null,
+      "unit": null,
+      "note": null
+     },
+     {
+      "room_type": "Odyssey Suite",
+      "meal_plan": "BB",
+      "sgl": 470,
+      "dbl": 480,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Triple N/A (as printed)"
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 30,
+    "note": "Dinner supplement USD 30 per person (as printed)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 25,
+    "note": "Lunch supplement USD 25 per person (as printed)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "lunch",
+    "adult": 25,
+    "note": "Per person (as printed)"
+   },
+   {
+    "meal": "dinner",
+    "adult": 30,
+    "note": "Per person (as printed)"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas (24th Dec.) — mandatory supplement",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 1,
+    "note": "Mandatory supplement USD 100 per person (as printed); child amount not printed"
+   },
+   {
+    "type": "gala",
+    "name": "New Year Gala Dinner (31st Dec.) — mandatory supplement",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 1,
+    "note": "Mandatory supplement USD 100 per person (as printed); child amount not printed"
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra bed",
+    "per": "person",
+    "amount": 20,
+    "compulsory": 0,
+    "note": "Extra bed USD 20 per person per night (as printed)"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "FOC (sharing parents' accommodation)"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "pct": 50,
+    "pct_basis": "adult_rate",
+    "note": "Child between 5 – 11.99 y: 50% of the per person rate including extra bed on the booked basis"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "30 days or more: no cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 29,
+    "days_to": 21,
+    "charge_pct": 75,
+    "note": "29 – 21 days prior to arrival: 75% cancellation fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 20,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "20 – 0 days prior to arrival: 100% cancellation fee"
+   }
+  ],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

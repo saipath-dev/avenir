@@ -1,0 +1,255 @@
+{
+ "key": "rts_jwp_mahesa_bhawan_villa",
+ "hotel": {
+  "acc": "6-9-11-10989",
+  "name": "Jetwing Mahesa Bhawan",
+  "location": "Jaffna",
+  "chain": "Jetwing Hotels (Premium)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10989",
+   "name": "Jetwing Mahesa Bhawan"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contracted rates – Premium Hotels (revised) – whole villa",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel Agent",
+   "tier": "all",
+   "hotel_reference": "Premium Hotels – Travel Agent Contracted Rates – Winter 2026/2027 (Revised)",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_unit",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "guide_policy_text": "Driver Accommodation – Not Available. The Guide/Tour leader Policy on the terms page is \"Only applicable at Jetwing Blue / Jetwing Beach / Jetwing Sea / Jetwing Lake / Jetwing St. Andrew's\" (and not from 20 Dec 2026 to 15 Mar 2027) — it does not apply here; no guide rate is printed for this hotel.",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival. (The peak-period clause for 21 Dec 2026 – 10 Jan 2027 & February 2027 is \"Only Applicable for Jetwing Blue / Jetwing Beach / Jetwing St. Andrew's / Jetwing Lake\" — not this hotel.)",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation. (The 50%-on-confirmation clause for 21 Dec 2026 – 10 Jan 2027 & February 2027 is \"Only Applicable for Jetwing Blue / Jetwing Beach / Jetwing St. Andrew's / Jetwing Lake\" — not this hotel.)",
+   "terms_text": "JETWING MAHESA BHAWAN: Currency USD $ Net (Per room/Per night), Double Occupancy. Rooms: Elephant, Monkey, Peacock, Flamingo; Whole Villa (Maximum 08 Pax). Single Reduction – 20 USD (On BB). SPECIAL OFFERS: Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not applicable for the stays during 26th December 2026 to 10th January 2027 period). VALUE ADDITIONS (Minimum 03 nights and above): 15% offer for honeymoon (Free mocktail for two and a fruit platter); Guided City Walk (Once per stay). Driver Accommodation – Not Available. Reservations +94 707 978 623 / +94 11 470 9400, resv.villas@jetwinghotels.com. | VALUE ADDITIONS POLICY: A maximum of 03 value adds can be used at each property. Experiences like Tours/Walks/Demonstrations etc. will be arranged in common groups depending on the occupancy for the day. Meal upgrade offers are valid only for FIT bookings. Food & Beverage discounts are not combinable with other promotions, offers, vouchers, outlets or seasonal deals. Food & Beverage discounts will not be applicable for liquor & tobacco. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+   "notes": "Transcribed from \"Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf\" (20 pages), saved to the winter RTS folder on 2 Oct 2026. Hotel page: p12; general terms: p20. Currency \"USD nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy. Market list: \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner, meal supplement or guide rate is printed. The peak cancellation / payment clauses and the guide/tour-leader policy on p20 name other Jetwing hotels only and are not entered. Whole Villa column only (per villa per night). The single reduction / triple supplement are room terms and do not apply to the villa. The child policy is printed once for the property; whether children count towards the villa maximum and whether the child rates apply to a whole-villa booking is not stated. Room rates (Elephant / Monkey / Peacock / Flamingo) are in rts_jwp_mahesa_bhawan. The meal-upgrade and value-addition offers are printed for the whole page and are repeated here. Value additions / special offers are entered as offers (information for staff; the lookup never applies them).",
+   "child_policy_text": "Child Policy (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 10 (Per kid/Per night on BB excluding extra bed). (No baby-cot line and no with-extra-bed rate printed for this hotel.)",
+   "source_file": "Jetwing Premium Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf"
+  },
+  "room_types": [
+   {
+    "name": "Whole Villa",
+    "priced_as": "base",
+    "room_count": 1,
+    "unit_pax_max": 8,
+    "description": "Entire house (the sheet lists Elephant, Monkey, Peacock and Flamingo), maximum 08 pax"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 25 Dec 2026 & 11 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-25"
+     },
+     {
+      "from": "2027-01-11",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Whole Villa",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 620,
+      "note": "Whole Villa (Maximum 08 Pax), per villa per night, BB"
+     }
+    ]
+   },
+   {
+    "name": "26 Dec 2026 – 10 Jan 2027 (Peak Period)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-26",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Whole Villa",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": null,
+      "tpl": null,
+      "quad": null,
+      "unit": 690,
+      "note": "Whole Villa (Maximum 08 Pax), per villa per night, BB"
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "other",
+    "name": "Meal Upgrade Offer – FOC Half Board upgrade (minimum 03 nights)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "min_nights": 3,
+    "per": "booking",
+    "combinable": 0,
+    "excludes_peak": 1,
+    "conditions": "Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not applicable for the stays during 26th December 2026 to 10th January 2027 period.) Value Additions Policy: meal upgrade offers are valid only for FIT bookings."
+   },
+   {
+    "kind": "other",
+    "name": "Meal Upgrade Offer – FOC Half Board upgrade (minimum 03 nights)",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "combinable": 0,
+    "excludes_peak": 1,
+    "conditions": "Meal Upgrade Offer – FOC Half Board Upgrade for minimum 03 nights and above bookings. (Not applicable for the stays during 26th December 2026 to 10th January 2027 period.) Value Additions Policy: meal upgrade offers are valid only for FIT bookings."
+   },
+   {
+    "kind": "honeymoon",
+    "name": "Honeymoon – 15% offer (value addition, minimum 03 nights)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "value_pct": 15,
+    "per": "booking",
+    "combinable": 0,
+    "conditions": "Printed under Value Additions (Minimum 03 nights and above): \"15% offer for honeymoon (Free mocktail for two and a fruit platter)\". What the 15% is taken off (room rate or the whole bill) is not stated — confirm with the hotel. Value Additions Policy: a maximum of 03 value adds can be used at each property."
+   },
+   {
+    "kind": "other",
+    "name": "Value additions (minimum 03 nights and above)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "min_nights": 3,
+    "per": "booking",
+    "combinable": 0,
+    "conditions": "Guided City Walk (Once per stay) (no money value printed). Value Additions Policy: a maximum of 03 value adds can be used at each property; experiences are arranged in common groups; F&B discounts are not combinable with other promotions and not applicable for liquor & tobacco."
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 5,
+    "pct": 100,
+    "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

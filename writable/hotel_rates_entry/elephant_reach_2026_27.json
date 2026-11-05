@@ -1,0 +1,338 @@
+{
+ "key": "elephant_reach_2026_27",
+ "hotel": {
+  "acc": "6-9-11-10630",
+  "name": "Elephant Reach Hotel Yala",
+  "location": "Kirinda / Tissamaharama",
+  "chain": null
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10630",
+   "name": "Elephant Reach Hotel Yala"
+  },
+  "contract": {
+   "name": "2026 – 2027 DMC contract rate sheet (update)",
+   "plan_type": "contract",
+   "contract_type": "DMC",
+   "hotel_reference": "2026 - 2027 DMC Contract Rate Sheet Update",
+   "tier": "all",
+   "valid_from": "2026-05-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "All rates are inclusive of taxes and service charge and non-commissionable; new taxes & levies implemented by the government will be borne by the tour operator or travel agent",
+   "source_type": "email",
+   "received_at": "2026-09-11",
+   "contract_date": "2026-02-03",
+   "credit_facility": "unknown",
+   "extra_bed_adult": 10,
+   "child_policy_text": "Child Supplementary without extra Bed: 0-5 yrs. - FOC. 05-12 yrs. sharing parent's: BB US$ 15, HB US$ 20, FB US$ 25. Extra bed supplement US$ 10. Compulsory supplementary child supplement (05 yrs - 12 yrs): 50% of the 24th / 31st December rate.",
+   "guide_policy_text": "Guide Policy: guide room rate BB US$ 50, HB US$ 55, FB US$ 60. Tour guide will be accommodated in the hotel premises on availability basis; if the hotel is fully booked alternative accommodation will be arranged. For groups: guide or tour leader will be charged US$ 55.",
+   "foc_policy_text": "For groups: every 16th paying pax one pax FOC. For group bookings (10 rooms and above), reduction of US$ 5 from the above rate.",
+   "cancellation_text": "Cancellation & No show policy: no show or same day cancellation will be charged 100% on the basis booked. Cancellation 21 days prior to arrival - no cancellation charges. Cancellation 14 days prior to arrival - 50% will be charged on the basis booked. Cancellation 07 days prior to arrival - 100% will be charged on the basis booked.",
+   "payment_text": "Payment Policy: non-credit agents - full payment should be settled prior to the clients' arrival to facilitate a smooth check-out process. Cheques should be banked before 03 working days before the departure date.",
+   "terms_text": "All rates are inclusive of taxes, service charge and non-commissionable. The above rates are confidential and prohibited to publish on any social media or OTA with any other organization. New taxes & levy's implemented by the government, resulting in additional cost, will have to be borne by the Tour Operator or Travel Agent. Reservations: reservations@elephantreach.com, +94 477 388 008 / +94 772 075 712; Mr. Hasitha Heshan (Reservations Executive) +94 761 617 153.",
+   "notes": "One sheet with two rate tables, \"Summer 2026\" (01st May 2026 - 30th October 2026) and \"Winter 2026/2027\" (01st November 2026 - 30th April 2027), under a single set of conditions → one plan with two seasons. 31 October 2026 falls between the two tables and is NOT priced. Sheet dated 03rd Feb of 2026. The columns are SGL / DBL / TPL / FAMILY, per room per night; the FAMILY column is entered as the quad (4-person) price — the sheet does not say whether \"FAMILY\" is a fourth person in the room or a family-room category; confirm with the hotel. THE RATE TABLE PRINTS NO ROOM CATEGORY: the priced category is entered as \"Standard Room\"; the only category named on the sheet is the Chalet (+US$ 10 per room per night, printed under both tables). Peak-period supplement US$ 10 per room per night: 10th July to 15th August 2026 (summer) and 15th December 2026 to 20th January 2027 (winter). Group notes: every 16th paying pax one pax FOC; guide or tour leader charged US$ 55; group bookings of 10 rooms and above get a US$ 5 reduction from the above rate. Meal charges breakfast US$ 10, lunch US$ 12, dinner US$ 15; extra bed supplement US$ 10. The child bands overlap on the sheet (\"0-5 yrs. - FOC\" and \"05-12 yrs.\"); entered as 0–4.99 free and 5–11.99 charged. The sheet's cancellation steps are 21 / 14 / 07 days, so 20 to 15 days before arrival is not covered by any printed band. Rates are confidential and prohibited from publication on social media or OTAs; new taxes and levies implemented by the government will be borne by the tour operator or travel agent.",
+   "source_file": "WINTER RATES 2026/2027 - ELEPHANT REACH YALA — 2026 - 2027 DMC Contract Rate Sheet Update.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Standard Room",
+    "priced_as": "base",
+    "description": "The rate table prints no room category — entered as \"Standard Room\" for the priced category. The only category named on the sheet is the Chalet (supplement US$ 10 per room per night). Confirm the correct category name with the hotel."
+   },
+   {
+    "name": "Chalet",
+    "priced_as": "supplement",
+    "base_room_type": "Standard Room",
+    "description": "\"Chalet category Supplementary US $ 10 per room per night\", printed under both the summer and the winter table"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "Summer 2026 (01 May – 30 Oct 2026)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-10-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Room",
+      "meal_plan": "BB",
+      "sgl": 65,
+      "dbl": 70,
+      "tpl": 90,
+      "quad": 110,
+      "unit": null
+     },
+     {
+      "room_type": "Standard Room",
+      "meal_plan": "HB",
+      "sgl": 70,
+      "dbl": 80,
+      "tpl": 105,
+      "quad": 135,
+      "unit": null
+     },
+     {
+      "room_type": "Standard Room",
+      "meal_plan": "FB",
+      "sgl": 75,
+      "dbl": 90,
+      "tpl": 120,
+      "quad": 160,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "Winter 2026/2027 (01 Nov 2026 – 30 Apr 2027)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard Room",
+      "meal_plan": "BB",
+      "sgl": 90,
+      "dbl": 95,
+      "tpl": 115,
+      "quad": 135,
+      "unit": null
+     },
+     {
+      "room_type": "Standard Room",
+      "meal_plan": "HB",
+      "sgl": 95,
+      "dbl": 110,
+      "tpl": 140,
+      "quad": 170,
+      "unit": null
+     },
+     {
+      "room_type": "Standard Room",
+      "meal_plan": "FB",
+      "sgl": 105,
+      "dbl": 120,
+      "tpl": 160,
+      "quad": 200,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Chalet",
+    "amount": 10,
+    "per": "room",
+    "note": "Chalet category supplementary US$ 10 per room per night (both seasons)"
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 10,
+    "note": "Meal charges: Breakfast US$ 10"
+   },
+   {
+    "meal": "lunch",
+    "adult": 12,
+    "note": "Meal charges: Lunch US$ 12"
+   },
+   {
+    "meal": "dinner",
+    "adult": 15,
+    "note": "Meal charges: Dinner US$ 15"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "peak",
+    "name": "Peak period supplement (summer)",
+    "date_from": "2026-07-10",
+    "date_to": "2026-08-15",
+    "per": "room",
+    "amount": 10,
+    "compulsory": 1,
+    "note": "Peak period supplementary US$ 10 per room per night. Peak period - 10th July to 15th August 2026."
+   },
+   {
+    "type": "peak",
+    "name": "Peak period supplement (winter)",
+    "date_from": "2026-12-15",
+    "date_to": "2027-01-20",
+    "per": "room",
+    "amount": 10,
+    "compulsory": 1,
+    "note": "Peak period supplementary US$ 10 per room per night. Peak period - 15th December 2026 to 20th January 2027."
+   },
+   {
+    "type": "gala",
+    "name": "24th December compulsory supplementary",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB,HB,FB",
+    "per": "person",
+    "amount": 65,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Compulsory supplementary, per person: 24th December US$ 65. Child supplement (05 yrs - 12 yrs) 50% of the above rate. The sheet does not restrict the supplement to a meal basis."
+   },
+   {
+    "type": "gala",
+    "name": "31st December compulsory supplementary",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB,HB,FB",
+    "per": "person",
+    "amount": 75,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "Compulsory supplementary, per person: 31st December US$ 75. Child supplement (05 yrs - 12 yrs) 50% of the above rate. The sheet does not restrict the supplement to a meal basis."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 4.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "\"0-5 yrs. - FOC\". The sheet's two bands overlap at 5 years (0-5 free / 05-12 charged); entered as 0–4.99 free of charge"
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 15,
+    "note": "Child supplementary WITHOUT extra bed, sharing parents; the sheet prints the band as \"05-12 yrs.\""
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 20,
+    "note": "Child supplementary WITHOUT extra bed, sharing parents; the sheet prints the band as \"05-12 yrs.\""
+   },
+   {
+    "age_from": 5,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "FB",
+    "amount": 25,
+    "note": "Child supplementary WITHOUT extra bed, sharing parents; the sheet prints the band as \"05-12 yrs.\""
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 50,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide room rate. The tour guide is accommodated in the hotel premises on availability basis; if the hotel is fully booked alternative accommodation will be arranged."
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 55,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide room rate. The tour guide is accommodated in the hotel premises on availability basis; if the hotel is fully booked alternative accommodation will be arranged."
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 60,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide room rate. The tour guide is accommodated in the hotel premises on availability basis; if the hotel is fully booked alternative accommodation will be arranged."
+   },
+   {
+    "role": "tour_leader",
+    "amount": 55,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "For groups: guide or tour leader will be charged US$ 55 (the sheet does not say on which meal basis)"
+   }
+  ],
+  "foc_rules": [
+   {
+    "basis": "pax",
+    "every_n": 16,
+    "free_n": 1,
+    "discount_pct": 100,
+    "as_what": "any",
+    "note": "For groups: every 16th paying pax one pax FOC"
+   }
+  ],
+  "offers": [
+   {
+    "kind": "group_reduction",
+    "name": "Group bookings 10 rooms and above: US$ 5 reduction",
+    "min_rooms": 10,
+    "value_amount": 5,
+    "per": "room",
+    "conditions": "Note - For Groups bookings (10 rooms and above), reduction of US$ 5 from the above rate"
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": null,
+    "date_to": null,
+    "tier": "all",
+    "days_from": null,
+    "days_to": 21,
+    "charge_pct": 0,
+    "note": "Cancellation 21 days prior to arrival - no cancellation charges"
+   },
+   {
+    "date_from": null,
+    "date_to": null,
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "note": "\"Cancellation 14 days prior to arrival - 50% will be charged on the basis booked\". The sheet prints only the 21 / 14 / 07-day steps, so 20 to 15 days before arrival is not covered by a printed band."
+   },
+   {
+    "date_from": null,
+    "date_to": null,
+    "tier": "all",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "\"Cancellation 07 days prior to arrival - 100% will be charged on the basis booked\". No show or same day cancellation is charged 100% on the basis booked."
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Non-credit agents: full payment should be settled prior to the clients' arrival to facilitate a smooth check-out process"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "days_before": 3,
+    "note": "Cheques should be banked 03 working days before the departure date"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

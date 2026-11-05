@@ -1,0 +1,3 @@
+dd9abf3a46d1740398926a07a02b88ae  app/Controllers/LoginController.php
+d4e62fc36fa3d4c9a0b7612dafb6b946  app/Filters/UserSessionFilter.php
+2698bcb7645ea358a306fb39b2c0f068  public/assets/js/plugins.js

@@ -1,0 +1,8 @@
+1738de2ce2f0da7b7ddcfbcabc7d4a1c  README-mailtest.txt
+678965fe5ecc74fe89456fa472964ee8  mailtest.sql
+5ffeacd9eef6fd4aaaab960ea318660f  mailtest_setup.php
+08817ab18875d0de47b15c1ceb5c9aea  mailtest_evidence.php
+3ad08f91e4df0c65dca04fc136acfc55  make_mailtest.py
+03f60095f94b1476b29b9c9158c04045  compare_with_cloud.py
+32a6b18f18162e2430557c480ee6e77f  MANIFEST-cloud-build.json
+cc9f964e7e4d71a2e92d7156b04c474d  kit_files-cloud.json

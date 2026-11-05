@@ -1,0 +1,82 @@
+/* tf-help-r1 — the User Manual button and panel. Everything is scoped under #avh-root. */
+#avh-root { --avh-p: #4b2a5c; --avh-p2: #842484; --avh-ink: #241d2b; --avh-muted: #6b6372; --avh-line: #e6dcef; --avh-soft: #f6f1f9;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 14px; line-height: 1.45; color: var(--avh-ink); }
+#avh-root *, #avh-root *::before, #avh-root *::after { box-sizing: border-box; }
+
+#avh-root .avh-fab { position: fixed; right: 20px; bottom: 20px; z-index: 1061; display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border: 0; border-radius: 999px; background: var(--avh-p2); color: #fff; font: 600 14px/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    box-shadow: 0 6px 18px rgba(75, 42, 92, .35); cursor: pointer; }
+#avh-root .avh-fab:hover { background: var(--avh-p); }
+#avh-root .avh-fab:focus-visible { outline: 3px solid #f5c542; outline-offset: 2px; }
+#avh-root.avh-open .avh-fab { display: none; }
+
+#avh-root .avh-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1062; width: 440px; max-width: 100vw; background: #fff;
+    border-left: 1px solid var(--avh-line); box-shadow: -10px 0 30px rgba(36, 29, 43, .18); display: flex; flex-direction: column; }
+#avh-root .avh-panel[hidden] { display: none; }
+#avh-root.avh-pagemode .avh-panel { position: static; width: auto; max-width: 860px; margin: 18px auto; border: 1px solid var(--avh-line); border-radius: 12px; box-shadow: none; min-height: 70vh; }
+
+#avh-root .avh-head { position: relative; padding: 14px 52px 10px 16px; background: var(--avh-p); color: #fff; }
+#avh-root.avh-pagemode .avh-head { border-radius: 12px 12px 0 0; }
+#avh-root .avh-title { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 700; }
+#avh-root .avh-sub { font-size: 12px; opacity: .85; margin-top: 2px; min-height: 16px; }
+#avh-root .avh-x { position: absolute; top: 8px; right: 10px; width: 34px; height: 34px; border: 0; border-radius: 8px; background: transparent; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
+#avh-root .avh-x:hover, #avh-root .avh-x:focus-visible { background: rgba(255, 255, 255, .15); outline: none; }
+
+#avh-root .avh-ask { display: flex; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--avh-line); background: var(--avh-soft); }
+#avh-root .avh-ask input { flex: 1; min-width: 0; padding: 9px 12px; border: 1px solid #cdbfd8; border-radius: 8px; font: inherit; color: var(--avh-ink); background: #fff; }
+#avh-root .avh-ask input:focus { outline: 2px solid var(--avh-p2); outline-offset: 0; border-color: var(--avh-p2); }
+#avh-root .avh-ask button { padding: 9px 16px; border: 0; border-radius: 8px; background: var(--avh-p2); color: #fff; font: 600 14px/1 inherit; cursor: pointer; }
+#avh-root .avh-ask button:hover { background: var(--avh-p); }
+#avh-root .avh-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+#avh-root .avh-body { flex: 1; overflow: auto; padding: 12px 16px 16px; }
+#avh-root .avh-foot { padding: 10px 16px; border-top: 1px solid var(--avh-line); font-size: 13px; background: #fff; }
+#avh-root.avh-pagemode .avh-foot { border-radius: 0 0 12px 12px; }
+#avh-root .avh-foot a { color: var(--avh-p2); font-weight: 600; }
+
+#avh-root .avh-label { margin: 14px 0 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--avh-muted); }
+#avh-root .avh-muted { color: var(--avh-muted); font-size: 12.5px; }
+#avh-root .avh-intro { margin: 0 0 8px; font-size: 13px; color: var(--avh-muted); }
+#avh-root .avh-examples { margin-bottom: 4px; }
+#avh-root .avh-chip { display: inline-block; margin: 0 6px 6px 0; padding: 6px 10px; border: 1px solid var(--avh-line); border-radius: 999px; background: #fff; color: var(--avh-p); font: 13px/1.3 inherit; text-align: left; cursor: pointer; }
+#avh-root .avh-chip:hover { background: var(--avh-soft); border-color: #cdbfd8; }
+#avh-root .avh-list { list-style: none; margin: 0; padding: 0; }
+#avh-root .avh-list li { border-bottom: 1px solid #f0eaf4; }
+#avh-root .avh-link { display: block; width: 100%; padding: 8px 2px; border: 0; background: transparent; color: var(--avh-p2); font: 600 13.5px/1.35 inherit; text-align: left; cursor: pointer; }
+#avh-root .avh-link:hover { text-decoration: underline; }
+#avh-root .avh-all { margin-top: 14px; }
+#avh-root .avh-all summary { cursor: pointer; font-weight: 600; color: var(--avh-p); }
+#avh-root .avh-sec { margin-top: 10px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--avh-muted); }
+
+#avh-root .avh-back { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+#avh-root .avh-back .avh-link { padding: 4px 0; font-weight: 600; }
+#avh-root .avh-card { border: 1px solid var(--avh-line); border-radius: 10px; padding: 12px 14px; background: #fff; }
+#avh-root .avh-card p { margin: 0 0 8px; }
+#avh-root .avh-warn { background: #fffaf0; border-color: #f2dfb8; }
+#avh-root .avh-answer h3 { margin: 2px 0 8px; font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--avh-p); }
+#avh-root .avh-answer .avh-sec { margin-top: 0; }
+#avh-root .avh-summary { font-size: 14px; }
+#avh-root .avh-access { display: flex; gap: 6px; align-items: flex-start; margin: 0 0 10px; padding: 8px 10px; border-radius: 8px; font-size: 13px; }
+#avh-root .avh-access svg { flex: 0 0 auto; margin-top: 2px; }
+#avh-root .avh-yes { background: #eef8f2; color: #0f6b4a; }
+#avh-root .avh-no { background: #fff4e5; color: #7a4b00; border: 1px solid #f2dfb8; }
+#avh-root .avh-who { display: block; margin-top: 4px; font-weight: 600; }
+#avh-root .avh-steps { margin: 8px 0 4px; padding-left: 22px; }
+#avh-root .avh-steps li { margin-bottom: 10px; padding-left: 2px; }
+#avh-root .avh-steps b { color: #1d1424; }
+#avh-root .avh-go { display: inline-block; margin-top: 6px; padding: 6px 12px; border-radius: 8px; background: var(--avh-p2); color: #fff !important; font-weight: 600; font-size: 13px; text-decoration: none; }
+#avh-root .avh-go:hover { background: var(--avh-p); }
+#avh-root .avh-off { background: #e9e4ee; color: #6b6372 !important; cursor: not-allowed; }
+#avh-root .avh-lock { margin-top: 4px; font-size: 12.5px; color: #7a4b00; }
+#avh-root .avh-notes { margin-top: 6px; padding: 8px 10px; border-radius: 8px; background: var(--avh-soft); font-size: 13px; }
+#avh-root .avh-notes p { margin: 0 0 4px; }
+#avh-root .avh-fig { margin: 10px 0 0; }
+#avh-root .avh-fig img { display: block; width: 100%; height: auto; border: 1px solid var(--avh-line); border-radius: 8px; }
+#avh-root .avh-fig figcaption { margin-top: 4px; font-size: 12px; color: var(--avh-muted); }
+#avh-root .avh-meta { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--avh-line); font-size: 12px; color: var(--avh-muted); }
+
+@media (max-width: 560px) {
+    #avh-root .avh-panel { width: 100vw; }
+    #avh-root .avh-fab { right: 12px; bottom: 12px; padding: 10px 14px; }
+}
+@media print { #avh-root { display: none !important; } }

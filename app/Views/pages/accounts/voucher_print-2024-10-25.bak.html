@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<?= view('layouts/head') ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Voucher</title>
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+        .content {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            /*text-align: left;*/
+            margin-bottom: 30px;
+        }
+        .header img {
+            height: 100px;
+        }
+        .voucher-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .company-info {
+            /*text-align: center;*/
+            margin-top: 20px;
+            /*align-content: left;*/
+            /*margin-left: 0;*/
+
+        }
+        .info-table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .info-table td {
+            padding: 5px;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #ddd;
+        }
+        .signature-table {
+            width: 100%;
+            margin-top: 30px;
+        }
+        .signature-table td {
+            text-align: center;
+            padding: 10px 10px;
+        }
+            .col-md-4, .col-md-6, .col-md-2 {
+        flex: 1; /* Ensure each column takes equal space */
+    }
+
+        /* Print styles */
+        @media print {
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+            }
+            .content {
+                padding: 20px;
+                border-radius: 8px;
+                background-color: white;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .header {
+                text-align: left;
+                margin-bottom: 30px;
+            }
+            .header img {
+                height: 100px;
+            }
+            .voucher-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+            .company-info {
+                /*text-align: center;*/
+                margin-top: 20px;
+                align-content: center;
+                /*margin-left: 0;*/
+
+            }
+            .info-table {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .info-table td {
+                padding: 5px;
+            }
+            .table-bordered td, .table-bordered th {
+                border: 1px solid #ddd;
+            }
+            .signature-table {
+                width: 100%;
+                margin-top: 30px;
+            }
+            .signature-table td {
+                text-align: center;
+                padding: 10px 10px;
+            }
+                .col-md-4, .col-md-6, .col-md-2 {
+        flex: 1; /* Ensure each column takes equal space */
+    }
+
+            /* You can hide elements that shouldn't appear in print */
+            /* For example: */
+            /* .header img { display: none; } */
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="content">
+       <div class="button-container">
+        <!-- <button class="btn btn-primary" onclick="window.print()">Print</button> &nbsp; -->
+        <?php if($id !=null){ 
+
+            if($status == 1){
+
+                ?>
+                <button class="btn btn-success ml-2 btn_update" id="confirmButton">Confirm</button> &nbsp;&nbsp;&nbsp;
+            <?php }else {  ?>
+                <button class="btn btn-danger ml-2 btn_update" id="rejectbutton">Reject</button>
+            <?php }} ?>
+        </div>
+        <div class="header row" >
+            <div class="logo col-md-4">
+                <img src="<?php echo base_url(); ?>assets/images/logo-light.png" alt="Logo" style="height: 80px;">
+            </div>
+            <div class="company-info col-md-6">
+                <span  style="font-size: 16px; font-weight: bold; font-family: 'Times-New-Roman', sans-serif; line-height: 1.6;">AVENIR HOLIDAYS PVT LTD</span><br><span></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO 126/1 Park Road, Colombo 05 <br> <span  style="font-size: 18px; font-weight: bold; font-family: 'Times-New-Roman', sans-serif; line-height: 1.6;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <u>Voucher Payment </u></span>
+            </div>
+            <div class="col-md-2" style="align-content: center;">
+                <?php if ($voucher_details) { ?>
+
+                    <?php if ($voucher_details->Aflag == 3) { ?>
+                        <img src="<?php echo base_url(); ?>assets/img/voucher_cancelled.jpg" alt="Voucher Cancelled" style="max-width: 100%; margin-top: 10px;">
+                    <?php } else if ($voucher_details->Aflag == 1) { ?>
+                        <img src="<?php echo base_url(); ?>assets/img/voucher_approved.jpg" alt="Voucher Approved" style="max-width: 100%; margin-top: 10px;">
+                    <?php } ?>
+
+                </div>
+
+            </div>
+            <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
+            <input type="hidden" name="status" id="status" value="<?php echo $status ?>">
+            <input type="hidden" name="bank_acc" id="bank_acc" value="<?php echo $bank_acc ?>">
+            <input type="hidden" name="type" id="type" value="<?php echo $type ?>">
+            <input type="hidden" name="amount" id="amount" value="<?php echo $amount ?>">
+            <input type="hidden" name="sup" id="sup" value="<?php echo $sup ?>">
+            <input type="hidden" name="payee" id="payee" value="<?php echo $payee ?>">
+            <input type="hidden" name="menu" id="menu" value="<?php echo $menu ?>">
+
+
+
+            <table class="info-table">
+                <tr>
+                    <td>Date: <?php echo $voucher_details->INV_Date ?></td>
+                    <td>           Payment Date:<?php  
+                    $dateString = $voucher_details->C_Date;
+                    $date = new DateTime($dateString);
+                    $formattedDate = $date->format('Y-m-d'); 
+                    echo $formattedDate; 
+                    ?></td>
+                </tr>
+                <tr>
+                    <td>Manual Refference No: <?php echo $voucher_details->ref_po ?></td>
+                    <td>Payee's Name: <?php echo $voucher_details->Payee ?></td>
+                </tr>
+                <tr>
+
+                    <td>Voucher No: <?php echo $voucher_details->Vnum ?></td>         
+                    <td></td>
+                </tr>
+            </table>
+
+            <table class="table table-bordered">
+              <?php
+              $formatter = new NumberFormatter('en', NumberFormatter::SPELLOUT);
+              $words = $formatter->format($voucher_details->Amount);
+              ?>
+              <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount (Rs.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $voucher_details->Description ?></td>
+                    <td><?php echo $voucher_details->Amount ?></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <p><strong>Total amount in words:</strong>  <?php echo $words . " " . "Rupees only" ?></p>
+    <?php } ?>
+
+    <table class="signature-table">
+        <tr>
+            <td>Prepared by:</td>
+            <td>Authorized by:</td>
+            <td>Receiver's Signature:</td>
+        </tr>
+        <tr>
+            <td>______________________</td>
+            <td>______________________</td>
+            <td>______________________</td>
+        </tr>
+    </table>
+
+    <table class="signature-table">
+       <tr>
+        <td>Receiver's Signature:</td>
+        <td>Cheque No:</td>
+        <td>Bank:</td>
+    </tr>
+    <tr>
+        <td>______________________</td>
+        <td>______________________</td>
+        <td>______________________</td>
+    </tr>
+</table>
+</div>
+
+<?= view('layouts/scripts') ?>
+
+
+<script src="<?= base_url(); ?>assets/bundles/datatablescripts.bundle.js"></script>
+<script src="<?= base_url(); ?>assets/vendor/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="<?= base_url(); ?>assets/vendor/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="<?= base_url(); ?>assets/vendor/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="<?= base_url(); ?>assets/vendor/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="<?= base_url(); ?>assets/vendor/jquery-datatable/buttons/buttons.print.min.js"></script>
+
+
+<script>
+     // $(document).ready(function() {
+        // var id = "<?php //echo $id; ?>";
+
+
+        // <?php //if ($id == null):
+     
+            // echo 'window.print();';
+        // endif; ?>
+    // });
+
+
+    $(".btn_update").click(function() {
+      var id = $('#id').val();
+      var status = $('#status').val();
+      var bank_acc = $('#bank_acc').val();
+      var type = $('#type').val();
+      var amount = $('#amount').val();
+      var sup = $('#sup').val();
+      var payee = $('#payee').val();
+
+
+      $.post("<?php echo base_url() ?>accounts/voucher_auth/update", {
+        update: "data",
+        id: id,
+        status: status,
+        bank_acc: bank_acc,
+        type: type,
+        amount:amount,
+        payee:payee,
+        sup:sup,
+    }, function(data) {
+        if (data.status === 200) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Updated Successfully!',
+            showConfirmButton: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+              // if(status==1){
+                window.location.href = "<?php echo base_url() ?>accounts/creditor_invoice/voucher_authentication";
+            // }else{
+            //     location.reload();
+            // }
+
+              // location.reload();
+          }
+      });
+    } else if ($.trim(data.status) === 400) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error!',
+        text: 'Error occurred.',
+        showConfirmButton: false,
+        timer: 1500
+    });
+  } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        showConfirmButton: false,
+        timer: 1500
+    });
+  }
+}, "json");
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+[
+ {
+  "test": 48,
+  "name": "GIMANHALA: the 12 approved lunches are eligible (LKR 31,000.00 of this run) and the disputed one is excluded with its reason",
+  "ok": true,
+  "detail": "({'status': 200, 'message': 'Saved.'}, 12, 31000, [(3175, 'disputed')])"
+ },
+ {
+  "test": 48,
+  "name": "a disputed item needs a reason (400) and cannot be disputed by a requester (403)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 48,
+  "name": "a supplier with USD and LKR items is shown as two currency groups (USD 65.00 \u00b7 LKR 4,500.00) \u2014 one bulk batch is one currency",
+  "ok": true,
+  "detail": "{'USD': (2, 65), 'LKR': (1, 4500)}"
+ },
+ {
+  "test": 48,
+  "name": "Kassapa: approved while verified, then its bank account changed on the master \u2192 the verification is void and the item is excluded (status unverified \u2192 reason bank_unverified)",
+  "ok": true,
+  "detail": "(200, 200, 'unverified', [(3179, 'bank_unverified')])"
+ },
+ {
+  "test": 49,
+  "name": "a selection that includes the disputed item is refused as a whole \u2014 nothing created",
+  "ok": true,
+  "detail": "Not eligible for this bulk payment: #3175 (disputed). Nothing was created."
+ },
+ {
+  "test": 49,
+  "name": "a selection mixing currencies is refused \u2014 nothing created",
+  "ok": true,
+  "detail": "Not eligible for this bulk payment: #3178 (other currency). Nothing was created."
+ },
+ {
+  "test": 49,
+  "name": "a confirmation without a valid one-time token is refused",
+  "ok": true,
+  "detail": "The confirmation token is missing. Reopen the confirmation and confirm again."
+ },
+ {
+  "test": 49,
+  "name": "the accountant cannot create a bulk payment (needs the batch-creation privilege \u2192 403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Creating a bulk supplier payment needs the batch-creation privilege (management). The attempt was recorded.'}"
+ },
+ {
+  "test": 50,
+  "name": "12 vouchers issued, consecutive 616\u2013627, under bulk batch SB-00010; one transfer LKR 31,000.00",
+  "ok": true,
+  "detail": "{'status': 200, 'ok': True, 'batch_id': 10, 'batch_no': 'SB-00010', 'vnums': [616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627], 'children': [{'batch_id': 11, 'batch_no': 'SB-00011', 'vnum': 616, 'pr_id': 3163, 'tour': 'AH 2218', 'amount': 2500}, {'batch_id': 12, 'batch_no': 'SB-00012', 'vnum': 617, 'pr_id': 3164, 'tour': 'AH 2290', 'amount': 1800}, {'batch_id': 13, 'batch_no': 'SB-00013', 'vnum': 618, 'pr_id': 3165, 'tour': 'AH 2218', 'amount': 3200}, {'batch_id': 14, 'batch_no': 'SB-"
+ },
+ {
+  "test": 50,
+  "name": "parent + 12 children: each child is a single-voucher batch with its own voucher, tour, service, invoice and amount; \u03a3 = transfer",
+  "ok": true,
+  "detail": "(12, {'voucher_total': 31000, 'transfer_total': 31000, 'transfer_lkr': None, 'paid_lkr': 0, 'charges_total': None, 'charges_allocated': 0, 'total_debit': 0, 'bank_credit': 0, 'fx_diff': 0, 'vouchers_equal_transfer': True})"
+ },
+ {
+  "test": 50,
+  "name": "every request flagged vouchered, linked to its own voucher and to the bulk batch; counter advanced by exactly 12",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 50,
+  "name": "each voucher row and its single v_inv line carry the tour (ref_po / Invoice), the restaurant and the amount",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 50,
+  "name": "audit: bulk_issued with the 12 numbers, who confirmed, the token; one voucher_issued per tour line; batch recorded as non-atomic (MyISAM \u2014 undo path)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 50,
+  "name": "the eligibility list no longer offers the 12 (they are batched)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 53,
+  "name": "the same confirmation token again returns the existing batch and creates nothing",
+  "ok": true,
+  "detail": "{'status': 200, 'ok': True, 'duplicate': True, 'batch_id': 10, 'batch_no': 'SB-00010', 'message': 'This confirmation was already processed as batch SB-00010 \u2014 nothing was created twice.'}"
+ },
+ {
+  "test": 53,
+  "name": "a new confirmation for the same items is refused (already batched) \u2014 nothing created",
+  "ok": true,
+  "detail": "Not eligible for this bulk payment: #3163 (not in this supplier's queue), #3164 (not in this supplier's queue), #3165 (not in this supplier's queue), #3166 (not in this supplier's queue), #3167 (not in this supplier's queue), #3168 (not in this supplier's queue), #3169 (not in this supplier's queue), #3170 (not in this supplier's queue), #3171 (not in this supplier's queue), #3172 (not in this supplier's queue), #3173 (not in this supplier's queue), #3174 (not in this supplier's queue). Nothing "
+ },
+ {
+  "test": 51,
+  "name": "a failure after voucher 1 of 2: refused, NOTHING created (vouchers, batches, flags, counter unchanged); audit voucher_issue_failed; items still eligible",
+  "ok": true,
+  "detail": "('Nothing issued: TEST HOOK: failure injected after voucher 1 of 2 (The voucher tables are not transactional on this install; the rows this run wrote were removed by hand \u2014 check the audit record.)', ('626', '22', '0'), ('626', '22', '0'))"
+ },
+ {
+  "test": 52,
+  "name": "counter behind the table: refused BEFORE writing, naming counter and last number; nothing changed",
+  "ok": true,
+  "detail": "Refused before writing: the voucher-number counter (invoice_no.V_Num = 626) is behind the voucher table (last Payment Voucher No. 627); number 627 is already issued. Accounts must bring the counter back in step (set invoice_no.V_Num to 627). (The voucher tables are not transactional on this install; the rows this run wrote were removed by hand \u2014 check the audit record.)"
+ },
+ {
+  "test": 54,
+  "name": "a child voucher cannot be initiated on its own (409, names the bulk batch)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Voucher 616 belongs to bulk batch SB-00010: the ONE bank transfer is initiated for the whole batch on its page, not voucher by voucher.', 'bulk_id': 10}"
+ },
+ {
+  "test": 54,
+  "name": "management cannot initiate (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Recording a bank initiation needs the Bank Payment Check (accountant) privilege. The attempt was recorded.'}"
+ },
+ {
+  "test": 54,
+  "name": "all 12 initiated in one operation: 12 initiation rows, the same date / account / reference, transfer LKR 31,000.00, charges 217.00 allocated to the cent (\u03a3 shares = 217.00)",
+  "ok": true,
+  "detail": "('Bank transfer initiated for the whole batch: 12 voucher(s) initiated now; transfer LKR 31,000.00 + charges 217.00 allocated to the cent.', {'issued': 0, 'initiated': 12, 'paid': 0, 'cancelled': 0, 'reconciled': 0}, 217.0)"
+ },
+ {
+  "test": 54,
+  "name": "shares pro rata to each voucher (largest: 4,100 \u2192 28.70; smallest: 1,800 \u2192 12.60), each \u03a3(amount+share) = total_debit per voucher",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 54,
+  "name": "the parent records the transfer: payment date, reference, charges 217.00, total debit 31,217.00, initiated by the accountant; status initiated",
+  "ok": true,
+  "detail": "{'id': 10, 'batch_no': 'SB-00010', 'sup_acc': '6-9-11-11590', 'supplier_name': 'GIMANHALA LUNCH VOUCHER', 'currency': 'LKR', 'usd_total': None, 'approval_lkr_total': '31000.00', 'item_count': 12, 'tour_count': 2, 'bank_account_id': 1, 'ledger_code': '1-6-8-10380', 'vnum': None, 'status': 'initiated', 'note': 'bulk test 50', 'created_by': 'tcpayappr', 'created_at': '2026-10-11 15:12:08', 'updated_at': '2026-10-11 15:12:09', 'parent_id': None, 'mode': 'bulk_parent', 'voucher_count': 12, 'transfer_"
+ },
+ {
+  "test": 54,
+  "name": "initiating again changes nothing (0 initiated now, still complete)",
+  "ok": true,
+  "detail": "Nothing to initiate: all 12 vouchers of batch SB-00010 are already initiated (0 Paid). The recorded transfer details were kept."
+ },
+ {
+  "test": 55,
+  "name": "a child voucher cannot be marked Paid on its own (409)",
+  "ok": true,
+  "detail": "{'status': 409, 'message': 'Voucher 619 belongs to bulk batch SB-00010: Paid is confirmed for the whole transfer on the bulk batch page, not voucher by voucher.', 'bulk_id': 10}"
+ },
+ {
+  "test": 55,
+  "name": "the legacy Mark Finalized is blocked for a bulk child voucher (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Voucher 619 belongs to supplier payment batch SB-00014: confirm the final payment date and exchange rate on its batch page (Supplier Payables \u2192 SB-00014 \u2192 Paid).'}"
+ },
+ {
+  "test": 55,
+  "name": "the accountant cannot mark Paid (403)",
+  "ok": true,
+  "detail": "{'status': 403, 'message': 'Only a holder of the Bank payment approver privilege can mark a payment Paid. The attempt was recorded.'}"
+ },
+ {
+  "test": 55,
+  "name": "all 12 marked Paid in one operation; every voucher finalized with the bank date; 12 Paid locks",
+  "ok": true,
+  "detail": "('Paid: all 12 vouchers of batch SB-00010 (12 marked now). Ledger balanced over the batch: credits to the paying account 31,217.00 = the bank debit. This is not a bank-statement match (Bank Reconciliation Step 2).', {'issued': 0, 'initiated': 0, 'paid': 12, 'cancelled': 0, 'reconciled': 12})"
+ },
+ {
+  "test": 55,
+  "name": "bank charges: one balanced Dr Bank Charges / Cr paying account pair per voucher (12 pairs, \u03a3 Dr = \u03a3 Cr = 217.00), posted once",
+  "ok": true,
+  "detail": "(24, {'issued': 0, 'initiated': 0, 'paid': 12, 'cancelled': 0, 'reconciled': 12})"
+ },
+ {
+  "test": 55,
+  "name": "batch ledger check: \u03a3 credits to the paying account = 31,000.00 + 217.00 = 31,217.00 = the one bank debit; every voucher balanced; parent reconciled",
+  "ok": true,
+  "detail": "{'ok': True, 'checks': [{'what': 'Every voucher of the batch is Paid', 'ok': True, 'detail': '12 of 12'}, {'what': \"Every voucher's own ledger check passed (payment + FX + charges, Dr = Cr)\", 'ok': True, 'detail': '12 of 12'}, {'what': 'Bank-charge shares add back to the charges entered', 'ok': True, 'detail': '217.00 of 217.00'}, {'what': '\u03a3 credits to the paying account over the batch = the one bank debit (transfer + charges)', 'ok': True, 'detail': '31,217.00 vs 31,217.00'}], 'bank_credit': 3"
+ },
+ {
+  "test": 55,
+  "name": "the message says plainly that this is not a bank-statement match",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 55,
+  "name": "Paid again: nothing posted twice (0 marked now, ledger row count unchanged)",
+  "ok": true,
+  "detail": "Paid: all 12 vouchers of batch SB-00010 (0 marked now). Ledger balanced over the batch: credits to the paying account 31,217.00 = the bank debit. This is not a bank-statement match (Bank Reconciliation Step 2)."
+ },
+ {
+  "test": 55,
+  "name": "the desk / tour record: each tour shows its own lunches with their own voucher numbers (6 + 6)",
+  "ok": true,
+  "detail": "([616, 618, 620, 622, 624, 626], [617, 619, 621, 623, 625, 627])"
+ },
+ {
+  "test": 56,
+  "name": "USD bulk batch (2 vouchers, USD 65.00) initiated at the payment-date rate 327.25 \u2192 transfer LKR 21271.25",
+  "ok": true,
+  "detail": "('2 vouchers issued (Payment Voucher No. 628\u2013629) under bulk batch SB-00023 for Fright Less Jeep Safari Minneriya  \u2014 one bank transfer of USD 65.00. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.', 'Bank transfer initiated for the whole batch: 2 voucher(s) initiated now; transfer LKR 21,271.25.', {'voucher_total': 21271.25, 'transfer_total': 65, 'transfer_lkr': 21271.25, 'paid_lkr': 0, 'charges_total': 0, 'charges_allocated': 0, 'tota"
+ },
+ {
+  "test": 56,
+  "name": "one child cancelled by the legacy screen: Paid marks the other and reports INCOMPLETE (207), the batch is \"paid_partial\" and NOT reconciled \u2014 no silent success",
+  "ok": true,
+  "detail": "(207, 'Paid incomplete \u2014 1 of 2 vouchers (1 marked now). Ledger check not yet balanced \u2014 see the batch page; re-run Paid to post what is missing. This is not a bank-statement match (Bank Reconciliation Step 2).', {'issued': 0, 'initiated': 0, 'paid': 1, 'cancelled': 1, 'reconciled': 1}, 'paid_with_cancelled')"
+ },
+ {
+  "test": 56,
+  "name": "the remittance advice is refused while the batch is incomplete",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 57,
+  "name": "prepared: one advice listing all 12 vouchers, to the supplier's remittance e-mail, subject names vouchers 616\u2013627 and the batch",
+  "ok": true,
+  "detail": "(None, 'Payment completed \u2014 12 invoices \u00b7 Payment Vouchers No. 616\u2013627 \u00b7 bulk batch SB-00010', 'gimanhala-test@example.invalid')"
+ },
+ {
+  "test": 57,
+  "name": "the advice page lists every voucher with tour, guest, service, invoice and amount, the one transfer total 31,000.00 and the bank reference",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 57,
+  "name": "the per-voucher advice of a bulk child is refused (409, names the batch) \u2014 the supplier gets ONE itemised advice",
+  "ok": true,
+  "detail": "Payment Voucher No. 620 was paid by the bulk transfer of batch SB-00010. The supplier receives ONE itemised remittance advice for the whole batch \u2014 prepare it from the bulk batch page."
+ },
+ {
+  "test": 57,
+  "name": "sent once (sink received 1 message with the PDF attached); all 12 vouchers marked Notified; a second send is refused",
+  "ok": true,
+  "detail": "('Sent to gimanhala-test@example.invalid \u2014 one advice covering 12 vouchers. The supplier is now marked Notified for all of them.', 1)"
+ },
+ {
+  "test": 58,
+  "name": "renders: report/bank_payment_check/finalized_records",
+  "ok": true,
+  "detail": "(200, '621')"
+ },
+ {
+  "test": 58,
+  "name": "renders: report/voucher_report",
+  "ok": true,
+  "detail": "(200, 'oucher')"
+ },
+ {
+  "test": 58,
+  "name": "renders: accounts/voucher_audit",
+  "ok": true,
+  "detail": "(200, 'oucher')"
+ },
+ {
+  "test": 58,
+  "name": "renders: tour/board/tour/4/record",
+  "ok": true,
+  "detail": "(200, 'Complete record')"
+ },
+ {
+  "test": 58,
+  "name": "renders: tour/tour_payment_dashboard/voucher/618",
+  "ok": true,
+  "detail": "(200, '618')"
+ },
+ {
+  "test": 58,
+  "name": "renders: tour/tour_payment_dashboard/batch/13",
+  "ok": true,
+  "detail": "(200, 'SB-00013')"
+ },
+ {
+  "test": 58,
+  "name": "renders: tour/tour_payment_dashboard/bulk/10",
+  "ok": true,
+  "detail": "(200, 'SB-00010')"
+ },
+ {
+  "test": 58,
+  "name": "renders: tour/tour_payment_dashboard/payables",
+  "ok": true,
+  "detail": "(200, 'Supplier Payables')"
+ },
+ {
+  "test": 58,
+  "name": "the legacy Bank Payment Check listed the 12 children individually before Paid (now in Finalized); the batches listing shows the bulk parent with its roll-up and no child as a top-level batch",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 59,
+  "name": "the administrator makes a request (allowed)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Payment requested \u2014 it now waits for management approval.', 'pr_id': 3180}"
+ },
+ {
+  "test": 59,
+  "name": "the administrator cannot approve their OWN request (403, separation); audit separation_blocked",
+  "ok": true,
+  "detail": "Separation of duties: you made the payment request for AH 2290 (request #3180) yourself, so you cannot approve it. Another authorised user must do this step."
+ },
+ {
+  "test": 59,
+  "name": "another user (management) approves it",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Approved for payment. It now waits under GIMANHALA LUNCH VOUCHER in Supplier Payables until management creates the supplier's payment batch.\", 'vnum': None, 'awaiting_batch': True, 'approval_rate': None, 'approval_lkr': '1200.00'}"
+ },
+ {
+  "test": 59,
+  "name": "the administrator cannot batch their own request (403)",
+  "ok": true,
+  "detail": "Separation of duties: you made the payment request for AH 2290 (request #3180) yourself, so you cannot batch it. Another authorised user must do this step."
+ },
+ {
+  "test": 59,
+  "name": "\u2026nor bulk-batch it (403)",
+  "ok": true,
+  "detail": "Separation of duties: you made the payment request for AH 2290 (request #3180) yourself, so you cannot batch (bulk payment) it. Another authorised user must do this step."
+ },
+ {
+  "test": 59,
+  "name": "management batches it (voucher 630)",
+  "ok": true,
+  "detail": "{'status': 200, 'message': \"Batch SB-00026 created \u2014 Payment Voucher No. 630 for GIMANHALA LUNCH VOUCHER (1 payment(s), 1 tour(s)) is now in the accountant's queue. Suggested account: Com Bank LKR operating \u2014 the accountant confirms the actual paying account at initiation.\", 'vnum': 630, 'payment_voucher_no': 630, 'batch_id': 26, 'batch_no': 'SB-00026', 'individual': False}"
+ },
+ {
+  "test": 59,
+  "name": "the administrator cannot initiate the payment of their own request (403)",
+  "ok": true,
+  "detail": "Separation of duties: you made the payment request for AH 2290 (request #3180) yourself, so you cannot initiate the bank payment for it. Another authorised user must do this step."
+ },
+ {
+  "test": 59,
+  "name": "the accountant initiates it",
+  "ok": true,
+  "detail": "{'status': 200, 'message': 'Bank payment initiated \u2014 awaiting bank approval. LKR 1,200.00. The bank approver can now confirm Paid.', 'amount': 1200, 'usd_rate': None, 'fx_diff': 0, 'total_debit': 1200, 'charge_warning': None}"
+ },
+ {
+  "test": 59,
+  "name": "the administrator cannot finally authorise their own request (403)",
+  "ok": true,
+  "detail": "Separation of duties: you made the payment request for AH 2290 (request #3180) yourself, so you cannot finally authorise (Paid) it. Another authorised user must do this step."
+ },
+ {
+  "test": 59,
+  "name": "the bank approver marks it Paid",
+  "ok": true,
+  "detail": "Paid. Payment Voucher No. 630 is locked: LKR 1,200.00; no bank charges; total debited 1,200.00; ledger reconciled: credits to 1-6-8-10380 = LKR 1,200.00 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepare and send it when ready."
+ },
+ {
+  "test": 59,
+  "name": "the administrator initiates a payment requested by someone else (allowed)",
+  "ok": true,
+  "detail": "Bank payment initiated \u2014 awaiting bank approval. LKR 1,300.00. The bank approver can now confirm Paid."
+ },
+ {
+  "test": 59,
+  "name": "the user who INITIATED cannot finally authorise it (403, separation)",
+  "ok": true,
+  "detail": "Separation of duties: you initiated the bank payment for Payment Voucher No. 631 yourself, so you cannot finally authorise (Paid) it. The bank authoriser must be a different user."
+ },
+ {
+  "test": 59,
+  "name": "a different bank approver marks it Paid",
+  "ok": true,
+  "detail": "Paid. Payment Voucher No. 631 is locked: LKR 1,300.00; no bank charges; total debited 1,300.00; ledger reconciled: credits to 1-6-8-10380 = LKR 1,300.00 = the bank debit; paying account confirmed: Com Bank LKR operating. The supplier's remittance advice is pending \u2014 prepare and send it when ready."
+ },
+ {
+  "test": 59,
+  "name": "bulk: the user who initiated the transfer cannot mark it Paid (403 on the first voucher, 0 paid)",
+  "ok": true,
+  "detail": "Separation of duties: you initiated the bank transfer for bulk batch SB-00028 yourself, so you cannot finally authorise (Paid) it. The bank authoriser must be a different user."
+ },
+ {
+  "test": 59,
+  "name": "the bank approver marks the bulk batch Paid (3 vouchers, charges 30.00 allocated)",
+  "ok": true,
+  "detail": "Paid: all 3 vouchers of batch SB-00028 (3 marked now). Ledger balanced over the batch: credits to the paying account 3,033.00 = the bank debit. This is not a bank-statement match (Bank Reconciliation Step 2)."
+ },
+ {
+  "test": 60,
+  "name": "management (dashboard, no request privilege) can READ the desk and sees requester=false, approver=true",
+  "ok": true,
+  "detail": "{'viewer': True, 'requester': False, 'approver': True, 'payables': True, 'batch': True, 'accountant': False, 'bank_approver': False, 'rate': True, 'bank_master': False, 'supplier_bank': False, 'verifier': False, 'offer': True, 'admin': False}"
+ },
+ {
+  "test": 60,
+  "name": "management cannot add an expense, write request meta, or post the legacy payment request (server refuses all three)",
+  "ok": true,
+  "detail": "(403, 403, 403, \"{'status': 403, 'msg': 'Forbidden', 'message': 'You do not have the privilege fo\")"
+ },
+ {
+  "test": 60,
+  "name": "the requester (holds the request privilege) can still request; the accountant (dashboard only) cannot",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 61,
+  "name": "Setup created the separate privilege \"Tour payment requests (make / cancel)\" (menu 260), granted to System Administrator only until an administrator grants it",
+  "ok": true,
+  "detail": "1,906,912,913"
+ },
+ {
+  "test": 62,
+  "name": "a single-item batch voucher (635) cancelled on the legacy screen: Aflag 3, flag 1, not finalized",
+  "ok": true,
+  "detail": "(500, '3|1|0')"
+ },
+ {
+  "test": 62,
+  "name": "the desk refuses to initiate (409) and to mark Paid (409) a cancelled voucher \u2014 the voucher stays unfinalized, no Paid lock, no ledger posting",
+  "ok": true,
+  "detail": "('This voucher was cancelled; it cannot be initiated.', 'This voucher was cancelled (Voucher Cancellation screen); it cannot be paid.')"
+ },
+ {
+  "test": 62,
+  "name": "the batches listing shows the batch as Cancelled; the tour history records \"Voucher cancelled (Voucher Cancellation screen)\"; the item is NOT offered for a bulk payment again",
+  "ok": true,
+  "detail": "('cancelled', ['Payment voucher issued', 'Voucher cancelled (Voucher Cancellation screen)'])"
+ }
+]

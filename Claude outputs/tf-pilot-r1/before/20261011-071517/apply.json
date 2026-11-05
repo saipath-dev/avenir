@@ -1,0 +1,15 @@
+{
+ "root": "/sessions/rcw-013tqgxxkz9gtufzavqdyhef/mnt/avenir",
+ "changed": [
+  "app/Controllers/LoginController.php",
+  "app/Controllers/NewDashboardController.php",
+  "app/Filters/UserPermissionFilter.php",
+  "app/Libraries/TourPayments/Perms.php",
+  "app/Libraries/TourPayments/SupplierBank.php",
+  "app/Views/pages/dashboard2/tile_dashboard.php"
+ ],
+ "added": [
+  "app/Libraries/Pilot.php",
+  "app/Views/pages/dashboard2/pilot_panel.php"
+ ]
+}

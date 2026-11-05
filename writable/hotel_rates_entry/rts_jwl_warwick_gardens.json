@@ -1,0 +1,710 @@
+{
+ "key": "rts_jwl_warwick_gardens",
+ "hotel": {
+  "acc": "6-9-11-10959",
+  "name": "Jetwing Warwick Gardens, A Luxury Reserve",
+  "location": "Ambewela",
+  "chain": "Jetwing Hotels (Luxury Reserves)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10959",
+   "name": "Jetwing Warwick Gardens, A Luxury Reserve"
+  },
+  "contract": {
+   "name": "Winter 2026/27 travel agent contracted rates – Luxury Reserves",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel Agent",
+   "tier": "all",
+   "hotel_reference": "Jetwing Luxury Reserves – Travel Agent Contracted Rates – Winter 2026 - 2027",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "markets": [
+    {
+     "code": "DOM",
+     "mode": "exclude"
+    }
+   ],
+   "child_policy_text": "Child Policy (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 30 (Per Child/Per Night on BB including Extra Bed), USD 45 (on HB including Extra Bed), USD 58 (on AI including Extra Bed) (Not Applicable for Triple Occupancy and Deluxe Rooms); USD 10 (Per Child/Per Night on BB excluding Extra Bed), USD 25 (on HB excluding Extra bed), USD 38 (on AI excluding Extra Bed). Baby cot can be provided on request - Free of Charge (Up to one cot per room).",
+   "guide_policy_text": "Driver Accommodation – Available. (No guide policy printed for Warwick Gardens.)",
+   "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+   "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+   "terms_text": "JETWING WARWICK GARDENS, A LUXURY RESERVE: Single Reduction – USD 20 / Triple Supplement – USD 40 (On BB); Single Reduction – USD 50 / Triple Supplement – USD 70 (On HB); Single Reduction – USD 95 / Triple Supplement – USD 115 (On AI). Triple option is not applicable for Deluxe rooms. Rates per room: Deluxe Room (3 Rooms), White Room (1 Room), Master Room (1 Room); Whole Villa (10 Pax). All Inclusive Package – Inclusions: Meals on Full board basis; Spirits, Wine and Beer included (Foreign/Local); High tea platter; Guided tea estate tour; Artisanal tea tasting session. EARLY BIRD OFFERS: Booked 75 days prior to arrival - 15% Discount; Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February); Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. VALUE ADDITIONS (Once per stay): Artisanal Tea Tour; Village Tour. Driver Accommodation – Available. Reservations resv.warwick@jetwinghotels.com, +94 11 470 9400. | VALUE ADDITIONS POLICY: A maximum of 03 value adds can be used at each property. Experiences like Tours/Walks/Demonstrations etc. will be arranged in common groups depending on the occupancy for the day. F&B discounts will not be applicable for liquor & tobacco. | JETWING LUXURY RESERVES COMBO OFFER: 10% discount for guests staying at a minimum of three (03) Jetwing Luxury Reserve properties within the same tour itinerary. Combinable with Early Bird Offer (EBO) and Stay Pay Offer. Year-round offer. Not applicable during the Super Peak period and the Month of February. All the Booking vouchers should send together to apply the Combo Offer. | GUEST AMENITIES (Jetwing Luxury Reserves): Check-In Experience – selection of welcome drink (items are subject to change without prior notice): alcoholic beverages Sparkling | Red or white wine | Beer (not applicable at Jetwing Lagoon Wellness/Jetwing Lighthouse/Jetwing Wahawa Walauwa); non-alcoholic Herbal | Fruit juices | Tea | Coffee. Selection of welcome snacks: Savory | Sweet (room canapés in common area upon guest arrival at Jetwing Warwick Gardens and Jetwing Wahawa Walauwa). In-room Experience – one fully stocked complimentary mini bar per stay (items are subject to change without prior notice): alcoholic beverages (not applicable at Jetwing Lagoon Wellness) Gin – Rockland Dry Gin 180ml | Arrack – Rockland Old Arrack Original | Beer – Lion Lager Bottle 330ml; non-alcoholic King Coconut Bottle (only item available at Jetwing Lagoon Wellness); aerated drinks Sparkling – Olu Tropical Sparkling 330ml | Coca Cola | Sprite | Pelican Island Soda | Pelican Island Tonic; snacks Nuts | Dehydrated Fruits (not applicable at Jetwing Lagoon Wellness/Jetwing Lighthouse/Jetwing Wahawa Walauwa); non-alcoholic Herbal | Fruit juices | Tea | Coffee; in-room welcome canapes. Guest Relations – 24-hour personalized butler service (not applicable at Jetwing Lagoon Wellness and Jetwing Lighthouse); guest hosting with afternoon tea and snacks or cocktail hour with canapés; departure gift. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+   "notes": "Transcribed from \"Jetwing Luxury Reserves - TA Contracted Rates - Winter 2026 & 2027.pdf\" (14 pages), saved to the winter RTS folder on 2 Oct 2026. Currency \"USD nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy; SGL / TPL / QUAD come from the single reduction / triple / quadruple supplements in the hotel's Terms and Conditions box (every row note gives the printed DBL and the arithmetic). Market list: \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, rate code, booking window or gala dinner is printed (PDF metadata says created 18 Aug 2026 — not printed on the sheet, so contract_date is empty). Early bird / stay-pay / combo offers are entered as offers, one row per stay range so they are not listed on Super Peak / February nights; the \"booked 75/45 days prior\" condition is in the offer text (no field for it). Room names: \"Deluxe Room (3 Rooms)\" → existing \"Deluxe\"; \"Master Room (1 Room)\" → existing \"Master\"; \"White Room\" matches. Warwick Gardens is not in the peak payment / cancellation list → standard terms all season. No Super Peak minimum stay printed. Periods: 01 Nov – 25 Dec 2026 & 01 – 30 Apr 2027; Super Peak 26 Dec – 10 Jan; 11 Jan – 31 Mar 2027 (February is inside this period at the normal rate, but the early bird text still treats February like Super Peak — entered as printed). The sheet also prices the Whole Villa (10 Pax) per night BB/HB/AI: 1215/1515/1965, Super Peak 1575/1875/2325, 11 Jan – 31 Mar 1395/1695/2145 — see rts_jwl_warwick_gardens_villa (one plan cannot mix per-room and per-unit).",
+   "source_file": "Jetwing Luxury Reserves - TA Contracted Rates - Winter 2026 & 2027.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "room_count": 3,
+    "max_children": 2,
+    "description": "Printed \"Deluxe Room (3 Rooms)\"; no triple, no child extra bed"
+   },
+   {
+    "name": "White Room",
+    "priced_as": "base",
+    "room_count": 1,
+    "max_children": 2
+   },
+   {
+    "name": "Master",
+    "priced_as": "base",
+    "room_count": 1,
+    "max_children": 2,
+    "description": "Printed \"Master Room (1 Room)\""
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 25 Dec 2026 & 01 – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-25"
+     },
+     {
+      "from": "2027-04-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 220,
+      "dbl": 240,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 240; SGL = DBL − single reduction USD 20; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms)"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 250,
+      "dbl": 300,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 300; SGL = DBL − single reduction USD 50; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms)"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "AI",
+      "sgl": 295,
+      "dbl": 390,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 390; SGL = DBL − single reduction USD 95; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms); AI package incl. tea estate tour (see terms)"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "BB",
+      "sgl": 270,
+      "dbl": 290,
+      "tpl": 330,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 290; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "HB",
+      "sgl": 300,
+      "dbl": 350,
+      "tpl": 420,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 350; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "AI",
+      "sgl": 345,
+      "dbl": 440,
+      "tpl": 555,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 440; SGL = DBL − single reduction USD 95; TPL = DBL + triple supplement USD 115; AI package incl. tea estate tour (see terms)"
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "BB",
+      "sgl": 320,
+      "dbl": 340,
+      "tpl": 380,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 340; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40; printed \"Master Room\""
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "HB",
+      "sgl": 350,
+      "dbl": 400,
+      "tpl": 470,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 400; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70; printed \"Master Room\""
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "AI",
+      "sgl": 395,
+      "dbl": 490,
+      "tpl": 605,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 490; SGL = DBL − single reduction USD 95; TPL = DBL + triple supplement USD 115; printed \"Master Room\"; AI package incl. tea estate tour (see terms)"
+     }
+    ]
+   },
+   {
+    "name": "26 Dec 2026 – 10 Jan 2027 (Super Peak Period)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-26",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 300,
+      "dbl": 320,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 320; SGL = DBL − single reduction USD 20; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms)"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 330,
+      "dbl": 380,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 380; SGL = DBL − single reduction USD 50; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms)"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "AI",
+      "sgl": 375,
+      "dbl": 470,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 470; SGL = DBL − single reduction USD 95; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms); AI package incl. tea estate tour (see terms)"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "BB",
+      "sgl": 350,
+      "dbl": 370,
+      "tpl": 410,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 370; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "HB",
+      "sgl": 380,
+      "dbl": 430,
+      "tpl": 500,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 430; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "AI",
+      "sgl": 425,
+      "dbl": 520,
+      "tpl": 635,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 520; SGL = DBL − single reduction USD 95; TPL = DBL + triple supplement USD 115; AI package incl. tea estate tour (see terms)"
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "BB",
+      "sgl": 400,
+      "dbl": 420,
+      "tpl": 460,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 420; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40; printed \"Master Room\""
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "HB",
+      "sgl": 430,
+      "dbl": 480,
+      "tpl": 550,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 480; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70; printed \"Master Room\""
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "AI",
+      "sgl": 475,
+      "dbl": 570,
+      "tpl": 685,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 570; SGL = DBL − single reduction USD 95; TPL = DBL + triple supplement USD 115; printed \"Master Room\"; AI package incl. tea estate tour (see terms)"
+     }
+    ]
+   },
+   {
+    "name": "11 Jan – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "BB",
+      "sgl": 260,
+      "dbl": 280,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 280; SGL = DBL − single reduction USD 20; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms)"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 290,
+      "dbl": 340,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 340; SGL = DBL − single reduction USD 50; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms)"
+     },
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "AI",
+      "sgl": 335,
+      "dbl": 430,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 430; SGL = DBL − single reduction USD 95; printed \"Deluxe Room\"; no triple (not applicable for Deluxe rooms); AI package incl. tea estate tour (see terms)"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "BB",
+      "sgl": 310,
+      "dbl": 330,
+      "tpl": 370,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 330; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "HB",
+      "sgl": 340,
+      "dbl": 390,
+      "tpl": 460,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 390; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70"
+     },
+     {
+      "room_type": "White Room",
+      "meal_plan": "AI",
+      "sgl": 385,
+      "dbl": 480,
+      "tpl": 595,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 480; SGL = DBL − single reduction USD 95; TPL = DBL + triple supplement USD 115; AI package incl. tea estate tour (see terms)"
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "BB",
+      "sgl": 360,
+      "dbl": 380,
+      "tpl": 420,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 380; SGL = DBL − single reduction USD 20; TPL = DBL + triple supplement USD 40; printed \"Master Room\""
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "HB",
+      "sgl": 390,
+      "dbl": 440,
+      "tpl": 510,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 440; SGL = DBL − single reduction USD 50; TPL = DBL + triple supplement USD 70; printed \"Master Room\""
+     },
+     {
+      "room_type": "Master",
+      "meal_plan": "AI",
+      "sgl": 435,
+      "dbl": 530,
+      "tpl": 645,
+      "quad": null,
+      "unit": null,
+      "note": "Printed DBL 530; SGL = DBL − single reduction USD 95; TPL = DBL + triple supplement USD 115; printed \"Master Room\"; AI package incl. tea estate tour (see terms)"
+     }
+    ]
+   }
+  ],
+  "room_supplements": [],
+  "meal_deltas": [],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in within 04 hours of the 14:00 check-in",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% charge of the room rate"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out up to 04 hours past 12:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% room rate charge"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out past 04 hours",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% room rate"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Age of 0-5: Free of Charge (maximum up to 02 children). Baby cot can be provided on request - Free of Charge (Up to one cot per room)."
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 30 per child per night on BB including extra bed (Not Applicable for Triple Occupancy and Deluxe Rooms)",
+    "room_type": "White Room"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "BB",
+    "amount": 30,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 30 per child per night on BB including extra bed (Not Applicable for Triple Occupancy and Deluxe Rooms)",
+    "room_type": "Master"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 45,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 45 per child per night on HB including extra bed (Not Applicable for Triple Occupancy and Deluxe Rooms)",
+    "room_type": "White Room"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 45,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 45 per child per night on HB including extra bed (Not Applicable for Triple Occupancy and Deluxe Rooms)",
+    "room_type": "Master"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "AI",
+    "amount": 58,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 58 per child per night on AI including extra bed (Not Applicable for Triple Occupancy and Deluxe Rooms)",
+    "room_type": "White Room"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "AI",
+    "amount": 58,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 58 per child per night on AI including extra bed (Not Applicable for Triple Occupancy and Deluxe Rooms)",
+    "room_type": "Master"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "BB",
+    "amount": 10,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 10 per child per night on BB excluding extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 25 per child per night on HB excluding extra bed"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "meal_plan": "AI",
+    "amount": 38,
+    "max_children": 2,
+    "note": "Age of 6-11.99: USD 38 per child per night on AI excluding extra bed"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 75 days prior to arrival – 15% (01 Nov 2026 – 25 Dec 2026)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "value_pct": 15,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "Booked 75 days prior to arrival - 15% Discount (Not Applicable for the stays during Super peak and month of February). No booking date printed — the 75 days are counted from arrival. Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 45 days prior to arrival – 10% (01 Nov 2026 – 25 Dec 2026)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February). Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 75 days prior to arrival – 15% (11 Jan 2027 – 31 Jan 2027)",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-01-31",
+    "value_pct": 15,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "Booked 75 days prior to arrival - 15% Discount (Not Applicable for the stays during Super peak and month of February). No booking date printed — the 75 days are counted from arrival. Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 45 days prior to arrival – 10% (11 Jan 2027 – 31 Jan 2027)",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-01-31",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February). Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 75 days prior to arrival – 15% (01 Mar 2027 – 30 Apr 2027)",
+    "stay_from": "2027-03-01",
+    "stay_to": "2027-04-30",
+    "value_pct": 15,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "Booked 75 days prior to arrival - 15% Discount (Not Applicable for the stays during Super peak and month of February). No booking date printed — the 75 days are counted from arrival. Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – booked 45 days prior to arrival – 10% (01 Mar 2027 – 30 Apr 2027)",
+    "stay_from": "2027-03-01",
+    "stay_to": "2027-04-30",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "Booked 45 days prior to arrival - 10% Discount (Not Applicable for the stays during Super peak and month of February). Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – Super Peak / February – booked 75 days prior – 10% (26 Dec 2026 – 10 Jan 2027)",
+    "stay_from": "2026-12-26",
+    "stay_to": "2027-01-10",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "conditions": "Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "early_booking",
+    "name": "Early Bird – Super Peak / February – booked 75 days prior – 10% (01 Feb 2027 – 28 Feb 2027)",
+    "stay_from": "2027-02-01",
+    "stay_to": "2027-02-28",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "conditions": "Booked 75 days prior to arrival during Super peak and month of February - 10% Discount. Combinable with the Jetwing Luxury Reserves Combo Offer (page 12)."
+   },
+   {
+    "kind": "other",
+    "name": "Jetwing Luxury Reserves Combo Offer – 10% (01 Nov 2026 – 25 Dec 2026)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2026-12-25",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "10% discount for guests staying at a minimum of three (03) Jetwing Luxury Reserve properties within the same tour itinerary. Combinable with Early Bird Offer (EBO) and Stay Pay Offer. Year-round offer; not applicable during the Super Peak period and the Month of February. All the booking vouchers should be sent together to apply the Combo Offer (page 12)."
+   },
+   {
+    "kind": "other",
+    "name": "Jetwing Luxury Reserves Combo Offer – 10% (11 Jan 2027 – 31 Jan 2027)",
+    "stay_from": "2027-01-11",
+    "stay_to": "2027-01-31",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "10% discount for guests staying at a minimum of three (03) Jetwing Luxury Reserve properties within the same tour itinerary. Combinable with Early Bird Offer (EBO) and Stay Pay Offer. Year-round offer; not applicable during the Super Peak period and the Month of February. All the booking vouchers should be sent together to apply the Combo Offer (page 12)."
+   },
+   {
+    "kind": "other",
+    "name": "Jetwing Luxury Reserves Combo Offer – 10% (01 Mar 2027 – 30 Apr 2027)",
+    "stay_from": "2027-03-01",
+    "stay_to": "2027-04-30",
+    "value_pct": 10,
+    "per": "booking",
+    "combinable": 1,
+    "excludes_peak": 1,
+    "conditions": "10% discount for guests staying at a minimum of three (03) Jetwing Luxury Reserve properties within the same tour itinerary. Combinable with Early Bird Offer (EBO) and Stay Pay Offer. Year-round offer; not applicable during the Super Peak period and the Month of February. All the booking vouchers should be sent together to apply the Combo Offer (page 12)."
+   },
+   {
+    "kind": "other",
+    "name": "Value additions (once per stay)",
+    "stay_from": "2026-11-01",
+    "stay_to": "2027-04-30",
+    "per": "booking",
+    "conditions": "Artisanal Tea Tour; Village Tour. No money value printed. Value additions policy: a maximum of 03 value adds can be used at each property; experiences arranged in common groups; F&B discounts not applicable for liquor & tobacco."
+   }
+  ],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 25,
+    "max_rooms": 8,
+    "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 50,
+    "max_rooms": 8,
+    "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 8,
+    "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 8,
+    "charge_pct": 50,
+    "min_rooms": 9,
+    "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 9,
+    "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 5,
+    "pct": 100,
+    "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+   },
+   {
+    "applies": "all",
+    "kind": "other",
+    "pct": 100,
+    "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

@@ -1,0 +1,18 @@
+New hotel suppliers — added 10 Oct 2026 on Shantha's request ("new hotel rate sheet can you add the supplier";
+her choices: all 27 hotels with rate sheets; addresses from the hotel's own / chain website, source noted).
+
+Rehearsed first on the test copy (27 suppliers, 38 drafts, no errors), test copy put back afterwards.
+On live, through the system's own screens' endpoints (signed-in session):
+  - Master Files -> Supplier -> create (hotel category): 27 suppliers, accounts 6-9-11-11781 ... 6-9-11-11807,
+    each with its ledger account and Hotel Master entry HTL-334 ... HTL-360.
+  - Hotel Incomplete Work -> Attach supplier account: the 38 "rate sheet without a supplier account" items
+    (466-481, 681-688, 741-752) closed; plans loaded as DRAFTS #416 ... #453. NOTHING APPROVED.
+  - Hotel Master: chain / website / notes / location filled where empty. New locations: Talpe, Matara,
+    Embilipitiya, Rambukkana, Panadura, Ambalangoda.
+  - Bank details and credit terms NOT entered (for Accounts).
+The attach step writes the supplier account into each sheet file; the 38 files as they were before are in
+_before_supplier_attach_20261010\ (MD5SUMS.txt). Only hotel.acc / attached_by / attached_at changed.
+
+Addresses to confirm with the hotel (not on its own website): Jetwing Villa 700, Jetwing Wahawa Walauwa (street),
+Jie Jie Beach Hotel, Mask & Tide. Hotel Tamarind Tree: no phone / e-mail on the sheet.
+Report: Claude outputs\New-hotel-suppliers-2026-10-10.xlsx

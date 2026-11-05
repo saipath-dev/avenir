@@ -1,0 +1,386 @@
+{
+ "instance": "http://localhost/avenir_rv/ (database avenir_restore_verify_20261011), 12 Oct 2026",
+ "installed": "tf-bankrec-r3 files via apply.py (backup before/20261012-055949)",
+ "browser_checks": [
+  [
+   "ok",
+   "D7 TestAccounts opens the old Bank Reconciliation screen (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 \"update\" on dummy row 99980305 (2026-09-02, on/after the first day 2026-09-01 of the verification account) → refused 409 with the reason (names the first day and Daily Bank Reconciliation)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 earlier dates stay available: dummy row 99980302 (2026-08-28, before the first day) ticked (200) and unticked again (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 \"finalize selected\" with one row before and one on/after the first day → all refused (409)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 \"reconcile up to\" 2026-09-05 refused (409); up to 2026-08-31 allowed (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 moving a row to the unrealised account, moving one back, reposting a range reaching the first day, and a TEST LKR row → all refused (409)",
+   ""
+  ],
+  [
+   "ok",
+   "F the new workflow warns about the old-screen flags in the protected period: 2 rows (bank_rec on 99980306; 99980307 moved to the unrealised account), on the day and on the overview",
+   ""
+  ],
+  [
+   "ok",
+   "F flags put back: no warning on the day or the overview",
+   ""
+  ],
+  [
+   "ok",
+   "P each day lists each correction once; the day's total = the sum of the amounts up to that day; the full total = the sum of the correction totals; \"up to this day; correction total\" shown exactly when they differ",
+   ""
+  ],
+  [
+   "ok",
+   "P a correction covering several days is counted only for the part up to the day (found: correction 1, 25.00 of 4550.00 on 2026-09-01)",
+   ""
+  ],
+  [
+   "ok",
+   "P that correction's amount grows day by day and equals its total once all its days have passed (25 → 50 → 1050 → 1050 → 4550 → 4550 → 4550 → 4550)",
+   ""
+  ],
+  [
+   "ok",
+   "P a daily record prepared for 2026-09-01 keeps \"… up to this day; correction total …\" in its snapshot",
+   ""
+  ],
+  [
+   "ok",
+   "P reviewed: \"Reviewed — ledger not yet corrected — … approved but not posted (… up to this day; correction total …)\"",
+   ""
+  ],
+  [
+   "ok",
+   "R the dummy ledger entry 99980399 (test database only) is recorded as the posting of correction 6: checked against the approved lines → \"posted and verified\", linked to the entry",
+   ""
+  ],
+  [
+   "ok",
+   "R the 5 Sep pending postings no longer include it (the ledger is corrected for that item)",
+   ""
+  ],
+  [
+   "ok",
+   "R the entry's wording changed in the ledger (SQL, dummy row) → \"Posted entry changed in the ledger — verify again\"",
+   ""
+  ],
+  [
+   "ok",
+   "R the reviewer (no preparer privilege) cannot verify again (403); the preparer verifies again → the entry still matches → posted and verified; verifying again with nothing changed is refused (409)",
+   ""
+  ],
+  [
+   "ok",
+   "R the entry's amounts changed (25 → 30): verifying again is refused (409, \"does not match\") and it stays \"verify again\"",
+   ""
+  ],
+  [
+   "ok",
+   "R amounts put back → posted and verified again without any action (the entry is as verified)",
+   ""
+  ],
+  [
+   "ok",
+   "R wording put back → \"verify again\" → verified again; the correction is posted and verified",
+   ""
+  ],
+  [
+   "ok",
+   "U TestRecDual (preparer AND reviewer privilege, not an administrator) proposes an opening item (200), cannot accept their own (403), withdraws it (200)",
+   ""
+  ],
+  [
+   "ok",
+   "U the same user proposes a correction (200), cannot approve it (403), withdraws it (200)",
+   ""
+  ],
+  [
+   "ok",
+   "U the same user prepares a daily record (200), cannot review it (403); the reviewer reviews it (200)",
+   ""
+  ],
+  [
+   "ok",
+   "U the same user may review a record someone else prepared (200)",
+   ""
+  ],
+  [
+   "ok",
+   "T two DIFFERENT users (TestAccounts in the localhost session, TestRecDual in the 127.0.0.1 session) classify the same statement line at the same instant: one 200, one 409 (\"already classified\")",
+   ""
+  ],
+  [
+   "ok",
+   "T two DIFFERENT reviewers (TestFinApprover, TestRecDual) review the same daily record at the same instant: one 200, one 409 (\"not waiting for review\")",
+   ""
+  ],
+  [
+   "ok",
+   "T in both races the two requests were in the server at the same time (overlapping)",
+   ""
+  ],
+  [
+   "ok",
+   "U on screen: TestRecDual's own record #13 has no Review button; forcing the review from the page is refused by the server (403) with the reason shown",
+   ""
+  ],
+  [
+   "ok",
+   "U on screen: what TestRecDual withdrew reads \"withdrawn by TestRecDual\" (not as if reviewed)",
+   ""
+  ],
+  [
+   "ok",
+   "U the reviewer TestFinApprover reviews record #13 (200)",
+   ""
+  ],
+  [
+   "ok",
+   "D7 on screen (old screen, TestAccounts): ticking dummy row 99980305 (2 Sep) shows the refusal with its reason; the row is not marked",
+   ""
+  ],
+  [
+   "ok",
+   "D7 on screen: the 28 Aug dummy row (before the first day) is ticked as before (row green) and unticked again",
+   "rgba(52, 179, 10, 0.24) / rgba(0, 0, 0, 0)"
+  ]
+ ],
+ "safeguards_after_r3": [
+  [
+   "ok",
+   "S opening outstanding items still work after r3: each day 1–5 Sep the opening difference is fully explained (remaining 0.00); cheque 000202 outstanding throughout; cheque 000201 outstanding 1–2 Sep, cleared from 3 Sep",
+   ""
+  ],
+  [
+   "ok",
+   "S partial clearing and undo still work after r3: undoing the completion makes the partial match (50,000 of 90,000; rest −40,000.00) active again; completing it again works; the reviewed 3 Sep record stays as it was",
+   ""
+  ],
+  [
+   "ok",
+   "S exchange-rate explanations still required and kept after r3: USD 5 Sep has no unexplained exchange-rate difference and its reviewed record is current",
+   ""
+  ],
+  [
+   "ok",
+   "S pending vs posted after r3: TEST LKR 8 Sep \"Reviewed — ledger not yet corrected — 4 approved but not posted (339,575.00)\"; the verification account 5 Sep has no pending posting (its correction is posted and verified)",
+   ""
+  ],
+  [
+   "ok",
+   "S changes after review still flagged after r3: a matched dummy ledger row edited after review → \"Changed since review — re-review needed: ledger rows\"; put back exactly → the review is current again",
+   ""
+  ],
+  [
+   "ok",
+   "S permissions after r3: other departments (TestHotelRes, TestOperations) have no access (403) to the data or to \"verify again\"; view-only TestBankAuth can read (200) but cannot verify again (403)",
+   "{\"TestHotelRes\":[403,403,403],\"TestOperations\":[403,403,403],\"TestBankAuth\":[403,200]}"
+  ]
+ ],
+ "database_checks": [
+  [
+   "ok",
+   "DB D7: every dummy row's flags (bank_rec, bankst_flag, unrealised moves) exactly as before the old-screen calls",
+   ""
+  ],
+  [
+   "ok",
+   "DB D7: the 7 refusals audited (\"brc_legacy_refused\", user TestAccounts)",
+   ""
+  ],
+  [
+   "ok",
+   "DB F: after the day and the overview were computed, the simulated flags are still set (the new workflow changed nothing)",
+   ""
+  ],
+  [
+   "ok",
+   "DB F: the simulated flags put back; every dummy row exactly as before",
+   ""
+  ],
+  [
+   "ok",
+   "DB R: correction 6 linked to the dummy entry: status approved, posting_state verified, posted_ref 99980399, by TestAccounts",
+   ""
+  ],
+  [
+   "ok",
+   "DB R: \"verified again\" audited (brc_correction_posting_reverified, correction 6, TestAccounts)",
+   ""
+  ],
+  [
+   "ok",
+   "DB R: the refused \"verify again\" attempts (amounts 30) are audited (brc_correction_reverify_refused: 2) and nothing was recorded (posted fingerprint unchanged)",
+   ""
+  ],
+  [
+   "ok",
+   "DB T: record 12 reviewed once (one \"brc_day_reviewed\" audit row, by TestFinApprover)",
+   ""
+  ],
+  [
+   "ok",
+   "DB T: the race's classification cleared afterwards; no active classification or claim left on line 27",
+   ""
+  ],
+  [
+   "ok",
+   "DB every audit row of the r3 run is by a TEST login (or the setup script): TestAccounts,TestFinApprover,TestRecDual",
+   ""
+  ],
+  [
+   "ok",
+   "DB D7 (screen): after the on-screen refusal and the tick/untick of the 28 Aug row, every dummy row's flags are as before",
+   ""
+  ],
+  [
+   "ok",
+   "DB D7 (screen): the on-screen refusal audited (1 more brc_legacy_refused row)",
+   ""
+  ],
+  [
+   "ok",
+   "DB the real ledger (every row outside the dummy range): rows, sums and every row's reconciliation flags unchanged — 11364|965763907.13|965314763.93|24383521306171",
+   ""
+  ]
+ ],
+ "races": [
+  {
+   "name": "two DIFFERENT users classify the same statement line (27) at the same instant",
+   "a": [
+    {
+     "user": "TestAccounts",
+     "code": 200,
+     "message": "Classified as timing.",
+     "id": 6,
+     "t0": 1791785278529,
+     "t1": 1791785278662
+    }
+   ],
+   "b": [
+    {
+     "code": 409,
+     "message": "That line is already classified.",
+     "t0": 1791785278528,
+     "t1": 1791785278718,
+     "user": "TestRecDual"
+    }
+   ]
+  },
+  {
+   "name": "two DIFFERENT reviewers review the same daily record (12) at the same instant",
+   "a": [
+    {
+     "user": "TestFinApprover",
+     "code": 200,
+     "message": "Daily record reviewed.",
+     "t0": 1791785326906,
+     "t1": 1791785327284
+    }
+   ],
+   "b": [
+    {
+     "code": 409,
+     "message": "That daily record is not waiting for review (reviewed by TestFinApprover).",
+     "t0": 1791785326907,
+     "t1": 1791785327285,
+     "user": "TestRecDual"
+    }
+   ]
+  }
+ ],
+ "facts": {
+  "open_2026-09-01": [
+   "50000.00",
+   "0.00",
+   "50000.00",
+   "outstanding",
+   "outstanding",
+   "0.00",
+   "explained"
+  ],
+  "open_2026-09-02": [
+   "-25000.00",
+   "0.00",
+   "50000.00",
+   "outstanding",
+   "outstanding",
+   "0.00",
+   "reviewed"
+  ],
+  "open_2026-09-03": [
+   "5000.00",
+   "0.00",
+   "30000.00",
+   "cleared",
+   "outstanding",
+   "0.00",
+   "reviewed"
+  ],
+  "open_2026-09-04": [
+   "-10000.00",
+   "0.00",
+   "30000.00",
+   "cleared",
+   "outstanding",
+   "0.00",
+   "reviewed"
+  ],
+  "open_2026-09-05": [
+   "30000.00",
+   "0.00",
+   "30000.00",
+   "cleared",
+   "outstanding",
+   "0.00",
+   "reviewed"
+  ],
+  "partial": {
+   "undo": [
+    200,
+    "Match undone (kept in the record). Partial match #12 is active again."
+   ],
+   "complete_again": [
+    200,
+    "Partial match #12 completed (kept in the record).",
+    21
+   ],
+   "review3": [
+    "reviewed",
+    "reviewed"
+   ],
+   "unexpl5": "0.00"
+  },
+  "usd": {
+   "status": "Reviewed — ledger not yet corrected — 1 approved but not posted (4,530.00)",
+   "unexplained_differences": 0,
+   "revaluation": "97500.00",
+   "review": "reviewed"
+  },
+  "pending_vs_posted": {
+   "lkr_8sep": "Reviewed — ledger not yet corrected — 4 approved but not posted (339,575.00)",
+   "v_5sep": "Reconciled — reviewed",
+   "v_pending": "none"
+  }
+ },
+ "before": "11364|965763907.13|965314763.93|24383521306171",
+ "summary": "51/51 passed"
+}

@@ -1,0 +1,661 @@
+{
+    "key": "moi_talpe",
+    "hotel": {
+        "acc": "6-9-11-11782",
+        "name": "Moi Talpe",
+        "location": "Talpe",
+        "chain": "DBI Ceylon / Moi Hotels",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:06"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Moi Talpe"
+        },
+        "contract": {
+            "name": "All market rates WEF 01 Feb 2026 (Winter/Summer 2026 – Winter 2026/27)",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "valid_from": "2026-02-01",
+            "valid_to": "2027-04-30",
+            "taxes_included": 1,
+            "tax_note": "All room rates inclusive of all taxes; non-commissionable",
+            "received_at": "2026-09-03",
+            "credit_facility": "unknown",
+            "extra_bed_adult": 15,
+            "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+            "terms_text": "All room rates are inclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 11.00 am; early check-in / late check-out subject to availability, charges apply. No pets. Bookings are confirmed by e-mail, subject to written confirmation from the reservations department followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for any loss or damage to hotel property. DBI e-mail 24 Aug 2026: rates apply to new reservations only; only HB bookings are accepted on 24 and 31 Dec 2026; reservations / amendments / cancellations to info@dbihotels.lk, reservation@dbihotels.lk, sales3@dbihotels.lk.",
+            "child_policy_text": "Below 5.99 years free of charge sharing parent's bed on booked basis. 6 – 11 years 50% of the adult rate on booked basis per night (excluding extra bed). 12 years and above considered as an adult. Extra bed $15 per night. Child meal rate 50% of the adult rate.",
+            "cancellation_text": "November – April: release period 21 days prior to arrival; 50% of the full booking value charged if cancelled within 21 days. May – October: release period 14 days prior to arrival; 50% of the full booking value charged if cancelled within 14 days. No-shows: 100% of the full stay / no refund (if payment is settled). An early departure fee applies for cancellations made after check-in.",
+            "payment_text": "Full payment to be settled 7 days prior to the date of arrival. Cheque payments must be banked and realised at least 10 days prior to arrival. Reservations made within 7 days of arrival: payment in full upon booking confirmation. Failure to settle in full by the above date: rooms released without prior notice. Hotel reserves the right to release bookings with unsettled payment (excluding credit agents) with advance notice of 14 days or more. Bank: DBI Ceylon (Pvt) Ltd, Commercial Bank Rajagiriya, A/C 1000580196. Quote travel agency / guest name / confirmation number as reference.",
+            "notes": "928/1 Talpe Railway Junction, Matara-Galle Road, Heenatigala South, Talpe (beach front). 4 rooms; the whole villa is priced separately (plan moi_talpe_villa). No guide policy printed. Offers exclude 20 Dec – 15 Jan.",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "source_type": "email",
+            "source_file": "MOI HOTELS — Moi Talpe WEF 01.02.2026.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Superior",
+                "priced_as": "base",
+                "room_count": 1,
+                "max_adults": 2
+            },
+            {
+                "name": "Deluxe Double",
+                "priced_as": "base",
+                "room_count": 1,
+                "max_adults": 2
+            },
+            {
+                "name": "Deluxe Triple",
+                "priced_as": "base",
+                "room_count": 2,
+                "max_adults": 3
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Feb – 30 Apr 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-02-01",
+                        "to": "2026-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "BB",
+                        "sgl": 78,
+                        "dbl": 88,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "HB",
+                        "sgl": 93,
+                        "dbl": 118,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "BB",
+                        "sgl": 93,
+                        "dbl": 103,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "HB",
+                        "sgl": 108,
+                        "dbl": 133,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "BB",
+                        "sgl": 103,
+                        "dbl": 113,
+                        "tpl": 138,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "HB",
+                        "sgl": 118,
+                        "dbl": 143,
+                        "tpl": 183,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "01 May – 31 Oct 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-05-01",
+                        "to": "2026-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "BB",
+                        "sgl": 45,
+                        "dbl": 55,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "HB",
+                        "sgl": 60,
+                        "dbl": 85,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "BB",
+                        "sgl": 60,
+                        "dbl": 70,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "HB",
+                        "sgl": 75,
+                        "dbl": 100,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "BB",
+                        "sgl": 70,
+                        "dbl": 80,
+                        "tpl": 105,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "HB",
+                        "sgl": 85,
+                        "dbl": 110,
+                        "tpl": 150,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "01 Nov – 19 Dec 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-19"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "BB",
+                        "sgl": 74,
+                        "dbl": 84,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "HB",
+                        "sgl": 89,
+                        "dbl": 114,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "BB",
+                        "sgl": 89,
+                        "dbl": 99,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "HB",
+                        "sgl": 104,
+                        "dbl": 129,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "BB",
+                        "sgl": 99,
+                        "dbl": 109,
+                        "tpl": 134,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "HB",
+                        "sgl": 114,
+                        "dbl": 139,
+                        "tpl": 179,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "20 Dec 2026 – 15 Jan 2027 (festive)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-20",
+                        "to": "2027-01-15"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "BB",
+                        "sgl": 95,
+                        "dbl": 105,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "HB",
+                        "sgl": 110,
+                        "dbl": 135,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "BB",
+                        "sgl": 110,
+                        "dbl": 120,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "HB",
+                        "sgl": 125,
+                        "dbl": 150,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "BB",
+                        "sgl": 120,
+                        "dbl": 130,
+                        "tpl": 155,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "HB",
+                        "sgl": 135,
+                        "dbl": 160,
+                        "tpl": 200,
+                        "quad": null,
+                        "unit": null
+                    }
+                ],
+                "min_stay": 3
+            },
+            {
+                "name": "16 Jan – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-16",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "BB",
+                        "sgl": 82,
+                        "dbl": 92,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Superior",
+                        "meal_plan": "HB",
+                        "sgl": 97,
+                        "dbl": 122,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "BB",
+                        "sgl": 97,
+                        "dbl": 107,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Double",
+                        "meal_plan": "HB",
+                        "sgl": 112,
+                        "dbl": 137,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "BB",
+                        "sgl": 107,
+                        "dbl": 117,
+                        "tpl": 142,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Triple",
+                        "meal_plan": "HB",
+                        "sgl": 122,
+                        "dbl": 147,
+                        "tpl": 187,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 20,
+                "child": 10,
+                "note": "Dinner supplement (printed HB rows take precedence)"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 15,
+                "child": 7.5,
+                "note": "Lunch supplement"
+            },
+            {
+                "from": "BB",
+                "to": "RO",
+                "adult": -10,
+                "child": -5,
+                "note": "Breakfast price (room-only derived)"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 10,
+                "child": 5
+            },
+            {
+                "meal": "lunch",
+                "adult": 15,
+                "child": 7.5
+            },
+            {
+                "meal": "dinner",
+                "adult": 20,
+                "child": 10
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (BB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 25,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "Christmas Eve gala (HB/FB guests)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 25,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (BB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 25,
+                "compulsory": 1,
+                "child_pct": 50
+            },
+            {
+                "type": "gala",
+                "name": "New Year's Eve gala (HB/FB guests)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB,AI",
+                "per": "person",
+                "amount": 25,
+                "compulsory": 1,
+                "child_pct": 50
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Free of charge sharing parents' bed on booked basis"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "adult_rate",
+                "note": "50% of the adult rate on booked basis per night (excluding extra bed)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "pct": 50,
+                "pct_basis": "adult_rate",
+                "note": "50% of the adult rate plus extra bed $15 per night"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [
+            {
+                "kind": "early_booking",
+                "name": "Book 30 days in advance: 5% discount",
+                "value_pct": 5,
+                "per": "booking",
+                "excludes_peak": 1,
+                "conditions": "Booked 30 or more days before arrival. Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "early_booking",
+                "name": "Book 60 days in advance: 10% discount",
+                "value_pct": 10,
+                "per": "booking",
+                "excludes_peak": 1,
+                "conditions": "Booked 60 or more days before arrival. Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "early_booking",
+                "name": "Book 90 days in advance: 15% discount",
+                "value_pct": 15,
+                "per": "booking",
+                "excludes_peak": 1,
+                "conditions": "Booked 90 or more days before arrival. Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 7 nights, pay for 6",
+                "min_nights": 7,
+                "free_nights": 1,
+                "per": "room",
+                "excludes_peak": 1,
+                "conditions": "Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 14 nights, pay for 12",
+                "min_nights": 14,
+                "free_nights": 2,
+                "per": "room",
+                "excludes_peak": 1,
+                "conditions": "Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 21 nights, pay for 17",
+                "min_nights": 21,
+                "free_nights": 4,
+                "per": "room",
+                "excludes_peak": 1,
+                "conditions": "Not valid 20 Dec 2026 – 15 Jan 2027 (offers exclude that period)"
+            }
+        ],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-04-30",
+                "tier": "all",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 50,
+                "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+            },
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-04-30",
+                "tier": "all",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-10-31",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 50,
+                "note": "Release period 14 days prior to arrival; 50% of the full booking value if cancelled within 14 days"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-10-31",
+                "tier": "all",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 50,
+                "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "all",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "No-show: 100% of the full stay, no refund"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 7,
+                "pct": 100,
+                "note": "Full payment 7 days prior to arrival; reservations made within 7 days of arrival are paid in full on confirmation"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "days_before": 10,
+                "note": "Cheque payments must be banked and realised at least 10 days prior to arrival"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "other",
+                "days_before": 14,
+                "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+            }
+        ],
+        "restrictions": [
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "value": "HB",
+                "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+            },
+            {
+                "kind": "meal_plan_required",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "value": "HB",
+                "note": "DBI e-mail 24 Aug 2026: only HB bookings accepted on 24 and 31 Dec 2026"
+            },
+            {
+                "kind": "min_stay",
+                "date_from": "2026-12-20",
+                "date_to": "2027-01-15",
+                "value": "3",
+                "note": "Minimum 3 nights 20 Dec 2026 – 15 Jan 2027 (printed on the period header)"
+            }
+        ],
+        "extras": []
+    }
+}

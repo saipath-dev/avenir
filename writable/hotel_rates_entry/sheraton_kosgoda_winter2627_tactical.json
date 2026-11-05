@@ -1,0 +1,475 @@
+{
+ "key": "sheraton_kosgoda_winter2627_tactical",
+ "hotel": {
+  "acc": "6-9-11-10793",
+  "name": "Sheraton Kosgoda Turtle Beach Resort",
+  "location": "Kosgoda",
+  "chain": "Marriott (Sheraton)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10793",
+   "name": "Sheraton Kosgoda Turtle Beach Resort"
+  },
+  "contract": {
+   "name": "Winter 2026/27 Tactical Offer – all markets",
+   "plan_type": "tactical",
+   "tier": "all",
+   "priority": 10,
+   "contract_type": "Tactical offer",
+   "hotel_reference": "Winter 2026-27 Tactical - All Markets Extended",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "book_to": "2026-11-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "USD net per room per night; above room and meal rates include government tax and service charge; non-commissionable; the hotel may amend rates if government tax increases",
+   "source_type": "email",
+   "received_at": "2026-09-09",
+   "contract_date": "2026-08-28",
+   "credit_facility": "no",
+   "child_policy_text": "CHILD POLICY: children from 5 years and below - free sharing accommodation and meals on booked basis. Children from 6 years to 11 years - free sharing accommodation | 50% charge on meals. 12 years and above – third person's supplement and full meal rates are chargeable. EXTRA PERSON(s), allowed as per the bedding configuration and maximum occupancy, one additional roller-away bed can be added to all room categories: infant under 2 years — baby cot is complimentary; child 2 – 5.99 years — meals on complimentary; child 6 – 11.99 years — USD 35.00 per child per night on BB basis or USD 50.00 per child per night on HB basis; adult 12 years and above — USD 40.00 per person per night on BB basis or USD 70.00 per person per night on HB basis.",
+   "cancellation_text": "CANCELLATION POLICY. From 11th January 2027 to 30th April 2027: up to 30 days - no charge; 29-14 days prior to arrival - 50% of the full stay; 0-13 days prior to arrival - 100% of the full stay. From 01st November 2026 to 10th January 2027: up to 45 days - no charge; 44-31 days prior to arrival - 50% of the full stay; 0-30 days prior to arrival - 100% of the full stay. Cancellation policy for groups of 10 rooms and above will see different terms and conditions. EARLY DEPARTURE: if a guest checks out prior to the reserved check-out date the hotel will charge the entire stay and no refunds will be given. NO SHOWS: any room reservation confirmed and guaranteed by the agent and not claimed as per guarantee on the day of arrival will be charged in full with no refunds.",
+   "payment_text": "Full payment is required upon receipt of the pro-forma invoice from the hotel. You must fully prepay for all bookings at the hotel by guests through you, your channels and your B2B contractors, unless, upon application and review, the hotel elects to extend alternative billing privileges. Payment to Samudra Beach Resorts (Pvt) Ltd, Commercial Bank of Ceylon PLC, Foreign Branch, SWIFT CCEYLKLX, USD account 5000079568.",
+   "terms_text": "Notes on the rates: above room and meal rates include government tax and service charge; the hotel reserves the right to amend rates in the eventuality of a government tax increase; above rates are non-commissionable; for MICE inquiries rates can be discussed; rates are valid for all markets; the hotel will not accept any bookings checking out on the 31st December 2026. RATE MARK UP: the above room rates and related room supplements need to be marked up by a minimum of 20% by the travel agency, DMC or wholesaler and sold only as a package. FREE SELL: you may book rooms until the hotel notifies you to cease booking; all rooms must be booked and reported to the hotel daily on the day of booking. RATES AND YIELDABILITY: rates and availability are subject to the hotel's blackout dates, available on request; the hotel may increase, decrease or cease making rooms available at any time with prior notice, and reservations made before a rate or availability change must be reported and confirmed within 24 hours. RATES VALID FOR OPAQUE PACKAGED TRAVEL ONLY: the rates apply to FIT leisure packaged travel and may not be released to any other individual or entity or to internet booking / electronic distribution systems; package components must be booked concurrently and may not be itemized, disclosed to or discernible by the guest; guest rooms may only be made available as part of a bundle with at least one other substantial travel component; no GDS, no OTA, no room-only or unbundled sale, no disclosure of the rate to the end-user guest. Guests do not earn Marriott Bonvoy points on these bookings. Exceptions (rate leakage, brand-damaging channels) must be suspended within 24 hours and may be charged the rate adjustment plus a USD 200 administrative fee per approved Exception or Look No Further claim. Check-in 1500 hrs, check-out 1200 hrs; early check-in and late check-out at an additional charge; all guests must produce passport identification at check-in. Reservations by e-mail to sh.cmbst.reservation@sheraton.com, availability to be checked on +94 917 600 100. Termination on 30 days' notice; disputes by arbitration; insurance, data-protection and force-majeure clauses apply. Contract signed for the hotel by Yohan Liyanage (Director of Sales) and Michael Jayatillake (Senior Sales Manager); the company is Samudra Beach Resorts (Pvt) Ltd.",
+   "notes": "ALL MARKETS WINTER TACTICAL OFFER. Booking window printed as \"On or before 30th November\" — the YEAR IS NOT PRINTED; entered as 30 Nov 2026 (the contract was issued 28 Aug 2026 for a stay period starting 01 Nov 2026). Stay period 01 November 2026 to 30 April 2027; no rate code is printed. Prices are USD net per room per night for the \"Deluxe Garden View\" room at SGL/DBL occupancy — the single and the double column of every rate row therefore carry the same printed figure. The five higher categories are priced as that room plus a room supplement (USD net per night). A third person is not priced as a triple rate: the sheet charges an extra-person supplement of USD 40 (BB) / USD 70 (HB) per person per night for 12 years and above (entered as an extra_adult supplement), so no TPL rate is entered. All Inclusive is a supplement on top of the booked basis (USD 100 per person on BB, USD 80 per person on HB; child 6-11.99 USD 50 / USD 40) and is entered as a meal delta. Full board is NOT priced; the HB → FB delta is taken from the printed lunch meal supplement (USD 27 per person, child USD 13.50) because the gala supplements quote an \"HB/FB/AI\" basis — confirm with the hotel before selling FB. The child policy paragraph (\"6 to 11 years free sharing accommodation, 50% charge on meals\") and the EXTRA PERSON table (USD 35 BB / USD 50 HB per child per night) do not say the same thing; the printed amounts were entered and both texts are kept in the child policy text. No bookings may check out on 31 December 2026 (entered as a closed-to-departure restriction). Cancellation terms for groups of 10 rooms and above are different and are not printed on this sheet. No FOC, guide or extra-bed policy is printed. Room counts and sizes are not printed.",
+   "voucher_note": "Rates are for opaque packaged travel only and must be marked up by a minimum of 20% and sold only as a package; the room rate may never be disclosed to the guest",
+   "source_file": "WINTER RATES 2026/2027 - SHERATON KOSGODA TURTLE BEACH RESORT — Sheraton Kosgoda Turtle Beach Resort - Winter 2026-27 Tactical - All Markets Extended.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe Garden View",
+    "priced_as": "base",
+    "view": "Garden view",
+    "description": "The only priced category (\"DISCOUNTED ROOM RATES\", USD net per room per night, SGL/DBL occupancy). One additional roller-away bed can be added to all room categories."
+   },
+   {
+    "name": "Deluxe Ocean View Room",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Garden View"
+   },
+   {
+    "name": "Premium Room with Plunge Pool",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Garden View"
+   },
+   {
+    "name": "Junior Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Garden View"
+   },
+   {
+    "name": "Ocean Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Garden View"
+   },
+   {
+    "name": "Presidential Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe Garden View"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01.11.2026 – 20.12.2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-20"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "BB",
+      "sgl": 225,
+      "dbl": 225,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "HB",
+      "sgl": 255,
+      "dbl": 255,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "21.12.2026 – 23.12.2026",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2026-12-21",
+      "to": "2026-12-23"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "BB",
+      "sgl": 285,
+      "dbl": 285,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "HB",
+      "sgl": 315,
+      "dbl": 315,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "24.12.2026 – 10.01.2027 (festive)",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-24",
+      "to": "2027-01-10"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "BB",
+      "sgl": 500,
+      "dbl": 500,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "HB",
+      "sgl": 530,
+      "dbl": 530,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "11.01.2027 – 28.02.2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-11",
+      "to": "2027-02-28"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "BB",
+      "sgl": 284,
+      "dbl": 284,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "HB",
+      "sgl": 314,
+      "dbl": 314,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01.03.2027 – 30.04.2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-03-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "BB",
+      "sgl": 260,
+      "dbl": 260,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Deluxe Garden View",
+      "meal_plan": "HB",
+      "sgl": 290,
+      "dbl": 290,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Deluxe Ocean View Room",
+    "amount": 35,
+    "per": "room",
+    "note": "Higher Room Category Supplements (subject to availability): Deluxe Ocean View Room – USD 35 net per night"
+   },
+   {
+    "room_type": "Premium Room with Plunge Pool",
+    "amount": 60,
+    "per": "room",
+    "note": "Higher Room Category Supplements (subject to availability): Premium Room with Plunge Pool – USD 60 net per night"
+   },
+   {
+    "room_type": "Junior Suite",
+    "amount": 200,
+    "per": "room",
+    "note": "Higher Room Category Supplements (subject to availability): Junior Suite – USD 200 net per night"
+   },
+   {
+    "room_type": "Ocean Suite",
+    "amount": 400,
+    "per": "room",
+    "note": "Higher Room Category Supplements (subject to availability): Ocean Suite – USD 400 net per night"
+   },
+   {
+    "room_type": "Presidential Suite",
+    "amount": 800,
+    "per": "room",
+    "note": "Higher Room Category Supplements (subject to availability): Presidential Suite – USD 800 net per night"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "AI",
+    "adult": 100,
+    "child": 50,
+    "note": "All Inclusive Package on BB basis US$ 100.00 per person, child (6-11.99 years) US$ 50.00"
+   },
+   {
+    "from": "HB",
+    "to": "AI",
+    "adult": 80,
+    "child": 40,
+    "note": "All Inclusive Package on HB basis US$ 80.00 per person, child (6-11.99 years) US$ 40.00"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 27,
+    "child": 13.5,
+    "note": "DERIVED: full board is not priced on the sheet; taken from the printed lunch meal supplement (US$ 27.00 per person, child 6-11.99 years US$ 13.50). Confirm with the hotel before selling FB."
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "lunch",
+    "name": "Lunch at \"S\" Kitchen",
+    "adult": 27,
+    "child": 13.5,
+    "note": "MEAL SUPPLEMENTS, child price is for 6-11.99 years"
+   },
+   {
+    "meal": "dinner",
+    "name": "Dinner at \"S\" Kitchen",
+    "adult": 32,
+    "child": 16,
+    "note": "MEAL SUPPLEMENTS, child price is for 6-11.99 years"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Xmas Eve Gala Dinner (BB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 75,
+    "compulsory": 1,
+    "child_amount": 37.5,
+    "note": "MANDATORY FESTIVE SUPPLEMENTS: Xmas Eve Gala Dinner on BB US$ 75.00 per person, child (6-11.99 years) US$ 37.50"
+   },
+   {
+    "type": "gala",
+    "name": "Xmas Eve Gala Dinner (HB/FB/AI guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 65,
+    "compulsory": 1,
+    "child_amount": 32.5,
+    "note": "MANDATORY FESTIVE SUPPLEMENTS: Xmas Eve Gala Dinner on HB/FB/AI US$ 65.00 per person, child (6-11.99 years) US$ 32.50"
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve Gala Dinner (BB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 250,
+    "compulsory": 1,
+    "child_amount": 125,
+    "note": "MANDATORY FESTIVE SUPPLEMENTS: New Year's Eve Gala Dinner on BB US$ 250.00 per person, child (6-11.99 years) US$ 125.00"
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve Gala Dinner (HB/FB/AI guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 250,
+    "compulsory": 1,
+    "child_amount": 125,
+    "note": "MANDATORY FESTIVE SUPPLEMENTS: New Year's Eve Gala Dinner on HB/FB/AI US$ 250.00 per person, child (6-11.99 years) US$ 125.00"
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra person 12 years and above (BB)",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 40,
+    "compulsory": 0,
+    "note": "EXTRA PERSON(s): adult 12 years and above, USD 40.00 per person per night on BB basis (one roller-away bed can be added to all room categories; no triple rate is printed)"
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra person 12 years and above (HB)",
+    "meal_plans": "HB",
+    "per": "person",
+    "amount": 70,
+    "compulsory": 0,
+    "note": "EXTRA PERSON(s): adult 12 years and above, USD 70.00 per person per night on HB basis"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 1.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Infant under 2 years — baby cot is complimentary"
+   },
+   {
+    "age_from": 2,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Child 2 – 5.99 years — meals on complimentary (child policy: children from 5 years and below free sharing accommodation and meals on the booked basis)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "any",
+    "meal_plan": "BB",
+    "amount": 35,
+    "note": "EXTRA PERSON(s): USD 35.00 per child per night on BB basis. The child policy paragraph instead says free sharing accommodation and 50% charge on meals for 6 to 11 years."
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "any",
+    "meal_plan": "HB",
+    "amount": 50,
+    "note": "EXTRA PERSON(s): USD 50.00 per child per night on HB basis. The child policy paragraph instead says free sharing accommodation and 50% charge on meals for 6 to 11 years."
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-01-10",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 45,
+    "charge_pct": 0,
+    "note": "01 Nov 2026 – 10 Jan 2027: up to 45 days — no charge"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-01-10",
+    "tier": "all",
+    "days_from": 44,
+    "days_to": 31,
+    "charge_pct": 50,
+    "note": "01 Nov 2026 – 10 Jan 2027: 44-31 days prior to arrival — 50% of the full stay"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-01-10",
+    "tier": "all",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "01 Nov 2026 – 10 Jan 2027: 0-30 days prior to arrival — 100% of the full stay"
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 30,
+    "charge_pct": 0,
+    "note": "11 Jan 2027 – 30 Apr 2027: up to 30 days — no charge"
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 29,
+    "days_to": 14,
+    "charge_pct": 50,
+    "note": "11 Jan 2027 – 30 Apr 2027: 29-14 days prior to arrival — 50% of the full stay"
+   },
+   {
+    "date_from": "2027-01-11",
+    "date_to": "2027-04-30",
+    "tier": "all",
+    "days_from": 13,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "11 Jan 2027 – 30 Apr 2027: 0-13 days prior to arrival — 100% of the full stay"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Full payment is required upon receipt of the pro-forma invoice from the hotel; full prepayment of all bookings unless the hotel extends alternative billing privileges"
+   }
+  ],
+  "restrictions": [
+   {
+    "kind": "closed_to_departure",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "value": "No check-out on 31.12.2026",
+    "note": "Please note that we will not accept any bookings checking out on the 31st December 2026"
+   }
+  ],
+  "extras": []
+ }
+}

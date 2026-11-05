@@ -1,0 +1,7 @@
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('1', '2', 'cleared_by_match', '10', 'TestAccounts', '2026-10-12 06:59:52', NULL);
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('2', '5', 'cleared_by_match', '12', 'TestAccounts', '2026-10-12 07:03:03', NULL);
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('3', '4', 'cleared_by_match', '14', 'TestAccounts', '2026-10-12 07:05:12', NULL);
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('4', '4', 'restored_by_undo', '14', 'TestAccounts', '2026-10-12 07:05:12', 'verification: undo restores the timing item');
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('5', '4', 'cleared_by_match', '15', 'TestAccounts', '2026-10-12 07:05:14', NULL);
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('6', '4', 'restored_by_undo', '15', 'TestAccounts', '2026-10-12 07:05:48', 'screenshot: show the timing item in the suggestions (dummy)');
+INSERT INTO `brc_mark_event` (`id`, `mark_id`, `event`, `match_id`, `by_user`, `at`, `note`) VALUES ('7', '4', 'cleared_by_match', '16', 'TestAccounts', '2026-10-12 07:06:33', NULL);

@@ -1,0 +1,227 @@
+=== app/Views/layouts/tourdesk_bar.php
+--- before_1c/app/Views/layouts/tourdesk_bar.php	2026-10-06 00:10:28.000000000 +0000
++++ tc/avenir/app/Views/layouts/tourdesk_bar.php	2026-10-06 03:48:58.529615016 +0000
+@@ -2,8 +2,8 @@
+ /**
+  * Tour Desk — the menu bar shared by the new panels.
+  *
+- * One strip, the same on every panel it sits on. The work tabs — Inquiries (Quotation
+- * Desk), Confirmed Tours (whoever holds Inquiries), Hotel Bookings (Hotel Desk), Transport (Transport Desk), Tour Board (Management),
++ * One strip, the same on every panel it sits on. The work tabs — Tour Inquiry (Quotation
++ * Desk), Confirmed Tours (whoever holds Tour Inquiry), Hotel Bookings (Hotel Desk), Transport Operations (Transport Desk), Tour Board (Management),
+  * Admin (Management: the one place for cancel, delete, restore, removal and the settings)
+  * — then a thin divider and the master files: Hotel Rates, Incomplete Work, Transport
+  * Rates, Mileage Allowances, Excursion Rates, Pricing; and a New quote button. Somebody holding more than six tabs
+@@ -25,17 +25,19 @@
+ // divider. A person holding more than six tabs (Management) gets the masters folded into
+ // one "Masters" menu so the bar keeps to a single row; every desk keeps the flat layout.
+ $tdItems = [
+-    ['url' => 'tour/intake',                     'label' => 'Inquiries',          'icon' => 'bi-inbox',       'zone' => 'work'],
++    ['url' => 'tour/intake',                     'label' => 'Tour Inquiry',       'icon' => 'bi-inbox',       'zone' => 'work'],   // 1c: the tab carries the screen's own name (the sidebar entry is 'Tour Inquiry' too)
+     // tf-confirmed-r1: every confirmed tour on one list — a page under Inquiries, so it is shown to (and opens for)
+     // exactly the groups that hold Inquiries; 'gate' names the privilege it rides on, it has no menu entry of its own
+     ['url' => 'tour/intake/confirmed',           'label' => 'Confirmed Tours',    'icon' => 'bi-calendar2-check', 'zone' => 'work', 'gate' => 'tour/intake'],
+     ['url' => 'tour/hotel_bookings',             'label' => 'Hotel Bookings',     'icon' => 'bi-door-open',   'zone' => 'work'],
+-    ['url' => 'tour/transport_ops',              'label' => 'Transport',          'icon' => 'bi-truck',       'zone' => 'work'],
++    ['url' => 'tour/transport_ops',              'label' => 'Transport Operations', 'icon' => 'bi-truck',     'zone' => 'work'],   // 1c: the same name as the screen and the sidebar entry
+     ['url' => 'tour/board',                      'label' => 'Tour Board',         'icon' => 'bi-kanban',      'zone' => 'work'],
+     // the entrance ticket stock (schema 37): a work tab with a count — the attractions low on or out of tickets
+     ['url' => 'tour/ticket_stock',               'label' => 'Ticket Stock',       'icon' => 'bi-ticket-detailed', 'zone' => 'work'],
+-    ['url' => 'master_files/hotel_rate_v2',      'label' => 'Hotel Rates',        'icon' => 'bi-building',    'zone' => 'master'],
+-    ['url' => 'master_files/hotel_work',         'label' => 'Incomplete Work',    'icon' => 'bi-list-check',  'zone' => 'master'],
++    // 1c (6 Oct 2026): the folded Masters menu reads in four groups — hotels; places, activities & meals; Transport & Guide
++    // Services; pricing — each master keeps its own URL, privilege and label; 'group' only decides where it sits in the menu
++    ['url' => 'master_files/hotel_rate_v2',      'label' => 'Hotel Rates',        'icon' => 'bi-building',    'zone' => 'master', 'group' => 'hotels', 'sub' => 'contracts, seasons, what a night costs'],
++    ['url' => 'master_files/hotel_work',         'label' => 'Incomplete Work',    'icon' => 'bi-list-check',  'zone' => 'master', 'group' => 'hotels', 'sub' => 'what the system found missing, nothing guessed'],
+     // Transport & Guide Services (Shantha, 5 Oct 2026): the four connected masters as one group in the Masters menu —
+     // the rates, the mileage, the people (what is paid) and the quotation's crew roles (what is costed); each keeps its own
+     // URL and privilege; Transport Operations is the desk's work and stays a work tab, outside the group
+@@ -44,17 +46,17 @@
+     ['url' => 'master_files/crew_people',        'label' => 'Drivers & Guides',   'icon' => 'bi-people',      'zone' => 'master', 'group' => 'tgs', 'sub' => 'the people · what is paid'],
+     ['url' => 'master_files/crew_bata',          'label' => 'Crew Roles & Quotation Costing', 'icon' => 'bi-calculator', 'zone' => 'master', 'group' => 'tgs', 'sub' => 'what is quoted — not what is paid'],
+     // schema 39 (tf-entrance-r1): the one master of places and their entrance fees
+-    ['url' => 'master_files/entrance_master',    'label' => 'Places & Entrance Fees', 'icon' => 'bi-bank',    'zone' => 'master'],
++    ['url' => 'master_files/entrance_master',    'label' => 'Places & Entrance Fees', 'icon' => 'bi-bank',    'zone' => 'master', 'group' => 'places', 'sub' => 'the one master of places and their fees'],
+     // schema 40 (tf-meals-r1): lunches and dinners outside the hotel for Half Board tours
+-    ['url' => 'master_files/meal_master',        'label' => 'Meal Master',        'icon' => 'bi-cup-hot',     'zone' => 'master'],
++    ['url' => 'master_files/meal_master',        'label' => 'Meal Master',        'icon' => 'bi-cup-hot',     'zone' => 'master', 'group' => 'places', 'sub' => 'lunches and dinners outside the hotel'],
+     // the two programme masters (schema 29): free visits (never costed) and paid activities & services (costed)
+-    ['url' => 'master_files/free_visits',        'label' => 'Free Visits',        'icon' => 'bi-geo-alt',     'zone' => 'master'],
+-    ['url' => 'master_files/paid_services',      'label' => 'Paid Activities & Services', 'icon' => 'bi-ticket-perforated', 'zone' => 'master'],
++    ['url' => 'master_files/free_visits',        'label' => 'Free Visits',        'icon' => 'bi-geo-alt',     'zone' => 'master', 'group' => 'places', 'sub' => 'never costed'],
++    ['url' => 'master_files/paid_services',      'label' => 'Paid Activities & Services', 'icon' => 'bi-ticket-perforated', 'zone' => 'master', 'group' => 'places', 'sub' => 'costed on the quotation'],
+     // stays in use until UAT of Paid Activities & Services is signed off; nothing retires it automatically
+-    ['url' => 'master_files/excursion_rates',    'label' => 'Excursion Rates',    'icon' => 'bi-compass',     'zone' => 'master'],
++    ['url' => 'master_files/excursion_rates',    'label' => 'Excursion Rates',    'icon' => 'bi-compass',     'zone' => 'master', 'group' => 'places', 'sub' => 'until Paid Activities & Services is signed off'],
+     // pinned: a master that keeps its own tab when the others fold into the Masters menu — the library is opened often, by staff as well as Admin
+-    ['url' => 'master_files/tour_photos',        'label' => 'Tour Photos',        'icon' => 'bi-images',      'zone' => 'master', 'pin' => true],
+-    ['url' => 'tour/pricing',                    'label' => 'Pricing',            'icon' => 'bi-percent',     'zone' => 'master'],
++    ['url' => 'master_files/tour_photos',        'label' => 'Tour Photos',        'icon' => 'bi-images',      'zone' => 'master', 'pin' => true, 'group' => 'pricing', 'sub' => 'the picture library'],
++    ['url' => 'tour/pricing',                    'label' => 'Pricing',            'icon' => 'bi-percent',     'zone' => 'master', 'group' => 'pricing', 'sub' => 'margins and the selling price'],
+     // the Admin tab: the privilege behind every ⋯ menu, and the one place for cancel, delete, restore, removal and the settings.
+     // A work tab, never folded, shown only to a group that holds it (Management / the System Administrator).
+     ['url' => 'tour/manage',                     'label' => 'Admin',              'icon' => 'bi-shield-lock', 'zone' => 'work'],
+@@ -117,6 +119,16 @@
+     $tdMasterBadge += (int) ($tdBadges[$it['url']] ?? 0);
+     $tdMasterOn = $tdMasterOn || $tdIsActive($it['url']);
+ }
++// 1c: the folded Masters menu in groups, in this order; a group is shown only when the signed-in group may open something in it
++$tdGroupNames = ['hotels' => ['Hotels', 'bi-building'], 'places' => ['Places, activities & meals', 'bi-geo-alt'], 'tgs' => ['Transport & Guide Services', 'bi-truck-front'], 'pricing' => ['Pricing', 'bi-percent']];
++$tdGroups = [];
++foreach ($tdGroupNames as $g => $gn) {
++    $in = array_values(array_filter($tdMaster, static fn ($it) => ($it['group'] ?? '') === $g));
++    if ($in) {
++        $tdGroups[$g] = $in;
++    }
++}
++$tdUngrouped = array_values(array_filter($tdMaster, static fn ($it) => !isset($tdGroupNames[$it['group'] ?? ''])));
+ ?>
+ <style>
+     /* Tour Desk bar — the Avenir colours, taken from the logo itself and the sign-in page:
+@@ -176,7 +188,11 @@
+     .tdbar .td-group { display:flex; align-items:center; gap:8px; padding:8px 12px 4px; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--td-purple); }
+     .tdbar .td-in-group { padding-left:18px; }
+     .tdbar .dropdown-divider { border-color:var(--td-line); margin:6px 4px; }
+-    .tdbar .dropdown-item .td-badge { vertical-align:middle; margin-left:4px; }
++    .tdbar .dropdown-item .td-badge { display:inline-grid; width:auto; vertical-align:middle; margin:0 0 0 4px; color:#fff; font-size:11px; line-height:1; }   /* 1c: the count reads white on red inside a menu entry too (the entry's span rule used to grey it out) */
++    /* 1c: the Masters menu in two columns, a group never split across them, the dividers gone (the group headings do that work) */
++    .tdbar .dropdown-menu.td-masters.show { column-count:2; column-gap:4px; min-width:660px; }
++    .tdbar .td-masters .td-mgroup { break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid; display:inline-block; width:100%; }
++    .tdbar .td-masters .dropdown-divider { display:none; }
+     .tdbar .td-badge { display:inline-grid; place-items:center; min-width:20px; height:20px; padding:0 6px; border-radius:10px; font-size:11px; font-weight:700; line-height:1;
+              background:#e53935; color:#fff; box-shadow:0 1px 3px rgba(0,0,0,.15); }
+     .tdbar .td-item.on .td-badge { background:#fff; color:var(--td-purple); }
+@@ -208,6 +224,8 @@
+     .tf .form-control:focus, .tf .form-select:focus, .hr2 .form-control:focus, .hr2 .form-select:focus { border-color:rgba(132,36,132,.45); box-shadow:0 0 0 .2rem rgba(132,36,132,.15); }
+     .tf .form-check-input:checked, .hr2 .form-check-input:checked { background-color:#842484; border-color:#842484; }
+ 
++    /* 1c: the two longer tab names (Tour Inquiry, Transport Operations) still fit one row on an office screen — tighter tabs under 1600px */
++    @media (max-width: 1600px) { .tdbar .td-item { padding:0 11px; gap:6px; } .tdbar .td-nav { gap:3px; } .tdbar .td-brand { padding-right:10px; } }
+     @media (max-width: 900px) { .tdbar .td-item .lbl { display:none; } .tdbar .td-item { padding:0 12px; } .tdbar .td-brand small { display:none; } }
+     @media (max-width: 520px) { .tdbar .td-brand b { display:none; } .tdbar .td-brand { padding-right:8px; } .tdbar { padding:8px; } }
+ </style>
+@@ -233,19 +251,19 @@
+             <button class="td-item<?= $tdMasterOn ? ' on' : '' ?>" type="button" id="td_masters" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                 <i class="bi bi-collection"></i><span class="lbl">Masters</span><?php if ($tdMasterBadge > 0): ?><span class="td-badge"><?= (int) $tdMasterBadge ?></span><?php endif; ?><i class="bi bi-chevron-down chev"></i>
+             </button>
+-            <div class="dropdown-menu">
+-                <?php $tdTgs = array_values(array_filter($tdMaster, static fn ($it) => ($it['group'] ?? '') === 'tgs')); $tdRest = array_values(array_filter($tdMaster, static fn ($it) => ($it['group'] ?? '') !== 'tgs')); ?>
+-                <?php if ($tdTgs): ?>
+-                <div class="td-group"><i class="bi bi-truck-front"></i> Transport &amp; Guide Services</div>
+-                <?php foreach ($tdTgs as $it): ?>
++            <div class="dropdown-menu td-masters">
++                <?php foreach ($tdGroups as $g => $in): ?>
++                <div class="td-mgroup">
++                <div class="td-group"><i class="bi <?= esc($tdGroupNames[$g][1]) ?>"></i> <?= esc($tdGroupNames[$g][0]) ?></div>
++                <?php foreach ($in as $it): ?>
+                 <a class="dropdown-item td-in-group<?= $tdIsActive($it['url']) ? ' active' : '' ?>" href="<?= base_url($it['url']) ?>">
+                     <span class="ic"><i class="bi <?= esc($it['icon']) ?>"></i></span>
+                     <div><b><?= esc($it['label']) ?><?php $n = $tdBadges[$it['url']] ?? null; if ($n !== null && (int) $n > 0): ?> <span class="td-badge"><?= (int) $n ?></span><?php endif; ?></b><?php if (!empty($it['sub'])): ?><span><?= esc($it['sub']) ?></span><?php endif; ?></div>
+                 </a>
+                 <?php endforeach; ?>
+-                <?php if ($tdRest): ?><div class="dropdown-divider"></div><?php endif; ?>
+-                <?php endif; ?>
+-                <?php foreach ($tdRest as $it): ?>
++                </div>
++                <?php endforeach; ?>
++                <?php foreach ($tdUngrouped as $it): ?>
+                 <a class="dropdown-item<?= $tdIsActive($it['url']) ? ' active' : '' ?>" href="<?= base_url($it['url']) ?>">
+                     <span class="ic"><i class="bi <?= esc($it['icon']) ?>"></i></span>
+                     <div><b><?= esc($it['label']) ?><?php $n = $tdBadges[$it['url']] ?? null; if ($n !== null && (int) $n > 0): ?> <span class="td-badge"><?= (int) $n ?></span><?php endif; ?></b></div>
+@@ -277,3 +295,4 @@
+     </div>
+     <?php endif; ?>
+ </nav>
++<?= view('layouts/tf_ux') ?>
+=== app/Views/pages/master_files/crew_people.php
+--- before_1c/app/Views/pages/master_files/crew_people.php	2026-10-06 00:10:29.000000000 +0000
++++ tc/avenir/app/Views/pages/master_files/crew_people.php	2026-10-06 03:39:43.876233265 +0000
+@@ -85,7 +85,7 @@
+ 
+                 <div class="tf-title">
+                     <div>
+-                        <h4>Driver &amp; Guide Master <span class="help">· Drivers &amp; Guides · Transport &amp; Guide Services</span></h4>
++                        <h4>Drivers &amp; Guides <span class="help">· the Driver &amp; Guide Master · Transport &amp; Guide Services</span></h4>
+                         <div class="sub">One record per person the company engages, in three categories: <b>JSD</b> Japanese Speaking Driver (drives, speaks Japanese, is not the licensed guide), <b>JSCG</b> Japanese Speaking Chauffeur Guide (drives, speaks Japanese, holds the guide licence) and <b>JSNTG</b> Japanese Speaking National Tourist Guide (the licensed guide; no vehicle — a driver is allocated separately). Each tab lists its own category only. Transport Operations picks the person for a confirmed tour from here, strictly by category; the pack, the vouchers and the payment screens name them. Nothing is deleted: a person who no longer works for the company is archived.</div>
+                     </div>
+                 </div>
+=== app/Views/pages/master_files/hotel_work.php
+--- before_1c/app/Views/pages/master_files/hotel_work.php	2026-09-17 06:52:34.000000000 +0000
++++ tc/avenir/app/Views/pages/master_files/hotel_work.php	2026-10-06 03:43:04.368281789 +0000
+@@ -44,6 +44,8 @@
+     .hr2 table.wk tr.item:hover td { background: #fbfcfd; }
+     .hr2 table.wk tr.done td { opacity: .6; }
+     .hr2 table.wk tr.ignored td { opacity: .75; font-style: italic; }
++    .hr2 table.wk tr.grp td { background: var(--hr-bg); border-top: 2px solid var(--hr-line); padding: 8px 12px; font-size: 12.5px; }  /* one heading row per kind (6 Oct 2026) */
++    .hr2 table.wk tr.grp .pill { font-size: 11.5px; }
+     .hr2 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+     .hr2 .dot.red { background: var(--hr-red); } .hr2 .dot.amber { background: var(--hr-amber); } .hr2 .dot.blue { background: var(--hr-navy); }
+     .hr2 .ttl { font-weight: 600; color: var(--hr-ink); }
+@@ -303,8 +305,13 @@
+             tb.innerHTML = `<tr><td colspan="6" class="empty">${S.status === 'open' && !S.kind && !S.q ? '<b>Nothing is missing.</b> Every confirmed night has a contract rate, no draft is waiting, every sheet has a supplier record.' : 'No items match.'}</td></tr>`;
+             return;
+         }
+-        tb.innerHTML = S.items.map(it => `<tr class="item ${it.status}" data-id="${it.id}">
+-            <td>${kindPill(it)}${it.source === 'manual' ? '<div class="help mt-1">added by hand</div>' : ''}${it.status !== 'open' ? '<div class="mt-1">' + pill(it.status === 'done' ? 'green' : 'grey', it.status) + '</div>' : ''}</td>
++        // one group per kind, the kind named once with its count (6 Oct 2026: terse rows, the explanation folded on each);
++        // the kinds keep the order the list already had (the most urgent first), the items within a kind keep theirs
++        const kindOrder = []; S.items.forEach(it => { if (!kindOrder.includes(it.kind_label)) kindOrder.push(it.kind_label); });
++        const sorted = S.items.slice().sort((a, b) => kindOrder.indexOf(a.kind_label) - kindOrder.indexOf(b.kind_label));
++        let lastKind = null;
++        tb.innerHTML = sorted.map(it => (lastKind === it.kind_label ? '' : (lastKind = it.kind_label, `<tr class="grp"><td colspan="6">${kindPill(it)} <span class="help">${sorted.filter(x => x.kind_label === it.kind_label).length} item${sorted.filter(x => x.kind_label === it.kind_label).length === 1 ? '' : 's'}</span></td></tr>`)) + `<tr class="item ${it.status}" data-id="${it.id}">
++            <td><span class="dot ${it.level === 'red' ? 'red' : it.level === 'amber' ? 'amber' : 'blue'}"></span>${it.source === 'manual' ? '<div class="help mt-1">added by hand</div>' : ''}${it.status !== 'open' ? '<div class="mt-1">' + pill(it.status === 'done' ? 'green' : 'grey', it.status) + '</div>' : ''}</td>
+             <td><div class="ttl">${esc(it.title)}</div>${it.detail ? `<div class="dtl">${esc(it.detail)}</div>` : ''}${nightsHtml(it)}${toursHtml(it)}${supplierHtml(it)}${it.note ? `<div class="note">${esc(it.note)}</div>` : ''}</td>
+             <td>${links(it)}</td>
+             <td>${esc(it.dates || '')}${it.amount !== null && it.amount !== undefined ? `<div class="help">${money(it.amount)}</div>` : ''}</td>
+=== app/Views/pages/tour/intake.php
+--- before_1c/app/Views/pages/tour/intake.php	2026-10-03 14:13:03.000000000 +0000
++++ tc/avenir/app/Views/pages/tour/intake.php	2026-10-06 03:13:46.624474192 +0000
+@@ -1491,7 +1491,7 @@
+                 const t = (tagsBy[d.day_no] || tagsBy[String(d.day_no)] || [])[0];
+                 const who = p ? (p.chosen_by === 'human' ? `<span class="pill pill-blue" title="${esc('Chosen by ' + (p.by || 'staff'))}">chosen</span>` : '<span class="pill pill-grey">auto</span>') : '';
+                 const pic = p && p.photo_id ? `<img class="pic" src="${esc(p.thumb_url || p.url)}" alt="">`
+-                    : `<div class="nopic">${p && p.chosen_by === 'human' ? 'No picture' : (p && p.note ? esc((p.tag_name || '') + ' pictures ' + p.note) : (t ? 'No photo for ' + esc(t.name) + ' yet' : 'No place recognised'))}</div>`;
++                    : `<div class="nopic">${p && p.chosen_by === 'human' ? 'No picture' : (p && p.note ? esc((p.tag_name || '') + ' pictures ' + p.note) : (t ? 'No photo for ' + esc(t.name) + ' yet' : 'No picture yet'))}</div>`;
+                 return `<div class="phtile" ${it.locked ? 'style="cursor:default"' : `data-photoday="${d.day_no}"`} title="${esc('Day ' + d.day_no + (d.area ? ' · ' + d.area : '') + (it.locked ? '' : ' — click to change'))}">${pic}
+                     <div class="cap"><b>Day ${d.day_no}${d.area ? ' · ' + esc(d.area) : ''}</b>${p && p.photo_id ? esc(p.tag_name || p.caption || '') + ' ' : (t ? esc(t.name) + ' ' : '')}${who}</div></div>`;
+             }).join('');
+=== app/Views/pages/tour/transport_ops.php
+--- before_1c/app/Views/pages/tour/transport_ops.php	2026-10-06 00:10:31.000000000 +0000
++++ tc/avenir/app/Views/pages/tour/transport_ops.php	2026-10-06 03:39:43.878204025 +0000
+@@ -140,7 +140,7 @@
+ 
+                 <div class="tf-title">
+                     <div>
+-                        <h4>Transport</h4>
++                        <h4>Transport Operations</h4>
+                         <div class="sub">One row per confirmed tour — the tour's one job on this desk, put here the moment the Quotation Desk presses Confirm Tour. Open the tour to see every vehicle it needs, with its dates, sectors, kilometres, driver and guide. Allocate the vehicle, engage the crew, check the schedule, issue the driver's pack. When every vehicle, driver and guide is allocated, mark <b>Transport work complete</b>: the tour leaves the red count and stays under Completed with its whole history. Kilometres, never rupees: the rate stays on the inquiry and the Tour Board.</div>
+                     </div>
+                     <div><button class="btn btn-light btn-sm" id="btn_docs"><i class="bi bi-list-check"></i> Driver's pack list</button></div>
+=== app/Libraries/TourFlow/Desks.php
+--- before_1c/app/Libraries/TourFlow/Desks.php	2026-10-02 10:12:32.000000000 +0000
++++ tc/avenir/app/Libraries/TourFlow/Desks.php	2026-10-06 03:13:57.989301758 +0000
+@@ -16,6 +16,13 @@
+  *
+  * Every grant is matched by URL against the live menu list. A screen that has no menu
+  * entry is reported by name, not invented: nothing is created for it.
++ *
++ * THE ACCESS RULE OF THE NEW GENERATION (Shantha, 6 Oct 2026). Nobody keeps a privilege
++ * because the old system gave it: the legacy grants are a reference, never an authority.
++ * Access is given only on his instruction, by name, desk by desk; what he has not decided
++ * stays ungranted and is asked about, never guessed. VERSION therefore stays at 9 — no
++ * release seeds a desk's starting set again; new screens get a menu entry only, and the
++ * grant is his to make in Settings → Group Privileges.
+  */
+ final class Desks
+ {
+@@ -24,7 +31,8 @@
+ 
+     public const QUOTATION  = 'Quotation Desk';
+     public const HOTEL      = 'Hotel Desk';
+-    public const TRANSPORT  = 'Transport Desk';
++    public const TRANSPORT  = 'Transport Desk';   // the seed name only: on live the group is 'Transport & Crew Guide Allocation Desk' (renamed 6 Oct 2026).
++                                                    // The seed looks a group up by this name, so a re-seed would NOT find the renamed group — one more reason VERSION stays at 9.
+     public const MANAGEMENT = 'Management';   // the group that already exists; nothing is created under this name
+ 
+     public const GROUPS = [self::QUOTATION, self::HOTEL, self::TRANSPORT];
+=== app/Views/layouts/tf_ux.php (new file, 185 lines — the whole file is in release/)

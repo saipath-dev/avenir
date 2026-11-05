@@ -1,0 +1,290 @@
+{
+    "key": "moi_oruwa",
+    "hotel": {
+        "acc": "6-9-11-11785",
+        "name": "Oruwa Boutique Villas",
+        "location": "Arugam Bay",
+        "chain": "DBI Ceylon / Moi Hotels",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:11"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Oruwa Boutique Villas"
+        },
+        "contract": {
+            "name": "Room-only rates 01 Apr – 30 Sep 2026 (exclusive of 18% VAT)",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "valid_from": "2026-04-01",
+            "valid_to": "2026-09-30",
+            "taxes_included": 0,
+            "tax_pct": 18,
+            "tax_note": "Above rates are exclusive of 18% VAT and applicable taxes; non-commissionable",
+            "received_at": "2026-09-03",
+            "credit_facility": "unknown",
+            "default_meal_plan": "RO",
+            "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+            "terms_text": "All room rates are exclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 11.00 am; early check-in / late check-out subject to availability, charges apply. Bookings confirmed by e-mail subject to written confirmation from reservations followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for loss or damage to hotel property. Reservations: reservation@dbihotels.lk / dilrukshi@dbihotels.com / info@dbihotels.lk.",
+            "child_policy_text": "Kids below 5.99 years share parents' bed on FOC basis. 6 – 11 years 50% of the per-night adult meal rate, sharing parents' bed. 12 years and above considered as an adult.",
+            "cancellation_text": "All group bookings above 5 rooms: release period 30 days prior to arrival; 50% of the full booking value charged if cancelled within 30 days. November – April: release period 21 days; 50% within 21 days. May – October: release period 14 days; 50% within 14 days. No-shows: 100% of the full stay, no refund (applicable for credit agents too — sentence truncated on the sheet).",
+            "payment_text": "Full payment to be settled 3 days prior to the date of arrival. Cheque payments must be banked and realised at least 10 days prior to arrival. Failure to settle: rooms released without prior notice. Hotel may release bookings with unsettled payment (excluding credit agents) with 14 days or more advance notice. Payment slips to financedepartment@dbihotels.lk / finance@dbihotels.lk / chiefaccountant@dbihotels.lk / sales3@dbihotels.lk / dilrukshi@dbihotels.lk / reservation@dbihotels.lk (no bank account printed).",
+            "notes": "Sarvodaya, Pottuvil-18, Arugam Bay (e-mail: 9 bedrooms). Undated sheet; rates printed without currency symbol — USD assumed from the meal supplements (USD). Deluxe Family Room is described as 4–5 pax but only SGL/DBL/TRPL prices are printed; no 4th/5th-person price, no extra-bed price, no gala, no guide policy.",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "source_type": "email",
+            "source_file": "MOI HOTELS — Oruwa Boutique Villas _1_.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Double room with Garden View",
+                "priced_as": "base",
+                "max_adults": 3,
+                "view": "Garden"
+            },
+            {
+                "name": "Double room with Balcony",
+                "priced_as": "base",
+                "max_adults": 3
+            },
+            {
+                "name": "Deluxe Family Room (4-5 pax)",
+                "priced_as": "base",
+                "max_adults": 5,
+                "description": "4–5 pax room; only single / double / triple prices printed"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Apr – 30 Jun 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-04-01",
+                        "to": "2026-06-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Double room with Garden View",
+                        "meal_plan": "RO",
+                        "sgl": 80,
+                        "dbl": 90,
+                        "tpl": 115,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Double room with Balcony",
+                        "meal_plan": "RO",
+                        "sgl": 100,
+                        "dbl": 110,
+                        "tpl": 135,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Family Room (4-5 pax)",
+                        "meal_plan": "RO",
+                        "sgl": 165,
+                        "dbl": 175,
+                        "tpl": 200,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "01 Jul – 30 Sep 2026",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-07-01",
+                        "to": "2026-09-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Double room with Garden View",
+                        "meal_plan": "RO",
+                        "sgl": 100,
+                        "dbl": 110,
+                        "tpl": 135,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Double room with Balcony",
+                        "meal_plan": "RO",
+                        "sgl": 120,
+                        "dbl": 130,
+                        "tpl": 155,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Family Room (4-5 pax)",
+                        "meal_plan": "RO",
+                        "sgl": 185,
+                        "dbl": 195,
+                        "tpl": 220,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "RO",
+                "to": "BB",
+                "adult": 15,
+                "child": 7.5,
+                "note": "Breakfast supplement"
+            },
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 25,
+                "child": 12.5,
+                "note": "Dinner supplement"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 20,
+                "child": 10,
+                "note": "Lunch supplement"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 15,
+                "child": 7.5,
+                "note": "USD 15 per person per night; child 50%"
+            },
+            {
+                "meal": "lunch",
+                "adult": 20,
+                "child": 10,
+                "note": "USD 20 per person per night; child 50%"
+            },
+            {
+                "meal": "dinner",
+                "adult": 25,
+                "child": 12.5,
+                "note": "USD 25 per person per night; child 50%"
+            }
+        ],
+        "supplements": [],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Sharing parents' bed on FOC basis"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "meal_rate",
+                "note": "50% of the per-night adult meal rate, sharing parents' bed"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-04-01",
+                "date_to": "2026-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 50,
+                "max_rooms": 5,
+                "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+            },
+            {
+                "date_from": "2026-04-01",
+                "date_to": "2026-04-30",
+                "tier": "fit",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 5,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-09-30",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 50,
+                "max_rooms": 5,
+                "note": "Release period 14 days prior to arrival; 50% of the full booking value if cancelled within 14 days"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-09-30",
+                "tier": "fit",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 5,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-04-01",
+                "date_to": "2026-09-30",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 0,
+                "charge_pct": 50,
+                "min_rooms": 6,
+                "note": "Release period 30 days prior to arrival; 50% of the full booking value if cancelled within 30 days"
+            },
+            {
+                "date_from": "2026-04-01",
+                "date_to": "2026-09-30",
+                "tier": "group",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_rooms": 6,
+                "note": "No-show: 100% of the full stay, no refund"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 3,
+                "pct": 100,
+                "note": "Full payment 3 days prior to arrival"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "days_before": 10,
+                "note": "Cheque payments must be banked and realised at least 10 days prior to arrival"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "other",
+                "days_before": 14,
+                "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

@@ -1,0 +1,83 @@
+"winter RTS" desktop folder (rate sheets saved there on 2 Oct 2026) — checked and loaded 4 Oct 2026 on Shantha's request
+("check the other contracts on folder winter RTS and update missing contracts if there is any").
+64 plan files added here (rts_*.json); each one validated E0 on the test copy first (load test 69 ok).
+
+Loaded as DRAFTS (Setup step load_plans, only the 52 coded rts_* keys) — NOTHING APPROVED; quotations keep using the
+approved plans until the Hotel Rate Approval queue approves them:
+  #352 Ayugiri Ayurveda Wellness Resort     Ayurveda Wing, AI + treatments, min 7 nights (Nov 2026 - Mar 2028)   E0 W5
+  #353 Ayugiri Ayurveda Wellness Resort     Wellness Wing, HB (Apr 2027 - Mar 2028)                               E0 W2
+  #354 Cinnamon Grand                       Winter 26/27 contract                                                 E0 W2
+  #355 Cinnamon Grand                       Tactical 1 Oct 2026 - 31 Mar 2027 (priority 10)                       E0 W3
+  #356 Cinnamon Lakeside                    Winter 26/27 contract                                                 E0 W2
+  #357 Cinnamon Lakeside                    Tactical 1 Oct 2026 - 31 Mar 2027 (priority 10)                       E0 W3
+  #358 Cinnamon Red                         Winter 26/27 contract                                                 E0 W2
+  #359 DoubleTree by Hilton Weerawila       FIT agreement 16 Jan 2027 - 15 Jan 2028                               E0 W0
+  #360 DoubleTree by Hilton Weerawila       Flash sale 1 Sep - 15 Nov 2026, HB (priority 10)                      E0 W2
+  #361 The Fortress Resort and Spa          Rate contract 22 Sep 2026 - 31 Oct 2027                               E0 W10
+  #362 Heritance Ayurveda Mahagedara        Summer 2027, FB + treatments, min 4 nights                            E0 W1
+  #363 Heritance Ayurveda Mahagedara        Winter 2026/27, FB + treatments, min 4 nights                         E0 W34
+  #364-#372 Japanese-market sheet (markets JP include, priority 20): Beach, Blue, Kaduruketha, Kandy Gallery (BB),
+            Lake, Lighthouse, Sea, St Andrew's (Superior + Heritage Superior), Yala                        E0 W2-W5
+  #373-#381 Jetwing Luxury Reserves Winter 2026/27: Kandy Gallery, Lagoon, Lighthouse, Saman Villas, Surf (Surf &
+            Safari), Vil Uyana, Warwick Gardens (+ whole villa #380), Yala                                  E0 W2-W28
+  #382-#402 Jetwing Premium Hotels Winter 2026/27 (revised): Beach, Blue, Broomfield (+ villa #385), Colombo Seven,
+            Galle Heritage Home (+ villa #388), Jaffna, Kaduruketha, Kottukal (+ villa #392), Kurulubedda, Lake,
+            Mahesa Bhawan (+ villa #396), Oatlands (+ villa #398), Sea, St Andrew's, Thalahena (+ villa #402)  E0 W2-W66
+  #403 Jetwing Lagoon                       Wellness Packages Winter 2026/27 (special offer, priority 10)         E0 W4
+Checked on live after loading: all 52 are drafts; every rate figure, plan type, priority, validity, market and the
+number of supplements / child rates / cancellation / payment / offer rows identical to the plan files; the approved
+plans of these 30 hotels unchanged (none superseded); quotation lookups still answer from approved plans only.
+Room types: new ones added where the sheets name new rooms (e.g. Kaduruketha Wel Vidana / Arachchi, Mahesa Bhawan
+Elephant / Monkey / Peacock, Fortress Courtyard Rooms / Premium Ocean / Premium Beach, DoubleTree rooms, Whole Villa
+units). One existing room type changed: Cinnamon Grand "Deluxe" (#86) is now priced as Superior + supplement, as the
+new contract prices it; the only plan using it (#37, migrated, expired 31 Mar 2026) still prices it from its own row.
+
+Waiting for a supplier record (12 "Rate sheet without a supplier" items in Hotel Incomplete Work; create the supplier
+under Master Files -> Supplier, then "Attach supplier code" loads the plan as a draft):
+  Jetwing Ratnam Residence (rooms + whole villa), Jetwing Villa 700 (rooms + whole villa), Jetwing Hoffmann Bungalow
+  (rooms + whole villa), Jetwing Wahawa Walauwa (rooms + whole villa), Hotel J Negombo, Hotel J Unawatuna (rooms +
+  dormitory), Jie Jie Beach Hotel.
+
+Already in the system (nothing added): Jetwing Select sheet, Jetwing Ayurveda Pavilions winter (#343), Jetwing
+Lagoon Short Stay (#344), Newburgh (#347), Morven Colombo (#318, winter 2025/26 — 2026/27 question open with Shantha).
+Not loaded, period ends 31 Oct 2026: the Browns 2025-26 agreements (Club Dolphin, Dickwella, Hotel Sigiriya,
+Occidental Eden / Paradise, Calm, Thaala) and every summer-2026 document (Jetwing summer, Heritance Ayurveda
+summer 2026, Virticle summer).
+Not rate sheets: Virticle winter (restaurant / events menu), Jetwing contact list, Fortress and Morven fact sheets,
+Ayurveda Package Doc, HAMG activity list, Ayugiri brochure (rack rates), Ayugiri package breakdown (.docx),
+Cinnamon rate-parity letter (no rates), "winter rates ammend ments .docx".
+
+Points to check before approving (details in the plan notes):
+  Jetwing: Blue / Beach peak start 26 Dec (hotel page) vs 21 Dec (terms page); quad = DBL + quad supplement; Mahesa
+  Bhawan entered as 3 rooms; Galle Heritage attic priced at quad only; Saman Villas BB single not printed; Surf AI
+  package (USD 800 / 2 nights) as an extra; Kandyan Suite -> Kandy Suite; JP sheet: higher categories and child
+  rates fall back to the all-market plans; minimum stays (Vil Uyana, Lighthouse, Saman Villas, Lagoon packages)
+  are in notes only, not enforced.
+  Cinnamon: validity text on the sheet says 2025 / "end March 2026"; tactical undercuts the contract, no booking
+  deadline printed.
+  Fortress: "20.12.2026-10.01.2026" read as to 10 Jan 2027; 2027 off-season cancellation not printed; Residence
+  Suite triple blank.
+  DoubleTree: agreement unsigned (sign-by 24 Sep); tax wording conflicts; flash-sale room assumed Deluxe Garden View;
+  no DoubleTree contract rates 16 Nov 2026 - 15 Jan 2027.
+  Heritance / Ayugiri: child restrictions; Ayugiri text says Euro, tables USD (entered USD); minimum stays 4 / 7
+  nights not enforced.
+  Jie Jie (no supplier yet): some cells blacked out on the sheet — left blank, not guessed.
+
+APPROVED 4 Oct 2026 on Shantha's instruction ("approve all 52 now"): #352-#403 approved (warnings acknowledged), none
+failed. Each approval rebuilt that hotel's rows on the old Hotel Rate screen (whole-villa per-unit rates cannot be
+shown there and are skipped) and re-priced the payable hotel cost of upcoming confirmed tours staying there (most:
+Jetwing Lagoon 33, Lighthouse 30, Yala 8); customer quotations are never changed.
+Checked after approval (quotation answers): Jetwing Lake 15 Nov Deluxe HB DBL 270 (UK) / 200 (JP sheet); Cinnamon
+Grand Superior BB 160; Fortress Ocean Room BB 380; Heritance Ayurveda Classic FB 403; Jetwing Lagoon Luxury Room
+FB 290 / HB 240.
+Payment side (every approved plan competes, highest priority wins): Cinnamon Grand / Lakeside are paid at the
+tactical rate (Superior BB 130); Jetwing Lagoon Luxury Room FB is paid at the wellness-package rate (410, #403)
+and HB at the Short Stay package (275, #344) — raised with Shantha.
+New "Payable above the quoted rate" items after approval: Jetwing Lighthouse AH 2038 / AH 2081 / AH 2222 (Feb 2027,
+quoted 310, Japanese-market sheet 410 in February); Heritance Ayurveda AH 1700 (1 Nov 2026, quoted 2,830, payable
+4,241).
+
+MORVEN COLOMBO 4 Oct 2026, on Shantha's instruction ("carry its winter 2025/26 rates into 2026/27 as a marked
+draft"): plan #404 "DMC Room Rates – Winter 2026/27 – CARRIED FORWARD from Winter 2025/26 (no hotel sheet yet)",
+a copy of #318 with every date one year later (1 Nov 2026 – 30 Apr 2027; gala supplements 24 / 31 Dec 2026), same
+prices. DRAFT — not approved; the notes say it is not a hotel sheet. Replace it when Morven sends the 2026/27 rates.

@@ -1,0 +1,354 @@
+{
+ "key": "rts_cin_grand",
+ "hotel": {
+  "acc": "6-9-11-10585",
+  "name": "Cinnamon Grand",
+  "location": "Colombo",
+  "chain": "Cinnamon Hotels & Resorts (John Keells)"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10585",
+   "name": "Cinnamon Grand"
+  },
+  "contract": {
+   "name": "Winter 26/27 contract rates (FIT | GIT & MICE)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Operator contract",
+   "tier": "all",
+   "hotel_reference": "Cinnamon Colombo Hotels – Winter 26/27 Contract Rates",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-03-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "NON-Commissionable; inclusive of prevailing service charge and applicable taxes – presently 10% Service Charge, 18% VAT, 1.01% Tourist Development Tax & 2.5% SSCL (subject to change).",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "child_policy_text": "Children aged 0-5 years meals are free of charge. Children aged 6-11 years get 50% discount on meals (Meal rates for each hotel is mentioned above). Children aged 12 + years considered as adults.",
+   "cancellation_text": "CANCELLATION POLICY: FIT (1 TO 9 ROOMS) – 14 days prior to arrival: Will be subjected to 100% of the total reservation value. CANCELLATION POLICY: GROUPS & MICE – UP TO 30 ROOMS: 30 days – 50%, 21 days – 75%, 14 days – 100% of the total reservation value. 31 TO 60 ROOMS: 45 days – 50%, 30 days – 75%, 21 days – 100%. 61 ROOMS AND ABOVE: 60 days – 50%, 45 days – 75%, 30 days – 100%. NO-SHOW POLICY: No shows will be charged 100% of the reservation value.",
+   "payment_text": "All payments to be made strictly prior to the arrival of clients or until credit are approved from our Credit Department. Payments in full require to be made 3 days prior to the arrival date. Please be kind enough to inform credit managers for individual hotels when the transfer is done on E-mail. Credit manager: Cinnamon Grand – Mr. Nuwan Samarasekera, 077 395 0218, nuwan@cinnamonhotels.com.",
+   "terms_text": "WINTER 26/27 CONTRACT RATES – Cinnamon Hotels Colombo partner with the Operator on a non-exclusive basis (FIT, GIT & MICE). Rates are valid until FROM 1st NOV 2025 UNTIL END MARCH 2027 only and subject to change without prior notice [as printed; every hotel header says VALIDITY PERIOD: 1ST NOV 2026 TO 31ST MARCH 2027]. ALL ABOVE RATES GIVEN ARE FOR PACKAGED PRODUCTS AND CANNOT BE SOLD NAKED OR CANNOT BE SOLD FOR PAYMENT DIRECT BOOKINGS. Rates are NON-Commissionable and are Inclusive of prevailing service charge and applicable taxes. Presently 10% Service Charge, 18% VAT, 1.01% Tourist Development Tax & 2.5% SSCL (subject to change). All meals are served at the designated hotel restaurants as mentioned above. Buffet rates given are for packaging purposes and to be sold to residential guests only. | MEAL SUPPLEMENT AT THE PLATES RESTAURANT (1 / 2 / 3 persons): Breakfast 14 / 28 / 42; Lunch 22 / 44 / 66; Dinner 26 / 52 / 78; Dinner - NUGA GAMA 25 / 50 / 75. | CHECK-IN/CHECK-OUT: Check-In time is 14:00hrs & Check-out time is 12 noon. Guaranteed access to rooms prior to 14:00hrs requires pre-registration from the night before; at contracted rate. Early check-in between 00:00hrs – 10:00hrs, 100% of accommodation cost on basis booked (Subject to availability). Early check-in between 10:00hrs – 14:00hrs, 50% of accommodation cost on basis booked (Subject to availability). Late check-out 50% of accommodation cost on basis booked (Subject to availability) till 18:00hrs. Beyond 1800Hrs 100% of accommodation cost on basis booked (Subject to availability). | CONTACTS: Reservations Manager Mr. Muneeb Ahamed 77 531 0969, muneeb@cinnamonhotels.com. ROOM AVAILABILITY: \"HELLO by Cinnamon\" WhatsApp tool 071 216 1161 (https://api.whatsapp.com/send?phone=94712161161). Cinnamon Grand Reservations 76 046 7869, reservations.grand@cinnamonhotels.com; Lobby Manager (24/7) 77 313 6774, lobby@cinnamonhotels.com. Signed for Cinnamon Colombo Hotels by Imran Noordeen, Director of Sales & Marketing; no date printed. | RATE PARITY (separate letter \"Cinnamon Hotel Management Limited - Rate Parity - City Properties (1).pdf\", Cinnamon Hotel Management Limited, effective 28th March 2024, signed Imran Noordeen; no rates): all static rates only as part of a bundle/package with at least one other substantial travel component (airfare, round trip accommodation or local logistics); never room-only / unpackaged, never on OTAs, opaque, group-buying, flash-sale, social-commerce or daily-deal sites, never through any GDS; never disclose the rate to the guest or claim lowest/discounted/exclusive prices; rates not to be transferred to other companies except B2B contractors; the operator is responsible for leaks by its sub-contractors. Best Rate Guarantee: non-compliance must be rectified within 24 hours of written notice or inventory is withheld (recurring: access discontinued); on a guest's Best Rate Guarantee claim the operator settles the difference (incl. value additions) within 15 days. A signed acknowledgement of the letter is requested.",
+   "notes": "Transcribed from \"Cinnamon Hotels Colombo - WINTER RATES 1ST NOV TO 31ST MARCH 2027 1.pdf\" (5 pages), saved to the winter RTS folder on 2 Oct 2026. One printed period (1 Nov 2026 – 31 Mar 2027), Superior room Bed and Breakfast SGL / DBL / TPL per room per night, one rate for \"FIT | GIT & MICE\" (tier all). Higher categories are printed as supplements on the Superior rate (entered as base + supplement rooms, per room per night – the sheet does not say per room or per person). HB / FB are not printed as rates: the meal supplement table (per person; the 2- and 3-person columns are exactly 2x and 3x) is entered as meal deltas BB→HB = dinner, HB→FB = lunch, so HB/FB are derived; breakfast and the Nuga Gama dinner are kept as a meal price; no room-only rate is offered. The T&C line reads \"valid until FROM 1st NOV 2025 UNTIL END MARCH 2027\" – conflicts with the hotel header; validity entered from the header (confirm). No gala dinner (W06), guide/driver terms, contract date, booking window or market restriction printed. The tactical sheet (rts_cin_grand_tactical, priority 10, 1 Oct 2026 – 31 Mar 2027, BB 120 / 130 / 161) is lower than this contract and covers the whole period. The rate parity letter (no rates) is summarised in terms_text.",
+   "source_file": "Cinnamon Hotels Colombo - WINTER RATES 1ST NOV TO 31ST MARCH 2027 1.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Superior",
+    "priced_as": "base",
+    "description": "Base category – printed \"CINNAMON GRAND COLOMBO (SUPERIOR ROOMS)\""
+   },
+   {
+    "name": "Deluxe",
+    "priced_as": "supplement",
+    "base_room_type": "Superior",
+    "description": "Higher category room rate: supplement on the Superior rate (printed \"Deluxe Room\")"
+   },
+   {
+    "name": "Executive Room",
+    "priced_as": "supplement",
+    "base_room_type": "Superior",
+    "description": "Higher category room rate: supplement on the Superior rate"
+   },
+   {
+    "name": "Premium Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Superior",
+    "description": "Higher category room rate: supplement on the Superior rate"
+   },
+   {
+    "name": "Executive Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Superior",
+    "description": "Higher category room rate: supplement on the Superior rate"
+   },
+   {
+    "name": "Presidential Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Superior",
+    "description": "Higher category room rate: supplement on the Superior rate"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov 2026 – 31 Mar 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Superior",
+      "meal_plan": "BB",
+      "sgl": 150,
+      "dbl": 160,
+      "tpl": 190,
+      "quad": null,
+      "unit": null,
+      "note": "\"CINNAMON GRAND COLOMBO (SUPERIOR ROOMS) – FIT | GIT & MICE\", Bed and Breakfast, per room per night"
+     }
+    ],
+    "notes": "Printed \"VALIDITY PERIOD: 1ST NOV 2026 TO 31ST MARCH 2027\""
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Deluxe",
+    "amount": 25,
+    "per": "room",
+    "note": "Higher category room rate: Superior + USD 25 (printed \"Supplement\"; read as per room per night – the sheet does not say)"
+   },
+   {
+    "room_type": "Executive Room",
+    "amount": 50,
+    "per": "room",
+    "note": "Higher category room rate: Superior + USD 50 (printed \"Supplement\"; read as per room per night – the sheet does not say)"
+   },
+   {
+    "room_type": "Premium Suite",
+    "amount": 140,
+    "per": "room",
+    "note": "Higher category room rate: Superior + USD 140 (printed \"Supplement\"; read as per room per night – the sheet does not say)"
+   },
+   {
+    "room_type": "Executive Suite",
+    "amount": 180,
+    "per": "room",
+    "note": "Higher category room rate: Superior + USD 180 (printed \"Supplement\"; read as per room per night – the sheet does not say)"
+   },
+   {
+    "room_type": "Presidential Suite",
+    "amount": 500,
+    "per": "room",
+    "note": "Higher category room rate: Superior + USD 500 (printed \"Supplement\"; read as per room per night – the sheet does not say)"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 26,
+    "child": 13.0,
+    "note": "Dinner at The Plates restaurant USD 26 per person (2 persons 52, 3 persons 78); child 6–11: 50%"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 22,
+    "child": 11.0,
+    "note": "Lunch at The Plates restaurant USD 22 per person (2 persons 44, 3 persons 66); child 6–11: 50%"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 14,
+    "child": 7.0,
+    "note": "Breakfast at The Plates restaurant (included in the BB rate); child 6–11: 50%"
+   },
+   {
+    "meal": "lunch",
+    "adult": 22,
+    "child": 11.0,
+    "note": "Lunch at The Plates restaurant; child 6–11: 50%"
+   },
+   {
+    "meal": "dinner",
+    "adult": 26,
+    "child": 13.0,
+    "note": "Dinner at The Plates restaurant; child 6–11: 50%"
+   },
+   {
+    "meal": "dinner",
+    "name": "Dinner – NUGA GAMA",
+    "adult": 25,
+    "child": 12.5,
+    "note": "Alternative dinner (2 persons 50, 3 persons 75); child 6–11: 50%"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "early_checkin",
+    "name": "Early check-in between 00:00 and 10:00",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% of accommodation cost on basis booked (subject to availability). Guaranteed access before 14:00 requires pre-registration from the night before, at contracted rate."
+   },
+   {
+    "type": "early_checkin",
+    "name": "Early check-in between 10:00 and 14:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% of accommodation cost on basis booked (subject to availability)"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out till 18:00",
+    "per": "room",
+    "pct_of_rate": 50,
+    "compulsory": 0,
+    "note": "50% of accommodation cost on basis booked (subject to availability)"
+   },
+   {
+    "type": "late_checkout",
+    "name": "Late check-out beyond 18:00",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "100% of accommodation cost on basis booked (subject to availability)"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Children aged 0-5 years: meals are free of charge (no extra-bed / room charge printed)"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "any",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Children aged 6-11 years get 50% discount on meals (meal rates per hotel); 12 + years are adults"
+   }
+  ],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 9,
+    "note": "FIT (1 to 9 rooms): 14 days prior to arrival – 100% of the total reservation value; no-shows 100%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 50,
+    "min_rooms": 10,
+    "max_rooms": 30,
+    "note": "Groups & MICE up to 30 rooms: 30 days – 50% of the total reservation value"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 21,
+    "days_to": 15,
+    "charge_pct": 75,
+    "min_rooms": 10,
+    "max_rooms": 30,
+    "note": "Groups & MICE up to 30 rooms: 21 days – 75%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 10,
+    "max_rooms": 30,
+    "note": "Groups & MICE up to 30 rooms: 14 days – 100%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 50,
+    "min_rooms": 31,
+    "max_rooms": 60,
+    "note": "Groups & MICE 31 to 60 rooms: 45 days – 50%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 22,
+    "charge_pct": 75,
+    "min_rooms": 31,
+    "max_rooms": 60,
+    "note": "Groups & MICE 31 to 60 rooms: 30 days – 75%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 21,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 31,
+    "max_rooms": 60,
+    "note": "Groups & MICE 31 to 60 rooms: 21 days – 100%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 60,
+    "days_to": 46,
+    "charge_pct": 50,
+    "min_rooms": 61,
+    "note": "Groups & MICE 61 rooms and above: 60 days – 50%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 31,
+    "charge_pct": 75,
+    "min_rooms": 61,
+    "note": "Groups & MICE 61 rooms and above: 45 days – 75%"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 61,
+    "note": "Groups & MICE 61 rooms and above: 30 days – 100%"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "days_before": 3,
+    "pct": 100,
+    "note": "Payments in full 3 days prior to the arrival date (all payments strictly prior to arrival unless credit is approved by the Cinnamon credit department)"
+   },
+   {
+    "applies": "credit",
+    "kind": "credit_period",
+    "note": "Only when credit is approved by the Cinnamon credit department; no credit period printed"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

@@ -1,0 +1,72 @@
+[
+ [
+  "ok",
+  "H0 sign-in works (JSON 200, start page dashboard2/tiles, needs_usd_rate field kept)",
+  ""
+ ],
+ [
+  "ok",
+  "H0 signed in: a page opens",
+  ""
+ ],
+ [
+  "ok",
+  "H1 PROBLEM REPRODUCED: opening the sign-in page (where a redirected background check lands) signs out the valid session",
+  ""
+ ],
+ [
+  "ok",
+  "H2 PROBLEM: a background check without a session is redirected to the sign-in page (302)",
+  ""
+ ],
+ [
+  "ok",
+  "H3 a page request without a session is still redirected to the sign-in page with ?redirect= (unchanged)",
+  ""
+ ],
+ [
+  "ok",
+  "H5 the sign-in page opens without a session (form shown)",
+  ""
+ ],
+ [
+  "ok",
+  "H4 a revoked session: the page goes to the sign-in page, which shows the form (no redirect loop)",
+  ""
+ ],
+ [
+  "ok",
+  "H4 a revoked session: background check redirected (before)",
+  ""
+ ],
+ [
+  "ok",
+  "H6 sign-out works; afterwards pages go to the sign-in page",
+  ""
+ ],
+ [
+  "ok",
+  "H8 a signed-in user without the privilege still gets 403 (permission filter unchanged)",
+  ""
+ ],
+ [
+  "ok",
+  "H9 PROBLEM REPRODUCED: a background check with no cookie (sent after signing out) answered after a new sign-in deletes that sign-in (302, 2 cookie header(s))",
+  ""
+ ],
+ [
+  "ok",
+  "H9 PROBLEM REPRODUCED: a background check with the old, ended session cookie answered after a new sign-in deletes that sign-in (302, 1 cookie header(s))",
+  ""
+ ],
+ [
+  "ok",
+  "P1 PROBLEM REPRODUCED: background checks from an old tab, answered just after a new sign-in in another tab, sign it out (6 held)",
+  ""
+ ],
+ [
+  "ok",
+  "P2 PROBLEM REPRODUCED: HTML with plugins.js inserted after load (as when a page receives the sign-in page) blanks the page",
+  ""
+ ]
+]

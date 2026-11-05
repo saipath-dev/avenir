@@ -1,0 +1,292 @@
+{
+ "key": "blue_water_summer2027_mkt_group",
+ "hotel": {
+  "acc": "6-9-11-10715",
+  "name": "The Blue Water Hotel & Spa",
+  "location": "Wadduwa",
+  "chain": "Union Resorts & Spas Sri Lanka"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10715",
+   "name": "The Blue Water Hotel & Spa"
+  },
+  "contract": {
+   "name": "Summer 2027 market special rates – Group (5 rooms or more)",
+   "plan_type": "special_offer",
+   "tier": "group",
+   "priority": 10,
+   "valid_from": "2027-05-01",
+   "valid_to": "2027-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "HB",
+   "taxes_included": 1,
+   "tax_note": "Inclusive of service charge and all applicable government taxes; non-commissionable (nett)",
+   "source_type": "email",
+   "received_at": "2026-09-09",
+   "contract_type": "DMC",
+   "credit_facility": "no",
+   "tentative_hold_hours": 48,
+   "child_policy_text": "Definition of children: 0 – 4.99 years infant, 5 – 11.99 years child. Infant / child sharing parents' room between the ages of 0 – 5.99 would be 100% complimentary. Child supplement with bed – USD 25 on half board basis. Meal reductions / supplements for children: BB reduction USD 2.50, FB supplement USD 12.50, AI supplement USD 22.50 per child per night on the HB rate.",
+   "guide_policy_text": "Guide policy (HB basis): guide rate USD 70 per night. Guide rooms will be strictly based on availability; guide rooms will be transferred as first priority in case of overbookings.",
+   "foc_policy_text": "FOC policy (all markets): for every 15 paying pax, the 16th pax is FOC.",
+   "cancellation_text": "Within 14 days of travel: 100% cancellation on the total value. All group allotments need to be finalised and released on or before 14 days from the travel date. 100% on booked basis. Tentative holds on rooms (group and FIT bookings): a tentative booking remains in the system for 48 hours; without a firm guarantee by letter / voucher it is released automatically without prior notice. All guaranteed bookings are cancelled subject to the contractual terms & conditions.",
+   "payment_text": "Groups of 5 rooms and above need 50% of the total value paid 30 days prior to arrival (any booking without an advance payment is automatically released according to policy). All bookings: full payment to be made within 7 days prior to the travel date (clients will be held back if payment is not received). No credit facilities would be provided to any partner. Union Resorts reserves the right to charge interest of 2% per month on all delayed outstanding amounts not settled within the stipulated period. Any billing dispute should be notified to the resort accounts department within 7 days of receiving the invoice.",
+   "terms_text": "GENERAL TERMS AND CONDITIONS. This agent rate agreement is made between the respective Destination Management Company (DMC), foreign travel agent or foreign tour operator and covers the accommodation, dining facilities and excursions at The Blue Water Hotel & Spa, Wadduwa. All rates are quoted in US dollars on the specified board basis inclusive of all applicable taxes and service charge and are non-commissionable. The Blue Water Hotel & Spa reserves the right to add on changes to government taxes, fees and charges from the date of implementation. Check-in 14:00 hrs, check-out 12:00 hrs (no early check-ins and late check-outs will be confirmed until 1 day prior to the arrival / departure date). Service charge and applicable taxes will be charged on any additional service not already shown in this contract. Definition of children: 0 – 4.99 years infant, 5 – 11.99 years child. All room categories can accommodate only one adult extra bed to a double / twin configuration; all double bedrooms and suites can accommodate one extra bed. Twin rooms are strictly based on availability unless blocked during booking. Under any condition of force majeure the resort holds no direct liability to the agent for failure to operate. Any violation of the above terms may result in termination of this agent agreement. Reservations will only be accepted on an e-mail voucher sent to reservations@thebluewatersrilanka.com; enquiries and availability on 0773876579 / 0740796858. TERMS & CONDITIONS: rates are in USD and are non-commissionable; all rates are inclusive of taxes; rates are subject to vary in accordance with government tax / levy changes; the above rates are not valid to be published online on any platform, direct or via a 3rd party agent (if identified, all contracts and bookings will be cancelled with immediate effect); the enclosed rates cannot be extended to the domestic market (Sri Lankan nationals). REMARKS: all vouchers without a rate and market will not be confirmed; any special rate should be sent with an e-mail from the sales person together with a voucher; any special negotiated series / market rate should be stated with a rate code; bookings without the specific market code will be billed on the all-other-market rate; bookings will not be confirmed if the above criteria are not met. Signed for the resort by Ashwin Joseph, Director – Sales and Marketing, Union Resorts & Spas Sri Lanka. Bank: Sampath Bank, Panadura, Sri Lanka — Union Resorts (Pvt) Limited, Thalpitiya, Wadduwa; A/C 0026 1000 1400; SWIFT BSAMLKLX. The contract is to be signed and returned within 02 days of its date and is binding only after the signed copy is received.",
+   "voucher_note": "Reservations only on an e-mail voucher to reservations@thebluewatersrilanka.com. Vouchers without a rate and a market are not confirmed; a negotiated series / market rate must carry its rate code, otherwise the booking is billed on the all-other-market rate.",
+   "notes": "The booklet prices the same Deluxe room in a separate table per booking tier (and per market block), so each printed table is a plan of its own — one plan cannot hold two rates for the same room type on the same night. Only half board is printed; BB / FB / AI / RO are derived from the printed per-person meal reductions and supplements (meal_deltas). Only the Deluxe category is priced; Club / Executive / Presidential Suites are Deluxe + a room supplement. The same four PDFs were also sent on 02 Sep 2026 as \"FW: Travel Agent Rates - The Blue Water Hotel & Spa, Wadduwa\". Each table prints three rows: \"1st May 2027 – 30th June 2027\", \"1st July 2027 – 30th August 2027\" and a third row whose dates are printed as \"1st July 2027 – 31st October 2027\" — a copy/paste error, as that repeats the July/August peak row. The third row carries the same rates as the first, so both are entered as ONE season with two date ranges, the second starting the day after the printed end of the peak (31 Aug 2027). Please have the hotel confirm whether the peak ends on 30 or 31 August. Cover page: \"ALL MARKET DMC CONTRACT SUMMER 2027\". No contract date is printed on the sheet. This plan is the \"MARKET SPECIAL RATES - GROUP - Chinese & Far East Asia / Russian, Eastern Europe & CIS / Indian / South Asia / Dutch / Spanish market offer (valid for all 5 or more rooms per booking)\" table. In this table the first row is printed as \"1st May 2027 - 31st October 2027\" (instead of 30 June, as in the other three tables); it is entered as 01 May – 30 Jun plus 31 Aug – 31 Oct, otherwise the peak nights would carry two rates. The peak row is printed \"90 / 105 / 35\": the triple of 35 is below the double and is almost certainly a typo for 135 — it is entered exactly as printed (35) and must be confirmed by the hotel before the plan is used.",
+   "tier_min_rooms": 5,
+   "markets": [
+    {
+     "code": "CN",
+     "mode": "include"
+    },
+    {
+     "code": "FE",
+     "mode": "include"
+    },
+    {
+     "code": "RU",
+     "mode": "include"
+    },
+    {
+     "code": "EE",
+     "mode": "include"
+    },
+    {
+     "code": "IN",
+     "mode": "include"
+    },
+    {
+     "code": "SA",
+     "mode": "include"
+    },
+    {
+     "code": "NL",
+     "mode": "include"
+    },
+    {
+     "code": "ES",
+     "mode": "include"
+    }
+   ],
+   "hotel_reference": "ALL MARKET DMC CONTRACT SUMMER 2027",
+   "release_days": 14,
+   "source_file": "WINTER/SUMMER RATES 2026 / 2027 - BLUE WATER HOTEL & SPA — Summer 2027 - ALL MARKET - DMC CONTRACT - THE BLUE WATER HOTEL _ SPA.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Deluxe",
+    "priced_as": "base",
+    "max_adults": 3,
+    "description": "The only priced category; all rates are per room per night on half board"
+   },
+   {
+    "name": "Club Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe"
+   },
+   {
+    "name": "Executive Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe"
+   },
+   {
+    "name": "Presidential Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Deluxe"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 May – 30 Jun & 31 Aug – 31 Oct 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-05-01",
+      "to": "2027-06-30"
+     },
+     {
+      "from": "2027-08-31",
+      "to": "2027-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 85,
+      "dbl": 95,
+      "tpl": 125,
+      "quad": null,
+      "unit": null
+     }
+    ],
+    "notes": "Printed as two rows (\"01 May – 30 Jun 2027\" and \"01 Jul – 31 Oct 2027\") with identical rates"
+   },
+   {
+    "name": "01 Jul – 30 Aug 2027 (peak)",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2027-07-01",
+      "to": "2027-08-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Deluxe",
+      "meal_plan": "HB",
+      "sgl": 90,
+      "dbl": 105,
+      "tpl": 35,
+      "quad": null,
+      "unit": null
+     }
+    ],
+    "notes": "Triple printed as 35 (below the double) — typo for 135? Entered as printed; confirm with the hotel"
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Club Suite",
+    "amount": 40,
+    "per": "room",
+    "note": "Deluxe to Club Suite – USD 40 per room per night"
+   },
+   {
+    "room_type": "Executive Suite",
+    "amount": 125,
+    "per": "room",
+    "note": "Deluxe to Executive Suite – USD 125 per room per night"
+   },
+   {
+    "room_type": "Presidential Suite",
+    "amount": 225,
+    "per": "room",
+    "note": "Deluxe to Presidential Suite – USD 225 per room per night"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "BB",
+    "adult": -5,
+    "child": -2.5,
+    "note": "BB reduction – per person per night (on HB)"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 25,
+    "child": 12.5,
+    "note": "FB supplement – per person per night (on HB)"
+   },
+   {
+    "from": "HB",
+    "to": "AI",
+    "adult": 45,
+    "child": 22.5,
+    "note": "AI supplement – per person per night (on HB)"
+   },
+   {
+    "from": "BB",
+    "to": "RO",
+    "adult": -3,
+    "note": "RO reduction – per person per night (on BB); no child amount printed"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 15,
+    "note": "Additional meal rates – per person"
+   },
+   {
+    "meal": "lunch",
+    "adult": 25,
+    "note": "Additional meal rates – per person"
+   },
+   {
+    "meal": "dinner",
+    "adult": 35,
+    "note": "Additional meal rates – per person"
+   }
+  ],
+  "supplements": [],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 5.99,
+    "bed": "any",
+    "amount": 0,
+    "note": "Infant / child sharing parents' room, 0 – 5.99 years: 100% complimentary"
+   },
+   {
+    "age_from": 6,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "meal_plan": "HB",
+    "amount": 25,
+    "note": "Child supplement with bed – USD 25 on half board basis"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 70,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "Guide rate USD 70 per night on HB; guide rooms strictly subject to availability and are transferred first in case of overbooking"
+   }
+  ],
+  "foc_rules": [
+   {
+    "basis": "pax",
+    "every_n": 15,
+    "free_n": 1,
+    "as_what": "any",
+    "note": "For every 15 paying pax the 16th pax is FOC (all markets)"
+   }
+  ],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2027-05-01",
+    "date_to": "2027-10-31",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Within 14 days of travel: 100% of the total value"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "group",
+    "kind": "advance",
+    "days_before": 30,
+    "pct": 50,
+    "note": "Groups of 5 rooms and above: 50% of the total value 30 days prior to arrival"
+   },
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 7,
+    "pct": 100,
+    "note": "All bookings: full payment 7 days prior to the travel date"
+   },
+   {
+    "applies": "all",
+    "kind": "interest",
+    "pct": 2,
+    "note": "2% per month on delayed outstanding amounts"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

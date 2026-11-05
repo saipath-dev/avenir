@@ -1,0 +1,75 @@
+== T4 forward repair (recovery file) on the scratch copy
+| server: vm / 3308 / MySQL 8.0.46-0ubuntu0.24.04.4 / 9e8be115-c573-11f1-aaf4-02fc00000001 / database avenir |      1 |
+| post: the three views are under root@localhost with the recorded definitions                               |      1 |
+| post: the three triggers are under root@localhost with the recorded bodies and sql_mode                    |      1 |
+| post: driver_allocation has exactly these three triggers                                                   |      1 |
+| post: no allocation or audit row was written during the change                                             |      1 |
+ERROR 1054 (42S22) at line 93: Unknown column 'a.id' in 'where clause'
++---------+--------------------------------+------------------------------------------------------------------------+
+| k       | n                              | d                                                                      |
++---------+--------------------------------+------------------------------------------------------------------------+
+| trigger | driver_allocation_after_delete | root@localhost NO_ENGINE_SUBSTITUTION 96d9f654c04d93f8a7c806e4a1cc14cb |
+| trigger | driver_allocation_after_insert | root@localhost NO_ENGINE_SUBSTITUTION d21612dbdd00ea7fcc42fb6377682aac |
+| trigger | driver_allocation_after_update | root@localhost NO_ENGINE_SUBSTITUTION ee77d484e2415657d979eb335deb61c6 |
+| view    | acc_selct                      | root@localhost                                                         |
+| view    | account_runing_q2              | root@localhost                                                         |
+| view    | account_runing_q21             | root@localhost                                                         |
++---------+--------------------------------+------------------------------------------------------------------------+
+== T5 complete rollback run on the scratch copy (approval + this server's identity)
+| 1 approval: @rollback_approved must hold a written-approval reference                                        |      1 |
+| 2 server: vm / 3308 / MySQL 8.0.46-0ubuntu0.24.04.4 / 9e8be115-c573-11f1-aaf4-02fc00000001 / database avenir |      1 |
+| 3a pre: the three views are under root@localhost with the recorded definitions                               |      1 |
+| 3b pre: the three triggers are under root@localhost, NO_ENGINE_SUBSTITUTION, recorded bodies                 |      1 |
+| 3c pre: driver_allocation has exactly these three triggers                                                   |      1 |
+| 1 approval: @rollback_approved must hold a written-approval reference                                        |      1 |
+| 2 server: vm / 3308 / MySQL 8.0.46-0ubuntu0.24.04.4 / 9e8be115-c573-11f1-aaf4-02fc00000001 / database avenir |      1 |
+| 3a pre: the three views are under root@localhost with the recorded definitions                               |      1 |
+| 3b pre: the three triggers are under root@localhost, NO_ENGINE_SUBSTITUTION, recorded bodies                 |      1 |
+| 3c pre: driver_allocation has exactly these three triggers                                                   |      1 |
+| 5a post: the three views are under dbmasteruser@% with the recorded definitions                              |      1 |
+| 5b post: the three triggers are under dbmasteruser@% with the recorded bodies and sql_mode                   |      1 |
+| 5c post: no allocation or audit row was written during the change                                            |      1 |
++---------+--------------------------------+------------------------------------------------------------------------+
+| k       | n                              | d                                                                      |
++---------+--------------------------------+------------------------------------------------------------------------+
+| trigger | driver_allocation_after_delete | dbmasteruser@% NO_ENGINE_SUBSTITUTION 96d9f654c04d93f8a7c806e4a1cc14cb |
+| trigger | driver_allocation_after_insert | dbmasteruser@% NO_ENGINE_SUBSTITUTION d21612dbdd00ea7fcc42fb6377682aac |
+| trigger | driver_allocation_after_update | dbmasteruser@% NO_ENGINE_SUBSTITUTION ee77d484e2415657d979eb335deb61c6 |
+| view    | acc_selct                      | dbmasteruser@%                                                         |
+| view    | account_runing_q2              | dbmasteruser@%                                                         |
+| view    | account_runing_q21             | dbmasteruser@%                                                         |
++---------+--------------------------------+------------------------------------------------------------------------+
+== T5b reading a view after the rollback (dbmasteruser does not exist here either)
+ERROR 1449 (HY000) at line 1: The user specified as a definer ('dbmasteruser'@'%') does not exist
+== T5c an allocation write after the rollback
+ERROR 1449 (HY000) at line 1: The user specified as a definer ('dbmasteruser'@'%') does not exist
++---------------------+
+| allocation rows 630 |
++---------------------+
++-----------------+
+| audit rows 1786 |
++-----------------+
+== T6 recovery: forward repair after the completed rollback
+| server: vm / 3308 / MySQL 8.0.46-0ubuntu0.24.04.4 / 9e8be115-c573-11f1-aaf4-02fc00000001 / database avenir |      1 |
+| post: the three views are under root@localhost with the recorded definitions                               |      1 |
+| post: the three triggers are under root@localhost with the recorded bodies and sql_mode                    |      1 |
+| post: driver_allocation has exactly these three triggers                                                   |      1 |
+| post: no allocation or audit row was written during the change                                             |      1 |
+ERROR 1054 (42S22) at line 93: Unknown column 'a.id' in 'where clause'
++---------+--------------------------------+------------------------------------------------------------------------+
+| k       | n                              | d                                                                      |
++---------+--------------------------------+------------------------------------------------------------------------+
+| trigger | driver_allocation_after_delete | root@localhost NO_ENGINE_SUBSTITUTION 96d9f654c04d93f8a7c806e4a1cc14cb |
+| trigger | driver_allocation_after_insert | root@localhost NO_ENGINE_SUBSTITUTION d21612dbdd00ea7fcc42fb6377682aac |
+| trigger | driver_allocation_after_update | root@localhost NO_ENGINE_SUBSTITUTION ee77d484e2415657d979eb335deb61c6 |
+| view    | acc_selct                      | root@localhost                                                         |
+| view    | account_runing_q2              | root@localhost                                                         |
+| view    | account_runing_q21             | root@localhost                                                         |
++---------+--------------------------------+------------------------------------------------------------------------+
++----------------+
+| acc_selct_rows |
++----------------+
+|           1174 |
++----------------+
+== T6b Q2 lists the allocation written while the triggers were broken
+ERROR 1054 (42S22) at line 1: Unknown column 'a.id' in 'where clause'

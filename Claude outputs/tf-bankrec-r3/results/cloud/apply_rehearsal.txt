@@ -1,0 +1,18 @@
+1. r2 skeleton: 4605bb8660e5
+2. check:
+   changed 8 added ['app/Libraries/BankRec/LegacyGuard.php'] not_r2 []
+3. apply:
+   verified True backup 20261012-054221
+   r3 files: bb99c19314fb = kit src bb99c19314fb
+4. rollback with deleting refused (as on the user's computer):
+   back_to_r2 True | app/Libraries/BankRec/LegacyGuard.php moved into before/…/added-removed/
+   files now: 4605bb8660e5 (r2 was 4605bb8660e5)
+   IDENTICAL to r2
+5. apply again + normal rollback:
+   back_to_r2 True ['app/Libraries/BankRec/LegacyGuard.php deleted']
+   IDENTICAL to r2
+6. development base URL:
+   Refused: /tmp/claude-0/-home-claude/1f177919-91eb-5b5f-a3ff-b7531d256531/scratchpad/bankrec/r3work/rehearse_apply_dev has the base URL "http://localhost/aven
+7. a file that is not the r2 file:
+   not_r2 ['app/Libraries/BankRec/Rec.php (e66d03e1074134a8b4f2d88c65230a7d)'] | Stopped: the target is not tf-bankrec-r2 as installed on the isolated instance; nothing was written.
+   LegacyGuard.php written: 0

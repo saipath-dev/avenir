@@ -1,0 +1,436 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bank Reconciliation – findings and decisions</title><style>body{font-family:Segoe UI,Arial,sans-serif;max-width:1180px;margin:24px auto;padding:0 16px;color:#1f2937;line-height:1.45;background:#fff}
+h1{font-size:24px;color:#4a1d6b}h2{font-size:19px;color:#4a1d6b;margin-top:32px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}h3{font-size:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}th,td{border:1px solid #d1d5db;padding:6px 8px;vertical-align:top;text-align:left}th{background:#f3f4f6}
+code{background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:12.5px}
+img{max-width:100%;border:1px solid #d1d5db;border-radius:4px;margin:6px 0 18px}
+hr{border:0;border-top:1px solid #e5e7eb;margin:24px 0}</style></head><body><h1>Bank Reconciliation — read-only findings and decision table (12 Oct 2026)</h1>
+<p><strong>Scope</strong></p>
+<ul>
+<li><strong>Source of the findings:</strong> at your choice, the read-only examination used <strong>development only</strong> (<code>localhost/avenir</code>, database <code>avenir</code>).</li>
+<li><strong>Development's data is a copy of live</strong> that stops on <strong>8 Sep 2026</strong>. Every live point below is therefore <strong>"not verified on live"</strong>.</li>
+<li><strong>What I did on live:</strong> before you chose, I opened live's sign-in page (no sign-in) and downloaded 9 public script and image files to compare them. I did nothing else on live.</li>
+<li><strong>What I did on development:</strong> I ran SELECT queries in phpMyAdmin and read files. Nothing was changed.</li>
+<li><strong>Not done:</strong> no mapping, first day or bank account was entered; no old tool was run; nothing was imported, posted, updated or deleted.</li>
+</ul>
+<hr />
+<h2>1. Read-only findings</h2>
+<h3>1.1 Files, schema and bank-account master</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Development</th>
+<th>Live</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daily Bank Reconciliation</td>
+<td>r3 installed; schema version 2; 13 <code>brc_…</code> tables, all empty</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Code it depends on</td>
+<td>The reconciliation uses the Tour Payments foundation (the <code>TourPayments</code> Audit / BankAccounts / Perms libraries, the tables <code>tpd_audit</code>, <code>tpd_meta</code>, <code>tpd_bank_account</code>, and the "Avenir Bank Accounts" screen, menu 249). On development this came with tf-paydesk r4/r5.</td>
+<td><strong>Probably absent</strong> (see next row). A live package must include this foundation or it cannot run.</td>
+</tr>
+<tr>
+<td>Public files</td>
+<td>Help widget, tour-mail script, e-mail logo and PDF fonts present; <code>plugins.js</code> carries the sign-out fix</td>
+<td>Help widget, tour-mail script, e-mail logo and fonts are <strong>missing (404)</strong>; <code>plugins.js</code> is the June 2024 file. <strong>Live is well behind development.</strong></td>
+</tr>
+<tr>
+<td>Bank-account master (<code>tpd_bank_account</code>)</td>
+<td><strong>Empty</strong> (0 rows)</td>
+<td>Not verified (the table probably does not exist yet)</td>
+</tr>
+<tr>
+<td>Engines</td>
+<td>Reconciliation and payment tables: InnoDB (24 tables). Ledger <code>account_runing</code>, <code>daily_usd_rate</code>, <code>a_log</code>: MyISAM.</td>
+<td>Not verified</td>
+</tr>
+</tbody>
+</table>
+<p>The live <code>plugins.js</code> differs from development's original in one line only: <code>base_url</code> is <code>/</code> on live and <code>/avenir/</code> on development. <strong>A live package must keep live's own line.</strong></p>
+<h3>1.2 Ledger accounts and activity (development copy, to 8 Sep 2026)</h3>
+<table>
+<thead>
+<tr>
+<th>Ledger account</th>
+<th style="text-align: right;">Rows</th>
+<th>Last ordinary date</th>
+<th style="text-align: right;">Book balance at 31 Aug (LKR)</th>
+<th>Proposed (recommendation only)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Com Bank LKR <code>1-6-8-10380</code></td>
+<td style="text-align: right;">1,844</td>
+<td>7 Sep 2026 (192 rows in Sep)</td>
+<td style="text-align: right;">−31,745,432.10</td>
+<td>Map</td>
+</tr>
+<tr>
+<td>Com Bank USD <code>1-6-8-10898</code></td>
+<td style="text-align: right;">23</td>
+<td>30 Sep 2026 (entered in July)</td>
+<td style="text-align: right;">−14,308,953.43</td>
+<td>Map</td>
+</tr>
+<tr>
+<td>Pan Asia LKR <code>1-6-8-10998</code></td>
+<td style="text-align: right;">32</td>
+<td>25 Aug 2026</td>
+<td style="text-align: right;">2,935,163.50</td>
+<td>Map</td>
+</tr>
+<tr>
+<td>Pan Asia USD <code>1-6-8-10999</code>, YEN <code>1-6-8-11000</code></td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td style="text-align: right;">0.00</td>
+<td>Wait until used</td>
+</tr>
+<tr>
+<td>Bank Control <code>1-6-8-9750</code></td>
+<td style="text-align: right;">125</td>
+<td>31 Aug 2026</td>
+<td style="text-align: right;">−6,833,544.62</td>
+<td>Do not map</td>
+</tr>
+<tr>
+<td>Deposits in Transit <code>1-6-112-10782</code>, Advance deposit <code>1-6-112-11024</code></td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+<td>Do not map</td>
+</tr>
+</tbody>
+</table>
+<p><strong>September cannot be confirmed as final from development</strong>, because the copy ends on 8 Sep. Accounts must confirm it from live.</p>
+<h3>1.3 Unusual and future-dated rows (left unchanged)</h3>
+<table>
+<thead>
+<tr>
+<th>Entry</th>
+<th>Account(s)</th>
+<th>Dated</th>
+<th style="text-align: right;">Amount</th>
+<th>Entered</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24553 "Journal entry – USD to LKR"</td>
+<td>10380 Dr / 10898 Cr</td>
+<td><strong>24 Oct 2026</strong></td>
+<td style="text-align: right;">3,020,000.00</td>
+<td>10 Jun 2026, Nimesha</td>
+<td>Both legs are bank accounts; probably a date error</td>
+</tr>
+<tr>
+<td>24568 "Journal entry – air tickets sale"</td>
+<td>10380 Dr</td>
+<td><strong>13 Nov 2026</strong></td>
+<td style="text-align: right;">209,000.00</td>
+<td>10 Jun 2026, Nimesha</td>
+<td></td>
+</tr>
+<tr>
+<td>5915 / 5916 "Voucher payment"</td>
+<td>10380 Cr; 9750 Dr/Cr</td>
+<td><strong>1 Jan 2030</strong></td>
+<td style="text-align: right;">178,020.00</td>
+<td>no entry time, Niroshan</td>
+<td><strong>Carries old-screen flags</strong> (<code>bank_rec</code>, <code>bankst_flag</code>)</td>
+</tr>
+<tr>
+<td>25668, 25669 "Journal entry – fuel charges"</td>
+<td>10380 Dr</td>
+<td><strong>16 Apr 2525</strong></td>
+<td style="text-align: right;">2 × 25,000.00</td>
+<td>6 Jul 2026, Nimesha</td>
+<td>Year typed wrongly</td>
+</tr>
+<tr>
+<td>11851 "Journal entry – STW payments"</td>
+<td>9750 Cr</td>
+<td><strong>20 Mar 2029</strong></td>
+<td style="text-align: right;">4,788,575.00</td>
+<td>18 Jul 2025, Jacob</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>If the first day is 1 Oct or 1 Nov,</strong> entries 24553 and 24568 fall inside the protected period of Com Bank LKR (and 24553 of Com Bank USD). They would wait there as book items that never appear on a statement.</li>
+<li><strong>Accounts should decide</strong> whether to correct their dates (by their own journal entries) before any first day is set.</li>
+</ul>
+<h3>1.4 E7 — the evidence</h3>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>What the data shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>449,143.20 imbalance</strong></td>
+<td>Exactly <strong>8 one-sided entries</strong> (an entry whose debits and credits do not match):<br>• <strong>25915:</strong> Com Bank LKR opening journal, 1 Apr 2026, <strong>+497,850.38</strong><br>• <strong>25918:</strong> Com Bank USD opening journal, 1 Apr 2026, <strong>+161,135.32</strong><br>• three single-leg hotel-reservation credits: −134,257.50, −44,752.50, −35,832.50<br>• three small lunch / voucher lines: +5,000, −1,000, +1,000<br>Total 449,143.20.</td>
+</tr>
+<tr>
+<td><strong>34,495,229.47 provisional difference</strong> (Com Bank LKR, bank vs book at 1 Sep)</td>
+<td>Candidates for <strong>part</strong> of it, not confirmed:<br>• a <strong>receipt of 15,868,192.50</strong> posted to account code <strong>"0"</strong> (15 Jun 2026, "STW May 2026 – debtor payment"), so its bank leg is missing;<br>• the one-sided opening journal above;<br>• bank payments recorded under Bank Control;<br>• bank charges not booked;<br>• the post-dated rows in §1.3.<br>The copy also stops on 8 Sep.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Both opening journals touch the bank accounts' opening balances</strong>, so E7 bears directly on the first day.</p>
+<h3>1.5 The two old tools</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>A. "Bank Not Reconciliation Record Insert"</strong> (Settings → Manual Update)</th>
+<th><strong>B. "Bank Req Data Transfer"</strong> (Accounts, menu 184)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Has it been run?</strong></td>
+<td><strong>Yes, once: 21 Oct 2025, between 10:50 and 11:22.</strong><br>• It created <strong>286 consecutive entry numbers (15947–16232)</strong>: one per listed ID (285 IDs, one listed twice).<br>• Together they copy all <strong>596 lines</strong> into the ledger then current (FY 2025/26): the 594 lines of the listed FY 2024/25 entries, with the twice-listed entry copied twice.<br>• They are in the database copies of ~4 Nov and ~5 Dec 2025 (all 286), and 283 are in a copy taken during the run.</td>
+<td><strong>No trace for any bank.</strong><br>• None of its candidate entries is in the current ledger or in the four 2025 copies.<br>• Its page was <strong>never opened</strong> between 27 Mar and 8 Sep 2026; the activity log starts on 27 Mar 2026.</td>
+</tr>
+<tr>
+<td><strong>What it covered</strong></td>
+<td>The FY 2024/25 bank items left unreconciled:<br>• Com Bank LKR 45 of 45<br>• Com Bank USD 10 of 11<br>• Pan Asia LKR 9 of 9<br>• Pan Asia USD 2 of 2<br>• YEN 1 of 1<br>• Bank Control 208 of 209</td>
+<td><strong>The same items Tool A already carried forward.</strong></td>
+</tr>
+<tr>
+<td><strong>Since then</strong></td>
+<td>The current ledger (FY 2026/27) has <strong>no line dated before 1 Apr 2025</strong>.<br>Manual Update was opened twice on 14 Jun 2026 (super admin), and no such lines appeared. <strong>So it was not run again</strong> (up to 8 Sep 2026).</td>
+<td>The current ledger has <strong>no "Brought Forward Balance 2025-03-31" rows</strong>. A run now would add 2024/25 lines with nothing to offset them.</td>
+</tr>
+<tr>
+<td><strong>Conclusion</strong></td>
+<td><strong>It has served its purpose.</strong><br>A second run would copy the 596 lines again under new numbers, which would change the balance of every listed account (e.g. Com Bank LKR −3,000,332.05 net).</td>
+<td><strong>No bank needs a supervised run</strong>: not Com Bank LKR, Com Bank USD, Pan Asia LKR, USD or YEN, nor Bank Control.<br>Running it for any bank would duplicate items already carried forward.</td>
+</tr>
+<tr>
+<td><strong>Not verifiable</strong></td>
+<td>Live after 8 Sep 2026.<br>Whether live still has the 2024 database Tool A reads from (development does not, so it would fail there).</td>
+<td>Dec 2025 – Mar 2026: the FY 2025/26 ledger is not in the development copy.<br>Live after 8 Sep 2026.</td>
+</tr>
+<tr>
+<td><strong>Who can run it (development)</strong></td>
+<td>System Administrator (1 user) and ticketing_admin (3 users)</td>
+<td>System Administrator (1 user)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Proposed retirement and protection of the two tools (development only — for approval; nothing done)</h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Files</strong> (5; no database change)</td>
+<td>• <code>LegacyGuard.php</code> gets a "retired tool" refusal and a token check.<br>• <code>ManualUpdateController.php</code>: <code>bank_recon_record_insert</code> refuses before anything else.<br>• <code>manual_update.php</code>: that one button and its click handler are replaced by a grey "retired" note. <strong>The other Manual Update buttons are unchanged.</strong><br>• <code>BankUnrealisedValueController.php</code>: <code>process</code> refuses.<br>• <code>bank_unrealised_value_change.php</code>: the Process button is replaced by the same note.<br>Routes and menus are not changed, so an old open page gets the refusal, not an error.</td>
+</tr>
+<tr>
+<td><strong>Security token</strong></td>
+<td>Each page carries the application's security token, and both actions check it first.<br>• Missing or wrong token: <strong>403</strong> "Security token missing or expired — reload the page. Nothing was changed."<br>• The token check is <strong>audited separately</strong>, so forged or cross-site attempts are visible.</td>
+</tr>
+<tr>
+<td><strong>Second-run prevention</strong> (needed only if you later want a tool kept rather than retired)</td>
+<td>• <strong>A run-once marker</strong> in <code>tpd_meta</code> (<code>legacy_run:&lt;tool&gt;[:&lt;bank&gt;]</code>).<br>• <strong>A data check:</strong> the tool refuses if the entries it would write are already in the ledger. Tool A's evidence is the 21 Oct 2025 copies; Tool B's is its entry numbers.<br>• It also refuses for any account with a confirmed mapping, <strong>whatever the date</strong>.</td>
+</tr>
+<tr>
+<td><strong>Refusal messages</strong></td>
+<td><strong>A:</strong> "This one-off was completed on 21 October 2025 (entries 15947–16232) and has been retired. Running it again would copy the same 2024/25 entries into the ledger a second time. Nothing was changed."<br><strong>B:</strong> "Bank Req Data Transfer has been retired. The 2024/25 unreconciled bank items were already carried forward on 21 October 2025, and the current ledger has no 31 March 2025 brought-forward balance to adjust. Nothing was changed."<br>Both are answered <strong>409</strong> and shown on the page.</td>
+</tr>
+<tr>
+<td><strong>Audit trail</strong></td>
+<td>Every attempt writes one <code>tpd_audit</code> row:<br>• action <code>legacy_tool_refused</code>, with the tool, the user and their id, the time, the IP, the bank (B) and the reason (retired / token / mapped / already run);<br>• <code>legacy_tool_run</code> would record an allowed run, with the lines written.</td>
+</tr>
+<tr>
+<td><strong>Rollback</strong></td>
+<td><code>apply.py rollback</code> restores the 5 files from <code>before\&lt;time&gt;\</code>.<br>There is no schema or data change to undo. Audit rows stay, as intended.</td>
+</tr>
+<tr>
+<td><strong>Tests</strong></td>
+<td>1. Cloud copy: refusal with and without token; audit row; ledger checksum unchanged; other Manual Update buttons still work.<br>2. Isolated test instance, with a TEST login given the two menus there.<br>3. Development: data-free refusals only, ledger checksum identical.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. First day per account — status, no decision</h2>
+<p><strong>Neither 1 Oct nor 1 Nov can be called safe for any account yet.</strong> Three things are missing: live is not verified, Accounts has not confirmed September, and the real bank accounts have not been entered.</p>
+<table>
+<thead>
+<tr>
+<th>Account</th>
+<th>For 1 Oct we need</th>
+<th>What could make it unsafe (development evidence)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Com Bank LKR</strong></td>
+<td>• September final in the ledger<br>• bank balance at 30 Sep<br>• E7 for this account understood (the 497,850.38 one-sided opening journal; the 15.87 m receipt on code "0")<br>• Accounts' view on the 24 Oct and 13 Nov rows</td>
+<td>• A large unexplained opening difference (34.5 m at 1 Sep)<br>• September only partly in the copy</td>
+</tr>
+<tr>
+<td><strong>Com Bank USD</strong></td>
+<td>• USD statements<br>• rate policy (D6)<br>• E7 for this account (the 161,135.32 one-sided opening journal)<br>• Accounts' view on the 30 Sep and 24 Oct rows</td>
+<td>• Rows entered months before their date<br>• Few rows; the statement is not yet seen</td>
+</tr>
+<tr>
+<td><strong>Pan Asia LKR</strong></td>
+<td>• Bank balance at 30 Sep<br>• live rows after 25 Aug</td>
+<td>• None found on development (no rows since 25 Aug, no odd dates). This is <strong>the simplest candidate</strong>, but the facts must still come from live and Accounts.</td>
+</tr>
+</tbody>
+</table>
+<p>Once these facts are in, I will state for each account whether 1 Oct or 1 Nov is safe, and why.</p>
+<hr />
+<h2>4. Decision table</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision required</th>
+<th>My recommendation</th>
+<th>Evidence</th>
+<th style="text-align: center;">Blocks live?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>D1</strong></td>
+<td>Where the off-computer copy of the database export is kept</td>
+<td>An external drive that you keep.</td>
+<td>All backups are on the same computer: the database copies on the same MySQL, the file backups on the same disk.</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>D2</strong></td>
+<td>Who prepares and who reviews (see the profiles below)</td>
+<td><strong>Preparer:</strong> "Accounts" (group 30: view + prepare, menus 253/254).<br><strong>Independent reviewer:</strong> "Finance &amp; Approvals — Management Approver" (group 29: view + review, menus 253/255).<br><strong>View only:</strong> "Finance &amp; Approvals — Bank Authoriser" (35), "Auditor (read-only)" (34).<br><strong>Not for daily use:</strong> System Administrator logins.<br><strong>Not a reviewer:</strong> the Bank Authoriser, because they mark payments Paid.</td>
+<td>• On development, groups 29 and 30 hold only TEST logins.</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>D3</strong></td>
+<td>First day per account</td>
+<td>No decision yet (§3).</td>
+<td>§1.2–1.4</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>D4</strong></td>
+<td>Real bank accounts entered by Accounts; each mapping proposed by the preparer and confirmed by the reviewer</td>
+<td>Enter the accounts on the "Avenir Bank Accounts" screen (System Administrator only), with the details taken from the bank documents. I will not enter account numbers.</td>
+<td>The bank-account master is empty; the mapping four-eyes check is built in.</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>D5</strong></td>
+<td>Statement format</td>
+<td><strong>(a) CSV export from web banking</strong>, with one real sample per bank checked first (needs your approval: real data on development).</td>
+<td><strong>Supported:</strong><br>• <strong>(a)</strong> CSV: separator, header row and debit/credit or signed-amount columns are found automatically; 12 date formats; Windows-1252 text<br>• <strong>(b)</strong> lines typed in, for short statements<br><strong>Not supported:</strong><br>• <strong>(c)</strong> Excel files (would need a library on the server)<br>• <strong>(d)</strong> PDF (would have to be typed in)</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>D6</strong></td>
+<td>Exchange-rate source and policy</td>
+<td><strong>USD (a)</strong>, confirmed every day.<br><strong>JPY (b)</strong>, entered with its source, once the YEN account is used.<br>Accounts also decides whether month-end revaluation is posted in the ledger (the workflow never posts).</td>
+<td><strong>Options:</strong><br>• <strong>(a)</strong> the system's daily USD rate (<code>daily_usd_rate</code>), used automatically when no rate is entered for a day<br>• <strong>(b)</strong> the bank's own rate from the statement<br>• <strong>(c)</strong> the Central Bank rate<br>Any rate entered shows its source.<br><strong>Evidence:</strong> on development only <strong>7 daily USD rates</strong> exist (19 Aug – 7 Sep 2026), so (a) works only if the rate really is confirmed every day.</td>
+<td style="text-align: center;"><strong>Yes</strong> (USD accounts)</td>
+</tr>
+<tr>
+<td><strong>D7</strong></td>
+<td>Use of the old screen and the two old tools</td>
+<td>• Approve the retirement design in §2.<br>• The old screen is not used for protected periods.<br>• The old menu is withdrawn after one parallel month.</td>
+<td>• The guard is on development.<br>• Tool A was run on 21 Oct 2025; Tool B has no trace.<br>• On development the 4-user "Auditor" group (17) counts as read-only (tf-pilot-r1). Live probably lacks that rule, so they may be able to tick rows on the old screen there.</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>E1</strong></td>
+<td>Mask Avenir's paying account number for roles that do not pay</td>
+<td>Mask it to the last 4 digits</td>
+<td>It is shown in full on batch and voucher pages to the Approver and Auditor (development).</td>
+<td style="text-align: center;">No (payments release)</td>
+</tr>
+<tr>
+<td><strong>E2</strong></td>
+<td>Older groups (id ≤ 28) still see full supplier bank numbers</td>
+<td>Review when staff move to the department profiles</td>
+<td>Unchanged on development</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>E3</strong></td>
+<td>Convert the MyISAM ledger tables to InnoDB</td>
+<td>A separate, backed-up step later</td>
+<td>The reconciliation tables are InnoDB, and the reconciliation never writes the ledger.</td>
+<td style="text-align: center;">No (for the reconciliation)</td>
+</tr>
+<tr>
+<td><strong>E4</strong></td>
+<td>Debtor-invoice amendment link open to every Tour Dashboard holder</td>
+<td>Restrict it to Accounts</td>
+<td>Unchanged</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>E5</strong></td>
+<td><code>tour/print</code> open to every signed-in user</td>
+<td>Restrict it to the roles that print tours</td>
+<td>Unchanged</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>E6</strong></td>
+<td>Retire <code>LEGACY_ALLOCATION_GROUPS</code></td>
+<td>Later, with E2</td>
+<td>Unchanged</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>E7</strong></td>
+<td>Explain the 449,143.20 imbalance and the 34,495,229.47 provisional difference</td>
+<td>Accounts reviews:<br>• the 8 one-sided entries<br>• the code-"0" receipt<br>• the post-dated rows (§1.3–1.4)<br>Then the opening items are agreed for each account's first day.</td>
+<td>§1.4</td>
+<td style="text-align: center;"><strong>Yes</strong> (first day of Com Bank LKR / USD)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>D2: how the same person is kept from preparing and reviewing the same reconciliation</strong></p>
+<ol>
+<li><strong>The code checks it.</strong> A reviewer is refused on any daily record, mapping, opening item or correction that the same login prepared or proposed.</li>
+<li><strong>One login belongs to one group</strong>, and the preparer and reviewer groups do not overlap.</li>
+<li><strong>One person, one login.</strong> No shared or second logins.</li>
+<li><strong>System Administrator logins hold every privilege</strong> and are not used for daily reconciliation.</li>
+</ol>
+<p>You name the people. Neither group has a real staff member yet.</p>
+<h3>Further live blockers found in this step</h3>
+<ol>
+<li><strong>Live has not been examined.</strong> That needs your sign-in on system.avenirholidays.com, or a fresh copy of the live database.</li>
+<li><strong>Live lacks the Tour Payments foundation</strong> the reconciliation depends on (§1.1).</li>
+<li><strong>Live is behind development.</strong> A live package must be built from live's own files, and I cannot read those PHP files from here.</li>
+<li><strong>Pending items from before:</strong><ul>
+<li>D1–D7 and E7;</li>
+<li>fresh live backups;</li>
+<li>your explicit approval.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Nothing on development or live was changed in this step.</strong></p></body></html>

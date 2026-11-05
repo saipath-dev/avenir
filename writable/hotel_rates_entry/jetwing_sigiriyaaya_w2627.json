@@ -1,0 +1,308 @@
+{
+    "key": "jetwing_sigiriyaaya_w2627",
+    "hotel": {
+        "acc": "6-9-11-11795",
+        "name": "Hotel Sigiriyaaya",
+        "location": "Sigiriya",
+        "chain": "Jetwing Hotels (Select)",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:35"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Hotel Sigiriyaaya"
+        },
+        "contract": {
+            "name": "Winter 2026/27 travel agent contracted rates – Select Hotels (revised)",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "tier": "all",
+            "hotel_reference": "Select Hotels – Travel Agent Contracted Rates – Winter 2026/2027 (Revised)",
+            "valid_from": "2026-11-01",
+            "valid_to": "2027-04-30",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "taxes_included": 1,
+            "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+            "source_type": "manual",
+            "received_at": "2026-10-02",
+            "markets": [
+                {
+                    "code": "DOM",
+                    "mode": "exclude"
+                }
+            ],
+            "guide_policy_text": "Driver Accommodation – Not Available (no guide accommodation terms printed).",
+            "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+            "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+            "terms_text": "HOTEL SIGIRIYAAYA: Single Reduction – USD 08 / Triple Supplement (Only applicable for 04 Rooms) – USD 23 (On BB). Single Reduction – USD 18 / Triple Supplement (Only applicable for 04 Rooms) – USD 33 (On HB). Driver Accommodation – Not available. Reservations +94 66 228 6246, reservations@sigiriyaaya.com. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserves the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+            "notes": "Transcribed from \"Jetwing Hotels - Select Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf\" (8 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Currency \"USD Nett (Per room/Per night)\", occupancy \"Double Occupancy\": the printed figure is the room at double occupancy. Market list: \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner or guide rate is printed. No supplier record in the live system yet. Not the Browns \"Hotel Sigiriya\" (6-9-11-10777). The number of Standard rooms is not printed; only 04 rooms take a triple.",
+            "child_policy_text": "Child Policy (Maximum Up to 02 Children): Age of 0-5 Free of Charge. Age of 6-11.99: USD 19 (Per kid/Per night on BB including extra bed), USD 24 (Per kid/Per night on HB including extra bed) (Not Applicable for Triple Occupancy); USD 04 (Per kid/Per night on BB excluding extra bed), USD 09 (Per kid/Per night on HB excluding extra bed). Baby cot on request can be provided free of charge. (Up to one cot per room)",
+            "source_file": "Jetwing Hotels - Select Hotels - TA Contracted Rates - Winter 2026-2027 (Revised).pdf"
+        },
+        "room_types": [
+            {
+                "name": "Standard",
+                "priced_as": "base",
+                "max_children": 2,
+                "description": "Triple occupancy only applicable for 04 rooms"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Nov – 25 Dec 2026 & 01 – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-25"
+                    },
+                    {
+                        "from": "2027-04-01",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 52,
+                        "dbl": 60,
+                        "tpl": 83,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed DBL 60; SGL = DBL − single reduction USD 8; TPL = DBL + triple supplement USD 23; triple only applicable for 04 rooms"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "HB",
+                        "sgl": 62,
+                        "dbl": 80,
+                        "tpl": 113,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed DBL 80; SGL = DBL − single reduction USD 18; TPL = DBL + triple supplement USD 33; triple only applicable for 04 rooms"
+                    }
+                ]
+            },
+            {
+                "name": "26 Dec 2026 – 10 Jan 2027 (Peak Period)",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-26",
+                        "to": "2027-01-10"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 92,
+                        "dbl": 100,
+                        "tpl": 123,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed DBL 100; SGL = DBL − single reduction USD 8; TPL = DBL + triple supplement USD 23; triple only applicable for 04 rooms"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "HB",
+                        "sgl": 102,
+                        "dbl": 120,
+                        "tpl": 153,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed DBL 120; SGL = DBL − single reduction USD 18; TPL = DBL + triple supplement USD 33; triple only applicable for 04 rooms"
+                    }
+                ]
+            },
+            {
+                "name": "11 Jan – 31 Mar 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-01-11",
+                        "to": "2027-03-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 62,
+                        "dbl": 70,
+                        "tpl": 93,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed DBL 70; SGL = DBL − single reduction USD 8; TPL = DBL + triple supplement USD 23; triple only applicable for 04 rooms"
+                    },
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "HB",
+                        "sgl": 72,
+                        "dbl": 90,
+                        "tpl": 123,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed DBL 90; SGL = DBL − single reduction USD 18; TPL = DBL + triple supplement USD 33; triple only applicable for 04 rooms"
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [],
+        "meal_prices": [],
+        "supplements": [
+            {
+                "type": "early_checkin",
+                "name": "Early check-in within 04 hours of the 14:00 check-in",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% charge of the room rate"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out up to 04 hours past 12:00",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% room rate charge"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out past 04 hours",
+                "per": "room",
+                "pct_of_rate": 100,
+                "compulsory": 0,
+                "note": "100% room rate"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "max_children": 2,
+                "note": "Free of charge (maximum up to 02 children). Baby cot on request can be provided free of charge. (Up to one cot per room)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "meal_plan": "BB",
+                "amount": 19,
+                "max_children": 2,
+                "note": "Per kid per night on BB including extra bed; not applicable for triple occupancy"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "with_bed",
+                "meal_plan": "HB",
+                "amount": 24,
+                "max_children": 2,
+                "note": "Per kid per night on HB including extra bed; not applicable for triple occupancy"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "BB",
+                "amount": 4,
+                "max_children": 2,
+                "note": "Per kid per night on BB excluding extra bed (USD 04)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "HB",
+                "amount": 9,
+                "max_children": 2,
+                "note": "Per kid per night on HB excluding extra bed (USD 09)"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 15,
+                "charge_pct": 25,
+                "max_rooms": 8,
+                "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 8,
+                "charge_pct": 50,
+                "max_rooms": 8,
+                "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 8,
+                "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 8,
+                "charge_pct": 50,
+                "min_rooms": 9,
+                "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_rooms": 9,
+                "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 5,
+                "pct": 100,
+                "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+            },
+            {
+                "applies": "credit",
+                "kind": "credit_period",
+                "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "pct": 100,
+                "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

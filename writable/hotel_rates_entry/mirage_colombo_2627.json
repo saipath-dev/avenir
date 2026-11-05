@@ -1,0 +1,326 @@
+{
+ "key": "mirage_colombo_2627",
+ "hotel": {
+  "acc": "6-9-11-10636",
+  "name": "Mirage Hotel Colombo",
+  "location": "Colombo 06",
+  "chain": "Mirage Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10636",
+   "name": "Mirage Hotel Colombo"
+  },
+  "contract": {
+   "name": "Rate Sheet for Travel Agent 2026/2027 – All Market FIT & GIT",
+   "plan_type": "contract",
+   "contract_type": "Local travel agent",
+   "tier": "all",
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "credit_facility": "unknown",
+   "cancellation_text": "Cancelation policy: Group bookings one-month prior notice. FIT bookings seven days prior notice.",
+   "payment_text": "Payment terms: payments on booked basis to be settled prior to guest arrival if not credit approved.",
+   "notes": "Transcribed from \"Mirage Colombo all Market 2026-2027 Winter Summer Rate.pdf\" (3 pages), saved to the HOTEL RATES folder on 2 Oct 2026. Page 3 is photographs only. No date printed on the sheet (PDF file created 21 Sep 2026). Travel Agent – Local Travel Agents; Market – All Market FIT & GIT; \"All Countries\". Rate table rows Single / Double-Twin / Triple / Family (4 pax) entered as SGL / DBL / TPL / QUAD of one base room, Standard City View (the room the Deluxe +15 / Super Deluxe +25 supplements are \"on top of\"). The sheet's room list also names Deluxe Triple and Deluxe family but gives them no price of their own, so the Triple and Family (4 pax) rows are taken as occupancies of the same table, not separate room types. Extra bed US$20 per night. If required, dinner for Indian national guests/groups US$12 pp at a separate location. Conference charges entered as extras.",
+   "tax_note": "Inclusive of all taxes: rate table says 28.75%, footer says \"inclusive of 36% Tax, VAT and service charge\". Non-commissionable; government rate/tax changes apply.",
+   "extra_bed_adult": 20,
+   "max_children_free": 1,
+   "child_policy_text": "Child meal policy: 1 Child below 04 years sharing with parents FOC. Children between 05 to 11 years sharing with parents 50% of adult meal rate chargeable. Children at the age 11 & above adult meal rate chargeable.",
+   "guide_policy_text": "Local Guide Room Rate USD 55 on BB.",
+   "foc_policy_text": "Every 11th room FOC on booked basics [basis]. Local Guide Room Rate USD 55 on BB.",
+   "terms_text": "Please note that above non-commissionable rates are inclusive of 36% Tax, VAT and service charge and any Rate, tax changes made by the government will be applicable for the above. Conference facility and inclusives: free WiFi, screen, podium, FM mike, clip-on mike, sounds, oil lamp, white board with marker pens, flip chart, note pads, pencils, mint, water bottles and registration table.",
+   "source_file": "Mirage Colombo all Market 2026-2027 Winter Summer Rate.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Standard City View",
+    "priced_as": "base",
+    "description": "Base room of the rate table (Single / Double-Twin / Triple / Family 4 pax = SGL / DBL / TPL / QUAD). Sheet room list: Standard City View / Deluxe Sea View / Superior Deluxe / Deluxe Triple / Deluxe family."
+   },
+   {
+    "name": "Deluxe Sea View",
+    "priced_as": "supplement",
+    "base_room_type": "Standard City View",
+    "view": "Direct sea view",
+    "description": "\"Upgrade to Deluxe room (direct sea view) US$15 per night\" on top of Standard City View"
+   },
+   {
+    "name": "Superior Deluxe",
+    "priced_as": "supplement",
+    "base_room_type": "Standard City View",
+    "view": "Direct sea view",
+    "description": "Room list says \"Superior Deluxe\"; supplements say \"Super deluxe Room Supplement US$ 25\" / \"Upgrade to Super Deluxe (direct sea view) US$25 per night\""
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov 2026 – 30 Apr 2027 (winter)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "RO",
+      "sgl": 60,
+      "dbl": 60,
+      "tpl": 80,
+      "quad": 100,
+      "unit": null
+     },
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "BB",
+      "sgl": 70,
+      "dbl": 75,
+      "tpl": 100,
+      "quad": 130,
+      "unit": null
+     },
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "HB",
+      "sgl": 85,
+      "dbl": 95,
+      "tpl": 130,
+      "quad": 170,
+      "unit": null
+     },
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "FB",
+      "sgl": 100,
+      "dbl": 125,
+      "tpl": 165,
+      "quad": 220,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 May – 31 Oct 2027 (summer)",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-05-01",
+      "to": "2027-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "RO",
+      "sgl": 55,
+      "dbl": 55,
+      "tpl": 75,
+      "quad": 95,
+      "unit": null
+     },
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "BB",
+      "sgl": 65,
+      "dbl": 70,
+      "tpl": 95,
+      "quad": 125,
+      "unit": null
+     },
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "HB",
+      "sgl": 80,
+      "dbl": 90,
+      "tpl": 125,
+      "quad": 165,
+      "unit": null
+     },
+     {
+      "room_type": "Standard City View",
+      "meal_plan": "FB",
+      "sgl": 95,
+      "dbl": 120,
+      "tpl": 160,
+      "quad": 215,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Deluxe Sea View",
+    "amount": 15,
+    "per": "room",
+    "note": "Per night, on top of Standard City View"
+   },
+   {
+    "room_type": "Superior Deluxe",
+    "amount": 25,
+    "per": "room",
+    "note": "Per night, on top of Standard City View (printed \"Super Deluxe\")"
+   }
+  ],
+  "meal_deltas": [],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 10,
+    "note": "Additional meal only rate, p.p."
+   },
+   {
+    "meal": "lunch",
+    "adult": 13,
+    "note": "Additional meal only rate, p.p."
+   },
+   {
+    "meal": "dinner",
+    "adult": 15,
+    "note": "Additional meal only rate, p.p."
+   },
+   {
+    "meal": "other",
+    "name": "Dinner for Indian national guests/groups (separate location)",
+    "adult": 12,
+    "note": "If required; at a separate location"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "X-mas eve dinner",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 35,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "US$35 per person. Child % from the sheet's child meal policy (50% of adult meal rate); no separate child gala price printed."
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve dinner",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "",
+    "per": "person",
+    "amount": 35,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "US$35 per person. Child % from the sheet's child meal policy (50% of adult meal rate); no separate child gala price printed."
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 3.99,
+    "bed": "no_bed",
+    "amount": 0,
+    "max_children": 1,
+    "note": "1 child below 04 years sharing with parents FOC"
+   },
+   {
+    "age_from": 5,
+    "age_to": 10.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "note": "Children 05 to 11 years sharing with parents: 50% of adult meal rate (sheet also says \"11 & above adult meal rate\", so the band stops at 10.99)"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 55,
+    "currency": "USD",
+    "per": "room",
+    "accommodation": "hotel_room",
+    "note": "Local guide room rate USD 55 on BB"
+   }
+  ],
+  "foc_rules": [
+   {
+    "basis": "rooms",
+    "every_n": 10,
+    "free_n": 1,
+    "as_what": "any",
+    "note": "Every 11th room FOC on booked basis"
+   }
+  ],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-10-31",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "Group bookings: one-month prior notice (taken as 30 days). No charge % printed — 100% assumed inside the notice period. Group size not defined on the sheet."
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2027-10-31",
+    "tier": "fit",
+    "days_from": 7,
+    "days_to": 0,
+    "charge_pct": 100,
+    "note": "FIT bookings: seven days prior notice. No charge % printed — 100% assumed inside the notice period."
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "non_credit",
+    "kind": "prepay",
+    "pct": 100,
+    "note": "Payments on booked basis to be settled prior to guest arrival if not credit approved (no number of days given)"
+   }
+  ],
+  "restrictions": [],
+  "extras": [
+   {
+    "category": "mice",
+    "name": "Conference – half day",
+    "per": "person",
+    "adult": 21,
+    "currency": "USD",
+    "note": "Morning tea/coffee with 2 snacks and lunch; 08am to 02pm"
+   },
+   {
+    "category": "mice",
+    "name": "Conference – full day",
+    "per": "person",
+    "adult": 26,
+    "currency": "USD",
+    "note": "Morning tea/coffee with 2 snacks, lunch, evening tea/coffee with cake; sheet prints \"08am to 02 pm\" (same hours as half day)"
+   },
+   {
+    "category": "mice",
+    "name": "Indian gala dinner",
+    "per": "person",
+    "adult": 30,
+    "currency": "USD",
+    "note": "2+2 starters with soft drinks for 2 hrs and dinner"
+   },
+   {
+    "category": "mice",
+    "name": "Projector",
+    "per": "booking",
+    "adult": 35,
+    "currency": "USD",
+    "note": "US$35 per day"
+   }
+  ]
+ }
+}

@@ -1,0 +1,1459 @@
+<?php
+
+namespace App\Libraries\TourPayments;
+
+/**
+ * tf-paydesk-r1 (10 Oct 2026) — the Tour Payment & Accounting Workflow over the existing payment chain.
+ *
+ * Nothing here recalculates a payment. The lines come from the records the system already keeps — the tour's
+ * quotation nights, activities, driver allocation and expenses (TourPaymentDashboardController::dashboardData) plus
+ * the manual expenses of tpd_expense — and each line's state is read from the chain as it stands:
+ *
+ *   payment_request (1 requested · 4/6 approved · 2 completed · 3 cancelled · 5 rejected · 0 waiting rate)
+ *     → Supplier Payables: the approved request waits under its supplier (tf-paydesk-r2)
+ *       → tpd_batch: management takes a supplier's approved requests into one batch → voucher / v_inv
+ *          (Aflag 0 issued · 1 authorised · 2 cancelled;  finalized 1 = paid, bank_date = paid date)
+ *         → tpd_bank_initiation (the accountant's step: the payment-date rate, charges, reference)
+ *           → tpd_bank_approval (the lock written when Paid is clicked: final date, rate, LKR, difference)
+ *             → tpd_remittance (the advice to the supplier: pending → sent)
+ *
+ * Rates (tf-paydesk-r2): a USD payment carries the rate locked when it was requested, the rate shown at approval (its
+ * provisional LKR — written once, never overwritten) and the rate of the actual bank-payment date (its final LKR,
+ * locked at Paid). The difference between the final and the provisional LKR is recorded as the exchange-rate
+ * difference, per request. Today's rate is only ever used for the part not yet requested, and then it is marked
+ * indicative. A finished payment is never touched by a later rate or a later itinerary change: a service that
+ * disappears from the itinerary after a payment stays on the dashboard as a flagged line.
+ */
+final class PayDesk
+{
+
+    /** Legacy voucher flags: Aflag 0 pending · 1 authorised (ledger posted) · 2 rejected · 3 cancelled (Voucher Cancellation screen, ledger reversed). */
+    public const AFLAG_DEAD = [2, 3];
+
+    /** True for a voucher the legacy system rejected (Aflag 2) or cancelled (Aflag 3): never initiated, paid or re-used. */
+    public static function isCancelled(?array $v): bool
+    {
+        return $v !== null && isset($v['Aflag']) && in_array((int) $v['Aflag'], self::AFLAG_DEAD, true);
+    }
+    public const VERSION = 'tf-paydesk-r2';
+
+    /** Stage number, label and colour of each status (Shantha's list, 10 Oct 2026). */
+    public const STATUS = [
+        'not_requested'  => [1, 'Payment Not Requested', 'grey'],
+        'requested'      => [2, 'Payment Requested', 'blue'],
+        'awaiting'       => [3, 'Awaiting Management Approval', 'blue'],
+        'approved'       => [4, 'Approved for Payment', 'indigo'],
+        'voucher_issued' => [5, 'Payment Voucher Issued', 'violet'],
+        'bank_initiated' => [6, 'Bank Payment Initiated — Awaiting Bank Approval', 'teal'],
+        'paid'           => [7, 'Fully Paid', 'green'],
+        'notify_pending' => [8, 'Supplier Notification Pending', 'olive'],
+        'notified'       => [9, 'Supplier Notified', 'green'],
+        'partly_paid'    => [0, 'Partly Paid', 'purple'],
+        'on_hold'        => [0, 'On Hold', 'yellow'],
+        'check'          => [0, 'Requires Checking', 'yellow'],
+        'rejected'       => [0, 'Rejected', 'red'],
+        'reversed'       => [0, 'Reversed', 'red'],
+    ];
+
+    private $db;
+    private string $user;
+
+    public function __construct($db, string $user)
+    {
+        $this->db = $db;
+        $this->user = $user;
+    }
+
+    // =====================================================================
+    //  The dashboard
+    // =====================================================================
+
+    /**
+     * @param array $data  TourPaymentDashboardController::dashboardData() — tour_info, payment_rows, categories, totals, tickets
+     */
+    public function build(array $data): array
+    {
+        $t = $data['tour_info'];
+        $tourId = (string) $t['tour_id'];
+        $today = date('Y-m-d');
+        $rate = $this->todayRate();
+        $perms = Perms::all();
+
+        $requests = $this->requests($tourId);
+        $vouchers = $this->vouchers($tourId);
+        $ext = $this->ext($tourId);
+        $inits = $this->rows('tpd_bank_initiation', 'tour_id', $tourId, 'vnum');
+        $apps = $this->rows('tpd_bank_approval', 'tour_id', $tourId, 'vnum');
+        $remits = $this->rows('tpd_remittance', 'tour_id', $tourId, 'vnum');
+        $docs = $this->documents($tourId);
+        $holds = $this->holds($tourId);
+        $expenses = $this->expenses($tourId);
+        $supBank = [];
+
+        $lines = [];
+        $usedRequests = [];
+        $usedVouchers = [];
+
+        // ---- the system's own lines (hotels, activities, driver advance / settlement, bata) ----
+        foreach ($data['payment_rows'] as $i => $row) {
+            $line = $this->lineFromLegacy($row, $i, $t);
+            $this->attachChain($line, $requests, $vouchers, $ext, $inits, $apps, $remits, $usedRequests, $usedVouchers);
+            $lines[] = $line;
+        }
+        // ---- manual expenses ----
+        foreach ($expenses as $e) {
+            $line = $this->lineFromExpense($e, $t);
+            $this->attachChain($line, $requests, $vouchers, $ext, $inits, $apps, $remits, $usedRequests, $usedVouchers);
+            $lines[] = $line;
+        }
+        // ---- payments whose service is no longer on the itinerary: kept, flagged ----
+        foreach ($requests as $r) {
+            if (isset($usedRequests[(int) $r['id']]) || in_array((int) $r['payment_request'], [3, 5], true)) {
+                continue;
+            }
+            $line = $this->lineFromOrphan($r, $t);
+            $this->attachChain($line, $requests, $vouchers, $ext, $inits, $apps, $remits, $usedRequests, $usedVouchers);
+            $lines[] = $line;
+        }
+        foreach ($vouchers as $v) {
+            if (isset($usedVouchers[(int) $v['Vnum']]) || self::isCancelled($v)) {
+                continue;
+            }
+            $line = $this->lineFromVoucher($v, $t);
+            $this->attachChain($line, $requests, $vouchers, $ext, $inits, $apps, $remits, $usedRequests, $usedVouchers);
+            $lines[] = $line;
+        }
+
+        // ---- a supplier with several activity lines on the tour has ONE request / voucher covering them (the chain is keyed
+        //      by tour + supplier + type): its amount is shared out across the lines in itinerary order, so nothing is counted twice
+        $this->shareRequests($lines);
+
+        // ---- money, status, warnings per line ----
+        foreach ($lines as &$line) {
+            $this->money($line, $rate['rate'] ?? null);
+            $this->status($line, $holds, $today);
+            $line['supplier_bank'] = $line['supplier_acc'] !== '' ? ($supBank[$line['supplier_acc']] ??= SupplierBank::forPayment($this->db, $line['supplier_acc'])) : null;
+            $this->warnings($line);
+            $line['documents'] = array_values(array_filter($docs, static fn ($d) => ($d['ref_type'] === 'line' && $d['ref_id'] === $line['key']) || ($d['vnum'] && in_array((int) $d['vnum'], array_column($line['transactions'], 'vnum'), false))));
+            $line['invoice_no'] = $line['invoice_no'] ?: implode(', ', array_values(array_unique(array_filter(array_map(static fn ($d) => $d['kind'] === 'invoice' ? (string) $d['number'] : '', $line['documents'])))));
+            $this->actions($line, $perms);
+        }
+        unset($line);
+
+        // ---- itinerary order ----
+        usort($lines, static function ($a, $b) {
+            return [$a['day_no'] ?? 999, $a['service_date'] ?? '', $a['sort'], $a['supplier']] <=> [$b['day_no'] ?? 999, $b['service_date'] ?? '', $b['sort'], $b['supplier']];
+        });
+        $days = $this->days($t, $lines, $data);
+
+        // ---- totals ----
+        $tot = ['estimated' => 0.0, 'paid' => 0.0, 'outstanding' => 0.0, 'due_week' => 0.0, 'overdue' => 0.0, 'lines' => count($lines)];
+        $cats = [];
+        $counts = ['all' => 0, 'outstanding' => 0, 'due_soon' => 0, 'overdue' => 0, 'awaiting' => 0, 'bank_initiated' => 0, 'paid' => 0, 'notify_pending' => 0, 'check' => 0];
+        foreach ($lines as $l) {
+            $tot['estimated'] += $l['lkr_amount'];
+            $tot['paid'] += $l['paid_lkr'];
+            $bal = max(0, $l['lkr_amount'] - $l['paid_lkr']);
+            $tot['outstanding'] += $bal;
+            if ($bal > 0 && $l['urgency'] === 'due_soon') {
+                $tot['due_week'] += $bal;
+            }
+            if ($bal > 0 && $l['urgency'] === 'overdue') {
+                $tot['overdue'] += $bal;
+            }
+            $g = $l['group'];
+            $cats[$g] ??= ['label' => self::GROUPS[$g] ?? $g, 'total' => 0.0, 'paid' => 0.0, 'count' => 0];
+            $cats[$g]['total'] += $l['lkr_amount'];
+            $cats[$g]['paid'] += $l['paid_lkr'];
+            $cats[$g]['count']++;
+            foreach ($l['filters'] as $f) {
+                $counts[$f] = ($counts[$f] ?? 0) + 1;
+            }
+        }
+        foreach ($cats as &$c) {
+            $c['pct'] = $c['total'] > 0 ? (int) round(min(100, $c['paid'] / $c['total'] * 100)) : 0;
+        }
+        unset($c);
+        $tot['pct'] = $tot['estimated'] > 0 ? (int) round(min(100, $tot['paid'] / $tot['estimated'] * 100)) : 0;
+        $tot['legacy_estimate'] = (float) ($data['totals']['estimated'] ?? 0);
+
+        $crew = $this->crew($t, $data);
+        return [
+            'version'   => self::VERSION,
+            'ready'     => Schema::installed($this->db),
+            'accumulates' => Batches::accumulates($this->db),   // tf-paydesk-r2: approvals wait in Supplier Payables; batches issue the vouchers
+            'tour'      => [
+                'tour_id' => $tourId, 'manual_id' => $t['manual_id'], 'name' => $t['consignee'] ?: ('Tour ' . $t['manual_id']),
+                'start_date' => $t['start_date'], 'end_date' => $t['end_date'], 'pax' => (int) ($t['passenger_count'] ?? 0),
+                'agency' => trim((string) ($t['agent_name'] ?? '')) ?: ($t['agent'] ?? ''), 'agent_acc' => $t['agent'] ?? '',
+                'status' => $data['tour_status'] ?? '', 'drivers' => $crew['drivers'], 'guide' => $crew['guide'],
+                'arrival_flight' => $t['arrival_flight'] ?? '', 'departure_flight' => $t['departure_flight'] ?? '',
+                'nights' => $this->nights($t['start_date'] ?? null, $t['end_date'] ?? null),
+            ],
+            'rate'      => $rate,
+            'totals'    => $tot,
+            'categories' => $cats,
+            'counts'    => $counts,
+            'days'      => $days,
+            'lines'     => $lines,
+            'history'   => $this->history($tourId, $lines, $requests, $vouchers, $inits, $apps, $remits),
+            'audit'     => $this->auditWithOffers($tourId),
+            'tickets'   => $data['tickets'] ?? [],
+            'perms'     => $perms,
+            'bank_accounts' => BankAccounts::forSelection($this->db),
+            'legacy'    => ['payment_rows' => $data['payment_rows'], 'categories' => $data['categories'], 'totals' => $data['totals'], 'tour_info' => $t, 'tour_status' => $data['tour_status'] ?? '', 'allocated_drivers' => $data['allocated_drivers'] ?? []],
+            'today'     => $today,
+        ];
+    }
+
+    public const GROUPS = ['hotel' => 'Hotels', 'meal' => 'Restaurants & meals', 'entrance' => 'Entrance tickets', 'activity' => 'Activities & services', 'transport' => 'Transport expenses',
+        'driver_advance' => 'Driver advance', 'driver_settlement' => 'Driver settlement', 'guide' => 'Guide payments', 'other' => 'Other supplier expenses'];
+
+    // ---------------------------------------------------------------------
+    //  Lines
+    // ---------------------------------------------------------------------
+
+    private function lineFromLegacy(array $row, int $idx, array $t): array
+    {
+        $cat = (string) $row['category'];
+        $acc = (string) ($row['supplier_acc'] ?? '');
+        $isHotel = $cat === 'Hotel';
+        $days = [];
+        if (preg_match_all('/\d+/', (string) $row['day'], $m)) {
+            $days = array_map('intval', $m[0]);
+        }
+        $dayNo = $days ? min($days) : null;
+        $stay = $row['stay_dates'] ?? [];
+        $serviceDate = $isHotel ? ($stay[0] ?? ($row['due_date'] ?? null)) : ($row['due_date'] ?? null);
+        if ($dayNo === null && $serviceDate && !empty($t['start_date'])) {
+            $dayNo = $this->dayOf($t['start_date'], $serviceDate);
+        }
+        $group = match ($cat) {
+            'Hotel' => 'hotel',
+            'Activity' => $this->activityGroup((string) $row['description']),
+            'Driver Advance' => 'driver_advance',
+            'Driver Settlement' => 'driver_settlement',
+            'Driver' => 'guide_or_driver',
+            default => 'other',
+        };
+        if ($group === 'guide_or_driver') {
+            $group = (!empty($t['guide']) && (string) $t['guide'] === $acc) ? 'guide' : 'transport';
+        }
+        // the driver's advance is due at the start of the tour, the settlement at its end, a bata when recorded
+        if ($group === 'driver_advance') {
+            $serviceDate = $t['start_date'] ?? $serviceDate;
+            $dayNo = 1;
+        } elseif ($group === 'driver_settlement') {
+            $serviceDate = $t['end_date'] ?? $serviceDate;
+            $dayNo = $this->dayOf($t['start_date'] ?? null, $serviceDate);
+        }
+        $prType = match ($cat) { 'Hotel' => 'Hotel', 'Activity' => 'lunch', 'Driver Advance', 'Driver Settlement' => 'Transport Advance', default => null };
+        $usd = $isHotel;
+        $amount = $isHotel ? (float) (($row['cost_dollar'] ?? null) ?: ($row['total_dollar'] ?? 0)) : (float) $row['total'];
+        $quoted = $isHotel ? (float) ($row['total_dollar'] ?? 0) : null;
+        return [
+            'key' => strtolower(str_replace(' ', '_', $cat)) . ':' . $acc . ($cat === 'Activity' && !empty($row['activity_id']) ? ':' . $row['activity_id'] : ''),
+            'source_type' => match ($cat) { 'Hotel' => 'hotel', 'Activity' => 'activity', 'Driver Advance' => 'driver_advance', 'Driver Settlement' => 'driver_settlement', default => 'driver_expense' },
+            'source_id' => $cat === 'Activity' ? (string) ($row['activity_id'] ?? '') : $acc,
+            'legacy_idx' => $idx, 'legacy_status' => (string) $row['status'], 'legacy_category' => $cat,
+            'sort' => match ($group) { 'hotel' => 1, 'meal' => 2, 'entrance' => 3, 'activity' => 4, 'transport' => 5, 'driver_advance' => 0, 'driver_settlement' => 9, 'guide' => 6, default => 7 },
+            'group' => $group, 'category' => self::categoryLabel($group),
+            'day_no' => $dayNo, 'days' => $days, 'service_date' => $serviceDate, 'service_dates' => $stay,
+            'nights' => $isHotel ? (int) ($row['night_count'] ?? count($stay)) : null,
+            'supplier' => (string) $row['supplier'], 'supplier_acc' => $acc,
+            'description' => (string) ($row['description'] ?? ''),
+            'pr_type' => $prType,
+            'currency' => $usd ? 'USD' : 'LKR', 'amount' => round($amount, 2), 'quoted_usd' => $quoted,
+            'request_date' => $row['request_date'] ?? null, 'due_date' => $this->dueDate($row, $t),
+            'invoice_no' => '', 'booking_ref' => '',
+            // the hotel rate panel's answer (kept as it is): contracted / ad hoc / quoted — check / no contract / offers
+            'rate_source' => $row['cost_source'] ?? null, 'rate_source_label' => $row['cost_source_label'] ?? null,
+            'rate_needs_check' => (bool) ($row['cost_needs_check'] ?? false), 'rate_check_notes' => $row['cost_check_notes'] ?? [],
+            'rate_plans' => $row['cost_plans'] ?? [], 'cost_offer' => $row['cost_offer'] ?? null, 'rate_review' => $row['rate_review'] ?? null,
+            'cost_dollar' => $row['cost_dollar'] ?? null, 'cost_margin' => $row['cost_margin'] ?? null,
+            'driver_advance_request_id' => $row['driver_advance_request_id'] ?? null,
+            'advance' => isset($row['advance_payment']) ? ['paid' => $row['advance_payment'], 'expenses' => $row['advance_expenses'], 'remaining' => $row['advance_remaining'], 'settled' => $row['total_pay_cr']] : null,
+            'payee' => $row['payee'] ?? null,
+            'bank_name' => $row['bank_name'] ?? '', 'branch_name' => $row['branch_name'] ?? '', 'supplier_bank_acc' => $row['supplier_bank_acc'] ?? '',
+            'flags' => [], 'transactions' => [], 'orphan' => false,
+        ];
+    }
+
+    private function lineFromExpense(array $e, array $t): array
+    {
+        $group = match (strtolower((string) $e['category'])) { 'meal', 'restaurant', 'restaurants & meals' => 'meal', 'entrance', 'ticket', 'entrance tickets' => 'entrance', 'activity', 'service' => 'activity', 'transport' => 'transport', 'guide' => 'guide', default => 'other' };
+        return [
+            'key' => 'expense:' . $e['id'], 'source_type' => 'expense', 'source_id' => (string) $e['id'], 'legacy_idx' => null, 'legacy_status' => null, 'legacy_category' => 'Expense',
+            'sort' => 8, 'group' => $group, 'category' => self::categoryLabel($group),
+            'day_no' => $this->dayOf($t['start_date'] ?? null, $e['service_date']), 'days' => [], 'service_date' => $e['service_date'], 'service_dates' => [], 'nights' => null,
+            'supplier' => (string) $e['supplier_name'], 'supplier_acc' => (string) ($e['supplier_acc'] ?? ''), 'description' => (string) $e['description'],
+            'pr_type' => 'lunch', 'currency' => strtoupper((string) $e['currency']) === 'USD' ? 'USD' : 'LKR', 'amount' => round((float) $e['amount'], 2), 'quoted_usd' => null,
+            'request_date' => null, 'due_date' => $e['due_date'] ?: $e['service_date'], 'invoice_no' => (string) ($e['invoice_no'] ?? ''), 'booking_ref' => '',
+            'rate_source' => null, 'rate_source_label' => null, 'rate_needs_check' => false, 'rate_check_notes' => [], 'rate_plans' => [], 'cost_offer' => null, 'rate_review' => null,
+            'cost_dollar' => null, 'cost_margin' => null, 'driver_advance_request_id' => null, 'advance' => null, 'payee' => null,
+            'bank_name' => '', 'branch_name' => '', 'supplier_bank_acc' => '', 'expense' => $e,
+            'flags' => [], 'transactions' => [], 'orphan' => false,
+        ];
+    }
+
+    /** A payment request whose service is no longer on the itinerary. */
+    private function lineFromOrphan(array $r, array $t): array
+    {
+        $type = (string) $r['type'];
+        $group = match ($type) { 'Hotel' => 'hotel', 'Transport Advance' => 'driver_advance', default => 'other' };
+        return [
+            'key' => 'orphan:' . $r['id'], 'source_type' => 'orphan_request', 'source_id' => (string) $r['id'], 'legacy_idx' => null, 'legacy_status' => null, 'legacy_category' => $type,
+            'sort' => 10, 'group' => $group, 'category' => self::categoryLabel($group),
+            'day_no' => $this->dayOf($t['start_date'] ?? null, $r['start_date'] ?? null), 'days' => [], 'service_date' => $r['start_date'] ?? null, 'service_dates' => [], 'nights' => null,
+            'supplier' => (string) ($r['hotel_name'] ?: $r['hotel_acc']), 'supplier_acc' => (string) $r['hotel_acc'], 'description' => $type === 'Hotel' ? 'Hotel stay (no longer on the itinerary)' : ($type === 'lunch' ? 'Service (no longer on the itinerary)' : 'Driver advance (driver no longer allocated)'),
+            'pr_type' => $type, 'currency' => $type === 'Hotel' ? 'USD' : 'LKR', 'amount' => round((float) $r['requestAmount'], 2), 'quoted_usd' => null,
+            'request_date' => $r['payment_request_date'], 'due_date' => $r['start_date'] ?? null, 'invoice_no' => '', 'booking_ref' => '',
+            'rate_source' => null, 'rate_source_label' => null, 'rate_needs_check' => false, 'rate_check_notes' => [], 'rate_plans' => [], 'cost_offer' => null, 'rate_review' => null,
+            'cost_dollar' => null, 'cost_margin' => null, 'driver_advance_request_id' => null, 'advance' => null, 'payee' => null,
+            'bank_name' => $r['bank_name'] ?? '', 'branch_name' => $r['branch_name'] ?? '', 'supplier_bank_acc' => $r['sup_bank_acc'] ?? '',
+            'flags' => [['level' => 'danger', 'code' => 'removed', 'text' => 'This service is no longer on the itinerary but a payment request exists. Check it; an authorised adjustment is needed — nothing was changed automatically.']],
+            'transactions' => [], 'orphan' => true,
+        ];
+    }
+
+    /** A voucher for this tour that no request or line explains (an older direct payment). */
+    private function lineFromVoucher(array $v, array $t): array
+    {
+        $group = (int) $v['advances_pay'] === 1 ? 'driver_advance' : 'other';
+        return [
+            'key' => 'voucher:' . $v['Vnum'], 'source_type' => 'voucher', 'source_id' => (string) $v['Vnum'], 'legacy_idx' => null, 'legacy_status' => null, 'legacy_category' => 'Voucher',
+            'sort' => 11, 'group' => $group, 'category' => self::categoryLabel($group),
+            'day_no' => null, 'days' => [], 'service_date' => substr((string) $v['W_Date'], 0, 10), 'service_dates' => [], 'nights' => null,
+            'supplier' => (string) $v['S_name'], 'supplier_acc' => (string) $v['Acc_No'], 'description' => trim((string) ($v['vi_description'] ?? '')) ?: 'Payment Voucher No. ' . $v['Vnum'],
+            'pr_type' => null, 'currency' => $v['doller_amt'] ? 'USD' : 'LKR', 'amount' => round((float) ($v['doller_amt'] ?: $v['Amount']), 2), 'quoted_usd' => null,
+            'request_date' => substr((string) $v['C_Date'], 0, 10), 'due_date' => substr((string) $v['W_Date'], 0, 10), 'invoice_no' => (string) ($v['inv'] !== '0' ? $v['inv'] : ''), 'booking_ref' => '',
+            'rate_source' => null, 'rate_source_label' => null, 'rate_needs_check' => false, 'rate_check_notes' => [], 'rate_plans' => [], 'cost_offer' => null, 'rate_review' => null,
+            'cost_dollar' => null, 'cost_margin' => null, 'driver_advance_request_id' => null, 'advance' => null, 'payee' => null,
+            'bank_name' => '', 'branch_name' => '', 'supplier_bank_acc' => '',
+            'flags' => [['level' => 'warning', 'code' => 'direct', 'text' => 'A payment voucher recorded outside the request chain (no payment request behind it). Shown so the history is complete.']],
+            'transactions' => [], 'orphan' => true,
+        ];
+    }
+
+    private static function categoryLabel(string $group): string
+    {
+        return match ($group) { 'hotel' => 'Hotel', 'meal' => 'Meal', 'entrance' => 'Entrance', 'activity' => 'Activity', 'transport' => 'Transport', 'driver_advance' => 'Driver advance',
+            'driver_settlement' => 'Driver settlement', 'guide' => 'Guide', default => 'Other' };
+    }
+
+    private function activityGroup(string $name): string
+    {
+        $n = strtolower($name);
+        if (preg_match('/lunch|dinner|breakfast|meal|restaurant|cafe|tea\b|buffet/', $n)) {
+            return 'meal';
+        }
+        if (preg_match('/entrance|ticket|entry|admission|museum|fort\b|temple|garden|park\b|rock\b|cave/', $n)) {
+            return 'entrance';
+        }
+        if (preg_match('/transfer|boat|train|jeep|safari vehicle|tuk/', $n)) {
+            return 'transport';
+        }
+        return 'activity';
+    }
+
+    private function dueDate(array $row, array $t): ?string
+    {
+        // the chain's own idea of the due date: check-in for a hotel, the service date for an activity, the tour's end for the settlement
+        $d = $row['due_date'] ?? null;
+        if (($row['category'] ?? '') === 'Hotel' && !empty($row['stay_dates'])) {
+            $d = $row['stay_dates'][0];
+        }
+        return $d ? substr((string) $d, 0, 10) : null;
+    }
+
+    private function dayOf(?string $start, ?string $date): ?int
+    {
+        if (!$start || !$date) {
+            return null;
+        }
+        $a = strtotime(substr($start, 0, 10));
+        $b = strtotime(substr($date, 0, 10));
+        if (!$a || !$b) {
+            return null;
+        }
+        return (int) floor(($b - $a) / 86400) + 1;
+    }
+
+    private function nights(?string $start, ?string $end): ?int
+    {
+        if (!$start || !$end) {
+            return null;
+        }
+        return max(0, (int) round((strtotime($end) - strtotime($start)) / 86400));
+    }
+
+    // ---------------------------------------------------------------------
+    //  The chain behind a line
+    // ---------------------------------------------------------------------
+
+    private function requests(string $tourId): array
+    {
+        return $this->db->query("SELECT * FROM payment_request WHERE tour_id = ? ORDER BY id ASC", [$tourId])->getResultArray();
+    }
+
+    /** Every voucher of the tour (through v_inv.Invoice, so a bulk voucher carrying this tour counts too), with its first line's words. */
+    private function vouchers(string $tourId): array
+    {
+        $rows = $this->db->query(
+            "SELECT v.ID, v.Vnum, v.Voucher_No, v.Acc_No, v.S_name, v.Amount, v.doller_amt, v.Aflag, v.finalized, v.finalized_user, v.finalized_date, v.bank_date,
+                    v.Bank, v.Bank_acc, v.C_Date, v.W_Date, v.Aut_user, v.aut_date, v.rejdate, v.remark, v.advances_pay, v.V_num, v.inv, v.login, v.app_user, v.type AS pay_type, v.sup, v.ref_po, v.C_Number,
+                    MIN(vi.Description) AS vi_description, MAX(vi.Rate) AS vi_rate, SUM(vi.Amount) AS vi_amount, COUNT(vi.ID) AS vi_lines
+             FROM v_inv vi JOIN voucher v ON v.Vnum = vi.V_tkn
+             WHERE vi.Invoice = ?
+             GROUP BY v.ID ORDER BY v.Vnum ASC", [$tourId])->getResultArray();
+        // a driver's advance voucher is written with ref_po but not always a v_inv line
+        $seen = array_column($rows, 'Vnum');
+        $more = $this->db->query("SELECT v.ID, v.Vnum, v.Voucher_No, v.Acc_No, v.S_name, v.Amount, v.doller_amt, v.Aflag, v.finalized, v.finalized_user, v.finalized_date, v.bank_date,
+                    v.Bank, v.Bank_acc, v.C_Date, v.W_Date, v.Aut_user, v.aut_date, v.rejdate, v.remark, v.advances_pay, v.V_num, v.inv, v.login, v.app_user, v.type AS pay_type, v.sup, v.ref_po, v.C_Number,
+                    NULL AS vi_description, NULL AS vi_rate, NULL AS vi_amount, 0 AS vi_lines
+             FROM voucher v WHERE v.ref_po = ? AND v.advances_pay IN (1,2)" . ($seen ? ' AND v.Vnum NOT IN (' . implode(',', array_map('intval', $seen)) . ')' : '') . ' ORDER BY v.Vnum', [$tourId])->getResultArray();
+        return array_merge($rows, $more);
+    }
+
+    private function ext(string $tourId): array
+    {
+        $out = [];
+        try {
+            foreach ($this->db->query("SELECT * FROM tpd_request_ext WHERE tour_id = ?", [$tourId])->getResultArray() as $r) {
+                $out[(int) $r['pr_id']] = $r;
+            }
+        } catch (\Throwable $e) {
+        }
+        return $out;
+    }
+
+    private function rows(string $table, string $col, string $val, string $key): array
+    {
+        $out = [];
+        try {
+            foreach ($this->db->query("SELECT * FROM `{$table}` WHERE `{$col}` = ?", [$val])->getResultArray() as $r) {
+                $out[(string) $r[$key]] = $r;
+            }
+        } catch (\Throwable $e) {
+        }
+        return $out;
+    }
+
+    private function documents(string $tourId): array
+    {
+        try {
+            return $this->db->query("SELECT * FROM tpd_document WHERE tour_id = ? ORDER BY id", [$tourId])->getResultArray();
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+
+    private function holds(string $tourId): array
+    {
+        $out = [];
+        try {
+            foreach ($this->db->query("SELECT * FROM hr2_payment_hold WHERE tour_id = ? ORDER BY id", [$tourId])->getResultArray() as $h) {
+                $out[(string) $h['hotel_acc']] = $h;
+            }
+        } catch (\Throwable $e) {
+        }
+        return $out;
+    }
+
+    private function expenses(string $tourId): array
+    {
+        try {
+            return $this->db->query("SELECT * FROM tpd_expense WHERE tour_id = ? AND status = 'open' ORDER BY service_date, id", [$tourId])->getResultArray();
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+
+    /** The requests and vouchers that belong to a line, as transactions, oldest first. */
+    private function attachChain(array &$line, array $requests, array $vouchers, array $ext, array $inits, array $apps, array $remits, array &$usedRequests, array &$usedVouchers): void
+    {
+        $acc = $line['supplier_acc'];
+        $type = $line['pr_type'];
+        $mine = [];
+        if ($line['source_type'] === 'orphan_request') {
+            $mine = array_values(array_filter($requests, static fn ($r) => (int) $r['id'] === (int) $line['source_id']));
+        } elseif ($line['source_type'] === 'voucher') {
+            $mine = [];
+        } elseif ($line['source_type'] === 'expense') {
+            $mine = array_values(array_filter($requests, static fn ($r) => isset($ext[(int) $r['id']]) && $ext[(int) $r['id']]['source_type'] === 'expense' && (string) $ext[(int) $r['id']]['source_id'] === (string) $line['source_id']));
+        } elseif ($type !== null && $acc !== '') {
+            $mine = array_values(array_filter($requests, static function ($r) use ($acc, $type, $ext) {
+                if ((string) $r['hotel_acc'] !== $acc || (string) $r['type'] !== $type) {
+                    return false;
+                }
+                $x = $ext[(int) $r['id']] ?? null;
+                return !$x || $x['source_type'] !== 'expense';   // an expense request on the same supplier belongs to its expense line
+            }));
+        }
+        // the vouchers of this supplier on this tour, in order; each request takes the next voucher raised at or after its acceptance
+        $vMine = [];
+        $myPrs = array_map(static fn ($r) => (int) $r['id'], $mine);
+        if ($line['source_type'] === 'voucher') {
+            $vMine = array_values(array_filter($vouchers, static fn ($v) => (int) $v['Vnum'] === (int) $line['source_id']));
+        } elseif ($acc !== '') {
+            $wantAdv = in_array($line['group'], ['driver_advance', 'driver_settlement'], true);
+            $vMine = array_values(array_filter($vouchers, static function ($v) use ($acc, $wantAdv, $usedVouchers, $myPrs) {
+                if ((string) $v['Acc_No'] !== $acc) {
+                    return false;
+                }
+                // a voucher taken by another line is reused only when that line shares this request
+                if (isset($usedVouchers[(int) $v['Vnum']]) && !in_array($usedVouchers[(int) $v['Vnum']], $myPrs, true)) {
+                    return false;
+                }
+                return $wantAdv ? (int) $v['advances_pay'] === 1 : (int) $v['advances_pay'] !== 1;
+            }));
+        }
+        $tx = [];
+        $taken = [];
+        foreach ($mine as $r) {
+            $usedRequests[(int) $r['id']] = true;
+            $x = $ext[(int) $r['id']] ?? null;
+            $pr = (int) $r['payment_request'];
+            $v = null;
+            foreach ($vMine as $cand) {
+                if (($usedVouchers[(int) $cand['Vnum']] ?? null) === (int) $r['id']) {
+                    $v = $cand;   // paired earlier by a line sharing this request
+                    break;
+                }
+            }
+            if ($v === null && $x && !empty($x['voucher_vnum'])) {
+                foreach ($vMine as $cand) {
+                    if ((int) $cand['Vnum'] === (int) $x['voucher_vnum']) {
+                        $v = $cand;
+                        break;
+                    }
+                }
+            }
+            if ($v === null && (in_array($pr, [4, 6, 2], true) || (int) $r['voucher_created'] === 1)) {
+                foreach ($vMine as $cand) {
+                    if (isset($taken[(int) $cand['Vnum']])) {
+                        continue;
+                    }
+                    if (empty($r['accept_date']) || substr((string) $cand['C_Date'], 0, 10) >= substr((string) $r['accept_date'], 0, 10)) {
+                        $v = $cand;
+                        break;
+                    }
+                }
+            }
+            if ($v !== null) {
+                $taken[(int) $v['Vnum']] = true;
+                $usedVouchers[(int) $v['Vnum']] = (int) $r['id'];
+            }
+            $tx[] = $this->transaction($line, $r, $x, $v, $inits, $apps, $remits);
+        }
+        // vouchers of this supplier with no request (older direct payments): shown under the line, flagged
+        if ($line['source_type'] !== 'orphan_request') {
+            foreach ($vMine as $cand) {
+                if (isset($taken[(int) $cand['Vnum']]) || isset($usedVouchers[(int) $cand['Vnum']])) {
+                    continue;
+                }
+                // only when nothing else explains it and it is not somebody else's activity on the same supplier
+                if ($line['source_type'] === 'activity' && count($mine) === 0) {
+                    continue;
+                }
+                $usedVouchers[(int) $cand['Vnum']] = 0;
+                $tx[] = $this->transaction($line, null, null, $cand, $inits, $apps, $remits);
+            }
+        }
+        $line['transactions'] = $tx;
+    }
+
+    private function transaction(array $line, ?array $r, ?array $x, ?array $v, array $inits, array $apps, array $remits): array
+    {
+        $usd = $line['currency'] === 'USD';
+        $prStatus = $r ? (int) $r['payment_request'] : null;
+        $vnum = $v ? (int) $v['Vnum'] : null;
+        $init = $vnum !== null ? ($inits[(string) $vnum] ?? null) : null;
+        $app = $vnum !== null ? ($apps[(string) $vnum] ?? null) : null;
+        $rem = $vnum !== null ? ($remits[(string) $vnum] ?? null) : null;
+        $batch = $x && !empty($x['batch_id']) ? $this->batch((int) $x['batch_id']) : null;
+        // tf-paydesk-r2 — three rates can belong to one payment: the one locked when requested, the one shown at approval
+        // (provisional LKR, never overwritten) and the one of the actual payment date (final LKR, locked at Paid)
+        $approvalRate = $x && isset($x['approval_rate']) && $x['approval_rate'] !== null ? (float) $x['approval_rate'] : null;
+        $approvalLkr = $x && isset($x['approval_lkr']) && $x['approval_lkr'] !== null ? (float) $x['approval_lkr'] : null;
+        $paidRate = $x && isset($x['paid_rate']) && $x['paid_rate'] !== null ? (float) $x['paid_rate'] : null;
+        $paidLkr = $x && isset($x['paid_lkr']) && $x['paid_lkr'] !== null ? (float) $x['paid_lkr'] : null;
+        $fxDiff = $x && isset($x['fx_diff']) && $x['fx_diff'] !== null ? (float) $x['fx_diff'] : null;
+        $initRate = $init && isset($init['usd_rate']) && $init['usd_rate'] !== null ? (float) $init['usd_rate'] : null;
+        $rate = null;
+        $rateFrom = null;
+        if ($usd && $paidRate !== null) {
+            $rate = $paidRate;
+            $rateFrom = 'payment-date rate (final, locked at Paid)';
+        } elseif ($usd && $batch && $initRate !== null) {
+            $rate = $initRate;
+            $rateFrom = 'payment-date rate confirmed at bank initiation (final at Paid)';
+        } elseif ($usd && $approvalRate !== null) {
+            $rate = $approvalRate;
+            $rateFrom = 'rate at approval (provisional until the bank payment)';
+        } elseif ($x && $x['usd_rate'] !== null) {
+            $rate = (float) $x['usd_rate'];
+            $rateFrom = 'locked at request';
+        } elseif ($v && $v['vi_rate'] !== null && (float) $v['vi_rate'] > 0) {
+            $rate = (float) $v['vi_rate'];
+            $rateFrom = 'locked on the voucher';
+        } elseif ($usd && $r && $line['source_type'] === 'hotel') {
+            $rate = $this->hotelRateAtRequest((string) $r['tour_id'], (string) $r['hotel_acc']);
+            $rateFrom = $rate ? 'locked at request (quotation record)' : null;
+        }
+        $amount = $r ? ($usd && $x && $x['amount'] !== null ? (float) $x['amount'] : (float) $r['requestAmount']) : (float) ($v['doller_amt'] ?: $v['Amount']);
+        $lkr = null;
+        if ($paidLkr !== null) {
+            $lkr = $paidLkr;
+        } elseif ($batch) {
+            $lkr = $usd ? ($initRate !== null ? self::lkr($amount, $initRate) : $approvalLkr) : $amount;
+            $lkr = $lkr ?? ($x['lkr_amount'] !== null ? (float) $x['lkr_amount'] : null);
+        } elseif ($v) {
+            $lkr = (float) $v['Amount'];
+        } elseif ($approvalLkr !== null) {
+            $lkr = $approvalLkr;
+        } elseif ($x && $x['lkr_amount'] !== null) {
+            $lkr = (float) $x['lkr_amount'];
+        } elseif ($usd && $rate) {
+            $lkr = round($amount * $rate, 2);
+        } elseif (!$usd) {
+            $lkr = $amount;
+        }
+        $finalized = $v && (int) $v['finalized'] === 1;
+        $cancelled = $v && self::isCancelled($v);
+        $stage = 'not_requested';
+        if ($r && $prStatus === 3) {
+            $stage = 'cancelled';
+        } elseif ($r && $prStatus === 5) {
+            $stage = 'rejected';
+        } elseif ($cancelled) {
+            $stage = 'reversed';
+        } elseif ($finalized) {
+            $stage = $rem ? ($rem['status'] === 'sent' ? 'notified' : 'notify_pending') : 'paid';
+        } elseif ($v && $init) {
+            $stage = 'bank_initiated';
+        } elseif ($v) {
+            $stage = 'voucher_issued';
+        } elseif ($r && in_array($prStatus, [4, 6], true)) {
+            $stage = 'approved';
+        } elseif ($r && $prStatus === 0) {
+            $stage = 'on_hold';
+        } elseif ($r) {
+            $stage = 'awaiting';
+        }
+        return [
+            'pr_id' => $r ? (int) $r['id'] : null, 'pr_status' => $prStatus,
+            'requested_at' => $r ? $r['payment_request_date'] : null, 'requested_by' => $r ? $r['payment_request_user'] : null,
+            'accepted_at' => $r ? $r['accept_date'] : null, 'accepted_by' => $r ? $r['accept_user'] : null,
+            'cancelled_at' => $r ? $r['payment_cancel_date'] : null, 'cancelled_by' => $r ? $r['payment_cancel_user'] : null,
+            'currency' => $usd ? 'USD' : 'LKR', 'amount' => round($amount, 2),
+            'usd_rate' => $rate, 'rate_from' => $rateFrom, 'rate_date' => $x['rate_date'] ?? ($r ? substr((string) $r['payment_request_date'], 0, 10) : null),
+            'lkr' => $lkr !== null ? round($lkr, 2) : null,
+            'invoice_no' => $x['invoice_no'] ?? ($v && $v['inv'] !== '0' && $v['inv'] !== null ? (string) $v['inv'] : null),
+            'booking_ref' => $x['booking_ref'] ?? null, 'note' => $x['note'] ?? null, 'parent_pr_id' => $x['parent_pr_id'] ?? null,
+            'vnum' => $vnum, 'voucher_no' => $v ? $v['Voucher_No'] : null, 'voucher_id' => $v ? (int) $v['ID'] : null,
+            // a batch voucher carries several requests (and tours): this request's share is its own figure, the whole voucher beside it
+            'voucher_amount' => $v ? ($batch ? ($lkr !== null ? round($lkr, 2) : null) : (float) $v['Amount']) : null, 'voucher_total' => $v ? (float) $v['Amount'] : null,
+            'voucher_usd' => $v ? ($batch ? ($usd ? round($amount, 2) : null) : ($v['doller_amt'] !== null ? (float) $v['doller_amt'] : null)) : null,
+            'approval_rate' => $approvalRate, 'approval_lkr' => $approvalLkr !== null ? round($approvalLkr, 2) : null, 'approval_rate_date' => $x['approval_rate_date'] ?? null,
+            'request_rate' => $x && $x['usd_rate'] !== null ? (float) $x['usd_rate'] : null,
+            'init_rate' => $initRate, 'paid_rate' => $paidRate, 'paid_lkr' => $paidLkr !== null ? round($paidLkr, 2) : null, 'fx_diff' => $fxDiff !== null ? round($fxDiff, 2) : null,
+            // tf-paydesk-r4: this request's share of the bank charges of its voucher, and what the bank debited for it (final LKR + share)
+            'charge_share' => $x && isset($x['charge_share']) && $x['charge_share'] !== null ? round((float) $x['charge_share'], 2) : null,
+            'tour_total_debit' => $paidLkr !== null ? round($paidLkr + (float) ($x['charge_share'] ?? 0), 2) : null,
+            'batch' => $batch ? ['id' => (int) $batch['id'], 'no' => $batch['batch_no'], 'status' => $batch['status'], 'items' => (int) $batch['item_count'], 'tours' => (int) $batch['tour_count'], 'supplier' => $batch['supplier_name'],
+                'individual' => (int) ($batch['individual'] ?? 0) === 1, 'bypass_label' => !empty($batch['bypass_reason']) ? (Batches::BYPASS[$batch['bypass_reason']] ?? $batch['bypass_reason']) : null] : null,
+            'payment_voucher_no' => $vnum,
+            'voucher_issued_at' => $v ? $v['C_Date'] : null, 'voucher_issued_by' => $v ? $v['login'] : null,
+            'aflag' => $v ? (int) $v['Aflag'] : null, 'authorised_by' => $v ? $v['Aut_user'] : null, 'authorised_at' => $v ? $v['aut_date'] : null, 'remark' => $v ? $v['remark'] : null,
+            'bank' => $v ? $v['Bank'] : null, 'bank_acc' => $v ? $v['Bank_acc'] : null, 'bulk' => $v ? ((int) ($v['vi_lines'] ?? 0) > 1) : false,
+            'finalized' => $finalized, 'paid_date' => $finalized ? ($v['bank_date'] ?: substr((string) $v['finalized_date'], 0, 10)) : null, 'finalized_by' => $v ? $v['finalized_user'] : null, 'finalized_at' => $v ? $v['finalized_date'] : null,
+            'initiation' => $init, 'approval' => $app, 'remittance' => $rem ? ['id' => (int) $rem['id'], 'status' => $rem['status'], 'to' => $rem['to_email'], 'sent_at' => $rem['sent_at'], 'sent_by' => $rem['sent_by'], 'pdf' => $rem['pdf_path'] ? basename($rem['pdf_path']) : null, 'error' => $rem['error']] : null,
+            'stage' => $stage, 'stage_label' => self::STATUS[$stage][1] ?? ucfirst($stage), 'stage_no' => self::STATUS[$stage][0] ?? 0,
+        ];
+    }
+
+    private array $batches = [];
+
+    private function batch(int $id): ?array
+    {
+        if (!array_key_exists($id, $this->batches)) {
+            $this->batches[$id] = Batches::get($this->db, $id);
+        }
+        return $this->batches[$id];
+    }
+
+    private function hotelRateAtRequest(string $tourId, string $acc): ?float
+    {
+        $r = $this->db->query("SELECT MAX(hotel_dollar_rate) AS r FROM tour_quotations WHERE quotation_id = ? AND hotel_acc = ?", [$tourId, $acc])->getRowArray();
+        $v = (float) ($r['r'] ?? 0);
+        return $v > 0 ? $v : null;
+    }
+
+    // ---------------------------------------------------------------------
+    //  Money and status
+    // ---------------------------------------------------------------------
+
+    private function shareRequests(array &$lines): void
+    {
+        $groups = [];
+        foreach ($lines as $i => $l) {
+            if ($l['source_type'] === 'activity' && $l['supplier_acc'] !== '') {
+                $groups[$l['supplier_acc']][] = $i;
+            }
+        }
+        foreach ($groups as $acc => $idx) {
+            if (count($idx) < 2) {
+                continue;
+            }
+            usort($idx, static fn ($a, $b) => [$lines[$a]['service_date'] ?? '', $lines[$a]['source_id']] <=> [$lines[$b]['service_date'] ?? '', $lines[$b]['source_id']]);
+            $byPr = [];
+            foreach ($idx as $i) {
+                foreach ($lines[$i]['transactions'] as $k => $tx) {
+                    $key = $tx['pr_id'] ? 'pr' . $tx['pr_id'] : ($tx['vnum'] ? 'v' . $tx['vnum'] : null);
+                    if ($key !== null) {
+                        $byPr[$key][] = [$i, $k];
+                    }
+                }
+            }
+            foreach ($byPr as $key => $places) {
+                if (count($places) < 2) {
+                    continue;
+                }
+                $left = (float) $lines[$places[0][0]]['transactions'][$places[0][1]]['amount'];
+                $leftLkr = (float) ($lines[$places[0][0]]['transactions'][$places[0][1]]['lkr'] ?? $left);
+                $n = count($places);
+                foreach ($places as $p => [$i, $k]) {
+                    $cap = (float) $lines[$i]['amount'];
+                    $take = $p === $n - 1 ? $left : min($cap, $left);
+                    $ratio = $left > 0 ? $take / $left : 0;
+                    $takeLkr = $p === $n - 1 ? $leftLkr : round($leftLkr * $ratio, 2);
+                    $lines[$i]['transactions'][$k]['shared'] = true;
+                    $lines[$i]['transactions'][$k]['covers'] = $n;
+                    $lines[$i]['transactions'][$k]['full_amount'] = (float) $lines[$i]['transactions'][$k]['amount'];
+                    $lines[$i]['transactions'][$k]['full_lkr'] = $lines[$i]['transactions'][$k]['lkr'];
+                    $lines[$i]['transactions'][$k]['amount'] = round($take, 2);
+                    $lines[$i]['transactions'][$k]['lkr'] = round($takeLkr, 2);
+                    if (isset($lines[$i]['transactions'][$k]['voucher_amount'])) {
+                        $lines[$i]['transactions'][$k]['voucher_amount_full'] = $lines[$i]['transactions'][$k]['voucher_amount'];
+                        $lines[$i]['transactions'][$k]['voucher_amount'] = $lines[$i]['transactions'][$k]['voucher_amount'] === null ? null : round($takeLkr, 2);
+                    }
+                    $left -= $take;
+                    $leftLkr -= $takeLkr;
+                }
+            }
+            foreach ($idx as $i) {
+                $lines[$i]['shared_supplier'] = ['lines' => count($idx), 'total' => round(array_sum(array_map(static fn ($j) => (float) $lines[$j]['amount'], $idx)), 2)];
+            }
+        }
+    }
+
+    private function money(array &$line, ?float $todayRate): void
+    {
+        $usd = $line['currency'] === 'USD';
+        $amount = (float) $line['amount'];
+        $paidLkr = 0.0;
+        $paidUsd = 0.0;
+        $lockedLkr = 0.0;
+        $lockedUsd = 0.0;
+        $openUsd = 0.0;
+        $lastRate = null;
+        foreach ($line['transactions'] as $tx) {
+            if (in_array($tx['stage'], ['cancelled', 'rejected', 'reversed'], true)) {
+                continue;
+            }
+            if ($tx['finalized']) {
+                $paidLkr += (float) ($tx['voucher_amount'] ?? $tx['lkr'] ?? 0);
+                $paidUsd += $usd ? (float) ($tx['voucher_usd'] ?? $tx['amount']) : 0.0;
+            }
+            if ($usd) {
+                $lockedUsd += (float) $tx['amount'];
+                $lockedLkr += (float) ($tx['lkr'] ?? 0);
+                $lastRate = $tx['usd_rate'] ?? $lastRate;
+            } else {
+                $lockedLkr += (float) ($tx['lkr'] ?? $tx['amount']);
+            }
+        }
+        if ($usd) {
+            $remainingUsd = max(0, $amount - $lockedUsd);
+            $indicative = $remainingUsd > 0 && $todayRate ? round($remainingUsd * $todayRate, 2) : 0.0;
+            $line['usd_amount'] = round($amount, 2);
+            $line['usd_requested'] = round($lockedUsd, 2);
+            $line['usd_remaining'] = round($remainingUsd, 2);
+            $line['usd_paid'] = round($paidUsd, 2);
+            $line['usd_rate'] = $lastRate ?? ($remainingUsd > 0 ? $todayRate : null);
+            $line['rate_locked'] = $lastRate !== null && $remainingUsd <= 0.005;
+            $line['rate_note'] = $lastRate !== null ? ($remainingUsd > 0.005 ? 'locked for the part requested; the balance at today\'s rate (indicative)' : 'locked when the payment was requested') : ($todayRate ? "today's rate — indicative until a payment is requested" : "no rate: today's USD rate is not entered");
+            $line['lkr_locked'] = round($lockedLkr, 2);
+            $line['lkr_indicative'] = $indicative;
+            $line['lkr_amount'] = round($lockedLkr + $indicative, 2);
+            $line['lkr_is_indicative'] = $remainingUsd > 0.005;
+        } else {
+            $line['usd_amount'] = null;
+            $line['usd_requested'] = null;
+            $line['usd_remaining'] = null;
+            $line['usd_paid'] = null;
+            $line['usd_rate'] = null;
+            $line['rate_locked'] = false;
+            $line['rate_note'] = 'priced in LKR — not converted';
+            $line['lkr_locked'] = round($lockedLkr, 2);
+            $line['lkr_indicative'] = 0.0;
+            $line['lkr_amount'] = round(max($amount, $paidLkr), 2);
+            $line['lkr_is_indicative'] = false;
+        }
+        $line['paid_lkr'] = round($paidLkr, 2);
+        $line['balance_lkr'] = round(max(0, $line['lkr_amount'] - $paidLkr), 2);
+        $line['balance_usd'] = $usd ? round(max(0, $amount - $paidUsd), 2) : null;
+    }
+
+    private function status(array &$line, array $holds, string $today): void
+    {
+        $all = $line['transactions'];
+        $newest = $all ? $all[count($all) - 1] : null;
+        $tx = array_values(array_filter($all, static fn ($t) => !in_array($t['stage'], ['cancelled'], true)));
+        $open = array_values(array_filter($tx, static fn ($t) => !in_array($t['stage'], ['rejected', 'reversed', 'paid', 'notify_pending', 'notified'], true)));
+        $paidTx = array_values(array_filter($tx, static fn ($t) => $t['finalized']));
+        $last = $tx ? $tx[count($tx) - 1] : null;
+        $hold = $line['source_type'] === 'hotel' ? ($holds[$line['supplier_acc']] ?? null) : null;
+        $total = (float) ($line['currency'] === 'USD' ? $line['usd_amount'] : $line['lkr_amount']);
+        $paid = (float) ($line['currency'] === 'USD' ? $line['usd_paid'] : $line['paid_lkr']);
+        $fully = $total > 0 ? $paid >= $total - 0.009 : $paid > 0;
+
+        $status = 'not_requested';
+        if ($line['orphan']) {
+            $status = $paidTx ? ($fully ? 'paid' : 'partly_paid') : ($open ? ($open[count($open) - 1]['stage']) : 'check');
+            if (!$paidTx && !$open) {
+                $status = 'check';
+            }
+        } elseif ($hold && $hold['status'] === 'awaiting') {
+            $status = 'on_hold';
+        } elseif ($fully && $paidTx) {
+            $status = 'paid';
+        } elseif ($open) {
+            $status = $open[count($open) - 1]['stage'];   // the request in flight: awaiting / approved / voucher_issued / bank_initiated / on_hold
+        } elseif ($paidTx) {
+            $status = 'partly_paid';
+        } elseif ($last && $last['stage'] === 'rejected' && $newest && $newest['stage'] !== 'cancelled') {
+            $status = 'rejected';
+        } elseif ($last && $last['stage'] === 'reversed' && $newest && $newest['stage'] !== 'cancelled') {
+            $status = 'reversed';
+        } elseif ($line['legacy_status'] === 'Waiting Rate Confirmation') {
+            $status = 'on_hold';
+        }
+        // after Paid: the supplier's notification
+        $notify = null;
+        if ($status === 'paid') {
+            $pending = array_filter($paidTx, static fn ($t) => $t['stage'] === 'notify_pending' || ($t['stage'] === 'paid' && $t['vnum']));
+            $notify = $pending ? 'notify_pending' : 'notified';
+            if (!array_filter($paidTx, static fn ($t) => in_array($t['stage'], ['notify_pending', 'notified'], true))) {
+                $notify = null;   // an older payment from before the advices existed
+            }
+        }
+        $partlyNote = ($paidTx && !$fully && $open) ? 'Partly Paid' : null;
+        $urgency = null;
+        if (!$fully && $line['due_date'] && !in_array($status, ['paid'], true)) {
+            if ($line['due_date'] < $today) {
+                $urgency = 'overdue';
+            } elseif ($line['due_date'] <= date('Y-m-d', strtotime($today . ' +7 days'))) {
+                $urgency = 'due_soon';
+            }
+        }
+        [$no, $label, $color] = self::STATUS[$status] ?? [0, ucfirst($status), 'grey'];
+        $line['status'] = $status;
+        $line['status_label'] = $label;
+        $line['status_no'] = $no;
+        $line['color'] = $color;
+        $line['notify'] = $notify;
+        $line['notify_label'] = $notify ? self::STATUS[$notify][1] : null;
+        $line['partly'] = $partlyNote;
+        $line['urgency'] = $urgency;
+        $line['urgency_label'] = $urgency === 'overdue' ? 'Overdue' : ($urgency === 'due_soon' ? 'Due soon' : null);
+        $line['fully_paid'] = $fully && (bool) $paidTx;
+        $line['hold'] = $hold;
+        $line['last_tx'] = $last;
+        $line['open_tx'] = $open ? $open[count($open) - 1] : null;
+        // the filters the line answers to
+        $f = ['all'];
+        if (!$line['fully_paid']) {
+            $f[] = 'outstanding';
+        }
+        if ($urgency === 'due_soon') {
+            $f[] = 'due_soon';
+        }
+        if ($urgency === 'overdue') {
+            $f[] = 'overdue';
+        }
+        if (in_array($status, ['requested', 'awaiting'], true)) {
+            $f[] = 'awaiting';
+        }
+        if ($status === 'bank_initiated') {
+            $f[] = 'bank_initiated';
+        }
+        if ($line['fully_paid']) {
+            $f[] = 'paid';
+        }
+        if ($notify === 'notify_pending') {
+            $f[] = 'notify_pending';
+        }
+        if (in_array($status, ['check', 'on_hold', 'rejected', 'reversed'], true) || $line['flags']) {
+            $f[] = 'check';
+        }
+        $line['filters'] = $f;
+    }
+
+    private function warnings(array &$line): void
+    {
+        $w = $line['flags'];
+        // the hotel rate panel's words, as they are
+        if ($line['source_type'] === 'hotel') {
+            if ($line['rate_needs_check']) {
+                $w[] = ['level' => 'danger', 'code' => 'rate_check', 'text' => trim(($line['rate_source_label'] ?: 'Quoted rate — check') . '. ' . implode(' ', (array) $line['rate_check_notes']))];
+            } elseif ($line['rate_source'] === 'quoted') {
+                $w[] = ['level' => 'danger', 'code' => 'rate_quoted', 'text' => 'Quoted rate — no contract rate found'];
+            } elseif ($line['rate_source'] === 'none' || $line['rate_source'] === null) {
+                $w[] = ['level' => 'warning', 'code' => 'rate_none', 'text' => $line['rate_source_label'] ?: 'No contract rate found'];
+            }
+            $o = $line['cost_offer'];
+            if ($o && !empty($o['choice_needed'])) {
+                $w[] = ['level' => 'info', 'code' => 'special_rate', 'text' => 'Special rate available — published rate used until an authorised user decides'];
+            }
+            if ($o && !empty($o['offers_used'])) {
+                $w[] = ['level' => 'success', 'code' => 'special_used', 'text' => 'Special rate applied: ' . implode(', ', array_map(static fn ($u) => $u['name'], $o['offers_used']))];
+            }
+            foreach ((array) ($line['rate_plans'] ?? []) as $p) {
+                if (stripos((string) $p, 'expired') !== false) {
+                    $w[] = ['level' => 'danger', 'code' => 'rate_expired', 'text' => 'Rate expired: ' . $p];
+                }
+            }
+        }
+        $sb = $line['supplier_bank'];
+        if ($sb) {
+            if ($sb['status'] === 'changed') {
+                $w[] = ['level' => 'danger', 'code' => 'bank_changed', 'text' => 'The supplier\'s bank account has CHANGED since it was verified — authorised confirmation is required before payment.'];
+            } elseif ($sb['status'] !== 'verified' && $line['supplier_acc'] !== '' && !in_array($line['group'], ['driver_advance', 'driver_settlement', 'transport', 'guide'], true)) {
+                $w[] = ['level' => 'warning', 'code' => 'bank_unverified', 'text' => $sb['account_no'] ? 'Supplier bank account not verified — authorised confirmation is required before payment.' : 'No bank account on file for this supplier.'];
+            }
+        }
+        // a requested amount that no longer matches the itinerary figure
+        if ($line['currency'] === 'USD' && !empty($line['transactions']) && $line['usd_requested'] > $line['usd_amount'] + 0.009) {
+            $w[] = ['level' => 'warning', 'code' => 'amount_changed', 'text' => sprintf('Requested $ %s but the itinerary now prices this at $ %s — the itinerary changed after the request. Check before paying more.', number_format($line['usd_requested'], 2), number_format($line['usd_amount'], 2))];
+        }
+        $line['warnings'] = $w;
+        $line['rate_label'] = $line['source_type'] === 'hotel'
+            ? ($line['rate_needs_check'] ? ($line['rate_source_label'] ?: 'Quoted rate — check') : ($line['rate_source_label'] ?: 'No contract rate found'))
+            : ($line['currency'] === 'LKR' ? 'LKR — no conversion' : '');
+    }
+
+    private function actions(array &$line, array $perms): void
+    {
+        $open = $line['open_tx'];
+        $a = ['request' => false, 'request_balance' => false, 'approve' => false, 'reject' => false, 'issue_voucher' => false, 'initiate' => false, 'paid' => false, 'remit' => false,
+            'cancel_request' => false, 'invoice' => true, 'document' => true, 'review_rate' => false, 'voucher_view' => (bool) ($line['last_tx']['vnum'] ?? null), 'confirm_bank' => false];
+        $canRequest = $perms['requester'] && !$line['orphan'] && $line['pr_type'] !== null;
+        $hold = $line['hold'];
+        if ($canRequest && $open === null && !$line['fully_paid'] && !($hold && $hold['status'] === 'awaiting')) {
+            if ($line['source_type'] === 'driver_advance') {
+                $a['request'] = !empty($line['driver_advance_request_id']);
+            } elseif ($line['source_type'] === 'driver_settlement' || $line['source_type'] === 'driver_expense') {
+                $a['request'] = false;   // settled through the log sheet and driver expenses, as today
+            } else {
+                $a['request'] = empty($line['transactions']) || $line['status'] === 'rejected' || $line['status'] === 'reversed';
+                $a['request_balance'] = !$a['request'] && $line['status'] === 'partly_paid';
+            }
+        }
+        if ($hold && $hold['status'] === 'awaiting' && $perms['offer']) {
+            $a['review_rate'] = true;
+        }
+        $accum = Batches::accumulates($this->db);
+        if ($open) {
+            $st = $open['stage'];
+            $a['approve'] = $perms['approver'] && $st === 'awaiting';
+            $a['reject'] = $perms['approver'] && $st === 'awaiting';
+            $a['cancel_request'] = $perms['requester'] && $st === 'awaiting';
+            // tf-paydesk-r2: an approved payment waits in Supplier Payables; management (batch privilege) takes it into the supplier's batch
+            $a['issue_voucher'] = ($accum ? ($perms['batch'] ?? false) : $perms['approver']) && $st === 'approved';
+            $a['initiate'] = $perms['accountant'] && $st === 'voucher_issued';
+            $a['paid'] = $perms['bank_approver'] && in_array($st, ['bank_initiated', 'voucher_issued'], true);
+        }
+        $a['batch_id'] = $open['batch']['id'] ?? ($line['last_tx']['batch']['id'] ?? null);
+        $a['batch_no'] = $open['batch']['no'] ?? ($line['last_tx']['batch']['no'] ?? null);
+        $a['payables'] = $accum && !empty($perms['payables']);
+        foreach ($line['transactions'] as $tx) {
+            if (in_array($tx['stage'], ['paid', 'notify_pending'], true) && $tx['vnum'] && $perms['requester']) {
+                $a['remit'] = true;
+            }
+        }
+        $sb = $line['supplier_bank'];
+        if ($sb && in_array($sb['status'], ['unverified', 'changed'], true) && $perms['verifier']) {
+            $a['confirm_bank'] = true;
+        }
+        $line['actions'] = $a;
+    }
+
+    // ---------------------------------------------------------------------
+    //  Days, crew, rate, history
+    // ---------------------------------------------------------------------
+
+    private function days(array $t, array $lines, array $data): array
+    {
+        $start = $t['start_date'] ?? null;
+        $end = $t['end_date'] ?? null;
+        $n = $this->nights($start, $end);
+        $days = [];
+        if ($start && $n !== null) {
+            $itin = $this->itinerary((string) $t['tour_id']);
+            for ($i = 0; $i <= $n; $i++) {
+                $date = date('Y-m-d', strtotime($start . " +{$i} days"));
+                $no = $i + 1;
+                $it = $itin[$date] ?? $itin[$no] ?? null;
+                $days[$no] = ['day_no' => $no, 'date' => $date, 'title' => $it['title'] ?? ($no === 1 ? 'Arrival' : ($i === $n ? 'Departure' : '')), 'route' => $it['route'] ?? '', 'area' => $it['area'] ?? '', 'hotel' => '', 'lines' => [], 'total' => 0.0, 'paid' => 0.0, 'pending' => 0, 'paid_count' => 0];
+            }
+        }
+        foreach ($lines as $l) {
+            $no = $l['day_no'];
+            if ($no === null || !isset($days[$no])) {
+                $no = 0;
+                $days[0] ??= ['day_no' => 0, 'date' => null, 'title' => 'Not on a tour day', 'route' => '', 'area' => '', 'hotel' => '', 'lines' => [], 'total' => 0.0, 'paid' => 0.0, 'pending' => 0, 'paid_count' => 0];
+            }
+            $days[$no]['lines'][] = $l['key'];
+            $days[$no]['total'] += $l['lkr_amount'];
+            $days[$no]['paid'] += $l['paid_lkr'];
+            if ($l['fully_paid']) {
+                $days[$no]['paid_count']++;
+            } else {
+                $days[$no]['pending']++;
+            }
+            if ($l['source_type'] === 'hotel') {
+                foreach (($l['service_dates'] ?: [$l['service_date']]) as $night) {
+                    $dn = $this->dayOf($start, $night);
+                    if ($dn !== null && isset($days[$dn]) && $days[$dn]['hotel'] === '') {
+                        $days[$dn]['hotel'] = $l['supplier'];
+                    }
+                }
+            }
+        }
+        ksort($days);
+        if (isset($days[0])) {
+            $z = $days[0];
+            unset($days[0]);
+            $days[0] = $z;
+        }
+        return array_values($days);
+    }
+
+    /** The itinerary's words per day, where the tour has them (tour_itinerary / the quotation's from→to). */
+    private function itinerary(string $tourId): array
+    {
+        $out = [];
+        try {
+            foreach ($this->db->query("SELECT tour_date, description, area FROM tour_itinerary WHERE tour_id = ? ORDER BY tour_date, order_id", [$tourId])->getResultArray() as $r) {
+                $d = (string) $r['tour_date'];
+                $out[$d] ??= ['title' => '', 'route' => '', 'area' => ''];
+                if ($out[$d]['title'] === '' && trim((string) $r['description']) !== '') {
+                    $out[$d]['title'] = mb_substr(trim((string) $r['description']), 0, 90);
+                }
+                if ($out[$d]['area'] === '' && trim((string) $r['area']) !== '') {
+                    $out[$d]['area'] = trim((string) $r['area']);
+                }
+            }
+        } catch (\Throwable $e) {
+        }
+        try {
+            foreach ($this->db->query("SELECT tour_date, quotation_day, from_location, to_location FROM tour_quotations WHERE quotation_id = ? AND (from_location IS NOT NULL OR to_location IS NOT NULL) ORDER BY tour_date, id", [$tourId])->getResultArray() as $r) {
+                $d = (string) $r['tour_date'];
+                $out[$d] ??= ['title' => '', 'route' => '', 'area' => ''];
+                $route = trim(implode(' → ', array_filter([trim((string) $r['from_location']), trim((string) $r['to_location'])])));
+                if ($route !== '' && strpos($out[$d]['route'], $route) === false) {
+                    $out[$d]['route'] = $out[$d]['route'] === '' ? $route : $out[$d]['route'] . ' → ' . trim((string) $r['to_location']);
+                }
+            }
+        } catch (\Throwable $e) {
+        }
+        return $out;
+    }
+
+    private function crew(array $t, array $data): array
+    {
+        $drivers = (array) ($data['allocated_drivers'] ?? []);
+        $guide = trim((string) ($t['guide_name'] ?? ''));
+        if ($guide === '' && !empty($t['guide'])) {
+            try {
+                $g = $this->db->query("SELECT Name FROM supplier WHERE Sup_Acc_No = ? LIMIT 1", [(string) $t['guide']])->getRowArray();
+                $guide = (string) ($g['Name'] ?? $t['guide']);
+            } catch (\Throwable $e) {
+                $guide = (string) $t['guide'];
+            }
+        }
+        return ['drivers' => $drivers, 'guide' => $guide];
+    }
+
+    /** The desk's audit rows plus the special-rate decisions kept by the Hotel Rates panel (hr2_offer_log), newest first. */
+    private function auditWithOffers(string $tourId): array
+    {
+        $rows = Audit::forTour($this->db, $tourId, 300);
+        try {
+            foreach ($this->db->query("SELECT * FROM hr2_offer_log WHERE tour_id = ? ORDER BY id DESC LIMIT 100", [$tourId])->getResultArray() as $o) {
+                $rows[] = ['id' => 'offer' . $o['id'], 'at' => $o['created_at'], 'user' => $o['by_user'], 'user_id' => null, 'tour_id' => $tourId, 'manual_id' => $o['manual_id'],
+                    'action' => 'rate_' . $o['event'], 'ref_type' => 'hotel', 'ref_id' => $o['hotel_acc'], 'vnum' => null, 'invoice_no' => null,
+                    'prev_value' => $o['published_total'] !== null ? json_encode(['published_total' => $o['published_total']]) : null,
+                    'new_value' => json_encode(array_filter(['offer' => $o['offer_name'], 'used_total' => $o['used_total'], 'nights' => $o['nights'], 'contract_id' => $o['contract_id']], static fn ($v) => $v !== null && $v !== '')),
+                    'reason' => $o['note'], 'usd_rate' => null, 'bank_account' => null, 'bank_ref' => null, 'ip' => null];
+            }
+        } catch (\Throwable $e) {
+        }
+        usort($rows, static fn ($a, $b) => strcmp((string) $b['at'], (string) $a['at']));
+        return $rows;
+    }
+
+    /** Today's rate as entered, with who and when, and the last entries. */
+    public function todayRate(): array
+    {
+        $today = date('Y-m-d');
+        $row = null;
+        $recent = [];
+        try {
+            $row = $this->db->query("SELECT * FROM daily_usd_rate WHERE rate_date = ?", [$today])->getRowArray();
+            $recent = $this->db->query("SELECT rate_date, rate, created_user, created_at FROM daily_usd_rate ORDER BY rate_date DESC LIMIT 10")->getResultArray();
+        } catch (\Throwable $e) {
+        }
+        $last = $recent[0] ?? null;
+        return ['date' => $today, 'rate' => $row ? (float) $row['rate'] : null, 'entered_by' => $row['created_user'] ?? null, 'entered_at' => $row['created_at'] ?? null,
+            'set' => (bool) $row, 'last' => $last && !$row ? ['date' => $last['rate_date'], 'rate' => (float) $last['rate'], 'by' => $last['created_user']] : null, 'recent' => $recent,
+            'can_confirm' => Perms::can('rate')];
+    }
+
+    /** Everything that happened on the tour's payments, newest first: requests, approvals, vouchers, initiations, Paid, advices. */
+    private function history(string $tourId, array $lines, array $requests, array $vouchers, array $inits, array $apps, array $remits): array
+    {
+        $h = [];
+        $lineOf = [];
+        foreach ($lines as $l) {
+            foreach ($l['transactions'] as $tx) {
+                if ($tx['pr_id']) {
+                    $lineOf['pr' . $tx['pr_id']] = $l;
+                }
+                if ($tx['vnum']) {
+                    $lineOf['v' . $tx['vnum']] = $l;
+                }
+            }
+        }
+        $who = static fn ($l) => $l ? $l['supplier'] . ' · ' . $l['category'] : '';
+        foreach ($requests as $r) {
+            $l = $lineOf['pr' . $r['id']] ?? null;
+            $amt = ((string) $r['type'] === 'Hotel' ? '$ ' : 'LKR ') . number_format((float) $r['requestAmount'], 2);
+            $h[] = ['at' => $r['payment_request_date'], 'by' => $r['payment_request_user'], 'what' => 'Payment requested', 'detail' => $who($l) . ' · ' . $amt, 'ref' => 'Request #' . $r['id'], 'kind' => 'request'];
+            if ($r['accept_date']) {
+                $st = (int) $r['payment_request'];
+                $h[] = ['at' => $r['accept_date'], 'by' => $r['accept_user'], 'what' => $st === 5 ? 'Request rejected' : 'Approved for payment', 'detail' => $who($l) . ' · ' . $amt, 'ref' => 'Request #' . $r['id'], 'kind' => $st === 5 ? 'reject' : 'approve'];
+            }
+            if ($r['payment_cancel_date']) {
+                $h[] = ['at' => $r['payment_cancel_date'], 'by' => $r['payment_cancel_user'], 'what' => 'Request cancelled', 'detail' => $who($l), 'ref' => 'Request #' . $r['id'], 'kind' => 'cancel'];
+            }
+        }
+        foreach ($vouchers as $v) {
+            $l = $lineOf['v' . $v['Vnum']] ?? null;
+            $amt = 'LKR ' . number_format((float) $v['Amount'], 2) . ($v['doller_amt'] ? ' ($ ' . number_format((float) $v['doller_amt'], 2) . ($v['vi_rate'] ? ' @ ' . number_format((float) $v['vi_rate'], 2) : '') . ')' : '');
+            $h[] = ['at' => $v['C_Date'], 'by' => $v['login'], 'what' => 'Payment voucher issued', 'detail' => ($who($l) ?: $v['S_name']) . ' · ' . $amt . ' · ' . $v['Bank'], 'ref' => 'Payment Voucher No. ' . $v['Vnum'], 'kind' => 'voucher', 'vnum' => (int) $v['Vnum']];
+            if ((int) $v['Aflag'] === 1 && $v['aut_date']) {
+                $h[] = ['at' => $v['aut_date'], 'by' => $v['Aut_user'], 'what' => 'Voucher authorised (ledger posted)', 'detail' => ($who($l) ?: $v['S_name']) . ' · ' . $amt, 'ref' => 'Payment Voucher No. ' . $v['Vnum'], 'kind' => 'auth', 'vnum' => (int) $v['Vnum']];
+            }
+            if (self::isCancelled($v)) {
+                $h[] = ['at' => $v['rejdate'] ?? $v['aut_date'] ?? $v['C_Date'], 'by' => $v['Aut_user'], 'what' => (int) $v['Aflag'] === 3 ? 'Voucher cancelled (Voucher Cancellation screen)' : 'Voucher rejected / reversed', 'detail' => ($who($l) ?: $v['S_name']) . ' · ' . $amt . ($v['remark'] ? ' — ' . $v['remark'] : ''), 'ref' => 'Payment Voucher No. ' . $v['Vnum'], 'kind' => 'reverse', 'vnum' => (int) $v['Vnum']];
+            }
+            if ((int) $v['finalized'] === 1) {
+                $h[] = ['at' => $v['finalized_date'], 'by' => $v['finalized_user'], 'what' => 'Paid — final bank approval', 'detail' => ($who($l) ?: $v['S_name']) . ' · ' . $amt . ' · bank date ' . $v['bank_date'], 'ref' => 'Payment Voucher No. ' . $v['Vnum'], 'kind' => 'paid', 'vnum' => (int) $v['Vnum']];
+            }
+        }
+        foreach ($inits as $i) {
+            $l = $lineOf['v' . $i['vnum']] ?? null;
+            $h[] = ['at' => $i['initiated_at'], 'by' => $i['initiated_by'], 'what' => 'Bank payment initiated', 'detail' => $who($l) . ' · ' . $i['currency'] . ' ' . number_format((float) $i['amount'], 2) . ($i['batch_ref'] ? ' · batch ' . $i['batch_ref'] : '') . ($i['bank_ref'] ? ' · ref ' . $i['bank_ref'] : ''), 'ref' => 'Payment Voucher No. ' . $i['vnum'], 'kind' => 'initiate', 'vnum' => (int) $i['vnum']];
+        }
+        foreach ($remits as $r) {
+            if ($r['sent_at']) {
+                $h[] = ['at' => $r['sent_at'], 'by' => $r['sent_by'], 'what' => 'Remittance advice e-mailed', 'detail' => ($r['supplier_name'] ?: $r['sup_acc']) . ' · ' . $r['to_email'], 'ref' => 'Payment Voucher No. ' . $r['vnum'], 'kind' => 'remit', 'vnum' => (int) $r['vnum']];
+            } elseif ($r['prepared_at']) {
+                $h[] = ['at' => $r['prepared_at'], 'by' => $r['prepared_by'], 'what' => 'Remittance advice prepared (not sent)', 'detail' => ($r['supplier_name'] ?: $r['sup_acc']), 'ref' => 'Payment Voucher No. ' . $r['vnum'], 'kind' => 'remit', 'vnum' => (int) $r['vnum']];
+            }
+        }
+        usort($h, static fn ($a, $b) => strcmp((string) $b['at'], (string) $a['at']));
+        return $h;
+    }
+
+    // =====================================================================
+    //  Rules shared with the request / approval / bank steps
+    // =====================================================================
+
+    /**
+     * The request currently in flight for a line (tour, supplier, type), or null. A request is closed when it was
+     * cancelled or rejected, marked completed, or its voucher was finalised (Paid) or cancelled — a line may then
+     * take a further request for its balance (a payment made in parts, each with the rate of its own day).
+     */
+    public static function openRequest($db, string $tourId, string $acc, string $type): ?array
+    {
+        $rows = $db->query("SELECT * FROM payment_request WHERE tour_id = ? AND hotel_acc = ? AND type = ? AND payment_request NOT IN (2,3,5) ORDER BY id DESC", [$tourId, $acc, $type])->getResultArray();
+        foreach ($rows as $r) {
+            if ((int) $r['payment_request'] === 1 || (int) $r['payment_request'] === 0) {
+                return $r;   // requested, not yet decided
+            }
+            // approved: open until its voucher is finalised or cancelled
+            $v = self::voucherOfRequest($db, $r);
+            if ($v === null) {
+                if ((int) $r['voucher_created'] === 1) {
+                    return $r;   // voucher expected but not found: keep it open rather than risk a double request
+                }
+                return $r;       // approved, voucher to be issued (bulk supplier)
+            }
+            if ((int) $v['finalized'] !== 1 && !self::isCancelled($v)) {
+                return $r;
+            }
+        }
+        return null;
+    }
+
+    /** The voucher behind an approved request: the one recorded on tpd_request_ext, else the supplier's voucher raised at or after acceptance. */
+    public static function voucherOfRequest($db, array $r): ?array
+    {
+        $linked = [];
+        try {
+            $x = $db->query("SELECT voucher_vnum FROM tpd_request_ext WHERE pr_id = ?", [(int) $r['id']])->getRowArray();
+            if ($x && !empty($x['voucher_vnum'])) {
+                $v = $db->query("SELECT * FROM voucher WHERE Vnum = ? LIMIT 1", [(int) $x['voucher_vnum']])->getRowArray();
+                if ($v) {
+                    return $v;
+                }
+            }
+            // vouchers the desk already knows belong to other requests are never taken for this one
+            foreach ($db->query("SELECT voucher_vnum FROM tpd_request_ext WHERE voucher_vnum IS NOT NULL AND pr_id <> ?", [(int) $r['id']])->getResultArray() as $o) {
+                $linked[] = (int) $o['voucher_vnum'];
+            }
+        } catch (\Throwable $e) {
+        }
+        if (in_array((int) $r['payment_request'], [0, 1, 3, 5], true) && (int) $r['voucher_created'] === 0) {
+            return null;   // not approved: there is no voucher for it
+        }
+        $adv = (string) $r['type'] === 'Transport Advance' ? 1 : 2;
+        $since = $r['accept_date'] ? substr((string) $r['accept_date'], 0, 10) : substr((string) $r['payment_request_date'], 0, 10);
+        $not = $linked ? ' AND v.Vnum NOT IN (' . implode(',', $linked) . ')' : '';
+        return $db->query("SELECT v.* FROM voucher v LEFT JOIN v_inv vi ON vi.V_tkn = v.Vnum AND vi.Invoice = ?
+                           WHERE v.Acc_No = ? AND (vi.ID IS NOT NULL OR v.ref_po = ?) AND v.advances_pay = ? AND DATE(v.C_Date) >= ? AND v.Aflag NOT IN (2,3){$not}
+                           ORDER BY v.Vnum ASC LIMIT 1", [(string) $r['tour_id'], (string) $r['hotel_acc'], (string) $r['tour_id'], $adv, $since])->getRowArray();
+    }
+
+    /**
+     * tf-paydesk-r5 — voucherOfRequest() for MANY requests in three queries instead of three per request (the Supplier
+     * Payables scan over every approved, unvouchered request took ~50 s on the development data). Same rules, same
+     * answer: [pr_id => voucher row | null].
+     */
+    public static function vouchersOfRequests($db, array $rows): array
+    {
+        $out = [];
+        if (!$rows) {
+            return $out;
+        }
+        $ids = array_values(array_unique(array_map(static fn ($r) => (int) $r['id'], $rows)));
+        $ext = [];
+        $linkedAll = [];
+        try {
+            foreach ($db->query("SELECT pr_id, voucher_vnum FROM tpd_request_ext WHERE voucher_vnum IS NOT NULL")->getResultArray() as $x) {
+                $ext[(int) $x['pr_id']] = (int) $x['voucher_vnum'];
+                $linkedAll[(int) $x['voucher_vnum']] = (int) $x['pr_id'];
+            }
+        } catch (\Throwable $e) {
+        }
+        // 1. requests the desk already linked to a voucher
+        $byVnum = [];
+        $known = array_values(array_unique(array_filter(array_map(static fn ($id) => $ext[$id] ?? 0, $ids))));
+        if ($known) {
+            foreach ($db->query("SELECT * FROM voucher WHERE Vnum IN (" . implode(',', $known) . ")")->getResultArray() as $v) {
+                $byVnum[(int) $v['Vnum']] = $v;
+            }
+        }
+        // 2. the legacy match for the rest: the supplier's vouchers of the right kind, on the tour (ref_po) or carrying a
+        //    v_inv line of the tour, dated on/after the request's acceptance, not rejected/cancelled, not linked elsewhere
+        $need = [];
+        foreach ($rows as $r) {
+            $id = (int) $r['id'];
+            if (isset($ext[$id]) && isset($byVnum[$ext[$id]])) {
+                $out[$id] = $byVnum[$ext[$id]];
+                continue;
+            }
+            if (in_array((int) $r['payment_request'], [0, 1, 3, 5], true) && (int) $r['voucher_created'] === 0) {
+                $out[$id] = null;
+                continue;
+            }
+            $need[$id] = $r;
+        }
+        if (!$need) {
+            return $out;
+        }
+        $accs = array_values(array_unique(array_map(static fn ($r) => (string) $r['hotel_acc'], $need)));
+        $tours = array_values(array_unique(array_map(static fn ($r) => (string) $r['tour_id'], $need)));
+        $cands = $db->query("SELECT v.* FROM voucher v WHERE v.Acc_No IN (" . implode(',', array_map([$db, 'escape'], $accs)) . ") AND v.advances_pay IN (1,2) AND v.Aflag NOT IN (2,3) ORDER BY v.Vnum ASC")->getResultArray();
+        $lines = [];   // vnum => [tour_id => true] from v_inv
+        if ($cands) {
+            $vn = array_map(static fn ($v) => (int) $v['Vnum'], $cands);
+            foreach (array_chunk($vn, 500) as $chunk) {
+                foreach ($db->query("SELECT V_tkn, Invoice FROM v_inv WHERE V_tkn IN (" . implode(',', $chunk) . ") AND Invoice IN (" . implode(',', array_map([$db, 'escape'], $tours)) . ")")->getResultArray() as $l) {
+                    $lines[(int) $l['V_tkn']][(string) $l['Invoice']] = true;
+                }
+            }
+        }
+        foreach ($need as $id => $r) {
+            $adv = (string) $r['type'] === 'Transport Advance' ? 1 : 2;
+            $since = $r['accept_date'] ? substr((string) $r['accept_date'], 0, 10) : substr((string) $r['payment_request_date'], 0, 10);
+            $found = null;
+            foreach ($cands as $v) {
+                if ((string) $v['Acc_No'] !== (string) $r['hotel_acc'] || (int) $v['advances_pay'] !== $adv) {
+                    continue;
+                }
+                if (substr((string) $v['C_Date'], 0, 10) < $since) {
+                    continue;
+                }
+                if (isset($linkedAll[(int) $v['Vnum']]) && $linkedAll[(int) $v['Vnum']] !== $id) {
+                    continue;   // the desk knows this voucher belongs to another request
+                }
+                if ((string) $v['ref_po'] === (string) $r['tour_id'] || !empty($lines[(int) $v['Vnum']][(string) $r['tour_id']])) {
+                    $found = $v;
+                    break;   // candidates are ordered by Vnum ASC, as the single lookup's LIMIT 1 is
+                }
+            }
+            $out[$id] = $found;
+        }
+        return $out;
+    }
+
+    /**
+     * The lock written when a voucher is Paid (finalised): the amount, currency, rate, LKR, paying account, bank
+     * reference, who initiated and who approved — and the supplier's remittance advice set pending. Idempotent: a
+     * voucher locked once is never locked again. Used by the dashboard's Paid and by Bank Payment Check's Mark Finalized.
+     */
+    public static function lockPaid($db, int $vnum, string $paidDate, string $bankRef, string $by, ?string $note = null, array $final = []): ?array
+    {
+        try {
+            if (!$db->query("SHOW TABLES LIKE 'tpd_bank_approval'")->getResultArray()) {
+                return null;
+            }
+            if ($db->query("SELECT id FROM tpd_bank_approval WHERE vnum = ?", [$vnum])->getRowArray()) {
+                return null;
+            }
+            $v = $db->query("SELECT * FROM voucher WHERE Vnum = ? LIMIT 1", [$vnum])->getRowArray();
+            if (!$v) {
+                return null;
+            }
+            $init = $db->query("SELECT * FROM tpd_bank_initiation WHERE vnum = ?", [$vnum])->getRowArray();
+            $usd = $v['doller_amt'] !== null && (float) $v['doller_amt'] > 0;
+            $rate = null;
+            if ($usd) {
+                if (isset($final['usd_rate']) && $final['usd_rate'] !== null) {
+                    $rate = (float) $final['usd_rate'];   // tf-paydesk-r2: the payment-date rate confirmed at Paid
+                } else {
+                    $x = $db->query("SELECT usd_rate FROM tpd_request_ext WHERE voucher_vnum = ? ORDER BY id DESC LIMIT 1", [$vnum])->getRowArray();
+                    $vi = $db->query("SELECT MAX(Rate) AS r FROM v_inv WHERE V_tkn = ?", [$vnum])->getRowArray();
+                    $rate = $x && $x['usd_rate'] ? (float) $x['usd_rate'] : ((float) ($vi['r'] ?? 0) > 0 ? (float) $vi['r'] : round((float) $v['Amount'] / (float) $v['doller_amt'], 4));
+                }
+            }
+            $acct = !empty($final['bank_account_id']) ? BankAccounts::get($db, (int) $final['bank_account_id']) : (!empty($init['bank_account_id']) ? BankAccounts::get($db, (int) $init['bank_account_id']) : BankAccounts::byLedger($db, $v['Bank_acc']));
+            if ($bankRef === '') {
+                $bankRef = (string) ($init['bank_ref'] ?? $init['batch_ref'] ?? '');
+            }
+            $lkr = isset($final['lkr_amount']) && $final['lkr_amount'] !== null ? (float) $final['lkr_amount'] : (float) $v['Amount'];
+            $charges = isset($final['charges']) && $final['charges'] !== null && $final['charges'] !== '' ? round((float) $final['charges'], 2) : (isset($init['charges']) && $init['charges'] !== null ? (float) $init['charges'] : null);
+            $lock = ['vnum' => $vnum, 'voucher_id' => (int) $v['ID'], 'tour_id' => (string) $v['ref_po'], 'sup_acc' => (string) $v['Acc_No'], 'paid_date' => $paidDate, 'amount' => $lkr, 'currency' => 'LKR',
+                'usd_amount' => $usd ? (float) $v['doller_amt'] : null, 'usd_rate' => $rate, 'lkr_amount' => $lkr, 'bank_account_id' => $acct['id'] ?? null, 'ledger_code' => (string) $v['Bank_acc'], 'bank_ref' => $bankRef ?: null,
+                'initiated_by' => $init['initiated_by'] ?? null, 'approved_by' => $by, 'approved_at' => date('Y-m-d H:i:s.v'), 'note' => $note,
+                // tf-paydesk-r2: the approval figures kept beside the final ones, the difference, the charges, the total debit
+                'batch_id' => $final['batch_id'] ?? ($init['batch_id'] ?? null), 'approval_lkr' => isset($final['approval_lkr']) ? (float) $final['approval_lkr'] : null,
+                'fx_diff' => isset($final['fx_diff']) && $final['fx_diff'] !== null ? round((float) $final['fx_diff'], 2) : null, 'charges' => $charges,
+                'total_debit' => round($lkr + (float) ($charges ?? 0), 2), 'rate_source' => $final['rate_source'] ?? ($init['rate_source'] ?? null),
+                'account_confirmed_by' => $final['account_confirmed_by'] ?? null];
+            $db->table('tpd_bank_approval')->insert($lock);
+            $db->query("INSERT IGNORE INTO tpd_remittance (vnum, tour_id, sup_acc, supplier_name, status, created_at) VALUES (?,?,?,?, 'pending', ?)", [$vnum, (string) $v['ref_po'], (string) $v['Acc_No'], (string) $v['S_name'], date('Y-m-d H:i:s')]);
+            Audit::log($db, ['action' => 'paid', 'user' => $by, 'tour_id' => (string) $v['ref_po'], 'ref_type' => 'voucher', 'ref_id' => $vnum, 'vnum' => $vnum, 'prev' => ['finalized' => 0, 'aflag' => (int) $v['Aflag']], 'new' => $lock,
+                'usd_rate' => $rate, 'bank_account' => $acct['label'] ?? $v['Bank'], 'bank_ref' => $bankRef ?: null, 'reason' => $note]);
+            return $lock;
+        } catch (\Throwable $e) {
+            log_message('error', 'tpd lockPaid: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    /** USD × rate → LKR, the system's rounding: half away from zero to the cent (DECIMAL(12,2)). */
+    public static function lkr(float $usd, float $rate): float
+    {
+        return round($usd * $rate, 2);
+    }
+
+    /** Records what the chain does not: the rate and amounts of a request as it was made. Idempotent. */
+    public static function recordRequest($db, int $prId, array $f): void
+    {
+        try {
+            if (!$db->query("SHOW TABLES LIKE 'tpd_request_ext'")->getResultArray()) {
+                return;
+            }
+            $r = $db->query("SELECT * FROM payment_request WHERE id = ?", [$prId])->getRowArray();
+            if (!$r) {
+                return;
+            }
+            $usd = (string) $r['type'] === 'Hotel' || (($f['currency'] ?? '') === 'USD');
+            $rate = isset($f['usd_rate']) && $f['usd_rate'] !== null && $f['usd_rate'] !== '' ? (float) $f['usd_rate'] : null;
+            $amount = (float) $r['requestAmount'];
+            $row = [
+                'pr_id' => $prId, 'tour_id' => (string) $r['tour_id'], 'hotel_acc' => (string) $r['hotel_acc'], 'type' => (string) $r['type'],
+                'source_type' => $f['source_type'] ?? ((string) $r['type'] === 'Hotel' ? 'hotel' : ((string) $r['type'] === 'lunch' ? 'activity' : 'driver_advance')),
+                'source_id' => isset($f['source_id']) ? (string) $f['source_id'] : null,
+                'currency' => $usd ? 'USD' : 'LKR', 'amount' => $amount,
+                'usd_rate' => $usd ? $rate : null, 'lkr_amount' => $usd ? ($rate ? self::lkr($amount, $rate) : null) : $amount,
+                'rate_date' => $usd && $rate ? date('Y-m-d') : null, 'rate_user' => $f['rate_user'] ?? null,
+                'invoice_no' => $f['invoice_no'] ?? null, 'booking_ref' => $f['booking_ref'] ?? null, 'due_date' => $f['due_date'] ?? null, 'note' => $f['note'] ?? null,
+                'parent_pr_id' => $f['parent_pr_id'] ?? null, 'created_at' => date('Y-m-d H:i:s'),
+            ];
+            $db->query("INSERT IGNORE INTO tpd_request_ext (pr_id, tour_id, hotel_acc, type, source_type, source_id, currency, amount, usd_rate, lkr_amount, rate_date, rate_user, invoice_no, booking_ref, due_date, note, parent_pr_id, created_at)
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array_values($row));
+        } catch (\Throwable $e) {
+            log_message('error', 'tpd recordRequest: ' . $e->getMessage());
+        }
+    }
+
+    /** After management approves a request: who, when, and the voucher it raised. Idempotent. */
+    public static function recordApproval($db, int $prId, string $by): ?int
+    {
+        try {
+            $r = $db->query("SELECT * FROM payment_request WHERE id = ?", [$prId])->getRowArray();
+            if (!$r) {
+                return null;
+            }
+            $v = self::voucherOfRequest($db, $r);
+            $vnum = $v ? (int) $v['Vnum'] : null;
+            if ($db->query("SHOW TABLES LIKE 'tpd_request_ext'")->getResultArray()) {
+                if (!$db->query("SELECT id FROM tpd_request_ext WHERE pr_id = ?", [$prId])->getRowArray()) {
+                    self::recordRequest($db, $prId, ['usd_rate' => $v && $v['doller_amt'] ? ((float) $v['Amount'] / max(0.0001, (float) $v['doller_amt'])) : null]);
+                }
+                $db->query("UPDATE tpd_request_ext SET approved_by = COALESCE(approved_by, ?), approved_at = COALESCE(approved_at, ?), voucher_vnum = COALESCE(voucher_vnum, ?) WHERE pr_id = ?", [$by, date('Y-m-d H:i:s'), $vnum, $prId]);
+                // tf-paydesk-r2: the approval figures, written once and never overwritten — the locked USD amount, the rate
+                // shown at approval (Today's confirmed rate on the approval day, else the rate locked when requested), the
+                // provisional LKR and the approval date
+                $x = $db->query("SELECT * FROM tpd_request_ext WHERE pr_id = ?", [$prId])->getRowArray();
+                if ($x && array_key_exists('approval_rate', $x) && $x['approval_rate'] === null) {
+                    if ($x['currency'] === 'USD') {
+                        $today = Batches::rateFor($db);
+                        $rate = $today['rate'] ?? ($x['usd_rate'] !== null ? (float) $x['usd_rate'] : null);
+                        if ($rate === null) {
+                            $q = $db->query("SELECT MAX(hotel_dollar_rate) AS r FROM tour_quotations WHERE quotation_id = ? AND hotel_acc = ?", [(string) $r['tour_id'], (string) $r['hotel_acc']])->getRowArray();
+                            $rate = (float) ($q['r'] ?? 0) > 0 ? (float) $q['r'] : null;
+                        }
+                        if ($rate !== null) {
+                            $usd = (float) ($x['amount'] ?? $r['requestAmount']);
+                            $db->query("UPDATE tpd_request_ext SET approval_rate = ?, approval_lkr = ?, approval_rate_date = ? WHERE pr_id = ? AND approval_rate IS NULL", [$rate, self::lkr($usd, $rate), date('Y-m-d'), $prId]);
+                        }
+                    } else {
+                        $db->query("UPDATE tpd_request_ext SET approval_lkr = ?, approval_rate_date = ? WHERE pr_id = ? AND approval_lkr IS NULL", [(float) $r['requestAmount'], date('Y-m-d'), $prId]);
+                    }
+                }
+            }
+            return $vnum;
+        } catch (\Throwable $e) {
+            log_message('error', 'tpd recordApproval: ' . $e->getMessage());
+            return null;
+        }
+    }
+}

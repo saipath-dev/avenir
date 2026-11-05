@@ -1,0 +1,37 @@
+"""Incomplete — Rates Pending (Shantha, 6 Oct 2026): a hotel with no valid published contract rate is marked so in the Hotel
+Rates list and header and in the quotation's hotel search; a hotel with approved rates is not. Screenshots under _work/hotel_codes/."""
+import asyncio, sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from tc import *
+OUT = os.path.join(S, "hotel_codes"); os.makedirs(OUT, exist_ok=True)
+async def main():
+    async with async_playwright() as p:
+        b, ctx = await browser(p, 1440, 900)
+        pg, body = await login(ctx, "admin")
+        errs = []; pg.on("pageerror", lambda e: errs.append(str(e)) if str(e) != "Failed to fetch" else None)
+        await pg.goto(BASE + "master_files/hotel_rate_v2", wait_until="load"); await pg.wait_for_timeout(3500)
+        await pg.fill("#hotel_search", "HTL-336"); await pg.wait_for_timeout(600)
+        t = await pg.locator("#hotel_list").inner_text()
+        check("the list marks the new hotel 'Incomplete — Rates Pending'", "Incomplete — Rates Pending" in t, t[:120])
+        await pg.click("#hotel_list .hotel-item"); await pg.wait_for_timeout(2500)
+        h = await pg.locator("#h_status").inner_text()
+        check("the header carries the mark", "Incomplete — Rates Pending" in h, h)
+        await pg.screenshot(path=f"{OUT}/09_rates_pending_panel.png")
+        await pg.fill("#hotel_search", "HTL-002"); await pg.wait_for_timeout(600)
+        t = await pg.locator("#hotel_list").inner_text()
+        check("a hotel with approved rates is not marked", "Rates Pending" not in t and "rates pending" not in t, t[:120])
+        exp = sql("SELECT h.hotel_code FROM hr2_hotel h WHERE h.status='active' AND EXISTS (SELECT 1 FROM hr2_contract c WHERE c.hotel_id=h.id AND c.status='approved' AND c.applies_to<>'payment') AND NOT EXISTS (SELECT 1 FROM hr2_contract c WHERE c.hotel_id=h.id AND c.status='approved' AND c.applies_to<>'payment' AND c.valid_to>=CURDATE()) ORDER BY h.id LIMIT 1")
+        await pg.fill("#hotel_search", exp); await pg.wait_for_timeout(600)
+        t = await pg.locator("#hotel_list").inner_text()
+        check("an expired hotel keeps its 'expired' label and is not marked", "expired" in t and "Rates Pending" not in t, exp + ' ' + t[:120])
+        iid = sql("SELECT i.id FROM tf_intake i JOIN tf_intake_day d ON d.intake_id = i.id WHERE i.archived_at IS NULL ORDER BY i.id DESC LIMIT 1")
+        await pg.goto(BASE + f"tour/intake?id={iid}", wait_until="load"); await pg.wait_for_timeout(4000)
+        await pg.locator("#detail_cols [data-day]").first.click(); await pg.wait_for_timeout(1200)
+        await pg.fill("#md_hotel", "HTL-336"); await pg.wait_for_timeout(1500)
+        s = await pg.locator("#md_hotel_sugg").inner_text()
+        check("the quotation's hotel search names it with the mark", "HTL-336" in s and "Incomplete — Rates Pending" in s, s[:160])
+        await pg.screenshot(path=f"{OUT}/10_rates_pending_quotation_search.png")
+        check("no page script error", not errs, errs[:2])
+        await b.close()
+    sys.exit(summary())
+asyncio.run(main())

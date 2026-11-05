@@ -1,0 +1,366 @@
+{
+    "key": "rts_jwx_hotelj_negombo",
+    "hotel": {
+        "acc": "6-9-11-11793",
+        "name": "Hotel J Negombo",
+        "location": "Negombo",
+        "chain": "Jetwing Hotels (Essentials)",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:27"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Hotel J Negombo"
+        },
+        "contract": {
+            "name": "Winter 2026/27 travel agent contracted rates – Essentials",
+            "plan_type": "contract",
+            "contract_type": "Travel Agent",
+            "tier": "all",
+            "hotel_reference": "Essentials – Travel Agent Contracted Rates – Winter 2026/2027",
+            "valid_from": "2026-11-01",
+            "valid_to": "2027-04-30",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "default_meal_plan": "BB",
+            "taxes_included": 1,
+            "tax_note": "USD nett, non-commissionable. In case of an increase in taxes or any additional taxes the hotel may add them from the date of implementation.",
+            "source_type": "manual",
+            "received_at": "2026-10-02",
+            "markets": [
+                {
+                    "code": "DOM",
+                    "mode": "exclude"
+                }
+            ],
+            "guide_policy_text": "Driver Accommodation - Not Available (no guide accommodation terms printed).",
+            "cancellation_text": "Cancellations within 07 days of the arrival date – 100% of the value of the booking. Cancellations within 14 days of the arrival date – 50% of the value of the booking. Cancellations within 21 days of the arrival date – 25% of the value of the booking. Group bookings, more than 8 rooms, will be liable to pay 50% of the basis booked before 30 days of arrival.",
+            "payment_text": "Travel agents without credit facilities are required to make the relevant payment 05 days before the clients check into the hotel. Travel agents that are entitled to credit facilities should make necessary payments within one month of the departure of guests. For last minute/short notice bookings, 100% of the payment is to be made on confirmation.",
+            "terms_text": "HOTEL J NEGOMBO: Currency - USD Nett (Per room/Per night); Occupancy - Single / Double Occupancy. Period 01st November 2026 – 25th December 2026 | 11th January 2027 – 30th April 2027, Bed & Breakfast basis: Standard (18 Rooms) 60, Standard Sea View (16 Rooms) 80, Suite with Sea View (01 Room) 130. Period 26th December 2026 – 10th January 2027: 75 / 95 / 145. Period 01st November 2026 – 30th April 2027, Bed & Breakfast basis: Basic Double Room (05 Rooms) 40, Basic Quadruple Room (Quadruple Occupancy) 01 Room 50, Studio with City View (01 Room) 80. Driver Accommodation - Not Available. Reservations +94 312232999, resv.negombo@hotelj.lk. | RATES: Rates are in USD and are non-commissionable. The accommodation rates are not valid for Meetings/Incentives/Conferences/Events/Exhibitions/Weddings. In case of an increase in taxes or any additional taxes, the hotel reserve the right to add such taxes to the rates from the date of implementation. Rates cannot be extended to the domestic market or any other unspecified markets. Rates should not be published as hotel only rate on the internet by you or any other 3rd party. If such case occurs, the hotel has the right to withdraw the rate with immediate effect. | CHECK-IN/CHECK-OUT: Check-in time is 14:00 and check-out time is 12:00 (noon). If an early check-in is required within 04 hours of the usual check-in time, 50% charge of the room rate will be applied. For late check-outs up to 04 hours past the original check-out time, a 50% room rate charge will apply. Late check outs past 04 hours will be charged for 100% room rate.",
+            "notes": "Transcribed from \"Jetwing Hotels - Essentials - TA Contracted Rates - Winter 2026-2027.pdf\" (4 pages), saved to the winter RTS folder on 2 Oct 2026. Currency \"USD Nett (Per room/Per night)\", occupancy \"Single / Double Occupancy\": one figure per room for one or two guests, so SGL = DBL = the printed figure (every row note says so). Market list: \"Rates cannot be extended to the domestic market or any other unspecified markets\" → DOM excluded. No contract date, gala dinner, guide rate, meal supplement or special offer is printed (PDF properties show 24 Feb 2026 — not printed, so contract_date left empty). No supplier record in the live system yet. The page has a second table for 01 Nov 2026 – 30 Apr 2027 (Basic Double Room 40, Basic Quadruple Room 50, Studio with City View 80, BB) beside the two-period table of the Standard rooms; seasons cannot overlap, so those three rooms carry the same figures in both seasons (row notes say so). Basic Quadruple Room: only the quadruple-occupancy price is printed (QUAD 50); single/double/triple left blank — confirm with the hotel whether 1–3 guests pay the same. No triple supplement is printed for Hotel J Negombo (the USD 20 triple supplement on the Essentials sheet is printed under Hotel J Unawatuna only).",
+            "child_policy_text": "Child Policy - (Maximum 01 Child): Age of 0-5 Free of Charge. Age of 6-11.99 USD 05 (Per kid/Per night on BB excluding extra bed). Baby cot on request can be provided free of charge. (Up to one cot per room)",
+            "max_children_free": 1,
+            "source_file": "Jetwing Hotels - Essentials - TA Contracted Rates - Winter 2026-2027.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Standard",
+                "priced_as": "base",
+                "room_count": 18,
+                "max_children": 1
+            },
+            {
+                "name": "Standard Sea View",
+                "priced_as": "base",
+                "room_count": 16,
+                "max_children": 1,
+                "view": "Sea"
+            },
+            {
+                "name": "Suite with Sea View",
+                "priced_as": "base",
+                "room_count": 1,
+                "max_children": 1,
+                "view": "Sea"
+            },
+            {
+                "name": "Basic Double Room",
+                "priced_as": "base",
+                "room_count": 5,
+                "max_children": 1
+            },
+            {
+                "name": "Basic Quadruple Room",
+                "priced_as": "base",
+                "room_count": 1,
+                "max_children": 1,
+                "description": "Printed \"Basic Quadruple Room (Quadruple Occupancy) 01 Room\""
+            },
+            {
+                "name": "Studio with City View",
+                "priced_as": "base",
+                "room_count": 1,
+                "max_children": 1,
+                "view": "City"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Nov – 25 Dec 2026 & 11 Jan – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2026-12-25"
+                    },
+                    {
+                        "from": "2027-01-11",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 60,
+                        "dbl": 60,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 60 – Single / Double Occupancy (same rate for 1 or 2 guests)"
+                    },
+                    {
+                        "room_type": "Standard Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 80,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 80 – Single / Double Occupancy (same rate for 1 or 2 guests)"
+                    },
+                    {
+                        "room_type": "Suite with Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 130,
+                        "dbl": 130,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 130 – Single / Double Occupancy (same rate for 1 or 2 guests)"
+                    },
+                    {
+                        "room_type": "Basic Double Room",
+                        "meal_plan": "BB",
+                        "sgl": 40,
+                        "dbl": 40,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 40 – Single / Double Occupancy (same rate for 1 or 2 guests); printed for 01 Nov 2026 – 30 Apr 2027 (no separate 26 Dec – 10 Jan rate)"
+                    },
+                    {
+                        "room_type": "Basic Quadruple Room",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 50,
+                        "unit": null,
+                        "note": "Printed 50 for the room at quadruple occupancy; no single/double/triple price printed; printed for 01 Nov 2026 – 30 Apr 2027 (no separate 26 Dec – 10 Jan rate)"
+                    },
+                    {
+                        "room_type": "Studio with City View",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 80,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 80 – Single / Double Occupancy (same rate for 1 or 2 guests); printed for 01 Nov 2026 – 30 Apr 2027 (no separate 26 Dec – 10 Jan rate)"
+                    }
+                ]
+            },
+            {
+                "name": "26 Dec 2026 – 10 Jan 2027",
+                "kind": "festive",
+                "dates": [
+                    {
+                        "from": "2026-12-26",
+                        "to": "2027-01-10"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Standard",
+                        "meal_plan": "BB",
+                        "sgl": 75,
+                        "dbl": 75,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 75 – Single / Double Occupancy (same rate for 1 or 2 guests)"
+                    },
+                    {
+                        "room_type": "Standard Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 95,
+                        "dbl": 95,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 95 – Single / Double Occupancy (same rate for 1 or 2 guests)"
+                    },
+                    {
+                        "room_type": "Suite with Sea View",
+                        "meal_plan": "BB",
+                        "sgl": 145,
+                        "dbl": 145,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 145 – Single / Double Occupancy (same rate for 1 or 2 guests)"
+                    },
+                    {
+                        "room_type": "Basic Double Room",
+                        "meal_plan": "BB",
+                        "sgl": 40,
+                        "dbl": 40,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 40 – Single / Double Occupancy (same rate for 1 or 2 guests); printed for 01 Nov 2026 – 30 Apr 2027 (no separate 26 Dec – 10 Jan rate)"
+                    },
+                    {
+                        "room_type": "Basic Quadruple Room",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 50,
+                        "unit": null,
+                        "note": "Printed 50 for the room at quadruple occupancy; no single/double/triple price printed; printed for 01 Nov 2026 – 30 Apr 2027 (no separate 26 Dec – 10 Jan rate)"
+                    },
+                    {
+                        "room_type": "Studio with City View",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 80,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null,
+                        "note": "Printed 80 – Single / Double Occupancy (same rate for 1 or 2 guests); printed for 01 Nov 2026 – 30 Apr 2027 (no separate 26 Dec – 10 Jan rate)"
+                    }
+                ],
+                "notes": "Printed as its own period \"26th December 2026 – 10th January 2027\" (not labelled peak on the sheet)"
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [],
+        "meal_prices": [],
+        "supplements": [
+            {
+                "type": "early_checkin",
+                "name": "Early check-in within 04 hours of the 14:00 check-in",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% charge of the room rate"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out up to 04 hours past 12:00",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "50% room rate charge"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out past 04 hours",
+                "per": "room",
+                "pct_of_rate": 100,
+                "compulsory": 0,
+                "note": "100% room rate"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "max_children": 1,
+                "note": "Age of 0-5: Free of Charge (Child Policy - Maximum 01 Child). Baby cot on request free of charge (up to one cot per room)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "meal_plan": "BB",
+                "amount": 5,
+                "max_children": 1,
+                "note": "Age of 6-11.99: USD 05 (Per kid/Per night on BB excluding extra bed)"
+            }
+        ],
+        "guide_policies": [],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 15,
+                "charge_pct": 25,
+                "max_rooms": 8,
+                "note": "Cancellations within 21 days of the arrival date – 25% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 8,
+                "charge_pct": 50,
+                "max_rooms": 8,
+                "note": "Cancellations within 14 days of the arrival date – 50% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "fit",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 8,
+                "note": "Cancellations within 07 days of the arrival date – 100% of the value of the booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 8,
+                "charge_pct": 50,
+                "min_rooms": 9,
+                "note": "Group bookings, more than 8 rooms: \"liable to pay 50% of the basis booked before 30 days of arrival\" — read as a 50% charge from 30 days (confirm with the hotel)"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-04-30",
+                "tier": "group",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_rooms": 9,
+                "note": "Within 07 days – 100% (the general rule; the group line itself gives only the 50%)"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "non_credit",
+                "kind": "prepay",
+                "days_before": 5,
+                "pct": 100,
+                "note": "Travel agents without credit facilities: payment 05 days before the clients check into the hotel"
+            },
+            {
+                "applies": "credit",
+                "kind": "credit_period",
+                "note": "Travel agents entitled to credit facilities: payment within one month of the departure of guests (no day count printed)"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "pct": 100,
+                "note": "Last minute / short notice bookings: 100% of the payment on confirmation"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

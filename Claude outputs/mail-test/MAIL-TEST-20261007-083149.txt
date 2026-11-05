@@ -1,0 +1,6 @@
+Avenir Holidays — mail connection test, 2026-10-07 08:31:49
+Mailbox: htl.res@avenirholidays.com   SMTP smtp.lolipop.jp:465 (SSL)   IMAP imap.lolipop.jp:993 (SSL)
+PHP 8.1.33; openssl yes; certificates checked against C:\wamp64\www\avenir/writable/cacert.pem
+
+1. Test e-mail: from htl.res@avenirholidays.com to Shanth@lionroyal.co.jp
+   Type SEND and press Enter to send it (anything else skips the e-mail):

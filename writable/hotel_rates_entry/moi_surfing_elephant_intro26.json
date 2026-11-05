@@ -1,0 +1,528 @@
+{
+    "key": "moi_surfing_elephant_intro26",
+    "hotel": {
+        "acc": "6-9-11-11783",
+        "name": "Surfing Elephant",
+        "location": "Matara (Polhena)",
+        "chain": "DBI Ceylon / Moi Hotels",
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:08"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Surfing Elephant"
+        },
+        "contract": {
+            "name": "All markets introductory rate – Winter 2026 (Feb – 30 Apr) & Summer 2026 (1 May – 30 Oct), bookings made before 30 Apr 2026",
+            "plan_type": "special_offer",
+            "contract_type": "Travel Agent",
+            "contract_date": "2026-03-04",
+            "valid_from": "2026-02-01",
+            "valid_to": "2026-10-30",
+            "taxes_included": 0,
+            "tax_pct": 18,
+            "tax_note": "Above rates are exclusive of 18% VAT and applicable taxes; non-commissionable",
+            "received_at": "2026-09-03",
+            "credit_facility": "unknown",
+            "extra_bed_adult": 20,
+            "voucher_note": "Reservation voucher MUST state the quoted room rate (basis) and other necessary information such as supplements",
+            "terms_text": "All room rates are exclusive of all taxes and non-commissionable. Contracted rates are confidential and cannot be published online or on any platform other than the company system. Check-in 2.00 pm, check-out 11.00 am; early check-in / late check-out subject to availability, charges apply. Bookings confirmed by e-mail subject to written confirmation from reservations followed by a proforma invoice. If overbooked, the hotel may transfer reservations to alternate accommodation of similar rating/category. Guests are responsible for loss or damage to hotel property. Reservations: reservation@dbihotels.lk / dilrukshi@dbiholtels.com (sic) / info@dbihotels.lk.",
+            "child_policy_text": "Kids below 5.99 years share parents' bed on FOC basis. 6 – 11 years 50% of the per-night adult meal rate, sharing parents' bed. 12 years and above considered as an adult. Extra bed supplement $20 net per person per night.",
+            "guide_policy_text": "Group bookings with 15 or more paying guests: guide room FOC. Guide fee (per night) for less than 15 paying guests: BB LKR 7,500 / HB LKR 10,500. If the hotel is fully booked, guide accommodation at a nearby suitable accommodation.",
+            "cancellation_text": "All group bookings above 5 rooms: release period 30 days prior to arrival; 50% of the full booking value charged if cancelled within 30 days. November – April: release period 21 days; 50% within 21 days. May – October: release period 14 days; 50% within 14 days. No-shows: 100% of the full stay, no refund (applicable for credit agents too — sentence truncated on the sheet).",
+            "payment_text": "Full payment to be settled 7 days prior to the date of arrival. Cheque payments must be banked and realised at least 10 days prior to arrival. Reservations made within 7 days of arrival: payment in full upon booking confirmation. Failure to settle in full by the above date: rooms released without prior notice. Hotel reserves the right to release bookings with unsettled payment (excluding credit agents) with advance notice of 14 days or more. Bank: Surfing Elephant (Pvt) Ltd, Commercial Bank Matara branch, A/C 1001061243. Quote travel agency / guest name / confirmation number as reference.",
+            "priority": 10,
+            "book_to": "2026-04-30",
+            "notes": "Introductory rate \"for bookings made before 30th April 2026\" (booking window closed). Peak season on the sheet = \"20th – 31st January, February, March, April, July, August\" (the January dates fall outside this plan); low season = May, June, September, October. Summer validity printed as \"to 30th October 2026\" — 31 Oct is unpriced. No gala dates inside the validity. Stay-pay and EBO offers are non-combinable.",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "source_type": "email",
+            "source_file": "MOI HOTELS — Surfing Elephant- Winter and Summer 2026- Winter 2027 Introductory Rates - 4.3.2026.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Premier King",
+                "priced_as": "base",
+                "room_count": 5,
+                "max_adults": 3
+            },
+            {
+                "name": "Premier Twin",
+                "priced_as": "base",
+                "room_count": 6,
+                "max_adults": 2
+            },
+            {
+                "name": "Premier Super Deluxe",
+                "priced_as": "base",
+                "room_count": 5,
+                "max_adults": 3
+            },
+            {
+                "name": "Premier Family",
+                "priced_as": "base",
+                "room_count": 2,
+                "max_adults": 4,
+                "description": "Priced for 4 pax only"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "Peak season (Feb – Apr, Jul – Aug 2026)",
+                "kind": "peak",
+                "dates": [
+                    {
+                        "from": "2026-02-01",
+                        "to": "2026-04-30"
+                    },
+                    {
+                        "from": "2026-07-01",
+                        "to": "2026-08-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Premier King",
+                        "meal_plan": "RO",
+                        "sgl": 70,
+                        "dbl": 70,
+                        "tpl": 85,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier King",
+                        "meal_plan": "BB",
+                        "sgl": 80,
+                        "dbl": 90,
+                        "tpl": 115,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier King",
+                        "meal_plan": "HB",
+                        "sgl": 95,
+                        "dbl": 120,
+                        "tpl": 160,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Twin",
+                        "meal_plan": "RO",
+                        "sgl": 75,
+                        "dbl": 75,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Twin",
+                        "meal_plan": "BB",
+                        "sgl": 85,
+                        "dbl": 95,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Twin",
+                        "meal_plan": "HB",
+                        "sgl": 100,
+                        "dbl": 125,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Super Deluxe",
+                        "meal_plan": "RO",
+                        "sgl": 80,
+                        "dbl": 80,
+                        "tpl": 95,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Super Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 90,
+                        "dbl": 100,
+                        "tpl": 125,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Super Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 105,
+                        "dbl": 130,
+                        "tpl": 170,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Family",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 135,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Family",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 175,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Family",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 235,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "Low season (May – Jun, Sep – Oct 2026)",
+                "kind": "low",
+                "dates": [
+                    {
+                        "from": "2026-05-01",
+                        "to": "2026-06-30"
+                    },
+                    {
+                        "from": "2026-09-01",
+                        "to": "2026-10-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Premier King",
+                        "meal_plan": "RO",
+                        "sgl": 50,
+                        "dbl": 50,
+                        "tpl": 65,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier King",
+                        "meal_plan": "BB",
+                        "sgl": 60,
+                        "dbl": 70,
+                        "tpl": 95,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier King",
+                        "meal_plan": "HB",
+                        "sgl": 75,
+                        "dbl": 100,
+                        "tpl": 140,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Twin",
+                        "meal_plan": "RO",
+                        "sgl": 55,
+                        "dbl": 55,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Twin",
+                        "meal_plan": "BB",
+                        "sgl": 65,
+                        "dbl": 75,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Twin",
+                        "meal_plan": "HB",
+                        "sgl": 80,
+                        "dbl": 105,
+                        "tpl": null,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Super Deluxe",
+                        "meal_plan": "RO",
+                        "sgl": 60,
+                        "dbl": 60,
+                        "tpl": 75,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Super Deluxe",
+                        "meal_plan": "BB",
+                        "sgl": 70,
+                        "dbl": 80,
+                        "tpl": 105,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Super Deluxe",
+                        "meal_plan": "HB",
+                        "sgl": 85,
+                        "dbl": 110,
+                        "tpl": 165,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Family",
+                        "meal_plan": "RO",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 115,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Family",
+                        "meal_plan": "BB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 155,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Premier Family",
+                        "meal_plan": "HB",
+                        "sgl": null,
+                        "dbl": null,
+                        "tpl": null,
+                        "quad": 215,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [],
+        "meal_deltas": [
+            {
+                "from": "RO",
+                "to": "BB",
+                "adult": 10,
+                "child": 5,
+                "note": "Breakfast supplement (printed BB rows take precedence)"
+            },
+            {
+                "from": "BB",
+                "to": "HB",
+                "adult": 15,
+                "child": 7.5,
+                "note": "Dinner supplement (printed HB rows take precedence)"
+            },
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 15,
+                "child": 7.5,
+                "note": "Lunch supplement"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 10,
+                "child": 5,
+                "note": "$10 per person per meal; child 50%"
+            },
+            {
+                "meal": "lunch",
+                "adult": 15,
+                "child": 7.5,
+                "note": "$15 per person per meal; child 50%"
+            },
+            {
+                "meal": "dinner",
+                "adult": 15,
+                "child": 7.5,
+                "note": "$15 per person per meal; child 50%"
+            }
+        ],
+        "supplements": [],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Sharing parents' bed on FOC basis"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "meal_rate",
+                "note": "50% of the per-night adult meal rate, sharing parents' bed"
+            }
+        ],
+        "guide_policies": [
+            {
+                "role": "guide",
+                "meal_plan": "BB",
+                "amount": 7500,
+                "per": "person",
+                "free_from_pax": 15,
+                "accommodation": "hotel_room",
+                "note": "Guide fee per night for less than 15 paying guests; groups of 15+ paying guests get the guide room FOC; if the hotel is full, nearby suitable accommodation",
+                "currency": "LKR"
+            },
+            {
+                "role": "guide",
+                "meal_plan": "HB",
+                "amount": 10500,
+                "per": "person",
+                "free_from_pax": 15,
+                "accommodation": "hotel_room",
+                "note": "Guide fee per night for less than 15 paying guests; groups of 15+ paying guests get the guide room FOC; if the hotel is full, nearby suitable accommodation",
+                "currency": "LKR"
+            }
+        ],
+        "foc_rules": [],
+        "offers": [
+            {
+                "kind": "free_night",
+                "name": "Stay 6 nights, pay for 5",
+                "min_nights": 6,
+                "free_nights": 1,
+                "per": "room",
+                "combinable": 0,
+                "conditions": "Offers are non-combinable"
+            },
+            {
+                "kind": "free_night",
+                "name": "Stay 11 nights, pay for 10",
+                "min_nights": 11,
+                "free_nights": 1,
+                "per": "room",
+                "combinable": 0,
+                "conditions": "Offers are non-combinable"
+            },
+            {
+                "kind": "early_booking",
+                "name": "EBO: bookings made 60 days prior to arrival – 15% discount",
+                "value_pct": 15,
+                "per": "booking",
+                "combinable": 0,
+                "conditions": "Booked 60 or more days before arrival; non-combinable"
+            },
+            {
+                "kind": "early_booking",
+                "name": "EBO: bookings made 90 days prior to arrival – 15% discount",
+                "value_pct": 15,
+                "per": "booking",
+                "combinable": 0,
+                "conditions": "Booked 90 or more days before arrival; non-combinable (sheet prints 15% for both 60 and 90 days — confirm)"
+            }
+        ],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-04-30",
+                "tier": "fit",
+                "days_from": 21,
+                "days_to": 0,
+                "charge_pct": 50,
+                "max_rooms": 5,
+                "note": "Release period 21 days prior to arrival; 50% of the full booking value if cancelled within 21 days"
+            },
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-04-30",
+                "tier": "fit",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 5,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-10-30",
+                "tier": "fit",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 50,
+                "max_rooms": 5,
+                "note": "Release period 14 days prior to arrival; 50% of the full booking value if cancelled within 14 days"
+            },
+            {
+                "date_from": "2026-05-01",
+                "date_to": "2026-10-30",
+                "tier": "fit",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "max_rooms": 5,
+                "note": "No-show: 100% of the full stay, no refund"
+            },
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-10-30",
+                "tier": "group",
+                "days_from": 30,
+                "days_to": 0,
+                "charge_pct": 50,
+                "min_rooms": 6,
+                "note": "Release period 30 days prior to arrival; 50% of the full booking value if cancelled within 30 days"
+            },
+            {
+                "date_from": "2026-02-01",
+                "date_to": "2026-10-30",
+                "tier": "group",
+                "days_from": 0,
+                "days_to": 0,
+                "charge_pct": 100,
+                "min_rooms": 6,
+                "note": "No-show: 100% of the full stay, no refund"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 7,
+                "pct": 100,
+                "note": "Full payment 7 days prior to arrival; reservations made within 7 days of arrival are paid in full on confirmation"
+            },
+            {
+                "applies": "all",
+                "kind": "other",
+                "days_before": 10,
+                "note": "Cheque payments must be banked and realised at least 10 days prior to arrival"
+            },
+            {
+                "applies": "non_credit",
+                "kind": "other",
+                "days_before": 14,
+                "note": "Bookings with unsettled payment (excluding credit agents) may be released with 14 days or more advance notice"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

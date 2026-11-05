@@ -1,0 +1,31 @@
+Winter 2026/27 rate sheets saved to the HOTEL RATES folder on 2 Oct 2026 — loaded 2 Oct 2026 on Shantha's approval ("approved for live").
+17 plan files added here (jetwing_*, mirage_*, newburgh_ella_2627, shangrila_*); each byte-identical to the version tested on the copy (32 checks passed there).
+
+Loaded as DRAFTS (Setup step load_plans, only these 9 keys) — nothing approved; quotations keep using approved plans until the Hotel Rate Approval queue approves them:
+  #343 Jetwing Ayurveda Pavilions   Winter 2026/27, FB + Ayurveda, minimum 3 nights            E0 W3
+  #344 Jetwing Lagoon               Short Stay Packages Winter 2026/27 (maximum 2 nights)      E0 W3
+  #345 Mirage Hotel Colombo         Rate Sheet 2026/2027 (1 Nov 2026 - 31 Oct 2027)           E0 W1
+  #346 Mirage Kings Cottage         Promotional Rate 2026/27 (1 Nov 2026 - 31 Oct 2027)       E0 W1
+  #347 Newburgh Hotel Ella          TA contract 1 Feb 2026 - 30 Apr 2027                       E0 W21
+  #348 Shangri-La Colombo           3 Night Offer (book by 31 Oct, stay to 19 Dec 2026)       E0 W1
+  #349 Shangri-La Hambantota        Tactical HB minimum 3 nights (priority 5)                  E0 W9
+  #350 Shangri-La Hambantota        All Market Tactical (book by 31 Oct, stay to 19 Dec)      E0 W17
+  #351 Shangri-La Hambantota        India / Far East / Middle East Tactical                    E0 W7
+Rates, room supplements and gala dinners on live checked against the files (identical for all 9).
+
+Waiting for a supplier record (8 "Rate sheet without a supplier" items in Hotel Incomplete Work; create the
+supplier under Master Files -> Supplier, then "Attach supplier code" loads the plan as a draft):
+  Mermaid Hotel & Club, Hotel Sigiriyaaya, Xavier's Cottage (rooms + whole villa), Olive Bungalow (rooms + whole villa),
+  Mask & Tide, Mirage Kandyan Heights.
+
+Not loaded: the seven Browns 2025-2026 agreements (expire 31 Oct 2026), the Shangri-La Hambantota China offer
+(booking closed 30 Sep 2026), Mahaweli Reach / Belluna / GBH (already loaded 21 Sep 2026).
+
+APPROVED 2 Oct 2026 on Shantha's instruction ("can you go and approve all"): #343-#351 approved (warnings acknowledged).
+Each approval rebuilt that hotel's rows on the old Hotel Rate screen and re-priced the payable hotel cost of upcoming
+confirmed tours staying there (Jetwing Lagoon 33 tours, Newburgh 1, others 0); customer quotations are never changed.
+Checked after approval: Mirage Colombo 15 Nov BB DBL 75; Newburgh Golden Tip 10 Feb 2027 DBL 400 (old 5 no longer used);
+Ayurveda Pavilions King FB 260; Kings Cottage Deluxe HB 125/160. The Shangri-La and Jetwing Lagoon offers are tactical /
+special-offer plans: quotations use contract kinds only (setting quote_plan_types), so they price payments and show in
+the panel, but are not offered to quotations automatically. Old Newburgh "Migrated from Hotel Rate screen" plan #252 not
+superseded (the new contract outranks it).

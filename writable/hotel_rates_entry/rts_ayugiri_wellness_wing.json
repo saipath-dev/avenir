@@ -1,0 +1,345 @@
+{
+ "key": "rts_ayugiri_wellness_wing",
+ "hotel": {
+  "acc": "6-9-11-10887",
+  "name": "Ayugiri Ayurveda Wellness Resort Sigiriya",
+  "location": "Sigiriya",
+  "chain": "Browns Hotels & Resorts"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10887",
+   "name": "Ayugiri Ayurveda Wellness Resort Sigiriya"
+  },
+  "contract": {
+   "name": "Travel Agent Contract – Wellness Wing, half board (Apr 2027 – Mar 2028)",
+   "plan_type": "contract",
+   "priority": 0,
+   "contract_type": "Travel Agent – All Market",
+   "tier": "all",
+   "hotel_reference": "Connect with Ayugiri – Rates for Wellness Wing",
+   "valid_from": "2027-04-01",
+   "valid_to": "2028-03-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "HB",
+   "taxes_included": 1,
+   "tax_note": "Nett, non-commissionable, per room per night, inclusive of Government taxes (General Conditions — which say \"in Euro\"; the rate tables are USD / $).",
+   "source_type": "manual",
+   "received_at": "2026-10-02",
+   "credit_facility": "unknown",
+   "child_policy_text": "Children below 9.99 years are restricted. For children of 10 years and above the parents should take responsibility that the children will not disturb any in-house guests. (The \"1 Child between ages 10 -13 can stay on complimentary without treatment\" special offer is printed on the Ayurveda Wing page only.) Presidential Suite: maximum 4 adults or 2 adults & 2 kids.",
+   "guide_policy_text": "Driver Accommodation: Accommodation and meals are provided free of charge. Advance notice is required and availability is subject to confirmation.",
+   "cancellation_text": "Cancellation during the stay -> Will be charged in full. No show -> 90% of the value of the booking. Cancellation within 01 - 07 days of the arrival date -> 80% of the value of the booking. Cancellation within 08 - 14 days of the arrival date -> 60% of the value of the booking. Cancellation within 15 - 34 days of the arrival date -> 40% of the value of the booking. Cancellation beyond 35 days of the arrival date -> No Charge.",
+   "payment_text": "All invoices must be settled 14 days prior to the arrival of the clients. Payment instructions, including bank account details, will be provided with the confirmation of the booking.",
+   "terms_text": "WELLNESS WING – Suite With Plunge Pool, Half Board, SGL / DBL per room per night (periods 01st April 2027 – 31st March 2028). Presidential Suite with pool deck: USD 200 per night per room for the double and single rates. Above room rates are all-inclusive with Ayurveda treatments per room per night [sic — printed under the half-board table]. Extra person supplement for suite with plunge pool: US$100. Extra person supplement for Presidential Suite with Pool Deck: US$100 (maximum up to 4 pax in total). Wellness package pricing above the standard half-board rate depends on the chosen package and treatment course length; please enquire for a tailored quote. THE HALF-BOARD RATE INCLUDES: Luxury suite accommodation in a peaceful natural setting; Dedicated Wellness Host throughout the stay; Two wholesome main meals daily; One private consultation with a qualified wellness doctor; Personalised wellness recommendations; One 40-minute wellbeing treatment per guest, recommended by the Ayurvedic doctor and subject to suitability; Healthy and nourishing International breakfast selections; One signature five-course wellness dining experience; One special morning yoga session per stay with a qualified yoga master; Meditation in a peaceful setting; One guided nature and wellbeing walk per stay; Unlimited organic tea, coffee and milk; Nightly relaxation bath ritual for deep relaxation; Personalised daily turndown service; Take-home wellness gift at departure; Flexible 24-hour check-in / check-out, subject to availability. MEAL PLAN & SEASONAL SUPPLEMENTS: Bed & Breakfast reduction (per person) – $15; 3-course set menu lunch (per person) $20; Christmas Eve supplement, 24 Dec (per person) $100; New Year's Eve supplement, 31 Dec (per person) $150. | ROOM CATEGORIES: Suite with Plunge Pool – 1059 sqft outdoor plunge pool / 1243 sqft indoor plunge pool – 20 rooms (13 DBLs and 7 TWINs) – maximum occupancy 2 adults. Presidential Suite With Pool Deck – 2536 sqft / 2848 sqft pool deck – 2 rooms (2 DBLs per suite) – maximum 4 adults or 2 adults & 2 kids. ADDITIONAL INFORMATION: special requests (dietary requirements, allergies, celebrations) to be communicated to reservations in advance; Wi-Fi in all rooms. GENERAL CONDITIONS: The resort is 100% Ayurvedic as such consumption of Liquor and Smoking are not allowed within the premises. Rates quoted are in Euro per room, per night, inclusive of Government taxes and are Nett and Non-Commissionable [the rate tables say USD]. The rates cannot be published on online channels / websites as standalone room rates, but can be included as part of a packaged offering on online platforms. The hotel reserves the right to modify the rates at any time, and such changes will apply to all future bookings. CHECK-IN 14:00 hours, CHECK-OUT 12:00 hours; for a guaranteed early check-in, the reservation needs to be made starting from the previous night. RESERVATIONS: Reservation.ayugiri@brownshotels.com, copy KalanaH@brownshotels.com, +9477 950 8721, 00664 960 900; all reservations subject to availability and written confirmation. Agreement signed for Browns Hotels and Resorts by Ishak Zainudeen (Head of Sales & Marketing); travel agent signature and date blank; special rates not valid until a signed acceptance is received by Browns Hotels and Resorts. Segment: Travel Agent; Market: All Market; Room rate: per room per night.",
+   "notes": "Transcribed from \"Updated DMC Ayugiri Contract S25W2526 S26 W2627 (4).pdf\" (8 pages), saved to the winter RTS folder on 2 Oct 2026. Wellness Wing page (p. 3) only; the Ayurveda Wing (all inclusive, min 7 nights) is the separate plan rts_ayugiri_ayurveda_wing — split because the two pages price different products (HB wellness vs AI Ayurveda) with different inclusions, extra-person supplements (US$100 vs US$80) and minimum stay. The same room name \"Suite with Plunge Pool\" is used in both plans (the room list on p. 7 has one such category, 20 rooms): HB rows live here, AI rows in the Ayurveda Wing plan, so the lookup finds each meal plan in its own plan. Six printed periods 01 Apr 2027 – 31 Mar 2028, HB SGL / DBL per room per night; no Wellness Wing rate is printed for winter 2026/27. The 01 Sep – 31 Oct 2027 DBL is printed 654 although the identical-SGL 01 Apr – 19 Jul period is 660 (entered as printed — confirm). The half-board rates are about equal to / slightly above the all-inclusive Ayurveda Wing rates (e.g. 660 HB vs 650 AI) and the line under the table still says \"all-inclusive with Ayurveda treatments\" — confirm the table and its label with Browns. No minimum stay is printed on this page (the \"Minimum Stay in the hotel is 07 nights\" line is on the Ayurveda Wing page) — confirm whether it applies. Meal plans: B&B reduction US$15 pp (HB→BB −15) and 3-course set-menu lunch US$20 pp (HB→FB +20) entered as meal deltas; Christmas Eve 24 Dec 2027 US$100 pp and New Year's Eve 31 Dec 2027 US$150 pp as compulsory supplements (no child % printed). No child price on this page (the 10 – 13 complimentary-child offer is printed only for the Ayurveda Wing) → child policy text only. Browns Hotels & Resorts travel agent contract (document title \"Updated DMC Ayugiri Contract S25/W25/26 S26 W26/27\"; the pages actually price 01 Apr 2026 – 31 Mar 2028). USD per room per night, SGL and DBL, \"ALL MARKET\", travel agent segment. Room names: the sheet's \"Suite with Plunge Pool\" (20 rooms) and \"Presidential Suite with Pool Deck\" (2 rooms) — the hotel's only existing room type is \"SUITE\", which could be either, so the sheet names are used (W08 new room type); merge \"SUITE\" into \"Suite with Plunge Pool\" if that is what it is. Presidential Suite = Suite with Plunge Pool + USD 200 per room per night (room supplement). No contract date printed (PDF created 16 Sep 2026); travel agent signature blank. General conditions say \"Rates quoted are in Euro\" while every table is USD / $ — entered as USD, confirm. Children below 9.99 restricted.",
+   "source_file": "Updated DMC Ayugiri Contract S25W2526 S26 W2627 (4).pdf"
+  },
+  "room_types": [
+   {
+    "name": "Suite with Plunge Pool",
+    "priced_as": "base",
+    "room_count": 20,
+    "bed_config": "13 DBLs and 7 TWINs",
+    "max_adults": 2,
+    "description": "1059 sqft – outdoor plunge pool / 1243 sqft – indoor plunge pool; 20 rooms (13 DBLs and 7 TWINs); maximum occupancy 2 adults. The hotel's existing room type \"SUITE\" is probably this room — merge if so."
+   },
+   {
+    "name": "Presidential Suite with Pool Deck",
+    "priced_as": "supplement",
+    "base_room_type": "Suite with Plunge Pool",
+    "room_count": 2,
+    "bed_config": "2 DBLs per suite",
+    "max_adults": 4,
+    "description": "2536 sqft / 2848 sqft – pool deck; 2 rooms; 2 DBLs per suite; maximum occupancy 4 adults or 2 adults & 2 kids. USD 200 per night per room for the Suite with Plunge Pool double and single rates."
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Apr – 19 Jul 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-04-01",
+      "to": "2027-07-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Suite with Plunge Pool",
+      "meal_plan": "HB",
+      "sgl": 539,
+      "dbl": 660,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Wellness Wing half board: two main meals daily, one 40-min wellbeing treatment per guest, one doctor consultation, wellness host"
+     }
+    ]
+   },
+   {
+    "name": "20 Jul – 31 Aug 2027",
+    "kind": "peak",
+    "dates": [
+     {
+      "from": "2027-07-20",
+      "to": "2027-08-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Suite with Plunge Pool",
+      "meal_plan": "HB",
+      "sgl": 594,
+      "dbl": 720,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Wellness Wing half board: two main meals daily, one 40-min wellbeing treatment per guest, one doctor consultation, wellness host"
+     }
+    ]
+   },
+   {
+    "name": "01 Sep – 31 Oct 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-09-01",
+      "to": "2027-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Suite with Plunge Pool",
+      "meal_plan": "HB",
+      "sgl": 539,
+      "dbl": 654,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Wellness Wing half board: two main meals daily, one 40-min wellbeing treatment per guest, one doctor consultation, wellness host; DBL printed 654 (660 in Apr–Jul with the same SGL)"
+     }
+    ]
+   },
+   {
+    "name": "01 Nov – 19 Dec 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-11-01",
+      "to": "2027-12-19"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Suite with Plunge Pool",
+      "meal_plan": "HB",
+      "sgl": 594,
+      "dbl": 720,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Wellness Wing half board: two main meals daily, one 40-min wellbeing treatment per guest, one doctor consultation, wellness host"
+     }
+    ]
+   },
+   {
+    "name": "20 Dec 2027 – 09 Jan 2028",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2027-12-20",
+      "to": "2028-01-09"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Suite with Plunge Pool",
+      "meal_plan": "HB",
+      "sgl": 709,
+      "dbl": 863,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Wellness Wing half board: two main meals daily, one 40-min wellbeing treatment per guest, one doctor consultation, wellness host"
+     }
+    ],
+    "notes": "Not labelled on the sheet; Christmas / New Year dates"
+   },
+   {
+    "name": "10 Jan – 31 Mar 2028",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2028-01-10",
+      "to": "2028-03-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Suite with Plunge Pool",
+      "meal_plan": "HB",
+      "sgl": 676,
+      "dbl": 814,
+      "tpl": null,
+      "quad": null,
+      "unit": null,
+      "note": "Wellness Wing half board: two main meals daily, one 40-min wellbeing treatment per guest, one doctor consultation, wellness host"
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Presidential Suite with Pool Deck",
+    "amount": 200,
+    "per": "room",
+    "note": "Presidential Suite with pool deck: USD 200 per night per room for the double and single rates"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "HB",
+    "to": "BB",
+    "adult": -15,
+    "note": "Bed & Breakfast reduction (per person) – $15"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 20,
+    "note": "3-course set menu lunch (per person) $20"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "lunch",
+    "name": "3-course set menu lunch",
+    "adult": 20,
+    "note": "3-course set menu lunch (per person) $20"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve supplement (24 Dec)",
+    "date_from": "2027-12-24",
+    "date_to": "2027-12-24",
+    "meal_plans": "BB,HB,FB",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 1
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve supplement (31 Dec)",
+    "date_from": "2027-12-31",
+    "date_to": "2027-12-31",
+    "meal_plans": "BB,HB,FB",
+    "per": "person",
+    "amount": 150,
+    "compulsory": 1
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra person – Suite with Plunge Pool",
+    "room_type": "Suite with Plunge Pool",
+    "meal_plans": "BB,HB,FB",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 0,
+    "note": "Extra person supplement for suite with plunge pool: US$100 (\"per night\" not printed; the suite is printed with max 2 adults)"
+   },
+   {
+    "type": "extra_adult",
+    "name": "Extra person – Presidential Suite with Pool Deck",
+    "room_type": "Presidential Suite with Pool Deck",
+    "meal_plans": "BB,HB,FB",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 0,
+    "note": "Extra person supplement for Presidential Suite with Pool Deck: US$100 (maximum up to 4 pax in total)"
+   },
+   {
+    "type": "early_checkin",
+    "name": "Guaranteed early check-in (before 14:00)",
+    "per": "room",
+    "pct_of_rate": 100,
+    "compulsory": 0,
+    "note": "For a guaranteed early check-in, reservation needs to be made starting from the previous night"
+   }
+  ],
+  "child_rates": [],
+  "guide_policies": [
+   {
+    "role": "driver",
+    "amount": 0,
+    "per": "person",
+    "accommodation": "unknown",
+    "note": "Driver accommodation and meals free of charge; advance notice required, availability subject to confirmation"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2028-03-31",
+    "tier": "all",
+    "days_from": null,
+    "days_to": 35,
+    "charge_pct": 0,
+    "note": "Cancellation beyond 35 days of the arrival date -> No Charge"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2028-03-31",
+    "tier": "all",
+    "days_from": 34,
+    "days_to": 15,
+    "charge_pct": 40,
+    "note": "Cancellation within 15 - 34 days of the arrival date -> 40% of the value of the booking"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2028-03-31",
+    "tier": "all",
+    "days_from": 14,
+    "days_to": 8,
+    "charge_pct": 60,
+    "note": "Cancellation within 08 - 14 days of the arrival date -> 60% of the value of the booking"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2028-03-31",
+    "tier": "all",
+    "days_from": 7,
+    "days_to": 1,
+    "charge_pct": 80,
+    "note": "Cancellation within 01 - 07 days of the arrival date -> 80% of the value of the booking"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2028-03-31",
+    "tier": "all",
+    "days_from": 0,
+    "days_to": 0,
+    "charge_pct": 90,
+    "note": "No show -> 90% of the value of the booking. Cancellation during the stay -> will be charged in full (100%)"
+   }
+  ],
+  "payment_rules": [
+   {
+    "applies": "all",
+    "kind": "prepay",
+    "days_before": 14,
+    "pct": 100,
+    "note": "All invoices must be settled 14 days prior to the arrival of the clients"
+   }
+  ],
+  "restrictions": [],
+  "extras": []
+ }
+}

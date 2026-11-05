@@ -1,0 +1,12 @@
+tf-session-r1 on the ISOLATED TEST INSTANCE (http://localhost/avenir_rv/), 12 Oct 2026, test login TestAccounts.
+Before (original files): S1 background request without a session redirected to the sign-in page (302) - problem;
+  S2 page request without a session sent to the sign-in page (unchanged); S3 opening the sign-in page while signed in
+  ended the session (api 200 -> 302) - problem; S4 background request after sign-out got the sign-in page, no notice;
+  S5 HTML with plugins.js inserted after load blanked the page (3,541 characters -> page wiped) - problem.   5/5 as expected.
+Installed with apply.py (before/20261012-061856). After: S1 401 JSON "session ended", no redirect; S2 unchanged (302);
+  S3 the session stays (200 / 200); S4 red notice "Your session has ended ... Sign in again"; S4b signed in again ->
+  200 and the notice goes away; S5 page unchanged (3,541 -> 3,551 characters).   6/6.
+  Finding: the first "after" run used the browser's cached old plugins.js (no notice); after refreshing it (as Ctrl+F5
+  does) all passed. Each browser needs one Ctrl+F5 after installing, unless the script tag gets a version mark.
+Rolled back with apply.py rollback: the 3 original files back (md5 a93a41e0, 4032a302, 71442658); the instance's files
+  equal the pre-r3 backup except the r3 files. Development: original files, unchanged.

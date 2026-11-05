@@ -1,0 +1,372 @@
+{
+ "key": "aitken_eb_amethyst",
+ "hotel": {
+  "acc": "6-9-11-10583",
+  "name": "Amethyst Resort – Passikudah",
+  "location": "Passikudah",
+  "chain": "Aitken Spence Hotels"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-10583",
+   "name": "Amethyst Resort – Passikudah"
+  },
+  "contract": {
+   "name": "Winter 2026/27 – Early Bird Offer – All Market Special (book before 31 Oct 2026)",
+   "plan_type": "early_bird",
+   "rate_code": "AM/W26_27/ALL MKT/EBO",
+   "hotel_reference": "LTA_All Market_Early Bird Offer (AM/W26_27/ALL MKT/EBO)",
+   "priority": 10,
+   "valid_from": "2026-11-01",
+   "valid_to": "2027-04-30",
+   "book_from": "2026-02-12",
+   "book_to": "2026-10-31",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "taxes_included": 1,
+   "tax_note": "Net rates in USD, non-commissionable, inclusive of applicable government taxes and levies",
+   "received_at": "2026-09-03",
+   "contract_date": "2026-02-12",
+   "contract_type": "LTA offer",
+   "credit_facility": "unknown",
+   "child_policy_text": "Children below 6 years FOC and 7-12 years 50% of the meal rate (max 02 children) sharing parents (offer document). Supplements summary (Summer 26 – Summer 27): below 6.99 years free of charge; 7-11.99 years 50% of the meal supplement sharing parents' room (max 02 children); extra bed USD 15 (Negombo: 7-11.99 years USD 42 per night for an extra bed with breakfast within Deluxe or Superior Deluxe based on availability; extra bed USD 30; Amethyst extra bed USD 12).",
+   "cancellation_text": "Bookings below 05 rooms: 14 days release 01 April – 20 December (excluding 01 – 31 August, which is 30 days); exceptions: up to 1 room reduction depending on occupancy 7 days prior to arrival with no cancellation fee. 30 days release 21 December – 31 March; exceptions: reduction of up to 1 room allowed until 14 days prior to arrival with no cancellation fee. Group bookings of 06 rooms & above: 30 days release 01 April – 20 December (excluding 01 – 31 August, which is 45 days); exception: 1-2 rooms reduction depending on occupancy 14 days prior to arrival with no cancellation fee. 45 days release 21 December – 31 March; exceptions: 1-2 rooms reduction depending on occupancy up to 14 days prior to arrival with no cancellation fee. No cancellation percentage is printed: 100% inside the release period entered. Reservations, amendments, cancellations: ashmres@aitkenspence.lk",
+   "terms_text": "The offer is valid for stays completed within the period of 01st November 2026 – 30th April 2027. Children below 6 years FOC and 7-12 years 50% of the meal rate (max 02 children) sharing parents. All rates and supplements are on net in USD currency and non-commissionable. The offer will not be applicable for any existing bookings and only be valid for new bookings commencing from the day on which the addendum was sent; amendments will not be accepted. All other supplements will remain as per the original Winter 26/27 contract. All rates are inclusive of applicable government taxes and levies as may be amended from time to time. Rates are subject to revision during the term of this contract. Please mention the special rate on the booking voucher in order for it to be applicable.",
+   "voucher_note": "Please mention the special rate (rate code) on the booking voucher in order for it to be applicable.",
+   "notes": "Printed code: LTA_All Market_Early Bird Offer (AM/W26_27/ALL MKT/EBO). Room type offered: Standard (River View). All other supplements will remain as per the original Winter 26/27 contract (base contract not received — this offer plan is not linked to a parent plan). Book-from = the sheet date (\"only valid for new bookings commencing from the day on which the addendum was sent\"). Market printed: \"All Market (Excluding French)\". The French market has no separate code in the system (France falls under EU) so it is NOT excluded automatically — do not apply this offer to French clients.  Galas, meal supplements, guide rates, child extra bed and room-category supplements were attached from the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026 (headed Summer 26 – Summer 27, i.e. it spans this winter) — confirm they are the Winter 26/27 contract supplements.",
+   "source_type": "email",
+   "source_file": "Aitkenspence Hotels Rates — WINTER 26_27 - EARLY BIRD OFFER_ALL MARKET SPECIAL _Book before 31st Oct 2026_.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Standard (River View)",
+    "priced_as": "base"
+   },
+   {
+    "name": "Sea View Room",
+    "priced_as": "supplement",
+    "base_room_type": "Standard (River View)"
+   },
+   {
+    "name": "Suite Room",
+    "priced_as": "supplement",
+    "base_room_type": "Standard (River View)"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 Nov – 21 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-21"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard (River View)",
+      "meal_plan": "BB",
+      "sgl": 85,
+      "dbl": 100,
+      "tpl": 140,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard (River View)",
+      "meal_plan": "HB",
+      "sgl": 102,
+      "dbl": 120,
+      "tpl": 168,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "22 Dec 2026 – 05 Jan 2027",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-22",
+      "to": "2027-01-05"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard (River View)",
+      "meal_plan": "BB",
+      "sgl": 106,
+      "dbl": 125,
+      "tpl": 175,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard (River View)",
+      "meal_plan": "HB",
+      "sgl": 123,
+      "dbl": 145,
+      "tpl": 203,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "06 Jan – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-06",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Standard (River View)",
+      "meal_plan": "BB",
+      "sgl": 85,
+      "dbl": 100,
+      "tpl": 140,
+      "quad": null,
+      "unit": null
+     },
+     {
+      "room_type": "Standard (River View)",
+      "meal_plan": "HB",
+      "sgl": 102,
+      "dbl": 120,
+      "tpl": 168,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Sea View Room",
+    "amount": 20,
+    "per": "room",
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: room supplement per room per night (over the Standard (River View) rate)"
+   },
+   {
+    "room_type": "Suite Room",
+    "amount": 75,
+    "per": "room",
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: room supplement per room per night (over the Standard (River View) rate)"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 20,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: dinner supplement — the printed HB rows take precedence"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 16,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: lunch supplement (FB derived from HB)"
+   }
+  ],
+  "meal_prices": [
+   {
+    "meal": "breakfast",
+    "adult": 14,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026"
+   },
+   {
+    "meal": "lunch",
+    "adult": 16,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026"
+   },
+   {
+    "meal": "dinner",
+    "adult": 20,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026"
+   },
+   {
+    "meal": "other",
+    "name": "All Inclusive supplement",
+    "adult": 35,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: All Inclusive USD 35 per person per night (basis it is added to is not printed)"
+   }
+  ],
+  "supplements": [
+   {
+    "type": "gala",
+    "name": "Christmas Eve compulsory festive supplement (BB guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 58,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026 (columns BB / HB-AI); child 50% follows the printed child-meal policy (no child gala price printed)"
+   },
+   {
+    "type": "gala",
+    "name": "Christmas Eve compulsory festive supplement (HB/FB/AI guests)",
+    "date_from": "2026-12-24",
+    "date_to": "2026-12-24",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 52,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026 (columns BB / HB-AI); child 50% follows the printed child-meal policy (no child gala price printed)"
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve compulsory festive supplement (BB guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "BB",
+    "per": "person",
+    "amount": 69,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026 (columns BB / HB-AI); child 50% follows the printed child-meal policy (no child gala price printed)"
+   },
+   {
+    "type": "gala",
+    "name": "New Year's Eve compulsory festive supplement (HB/FB/AI guests)",
+    "date_from": "2026-12-31",
+    "date_to": "2026-12-31",
+    "meal_plans": "HB,FB,AI",
+    "per": "person",
+    "amount": 64,
+    "compulsory": 1,
+    "child_pct": 50,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026 (columns BB / HB-AI); child 50% follows the printed child-meal policy (no child gala price printed)"
+   }
+  ],
+  "child_rates": [
+   {
+    "age_from": 0,
+    "age_to": 6.99,
+    "bed": "any",
+    "amount": 0,
+    "max_children": 2,
+    "note": "Offer: children below 6 years FOC sharing parents; supplements summary: below 6.99 years free of charge — entered to 6.99"
+   },
+   {
+    "age_from": 7,
+    "age_to": 11.99,
+    "bed": "no_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "max_children": 2,
+    "note": "Offer: 7-12 years 50% of the meal rate (max 02 children) sharing parents; 12 and above adult"
+   },
+   {
+    "age_from": 7,
+    "age_to": 11.99,
+    "bed": "with_bed",
+    "pct": 50,
+    "pct_basis": "meal_rate",
+    "max_children": 2,
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: 50% of the meal supplement plus extra bed USD 12 per night"
+   }
+  ],
+  "guide_policies": [
+   {
+    "role": "guide",
+    "meal_plan": "BB",
+    "amount": 45,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: guide room rate per night"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "HB",
+    "amount": 65,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: guide room rate per night"
+   },
+   {
+    "role": "guide",
+    "meal_plan": "FB",
+    "amount": 85,
+    "per": "person",
+    "accommodation": "hotel_room",
+    "note": "From the Aitken Spence Hotel Supplements Summary (Summer 26 – Summer 27), e-mail \"RE: Aitkenspence Hotels Rates\" 3 Sep 2026: guide room rate per night"
+   }
+  ],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-20",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 5,
+    "note": "Bookings below 05 rooms: 14 days release (01 Apr – 20 Dec; August would be 30 days). Exception: up to 1 room reduction depending on occupancy until 7 days prior, no fee"
+   },
+   {
+    "date_from": "2026-12-21",
+    "date_to": "2027-03-31",
+    "tier": "fit",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 5,
+    "note": "Bookings below 05 rooms: 30 days release (21 Dec – 31 Mar). Exception: reduction of up to 1 room allowed until 14 days prior, no fee"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "fit",
+    "days_from": 14,
+    "days_to": 0,
+    "charge_pct": 100,
+    "max_rooms": 5,
+    "note": "Bookings below 05 rooms: 14 days release (01 Apr – 20 Dec). Exception: up to 1 room reduction depending on occupancy until 7 days prior, no fee"
+   },
+   {
+    "date_from": "2026-11-01",
+    "date_to": "2026-12-20",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 6,
+    "note": "Groups 06 rooms & above: 30 days release (01 Apr – 20 Dec; August would be 45 days). Exception: 1-2 rooms reduction depending on occupancy 14 days prior, no fee"
+   },
+   {
+    "date_from": "2026-12-21",
+    "date_to": "2027-03-31",
+    "tier": "group",
+    "days_from": 45,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 6,
+    "note": "Groups 06 rooms & above: 45 days release (21 Dec – 31 Mar). Exception: 1-2 rooms reduction depending on occupancy up to 14 days prior, no fee"
+   },
+   {
+    "date_from": "2027-04-01",
+    "date_to": "2027-04-30",
+    "tier": "group",
+    "days_from": 30,
+    "days_to": 0,
+    "charge_pct": 100,
+    "min_rooms": 6,
+    "note": "Groups 06 rooms & above: 30 days release (01 Apr – 20 Dec). Exception: 1-2 rooms reduction depending on occupancy 14 days prior, no fee"
+   }
+  ],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

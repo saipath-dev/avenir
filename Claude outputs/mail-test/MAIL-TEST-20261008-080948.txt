@@ -1,0 +1,5 @@
+Avenir Holidays — mail connection test, 2026-10-08 08:09:48
+Mailbox: htl.res@avenirholidays.com   SMTP smtp.lolipop.jp:465 (SSL)   IMAP imap.lolipop.jp:993 (SSL)
+PHP 8.1.33; openssl yes; certificates checked against C:\wamp64\www\avenir/writable/cacert.pem
+
+2. Inbox check (read-only): htl.res@avenirholidays.com on imap.lolipop.jp:993

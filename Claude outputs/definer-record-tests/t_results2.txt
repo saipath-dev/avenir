@@ -1,0 +1,35 @@
+== T6c Q2 after the earlier test (forward file output tail)
++---------+--------------------------------+----------------+------------------------+----------------------------------+
++---------------+---------+--------------+
+| allocation_id | tour_id | driver       |
++---------------+---------+--------------+
+|           807 |  990001 | 6-9-11-99901 |
++---------------+---------+--------------+
+== T7 rollback that stops between DROP TRIGGER and CREATE TRIGGER (simulated failure)
+ERROR 1100 (HY000) at line 74: Table 'no_such_table' was not locked with LOCK TABLES
++-------------------------------------------------------+
+| trigger driver_allocation_after_insert root@localhost |
+| trigger driver_allocation_after_update root@localhost |
+| view acc_selct dbmasteruser@%                         |
+| view account_runing_q2 dbmasteruser@%                 |
+| view account_runing_q21 dbmasteruser@%                |
++-------------------------------------------------------+
+-- a delete while the DELETE trigger is missing (dummy row 808)
++---------------------+
+| allocation rows 630 |
++---------------------+
++-----------------+
+| audit rows 1786 |
++-----------------+
+== T8 recovery with the forward file
+| server: vm / 3308 / MySQL 8.0.46-0ubuntu0.24.04.4 / 9e8be115-c573-11f1-aaf4-02fc00000001 / database avenir |      1 |
+| post: the three views are under root@localhost with the recorded definitions                               |      1 |
+| post: the three triggers are under root@localhost with the recorded bodies and sql_mode                    |      1 |
+| post: driver_allocation has exactly these three triggers                                                   |      1 |
+| post: no allocation or audit row was written during the change                                             |      1 |
++------------------------------------------------------------+
+| triggers on driver_allocation: 3, definers: root@localhost |
++------------------------------------------------------------+
++---------------------+
+| acc_selct rows 1174 |
++---------------------+

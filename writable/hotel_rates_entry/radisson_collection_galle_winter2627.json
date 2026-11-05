@@ -1,0 +1,249 @@
+{
+ "key": "radisson_collection_galle_winter2627",
+ "hotel": {
+  "acc": "6-9-11-11677",
+  "name": "Radisson Collection Resort Galle",
+  "location": "Galle (Talpe)",
+  "chain": "Radisson Hotel Group"
+ },
+ "parent": null,
+ "sheet": {
+  "hotel": {
+   "sup_acc_no": "6-9-11-11677",
+   "name": "Radisson Collection Resort Galle"
+  },
+  "contract": {
+   "name": "Winter 2026/2027 Rate Sheet – Exclusive DMC Partner Offer",
+   "plan_type": "contract",
+   "tier": "all",
+   "priority": 0,
+   "valid_from": "2026-05-01",
+   "valid_to": "2027-04-30",
+   "currency": "USD",
+   "pricing_mode": "per_room",
+   "default_meal_plan": "BB",
+   "taxes_included": 1,
+   "tax_note": "USD per room per night, inclusive of all applicable taxes; government and local taxes subject to change without prior notice",
+   "source_type": "email",
+   "received_at": "2026-09-07",
+   "contract_type": "DMC rate sheet",
+   "hotel_reference": "Room Rates :- 2026 - 2027",
+   "credit_facility": "unknown",
+   "child_policy_text": "No child policy is printed on this sheet — \"all other terms and conditions remain unchanged as per the existing contract\". The only occupancy supplement printed is the extra person supplement USD 100 per person per day with breakfast, applicable only from the Premium category upwards.",
+   "terms_text": "Rates are quoted in USD per room, per night, inclusive of all applicable taxes. Government and local taxes are subject to change without prior notice. Applicable only for new bookings; not valid for existing reservations. Exclusive to DMC partners; cannot be combined with any other promotion or discount. Early check-in and late check-out available, subject to availability. Extra person supplement: USD 100 per person, per day with breakfast, applicable only from Premium category upwards. Kindly note that all other terms and conditions remain unchanged as per the existing contract.",
+   "notes": "One-page sheet headed \"Welcome to the EXCEPTIONAL — Exclusive DMC Partner Offer at Radisson Collection Resort Galle\"; the body calls itself \"our exclusive seasonal tactical offer\" but it is the hotel's winter 2026/27 DMC rate sheet, entered as the contract plan (priority 0) so the Radisson tactical offers can win over it. Only ONE priced line is printed: Collection Room, DOUBLE occupancy, Bed & Breakfast — there is no single, triple or extra-bed price and no room-only / half-board / full-board row (HB and FB come from the printed add-on meal upgrades). Rate period \"1st May - 31st Oct 2026\" starts before the e-mail was forwarded (the sheet was first sent 29 May 2026) — validity entered as printed, 01 May 2026 – 30 Apr 2027. Two of the printed columns hold two date ranges each (24–29 Dec 2026 together with 02–07 Jan 2027 at USD 315; 30–31 Dec 2026 together with 01 Jan 2027 at USD 597) — entered as one season with two ranges each. No gala dinner, child policy, guide policy, cancellation or payment terms are printed: the festive nights are priced through the rate itself, everything else is \"as per the existing contract\", which is not in this folder. The PDF text layer is scrambled; the table was read from the rendered page (entry/img/rdcoll-1.png). No booking window and no sheet date are printed.",
+   "source_file": "FW: Winter 2026/2027 Rate Sheet - Radisson Collection Resort Galle — Winter 20262027 Rate Sheet - Radisson Collection_ Resort Galle.pdf"
+  },
+  "room_types": [
+   {
+    "name": "Collection Room",
+    "priced_as": "base"
+   },
+   {
+    "name": "Collection Deluxe",
+    "priced_as": "supplement",
+    "base_room_type": "Collection Room"
+   },
+   {
+    "name": "Collection Premium",
+    "priced_as": "supplement",
+    "base_room_type": "Collection Room"
+   },
+   {
+    "name": "One Bedroom Suite",
+    "priced_as": "supplement",
+    "base_room_type": "Collection Room"
+   }
+  ],
+  "seasons": [
+   {
+    "name": "01 May – 31 Oct 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-05-01",
+      "to": "2026-10-31"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Collection Room",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": 145,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 Nov – 23 Dec 2026",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2026-11-01",
+      "to": "2026-12-23"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Collection Room",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": 170,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "24 – 29 Dec 2026 & 02 – 07 Jan 2027",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-24",
+      "to": "2026-12-29"
+     },
+     {
+      "from": "2027-01-02",
+      "to": "2027-01-07"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Collection Room",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": 315,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "30 & 31 Dec 2026 & 01 Jan 2027",
+    "kind": "festive",
+    "dates": [
+     {
+      "from": "2026-12-30",
+      "to": "2026-12-31"
+     },
+     {
+      "from": "2027-01-01",
+      "to": "2027-01-01"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Collection Room",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": 597,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "08 Jan – 28 Feb 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-01-08",
+      "to": "2027-02-28"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Collection Room",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": 202,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   },
+   {
+    "name": "01 Mar – 30 Apr 2027",
+    "kind": "normal",
+    "dates": [
+     {
+      "from": "2027-03-01",
+      "to": "2027-04-30"
+     }
+    ],
+    "rates": [
+     {
+      "room_type": "Collection Room",
+      "meal_plan": "BB",
+      "sgl": null,
+      "dbl": 185,
+      "tpl": null,
+      "quad": null,
+      "unit": null
+     }
+    ]
+   }
+  ],
+  "room_supplements": [
+   {
+    "room_type": "Collection Deluxe",
+    "amount": 30,
+    "per": "room",
+    "note": "Add-on room category upgrade: USD 30 per room per day, including taxes (over the Collection Room)"
+   },
+   {
+    "room_type": "Collection Premium",
+    "amount": 50,
+    "per": "room",
+    "note": "Add-on room category upgrade: USD 50 per room per day, including taxes (over the Collection Room)"
+   },
+   {
+    "room_type": "One Bedroom Suite",
+    "amount": 100,
+    "per": "room",
+    "note": "Add-on room category upgrade: USD 100 per room per day, including taxes (over the Collection Room)"
+   }
+  ],
+  "meal_deltas": [
+   {
+    "from": "BB",
+    "to": "HB",
+    "adult": 25,
+    "note": "Add-on meal plan upgrade: Half Board USD 25 per person per day, including taxes"
+   },
+   {
+    "from": "HB",
+    "to": "FB",
+    "adult": 25,
+    "note": "Derived: the sheet prints Full Board USD 50 per person per day over Bed & Breakfast, i.e. HB + 25"
+   }
+  ],
+  "meal_prices": [],
+  "supplements": [
+   {
+    "type": "extra_adult",
+    "name": "Extra person supplement (Premium category and above)",
+    "per": "person",
+    "amount": 100,
+    "compulsory": 0,
+    "meal_plans": "BB",
+    "note": "USD 100 per person, per day with breakfast, applicable only from the Premium category upwards — NOT available in the Collection Room or Collection Deluxe"
+   }
+  ],
+  "child_rates": [],
+  "guide_policies": [],
+  "foc_rules": [],
+  "offers": [],
+  "cancellation_rules": [],
+  "payment_rules": [],
+  "restrictions": [],
+  "extras": []
+ }
+}

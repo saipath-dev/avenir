@@ -1,0 +1,307 @@
+{
+    "key": "tamarind_tree_2027",
+    "hotel": {
+        "acc": "6-9-11-11807",
+        "name": "Hotel Tamarind Tree",
+        "location": "Tissamaharama (Yala)",
+        "chain": null,
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:57"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Hotel Tamarind Tree"
+        },
+        "contract": {
+            "name": "Hotel contract – travel agent rates 01 Dec 2026 – 30 May 2027",
+            "plan_type": "contract",
+            "tier": "all",
+            "valid_from": "2026-12-01",
+            "valid_to": "2027-05-30",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "taxes_included": 1,
+            "tax_note": "Per room per day, net non-commissionable, VAT inclusive",
+            "source_type": "email",
+            "received_at": "2026-09-09",
+            "contract_type": "Travel agent",
+            "hotel_reference": "HOTEL CONTRACT – TRAVEL AGENT RATES",
+            "credit_facility": "unknown",
+            "extra_bed_adult": 20,
+            "default_meal_plan": "BB",
+            "child_policy_text": "Children from age 5 to 12 years can share the room free of cost and 50% from the meal rates will be applied. Children below 5 years free meals and accommodation.",
+            "guide_policy_text": "GUIDE RATE BB - 55USD, HB - 65USD, FB - 75USD. Hotels reserve the right to arrange an alternative room for the guide in a nearby hotel in case of an overbooking situation but transport, meals will be provided in our hotel.",
+            "foc_policy_text": "Complimentary room policy: every 10th paid room (11th room) is entitled to a complimentary room OR every 15th paid pax will be entitled for 1 pax (16th pax) free.",
+            "cancellation_text": "Due to the limited number of rooms, cancellation charges will be in effect as shown below. 1) Over 21 days from the arrival date no cancellation charge. 2) Between 21 days to 14 days from the arrival date 75% cancellation charge on the total value of the booking. 3) Between 14 days to 07 days 50% cancellation charge on the total value of the booking. 4) Between 07 days to null days 100% cancellation charge on the total value of the booking.",
+            "payment_text": "Hotel requires the payment to be made prior to the guest's arrival to avoid any inconvenience.",
+            "terms_text": "Basis: per room per day, net non-commissionable, VAT inclusive. Check in time 1400 hrs, check out time 1200 noon. Hotel Tamarind Tree is located 1.5 km from Tissa Lake, 15 km from the Yala National Park entrance and 30 km from Mattala international airport; 16 deluxe rooms and 4 family suite rooms. Whilst thanking you for your valued support and coordination, we feel the attached rates are competitive to you in canvassing business for our hotels in the forthcoming seasons. Kumudu Ranathunga, Manager – Sales & Marketing, Hotel Tamarind Tree, Mahasenpura, Tissamaharama.",
+            "notes": "Hotel Tamarind Tree, Mahasenpura, Tissamaharama — a different property from \"Grand Tamarind Lake, Yala\" (6-9-11-10930); no supplier record yet, so acc is None. The rate page carries a stale invisible heading in the text layer (\"01ST JANUARY 2027 TO ... DECEMBER 2027\"); the rendered page entry/img/fort-tam-4.png shows the printed contract period is 01ST DECEMBER 2026 TO 30TH MAY 2027, which is what is entered — the PDF file name still says \"RATES 2027\", worth confirming with the hotel. The table is occupancy-by-row (DELUXE SINGLE / DOUBLE / TRIPLE) and meal-by-column (BB / HB / FB), so it is one Deluxe Room row per meal plan. The family suite is priced as the Deluxe rate plus USD 30 per night (\"FAMILY ROOM SUPPLIMENT 30USD PER NIGHT on each rate mentioned above\"). The 4th pax is a separate supplement (15 BB / 25 HB / 30 FB per person), so the QUAD column is left empty. The gala dinner supplements are priced by basis (BB guest 45, HB/FB guest 40 per person) but carry no dates in the table — entered on 24 and 31 December 2026, the only Christmas/New Year nights inside the contract period; no child share is printed. The cancellation ladder is printed non-monotonic (21-14 days 75%, then 14-07 days 50%) and is entered exactly as printed — the validator flags it (W11) and the validator text itself cites this hotel. The guide rate is printed without a basis; entered per room per night because the whole sheet is quoted per room per day — please confirm. The child bands overlap at age 5 (\"below 5 free\" and \"from age 5 to 12\"); entered as 0 – 4.99 free and 5 – 12 at 50% of the meal rates.",
+            "source_file": "WINTER RATES 2026/2027 - TAMARIND TREE -THISSAMAHARAMA — HOTEL TAMARIND TREE RATES 2027-1.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Deluxe Room",
+                "priced_as": "base",
+                "room_count": 16,
+                "bed_config": "8 double + 8 twin, king size",
+                "description": "8 deluxe double rooms and 8 deluxe twin rooms (375 square feet) with king size bed overlooking the swimming pool; ceiling fan air conditioning, minibar, IDD telephone, tea & coffee making facilities, flat screen TV, free Wi-Fi, in-room safe, sitting area and writing desk, en-suite bathroom with hot/cold water and hairdryer."
+            },
+            {
+                "name": "Family Suite Room",
+                "priced_as": "supplement",
+                "base_room_type": "Deluxe Room",
+                "room_count": 4,
+                "bed_config": "1 king size + 2 queen size",
+                "description": "4 family suite rooms (405 square feet) with 1 king size bed plus 2 queen size beds, sitting area, writing desk and separate dressing area, double glass panel door to a large private veranda overlooking the swimming pool."
+            }
+        ],
+        "seasons": [
+            {
+                "name": "01 Dec 2026 – 30 May 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-12-01",
+                        "to": "2027-05-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe Room",
+                        "meal_plan": "BB",
+                        "sgl": 75,
+                        "dbl": 85,
+                        "tpl": 100,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Room",
+                        "meal_plan": "HB",
+                        "sgl": 80,
+                        "dbl": 105,
+                        "tpl": 125,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Room",
+                        "meal_plan": "FB",
+                        "sgl": 90,
+                        "dbl": 115,
+                        "tpl": 140,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [
+            {
+                "room_type": "Family Suite Room",
+                "amount": 30,
+                "per": "room",
+                "note": "FAMILY ROOM SUPPLIMENT 30USD PER NIGHT on each rate mentioned above"
+            }
+        ],
+        "meal_deltas": [],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 15,
+                "note": "Additional meal rates"
+            },
+            {
+                "meal": "lunch",
+                "adult": 15,
+                "note": "Additional meal rates"
+            },
+            {
+                "meal": "dinner",
+                "adult": 15,
+                "note": "Additional meal rates"
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Christmas Eve Gala Dinner (BB guest)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 45,
+                "compulsory": 1,
+                "note": "Gala dinner rates, supplement per person – Christmas Eve Gala Dinner BB Guest 45 (no date printed on the table)"
+            },
+            {
+                "type": "gala",
+                "name": "Christmas Eve Gala Dinner (HB/FB guest)",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "HB,FB",
+                "per": "person",
+                "amount": 40,
+                "compulsory": 1,
+                "note": "Gala dinner rates, supplement per person – Christmas Eve Gala Dinner HB/FB Guest 40 (no date printed on the table)"
+            },
+            {
+                "type": "gala",
+                "name": "New Year Eve Gala Dinner (BB guest)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 45,
+                "compulsory": 1,
+                "note": "Gala dinner rates, supplement per person – New Year Eve Gala Dinner BB Guest 45 (no date printed on the table)"
+            },
+            {
+                "type": "gala",
+                "name": "New Year Eve Gala Dinner (HB/FB guest)",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "HB,FB",
+                "per": "person",
+                "amount": 40,
+                "compulsory": 1,
+                "note": "Gala dinner rates, supplement per person – New Year Eve Gala Dinner HB/FB Guest 40 (no date printed on the table)"
+            },
+            {
+                "type": "extra_adult",
+                "name": "4th pax supplement (BB)",
+                "meal_plans": "BB",
+                "per": "person",
+                "amount": 15,
+                "compulsory": 0,
+                "note": "4th pax 15USD Supplement on BB"
+            },
+            {
+                "type": "extra_adult",
+                "name": "4th pax supplement (HB)",
+                "meal_plans": "HB",
+                "per": "person",
+                "amount": 25,
+                "compulsory": 0,
+                "note": "4th pax 25USD Supplement on HB"
+            },
+            {
+                "type": "extra_adult",
+                "name": "4th pax supplement (FB)",
+                "meal_plans": "FB",
+                "per": "person",
+                "amount": 30,
+                "compulsory": 0,
+                "note": "4th pax 30USD Supplement on FB"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 4.99,
+                "bed": "any",
+                "amount": 0,
+                "note": "Children below 5 years – free meals and accommodation"
+            },
+            {
+                "age_from": 5,
+                "age_to": 12,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "meal_rate",
+                "note": "Children from age 5 to 12 years can share the room free of cost and 50% from the meal rates will be applied"
+            }
+        ],
+        "guide_policies": [
+            {
+                "role": "guide",
+                "meal_plan": "BB",
+                "amount": 55,
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "GUIDE RATE BB - 55USD. Hotels reserve the right to arrange an alternative room for the guide in a nearby hotel in case of an overbooking situation but transport, meals will be provided in our hotel"
+            },
+            {
+                "role": "guide",
+                "meal_plan": "HB",
+                "amount": 65,
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "GUIDE RATE HB - 65USD. Hotels reserve the right to arrange an alternative room for the guide in a nearby hotel in case of an overbooking situation but transport, meals will be provided in our hotel"
+            },
+            {
+                "role": "guide",
+                "meal_plan": "FB",
+                "amount": 75,
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "GUIDE RATE FB - 75USD. Hotels reserve the right to arrange an alternative room for the guide in a nearby hotel in case of an overbooking situation but transport, meals will be provided in our hotel"
+            }
+        ],
+        "foc_rules": [
+            {
+                "basis": "rooms",
+                "every_n": 10,
+                "free_n": 1,
+                "note": "Every 10th paid room (11th room) is entitled to a complimentary room"
+            },
+            {
+                "basis": "pax",
+                "every_n": 15,
+                "free_n": 1,
+                "note": "OR every 15th paid pax will be entitled for 1 pax (16th pax) free"
+            }
+        ],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-12-01",
+                "date_to": "2027-05-30",
+                "tier": "all",
+                "days_from": null,
+                "days_to": 21,
+                "charge_pct": 0,
+                "note": "Over 21 days from the arrival date – no cancellation charge"
+            },
+            {
+                "date_from": "2026-12-01",
+                "date_to": "2027-05-30",
+                "tier": "all",
+                "days_from": 21,
+                "days_to": 14,
+                "charge_pct": 75,
+                "note": "Between 21 days to 14 days – 75% of the total value of the booking"
+            },
+            {
+                "date_from": "2026-12-01",
+                "date_to": "2027-05-30",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 7,
+                "charge_pct": 50,
+                "note": "Between 14 days to 07 days – 50% of the total value of the booking"
+            },
+            {
+                "date_from": "2026-12-01",
+                "date_to": "2027-05-30",
+                "tier": "all",
+                "days_from": 7,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Between 07 days to null days – 100% of the total value of the booking"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "pct": 100,
+                "note": "Hotel requires the payment to be made prior to the guest's arrival to avoid any inconvenience"
+            }
+        ],
+        "restrictions": [],
+        "extras": []
+    }
+}

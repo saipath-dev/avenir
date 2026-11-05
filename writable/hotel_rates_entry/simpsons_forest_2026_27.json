@@ -1,0 +1,412 @@
+{
+    "key": "simpsons_forest_2026_27",
+    "hotel": {
+        "acc": "6-9-11-11805",
+        "name": "Simpson's Forest",
+        "location": "Hunnasgiriya / Hill Country",
+        "chain": null,
+        "attached_by": "super admin",
+        "attached_at": "2026-10-10 16:04:54"
+    },
+    "parent": null,
+    "sheet": {
+        "hotel": {
+            "sup_acc_no": null,
+            "name": "Simpson's Forest"
+        },
+        "contract": {
+            "name": "Travel Agent Contract – Deluxe Tea Room, Mountain view (winter 2026/27 & summer 2027)",
+            "plan_type": "contract",
+            "tier": "all",
+            "valid_from": "2026-11-01",
+            "valid_to": "2027-10-31",
+            "currency": "USD",
+            "pricing_mode": "per_room",
+            "taxes_included": 1,
+            "tax_note": "All rates are inclusive of VAT; inclusive of service charge and applicable government taxes",
+            "source_type": "email",
+            "received_at": "2026-09-09",
+            "contract_type": "Travel agent contract",
+            "hotel_reference": "Travel Agent Contract - Deluxe Tea Room- Mountain view",
+            "credit_facility": "unknown",
+            "child_policy_text": "Children below 6 years – free of charge (maximum of two kids). Children between 6 to 11 years – 50% on meal rates will be charged when sharing parent's room without extra bed.",
+            "guide_policy_text": "Guide Policy (Local): Bed & Breakfast (Single) - $90, Half Board (Single) - $100.",
+            "cancellation_text": "Standard cancellation policy: cancellation within 14 days prior to the arrival date subjected to 100% of the value of booking. Cancellation within 21 days prior to the arrival date subjected to 50% of the value of booking.",
+            "payment_text": "Standard payment policy: full payment to be made within 7 days before the arrival of the guest. Failure to adhere to the above payment condition could result in the reservation being cancelled without prior notification. For all confirmed reservations, the contract partner sends the bills along with the corresponding guest vouchers via e-mail.",
+            "terms_text": "The above-offered rates are quoted in USD and inclusive of service charge and applicable government taxes and will be converted to LKR at the government-stipulated exchange rate prevailing at that time. Any increase in government taxes/levies would be applied to the above rate without notification. The above rates are per room per night basis and non-commissionable. All above rates are valid for FITs, group bookings and cannot be used for any websites / online travel agents. Rates cannot be extended to the domestic market. The offered rate should be indicated on the voucher/email confirmation to avoid any inconvenience. Reservation: all bookings should be confirmed through an email confirmation with a valid voucher; bookings will not be auto-confirmed unless confirmed in writing by the resort; all bookings should be sent to reservation@simpsonsforest.com, cc rm@simpsonsforest.com. Early check-in (subject to availability): all arrivals prior to 0900 hrs will be billed from the previous night; check-ins between 0900 and 1200 hrs: half rate of the room rate applied on room only basis. Late check-out (subject to availability): between 1200 and 1800 hrs half rate of the room rate applied on room only basis; after 1800 hrs 100% of the room rate. The resort has 20 rooms across 3 categories on a 100-acre tea and spice plantation. Asela Ranatunge, Resident Manager.",
+            "notes": "No supplier record for Simpson's Forest yet — acc None. The page-2 text layer interleaves the two period headings with the two tables, so both tables were read off the rendered page entry/img/fort-simp-2.png: the first table (BB 180/190/220, HB 190/200/230) is the WINTER period 01 Nov 2026 – 30 Apr 2027 and the second (BB 160/170/200, HB 170/180/210) the SUMMER period 01 May – 31 Oct 2027. The sheet prices nothing before 01 Nov 2026. Only the Deluxe Tea Room – Mountain view is priced; the Forest Villa Room and Simpson's Bungalow Room are that rate plus USD 20 / 50 (the supplement table prints them as \"Deluxe Tea Room - Forest Villa Room\" and \"Deluxe Tea Room - Simpson's Bungalow Room\"; entered per room, the sheet says all rates are per room per night). The HB → FB delta is the printed lunch price (USD 18 per person); note the printed BB → HB step is only 10 per room, so FB is derived, not printed. The \"Festival Supplement Per Person - 24th & 31st December 2026 USD 100\" is entered as a compulsory gala on both nights; no child share is printed. The cancellation ladder is printed as two overlapping \"within N days\" lines (within 21 days 50%, within 14 days 100%) and is entered as 21 – 15 days 50% and 14 – 0 days 100%. The excursion list is entered under extras; the two guided treks are priced for 2 persons with an additional-person rate (kept in the note).",
+            "source_file": "WINTER/ SUMMER RATES 2026/2027 - SIMPSONS FOREST — Simpsons Forest-DMC Rates- 2026 _ 2027.pdf"
+        },
+        "room_types": [
+            {
+                "name": "Deluxe Tea Room - Mountain view",
+                "priced_as": "base",
+                "description": "20 rooms across 3 categories; the mountain-view Deluxe Tea Room is the priced category"
+            },
+            {
+                "name": "Forest Villa Room",
+                "priced_as": "supplement",
+                "base_room_type": "Deluxe Tea Room - Mountain view"
+            },
+            {
+                "name": "Simpson's Bungalow Room",
+                "priced_as": "supplement",
+                "base_room_type": "Deluxe Tea Room - Mountain view"
+            }
+        ],
+        "seasons": [
+            {
+                "name": "Winter: 01 Nov 2026 – 30 Apr 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2026-11-01",
+                        "to": "2027-04-30"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe Tea Room - Mountain view",
+                        "meal_plan": "BB",
+                        "sgl": 180,
+                        "dbl": 190,
+                        "tpl": 220,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Tea Room - Mountain view",
+                        "meal_plan": "HB",
+                        "sgl": 190,
+                        "dbl": 200,
+                        "tpl": 230,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            },
+            {
+                "name": "Summer: 01 May – 31 Oct 2027",
+                "kind": "normal",
+                "dates": [
+                    {
+                        "from": "2027-05-01",
+                        "to": "2027-10-31"
+                    }
+                ],
+                "rates": [
+                    {
+                        "room_type": "Deluxe Tea Room - Mountain view",
+                        "meal_plan": "BB",
+                        "sgl": 160,
+                        "dbl": 170,
+                        "tpl": 200,
+                        "quad": null,
+                        "unit": null
+                    },
+                    {
+                        "room_type": "Deluxe Tea Room - Mountain view",
+                        "meal_plan": "HB",
+                        "sgl": 170,
+                        "dbl": 180,
+                        "tpl": 210,
+                        "quad": null,
+                        "unit": null
+                    }
+                ]
+            }
+        ],
+        "room_supplements": [
+            {
+                "room_type": "Forest Villa Room",
+                "amount": 20,
+                "per": "room",
+                "note": "Supplement charges: Deluxe Tea Room – Forest Villa Room USD 20"
+            },
+            {
+                "room_type": "Simpson's Bungalow Room",
+                "amount": 50,
+                "per": "room",
+                "note": "Supplement charges: Deluxe Tea Room – Simpson's Bungalow Room USD 50"
+            }
+        ],
+        "meal_deltas": [
+            {
+                "from": "HB",
+                "to": "FB",
+                "adult": 18,
+                "note": "Derived from the printed extra meal rate Lunch USD 18 per person — the sheet prices only BB and HB"
+            }
+        ],
+        "meal_prices": [
+            {
+                "meal": "breakfast",
+                "adult": 18,
+                "note": "Extra meal rates per person"
+            },
+            {
+                "meal": "lunch",
+                "adult": 18,
+                "note": "Extra meal rates per person"
+            },
+            {
+                "meal": "dinner",
+                "adult": 20,
+                "note": "Extra meal rates per person"
+            }
+        ],
+        "supplements": [
+            {
+                "type": "gala",
+                "name": "Festival Supplement – 24th December 2026",
+                "date_from": "2026-12-24",
+                "date_to": "2026-12-24",
+                "meal_plans": "",
+                "per": "person",
+                "amount": 100,
+                "compulsory": 1,
+                "note": "Festival Supplement per person – 24th & 31st December 2026 USD 100 (no child share printed)"
+            },
+            {
+                "type": "gala",
+                "name": "Festival Supplement – 31st December 2026",
+                "date_from": "2026-12-31",
+                "date_to": "2026-12-31",
+                "meal_plans": "",
+                "per": "person",
+                "amount": 100,
+                "compulsory": 1,
+                "note": "Festival Supplement per person – 24th & 31st December 2026 USD 100 (no child share printed)"
+            },
+            {
+                "type": "early_checkin",
+                "name": "Early check-in 0900 – 1200 hrs",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "Check-ins between 0900 and 1200 hrs: half rate of the room rate applied on room only basis; arrivals prior to 0900 hrs are billed from the previous night"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out 1200 – 1800 hrs",
+                "per": "room",
+                "pct_of_rate": 50,
+                "compulsory": 0,
+                "note": "Between 1200 – 1800 hrs: half rate of the room rate applied on room only basis"
+            },
+            {
+                "type": "late_checkout",
+                "name": "Late check-out after 1800 hrs",
+                "per": "room",
+                "pct_of_rate": 100,
+                "compulsory": 0,
+                "note": "After 1800 hrs: 100% of the room rate"
+            }
+        ],
+        "child_rates": [
+            {
+                "age_from": 0,
+                "age_to": 5.99,
+                "bed": "any",
+                "amount": 0,
+                "max_children": 2,
+                "note": "Children below 6 years – free of charge (maximum of two kids)"
+            },
+            {
+                "age_from": 6,
+                "age_to": 11.99,
+                "bed": "no_bed",
+                "pct": 50,
+                "pct_basis": "meal_rate",
+                "note": "Children between 6 to 11 years – 50% on meal rates when sharing parent's room without extra bed"
+            }
+        ],
+        "guide_policies": [
+            {
+                "role": "guide",
+                "meal_plan": "BB",
+                "amount": 90,
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "Guide Policy (Local): Bed & Breakfast (Single) - $90"
+            },
+            {
+                "role": "guide",
+                "meal_plan": "HB",
+                "amount": 100,
+                "per": "room",
+                "accommodation": "hotel_room",
+                "note": "Guide Policy (Local): Half Board (Single) - $100"
+            }
+        ],
+        "foc_rules": [],
+        "offers": [],
+        "cancellation_rules": [
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-10-31",
+                "tier": "all",
+                "days_from": 21,
+                "days_to": 15,
+                "charge_pct": 50,
+                "note": "Cancellation within 21 days prior to the arrival date – 50% of the value of booking"
+            },
+            {
+                "date_from": "2026-11-01",
+                "date_to": "2027-10-31",
+                "tier": "all",
+                "days_from": 14,
+                "days_to": 0,
+                "charge_pct": 100,
+                "note": "Cancellation within 14 days prior to the arrival date – 100% of the value of booking"
+            }
+        ],
+        "payment_rules": [
+            {
+                "applies": "all",
+                "kind": "prepay",
+                "days_before": 7,
+                "pct": 100,
+                "note": "Full payment to be made within 7 days before the arrival of the guest; failure to adhere could result in the reservation being cancelled without prior notification"
+            }
+        ],
+        "restrictions": [],
+        "extras": [
+            {
+                "category": "excursion",
+                "name": "Simpson's Nature Trek & Natural Pool Experience",
+                "per": "person",
+                "adult": 0,
+                "currency": "USD",
+                "note": "Complimentary"
+            },
+            {
+                "category": "excursion",
+                "name": "Bird Watching",
+                "per": "person",
+                "adult": 10,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Sunset Peak Hike",
+                "per": "person",
+                "adult": 10,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Moonlight - Nature Walk",
+                "per": "person",
+                "adult": 10,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Tea Plucking Experience",
+                "per": "person",
+                "adult": 10,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Breakfast by Simpson's Natural Pool",
+                "per": "person",
+                "adult": 30,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Exclusive Sunset High Tea at Infinity Pool",
+                "per": "person",
+                "adult": 15,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Mud House Authentic Sri Lankan Lunch",
+                "per": "person",
+                "adult": 20,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Scenic Cycling Trail",
+                "per": "person",
+                "adult": 20,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Handicrafts - Lacquer works",
+                "per": "person",
+                "adult": 20,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Tamil Village Cultural Tour",
+                "per": "person",
+                "adult": 40,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Hatale Tea Factory Tour",
+                "per": "person",
+                "adult": 50,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Hunas Waterfall Retreat",
+                "per": "person",
+                "adult": 30,
+                "currency": "USD",
+                "note": "Value Additions (led by in-house naturalist), per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Hunas Falls Village Full Day Guided Trek",
+                "per": "group",
+                "adult": 140,
+                "currency": "USD",
+                "note": "USD 140 for 2 persons / USD 40 additional person"
+            },
+            {
+                "category": "excursion",
+                "name": "Knuckles Full Day Guided Trekking Adventure",
+                "per": "group",
+                "adult": 240,
+                "currency": "USD",
+                "note": "USD 240 for 2 persons / USD 50 additional person"
+            },
+            {
+                "category": "wellness",
+                "name": "Yoga Session (1 hour)",
+                "per": "person",
+                "adult": 30,
+                "currency": "USD",
+                "note": "USD 30 per person"
+            },
+            {
+                "category": "excursion",
+                "name": "Buddhist Village Temple Visit",
+                "per": "person",
+                "currency": "USD",
+                "note": "Donation at your discretion – no price printed"
+            }
+        ]
+    }
+}

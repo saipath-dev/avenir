@@ -1,0 +1,200 @@
+[
+ {
+  "test": 80,
+  "name": "ops: the page for a tour opens (200) and shows the tour",
+  "ok": true,
+  "detail": "(200, 147497)"
+ },
+ {
+  "test": 80,
+  "name": "ops: opened WITHOUT a tour (the menu entry) it no longer errors \u2014 it goes to the existing \"Tours pending driver allocation\" list (302 \u2192 200)",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/dashboard2/transport/driver_allow/pending_tours', 200)"
+ },
+ {
+  "test": 80,
+  "name": "admin: the page for a tour opens (200) and shows the tour",
+  "ok": true,
+  "detail": "(200, 147497)"
+ },
+ {
+  "test": 80,
+  "name": "admin: opened WITHOUT a tour (the menu entry) it no longer errors \u2014 it goes to the existing \"Tours pending driver allocation\" list (302 \u2192 200)",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/dashboard2/transport/driver_allow/pending_tours', 200)"
+ },
+ {
+  "test": 80,
+  "name": "transh: the allocation page is refused (302 to the 403 page)",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/403')"
+ },
+ {
+  "test": 80,
+  "name": "requester: the allocation page is refused (302 to the 403 page)",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/403')"
+ },
+ {
+  "test": 80,
+  "name": "hotelres: the allocation page is refused (302 to the 403 page)",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/403')"
+ },
+ {
+  "test": 81,
+  "name": "ops: \"Crew replacement\" opens the Transport Desk at its replacement work (302 \u2192 tour/transport_ops?focus=crew_change \u2192 200) \u2014 no second workflow",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/tour/transport_ops?focus=crew_change', 200)"
+ },
+ {
+  "test": 81,
+  "name": "admin: \"Crew replacement\" opens the Transport Desk at its replacement work (302 \u2192 tour/transport_ops?focus=crew_change \u2192 200) \u2014 no second workflow",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/tour/transport_ops?focus=crew_change', 200)"
+ },
+ {
+  "test": 81,
+  "name": "Transport & Guide Handling: \"Crew replacement\" refused (\u2192 403 page) and recorded",
+  "ok": true,
+  "detail": "(302, 'http://127.0.0.1:8081/avenir/403')"
+ },
+ {
+  "test": 81,
+  "name": "Transport & Guide Handling (holds Driver advance): the entry opens the desk at the advance (focus=driver_advance)",
+  "ok": true,
+  "detail": "http://127.0.0.1:8081/avenir/tour/transport_ops?focus=driver_advance"
+ },
+ {
+  "test": 81,
+  "name": "Operations (no Driver advance privilege): that entry is refused and recorded",
+  "ok": true,
+  "detail": "http://127.0.0.1:8081/avenir/403"
+ },
+ {
+  "test": 82,
+  "name": "Transport & Guide Handling cannot allocate: engage crew, set the vehicle, the days worked, replace \u2014 all 403 {'crew (engage)': 403, 'vehicle': 403, 'days worked': 403, 'replace': 403}, each recorded",
+  "ok": true,
+  "detail": "({'crew (engage)': 403, 'vehicle': 403, 'days worked': 403, 'replace': 403}, 4)"
+ },
+ {
+  "test": 82,
+  "name": "ops: sets the vehicle (200)",
+  "ok": true,
+  "detail": "(200, \"{'status': 200, 'message': 'Vehicle set.', 'data': {'id': 4, 'tour_id': 4, 'seq': 0, 'intake_vehicle_id': 38, 'class_code': 'SEDAN', 'vehicle_type': 'Sedan', 'seats': 4, 'qty': 1, 'days': 4, 'km_quote\")"
+ },
+ {
+  "test": 82,
+  "name": "admin: sets the vehicle (200)",
+  "ok": true,
+  "detail": "(200, \"{'status': 200, 'message': 'Vehicle set.', 'data': {'id': 4, 'tour_id': 4, 'seq': 0, 'intake_vehicle_id': 38, 'class_code': 'SEDAN', 'vehicle_type': 'Sedan', 'seats': 4, 'qty': 1, 'days': 4, 'km_quote\")"
+ },
+ {
+  "test": 82,
+  "name": "transport: sets the vehicle (200) \u2014 the existing Transport & Crew Guide Allocation Desk group keeps the ability it has today",
+  "ok": true,
+  "detail": "(200, \"{'status': 200, 'message': 'Vehicle set.', 'data': {'id': 4, 'tour_id': 4, 'seq': 0, 'intake_vehicle_id': 38, 'class_code': 'SEDAN', 'vehicle_type': 'Sedan', 'seats': 4, 'qty': 1, 'days': 4, 'km_quote\")"
+ },
+ {
+  "test": 82,
+  "name": "Operations passes the allocation gate for engaging crew (the service answers on the content, not 403: 200)",
+  "ok": true,
+  "detail": "{\"status\":400,\"message\":\"This JSD line is filled from the Driver & Guide Master \u2014 pick the person from the list (add them to the master first if they are not on it).\"}"
+ },
+ {
+  "test": 82,
+  "name": "a payment requester (no Transport Operations) is refused at the route (403)",
+  "ok": true,
+  "detail": "403"
+ },
+ {
+  "test": 82,
+  "name": "the desk page tells the browser: CAN_ALLOCATE false for Transport & Guide Handling, true for Operations",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 83,
+  "name": "the legacy allocate / remove endpoints refuse every department without the Driver Allocation privilege (403, nothing executed): {'transh': 403, 'hotelres': 403, 'requester': 403}",
+  "ok": true,
+  "detail": "{'transh': 403, 'hotelres': 403, 'requester': 403}"
+ },
+ {
+  "test": 83,
+  "name": "Operations reaches the allocation details of a tour (200)",
+  "ok": true,
+  "detail": "200"
+ },
+ {
+  "test": 84,
+  "name": "Supplier Report (list): the full number is nowhere on the page; the masked \"\u20265678\" and the contact e-mail are",
+  "ok": true,
+  "detail": "(False, True, True)"
+ },
+ {
+  "test": 84,
+  "name": "the supplier lookup (used by the booking pages): bank number masked, contacts kept",
+  "ok": true,
+  "detail": "{'sup_bank_acc': '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u20225678', 'email': 'gimanhala-test@example.invalid', 'Mobile': '0'}"
+ },
+ {
+  "test": 84,
+  "name": "the edit form: the number masked, the bank fields locked (notice shown); the full number is not in the page",
+  "ok": true,
+  "detail": "(False, True)"
+ },
+ {
+  "test": 84,
+  "name": "a direct update with a different bank account: contacts saved, the bank details EXACTLY as before, the attempt recorded (Supplier updated successfully! Bank details unchanged \u2014 they are maintained by Accounts.)",
+  "ok": true,
+  "detail": "('TEST1001002345678|1|Test Bank|1|Test Branch|Gimanhala Holder|pilot-r2 contact update', 1)"
+ },
+ {
+  "test": 84,
+  "name": "a new supplier entered by Hotel Reservations: created with its contacts, the bank fields left empty for Accounts (Supplier Added successfully! Hotel code HTL-2406 \u2014 the hotel is on the Hotel Master. Bank details are entered by Accounts.)",
+  "ok": true,
+  "detail": "({'status': 201, 'message': 'Supplier Added successfully! Hotel code HTL-2406 \u2014 the hotel is on the Hotel Master. Bank details are entered by Accounts.', 'hotel': {'id': 2394, 'code': 'HTL-2406'}}, '-|-')"
+ },
+ {
+  "test": 84,
+  "name": "Accounts (pays) still sees the full number in the master",
+  "ok": true,
+  "detail": "TEST1001002345678"
+ },
+ {
+  "test": 84,
+  "name": "Accounts can still change the bank details (finance access preserved)",
+  "ok": true,
+  "detail": "(200, 'TEST1001009999999')"
+ },
+ {
+  "test": 85,
+  "name": "the Tour Payment Dashboard JSON (the desk and the legacy tour search) carries no full bank number for Hotel Reservations",
+  "ok": true,
+  "detail": "(False, False)"
+ },
+ {
+  "test": 85,
+  "name": "for Accounts the same data keeps the full number",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "test": 85,
+  "name": "a request made from the masked dashboard stores the bank details of the MASTER (TEST2002003344556|Test Bank 2|Test Branch 2), never the masked text or the bank names the browser sent",
+  "ok": true,
+  "detail": "(200, '{\"status\":200,\"message\":\"Payment Request saved successfully\"}', 'TEST2002003344556|Test Bank 2|Test Branch 2')"
+ },
+ {
+  "test": 86,
+  "name": "Operations' Pilot offers Driver Allocation (\u2192 the pending list) and Crew replacement (\u2192 the desk); both open",
+  "ok": true,
+  "detail": "['dashboard2/transport/driver_allow/pending_tours', 'tour/board', 'tour/board', 'tour/board', 'tour/transport_ops', 'tour/transport_ops/crew_change', 'dashboard2/transport/driver_allow/pending_tours']"
+ },
+ {
+  "test": 86,
+  "name": "Transport & Guide Handling's Pilot offers neither",
+  "ok": true,
+  "detail": ""
+ }
+]

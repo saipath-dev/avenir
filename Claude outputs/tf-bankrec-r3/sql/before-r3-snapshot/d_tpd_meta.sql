@@ -1,0 +1,1 @@
+INSERT INTO `tpd_meta` (`k`, `v`) VALUES ('brc_schema_version', '2');

@@ -1,0 +1,52 @@
+[
+ {
+  "name": "GET advance_delete (the old way) is refused with 405 and changes nothing",
+  "ok": true,
+  "detail": "(405, '0,0')"
+ },
+ {
+  "name": "a profile without the privilege is refused (POST) and nothing changes",
+  "ok": true,
+  "detail": "(403, '0,0')"
+ },
+ {
+  "name": "prepare (administrator): shows both legs, eligible, the confirmation phrase and a CSRF token; nothing changes",
+  "ok": true,
+  "detail": "{'eligible': True, 'confirm_phrase': 'FLAG 99990001'}"
+ },
+ {
+  "name": "POST without the CSRF token is refused (403) and nothing changes",
+  "ok": true,
+  "detail": "(403, '{\"status\":403,\"message\":\"The security token is missing or not valid; prepare the change again. The attempt was recorded.')"
+ },
+ {
+  "name": "POST without the typed confirmation is refused (400) and nothing changes",
+  "ok": true,
+  "detail": "(400, '{\"status\":400,\"message\":\"Type the confirmation exactly: FLAG 99990001. The attempt was recorded.\"}')"
+ },
+ {
+  "name": "an entry that is not a tour advance is refused (409) and nothing changes",
+  "ok": true,
+  "detail": "(409, '{\"status\":409,\"message\":\"Only a tour advance entry (a leg on 6-11-107-10381) can be taken out of the advance list. The a', '0,0')"
+ },
+ {
+  "name": "the full POST (token in the header, confirmation, reason) flags both legs of the dummy advance",
+  "ok": true,
+  "detail": "(200, '{\"status\":200,\"message\":\"Successfully Updated: 2 ledger row(s) of entry 99990001 taken out of the advance list (recorded).\",\"rows\":[{\"ID\":99990001,\"L_Code\":\"1-6', '1,1')"
+ },
+ {
+  "name": "the change is recorded: user, entry, reason, both rows before (aflag 0) and after (aflag 1)",
+  "ok": true,
+  "detail": "tcadmin|ledger_entry_flagged|ledger_entry|99990001|test: dummy advance taken out|2|2|0>1"
+ },
+ {
+  "name": "flagging the same entry again is refused (409)",
+  "ok": true,
+  "detail": "(409, '{\"status\":409,\"message\":\"This entry is not an open advance (a leg is already flagged, or it belongs to a posted voucher:')"
+ },
+ {
+  "name": "every refusal is recorded (6 refusal rows)",
+  "ok": true,
+  "detail": "6"
+ }
+]

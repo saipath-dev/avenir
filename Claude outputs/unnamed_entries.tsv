@@ -1,0 +1,88 @@
+id	category	name	url	right
+267	Accounts	Action: Advance payment - post	act:advance_payment.post	1
+256	Accounts	Action: Chart of accounts - maintain (System Administrator only)	act:chart.maintain	1
+257	Accounts	Action: Delete a posted record (reason required)	act:records.delete	1
+263	Accounts	Action: Payment amendment - post	act:creditor_invoice.post	1
+276	Accounts	Action: Tour amendment - approve / finalise	act:amendment.decide	1
+275	Accounts	Action: Tour amendment - request	act:amendment.request	1
+90	Accounts	Advance Payments	accounts/advance_payment	0
+49	Accounts	Manage Accounts	accounts	0
+84	Accounts	Payment Amendment	accounts/creditor_invoice	0
+136	Accounts	Payment Request Report	tour/tour_accounts/payment_requested_dashboard	0
+146	Accounts	Visa Fee	accounts/visa_fees	0
+196	Accounts Reports	Account Reservation Card	report/acc_reservation_card_report	0
+89	Accounts Reports	Advance Payments Report	accounts/advance_payment/report	0
+104	Accounts Reports	Age Analysis Report	accounts/age_analysis	0
+51	Accounts Reports	Balance Sheet	accounts/balance_sheet	0
+109	Accounts Reports	Bank Statement	accounts/bank_statement	0
+125	Accounts Reports	Cancelled Voucher Report	report/voucher_cancel_report	0
+101	Accounts Reports	Cash In Hand	accounts/cash_book	0
+105	Accounts Reports	Creditor Age Analysis	accounts/age_analysis/creditor	0
+91	Accounts Reports	Creditor Invoice Report	accounts/creditor_invoice/report	0
+178	Accounts Reports	Driver Ledger	report/driver_ledger	0
+94	Accounts Reports	Expenses Chart	accounts/expenses_chart	0
+180	Accounts Reports	Expenses Report	accounts/expenses_chart/report	0
+108	Accounts Reports	Ledger Accounts	accounts/account_filter	0
+88	Accounts Reports	Liability Report	accounts/liability	0
+95	Accounts Reports	Operational PNL	accounts/creditor_invoice/expenses_report	0
+143	Accounts Reports	Outstanding Report	accounts/outstanding_report	0
+179	Accounts Reports	Petty Cash Report	report/petty_cash	0
+103	Accounts Reports	Profit and Loss Report	accounts/profit_loss	0
+127	Accounts Reports	Tour Amendment Approval	accounts/debtor_invoice/get_cancellation_request	0
+147	Accounts Reports	Tour Amendment Finalize	accounts/debtor_invoice/get_cancellation_request_final	0
+128	Accounts Reports	Tour Amendment Report	accounts/debtor_invoice/get_cancellation	0
+100	Accounts Reports	Trial Balance Report	accounts/trial_balance	0
+141	Accounts Reports	Trial Balance Report - Account	accounts/trial_balance/report	0
+142	Accounts Reports	Trial Balance Report New	accounts/trial_balance/load_accountant_report	0
+116	Accounts Reports	Voucher Cancellation	report/voucher_report/cancel	0
+118	Chat	Open Chat	chat	0
+201	Ground Handling	Driver Portal	dashboard2/transport/transport_portal	1
+177	Ground Handling	Fund Return	dashboard2/transport/fund_return	1
+144	Ground Handling	Ground Handling	dashboard2/tiles	1
+205	Ground Handling	Hotel Management	dashboard2/tiles	0
+188	Ground Handling	Invoice Amendment	dashboard2/tour_search/inv_amendment	1
+187	Ground Handling	Invoice Cancellation	dashboard2/tour_search/inv_cancellation	1
+156	Ground Handling	Itinerary List	dashboard2/tour_search/itinerary_print	1
+204	Ground Handling	New Booking	dashboard2/tour_search/new_quotation	0
+203	Ground Handling	New Inquiry	inquiries	0
+197	Ground Handling	New Quotation	dashboard2/tour_search/new_quotation	1
+215	Ground Handling	Ongoing Tours	dashboard2/transport/transport_ongoing	0
+155	Ground Handling	Reservation Card	dashboard2/tour_search/reservation_card	1
+167	Ground Handling	Shop Allocation	dashboard2/transport/shop_allow	1
+154	Ground Handling	Tour Details View	dashboard2/tour_search/tour_quotation	1
+186	Ground Handling	Tour Edit	dashboard2/tour_search/timeline	1
+202	Ground Handling	Tour Search	dashboard2/tiles	0
+206	Ground Handling	Transport	dashboard2/tiles	0
+207	Ground Handling	Transport Portal	dashboard2/transport/transport_portal	0
+160	Inventory	GRN	inventory/manual_grn	0
+218	Inventory	Inventory	inventory/stock	0
+159	Inventory	Item Registry	inventory/item_registry	0
+214	Inventory	Stock Summary Report	inventory/stock/summary_report	0
+161	Inventory	Usage Note	inventory/usage_note	0
+176	Inventory	Usage Note Authorization	inventory/usage_note/authorization	0
+175	Inventory	Usage Note Report	inventory/usage_note/report	0
+282	Master Files	Blocks & Investigations	master_files/blocks	1
+228	Master Files	Excursion Rates	master_files/excursion_rates	1
+190	Pilot Report	Workshop	dashboard	0
+184	Settings	Bank Req Data Transfer	accounts/bank_unrealised_value	0
+1	Settings	Group Profiles	settings/group_profile	0
+107	Settings	Manual Update	settings/manual_update	0
+2	Settings	Menu Categories	settings/menu_category	0
+37	Settings	Staff Directory	staff/directory	0
+36	Settings	Staff Registration	staff/registration	0
+163	Tour	Accepted Invoice	tour/tour_accounts/inv_send_report	0
+121	Tour	Arrival Notification	tour/tour_arrival	0
+129	Tour	Booking	booking	0
+130	Tour	Booking Dashboard	booking_dashboard	0
+199	Tour	Hotel Rate Confimation	tour/tour_accounts/hotel_rate_confirm	0
+126	Tour	Payment Forcast	tour/tour_payment_forcast	0
+132	Tour	Payment Forecast Report	tour/tour_accounts	0
+158	Tour	Quotation Change Log	reports/change-log	0
+165	Tour	Specia Tourl Request	tour/special_payment_requests	0
+98	Tour	Tour Calender	tour/calendar	0
+80	Tour	Tour Copy	tour/tour_copy	0
+110	Tour	Tour Dashboard	tour/tour_dashboard	0
+137	Tour	Tour Documentations	tour/tour_dashboard/documentation/documentation_report	0
+79	Tour	Tour Inquiry	inquiries	0
+183	Tour	Tour Timeline Preview	tour/timeline	0
+117	Tour	Working Dashboard	tour/tour_details	0
