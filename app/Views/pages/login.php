@@ -82,7 +82,7 @@
                             <div class="card-body p-3">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Welcome Back!</h5>
-                                    <p class="text-muted small">Sign in to continue</p>
+                                    <p class="text-muted small">First thing's first, please enter your credentials</p>
                                 </div>
                                 <div class="p-2 mt-3">
                                     <form id="login_form" action="javascript:void(0)">
