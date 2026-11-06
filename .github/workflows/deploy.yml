@@ -1,0 +1,28 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches: [uat, main]
+    paths-ignore: ['docs/**']
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Deploy app folder via rsync (${{ github.ref_name == 'main' && 'Production' || 'UAT' }})
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzr --delete --exclude='Config/App.php' --exclude='Config/Database.php'
+          path: ./app/
+          remote_path: ${{ github.ref_name == 'main' && '/opt/bitnami/apache/htdocs/app/' || '/opt/bitnami/apache/htdocs/UAT/app/' }}
+          remote_host: ${{ secrets.SERVER_IP }}
+          remote_user: ${{ secrets.SERVER_USER }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
