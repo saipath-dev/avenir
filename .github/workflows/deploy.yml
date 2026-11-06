@@ -2,7 +2,7 @@ name: Deploy to Lightsail
 
 on:
   push:
-    branches: [uat, main]
+    branches: [UAT, main]
     paths-ignore: ['docs/**']
 
 concurrency:
