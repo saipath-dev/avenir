@@ -312,24 +312,84 @@ class UserAccountController extends BaseController
 	// route : base_url/settings/user_account/delete/$1 
 	public function delete($id)
 	{
-		if ($id != 1) {
-			$model = new UserModel();
-			// get emp_id from user_acc_tbl
-			$user = $model->select('emp_id')->where('id', $id)->findAll(1);
-			// delete user from staff_members table
-			$model->delete($id);
-			// if logged in user is deleting his own account
-			if ($user[0]['emp_id'] == session()->get('emp_id')) {
-				// logout
-				session()->destroy();
-				// redirect to /;
-				redirect('/');
-			}
-			return $this->response->setJSON(["status" => 200, "message" => "User Account Deleted Successfully"]);
-		} else {
-			// Forbidden
+		// tf-userdel-r1 (7 Nov 2026, Shantha): the login goes, its history stays. Job role assignments that point at the login
+		// (the database refuses to delete a login they reference) are copied to job_role_assignments_archive first; its panel
+		// access is closed, any position it holds is ended, its sessions end, and the deletion is logged. The answer says what
+		// actually happened: before this, a refused delete still said "Deleted Successfully".
+		$id = (int) $id;
+		$db = \Config\Database::connect();
+		$user = $db->query('SELECT id, user, emp_id, group_id FROM user_acc_tbl WHERE id = ? LIMIT 1', [$id])->getRowArray();
+		if (!$user) {
+			return $this->response->setJSON(["status" => 404, "message" => "No such account."]);
+		}
+		if ($id === 1 || (int) $user['group_id'] === 1) {
 			return $this->response->setJSON(["status" => 500, "message" => "You can't delete System Administrator Account."]);
 		}
+		$by = (string) (session()->get('username') ?? session()->get('user') ?? ('user ' . session()->get('user_id')));
+		$now = date('Y-m-d H:i:s');
+		$killed = 0;
+		try {
+			helper('usersession');
+			$killed = (int) kill_user_sessions($id, false, 'account_deleted');
+		} catch (\Throwable $e) {
+		}
+		$archived = 0;
+		// the archive table is created before the transaction: MySQL commits implicitly on CREATE TABLE
+		if ($db->query("SHOW TABLES LIKE 'job_role_assignments'")->getRowArray() && (int) ($db->query('SELECT COUNT(*) n FROM job_role_assignments WHERE user_id = ?', [$id])->getRowArray()['n'] ?? 0) > 0) {
+			$db->query("CREATE TABLE IF NOT EXISTS job_role_assignments_archive (
+						archive_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+						original_id INT UNSIGNED NOT NULL, user_id INT NOT NULL, deleted_username VARCHAR(190) NULL,
+						job_role_id VARCHAR(255) NULL, start_date DATE NULL, end_date DATE NULL,
+						assigned_at DATETIME NULL, assigned_by VARCHAR(100) NULL, updated_at DATETIME NULL, updated_by VARCHAR(100) NULL, del TINYINT(1) NULL,
+						archived_at DATETIME NOT NULL, archived_by VARCHAR(100) NOT NULL, archive_reason VARCHAR(255) NOT NULL,
+						KEY ix_jra_archive_user (user_id)
+					)");
+		}
+		$db->transBegin();
+		try {
+			$hasJra = (bool) $db->query("SHOW TABLES LIKE 'job_role_assignments'")->getRowArray();
+			if ($hasJra) {
+				$n = (int) ($db->query('SELECT COUNT(*) n FROM job_role_assignments WHERE user_id = ?', [$id])->getRowArray()['n'] ?? 0);
+				if ($n > 0) {
+					$db->query("INSERT INTO job_role_assignments_archive (original_id, user_id, deleted_username, job_role_id, start_date, end_date, assigned_at, assigned_by, updated_at, updated_by, del, archived_at, archived_by, archive_reason)
+						SELECT id, user_id, ?, job_role_id, start_date, end_date, assigned_at, assigned_by, updated_at, updated_by, del, ?, ?, 'login deleted under Settings -> User Accounts'
+						FROM job_role_assignments WHERE user_id = ?", [$user['user'], $now, $by, $id]);
+					$archived = (int) $db->affectedRows();
+					if ($archived !== $n) {
+						throw new \RuntimeException('the job role assignments could not all be archived');
+					}
+					$db->query('DELETE FROM job_role_assignments WHERE user_id = ?', [$id]);
+				}
+			}
+			$staff = null;
+			if (\App\Libraries\TourFlow\StaffAssignment::installed($db)) {
+				$staff = $db->query('SELECT id FROM tf_staff WHERE user_id = ? LIMIT 1', [$id])->getRowArray();
+				if ($staff) {
+					$db->query("UPDATE tf_staff_permission SET state = 'blocked', reason = 'Login deleted', set_by = ?, set_at = ? WHERE staff_id = ? AND state = 'open'", [$by, $now, (int) $staff['id']]);
+					$db->query("UPDATE tf_staff SET on_panel = 0, status = 'deactivated', status_reason = 'Login deleted', updated_by = ?, updated_at = ? WHERE id = ?", [$by, $now, (int) $staff['id']]);
+				}
+				if ($db->query("SHOW TABLES LIKE 'tf_position_holder'")->getRowArray()) {
+					$db->query("UPDATE tf_position_holder SET to_at = ?, ended_by = ?, end_reason = 'Login deleted' WHERE user_id = ? AND to_at IS NULL", [$now, $by, $id]);
+				}
+			}
+			$db->query('DELETE FROM user_acc_tbl WHERE id = ? AND id <> 1', [$id]);
+			if ((int) $db->affectedRows() !== 1) {
+				throw new \RuntimeException('the database did not remove the login');
+			}
+			if (\App\Libraries\TourFlow\StaffAssignment::installed($db)) {
+				\App\Libraries\TourFlow\StaffAssignment::log($db, $staff ? (int) $staff['id'] : null, $id, 'login_deleted', null, 'login', 'deleted', 'Deleted under Settings -> User Accounts', 'Login "' . $user['user'] . '" deleted; ' . $archived . ' job role assignment(s) archived; ' . $killed . ' open session(s) ended. The employee record and its history are kept.', $by, $by);
+			}
+			$db->transCommit();
+		} catch (\Throwable $e) {
+			$db->transRollback();
+			log_message('error', 'user account delete ' . $id . ': ' . $e->getMessage());
+			return $this->response->setJSON(["status" => 500, "message" => 'The account "' . $user['user'] . '" was not deleted: ' . $e->getMessage() . '. Nothing was changed.']);
+		}
+		// if logged in user is deleting his own account
+		if ((string) $user['emp_id'] === (string) session()->get('emp_id')) {
+			session()->destroy();
+		}
+		return $this->response->setJSON(["status" => 200, "message" => 'User account "' . $user['user'] . '" deleted.' . ($archived ? ' ' . $archived . ' job role assignment(s) were archived first.' : '')]);
 	}
 
 	public function update_access($user_id)
