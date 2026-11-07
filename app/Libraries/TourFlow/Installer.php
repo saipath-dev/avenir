@@ -332,6 +332,20 @@ final class Installer
         foreach (self::staffView($db) as $u) {   // tf-stage10
             $notes[] = $u;
         }
+        try {
+            foreach (StaffPositions::ensure($db) as $u) {   // tf-positions-r1
+                $notes[] = $u;
+            }
+        } catch (\Throwable $e) {
+            $notes[] = 'Positions: ' . $e->getMessage();
+        }
+        try {
+            foreach (StaffProfiles::ensure($db) as $u) {   // tf-staffno-r1
+                $notes[] = $u;
+            }
+        } catch (\Throwable $e) {
+            $notes[] = 'Staff profiles: ' . $e->getMessage();
+        }
         // Transport & Guide Services (Shantha, 5 Oct 2026): the four connected masters under one sidebar heading
         foreach (self::transportGuideMenu($db) as $u) {
             $notes[] = $u;
@@ -1689,19 +1703,23 @@ final class Installer
         try {
             $cur = $db->query('SHOW CREATE VIEW user_priv_q')->getRowArray();
             $ddl = (string) ($cur['Create View'] ?? '');
-            if (str_contains($ddl, 'tf_staff_permission')) {
+            // tf-zeroperm-r1 (7 Nov 2026, Shantha): a group grants menu privileges to the System Administrator group only; every
+            // other account holds exactly its Open rows on the Staff Access Control Panel, and nothing when it is not on it.
+            $zeroGroup = str_contains($ddl, '`user_acc_tbl`.`group_id` = 1');
+            if (str_contains($ddl, 'tf_staff_permission') && $zeroGroup) {
                 return [];
             }
             if ($ddl !== '') {
-                $db->query("INSERT INTO tf_meta (k, v) VALUES ('user_priv_q_before_57', ?) ON DUPLICATE KEY UPDATE v = v", [$ddl]);
+                $key = str_contains($ddl, 'tf_staff_permission') ? 'user_priv_q_before_zeroperm' : 'user_priv_q_before_57';
+                $db->query("INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = v", [$key, $ddl]);
             }
             $cols = '`user_acc_tbl`.`emp_id` AS `emp_id`, `employee`.`Name` AS `name`, `user_acc_tbl`.`id` AS `user_id`, `user_acc_tbl`.`user` AS `user`, `user_acc_tbl`.`group_id` AS `group_id`, `group_profile`.`type` AS `type`, `menu_list`.`cat_id` AS `cat_id`, `menu_category`.`category` AS `category`, `menu_category`.`order_id` AS `cat_oid`, `menu_list`.`id` AS `menu_id`, `menu_list`.`name` AS `menu`, `menu_list`.`url` AS `url`, `menu_list`.`order_id` AS `menu_oid`, `employee`.`Acc_No` AS `account_no`, `menu_list`.`show_in_menu_bar` AS `show_in_menu_bar`';
             $db->query('CREATE OR REPLACE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `user_priv_q` AS '
                 . 'SELECT ' . $cols . ' FROM `user_acc_tbl` JOIN `user_privileges` ON `user_acc_tbl`.`group_id` = `user_privileges`.`group_id` JOIN `employee` ON `employee`.`emp_num` = `user_acc_tbl`.`emp_id` JOIN `menu_list` ON `user_privileges`.`menu_id` = `menu_list`.`id` JOIN `menu_category` ON `menu_category`.`id` = `menu_list`.`cat_id` JOIN `group_profile` ON `group_profile`.`id` = `user_acc_tbl`.`group_id` '
-                . "WHERE `user_acc_tbl`.`access` = '1' AND `menu_list`.`del` = '0' AND NOT EXISTS (SELECT 1 FROM `tf_staff` s WHERE s.`user_id` = `user_acc_tbl`.`id` AND s.`on_panel` = 1) "
+                . "WHERE `user_acc_tbl`.`access` = '1' AND `menu_list`.`del` = '0' AND `user_acc_tbl`.`group_id` = 1 AND NOT EXISTS (SELECT 1 FROM `tf_staff` s WHERE s.`user_id` = `user_acc_tbl`.`id` AND s.`on_panel` = 1) "
                 . 'UNION ALL SELECT ' . $cols . ' FROM `user_acc_tbl` JOIN `tf_staff` s ON s.`user_id` = `user_acc_tbl`.`id` AND s.`on_panel` = 1 AND s.`status` = \'active\' JOIN `tf_staff_permission` p ON p.`staff_id` = s.`id` AND p.`state` = \'open\' JOIN `employee` ON `employee`.`emp_num` = `user_acc_tbl`.`emp_id` JOIN `menu_list` ON `menu_list`.`id` = p.`menu_id` JOIN `menu_category` ON `menu_category`.`id` = `menu_list`.`cat_id` JOIN `group_profile` ON `group_profile`.`id` = `user_acc_tbl`.`group_id` '
                 . "WHERE `user_acc_tbl`.`access` = '1' AND `menu_list`.`del` = '0'");
-            $notes[] = 'The privilege view user_priv_q now answers from the Staff Assignment panel for accounts on it (none yet); every other account exactly as before. The previous definition is kept in tf_meta.';
+            $notes[] = 'The privilege view user_priv_q now gives group privileges to the System Administrator group only; every other account holds exactly its Open rows on the Staff Access Control Panel (tf-zeroperm-r1). The previous definition is kept in tf_meta.';
         } catch (\Throwable $e) {
             $notes[] = 'Staff Assignment view: ' . $e->getMessage();
         }

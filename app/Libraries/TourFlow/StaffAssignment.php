@@ -95,8 +95,40 @@ final class StaffAssignment
     }
 
     /**
+     * tf-zeroperm-r1 (7 Nov 2026, Shantha): the groups that never come onto the panel. The System Administrator's access does not
+     * come from here; Driver Portal sign-ins are retired; the Admin group (25) carries access decided by its group number — three
+     * pages with no menu entry and the daily USD rate — which the panel cannot take away.
+     */
+    public const NEVER_ON_PANEL = [
+        1  => 'The System Administrator account is never put on the panel. Its access does not come from here.',
+        24 => 'Driver Portal sign-ins are retired (decision of 7 Nov 2026); they do not come onto the panel.',
+        25 => 'An account in the Admin group (25) carries access the panel cannot remove (three pages with no menu entry, and the daily USD rate). Move it to an ordinary staff group first.',
+    ];
+
+    /**
+     * tf-zeroperm-r1 (7 Nov 2026, Shantha): a staff account works only from the Staff Access Control Panel. Its group grants
+     * nothing. An account that is not on the panel, or is on it but not Active, may neither sign in nor continue a session.
+     * The System Administrator group (1) is the one exception. Null = allowed. Before the panel is installed nothing changes.
+     */
+    public static function panelRefusal($db, ?int $userId, int $groupId): ?string
+    {
+        if (!$userId || $groupId === 1 || !self::installed($db)) {
+            return null;
+        }
+        $s = self::byUser($db, $userId);
+        if (!$s || (int) $s['on_panel'] !== 1) {
+            return 'not on the Staff Access Control Panel';
+        }
+        if ($s['status'] !== 'active') {
+            return 'account ' . $s['status'];
+        }
+        return null;
+    }
+
+    /**
      * For UserSessionFilter, on every request: the reason this signed-in account may not continue — disabled on the account
-     * table, or suspended / deactivated on the panel. Null = carry on. Never applies to the System Administrator group.
+     * table, not on the Staff Access Control Panel, or suspended / deactivated on it (tf-zeroperm-r1). Null = carry on.
+     * Never applies to the System Administrator group. A failed check refuses rather than lets through.
      */
     public static function sessionRefusal($db, ?int $userId, int $groupId): ?string
     {
@@ -105,16 +137,13 @@ final class StaffAssignment
         }
         try {
             $u = $db->query('SELECT access FROM user_acc_tbl WHERE id = ? LIMIT 1', [$userId])->getRowArray();
-            if ($u && (int) $u['access'] !== 1) {
+            if (!$u || (int) $u['access'] !== 1) {
                 return 'account disabled';
             }
-            $s = self::byUser($db, $userId);
-            if ($s && (int) $s['on_panel'] === 1 && $s['status'] !== 'active') {
-                return 'account ' . $s['status'];
-            }
+            return self::panelRefusal($db, $userId, $groupId);
         } catch (\Throwable $e) {
+            return 'access check failed';
         }
-        return null;
     }
 
     // ------------------------------------------------------------------ roles
@@ -292,11 +321,8 @@ final class StaffAssignment
         if (!$u) {
             return ['ok' => false, 'message' => 'No such account.'];
         }
-        if ((int) $u['group_id'] === 1) {
-            return ['ok' => false, 'message' => 'The System Administrator account is never put on the panel. Its access does not come from here.'];
-        }
-        if ((int) $u['group_id'] === 24) {
-            return ['ok' => false, 'message' => 'Driver portal sign-ins are not staff accounts; whether they come onto the panel is decision 9, not yet taken.'];
+        if (isset(self::NEVER_ON_PANEL[(int) $u['group_id']])) {   // tf-zeroperm-r1: groups 1, 24 and 25
+            return ['ok' => false, 'message' => self::NEVER_ON_PANEL[(int) $u['group_id']]];
         }
         $department = trim($department);
         if ($department !== '' && !in_array($department, self::DEPARTMENTS, true)) {
@@ -338,8 +364,15 @@ final class StaffAssignment
         }
         $db->table('tf_staff')->where('id', $staffId)->update(['on_panel' => 0, 'updated_by' => $by, 'updated_at' => date('Y-m-d H:i:s')]);
         unset(self::$byUser[(int) $s['user_id']]);
-        self::log($db, $staffId, (int) $s['user_id'], 'removed_from_panel', null, 'on panel', 'group list', $reason, 'Account "' . $s['username'] . '" taken off the panel: its group "' . $s['group_name'] . '" decides its access again. The Open / Blocked rows are kept, not applied.', $by, $byName);
-        return ['ok' => true, 'message' => 'Account "' . $s['username'] . '" is back on its group list.'];
+        // tf-zeroperm-r1: off the panel is no access at all — its group grants nothing — so its sessions end now
+        $killed = 0;
+        try {
+            helper('usersession');
+            $killed = (int) kill_user_sessions((int) $s['user_id'], false, 'removed_from_panel');
+        } catch (\Throwable $e) {
+        }
+        self::log($db, $staffId, (int) $s['user_id'], 'removed_from_panel', null, 'on panel', 'no access', $reason, 'Account "' . $s['username'] . '" taken off the panel: it has no access and cannot sign in (its group "' . $s['group_name'] . '" grants nothing). The Open / Blocked rows are kept, not applied. ' . $killed . ' open session(s) ended.', $by, $byName);
+        return ['ok' => true, 'message' => 'Account "' . $s['username'] . '" is off the panel: it has no access and cannot sign in. ' . $killed . ' open session(s) ended.'];
     }
 
     /** The department label and responsibilities: labels only, they grant nothing. */

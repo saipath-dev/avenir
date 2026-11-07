@@ -112,8 +112,12 @@ final class Staff
                  WHERE u.group_id = 1 OR u.group_id IN (
                     SELECT up.group_id FROM user_privileges up JOIN menu_list ml ON ml.id = up.menu_id
                     WHERE ml.del = 0 AND TRIM(BOTH \'/\' FROM ml.url) IN (' . implode(',', array_fill(0, count(self::DESK_URLS), '?')) . '))
+                 OR u.id IN (
+                    SELECT s.user_id FROM tf_staff s JOIN tf_staff_permission p ON p.staff_id = s.id AND p.state = \'open\'
+                    JOIN menu_list ml2 ON ml2.id = p.menu_id
+                    WHERE s.on_panel = 1 AND ml2.del = 0 AND TRIM(BOTH \'/\' FROM ml2.url) IN (' . implode(',', array_fill(0, count(self::DESK_URLS), '?')) . '))
                  ORDER BY name, u.id',
-                self::DESK_URLS
+                array_merge(self::DESK_URLS, self::DESK_URLS)   // tf-zeroperm-r1: a staff account is a handler by its panel rows, not its group
             )->getResultArray();
         } catch (\Throwable $e) {
             try {

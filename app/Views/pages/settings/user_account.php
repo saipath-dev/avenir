@@ -226,7 +226,7 @@
                                                 <label class="form-label">Password<font
                                                         color="#FF0000"><strong>*</strong></font></label>
                                                 <input type="password" name="password" id="password" class="form-control"
-                                                    placeholder="">
+                                                    placeholder="" autocomplete="new-password" data-eye>
                                             </div>
                                         </div>
                                     </div>
@@ -258,7 +258,7 @@
                                                 <label class="form-label">Email's Password<font
                                                         color="#FF0000"><strong>*</strong></font></label>
                                                 <input type="password" name="email_password" id="email_password"
-                                                    class="form-control" placeholder="">
+                                                    class="form-control" placeholder="" autocomplete="new-password" data-eye>
                                             </div>
                                         </div>
                                     </div>
@@ -331,8 +331,8 @@
                                                 <div class="form-group">
                                                     <label class="form-label">Password<font
                                                             color="#FF0000"><strong>*</strong></font></label>
-                                                    <input type="text" name="password" id="employee_password_edit"
-                                                        class="form-control" placeholder="">
+                                                    <input type="password" name="password" id="employee_password_edit"
+                                                        class="form-control" placeholder="" autocomplete="new-password" data-eye><!-- tf-eye-r1: was type="text", which showed the new password as it was typed -->
                                                 </div>
                                             </div>
                                         </div>
@@ -365,7 +365,7 @@
                                                     <label class="form-label">Email's Password<font
                                                             color="#FF0000"><strong>*</strong></font></label>
                                                     <input type="password" name="email_password" id="email_password_edit"
-                                                        class="form-control" placeholder="">
+                                                        class="form-control" placeholder="" autocomplete="new-password" data-eye>
                                                 </div>
                                             </div>
                                         </div>
@@ -390,6 +390,7 @@
     <?= view('layouts/inpage_footer') ?>
     <?= view('layouts/theme_settings') ?>
     <?= view('layouts/scripts') ?>
+    <?= view('layouts/password_toggle') ?><!-- tf-eye-r1 -->
 
     <script>
         $('.js-example-basic-single').select2({

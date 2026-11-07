@@ -91,14 +91,26 @@
 </div>
 
 <div class="tabs" role="tablist">
-  <button class="tab" role="tab" data-tab="accounts" aria-selected="true" type="button">Accounts &amp; assignments</button>
+  <button class="tab" role="tab" data-tab="pos" aria-selected="true" type="button">Positions</button>
+  <button class="tab" role="tab" data-tab="accounts" aria-selected="false" type="button">Accounts &amp; assignments</button>
   <button class="tab" role="tab" data-tab="perm" type="button">Permission panel</button>
   <button class="tab" role="tab" data-tab="tpl" type="button">Role templates</button>
   <button class="tab" role="tab" data-tab="hist" type="button">Access &amp; activity history</button>
 </div>
 
+<!-- Positions (tf-positions-r1): the position first, then the person who holds it. A position grants nothing. -->
+<section id="v_pos">
+  <div class="card2 panel">
+    <div class="panel-h"><div><h5>Positions</h5><p>each position, and the person who holds it &mdash; a position grants nothing; permissions are opened on the person</p></div><button class="btn2 g" id="b_newpos" type="button">+ New position</button></div>
+    <?php if (empty($positions_installed)): ?>
+    <div class="warnbox" style="margin:14px">The positions tables are not installed yet. Run the installer (Tour Inquiry &rarr; Setup &rarr; Install) as the System Administrator.</div>
+    <?php endif; ?>
+    <div class="tw"><table class="t"><thead><tr><th>Position &rarr; username</th><th>Department</th><th>Held since</th><th>Name</th><th>Access</th><th></th></tr></thead><tbody id="pos_body"></tbody></table></div>
+  </div>
+</section>
+
 <!-- Accounts -->
-<section id="v_accounts">
+<section id="v_accounts" hidden>
   <div class="card2 panel">
     <div class="panel-h"><div><h5>Accounts</h5><p id="acc_sub">every account the system has, for review</p></div><span class="pill" id="acc_pill">–</span></div>
     <div class="filters">
@@ -207,7 +219,7 @@
     let ACCOUNTS = [], MENUS = [], STAFF = null, PERMS = {}, HIST = [];
 
     // ---------------------------------------------------------------- tabs
-    const views = { accounts: 'v_accounts', perm: 'v_perm', tpl: 'v_tpl', hist: 'v_hist' };
+    const views = { pos: 'v_pos', accounts: 'v_accounts', perm: 'v_perm', tpl: 'v_tpl', hist: 'v_hist' };
     function tab(k) { if (!views[k]) k = 'accounts'; document.querySelectorAll('.sa .tab').forEach(t => t.setAttribute('aria-selected', t.dataset.tab === k ? 'true' : 'false')); Object.keys(views).forEach(v => $(views[v]).hidden = v !== k); if (k === 'hist') loadHistory(); }
     document.querySelectorAll('.sa .tab').forEach(t => t.addEventListener('click', () => tab(t.dataset.tab)));
 
@@ -367,7 +379,49 @@
         await loadAccounts(); if (STAFF) await loadStaff(STAFF.id); if (!$('v_hist').hidden) loadHistory();
     });
 
-    Promise.all([loadMenus(), loadAccounts()]).then(() => { if (OPEN_STAFF) { $('p_staff').value = OPEN_STAFF; tab('perm'); loadStaff(OPEN_STAFF); } });
+    // ---------------------------------------------------------------- positions (tf-positions-r1)
+    const DEPTS_P = <?= json_encode(array_values($departments ?? [])) ?>;
+    let POSITIONS = [];
+    async function loadPositions() {
+        const j = await api('/positions'); POSITIONS = j.positions || [];
+        const body = $('pos_body'); if (!body) return;
+        if (!POSITIONS.length) { body.innerHTML = '<tr><td colspan="6" class="muted">No positions yet. Create the position first, then assign the person who holds it.</td></tr>'; return; }
+        body.innerHTML = POSITIONS.map(p => {
+            const h = p.holder;
+            const who = h ? esc(h.username) : '<span class="muted">vacant</span>';   // the position reads by the holder's username (Shantha, 7 Nov 2026)
+            const acc = h ? ((h.enabled ? '<span class="pill p-green">Sign-in enabled</span>' : '<span class="pill p-grey">Sign-in disabled</span>') + ' ' + (h.status === 'active' ? '<span class="pill p-green">Panel active</span>' : '<span class="pill p-amber">Panel ' + esc(h.status || '—') + '</span>') + ' <span class="pill">' + h.open_count + ' permission' + (h.open_count === 1 ? '' : 's') + '</span>') : '—';
+            const act = p.status !== 'open' ? '<span class="pill p-grey">Closed</span>'
+                : h ? '<button class="btn2" type="button" data-pperm="' + h.staff_id + '">Permissions</button> <button class="btn2" type="button" data-pend="' + p.id + '">End holding</button>'
+                    : '<button class="btn2 g" type="button" data-passign="' + p.id + '">Assign person</button>';
+            return '<tr><td><b>' + esc(p.title) + '</b> &rarr; ' + who + '</td><td>' + esc(p.department || '—') + '</td><td>' + (h ? dt(h.since) : '—') + '</td><td>' + (h ? esc(h.name) : '—') + '</td><td>' + acc + '</td><td>' + act + '</td></tr>';
+        }).join('');
+    }
+    $('b_newpos') && $('b_newpos').addEventListener('click', () => {
+        ask('New position', '<div class="field"><span>Position title</span><input class="inp" id="np_title" maxlength="120" placeholder="e.g. Director of Operations"></div>'
+            + '<div class="field"><span>Department label</span><select class="inp" id="np_dept"><option value="">— none —</option>' + DEPTS_P.map(d => '<option>' + esc(d) + '</option>').join('') + '</select></div>'
+            + '<div class="field"><span>Responsibilities</span><input class="inp" id="np_resp" maxlength="500" placeholder="what the holder of this position is expected to do"></div>'
+            + '<div class="small muted">A position grants nothing. Permissions are opened on the person who holds it, one row at a time.</div>',
+            async reason => { const j = await post('/position', { title: $('np_title').value, department: $('np_dept').value, responsibilities: $('np_resp').value, reason }); if (j.status === 200) loadPositions(); return j; });
+    });
+    document.addEventListener('click', e => {
+        const a = e.target.closest('[data-passign]'), en = e.target.closest('[data-pend]'), pp = e.target.closest('[data-pperm]');
+        if (a) {
+            const p = POSITIONS.find(x => +x.id === +a.dataset.passign); if (!p) return;
+            const held = new Set(POSITIONS.filter(x => x.holder).map(x => x.holder.staff_id));
+            const opts = ACCOUNTS.filter(x => x.on_panel && x.staff_id && !held.has(x.staff_id));
+            if (!opts.length) { toast('info', 'Nobody on the panel is free to assign. The person needs their own sign-in first; creating it puts them on the panel with nothing open.'); return; }
+            ask('Assign the person who holds "' + p.title + '"', '<div class="field"><span>Person</span><select class="inp" id="pa_staff">' + opts.map(x => '<option value="' + x.staff_id + '">' + esc((x.name || x.username) + ' (' + x.username + ')') + '</option>').join('') + '</select></div><div class="small muted">This records who holds the position. It opens no permission and changes no status.</div>',
+                async reason => { const j = await post('/position/assign', { position_id: p.id, staff_id: +$('pa_staff').value, reason }); if (j.status === 200) loadPositions(); return j; });
+        } else if (en) {
+            const p = POSITIONS.find(x => +x.id === +en.dataset.pend); if (!p || !p.holder) return;
+            ask('End ' + p.holder.name + '\'s holding of "' + p.title + '"', '<div class="small muted">The record of who held it, and when, is kept. Their permissions and status are not changed by this &mdash; suspend them on the panel if their access should end.</div>',
+                async reason => { const j = await post('/position/end', { position_id: p.id, reason }); if (j.status === 200) loadPositions(); return j; });
+        } else if (pp) {
+            $('p_staff').value = pp.dataset.pperm; tab('perm'); loadStaff(+pp.dataset.pperm);
+        }
+    });
+
+    Promise.all([loadMenus(), loadAccounts(), loadPositions()]).then(() => { if (OPEN_STAFF) { $('p_staff').value = OPEN_STAFF; tab('perm'); loadStaff(OPEN_STAFF); } });
 })();
 </script>
 </body>

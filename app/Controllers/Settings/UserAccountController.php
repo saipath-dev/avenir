@@ -61,7 +61,7 @@ class UserAccountController extends BaseController
 
 		$staffMemberModel = new StaffMemberModel();
 		// get all staff members
-		$members = $staffMemberModel->select('emp_num, fullname AS Name')->findAll();
+		$members = $staffMemberModel->select('emp_num, fullname AS Name')->where('is_active', 1)->findAll();   // tf-empactive-r1: only active employees can be given a login
 		$data['members'] = [];
 		// get members who is not in user_accounts
 		foreach ($members as $member) {
@@ -160,6 +160,12 @@ class UserAccountController extends BaseController
 					return $this->response->setJSON(["status" => 400, "message" => "Agent is required."]);
 				}
 
+				// tf-zeroperm-r1 (7 Nov 2026, Shantha): a new staff account comes onto the Staff Access Control Panel, so it may
+				// not be created in a group that never comes onto it (System Administrator, Driver, Admin)
+				if (isset(\App\Libraries\TourFlow\StaffAssignment::NEVER_ON_PANEL[(int) $group_profile])) {
+					return $this->response->setJSON(["status" => 400, "message" => \App\Libraries\TourFlow\StaffAssignment::NEVER_ON_PANEL[(int) $group_profile] . ' A staff account cannot be created in this group.']);
+				}
+
 				$model = new UserModel();
 				$rowCount = $model->where('user', $username)->countAllResults();
 
@@ -169,16 +175,24 @@ class UserAccountController extends BaseController
 				} else {
 					// get emp_num, location_id, cost_center_id, designation_id from staff_members table
 					$staffMemberModel = new StaffMemberModel();
-					$staffMember = $staffMemberModel->select('emp_num, Acc_No')->where('emp_num', $employee_id)->findAll(1);
+					$staffMember = $staffMemberModel->select('emp_num, Acc_No, is_active')->where('emp_num', $employee_id)->findAll(1);
+					// tf-empactive-r1 (7 Nov 2026, Shantha): a deactivated employee record cannot be given a new login
+					if (empty($staffMember) || (int) ($staffMember[0]['is_active'] ?? 0) !== 1) {
+						return $this->response->setJSON(["status" => 400, "message" => "This employee record is not active. Only an active employee can be given a login."]);
+					}
 					// hash password
 					$password = password_hash($password, PASSWORD_DEFAULT);
+					// tf-staffno-r1: the account links to the employee by its internal number (emp_num), which must name exactly one record
+					if ((int) $staffMemberModel->where('emp_num', $staffMember[0]['emp_num'])->countAllResults() !== 1) {
+						return $this->response->setJSON(["status" => 400, "message" => "This employee's internal number is shared with another record, so a login could not be linked to it safely. Nothing was created."]);
+					}
 					$data = [
 						'group_id' => $group_profile,
 						'user' => $username,
 						'pass' => $password,
 						'emp_id' => $staffMember[0]['emp_num'],
 						'acc_no' => $staffMember[0]['Acc_No'],
-						'access' => 1,
+						'access' => 0,   // tf-zeroperm-r1: created disabled; enabled only once it is on the Staff Access Control Panel
 						'host' => $host,
 						'email' => $email,
 						'email_password' => !empty($email_password) ? \App\Libraries\TourFlow\Secrets::sealIfReady((string) $email_password) : $email_password,   // tf-comms-r3: encrypted at rest
@@ -186,7 +200,17 @@ class UserAccountController extends BaseController
 					];
 
 					$model->insert($data); // insert data to user_acc_tbl
-					return $this->response->setJSON(["status" => 201, "message" => "User Account Created Successfully."]);
+					$newId = (int) $model->getInsertID();
+
+					// tf-zeroperm-r1: register it on the Staff Access Control Panel with zero permissions BEFORE it can ever be
+					// enabled. If that fails the account simply stays disabled, which is safe.
+					$by = (string) session()->get('username');
+					$reg = \App\Libraries\TourFlow\StaffAssignment::addToPanel(\Config\Database::connect(), $newId, '', '', 'New staff account registered on the Staff Access Control Panel with zero permissions at creation (tf-zeroperm-r1).', $by, $by);
+					if (empty($reg['ok'])) {
+						log_message('error', 'tf-zeroperm-r1: account ' . $newId . ' created disabled but not registered on the panel: ' . ($reg['message'] ?? ''));
+						return $this->response->setJSON(["status" => 500, "message" => "The account was created but is disabled: it could not be registered on the Staff Access Control Panel (" . ($reg['message'] ?? 'unknown reason') . "). It cannot sign in."]);
+					}
+					return $this->response->setJSON(["status" => 201, "message" => "User Account Created. It is disabled and on the Staff Access Control Panel with no permissions. Open what you approve under Master Files -> Staff Assignment, then enable it here."]);
 				}
 			} else {
 				// Bad Request
@@ -219,6 +243,13 @@ class UserAccountController extends BaseController
 
 				$group_profile = $this->request->getRawInputVar('group_profile_edit');
 				$employee_id = $this->request->getRawInputVar('employee_id_edit');
+
+				// tf-zeroperm-r1 (7 Nov 2026, Shantha): a staff account is never moved into a group that sits outside the Staff
+				// Access Control Panel (System Administrator, Driver, Admin) — that would hand it access the panel does not decide
+				$currentGroup = (int) ((new UserModel())->select('group_id')->find($id)['group_id'] ?? 0);
+				if ((int) $group_profile !== $currentGroup && isset(\App\Libraries\TourFlow\StaffAssignment::NEVER_ON_PANEL[(int) $group_profile])) {
+					return $this->response->setJSON(["status" => 400, "message" => \App\Libraries\TourFlow\StaffAssignment::NEVER_ON_PANEL[(int) $group_profile] . ' A staff account cannot be moved into this group.']);
+				}
 				$password = $this->request->getRawInputVar('password');
 				$host = $this->request->getRawInputVar('host');
 				$email = $this->request->getRawInputVar('email');
@@ -305,11 +336,40 @@ class UserAccountController extends BaseController
 	{
 		$model = new UserModel();
 		$user = $model->find($user_id);
+		if (!$user) {
+			return $this->response->setJSON(["status" => 500, "message" => "No such account."]);
+		}
+		// tf-zeroperm-r1 (7 Nov 2026, Shantha): the System Administrator's access is never switched from here (it would lock the system)
+		if ((int) $user['id'] === 1 || (int) $user['group_id'] === 1) {
+			return $this->response->setJSON(["status" => 500, "message" => "The System Administrator account's access is not switched from here."]);
+		}
+		$db = \Config\Database::connect();
 		$access = $user['access'] == 1 ? 0 : 1;
-		$data = [
-			'access' => $access
-		];
-		$model->update($user_id, $data);
-		return $this->response->setJSON(["status" => 200, "message" => "Account Access Updated Successfully."]);
+		if ($access === 1) {
+			// enabling: only an account that is on the Staff Access Control Panel and Active there; its group grants nothing
+			if (isset(\App\Libraries\TourFlow\StaffAssignment::NEVER_ON_PANEL[(int) $user['group_id']])) {
+				return $this->response->setJSON(["status" => 500, "message" => \App\Libraries\TourFlow\StaffAssignment::NEVER_ON_PANEL[(int) $user['group_id']] . ' It cannot be enabled.']);
+			}
+			$stop = \App\Libraries\TourFlow\StaffAssignment::panelRefusal($db, (int) $user['id'], (int) $user['group_id']);
+			if ($stop !== null) {
+				return $this->response->setJSON(["status" => 500, "message" => "This account cannot be enabled: it is " . $stop . ". Bring it onto Master Files -> Staff Assignment and make it Active first."]);
+			}
+		}
+		$model->update($user_id, ['access' => $access]);
+		$killed = 0;
+		if ($access === 0) {
+			try {
+				helper('usersession');
+				$killed = (int) kill_user_sessions((int) $user['id'], false, 'disabled');
+			} catch (\Throwable $e) {
+			}
+		}
+		// the switch is recorded in the panel history beside the permission changes
+		$s = \App\Libraries\TourFlow\StaffAssignment::byUser($db, (int) $user['id']);
+		if ($s) {
+			$by = (string) session()->get('username');
+			\App\Libraries\TourFlow\StaffAssignment::log($db, (int) $s['id'], (int) $user['id'], 'access', null, $access ? 'disabled' : 'enabled', $access ? 'enabled' : 'disabled', 'Access switched under Settings -> User Accounts', 'Account "' . $user['user'] . '" ' . ($access ? 'enabled' : 'disabled') . ($access ? '' : '; ' . $killed . ' open session(s) ended') . '.', $by, $by);
+		}
+		return $this->response->setJSON(["status" => 200, "message" => "Account " . ($access ? "enabled" : "disabled") . "." . ($access ? "" : " " . $killed . " open session(s) ended.")]);
 	}
 }

@@ -333,6 +333,17 @@ $routes->group('master_files/staff', ['filter' => ['UserSessionFilter']], static
     $routes->post('set', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'set']);
     $routes->post('bulk', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'bulk']);
     $routes->post('status', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'status']);
+    // tf-positions-r1: position first, then the person (a position grants nothing)
+    $routes->get('positions', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positions']);
+    $routes->post('position', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionCreate']);
+    $routes->post('position/assign', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionAssign']);
+    $routes->post('position/end', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionEnd']);
+});
+
+// tf-staffno-r1: Pilot → Staff Work Descriptions — System Administrator only unless opened on the Staff Access Control Panel
+$routes->group('report/staff_work_descriptions', ['filter' => ['UserSessionFilter', 'UserPermissionFilter']], static function ($routes) {
+    $routes->get('/', [\App\Controllers\Report\StaffWorkDescriptionsController::class, 'index']);
+    $routes->get('export', [\App\Controllers\Report\StaffWorkDescriptionsController::class, 'export']);
 });
 
 // tf-stage8: Blocks & Investigations — Super Admin only (the controller checks the group on every call, over the menu privilege)

@@ -88,6 +88,21 @@ class LoginController extends BaseController
                     return $this->response->setStatusCode(401)->setJSON(["status" => 401, "msg" => "Unauthorized. Please check your username and password."]);
                 }
 
+                // tf-zeroperm-r1 (7 Nov 2026, Shantha): a staff account signs in only once it is on the Staff Access Control Panel
+                // and Active there; its group grants nothing. Checked after the password, so only the account's owner learns why.
+                // A failed check refuses. The System Administrator group is never stopped here.
+                if ((int) $user['group_id'] !== 1) {
+                    try {
+                        $panelStop = \App\Libraries\TourFlow\StaffAssignment::panelRefusal(\Config\Database::connect(), (int) $user['id'], (int) $user['group_id']);
+                    } catch (\Throwable $e) {
+                        $panelStop = 'access check failed';
+                    }
+                    if ($panelStop !== null) {
+                        log_message('notice', 'tf-zeroperm-r1: sign-in refused for "' . $user['user'] . '": ' . $panelStop);
+                        return $this->response->setStatusCode(401)->setJSON(["status" => 401, "msg" => "Your account has not been activated on the Staff Access Control Panel. Please ask the System Administrator."]);
+                    }
+                }
+
                 // Success — clear account counter
                 $this->clearFailedLoginAttempts($username);
 

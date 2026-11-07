@@ -411,7 +411,7 @@ class HomeDeskController extends BaseController
         // here, for group 1 only; every other account is unchanged, and the controllers of both pages still check the group on
         // every request. No privilege, route or record is touched.
         if ((int) session()->get('group_id') === 1) {
-            foreach ([['master_files/blocks', 'Blocks & Investigations'], ['master_files/staff', 'Staff Assignment']] as [$u, $l]) {
+            foreach ([['master_files/blocks', 'Blocks & Investigations']] as [$u, $l]) {   // tf-move283-r1 (7 Nov 2026): Staff Assignment now lives under Pilot Report only
                 $held[$u] = $held[$u] ?? ['url' => $u, 'label' => $l];
             }
         }
@@ -464,7 +464,6 @@ class HomeDeskController extends BaseController
             // the sixth door: built in Stage 8; until then the System Administrator sees it as coming, nobody else sees it
             'blocks' => ['title' => 'Blocks & Investigations', 'short' => 'block and investigation', 'icon' => 'bi-shield-exclamation', 'tone' => 'purple', 'tint' => 'rose', 'items' => [
                 ['url' => 'master_files/blocks', 'label' => 'Blocks & Investigations', 'icon' => 'bi-shield-exclamation'],   // tf-stage8: Super Admin only
-                ['url' => 'master_files/staff', 'label' => 'Staff Assignment', 'icon' => 'bi-person-badge'],   // tf-stage10: Super Admin only
             ]],
             'system' => ['title' => 'System & General', 'short' => 'system and general', 'icon' => 'bi-grid-3x3-gap', 'tone' => 'green', 'tint' => 'mint', 'items' => []],
         ];

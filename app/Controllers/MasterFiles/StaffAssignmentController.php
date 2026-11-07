@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Libraries\MenuLoader;
 use App\Libraries\TourFlow\Staff;
 use App\Libraries\TourFlow\StaffAssignment;
+use App\Libraries\TourFlow\StaffPositions;
 
 /**
  * Master Files → Staff Assignment — master_files/staff (tf-stage10, 30 Oct 2026).
@@ -97,6 +98,7 @@ class StaffAssignmentController extends BaseController
         $data['role_names']   = StaffAssignment::ROLE_NAMES;
         $data['reason_min']   = StaffAssignment::REASON_MIN;
         $data['open_staff']   = (int) ($this->request->getGet('staff') ?? 0);
+        $data['positions_installed'] = StaffPositions::installed($this->db());   // tf-positions-r1
         return view('pages/master_files/staff_assignment', $data);
     }
 
@@ -200,6 +202,48 @@ class StaffAssignmentController extends BaseController
         }
         $b = $this->body();
         return $this->out(StaffAssignment::status($this->db(), (int) ($b['staff_id'] ?? 0), (string) ($b['status'] ?? ''), (string) ($b['reason'] ?? ''), $this->user(), $this->name()));
+    }
+
+    // ---------------------------------------------------------------- tf-positions-r1: position first, then the person
+
+    /** Every position with its current holder. */
+    public function positions()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $db = $this->db();
+        if (!StaffPositions::installed($db)) {
+            return $this->json(['status' => 200, 'installed' => false, 'positions' => []]);
+        }
+        return $this->json(['status' => 200, 'installed' => true, 'positions' => StaffPositions::positions($db)]);
+    }
+
+    public function positionCreate()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $b = $this->body();
+        return $this->out(StaffPositions::create($this->db(), (string) ($b['title'] ?? ''), (string) ($b['department'] ?? ''), (string) ($b['responsibilities'] ?? ''), (string) ($b['reason'] ?? ''), $this->user(), $this->name()));
+    }
+
+    public function positionAssign()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $b = $this->body();
+        return $this->out(StaffPositions::assign($this->db(), (int) ($b['position_id'] ?? 0), (int) ($b['staff_id'] ?? 0), (string) ($b['reason'] ?? ''), $this->user(), $this->name()));
+    }
+
+    public function positionEnd()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $b = $this->body();
+        return $this->out(StaffPositions::end($this->db(), (int) ($b['position_id'] ?? 0), (string) ($b['reason'] ?? ''), $this->user(), $this->name()));
     }
 
     /** The access list as CSV (read-only record for the Super Admin's files). */

@@ -143,6 +143,7 @@
     <!-- end auth-page-wrapper -->
 
     <?= view('layouts/scripts') ?>
+    <?= view('layouts/password_toggle') ?><!-- tf-eye-r1: the eye button shows / hides the password (inline, so it deploys with app/) -->
     <script>
         $(document).ready(function() {
             // get redirect param from url

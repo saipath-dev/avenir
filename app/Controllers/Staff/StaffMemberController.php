@@ -93,6 +93,12 @@ class StaffMemberController extends BaseController
 			if ($employee > 0) {
 				return $this->response->setJSON(["status" => 400, "message" => "Employee already exists with the same Employee No!"]);
 			}
+			// tf-staffno-r1 (7 Nov 2026): the Employee No shown is the staff number; logins link by the internal number (emp_num),
+			// which must stay unique. If an older (deactivated) record already uses this number internally, a fresh internal number is used.
+			if ((new StaffMemberModel())->where('emp_num', (string) $emp_no)->countAllResults() > 0) {
+				$max = \Config\Database::connect()->query("SELECT MAX(CAST(emp_num AS UNSIGNED)) AS m FROM employee WHERE emp_num REGEXP '^[0-9]+$'")->getRow();
+				$data['emp_num'] = (string) (((int) ($max->m ?? 0)) + 1);
+			}
 			if ($StaffMemberModel->insert($data)) {
 				$accountPostingMode = new AccountPostingModel();
 				$accountPostingMode->insert([

@@ -246,7 +246,7 @@ final class AccessPolicyFilter implements FilterInterface
             if ($ro && ($isWrite || empty($entry['ro']))) {
                 return [403, 'read_only', 'Your profile is read-only and this address is not on the read-only list. The attempt was recorded.', null, null];
             }
-            $held = \App\Libraries\TourFlow\StaffAssignment::heldOverride(\Config\Database::connect(), (int) session()->get('user_id')) ?? self::held($gid);   // tf-stage10: an account on the Staff Assignment panel holds exactly its Open rows
+            $held = \App\Libraries\TourFlow\StaffAssignment::heldOverride(\Config\Database::connect(), (int) session()->get('user_id')) ?? [];   // tf-zeroperm-r1: off the panel = nothing; a group never grants   // tf-stage10: an account on the Staff Assignment panel holds exactly its Open rows
             $privs = $entry['priv'] ?? [];
             if ($ro) {
                 $privs[] = 'accounts';   // a read-only group holding Manage Accounts keeps every allowlisted address, never more
