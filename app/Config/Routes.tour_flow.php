@@ -348,6 +348,13 @@ $routes->group('master_files/staff', ['filter' => ['UserSessionFilter']], static
     $routes->post('staff_number', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'staffNumber']);
 });
 
+// tf-costfix-r1 (8 Nov 2026, Shantha): the old "Tour Costing" menu entry pointed at a page that no longer exists (404).
+// Costing is now done inside each Tour Inquiry, so the old address opens Tour Inquiry. Same address, same permission;
+// Tour Inquiry checks its own permission as usual.
+$routes->get('tour/tour_costing', static function () {
+    return redirect()->to(base_url('tour/intake'));
+}, ['filter' => ['UserSessionFilter', 'UserPermissionFilter']]);
+
 // tf-staffno-r1: Pilot → Staff Work Descriptions — System Administrator only unless opened on the Staff Access Control Panel
 $routes->group('report/staff_work_descriptions', ['filter' => ['UserSessionFilter', 'UserPermissionFilter']], static function ($routes) {
     $routes->get('/', [\App\Controllers\Report\StaffWorkDescriptionsController::class, 'index']);
