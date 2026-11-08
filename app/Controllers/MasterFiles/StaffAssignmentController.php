@@ -246,6 +246,25 @@ class StaffAssignmentController extends BaseController
         return $this->out(StaffPositions::end($this->db(), (int) ($b['position_id'] ?? 0), (string) ($b['reason'] ?? ''), $this->user(), $this->name()));
     }
 
+    // tf-retire-r1: retire old employee records (preview, then apply) and set a staff number — Super Admin only
+    public function retireOld()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $b = $this->body();
+        return $this->out(\App\Libraries\TourFlow\StaffProfiles::retire($this->db(), (array) ($b['keep_ids'] ?? []), (string) ($b['reason'] ?? ''), $this->user(), !empty($b['apply'])));
+    }
+
+    public function staffNumber()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $b = $this->body();
+        return $this->out(\App\Libraries\TourFlow\StaffProfiles::setNumber($this->db(), (int) ($b['employee_id'] ?? 0), (string) ($b['number'] ?? ''), (string) ($b['reason'] ?? ''), $this->user()));
+    }
+
     /** The access list as CSV (read-only record for the Super Admin's files). */
     public function export()
     {

@@ -114,4 +114,78 @@ final class StaffProfiles
             [$employeeId, $title, $group, $duties, $by, date('Y-m-d H:i:s')]
         );
     }
+
+    /**
+     * tf-retire-r1 (8 Nov 2026, Shantha): retire old employee records. A record is retired, not deleted: it is made inactive
+     * and its staff number moves to OLD-<number>, so the number is free and the person leaves every list, picker and report,
+     * while tours, payments, accounts and history stay linked by the internal number (emp_num), which never changes.
+     * Kept: every record a login points at, and the IDs passed in $keepIds. $apply = false only lists what would change.
+     */
+    public static function retire($db, array $keepIds, string $reason, string $by, bool $apply): array
+    {
+        $reason = trim($reason);
+        if ($apply && mb_strlen($reason) < 5) {
+            return ['ok' => false, 'message' => 'Give a reason (at least 5 characters).'];
+        }
+        $keepIds = array_values(array_filter(array_map('intval', $keepIds)));
+        $rows = $db->query(
+            "SELECT e.ID, e.empno, e.emp_num, e.fullname FROM employee e
+             WHERE e.is_active = 1
+               AND e.emp_num NOT IN (SELECT emp_id FROM user_acc_tbl WHERE emp_id IS NOT NULL)
+               " . ($keepIds ? 'AND e.ID NOT IN (' . implode(',', $keepIds) . ')' : '') . "
+             ORDER BY e.ID"
+        )->getResultArray();
+        if (!$apply) {
+            return ['ok' => true, 'count' => count($rows), 'rows' => $rows];
+        }
+        $now = date('Y-m-d H:i:s');
+        $db->transBegin();
+        try {
+            $db->query("INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)", ['retire_before_' . date('Ymd_His'), json_encode($rows)]);
+            $done = 0;
+            foreach ($rows as $r) {
+                $no = (string) $r['empno'];
+                $newNo = ($no !== '' && stripos($no, 'OLD-') !== 0) ? 'OLD-' . $no : $no;
+                $db->query('UPDATE employee SET is_active = 0, empno = ? WHERE ID = ? AND is_active = 1', [$newNo, (int) $r['ID']]);
+                $done += (int) $db->affectedRows();
+            }
+            if ($done !== count($rows)) {
+                throw new \RuntimeException('only ' . $done . ' of ' . count($rows) . ' records could be retired');
+            }
+            if (StaffAssignment::installed($db)) {
+                StaffAssignment::log($db, null, null, 'employees_retired', null, 'active', 'retired', $reason,
+                    $done . ' employee record(s) retired (inactive, staff number moved to OLD-<n>); kept linked by internal number. IDs: ' . implode(',', array_column($rows, 'ID')), $by, $by);
+            }
+            $db->transCommit();
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            return ['ok' => false, 'message' => 'Nothing was retired: ' . $e->getMessage() . '.'];
+        }
+        return ['ok' => true, 'count' => $done, 'message' => $done . ' old employee record(s) retired. Their staff numbers are free; their history stays linked.'];
+    }
+
+    /** tf-retire-r1: give an active employee record a staff number. The internal number (emp_num) is not touched. */
+    public static function setNumber($db, int $employeeId, string $number, string $reason, string $by): array
+    {
+        $number = trim($number);
+        if (!preg_match('/^[0-9]{1,6}$/', $number)) {
+            return ['ok' => false, 'message' => 'A staff number is 1 to 6 digits.'];
+        }
+        if (mb_strlen(trim($reason)) < 5) {
+            return ['ok' => false, 'message' => 'Give a reason (at least 5 characters).'];
+        }
+        $e = $db->query('SELECT ID, empno, fullname FROM employee WHERE ID = ? AND is_active = 1 LIMIT 1', [$employeeId])->getRowArray();
+        if (!$e) {
+            return ['ok' => false, 'message' => 'No such active employee record.'];
+        }
+        $taken = $db->query('SELECT ID, fullname, is_active FROM employee WHERE empno = ? AND ID <> ? LIMIT 1', [$number, $employeeId])->getRowArray();
+        if ($taken) {
+            return ['ok' => false, 'message' => 'Staff number ' . $number . ' is already used by ' . $taken['fullname'] . ((int) $taken['is_active'] ? '' : ' (inactive)') . '.'];
+        }
+        $db->query('UPDATE employee SET empno = ? WHERE ID = ?', [$number, $employeeId]);
+        if (StaffAssignment::installed($db)) {
+            StaffAssignment::log($db, null, null, 'staff_number', null, (string) $e['empno'], $number, $reason, 'Employee "' . $e['fullname'] . '" (record ' . $employeeId . ') staff number ' . $e['empno'] . ' -> ' . $number . '; internal number unchanged.', $by, $by);
+        }
+        return ['ok' => true, 'message' => $e['fullname'] . ' now has staff number ' . $number . '.'];
+    }
 }

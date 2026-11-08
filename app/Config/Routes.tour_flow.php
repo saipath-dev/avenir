@@ -338,6 +338,9 @@ $routes->group('master_files/staff', ['filter' => ['UserSessionFilter']], static
     $routes->post('position', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionCreate']);
     $routes->post('position/assign', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionAssign']);
     $routes->post('position/end', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionEnd']);
+    // tf-retire-r1: retire old employee records; set a staff number
+    $routes->post('retire_old', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'retireOld']);
+    $routes->post('staff_number', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'staffNumber']);
 });
 
 // tf-staffno-r1: Pilot → Staff Work Descriptions — System Administrator only unless opened on the Staff Access Control Panel
