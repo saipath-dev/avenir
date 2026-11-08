@@ -441,6 +441,8 @@
     </div>
     <?php endif; ?>
     <?= view('layouts/topbar', ['topbar_extra' => ob_get_clean()]) ?>
+    <?php $ckAdmin = (int) session()->get('group_id') === 1; /* tf-cockpit-r1: the Super Admin's Pilot Panel cockpit */ ?>
+    <?php if ($ckAdmin): ?><?= view('pages/dashboard2/pilot_cockpit', get_defined_vars()) ?><?php endif; ?>
     <div class="container-fluid p-4 mt-5">
         <?php
         // Action-tile behavior map, keyed by menu name. The 6 action tiles
@@ -466,6 +468,7 @@
             '25|Ongoing Tour Transport' => ['action' => 'redirect', 'target' => 'dashboard2/transport/transport_ongoing', 'icon' => 'https://img.icons8.com/office/80/road.png'],
         ];
         ?>
+        <?php if (!$ckAdmin): /* tf-cockpit-r1: the cockpit replaces the panel and the department tiles for the Super Admin; the department windows below stay */ ?>
         <?= view('pages/dashboard2/pilot_panel', ['pilot' => $pilot ?? null]) /* tf-pilot-r1: the department panel */ ?>
         <?php if (!empty($allowed_categories)): ?>
         <!-- Menu Categories Section -->
@@ -536,6 +539,8 @@
             <?php endforeach; ?>
         </div>
         <?php endif; ?>
+
+        <?php endif; /* tf-cockpit-r1 */ ?>
 
         <!-- Per-category menu modals -->
         <?php

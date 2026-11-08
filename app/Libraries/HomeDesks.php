@@ -174,6 +174,11 @@ final class HomeDesks
         $links = [];
         foreach (self::LINKS as $l) {
             if (!empty($l['open']) || $may($l)) {
+                // tf-cockpit-r1 (8 Nov 2026, Shantha): for the Super Admin the same address is the Pilot cockpit, named Pilot Report;
+                // staff keep "Assigned Functions" and their own page
+                if ($admin && $l['url'] === 'dashboard2/tiles') {
+                    $l = ['url' => 'dashboard2/tiles', 'label' => 'Pilot Report', 'icon' => 'bi-airplane', 'open' => true];
+                }
                 $links[] = $l;
             }
         }

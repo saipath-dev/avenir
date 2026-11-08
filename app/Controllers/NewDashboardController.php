@@ -108,6 +108,15 @@ class NewDashboardController extends BaseController
                 ->getResultArray();
         }
 
+        // tf-cockpit-r1: today's USD rate for the Super Admin's cockpit strip
+        if (session()->get('group_id') == 1) {
+            try {
+                $data['usd'] = \App\Libraries\TourFlow\UsdRate::status($db);
+            } catch (\Throwable $e) {
+                $data['usd'] = null;
+            }
+        }
+
         // tf-pilot-r1: the department panel (tasks waiting, shortcuts, reports) — derived from the user's own privileges
         try {
             $data['pilot'] = \App\Libraries\Pilot::forUser($db, $data);
