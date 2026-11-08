@@ -91,15 +91,15 @@
 </div>
 
 <div class="tabs" role="tablist">
-  <button class="tab" role="tab" data-tab="pos" aria-selected="true" type="button">Positions</button>
+  <button class="tab" role="tab" data-tab="perm" aria-selected="true" type="button">Staff Access Control Panel</button>
+  <button class="tab" role="tab" data-tab="pos" aria-selected="false" type="button">Positions</button>
   <button class="tab" role="tab" data-tab="accounts" aria-selected="false" type="button">Accounts &amp; assignments</button>
-  <button class="tab" role="tab" data-tab="perm" type="button">Permission panel</button>
   <button class="tab" role="tab" data-tab="tpl" type="button">Role templates</button>
   <button class="tab" role="tab" data-tab="hist" type="button">Access &amp; activity history</button>
 </div>
 
 <!-- Positions (tf-positions-r1): the position first, then the person who holds it. A position grants nothing. -->
-<section id="v_pos">
+<section id="v_pos" hidden>
   <div class="card2 panel">
     <div class="panel-h"><div><h5>Positions</h5><p>each position, and the person who holds it &mdash; a position grants nothing; permissions are opened on the person</p></div><button class="btn2 g" id="b_newpos" type="button">+ New position</button></div>
     <?php if (empty($positions_installed)): ?>
@@ -132,20 +132,8 @@
   </div>
 </section>
 
-<!-- Permission panel -->
-<section id="v_perm" hidden>
-  <div class="card2 panel">
-    <div class="panel-h"><div><h5>Permission panel</h5><p id="p_sub">choose a staff member on the panel</p></div><span class="pill" id="p_count">–</span></div>
-    <div class="filters" style="grid-template-columns:2fr 2fr 1fr">
-      <select class="inp" id="p_staff"><option value="">— staff member on the panel —</option></select>
-      <input class="inp" id="p_q" type="search" placeholder="Search a page or action">
-      <select class="inp" id="p_filter"><option value="">All rows</option><option value="open">Open only</option><option value="blocked">Blocked only</option><option value="rights">Action rights only</option></select>
-    </div>
-    <div id="p_head" class="small muted" style="padding:10px 14px;border-bottom:1px solid var(--line)" hidden></div>
-    <div class="tw"><table class="t" id="p_table"><thead><tr><th>Page / action</th><th>URL</th><th>Control</th><th>Last change</th></tr></thead><tbody id="p_body"><tr><td colspan="4" class="muted" style="padding:16px">Choose a staff member above.</td></tr></tbody></table></div>
-    <div class="small muted" style="padding:10px 14px">One switch per page or action from the system's own menu table. Rows that share one URL switch together. Payment roles A, B and C are never opened by a group shortcut and refuse each other in any order. Settings, Staff Assignment, Blocks &amp; Investigations and the System-Administrator-only rights have no switch.</div>
-  </div>
-</section>
+<!-- Permission panel: tf-panel2-r1, the redesigned Staff Access Control Panel -->
+<?= view('pages/master_files/staff_access_panel') ?>
 
 <!-- Role templates -->
 <section id="v_tpl" hidden>
@@ -233,7 +221,6 @@
         $('st_all').textContent = ACCOUNTS.length; $('st_sa').textContent = ACCOUNTS.filter(a => a.is_admin).length;
         $('st_roles').textContent = onPanel.reduce((n, a) => n + (a.roles || []).length, 0);
         $('acc_pill').textContent = ACCOUNTS.length + ' accounts · ' + ACCOUNTS.filter(a => a.enabled).length + ' enabled · ' + onPanel.length + ' on the panel';
-        $('p_staff').innerHTML = '<option value="">— staff member on the panel —</option>' + onPanel.map(a => '<option value="' + a.staff_id + '">' + esc((a.name || a.username) + ' (' + a.username + ')') + '</option>').join('');
         renderAccounts();
     }
     function renderAccounts() {
@@ -253,79 +240,21 @@
     $('acc_body').addEventListener('click', e => {
         const add = e.target.closest('[data-add]'), open = e.target.closest('[data-open]');
         if (add) { const a = ACCOUNTS.find(x => x.user_id == add.dataset.add); $('ad_who').innerHTML = '<b>' + esc(a.name || a.username) + '</b> · <code>' + esc(a.username) + '</code> · ' + esc(a.group); $('ad_ok').dataset.user = a.user_id; $('ad_reason').value = ''; $('ad_resp').value = ''; $('ad_err').hidden = true; show('m_add'); }
-        if (open) { $('p_staff').value = open.dataset.open; tab('perm'); loadStaff(+open.dataset.open); }
+        if (open) { tab('perm'); loadStaff(+open.dataset.open); }
     });
     $('ad_ok').addEventListener('click', async () => {
         const j = await post('/add', { user_id: +$('ad_ok').dataset.user, department: $('ad_dept').value, responsibilities: $('ad_resp').value, reason: $('ad_reason').value });
         if (j.status !== 200) { $('ad_err').textContent = j.message; $('ad_err').hidden = false; return; }
-        hide('m_add'); toast('success', j.message); await loadAccounts(); $('p_staff').value = j.id; tab('perm'); loadStaff(j.id);
+        hide('m_add'); toast('success', j.message); await loadAccounts(); tab('perm'); loadStaff(j.id);
     });
     $('b_new').addEventListener('click', () => { $('a_state').value = 'eligible'; renderAccounts(); tab('accounts'); Swal.fire({ icon: 'info', title: 'New staff assignment', text: 'No account is created here. Choose an existing enabled account below and bring it onto the panel; it starts with everything Blocked. Sign-in names and passwords are a separate decision (decision 4).' }); });
 
-    // ---------------------------------------------------------------- permission panel
+    // ---------------------------------------------------------------- permission panel (tf-panel2-r1: the new panel, staff_access_panel.php)
     async function loadMenus() { const j = await api('/menus'); MENUS = j.menus || []; renderTemplates(); }
-    async function loadStaff(id) {
-        if (!id) { STAFF = null; PERMS = {}; $('p_head').hidden = true; $('p_body').innerHTML = '<tr><td colspan="4" class="muted" style="padding:16px">Choose a staff member above.</td></tr>'; $('p_count').textContent = '–'; return; }
-        const j = await api('/one?id=' + id); if (j.status !== 200) { toast('error', j.message); return; }
-        STAFF = j.staff; PERMS = j.permissions || {}; renderStaffHead(); renderPerm();
-    }
-    function renderStaffHead() {
-        const s = STAFF, st = s.status;
-        $('p_sub').textContent = (s.emp_name || s.username) + ' · ' + s.username + ' · group today: ' + (s.group_name || s.group_id) + ' (not applied while on the panel)';
-        $('p_head').hidden = false;
-        $('p_head').innerHTML = '<div class="gh"><div>Status: ' + (st === 'active' ? '<span class="pill p-green">Active</span>' : st === 'suspended' ? '<span class="pill p-amber">Suspended</span>' : '<span class="pill p-red">Deactivated</span>') + ' · Department label: <b>' + esc(s.department || '—') + '</b>' + (s.responsibilities ? ' · ' + esc(s.responsibilities) : '') + ' · Payment roles held: <b>' + ((s.roles || []).map(r => r + ' ' + ROLE_NAMES[r]).join(', ') || 'none') + '</b></div>' +
-            '<div>' + (st !== 'active' ? '<button class="btn3 g" data-status="active">Reactivate</button> ' : '') + (st !== 'suspended' ? '<button class="btn3" data-status="suspended">Suspend</button> ' : '') + (st !== 'deactivated' ? '<button class="btn3 r" data-status="deactivated">Deactivate</button> ' : '') + '<button class="btn3" data-label="1">Label</button> <button class="btn3" data-remove="1">Take off the panel</button></div></div>';
-    }
-    $('p_head').addEventListener('click', e => {
-        const b = e.target.closest('button'); if (!b || !STAFF) return;
-        if (b.dataset.status) ask('Change status', '<div class="field"><span>Staff member</span><span><b>' + esc(STAFF.emp_name || STAFF.username) + '</b></span></div><div class="field"><span>Current</span><span>' + esc(STAFF.status) + '</span></div><div class="field"><span>Proposed</span><span><b>' + esc(b.dataset.status) + '</b></span></div>' + (b.dataset.status !== 'active' ? '<div class="warnbox">Every open session of this account is ended at once and its next request is refused.</div>' : ''), async reason => post('/status', { staff_id: STAFF.id, status: b.dataset.status, reason }));
-        if (b.dataset.remove) ask('Take off the panel', '<div class="warnbox">The account goes back to its group list (<b>' + esc(STAFF.group_name) + '</b>). Its Open / Blocked rows are kept but no longer applied.</div>', async reason => post('/remove', { staff_id: STAFF.id, reason }));
-        if (b.dataset.label) {
-            const depts = <?= json_encode($departments ?? []) ?>;
-            ask('Department label and responsibilities', '<div class="field"><span>Department label</span><select class="inp" id="l_dept"><option value="">— none —</option>' + depts.map(d => '<option' + (d === STAFF.department ? ' selected' : '') + '>' + esc(d) + '</option>').join('') + '</select></div><div class="field"><span>Responsibilities</span><input class="inp" id="l_resp" maxlength="500" value="' + esc(STAFF.responsibilities || '') + '"></div><div class="small muted">Labels grant nothing.</div>', async reason => post('/label', { staff_id: STAFF.id, department: $('l_dept').value, responsibilities: $('l_resp').value, reason }));
-        }
-    });
+    async function loadStaff(id) { if (!id || !window.SAP) return; await window.SAP.openPerson(id); }
+    document.addEventListener('sap:person', e => { STAFF = e.detail.staff; PERMS = e.detail.perms || {}; });
     function stateOf(m) { return (PERMS[m.id] && PERMS[m.id].state) === 'open' ? 'open' : 'blocked'; }
-    function renderPerm() {
-        if (!STAFF) return;
-        const q = $('p_q').value.trim().toLowerCase(), f = $('p_filter').value;
-        let open = 0, total = 0, html = '', cat = null, seenUrl = new Set();
-        MENUS.forEach(m => {
-            const st = stateOf(m); if (!m.protected) { total++; if (st === 'open') open++; }
-            if (q && !(m.name + ' ' + m.url + ' ' + m.category).toLowerCase().includes(q)) return;
-            if (f === 'open' && st !== 'open') return; if (f === 'blocked' && (st !== 'blocked' || m.protected)) return; if (f === 'rights' && !m.right) return;
-            if (m.category !== cat) { cat = m.category; const ids = MENUS.filter(x => x.category === cat && !x.protected && !x.role).map(x => x.id); html += '<tr class="grp"><td colspan="4"><div class="gh"><span>' + esc(cat) + '</span>' + (ids.length ? '<span><button class="btn3" data-bulk="open" data-cat="' + esc(cat) + '">Open all in this group</button> <button class="btn3" data-bulk="blocked" data-cat="' + esc(cat) + '">Block all</button></span>' : '') + '</div></td></tr>'; }
-            const p = PERMS[m.id];
-            const tags = (m.role ? ' <span class="pill p-orchid">role ' + m.role + ' · ' + esc(ROLE_NAMES[m.role]) + '</span>' : '') + (m.right ? ' <span class="pill p-grey">action right</span>' : '') + (m.same_url.length ? ' <span class="pill p-grey" title="same URL as menu id ' + m.same_url.join(', ') + '">shares URL</span>' : '');
-            const ctl = m.protected ? '<span class="pill p-red">Super Admin only</span>' : '<span class="sw ' + st + '" role="switch" tabindex="0" aria-checked="' + (st === 'open') + '" data-id="' + m.id + '"><span class="o">Open</span><span class="b">Blocked</span></span>';
-            html += '<tr><td>' + esc(m.name) + tags + '</td><td class="small"><code>' + esc(m.url) + '</code></td><td>' + ctl + '</td><td class="small muted">' + (p ? dt(p.set_at) + ' · ' + esc(p.set_by) + ' · "' + esc(p.reason) + '"' : (m.protected ? 'no switch; the controller refuses every other account' : '—')) + '</td></tr>';
-        });
-        $('p_body').innerHTML = html || '<tr><td colspan="4" class="muted" style="padding:14px">No row matches.</td></tr>';
-        $('p_count').textContent = open + ' open · ' + (total - open) + ' blocked · ' + total + ' switchable rows';
-    }
-    ['p_q', 'p_filter'].forEach(id => $(id).addEventListener('input', renderPerm));
-    $('p_staff').addEventListener('change', e => loadStaff(+e.target.value));
-    $('pageSearch').addEventListener('input', e => { $('p_q').value = e.target.value; if (STAFF) { tab('perm'); renderPerm(); } });
-    $('p_body').addEventListener('click', e => {
-        const sw = e.target.closest('.sw'), bk = e.target.closest('[data-bulk]');
-        if (sw) switchRow(+sw.dataset.id);
-        if (bk) bulkCat(bk.dataset.cat, bk.dataset.bulk);
-    });
-    $('p_body').addEventListener('keydown', e => { const sw = e.target.closest('.sw'); if (sw && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); switchRow(+sw.dataset.id); } });
-    function switchRow(id) {
-        const m = MENUS.find(x => x.id === id); if (!m || !STAFF) return;
-        const cur = stateOf(m), to = cur === 'open' ? 'blocked' : 'open';
-        ask((to === 'open' ? 'Open' : 'Block') + ' this permission?', '<div class="field"><span>Staff member</span><span><b>' + esc(STAFF.emp_name || STAFF.username) + '</b> (' + esc(STAFF.username) + ')</span></div><div class="field"><span>Function</span><span><b>' + esc(m.name) + '</b> <code>' + esc(m.url) + '</code></span></div><div class="field"><span>Current setting</span><span>' + (cur === 'open' ? '<span class="pill p-green">Open</span>' : '<span class="pill p-red">Blocked</span>') + '</span></div><div class="field"><span>Proposed setting</span><span>' + (to === 'open' ? '<span class="pill p-green">Open</span>' : '<span class="pill p-red">Blocked</span>') + '</span></div>' + (m.role && to === 'open' ? '<div class="warnbox">Payment role ' + m.role + ' (' + esc(ROLE_NAMES[m.role]) + '). After this the other two payment roles are refused for this person.</div>' : ''),
-            async reason => post('/set', { staff_id: STAFF.id, menu_id: id, state: to, reason }));
-    }
-    function bulkCat(cat, state) {
-        if (!STAFF) return;
-        const rows = MENUS.filter(m => m.category === cat && !m.protected && !m.role && stateOf(m) !== state);
-        const skipped = MENUS.filter(m => m.category === cat && (m.role || m.protected));
-        if (!rows.length) { toast('info', 'Every switchable row in "' + cat + '" is already ' + state + '.'); return; }
-        ask((state === 'open' ? 'Open' : 'Block') + ' all in ' + cat, '<div class="warnbox">This will switch <b>' + rows.length + ' rows</b> to <b>' + state + '</b>:<br>' + rows.map(m => esc(m.name)).join(' · ') + '</div>' + (skipped.length ? '<div class="small muted" style="margin-top:6px">Not included (never in bulk): ' + skipped.map(m => esc(m.name)).join(' · ') + '</div>' : '') + '<div class="small muted" style="margin-top:6px">Each row is logged as its own line with this reason.</div>',
-            async reason => post('/bulk', { staff_id: STAFF.id, menu_ids: rows.map(m => m.id), state, reason }));
-    }
+    $('pageSearch').addEventListener('input', e => { tab('perm'); if (window.SAP) window.SAP.search(e.target.value); });
 
     // ---------------------------------------------------------------- templates (suggestion lists by URL; payment roles never included)
     const TEMPLATES = {
@@ -348,7 +277,7 @@
     }
     $('tpl_grid').addEventListener('click', e => {
         const b = e.target.closest('[data-tpl]'); if (!b) return;
-        if (!STAFF) { toast('info', 'Choose a staff member on the Permission panel first.'); tab('perm'); return; }
+        if (!STAFF) { toast('info', 'Choose a staff member on the Staff Access Control Panel first.'); tab('perm'); return; }
         const rows = TEMPLATES[b.dataset.tpl].map(u => MENUS.find(m => m.url === u)).filter(Boolean).filter(m => !m.role && !m.protected && stateOf(m) !== 'open');
         if (!rows.length) { toast('info', 'Every row of this template is already Open for ' + (STAFF.emp_name || STAFF.username) + '.'); return; }
         ask('Template — ' + b.dataset.tpl, '<div class="warnbox">For <b>' + esc(STAFF.emp_name || STAFF.username) + '</b> this would switch <b>' + rows.length + ' rows</b> from Blocked to Open:<br>' + rows.map(m => esc(m.name)).join(' · ') + '</div><div class="small muted" style="margin-top:6px">Nothing else changes; each row is logged on its own.</div>', async reason => post('/bulk', { staff_id: STAFF.id, menu_ids: rows.map(m => m.id), state: 'open', reason }));
@@ -376,7 +305,7 @@
         if (j.status !== 200) { $('r_err').innerHTML = esc(j.message) + (j.refused ? '<div class="small" style="margin-top:4px">The refusal was logged.</div>' : ''); $('r_err').hidden = false; return; }
         hide('m_reason');
         if (j.refused && j.refused.length) Swal.fire({ icon: 'warning', title: j.message, html: j.refused.map(r => esc(r.message)).join('<br>') }); else toast('success', j.message);
-        await loadAccounts(); if (STAFF) await loadStaff(STAFF.id); if (!$('v_hist').hidden) loadHistory();
+        await loadAccounts(); if (window.SAP) await window.SAP.refresh(); if (!$('v_hist').hidden) loadHistory();
     });
 
     // ---------------------------------------------------------------- positions (tf-positions-r1)
@@ -417,11 +346,11 @@
             ask('End ' + p.holder.name + '\'s holding of "' + p.title + '"', '<div class="small muted">The record of who held it, and when, is kept. Their permissions and status are not changed by this &mdash; suspend them on the panel if their access should end.</div>',
                 async reason => { const j = await post('/position/end', { position_id: p.id, reason }); if (j.status === 200) loadPositions(); return j; });
         } else if (pp) {
-            $('p_staff').value = pp.dataset.pperm; tab('perm'); loadStaff(+pp.dataset.pperm);
+            tab('perm'); loadStaff(+pp.dataset.pperm);
         }
     });
 
-    Promise.all([loadMenus(), loadAccounts(), loadPositions()]).then(() => { if (OPEN_STAFF) { $('p_staff').value = OPEN_STAFF; tab('perm'); loadStaff(OPEN_STAFF); } });
+    Promise.all([loadMenus(), loadAccounts(), loadPositions()]).then(() => { if (OPEN_STAFF) { tab('perm'); loadStaff(OPEN_STAFF); } });
 })();
 </script>
 </body>

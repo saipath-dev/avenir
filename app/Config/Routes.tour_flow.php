@@ -338,6 +338,11 @@ $routes->group('master_files/staff', ['filter' => ['UserSessionFilter']], static
     $routes->post('position', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionCreate']);
     $routes->post('position/assign', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionAssign']);
     $routes->post('position/end', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'positionEnd']);
+    // tf-panel2-r1: the redesigned panel — work map, person, category, reviewed batch
+    $routes->get('map', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'map']);
+    $routes->get('person', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'person']);
+    $routes->get('category', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'category']);
+    $routes->post('apply', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'apply']);
     // tf-retire-r1: retire old employee records; set a staff number
     $routes->post('retire_old', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'retireOld']);
     $routes->post('staff_number', [\App\Controllers\MasterFiles\StaffAssignmentController::class, 'staffNumber']);

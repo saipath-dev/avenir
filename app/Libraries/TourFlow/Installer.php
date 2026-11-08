@@ -346,6 +346,13 @@ final class Installer
         } catch (\Throwable $e) {
             $notes[] = 'Staff profiles: ' . $e->getMessage();
         }
+        try {
+            foreach (StaffTaskMap::ensure($db) as $u) {   // tf-panel2-r1: the issue-quotation action right
+                $notes[] = $u;
+            }
+        } catch (\Throwable $e) {
+            $notes[] = 'Issue-quotation right: ' . $e->getMessage();
+        }
         // Transport & Guide Services (Shantha, 5 Oct 2026): the four connected masters under one sidebar heading
         foreach (self::transportGuideMenu($db) as $u) {
             $notes[] = $u;

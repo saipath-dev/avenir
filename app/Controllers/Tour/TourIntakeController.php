@@ -346,6 +346,7 @@ class TourIntakeController extends BaseController
         // (Management), typing kilometres over the history (Management), the excursion master
         $data['sees_pricing']   = $this->holds(self::PRICING_URL);
         $data['can_mileage']    = $this->holds(self::MILEAGE_URL);
+        $data['can_issue']      = $this->holds(\App\Libraries\TourFlow\StaffTaskMap::ISSUE_URL);   // tf-panel2-r1
         // tf-walkfix-r1: the desks and the Board are linked only for a sign-in that may open them — a link that
         // answers Forbidden is no link
         $data['can_hotel']      = $this->holds(TourDeskController::HOTEL);
@@ -1679,6 +1680,10 @@ class TourIntakeController extends BaseController
     public function quoteAction($id, $qid, $action)
     {
         try {
+            // tf-panel2-r1: issuing is its own permission (act:quote.issue), checked on the server before anything is read
+            if ($action === 'issue' && !$this->holds(\App\Libraries\TourFlow\StaffTaskMap::ISSUE_URL)) {
+                return $this->json(['status' => 403, 'message' => 'You may prepare quotations but not issue them. Ask the Super Admin to open "Issue quotations" for you on the Staff Access Control Panel.']);
+            }
             $q = $this->quotes();
             $row = $q->quote((int) $qid);
             if (!$row || (int) $row['intake_id'] !== (int) $id) {
@@ -1980,6 +1985,10 @@ class TourIntakeController extends BaseController
             }
             if ($row['status'] === 'superseded') {
                 return $this->json(['status' => 400, 'message' => 'Version ' . $row['version'] . ' is history; send the current version.']);
+            }
+            // tf-panel2-r1: e-mailing a draft issues it, so it needs the issue permission too
+            if ($row['status'] === 'draft' && !$this->holds(\App\Libraries\TourFlow\StaffTaskMap::ISSUE_URL)) {
+                return $this->json(['status' => 403, 'message' => 'Sending this version issues it. You may prepare quotations but not issue them; ask the Super Admin to open "Issue quotations" for you.']);
             }
             // tf-comms-r3: a version the system drafted from a request e-mail goes nowhere until a person has reviewed it and pressed Issue
             if ($row['status'] === 'draft' && (int) ($row['review_required'] ?? 0) === 1) {

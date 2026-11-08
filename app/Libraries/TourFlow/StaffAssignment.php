@@ -413,7 +413,9 @@ final class StaffAssignment
             return ['ok' => false, 'message' => 'No such page or action in the menu table.'];
         }
         $url = trim((string) $m['url'], '/');
-        $cur = self::permissions($db, $staffId)[$menuId]['state'] ?? 'blocked';
+        // tf-panel2-r1: "Not set" (no row) is no access like Blocked, but an explicit Block is still written, so it shows and is logged
+        $curRow = self::permissions($db, $staffId)[$menuId]['state'] ?? null;
+        $cur = $curRow ?? 'not set';
         $label = $m['name'] . ' (' . $url . ')';
         if ($state === 'open' && self::isProtected($url)) {
             self::log($db, $staffId, (int) $s['user_id'], 'refused', $menuId, $cur, 'open', $reason, 'Protected: ' . $label . ' is Super Admin only and is never opened for a staff account.', $by, $byName);
@@ -432,7 +434,7 @@ final class StaffAssignment
                 return ['ok' => false, 'refused' => 'role', 'message' => 'Not opened. ' . $s['username'] . ' already holds ' . self::ROLE_NAMES[$h] . '. Opening ' . self::ROLE_NAMES[$role] . ' as well would give one person two of the three payment roles. Keep them with different people. The refusal was logged.'];
             }
         }
-        if ($cur === $state) {
+        if ($curRow === $state) {
             return ['ok' => true, 'unchanged' => true, 'message' => '"' . $m['name'] . '" was already ' . ucfirst($state) . '.'];
         }
         $now = date('Y-m-d H:i:s');
@@ -444,6 +446,34 @@ final class StaffAssignment
         }
         self::log($db, $staffId, (int) $s['user_id'], $state === 'open' ? 'opened' : 'blocked', $menuId, $cur, $state, $reason, $label . ($role ? ' — payment role ' . $role : '') . (count($ids) > 1 ? ' (' . count($ids) . ' menu rows share this URL)' : '') . ($bulk ? ' [bulk]' : ''), $by, $byName);
         return ['ok' => true, 'message' => '"' . $m['name'] . '" is now ' . ucfirst($state) . ' for ' . $s['username'] . '. Applies on their next request.'];
+    }
+
+    /**
+     * tf-panel2-r1: Remove — the row goes back to "Not set" (no setting at all, so no access: the zero-permission default).
+     * Rows that share the URL go together. The history keeps what it was; nothing else changes.
+     */
+    public static function unset($db, int $staffId, int $menuId, string $reason, string $by, string $byName): array
+    {
+        if ($why = self::reasonRefusal($reason)) {
+            return ['ok' => false, 'message' => $why];
+        }
+        $s = self::staff($db, $staffId);
+        if (!$s) {
+            return ['ok' => false, 'message' => 'No such staff record.'];
+        }
+        $m = $db->query('SELECT id, name, url FROM menu_list WHERE id = ? AND del = 0 LIMIT 1', [$menuId])->getRowArray();
+        if (!$m) {
+            return ['ok' => false, 'message' => 'No such page or action in the menu table.'];
+        }
+        $url = trim((string) $m['url'], '/');
+        $ids = array_map(static fn ($r) => (int) $r['id'], $db->query('SELECT id FROM menu_list WHERE del = 0 AND TRIM(BOTH "/" FROM url) = ?', [$url])->getResultArray()) ?: [$menuId];
+        $cur = self::permissions($db, $staffId)[$menuId]['state'] ?? null;
+        if ($cur === null) {
+            return ['ok' => true, 'unchanged' => true, 'message' => '"' . $m['name'] . '" was already Not set.'];
+        }
+        $db->query('DELETE FROM tf_staff_permission WHERE staff_id = ? AND menu_id IN (' . implode(',', $ids) . ')', [$staffId]);
+        self::log($db, $staffId, (int) $s['user_id'], 'removed', $menuId, $cur, 'not set', $reason, $m['name'] . ' (' . $url . ') removed: back to Not set (no access).' . (count($ids) > 1 ? ' (' . count($ids) . ' menu rows share this URL)' : ''), $by, $byName);
+        return ['ok' => true, 'message' => '"' . $m['name'] . '" is now Not set for ' . $s['username'] . '.'];
     }
 
     /** A group shortcut: each row on its own, same reason; payment roles and protected rows are refused, never granted. */

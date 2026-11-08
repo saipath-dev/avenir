@@ -1123,6 +1123,7 @@
     const ML = <?= json_encode($masters_links ?? []) ?>;   // tf-stage9: which masters this sign-in may open
     const SITE = '<?= base_url() ?>';
     const CAN_MILEAGE = <?= !empty($can_mileage) ? 'true' : 'false' ?>;
+    const CAN_ISSUE = <?= !empty($can_issue) ? 'true' : 'false' ?>;   // tf-panel2-r1: issuing is its own permission
     const SEES_EXC = <?= !empty($sees_excursions) ? 'true' : 'false' ?>;
     const SEES_CREW = <?= !empty($sees_crew) ? 'true' : 'false' ?>;   // holds Master Files → Crew Bata: a link, never an editor here
     const CREW_URL = '<?= base_url($crew_url ?? 'master_files/crew_bata') ?>';
@@ -1496,7 +1497,7 @@
         const s2cls = issued ? 'done' : (draft || it.status === 'quoted' ? 'on' : (confirmed ? 'done' : ''));
         const s2sub = issued ? `v${issued.version} issued ${esc((issued.issued_at || '').slice(0, 10))}${issued.sell_usd != null ? ' · ' + fmtUsd(issued.sell_usd) : ''}`
             : (draft ? `v${draft.version} is a draft — issue it once it has gone to the agent` : (it.status === 'quoted' ? 'marked as quoted — no version issued' : 'no version yet'));
-        const s2acts = it.locked ? '' : (draft ? `<button class="btn btn-success btn-sm" data-flow-issue="${draft.id}"><i class="bi bi-send"></i> Issue v${draft.version}</button>` : '')
+        const s2acts = it.locked ? '' : (draft && CAN_ISSUE ? `<button class="btn btn-success btn-sm" data-flow-issue="${draft.id}"><i class="bi bi-send"></i> Issue v${draft.version}</button>` : '')
             + `<button class="btn btn-light btn-sm" id="f_goquote"><i class="bi bi-arrow-down"></i> ${issued || draft ? 'Quotation' : 'Go for Quotation'}</button>`;
         // 3 — Confirm Tour
         let s3cls = '', s3sub = '', s3acts = '';
@@ -2688,7 +2689,7 @@
                 <span style="white-space:nowrap"><a class="btn btn-light btn-sm" target="_blank" href="${BASE}/intake/${it.id}/quote/${q.id}?view=internal">Costing</a>
                     <a class="btn btn-light btn-sm" target="_blank" href="${BASE}/intake/${it.id}/quote/${q.id}?view=client">Client</a>
                     <a class="btn btn-light btn-sm" target="_blank" href="${BASE}/intake/${it.id}/quote/${q.id}?view=client&pdf=1" title="Client quotation as PDF"><i class="bi bi-file-earmark-pdf"></i> PDF</a>
-                    ${q.status === 'draft' && !it.locked ? `<button class="btn btn-success btn-sm" data-issue="${q.id}" title="Sent to the agent: this version becomes the quotation on record">Issue</button>
+                    ${q.status === 'draft' && !it.locked && CAN_ISSUE ? `<button class="btn btn-success btn-sm" data-issue="${q.id}" title="Sent to the agent: this version becomes the quotation on record">Issue</button>
                     <button class="btn btn-light btn-sm rowdel" data-discard="${q.id}" title="Throw the draft away">&times;</button>` : ''}</span></div>`).join('')}` : '<div class="empty">No quotation version yet.</div>'}
             ${it.locked ? '' : `<div class="d-flex gap-2 mt-3 flex-wrap align-items-center">
                 <button class="btn btn-light btn-sm" id="d_checklist" title="Every rate and figure still missing, each with a Fix that takes you to it"><i class="bi bi-list-check"></i> Checklist</button>

@@ -148,6 +148,7 @@
     const CLASSIC = '<?= base_url($classic_url ?? 'tour/intake?classic=1') ?>';
     const OPEN_ID = <?= (int) ($open_id ?? 0) ?>;
     const SEES_PRICING = <?= !empty($sees_pricing) ? 'true' : 'false' ?>;
+    const CAN_ISSUE = <?= !empty($can_issue) ? 'true' : 'false' ?>;   // tf-panel2-r1
 
     const $ = id => document.getElementById(id);
     const esc = s => String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1134,7 +1135,7 @@
                 + '<td><div class="acts">'
                 +     '<button class="btn-quiet btn-xs" data-act="view" type="button">View</button>'
                 +     '<button class="btn-quiet btn-xs" data-act="pdf" type="button">PDF</button>'
-                +     (ro ? '' : (q.status === 'draft' ? '<button class="btn-quiet btn-xs" data-act="issue" type="button">Issue</button><button class="btn-red btn-xs" data-act="discard" type="button">Discard</button>' : ''))
+                +     (ro ? '' : (q.status === 'draft' ? (CAN_ISSUE ? '<button class="btn-quiet btn-xs" data-act="issue" type="button">Issue</button>' : '')+'<button class="btn-red btn-xs" data-act="discard" type="button">Discard</button>' : ''))
                 +     (ro ? '' : '<button class="btn-quiet btn-xs" data-act="maxpax" type="button">Save max</button><button class="btn-quiet btn-xs" data-act="mail" type="button">E-mail it</button>')
                 +     '</div></td></tr>').join('')
             + (quotes.length ? '' : '<tr><td colspan="6" class="muted">No quotation version on this inquiry yet.</td></tr>')

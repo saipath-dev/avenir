@@ -62,6 +62,7 @@ class GuidedInquiryController extends BaseController
         $data['guided_url']    = self::URL . '/guided';
         $data['pricing_url']   = TourIntakeController::PRICING_URL;
         $data['sees_pricing']  = $this->holds(TourIntakeController::PRICING_URL);
+        $data['can_issue']     = $this->holds(\App\Libraries\TourFlow\StaffTaskMap::ISSUE_URL);   // tf-panel2-r1
         // tf-confirmux-r1: ?id= takes the row's id as before, and also the inquiry number as it is written
         // on the screen (1046, INQ 1046, inq-1046) — a bookmark or a typed link opens the right inquiry
         $data['open_id']       = $this->openId((string) ($this->request->getGet('id') ?? ''));

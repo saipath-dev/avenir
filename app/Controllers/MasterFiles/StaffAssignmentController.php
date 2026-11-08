@@ -246,6 +246,149 @@ class StaffAssignmentController extends BaseController
         return $this->out(StaffPositions::end($this->db(), (int) ($b['position_id'] ?? 0), (string) ($b['reason'] ?? ''), $this->user(), $this->name()));
     }
 
+    // ---------------------------------------------------------------- tf-panel2-r1: the redesigned Staff Access Control Panel
+
+    /** GET map — every page and action, arranged in Travel Sales / Ground Handling / Accounts / Shared & Administration. */
+    public function map()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        return $this->json(['status' => 200, 'categories' => \App\Libraries\TourFlow\StaffTaskMap::build($this->db()), 'role_names' => StaffAssignment::ROLE_NAMES]);
+    }
+
+    /** GET person?id=<staff id> — the person, their saved settings, and the last logged change of every row. */
+    public function person()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $db = $this->db();
+        $id = (int) $this->request->getGet('id');
+        $s = StaffAssignment::staff($db, $id);
+        if (!$s) {
+            return $this->json(['status' => 404, 'message' => 'No such staff record.'], 404);
+        }
+        $last = [];
+        foreach ($db->query('SELECT l.menu_id, l.action, l.to_state, l.reason, l.by_name, l.by_user, l.at FROM tf_staff_log l
+                             JOIN (SELECT menu_id, MAX(id) mid FROM tf_staff_log WHERE staff_id = ? AND menu_id IS NOT NULL GROUP BY menu_id) x ON x.mid = l.id', [$id])->getResultArray() as $r) {
+            $last[(int) $r['menu_id']] = $r;
+        }
+        return $this->json(['status' => 200, 'staff' => $s, 'permissions' => StaffAssignment::permissions($db, $id), 'last' => $last]);
+    }
+
+    /** GET category?cat=sales|ground|acc|shared — who holds access in a work category (people with permission, not who is signed in). */
+    public function category()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $db = $this->db();
+        $key = (string) $this->request->getGet('cat');
+        $cat = null;
+        foreach (\App\Libraries\TourFlow\StaffTaskMap::build($db) as $c) {
+            if ($c['key'] === $key) {
+                $cat = $c;
+            }
+        }
+        if (!$cat) {
+            return $this->json(['status' => 404, 'message' => 'No such category.'], 404);
+        }
+        $tasks = array_values(array_filter($cat['tasks'], static fn ($t) => empty($t['locked'])));
+        $people = ['enabled' => [], 'inactive' => [], 'admins' => []];
+        foreach (StaffAssignment::accounts($db) as $a) {
+            if ($a['is_admin']) {
+                $people['admins'][] = ['name' => $a['name'], 'username' => $a['username'], 'enabled' => $a['enabled']];
+                continue;
+            }
+            if (!$a['on_panel'] || !$a['staff_id']) {
+                continue;
+            }
+            $open = [];
+            foreach (StaffAssignment::permissions($db, (int) $a['staff_id']) as $mid => $p) {
+                if ($p['state'] === 'open') {
+                    $open[(int) $mid] = true;
+                }
+            }
+            $held = [];
+            foreach ($tasks as $t) {
+                $n = 0;
+                $tot = 0;
+                foreach ($t['screens'] as $sc) {
+                    $tot++;
+                    $ids = array_merge([$sc['id']], $sc['same_ids']);
+                    foreach ($ids as $i) {
+                        if (isset($open[$i])) {
+                            $n++;
+                            break;
+                        }
+                    }
+                }
+                if ($n > 0) {
+                    $held[] = ['task' => $t['title'], 'open' => $n, 'of' => $tot];
+                }
+            }
+            if (!$held) {
+                continue;
+            }
+            $row = ['name' => $a['name'], 'username' => $a['username'], 'staff_id' => $a['staff_id'], 'group' => $a['group'], 'tasks' => $held,
+                'coverage' => count($held) === count($tasks) ? 'every' : 'some', 'task_count' => count($tasks),
+                'state' => !$a['enabled'] ? 'Sign-in disabled' : ($a['status'] !== 'active' ? ucfirst((string) $a['status']) : 'Enabled')];
+            if ($a['enabled'] && $a['status'] === 'active') {
+                $people['enabled'][] = $row;
+            } else {
+                $people['inactive'][] = $row;
+            }
+        }
+        return $this->json(['status' => 200, 'category' => ['key' => $cat['key'], 'title' => $cat['title'], 'desc' => $cat['desc'], 'task_count' => count($tasks)], 'people' => $people]);
+    }
+
+    /**
+     * POST apply {staff_id, reason, changes: [{menu_id, to: open|blocked|unset, group: bool}]} — the reviewed batch.
+     * Blocks and removals run first, then opens, so a person can move from one payment role to another in one review.
+     * A change made from a category or task heading (group: true) never opens a payment role; a row's own change may, and the
+     * three-role separation still refuses a second role. Every row is logged on its own with the one reason.
+     */
+    public function apply()
+    {
+        if ($r = $this->refusal()) {
+            return $r;
+        }
+        $b = $this->body();
+        $db = $this->db();
+        $staff = (int) ($b['staff_id'] ?? 0);
+        $reason = (string) ($b['reason'] ?? '');
+        $changes = is_array($b['changes'] ?? null) ? $b['changes'] : [];
+        if (!$changes) {
+            return $this->json(['status' => 422, 'message' => 'Nothing to change.'], 422);
+        }
+        if (mb_strlen(trim($reason)) < StaffAssignment::REASON_MIN) {
+            return $this->json(['status' => 422, 'message' => 'Give a reason of at least ' . StaffAssignment::REASON_MIN . ' characters. Nothing was changed.'], 422);
+        }
+        usort($changes, static fn ($x, $y) => (($x['to'] ?? '') === 'open') <=> (($y['to'] ?? '') === 'open'));
+        $done = $refused = $unchanged = [];
+        foreach ($changes as $c) {
+            $mid = (int) ($c['menu_id'] ?? 0);
+            $to = (string) ($c['to'] ?? '');
+            if ($to === 'unset') {
+                $res = StaffAssignment::unset($db, $staff, $mid, $reason, $this->user(), $this->name());
+            } elseif ($to === 'open' || $to === 'blocked') {
+                $res = StaffAssignment::set($db, $staff, $mid, $to, $reason, $this->user(), $this->name(), !empty($c['group']));
+            } else {
+                $res = ['ok' => false, 'message' => 'Unknown setting "' . $to . '".'];
+            }
+            if (!empty($res['unchanged'])) {
+                $unchanged[] = $mid;
+            } elseif (!empty($res['ok'])) {
+                $done[] = ['menu_id' => $mid, 'to' => $to];
+            } else {
+                $refused[] = ['menu_id' => $mid, 'to' => $to, 'message' => $res['message'] ?? 'Refused.'];
+            }
+        }
+        return $this->json(['status' => 200, 'done' => $done, 'refused' => $refused, 'unchanged' => $unchanged,
+            'message' => count($done) . ' change(s) saved' . ($refused ? ', ' . count($refused) . ' refused' : '') . ($unchanged ? ', ' . count($unchanged) . ' already so' : '') . '.']);
+    }
+
     // tf-retire-r1: retire old employee records (preview, then apply) and set a staff number — Super Admin only
     public function retireOld()
     {
