@@ -51,7 +51,21 @@ $item = static function (array $it) use ($esc): string {
     .hd-brand img { height:clamp(72px,7.4vw,104px); max-width:100%; width:auto; }
     .hd-title { font-family:var(--hd-font); color:var(--hd-title); text-align:center; font-size:clamp(1.8rem,3.1vw,2.75rem); font-weight:800; margin:6px 0 4px; letter-spacing:-.03em; line-height:1.08; }
     /* tf-stage2: the daily USD rate box */
-    .hd-usd { font-family:var(--hd-font); background:#fff; border:1.5px solid var(--hd-line); border-radius:16px; margin:0 auto clamp(16px,1.8vw,26px); max-width:760px; overflow:hidden; box-shadow:0 4px 14px rgba(132,36,132,.08); }
+    /* tf-usdpill-r1 (8 Nov 2026, Shantha — mockup option 3): the rate is a small pill in the top bar; the full box opens under it */
+    .hd-usd { font-family:var(--hd-font); background:#fff; border:1.5px solid var(--hd-line); border-radius:16px; overflow:hidden; box-shadow:0 18px 40px rgba(43,27,48,.22);
+      position:fixed; top:64px; right:clamp(12px,14vw,330px); width:min(460px, calc(100vw - 24px)); z-index:1045; display:none; }
+    .hd-usd.open { display:block; }
+    .hd-usd-x { background:transparent; border:0; color:#fff; font-size:1.1rem; line-height:1; cursor:pointer; padding:0 2px; margin-left:4px; }
+    .hd-usdpill { display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 6px 0 12px; border-radius:999px; border:1px solid rgba(255,255,255,.45);
+      background:rgba(255,255,255,.14); color:#fff; font-family:var(--hd-font); font-size:.85rem; font-weight:600; cursor:pointer; white-space:nowrap; transition:background .15s; }
+    .hd-usdpill:hover, .hd-usdpill[aria-expanded="true"] { background:rgba(255,255,255,.24); }
+    .hd-usdpill b { font-size:.95rem; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:.01em; }
+    .hd-usdpill .lb { opacity:.85; font-weight:600; }
+    .hd-usdpill .st { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:3px 9px; font-size:.72rem; font-weight:700; }
+    .hd-usdpill .st::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
+    .hd-usdpill .st.ok { background:#eaf5df; color:#4e8a26; } .hd-usdpill .st.warn { background:#fdf0d5; color:#9a6a12; }
+    @media (max-width:991px) { .hd-usd { top:58px; right:12px; } .hd-usdpill .lb { display:none; } }
+    @media (max-width:480px) { .hd-usdpill { padding:0 4px 0 9px; gap:5px; } .hd-usdpill .st { padding:3px 7px; } }
     .hd-usd.warn { border-color:#e5b45a; }
     .hd-usd-h { background:var(--hd-b1); color:#fff; padding:9px 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-weight:700; font-size:.95rem; }
     .hd-usd-h .st { font-size:.75rem; font-weight:700; border-radius:14px; padding:2px 10px; letter-spacing:.03em; text-transform:uppercase; }
@@ -138,6 +152,28 @@ $item = static function (array $it) use ($esc): string {
     }
     @media (min-width:600px) and (max-width:991px) { .hd-desks { grid-template-columns:repeat(2,minmax(0,1fr)); } }   /* two per row; Master Files stays under Tour Desk */
     @media (max-width:599px) { .hd-desk { order:0 !important; } }   /* one per row: the usual order */
+    /* tf-tiles-r2 (8 Nov 2026, Shantha's picture): two columns of larger tiles — icon in a circle, a thin divider, name and
+       subtitle, chevron in a circle — green and purple alternating like a chessboard. Every desk the person has stays. */
+    .hd-desks { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:18px 22px; max-width:1040px; margin:0 auto; }
+    .hd-desk { order:0 !important; }
+    .hd-desk > .hd-btn { min-height:118px; border-radius:16px; padding:18px 20px 18px 22px; gap:0; box-shadow:0 6px 16px rgba(43,27,48,.10); }
+    .hd-desk:nth-child(4n+1) > .hd-btn, .hd-desk:nth-child(4n+4) > .hd-btn { background:linear-gradient(145deg,#7cba4c,#69a83e) !important; color:#fff !important; }
+    .hd-desk:nth-child(4n+2) > .hd-btn, .hd-desk:nth-child(4n+3) > .hd-btn { background:linear-gradient(145deg,#8a2a8a,#7a1f7a) !important; color:#fff !important; }
+    .hd-desk > .hd-btn .ct { color:rgba(255,255,255,.9) !important; font-size:1rem; margin-top:6px; }
+    .hd-desk > .hd-btn .nm { font-size:1.42rem; font-weight:800; text-shadow:0 1px 1px rgba(0,0,0,.12); }
+    .hd-desk > .hd-btn .ic { width:66px; height:66px; background:rgba(255,255,255,.88) !important; box-shadow:none !important; }
+    .hd-desk:nth-child(4n+1) > .hd-btn .ic, .hd-desk:nth-child(4n+4) > .hd-btn .ic { color:#4f8a2a; }
+    .hd-desk:nth-child(4n+2) > .hd-btn .ic, .hd-desk:nth-child(4n+3) > .hd-btn .ic { color:#7a1f7a; }
+    .hd-desk > .hd-btn .ic svg { width:32px; height:32px; }
+    .hd-desk > .hd-btn .row1 { margin-left:22px; padding-left:22px; border-left:1.5px solid rgba(255,255,255,.55); align-self:stretch; }
+    .hd-desk > .hd-btn .chev { width:40px; height:40px; background:rgba(255,255,255,.22) !important; box-shadow:none !important; color:#fff; font-size:1rem; }
+    .hd-desk > .hd-btn:hover .chev { background:rgba(255,255,255,.34) !important; }
+    .hd-desk.none > .hd-btn { filter:saturate(.55) brightness(1.04); }
+    @media (max-width:1259px) { .hd-desk > .hd-btn { min-height:104px; padding:16px; } .hd-desk > .hd-btn .ic { width:56px; height:56px; } .hd-desk > .hd-btn .row1 { margin-left:16px; padding-left:16px; } .hd-desk > .hd-btn .nm { font-size:1.22rem; } }
+    @media (max-width:599px) { .hd-desks { grid-template-columns:1fr !important; gap:12px; }
+        .hd-desk:nth-child(odd) > .hd-btn { background:linear-gradient(145deg,#7cba4c,#69a83e) !important; } .hd-desk:nth-child(even) > .hd-btn { background:linear-gradient(145deg,#8a2a8a,#7a1f7a) !important; }
+        .hd-desk:nth-child(odd) > .hd-btn .ic { color:#4f8a2a; } .hd-desk:nth-child(even) > .hd-btn .ic { color:#7a1f7a; }
+        .hd-desk > .hd-btn { min-height:84px; } .hd-desk > .hd-btn .ic { width:48px; height:48px; } .hd-desk > .hd-btn .nm { font-size:1.08rem; } .hd-desk > .hd-btn .ct { font-size:.88rem; } }
 </style>
 
 <style id="av-nav-btn-css">
@@ -159,6 +195,15 @@ $item = static function (array $it) use ($esc): string {
 <header class="hd-top">
     <?= view('layouts/nav_bar', ['nb_back' => 'window.history.back()']) ?><?php /* tf-navbar-r1 */ ?>
     <div class="sp"></div>
+    <?php if (!empty($usd)): // tf-usdpill-r1: today's USD rate as a pill; the details open under it
+        $pRate = $usd['entered'] ? $usd['rate'] : $usd['last_rate'];
+        if (!$usd['entered']) { $pSt = ['warn', $usd['last_date'] ? date('j M', strtotime($usd['last_date'])) : 'Not set', 'Not entered today']; }
+        elseif (!empty($usd['test'])) { $pSt = ['warn', 'TEST', 'Today\'s figure is marked TEST']; }
+        else { $pSt = ['ok', 'Today', 'Entered today']; } ?>
+    <button type="button" class="hd-usdpill" id="hd_usd_pill" aria-expanded="false" aria-controls="hd_usd" title="Today's USD rate — <?= $esc($pSt[2]) ?>. Click for details.">
+        <span class="lb">USD</span><b><?= $pRate !== null ? $esc(number_format($pRate, 2)) : '—' ?></b><span class="st <?= $pSt[0] ?>"><?= $esc($pSt[1]) ?></span>
+    </button>
+    <?php endif; ?>
     <?= view('layouts/page_search') ?><?php /* tf-search-r1 */ ?>
     <div class="hd-user">
         <img src="<?= $esc($profile_picture ?? base_url('assets/images/users/no_profile.jpg')) ?>" alt="" onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'bi bi-person-circle hd-avatar-fallback'}))">
@@ -215,9 +260,9 @@ $item = static function (array $it) use ($esc): string {
         </div>
 
     <?php if (!empty($usd)): // tf-stage2: today's USD rate, entered here by anyone holding the right; read by every costing and payment ?>
-    <div class="hd-usd <?= $usd['entered'] ? 'ok' : 'warn' ?>" id="hd_usd">
-        <div class="hd-usd-h"><span class="t"><i class="bi bi-currency-exchange"></i> Today's USD rate · <?= $esc(date('j M Y')) ?></span>
-            <?php if ($usd['entered'] && !empty($usd['test'])): ?><span class="st warn" title="The latest entry or correction for today is marked TEST. Enter the real rate as a correction (with the reason) to replace it.">TEST figure — not the real rate</span><?php elseif ($usd['entered']): ?><span class="st ok">Entered</span><?php else: ?><span class="st warn">Not entered today</span><?php endif; ?></div>
+    <div class="hd-usd <?= $usd['entered'] ? 'ok' : 'warn' ?>" id="hd_usd" role="dialog" aria-label="Today's USD rate">
+        <div class="hd-usd-h" role="heading" aria-level="2"><span class="t"><i class="bi bi-currency-exchange"></i> Today's USD rate · <?= $esc(date('j M Y')) ?></span>
+            <?php if ($usd['entered'] && !empty($usd['test'])): ?><span class="st warn" title="The latest entry or correction for today is marked TEST. Enter the real rate as a correction (with the reason) to replace it.">TEST figure — not the real rate</span><?php elseif ($usd['entered']): ?><span class="st ok">Entered</span><?php else: ?><span class="st warn">Not entered today</span><?php endif; ?><button type="button" class="hd-usd-x" id="hd_usd_x" aria-label="Close">&times;</button></div>
         <div class="hd-usd-b">
             <?php if ($usd_may): ?>
             <form class="hd-usd-f" id="hd_usd_f" autocomplete="off">
@@ -255,6 +300,20 @@ $item = static function (array $it) use ($esc): string {
 
 <?= view('layouts/theme_settings') ?>
 <?= view('layouts/scripts') ?>
+<script>
+// tf-usdpill-r1: the pill opens and closes the rate panel (outside click, Esc and the × close it; #usd opens it)
+(function () {
+    var pill = document.getElementById('hd_usd_pill'), box = document.getElementById('hd_usd'); if (!pill || !box) return;
+    function place() { var r = pill.getBoundingClientRect(), w = box.offsetWidth, x = Math.min(Math.max(12, r.right - w), window.innerWidth - w - 12); box.style.left = x + 'px'; box.style.right = 'auto'; box.style.top = (r.bottom + 8) + 'px'; }
+    window.addEventListener('resize', function () { if (box.classList.contains('open')) place(); });
+    function set(open) { box.classList.toggle('open', open); if (open) place(); pill.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) { var r = document.getElementById('hd_usd_rate'); if (r) setTimeout(function () { r.focus(); }, 30); } }
+    pill.addEventListener('click', function (e) { e.stopPropagation(); set(!box.classList.contains('open')); });
+    document.getElementById('hd_usd_x').addEventListener('click', function () { set(false); pill.focus(); });
+    document.addEventListener('click', function (e) { if (box.classList.contains('open') && !box.contains(e.target) && e.target !== pill) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && box.classList.contains('open')) { set(false); pill.focus(); } });
+    if (location.hash === '#usd') set(true);
+})();
+</script>
 <script>
 // tf-stage2: the Home box saves today's rate; a second save for today asks for the reason and is logged as a correction
 (function () {

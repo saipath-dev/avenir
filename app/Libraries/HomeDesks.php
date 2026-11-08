@@ -105,7 +105,7 @@ final class HomeDesks
 
     /** The links under the desks: the Pilot task dashboard for everybody, the rest by privilege. */
     public const LINKS = [
-        ['url' => 'dashboard2/tiles', 'label' => 'My tasks (Pilot)', 'icon' => 'bi-list-task', 'open' => true],
+        ['url' => 'dashboard2/tiles', 'label' => 'Assigned Functions', 'icon' => 'bi-list-task', 'open' => true],
     ];
 
     /**
