@@ -222,7 +222,7 @@ $item = static function (array $it) use ($esc): string {
     </figure>
 
     <div class="hd-main">
-    <div class="hd-brand"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></div>
+    <?= view('partials/world_clock', ['layout' => 'brand', 'logo' => '<div class="hd-brand"><img src="' . base_url('assets/images/Logo-new.png') . '" alt="Avenir Holidays — Connecting Cultures"></div>']) ?><?php /* tf-clock-r3: Tokyo and Colombo either side of the logo */ ?>
     <h1 class="hd-title">Avenir Holidays Handling System</h1>
     <p class="hd-sub">Choose your desk to get started</p>
 
