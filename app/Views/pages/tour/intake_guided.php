@@ -1579,7 +1579,17 @@
     $('q_go').addEventListener('click', search);
     $('q').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); search(); } });
     $('b_classic').addEventListener('click', () => { window.location.href = CLASSIC; });
-    $('b_new').addEventListener('click', startHand);
+    // tf-newbtn-r1 (9 Nov 2026): New inquiry works from inside an open inquiry too — back to the list first (the open
+    // inquiry is already saved), then the Start by hand form, in view. Before, the form was drawn inside the hidden list.
+    $('b_new').addEventListener('click', () => {
+        err('');
+        $('work').style.display = 'none';
+        $('c_pick').style.display = '';
+        IT = null; COST = null; REVIEW = null;
+        try { if (new URLSearchParams(location.search).has('id')) { history.replaceState(history.state, '', location.pathname); } } catch (e) { /* the address stays */ }
+        startHand();
+        $('q_new').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     $('b_start_mail').addEventListener('click', startEmail);
     $('b_start_hand').addEventListener('click', startHand);
     // an address with an id that cannot be opened must not leave an empty box: the list comes up,
