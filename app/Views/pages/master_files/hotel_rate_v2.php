@@ -113,6 +113,22 @@
     .hr2 table.hr-table td { padding: 7px 10px; border-bottom: 1px solid #eef1f5; vertical-align: middle; }
     .hr2 table.hr-table tr:hover td { background: #fbfcfd; }
     .hr2 table.hr-table td.num, .hr2 table.hr-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    /* tf-hr-queue-r2 (10 Nov 2026, Shantha): the approval queue uses the width the screen has, can open full screen,
+       and keeps the Edit / Approve buttons in view (sticky right column) while the table scrolls sideways */
+    #m_queue .modal-dialog:not(.modal-fullscreen) { max-width: min(1500px, 96vw); }
+    #m_queue .modal-header .aq-full { margin-left: auto; margin-right: 10px; white-space: nowrap; }
+    #m_queue .aq-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--hr-line); border-radius: 8px; }
+    #m_queue .modal-fullscreen .aq-scroll { max-height: calc(100vh - 260px); overflow-y: auto; }
+    #m_queue #aq_table { min-width: 900px; }
+    #m_queue #aq_table thead th { position: sticky; top: 0; z-index: 2; }
+    #m_queue #aq_table td.aq-hotel { min-width: 140px; }
+    #m_queue #aq_table td.aq-plan { min-width: 210px; max-width: 420px; }
+    #m_queue #aq_table td.aq-hotel, #m_queue #aq_table td.aq-plan { white-space: normal; }
+    #m_queue #aq_table td.aq-dates { min-width: 118px; }
+    #m_queue #aq_table td.aq-by { min-width: 110px; white-space: normal; }
+    #m_queue #aq_table th.aq-act, #m_queue #aq_table td.aq-act { position: sticky; right: 0; background: #fff; box-shadow: -6px 0 8px -6px rgba(16,24,40,.18); z-index: 1; }
+    #m_queue #aq_table th.aq-act { background: #fafbfc; z-index: 3; }
+    #m_queue #aq_table tr:hover td.aq-act { background: #fbfcfd; }
     .hr2 table.grid td, .hr2 table.grid th { padding: 3px 4px; }
     .hr2 table.grid input, .hr2 table.grid select { font-size: 12.5px; padding: 3px 6px; height: 28px; border-radius: 6px; border: 1px solid var(--hr-line); background: #fff; width: 100%; min-width: 64px; }
     .hr2 table.grid input[type=number] { text-align: right; }
@@ -482,7 +498,7 @@ php spark hotelrates:migrate</pre>
 </div></div></div>
 
 <div class="modal fade hr2" id="m_queue" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content">
-    <div class="modal-header"><h5 class="modal-title">Approval queue</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-header"><h5 class="modal-title">Approval queue</h5><button type="button" class="btn btn-sm btn-outline-primary aq-full" id="aq_full" title="Use the whole browser window for the queue"><i class="bi bi-arrows-fullscreen"></i> <span>Full screen</span></button><button type="button" class="btn-close ms-0" data-bs-dismiss="modal"></button></div>
     <div class="modal-body" id="queue_body"><div class="empty">Loading…</div></div>
 </div></div></div>
 
@@ -1723,11 +1739,11 @@ php spark hotelrates:migrate</pre>
                 <span class="help" id="aq_count"></span>
                 <button class="btn btn-sm btn-light ms-auto" id="aq_clear" title="Clear the search and filters">&times; Clear</button>
             </div>
-            <div class="table-responsive"><table class="hr-table" id="aq_table"><thead><tr><th>Hotel</th><th>Plan</th><th>Type</th><th>Stay dates</th><th class="num">Seasons</th><th class="num">Rows</th><th>Checks</th><th>Entered by</th><th></th></tr></thead><tbody>
-            ${d.drafts.map(c => `<tr data-aq="${esc([c.hotel, c.name, c.source_type, c.entered_by, c.plan_type].join(' ').toLowerCase())}" data-aqtype="${esc(c.plan_type || '')}" data-aqcheck="${Number(c.errors) ? 'err' : (Number(c.warnings) ? 'warn' : 'clean')}" data-aqhotel="${esc((c.hotel || '').toLowerCase())}" data-aqat="${esc(c.updated_at || '')}" data-aqfrom="${esc(c.valid_from || '')}"><td class="fw-semibold">${esc(c.hotel)}</td><td>${esc(c.name)}<div class="help">${esc(c.source_type)}</div></td><td>${typePill(c.plan_type)}</td><td class="mono">${c.valid_from} → ${c.valid_to}</td><td class="num">${c.seasons}</td><td class="num">${c.rate_rows}</td>
+            <div class="aq-scroll"><table class="hr-table" id="aq_table"><thead><tr><th>Hotel</th><th>Plan</th><th>Type</th><th>Stay dates</th><th class="num">Seasons</th><th class="num">Rows</th><th>Checks</th><th>Entered by</th><th class="aq-act text-end">Actions</th></tr></thead><tbody>
+            ${d.drafts.map(c => `<tr data-aq="${esc([c.hotel, c.name, c.source_type, c.entered_by, c.plan_type].join(' ').toLowerCase())}" data-aqtype="${esc(c.plan_type || '')}" data-aqcheck="${Number(c.errors) ? 'err' : (Number(c.warnings) ? 'warn' : 'clean')}" data-aqhotel="${esc((c.hotel || '').toLowerCase())}" data-aqat="${esc(c.updated_at || '')}" data-aqfrom="${esc(c.valid_from || '')}"><td class="fw-semibold aq-hotel">${esc(c.hotel)}</td><td class="aq-plan">${esc(c.name)}<div class="help">${esc(c.source_type)}</div></td><td>${typePill(c.plan_type)}</td><td class="mono aq-dates">${c.valid_from} → ${c.valid_to}</td><td class="num">${c.seasons}</td><td class="num">${c.rate_rows}</td>
                 <td>${Number(c.errors) ? pill('red', c.errors + ' error(s)') : ''} ${Number(c.warnings) ? pill('amber', c.warnings + ' warning(s)') : ''}${!Number(c.errors) && !Number(c.warnings) ? pill('green', 'clean') : ''}</td>
-                <td class="help">${esc(c.entered_by || '')}<br>${(c.updated_at || '').slice(0, 16)}</td>
-                <td class="text-nowrap text-end"><a class="btn btn-sm btn-primary" href="${BASE}?contract=${c.id}&from=queue" title="Open this draft where the rates were entered: correct the hotel name, rates, dates, seasons and supplements, save (still a draft) and come back here to approve"><i class="bi bi-pencil-square"></i> Edit</a> ${CAN_APPROVE && !Number(c.errors) ? `<button class="btn btn-sm btn-success" data-qapprove="${c.hotel_id}:${c.id}">Approve</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="9"><div class="empty">Nothing waiting for approval.</div></td></tr>'}
+                <td class="help aq-by">${esc(c.entered_by || '')}<br>${(c.updated_at || '').slice(0, 16)}</td>
+                <td class="text-nowrap text-end aq-act"><a class="btn btn-sm btn-primary" href="${BASE}?contract=${c.id}&from=queue" title="Open this draft where the rates were entered: correct the hotel name, rates, dates, seasons and supplements, save (still a draft) and come back here to approve"><i class="bi bi-pencil-square"></i> Edit</a> ${CAN_APPROVE && !Number(c.errors) ? `<button class="btn btn-sm btn-success" data-qapprove="${c.hotel_id}:${c.id}">Approve</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="9"><div class="empty">Nothing waiting for approval.</div></td></tr>'}
             </tbody></table></div>
             <h6 class="mt-3">Recently approved</h6>${d.recently_approved.length ? '<ul class="small">' + d.recently_approved.map(r => `<li>${(r.approved_at || '').slice(0, 16)} — ${esc(r.hotel)}: ${esc(r.name)} <span class="help">by ${esc(r.approved_by || '')}</span></li>`).join('') + '</ul>' : '<div class="help">none yet</div>'}`;
         // tf-hr-queue-r1: filter, sort and count; the search is remembered while the page is open so Approve → reopen keeps it
@@ -1757,6 +1773,15 @@ php spark hotelrates:migrate</pre>
         body.querySelectorAll('[data-qapprove]').forEach(b => b.addEventListener('click', async () => { const [h, c] = b.dataset.qapprove.split(':').map(Number); if (!S.hotel || S.hotel.id !== h) { await selectHotel(h); } await approveContract(c); openQueue(); }));
     }
     document.getElementById('btn_queue').addEventListener('click', openQueue);
+    // tf-hr-queue-r2: Full screen / Exit full screen for the approval queue; the choice is remembered on this computer
+    (function () {
+        const btn = document.getElementById('aq_full'); if (!btn) return;
+        const dlg = document.querySelector('#m_queue .modal-dialog');
+        const set = on => { dlg.classList.toggle('modal-fullscreen', on); dlg.classList.toggle('modal-xl', !on); btn.querySelector('i').className = on ? 'bi bi-fullscreen-exit' : 'bi bi-arrows-fullscreen'; btn.querySelector('span').textContent = on ? 'Exit full screen' : 'Full screen'; btn.title = on ? 'Back to the normal window size' : 'Use the whole browser window for the queue'; };
+        let on = false; try { on = localStorage.getItem('hr2_aq_full') === '1'; } catch (e) { /* storage off */ }
+        set(on);
+        btn.addEventListener('click', () => { on = !dlg.classList.contains('modal-fullscreen'); set(on); try { localStorage.setItem('hr2_aq_full', on ? '1' : '0'); } catch (e) { /* storage off */ } });
+    })();
 
     // tf-hr-queue-r1: the correction dialog — the draft is read in full, only the hotel / name / dates / note change,
     // and it is saved back as a draft through the same save the editor uses (every check runs again)
