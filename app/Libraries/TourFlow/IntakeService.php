@@ -4782,8 +4782,9 @@ final class IntakeService
         $pax = self::intOrNull($it['pax_total'] ?? null);
         $party = ['adults' => self::intOrNull($it['pax_adults'] ?? null), 'children' => self::intOrNull($it['pax_children'] ?? null), 'child_ages' => ChildFares::ages($it ?: [])];
 
-        $sql  = 'SELECT s.*, d.day_date FROM tf_intake_service s
+        $sql  = 'SELECT s.*, d.day_date, CONCAT_WS(\' \', d.hotel_name_raw, d.rate_plan_name, d.room_type_name, p.hotel_name_raw, p.rate_plan_name, p.room_type_name) AS stay_words FROM tf_intake_service s
                  LEFT JOIN tf_intake_day d ON d.intake_id = s.intake_id AND d.day_no = s.day_no
+                 LEFT JOIN tf_intake_day p ON p.intake_id = s.intake_id AND p.day_no = s.day_no - 1
                  WHERE s.intake_id = ?' . ($onlyServiceId ? ' AND s.id = ?' : '');
         $bind = $onlyServiceId ? [$id, $onlyServiceId] : [$id];
         $arrival = $this->db->query('SELECT arrival_date FROM tf_intake WHERE id = ?', [$id])->getRowArray()['arrival_date'] ?? null;
@@ -4798,6 +4799,17 @@ final class IntakeService
             if ($childDecisions !== null) {
                 $row['child_decision'] = $childDecisions['svc:' . (int) $row['id']] ?? '';
             }
+            // tf-inrate-r1: an Ayurveda programme at an Ayurveda hotel (that night's hotel, or the last night's on the
+            // departure morning) is part of the hotel's rate — set once, while nobody has said who pays; a person can change it
+            if ((string) ($row['kind'] ?? '') === 'ayurveda' && (string) ($row['pay_mode'] ?? '') === 'unknown' && stripos((string) ($row['stay_words'] ?? ''), 'ayurved') !== false) {
+                try {
+                    $this->db->query("UPDATE tf_intake_service SET pay_mode = 'in_rate' WHERE id = ? AND pay_mode = 'unknown'", [(int) $row['id']]);
+                    $row['pay_mode'] = 'in_rate';
+                } catch (\Throwable $e) {
+                    // the column not widened yet (installer not re-run): left as it was
+                }
+            }
+            unset($row['stay_words']);
             $out = $this->applyLine($row, $pax, $party);
             if ($out !== null) {
                 // tf-stage4: a line with a saved figure keeps it unless this one line was changed, or the re-check is a deliberate Recalculate

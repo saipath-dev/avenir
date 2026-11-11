@@ -53,6 +53,8 @@
     .tf .svc.offlist { background:var(--tf-red-soft); color:var(--tf-red); }
     .tf .svc.declined { background:#f6f7f9; color:var(--tf-muted); text-decoration:line-through; }
     .tf .svc.free { background:#eef7f0; color:var(--tf-green); border:1px dashed #b9dcc4; }
+    .tf .svc.inrate { background:var(--tf-green-soft); color:var(--tf-green); border:1px solid #b9dcc4; }   /* tf-inrate-r1 */
+    .tf .svc.optional { background:#eaf2fb; color:#1e5aa8; border:1px dashed #b5cdea; }
     .tf .svc .amt { font-weight:700; opacity:.85; }
     .tf .svc-add { font-size:11px; font-weight:600; color:var(--tf-teal); background:none; border:1px dashed #c9d3de;
                    border-radius:5px; padding:2px 7px; cursor:pointer; }
@@ -862,7 +864,8 @@
                         <option value="unknown">Not stated</option><option value="in_tour">Included in the tour price</option>
                         <option value="prepaid">Prepaid by the agent</option><option value="direct">Paid on the spot</option>
                         <option value="own_arrangement">Agent arranges it themselves</option><option value="not_arranged">Not to be arranged</option>
-                        <option value="no_charge">No charge — a stop with nothing to pay</option></select></div>
+                        <option value="no_charge">No charge — a stop with nothing to pay</option>
+                        <option value="in_rate">Included in the rate — part of the hotel's rate</option><option value="optional">Extra option — priced, not in the tour total</option></select></div>
                 <div class="col-md-7"><label class="form-label help">Special note</label>
                     <input class="form-control form-control-sm" id="ms_note" placeholder="Anything the operations team needs to know"></div>
                 <div class="col-12" id="ms_descwrap" style="display:none"><label class="form-label help">Description on the client quotation <span class="text-muted">— the Place to Visit master's words, copied here; edit them for this quotation only. Empty the box to take the master's text again.</span></label>
@@ -1760,20 +1763,21 @@
             const lpOn = !!(CURRENT && CURRENT.meals && CURRENT.meals.available);
             const chips = list.filter(s => !(lpOn && s.meal_id && s.kind === 'lunch')).map(s => {
                 const declined = s.pay_mode === 'own_arrangement' || s.pay_mode === 'not_arranged';
+                const inrate = s.pay_mode === 'in_rate', optional = s.pay_mode === 'optional';   // tf-inrate-r1
                 // schema 39: an entrance or safari not in the Place to Visit / Entrance Fee Master, or one with no rate for the day, is held — never free
-                const held = !declined && (s.match_state === 'not_in_master' || s.match_state === 'rate_missing');
-                const free = !held && (s.pay_mode === 'no_charge' || s.match_state === 'no_charge');
-                const cls = declined ? 'declined' : (free ? 'free' : (s.match_state === 'not_in_list' || held ? 'offlist'
-                    : (s.amount_usd !== null && s.amount_usd !== undefined ? 'priced' : '')));
-                const amt = (!declined && !free && s.amount_usd != null) ? `<span class="amt">$${Number(s.amount_usd).toFixed(0)}</span>` : (free ? '<span class="amt">free</span>' : (held ? '<span class="amt">held</span>' : ''));
+                const held = !declined && !inrate && !optional && (s.match_state === 'not_in_master' || s.match_state === 'rate_missing');
+                const free = !held && !inrate && !optional && (s.pay_mode === 'no_charge' || s.match_state === 'no_charge');
+                const cls = declined ? 'declined' : (inrate ? 'inrate' : (optional ? 'optional' : (free ? 'free' : (s.match_state === 'not_in_list' || held ? 'offlist'
+                    : (s.amount_usd !== null && s.amount_usd !== undefined ? 'priced' : '')))));
+                const amt = inrate ? '<span class="amt">in rate</span>' : (optional ? '<span class="amt">option</span>' : ((!declined && !free && s.amount_usd != null) ? `<span class="amt">$${Number(s.amount_usd).toFixed(0)}</span>` : (free ? '<span class="amt">free</span>' : (held ? '<span class="amt">held</span>' : ''))));
                 return `<span class="svc ${cls}" data-svc="${s.id}" title="${esc(s.free_visit_id ? 'Free visit from the master — on the itinerary only, never costed' : (s.match_note || s.source_quote || ''))}">${esc(s.title)}${amt}</span>`;
             }).join('');
             // the night's activities and excursions (Paid Activities & Services), costed at the master's rate
             const exc = d.excursions || [];
             const excChips = exc.map(x => `<span class="svc priced" data-dayexc="${x.id}" title="Activity, ${esc(x.currency)} ${Number(x.rate).toLocaleString()} ${esc(({ per_person: 'per person', per_group: 'per group', per_vehicle: 'per vehicle' })[x.unit] || x.unit)} × ${Number(x.qty)}">${esc(x.name)}<span class="amt">${x.currency === 'USD' ? '$' + Number(x.amount).toFixed(0) : esc(x.currency) + ' ' + Number(x.amount).toLocaleString()}</span></span>`).join('');
-            const total = list.reduce((n, s) => n + (Number(s.amount_usd) || 0), 0) + exc.filter(x => x.currency === 'USD').reduce((n, x) => n + (Number(x.amount) || 0), 0);
+            const total = list.filter(s => s.pay_mode !== 'optional').reduce((n, s) => n + (Number(s.amount_usd) || 0), 0) + exc.filter(x => x.currency === 'USD').reduce((n, x) => n + (Number(x.amount) || 0), 0);
             const lkr = exc.filter(x => x.currency !== 'USD').reduce((n, x) => n + (Number(x.amount) || 0), 0);
-            const tot = total > 0 || lkr > 0 ? `<div class="daytot">${total > 0 ? '$' + total.toFixed(2) : ''}${lkr > 0 ? (total > 0 ? ' + ' : '') + 'LKR ' + lkr.toLocaleString() : ''} for the day${list.some(s => s.amount_usd == null && (!['own_arrangement', 'not_arranged', 'no_charge'].includes(s.pay_mode) || s.match_state === 'not_in_master') && s.match_state !== 'no_charge') ? ' + unpriced items' : ''}</div>` : '';
+            const tot = total > 0 || lkr > 0 ? `<div class="daytot">${total > 0 ? '$' + total.toFixed(2) : ''}${lkr > 0 ? (total > 0 ? ' + ' : '') + 'LKR ' + lkr.toLocaleString() : ''} for the day${list.some(s => s.amount_usd == null && (!['own_arrangement', 'not_arranged', 'no_charge', 'in_rate', 'optional'].includes(s.pay_mode) || s.match_state === 'not_in_master') && s.match_state !== 'no_charge') ? ' + unpriced items' : ''}</div>` : '';
             return `<div class="svcs">${chips}${excChips}<button class="svc-add" data-addsvc="${d.day_no}">${list.length || exc.length ? '+' : '+ Add'}</button></div>${lunchPlace(d.day_no)}${tot}`;
         }
 
@@ -2648,7 +2652,7 @@
         // Entrance & Activities: the one place the entrance and activity cost is worked out —
         // every line across the days, what it costs and why, and one total the quotation takes as it is
         const ea = it.entrances || { lines: [], total_usd: 0, by_state: {}, stops: 0, mentions: [], recalc: [] };
-        const EA_PILL = { priced: ['Priced', 'pill-green'], no_charge: ['No charge', 'pill-green'], declined: ['No cost', 'pill-grey'], direct: ['Paid direct', 'pill-blue'], unsure: ['Unsure', 'pill-amber'], no_amount: ['No amount', 'pill-amber'], rupees: ['Check figure', 'pill-red'], rate_missing: ['Rate missing — held', 'pill-red'], not_in_master: ['Not in the master — held', 'pill-red'] };
+        const EA_PILL = { in_rate: ['Included in rate', 'pill-green'], optional: ['Extra option', 'pill-blue'], priced: ['Priced', 'pill-green'], no_charge: ['No charge', 'pill-green'], declined: ['No cost', 'pill-grey'], direct: ['Paid direct', 'pill-blue'], unsure: ['Unsure', 'pill-amber'], no_amount: ['No amount', 'pill-amber'], rupees: ['Check figure', 'pill-red'], rate_missing: ['Rate missing — held', 'pill-red'], not_in_master: ['Not in the master — held', 'pill-red'] };
         const eaLines = ea.lines || [];
         const eaBy = ea.by_state || {};
         const entrancesBlock = `${eaLines.length ? `<div style="overflow-x:auto"><table class="tbl" id="ea_table">
@@ -4122,7 +4126,7 @@
     const PAY_LABEL = {
         in_tour: 'Included in the tour price', prepaid: 'Prepaid by the agent', direct: 'Paid on the spot',
         own_arrangement: 'The agent arranges it themselves', not_arranged: 'Not to be arranged', unknown: 'Who settles it is not stated',
-        no_charge: 'No charge — nothing to pay'
+        no_charge: 'No charge — nothing to pay', in_rate: 'Included in the hotel rate', optional: 'Extra option — not in the tour total'
     };
 
     function svcDayOptions(sel) {
@@ -4161,13 +4165,16 @@
                     <button class="btn btn-light btn-sm" data-delsvc="${s.id}">Remove</button></div></div></div>`;
             }
             const declined = s.pay_mode === 'own_arrangement' || s.pay_mode === 'not_arranged';
+            const inrate = s.pay_mode === 'in_rate', optional = s.pay_mode === 'optional';   // tf-inrate-r1
             // schema 39: an entrance or safari not in the Place to Visit / Entrance Fee Master, or with no rate for the day, is held — never free
-            const notIn = !declined && s.match_state === 'not_in_master' && s.pay_mode !== 'direct';
-            const free = !notIn && (s.pay_mode === 'no_charge' || s.match_state === 'no_charge');
-            const held = !declined && !free && (s.match_state === 'rate_missing' || notIn);
-            const unsure = !declined && !free && !held && (s.match_state === 'not_in_list' || s.amount_usd == null);
+            const notIn = !declined && !inrate && !optional && s.match_state === 'not_in_master' && s.pay_mode !== 'direct';
+            const free = !notIn && !inrate && !optional && (s.pay_mode === 'no_charge' || s.match_state === 'no_charge');
+            const held = !declined && !free && !inrate && !optional && (s.match_state === 'rate_missing' || notIn);
+            const unsure = !declined && !free && !held && !inrate && !optional && (s.match_state === 'not_in_list' || s.amount_usd == null);
             const sug = s.suggest_code ? (MASTER || []).find(m => String(m.code).toLowerCase() === String(s.suggest_code).toLowerCase()) : null;
             const money = declined ? '<span class="pill pill-grey">No cost</span>'
+                : inrate ? '<span class="pill pill-green">Included in rate</span>'
+                : optional ? '<span class="pill pill-blue">Extra option</span>' + (s.unit_usd != null && Number(s.unit_usd) > 0 ? `<div class="help">$${Number(s.unit_usd).toFixed(2)} per person, not in the total</div>` : '<div class="help">not in the tour total</div>')
                 : (free ? '<span class="pill pill-green">No charge</span>'
                 : (s.amount_usd != null
                     ? `<span class="pill pill-green">$${Number(s.amount_usd).toFixed(2)}</span>`
@@ -4176,6 +4183,7 @@
             // an unsure line is never forced to a price: No charge, the closest entry in the list, or the master
             const offer = unsure ? `<div class="mt-1 d-flex gap-1 flex-wrap">
                     <button class="btn btn-light btn-sm" data-nocharge="${s.id}" title="A stop with nothing to pay: on the programme, nothing costed">No charge</button>
+                    <button class="btn btn-light btn-sm" data-inrate="${s.id}" title="Part of the hotel's rate for the night (e.g. an Ayurveda programme on the board): shown as included, nothing costed">Included in rate</button>
                     ${sug ? `<button class="btn btn-light btn-sm" data-accept="${s.id}" data-code="${esc(sug.code)}" title="Price it from this entry in the list">Use “${esc(sug.name)}”${sug.usd ? ' $' + Number(sug.usd).toFixed(2) : ''}</button>` : ''}
                     <button class="btn btn-light btn-sm" data-editsvc="${s.id}" title="Pick the entry from the priced list by name">Pick from the list…</button></div>`
                 // schema 39: an entrance or safari not in the master — held: the place picked from the master (one click for the closest spelling), or added there
@@ -4209,6 +4217,7 @@
 
         document.querySelectorAll('#ms_list [data-editsvc]').forEach(b => b.addEventListener('click', () => fillSvcForm(Number(b.dataset.editsvc))));
         document.querySelectorAll('#ms_list [data-nocharge]').forEach(b => b.addEventListener('click', () => svcQuick(Number(b.dataset.nocharge), { pay_mode: 'no_charge' })));
+        document.querySelectorAll('#ms_list [data-inrate]').forEach(b => b.addEventListener('click', () => svcQuick(Number(b.dataset.inrate), { pay_mode: 'in_rate' })));
         document.querySelectorAll('#ms_list [data-accept]').forEach(b => b.addEventListener('click', () => svcQuick(Number(b.dataset.accept), { fee_code: b.dataset.code })));
         document.querySelectorAll('#ms_list [data-delsvc]').forEach(b => b.addEventListener('click', async () => {
             if (!await ask('Are you sure you want to delete this record? The service line comes off the day and off the costing.', 'Remove')) return;
@@ -4512,7 +4521,7 @@
             return;
         }
         // 2 — the final warning
-        const arranged = (it.services || []).filter(x => !['guide', 'transport'].includes(x.kind) && !['own_arrangement', 'not_arranged', 'no_charge'].includes(x.pay_mode) && x.match_state !== 'no_charge').length + (it.excursions || []).length;
+        const arranged = (it.services || []).filter(x => !['guide', 'transport'].includes(x.kind) && !['own_arrangement', 'not_arranged', 'no_charge', 'in_rate'].includes(x.pay_mode) && x.match_state !== 'no_charge').length + (it.excursions || []).length;
         const r = await Swal.fire({
             icon: 'warning',
             title: 'Confirm ' + it.inquiry_no + '?',

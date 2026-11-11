@@ -68,10 +68,10 @@ final class ServiceLookup
     }
 
     /** How the money is settled; taken from the master, or stated by the agent. no_charge (schema 25): a stop with nothing to pay. */
-    public const PAY_MODES = ['in_tour', 'prepaid', 'direct', 'own_arrangement', 'not_arranged', 'unknown', 'no_charge'];
+    public const PAY_MODES = ['in_tour', 'prepaid', 'direct', 'own_arrangement', 'not_arranged', 'unknown', 'no_charge', 'in_rate', 'optional'];   // tf-inrate-r1: in_rate = included in the hotel rate; optional = extra option (priced, not in the total)
 
     /** The pay modes that cost nothing: declined by the agent, not happening, or nothing to pay. */
-    public const FREE_MODES = ['own_arrangement', 'not_arranged', 'no_charge'];
+    public const FREE_MODES = ['own_arrangement', 'not_arranged', 'no_charge', 'in_rate'];
 
     private ?array $noChargeWords = null;
     private ?array $aliases = null;
@@ -1439,7 +1439,7 @@ final class ServiceLookup
         $mode  = (string) ($s['pay_mode'] ?? '');
         $state = (string) ($s['match_state'] ?? '');
         // schema 39: "No charge" does not free an entrance or a safari that is not in the master
-        return in_array($mode, ['own_arrangement', 'not_arranged'], true) || ($mode === 'no_charge' && $state !== 'not_in_master') || $state === 'no_charge';
+        return in_array($mode, ['own_arrangement', 'not_arranged', 'in_rate', 'optional'], true) || ($mode === 'no_charge' && $state !== 'not_in_master') || $state === 'no_charge';
     }
 
     /**
@@ -1464,6 +1464,16 @@ final class ServiceLookup
         $state = (string) ($s['match_state'] ?? '');
         if (in_array($mode, ['own_arrangement', 'not_arranged'], true)) {
             return ['state' => 'declined', 'costed' => false, 'blocks' => false, 'why' => $mode === 'own_arrangement' ? 'Arranged by the agent.' : 'Not happening.'];
+        }
+        // tf-inrate-r1: part of the hotel's rate for the night (an Ayurveda programme on the board), or an extra option
+        // the clients may take — neither is costed in the tour, neither stops the quotation
+        if ($mode === 'in_rate') {
+            return ['state' => 'in_rate', 'costed' => false, 'blocks' => false, 'why' => 'Included in the hotel rate.'];
+        }
+        if ($mode === 'optional') {
+            $u = $s['unit_usd'] ?? null;
+            return ['state' => 'optional', 'costed' => false, 'blocks' => false, 'why' => ($u !== null && $u !== '' && (float) $u > 0)
+                ? 'Extra option — USD ' . number_format((float) $u, 2) . ' per person, not in the tour total.' : 'Extra option — not in the tour total.'];
         }
         if (!empty($s['free_visit_id'])) {
             return ['state' => 'no_charge', 'costed' => false, 'blocks' => false, 'why' => 'Free visit from the master — nothing to pay.'];

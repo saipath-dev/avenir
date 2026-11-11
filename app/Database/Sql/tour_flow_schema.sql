@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `tf_intake_service` (
   `usd_rate`     DECIMAL(10,2) NULL,
   `rate_date`    DATE NULL,
   `amount_lkr`   DECIMAL(12,2) NULL,
-  `pay_mode`     ENUM('in_tour','prepaid','direct','own_arrangement','not_arranged','unknown','no_charge') NOT NULL DEFAULT 'unknown',
+  `pay_mode`     ENUM('in_tour','prepaid','direct','own_arrangement','not_arranged','unknown','no_charge','in_rate','optional') NOT NULL DEFAULT 'unknown',
   `special_note` VARCHAR(500) NULL,
   `source_quote` VARCHAR(1000) NULL,
   `origin`       ENUM('ai','human') NOT NULL DEFAULT 'ai',

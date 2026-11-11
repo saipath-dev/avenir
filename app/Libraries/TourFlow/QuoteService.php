@@ -843,9 +843,11 @@ final class QuoteService
             }
             $dayOf((int) $s['day_no']);
             // a no-charge stop is part of the programme and of what is included, at no cost
-            $days[$s['day_no']]['services'][] = ['title' => $s['title'], 'kind' => $s['kind'], 'description' => $s['description'], 'included' => $s['costed'] || $s['pay_mode'] === 'no_charge', 'note' => $s['pay_mode'] === 'direct' ? 'payable direct' : ($s['pay_mode'] === 'own_arrangement' ? 'own arrangement'
+            $days[$s['day_no']]['services'][] = ['title' => $s['title'], 'kind' => $s['kind'], 'description' => $s['description'], 'included' => $s['costed'] || $s['pay_mode'] === 'no_charge' || $s['pay_mode'] === 'in_rate', 'note' => $s['pay_mode'] === 'direct' ? 'payable direct' : ($s['pay_mode'] === 'own_arrangement' ? 'own arrangement'
+                : ($s['pay_mode'] === 'in_rate' ? 'included in the hotel rate'
+                : ($s['pay_mode'] === 'optional' ? 'optional extra' . ($s['unit_usd'] !== null && $s['unit_usd'] > 0 ? ' — USD ' . number_format((float) $s['unit_usd'], 2) . ' per person' : '')
                 // tf-safari-r1: a safari is one item to the client — the jeep and the park entrance in the one price, never broken down
-                : ($s['costed'] && (string) $s['kind'] === 'safari' ? 'jeep and park entrance included' : null))];
+                : ($s['costed'] && (string) $s['kind'] === 'safari' ? 'jeep and park entrance included' : null))))];
         }
         foreach ($cost['excursions'] as $x) {
             $dayOf((int) $x['day_no']);

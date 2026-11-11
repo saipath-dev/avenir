@@ -35,7 +35,7 @@ final class TourService
     /** The service kinds that go to the Transport Desk as crew or vehicle, never as a reservation. */
     private const SERVICE_KINDS_SKIPPED = ['guide', 'transport'];
     /** A line the party arranges for themselves, or that is not happening, is nothing to reserve. */
-    private const PAY_MODES_SKIPPED = ['own_arrangement', 'not_arranged', 'no_charge'];   // nothing to book for a stop with nothing to pay
+    private const PAY_MODES_SKIPPED = ['own_arrangement', 'not_arranged', 'no_charge', 'in_rate'];   // nothing to book for a stop with nothing to pay
 
     private $db;
     private string $user;

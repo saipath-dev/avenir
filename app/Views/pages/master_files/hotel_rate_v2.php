@@ -129,6 +129,12 @@
     #m_queue #aq_table th.aq-act, #m_queue #aq_table td.aq-act { position: sticky; right: 0; background: #fff; box-shadow: -6px 0 8px -6px rgba(16,24,40,.18); z-index: 1; }
     #m_queue #aq_table th.aq-act { background: #fafbfc; z-index: 3; }
     #m_queue #aq_table tr:hover td.aq-act { background: #fbfcfd; }
+    /* tf-hr-queue-r3 (10 Nov 2026, Shantha): the site theme turns every button light green; in the queue Edit stays navy and
+       Approve teal with white text, as on the approved test page */
+    #m_queue #aq_table td.aq-act .btn-primary { background: #1e3553 !important; border-color: #1e3553 !important; color: #fff !important; }
+    #m_queue #aq_table td.aq-act .btn-primary:hover, #m_queue #aq_table td.aq-act .btn-primary:focus { background: #16283f !important; border-color: #16283f !important; color: #fff !important; }
+    #m_queue #aq_table td.aq-act [data-qapprove] { background: #0f8b7e !important; border-color: #0f8b7e !important; color: #fff !important; }
+    #m_queue #aq_table td.aq-act [data-qapprove]:hover, #m_queue #aq_table td.aq-act [data-qapprove]:focus { background: #0b6f65 !important; border-color: #0b6f65 !important; color: #fff !important; }
     .hr2 table.grid td, .hr2 table.grid th { padding: 3px 4px; }
     .hr2 table.grid input, .hr2 table.grid select { font-size: 12.5px; padding: 3px 6px; height: 28px; border-radius: 6px; border: 1px solid var(--hr-line); background: #fff; width: 100%; min-width: 64px; }
     .hr2 table.grid input[type=number] { text-align: right; }

@@ -1807,6 +1807,11 @@ final class Installer
              "ALTER TABLE `tf_intake_service` MODIFY COLUMN `match_state` ENUM('matched','not_in_list','nothing_named','not_checked','no_charge','not_in_master','rate_missing') NOT NULL DEFAULT 'not_checked'"],
             ['tf_intake_service', 'match_state', 'rate_missing',
              "ALTER TABLE `tf_intake_service` MODIFY COLUMN `match_state` ENUM('matched','not_in_list','nothing_named','not_checked','no_charge','not_in_master','rate_missing') NOT NULL DEFAULT 'not_checked'"],
+            // tf-inrate-r1: a line included in the hotel rate, and an extra option (priced, not in the total)
+            ['tf_intake_service', 'pay_mode', 'in_rate',
+             "ALTER TABLE `tf_intake_service` MODIFY COLUMN `pay_mode` ENUM('in_tour','prepaid','direct','own_arrangement','not_arranged','unknown','no_charge','in_rate','optional') NOT NULL DEFAULT 'unknown'"],
+            ['tf_intake_service', 'pay_mode', 'optional',
+             "ALTER TABLE `tf_intake_service` MODIFY COLUMN `pay_mode` ENUM('in_tour','prepaid','direct','own_arrangement','not_arranged','unknown','no_charge','in_rate','optional') NOT NULL DEFAULT 'unknown'"],
             // schema 37: an entrance paid at the counter on the day is its own status on the Activities desk
             ['tf_service_job', 'status', 'pay_at_gate',
              "ALTER TABLE `tf_service_job` MODIFY COLUMN `status` ENUM('to_book','requested','confirmed','not_needed','problem','cancelled','pay_at_gate') NOT NULL DEFAULT 'to_book'"],
