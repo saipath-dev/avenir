@@ -260,6 +260,7 @@ final class PaxMatrix
             // ---- the vehicles for this size, and what they cost to drive ------------------------
             $vehicles = [];
             $lkr      = 0.0;
+            $usdKm    = 0.0;   // tf-kmusd-r1: a rate per km kept in USD, taken as it is
             $vehCount = 0;
             if ($own) {
                 foreach (($it['mileage']['by_vehicle'] ?? []) as $bv) {
@@ -283,7 +284,11 @@ final class PaxMatrix
                         }
                         continue;
                     }
-                    $lkr += round((float) $bv['charged_km'] * (float) $bv['km_rate'] * $qty, 2);
+                    if (strtoupper((string) ($bv['currency'] ?: 'LKR')) === 'USD') {
+                        $usdKm += round((float) $bv['charged_km'] * (float) $bv['km_rate'] * $qty, 2);
+                    } else {
+                        $lkr += round((float) $bv['charged_km'] * (float) $bv['km_rate'] * $qty, 2);
+                    }
                 }
                 if (($it['vehicles'] ?? []) === []) {
                     $gaps[] = ['part' => 'transport', 'text' => 'No vehicle has been chosen on this inquiry.'];
@@ -305,13 +310,17 @@ final class PaxMatrix
                         $gaps[] = ['part' => 'transport', 'text' => 'No rate per kilometre for the ' . ($v['class_name'] ?? $v['class_code']) . ' in Master Files → Transport Rates.'];
                         continue;
                     }
-                    if (strtoupper((string) $cur) !== 'LKR') {
-                        // the costing reads a rate per kilometre in rupees; one kept in another currency is said, never converted by guess
-                        $gaps[] = ['part' => 'transport', 'text' => 'The rate per kilometre for the ' . ($v['class_name'] ?? $v['class_code']) . ' is in ' . $cur . '; the costing reads transport in rupees.'];
+                    if (!in_array(strtoupper((string) $cur), ['LKR', 'USD'], true)) {
+                        // the costing reads a rate per kilometre in rupees or dollars; one kept in another currency is said, never converted by guess
+                        $gaps[] = ['part' => 'transport', 'text' => 'The rate per kilometre for the ' . ($v['class_name'] ?? $v['class_code']) . ' is in ' . $cur . '; the costing reads transport in rupees or US dollars.'];
                         continue;
                     }
                     if ($routeKm !== null) {
-                        $lkr += round($routeKm * $kmRate * $qty, 2);
+                        if (strtoupper((string) $cur) === 'USD') {
+                            $usdKm += round($routeKm * $kmRate * $qty, 2);
+                        } else {
+                            $lkr += round($routeKm * $kmRate * $qty, 2);
+                        }
                     }
                 }
                 if ($plan['ok'] && $drivers > 0 && $vehCount > $drivers) {
@@ -328,7 +337,7 @@ final class PaxMatrix
 
             $sections = [
                 'hotels'     => round($hotelUsd, 2),
-                'transport'  => round($toUsd($lkr) ?? 0.0, 2),
+                'transport'  => round(($toUsd($lkr) ?? 0.0) + $usdKm, 2),
                 'crew'       => round($toUsd($crewLkr) ?? 0.0, 2),
                 'crew_rooms' => round($crewRoomsUsd, 2),
                 'services'   => round($svcUsd, 2),

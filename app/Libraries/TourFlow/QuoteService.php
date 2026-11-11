@@ -386,6 +386,7 @@ final class QuoteService
         $mil = $it['mileage'] ?? ['by_vehicle' => [], 'legs' => 0];
         $transport = [];
         $transportLkr = 0.0;
+        $transportUsdDirect = 0.0;   // tf-kmusd-r1: a vehicle on a rate per km kept in USD (the sedan's quotation rate) — taken as it is, never converted
         if (($it['vehicles'] ?? []) === []) {
             $blockers[] = ['code' => 'no_vehicle', 'label' => 'No vehicle has been chosen.'];
         }
@@ -410,8 +411,13 @@ final class QuoteService
                 $blockers[]  = ['code' => 'km_norate_' . $bv['vehicle_seq'], 'label' => $tl['label'] . ' (' . ($bv['type'] ?: 'size not set') . ') has no rate per kilometre. Set it under Master Files → Transport Rates.'];
             }
             if ($tl['state'] === 'ok' && $bv['amount'] !== null) {
-                $transportLkr  += (float) $bv['amount'];
-                $tl['amount_usd'] = $toUsd((float) $bv['amount']);
+                if (strtoupper((string) $tl['currency']) === 'USD') {
+                    $transportUsdDirect += (float) $bv['amount'];
+                    $tl['amount_usd'] = round((float) $bv['amount'], 2);
+                } else {
+                    $transportLkr  += (float) $bv['amount'];
+                    $tl['amount_usd'] = $toUsd((float) $bv['amount']);
+                }
             }
             if ((int) $bv['thin'] > 0) {
                 $warnings[] = ['code' => 'km_thin_' . $bv['vehicle_seq'], 'label' => $tl['label'] . ': ' . (int) $bv['thin'] . ' leg(s) rest on only one or two past journeys.'];
@@ -603,7 +609,7 @@ final class QuoteService
         }
 
         // ---- totals, and the price ---------------------------------------------------
-        $transportUsd = $toUsd($transportLkr) ?? 0.0;
+        $transportUsd = ($toUsd($transportLkr) ?? 0.0) + $transportUsdDirect;
         $crewUsd      = $toUsd($crewLkr) ?? 0.0;
         $sections = [
             'hotels'     => round($hotelUsd, 2),

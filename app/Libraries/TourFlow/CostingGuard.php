@@ -145,7 +145,7 @@ final class CostingGuard
             $items[] = [
                 'kind' => 'vehicle', 'ref' => (int) $v['id'],
                 'what' => 'Vehicle · ' . trim((string) (($v['type'] ?? '') ?: ($v['class_code'] ?? ''))) . ' (rate per km)',
-                'old' => self::money($v['km_rate'] ?? null, 'LKR'), 'new' => self::money($v['master_now'] ?? null, 'LKR'), 'since' => null, 'source' => 'Transport Rates',
+                'old' => self::money($v['km_rate'] ?? null, (string) (($v['currency'] ?? '') ?: 'LKR')), 'new' => self::money($v['master_now'] ?? null, (string) (($v['master_currency'] ?? $v['currency'] ?? '') ?: 'LKR')), 'since' => null, 'source' => 'Transport Rates',
             ];
         }
         $kept = isset($it['usd_rate_kept']) && $it['usd_rate_kept'] !== null && $it['usd_rate_kept'] !== '' ? (float) $it['usd_rate_kept'] : null;
