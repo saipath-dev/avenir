@@ -263,7 +263,7 @@ class TransportController extends BaseController
     {
         try {
             $a = $this->allowancesSvc();
-            return $this->json(['status' => 200, 'data' => ['fixed' => $a->all(), 'cities' => $a->cities(), 'has_city_master' => $a->hasCityMaster(), 'quote' => $this->quoteData()]]);
+            return $this->json(['status' => 200, 'data' => ['fixed' => $a->all(), 'cities' => $a->cities(), 'has_city_master' => $a->hasCityMaster(), 'quote' => $this->quoteData(), 'route' => $this->routeData()]]);
         } catch (\Throwable $e) {
             return $this->fail($e);
         }
@@ -331,6 +331,49 @@ class TransportController extends BaseController
             $b = $this->body();
             $this->allowancesSvc()->save((string) $code, $b['km'] ?? null, $b['note'] ?? null, array_key_exists('active', $b) ? !empty($b['active']) : null);
             return $this->json(['status' => 200, 'message' => 'Allowance saved. New inquiries use it from now; nothing already priced changes.', 'data' => $this->allowancesSvc()->all()]);
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    /**
+     * tf-garage-r1: where a tour starts and ends. At the airport (the company's way since Nov 2026): the vehicle's day begins
+     * at the airport, the garage run is the only running added (Garage → airport at the start, airport → Garage at the end,
+     * the garage figure above each), and there is no positioning leg from Colombo. Otherwise the older plan: Garage → Colombo,
+     * then Colombo → airport to collect the party.
+     */
+    private function routeData(): array
+    {
+        $get = function (string $k, string $d): string {
+            try {
+                $r = $this->db()->query('SELECT v FROM tf_meta WHERE k = ?', [$k])->getRowArray();
+                return $r ? (string) $r['v'] : $d;
+            } catch (\Throwable $e) {
+                return $d;
+            }
+        };
+        $base = trim($get('vehicle_base', 'Colombo'));
+        $pos  = trim($get('position_on_arrival', '1')) === '1';
+        return ['start_at_airport' => $base === '' && !$pos, 'vehicle_base' => $base, 'position_on_arrival' => $pos, 'gateway' => trim($get('gateway', 'Katunayake')) ?: 'Katunayake'];
+    }
+
+    // POST master_files/mileage_allowances/route {start_at_airport: 1 | 0}
+    public function saveRoute()
+    {
+        try {
+            $b   = $this->body();
+            $on  = !empty($b['start_at_airport']) && (string) $b['start_at_airport'] !== '0';
+            $was = $this->routeData();
+            $db  = $this->db();
+            foreach (['vehicle_base' => $on ? '' : 'Colombo', 'position_on_arrival' => $on ? '0' : '1'] as $k => $v) {
+                $db->query('INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)', [$k, $v]);
+            }
+            if ($was['start_at_airport'] !== $on) {
+                \App\Libraries\TourFlow\Activity::master($db, $this->user(), 'mileage_allowance', 0, 'Mileage Allowances: tours ' . ($on ? 'start and end at the airport (garage run only)' : 'start from Colombo (garage → Colombo → airport)'), [
+                    ['what' => 'tour start', 'from' => $was['start_at_airport'] ? 'airport' : 'Colombo', 'to' => $on ? 'airport' : 'Colombo'],
+                ]);
+            }
+            return $this->json(['status' => 200, 'message' => ($on ? 'Tours now start and end at the airport: Garage → airport and airport → Garage, the garage figure each way.' : 'Tours start from Colombo again: Garage → Colombo, then Colombo → airport.') . ' New inquiries and re-read mileage use it; a leg typed by hand is never touched.', 'data' => $this->routeData()]);
         } catch (\Throwable $e) {
             return $this->fail($e);
         }

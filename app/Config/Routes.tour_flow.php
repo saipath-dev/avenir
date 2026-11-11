@@ -184,6 +184,7 @@ $routes->group('master_files/mileage_allowances', ['filter' => ['UserSessionFilt
     $routes->get('/', [TransportController::class, 'allowances']);
     $routes->get('data', [TransportController::class, 'allowanceData']);
     $routes->post('allowance/(:segment)', [TransportController::class, 'saveAllowance']);
+    $routes->post('route', [TransportController::class, 'saveRoute']);   // tf-garage-r1: where the tour starts and ends
     $routes->post('city', [TransportController::class, 'city']);
     $routes->post('city/(:num)', [TransportController::class, 'city']);
     // schema 17: which figure the quotation is costed on, and a live check of the Google key

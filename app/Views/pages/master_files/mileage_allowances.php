@@ -82,6 +82,10 @@
                             <div class="tf-card-b" style="overflow-x:auto">
                                 <table class="tbl" id="fixed"><thead><tr><th>Allowance</th><th>Kilometres</th><th>Applies</th><th></th></tr></thead><tbody></tbody></table>
                                 <div class="help mt-2">A change applies to inquiries worked out from now on. Legs already on an inquiry keep their figure until that inquiry's mileage is re-read, and a leg somebody typed by hand is never touched.</div>
+                                <div class="mt-3 pt-2" style="border-top:1px solid #eef0f3">
+                                    <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="r_airport"><label class="form-check-label" for="r_airport"><b>Tours start and end at the airport</b></label></div>
+                                    <div class="help" id="r_help">The vehicle's tour begins and ends at the airport: only the garage run is added — Garage → airport on the first day and airport → Garage on the last, at the garage figure above each way. Switched off: Garage → Colombo, then Colombo → airport to collect the party.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,6 +197,14 @@
         if (j.data && j.data.cached != null) { const k = document.getElementById('q_key'); if (k && j.status === 200) { const d = await api('/data'); if (d.status === 200) renderQuote(d.data.quote); } }
     });
 
+    // tf-garage-r1: where the tour starts and ends
+    const rBox = document.getElementById('r_airport');
+    rBox.addEventListener('change', async () => {
+        const j = await post('/route', { start_at_airport: rBox.checked ? 1 : 0 });
+        if (j.status !== 200) { toast('error', j.message); rBox.checked = !rBox.checked; return; }
+        toast('success', j.message);
+    });
+
     document.getElementById('c_add').addEventListener('click', async () => {
         const j = await post('/city', { city: document.getElementById('c_city').value, km: document.getElementById('c_km').value });
         if (j.status !== 200) { toast('error', j.message); return; }
@@ -206,6 +218,7 @@
         renderFixed(j.data.fixed);
         renderCities(j.data.cities);
         renderQuote(j.data.quote);
+        if (j.data.route) rBox.checked = !!j.data.route.start_at_airport;
         if (!j.data.has_city_master) {
             document.getElementById('c_note').textContent = 'The extra_kilometers master is not on this install, so city allowances cannot be kept here.';
         }
