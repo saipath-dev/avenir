@@ -580,6 +580,9 @@ final class IntakeService
         // the itinerary written out, day by day, the way the quotation says it (schema 28)
         try {
             $it['itinerary'] = $this->writer()->write($it);
+            // tf-journey-r1: the day headings, the hotels shown in bold, the hotel each night stays at
+            $it['itinerary']['journey'] = ItineraryWriter::journey(array_merge((array) ($it['days'] ?? []), (array) ($it['departure_rows'] ?? [])),
+                isset($it['itinerary']['departure']['day_no']) ? (int) $it['itinerary']['departure']['day_no'] : null, (array) ($it['hotel_transfers'] ?? []));
         } catch (\Throwable $e) {
             $it['itinerary'] = ['days' => [], 'departure' => null, 'error' => $e->getMessage()];
         }

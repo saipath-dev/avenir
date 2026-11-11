@@ -257,6 +257,36 @@
     .tf .reqrow q { display:block; font-style:normal; color:var(--tf-muted); font-size:12px; margin-top:2px; }
     .tf .paxgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:7px; }
     /* the itinerary as the quotation says it */
+    /* tf-journey-r1: How the quotation reads — "Your Sri Lanka journey" */
+    .tf .jr-sheet { padding:22px 28px 18px; color:#1f1f24; }
+    .tf .jr-brand { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:3px solid #842484; padding-bottom:12px; }
+    .tf .jr-logo { font-family:Georgia,'Times New Roman',serif; font-size:30px; font-weight:700; letter-spacing:1px; color:#842484; line-height:1; }
+    .tf .jr-logo2 { font-size:11px; letter-spacing:6px; color:#4a5a2a; font-weight:700; margin-top:4px; }
+    .tf .jr-tag { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#777; }
+    .tf .jr-title { font-family:Georgia,'Times New Roman',serif; font-size:30px; color:#1f1f24; margin:22px 0 4px; }
+    .tf .jr-sub { color:#555; font-size:15px; font-weight:500; margin-bottom:14px; }
+    .tf .jr-day { display:flex; gap:20px; padding:22px 0; border-top:1px solid #ece6ec; }
+    .tf .jr-no { flex:0 0 64px; text-align:center; }
+    .tf .jr-no span { display:block; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#666; font-weight:700; }
+    .tf .jr-no b { display:block; font-family:Georgia,'Times New Roman',serif; font-size:38px; font-weight:400; color:#842484; line-height:1.1; }
+    .tf .jr-body { flex:1 1 auto; min-width:0; }
+    .tf .jr-h { font-size:20px; font-weight:800; color:#1f1f24; margin-bottom:8px; }
+    .tf .jr-own { font-size:11px; font-weight:600; color:#78b848; border:1px solid #cfe6bd; border-radius:999px; padding:1px 8px; vertical-align:middle; }
+    .tf .jr-row { display:flex; gap:18px; align-items:flex-start; }
+    .tf .jr-txt { flex:1 1 auto; font-size:16px !important; line-height:1.7; color:#2f2f35; }
+    .tf .jr-txt b { color:#111; }
+    .tf .jr-night { margin-top:10px; font-size:14px; color:#777; }
+    .tf .jr-night b { color:#111; font-size:15px; margin-left:4px; }
+    .tf .jr-pic { flex:0 0 200px; }
+    .tf .jr-pic img { width:200px; height:140px; object-fit:cover; border-radius:8px; display:block; }
+    .tf .jr-acts { display:flex; gap:10px; margin-top:12px; }
+    .tf .jr-btn { border:1px solid #d9d0d9; background:#fff; color:#4b1f4b; font-weight:600; font-size:13px; padding:7px 14px; border-radius:8px; }
+    .tf .jr-btn:hover { border-color:#842484; color:#842484; }
+    .tf .jr-addpic { border-style:dashed; color:#777; font-weight:500; background:#fafafa; }
+    .tf .jr-foot { display:flex; justify-content:space-between; align-items:center; border-top:1px solid #ece6ec; padding-top:14px; color:#777; font-size:13px; }
+    .tf .jr-foot span { display:inline-block; width:56px; height:3px; background:#78b848; }
+    .tf .jr-client .jr-acts, .tf .jr-client .jr-own { display:none; }
+    @media (max-width:700px) { .tf .jr-row { flex-direction:column; } .tf .jr-pic, .tf .jr-pic img { width:100%; flex-basis:auto; } .tf .jr-sheet { padding:16px; } }
     .tf .itinline { display:flex; gap:10px; align-items:flex-start; padding:6px 4px; border-bottom:1px solid var(--tf-line); font-size:12.5px; line-height:1.5; }
     .tf .itinline:last-child { border-bottom:0; }
     .tf .itinline.edit { cursor:pointer; }
@@ -1906,18 +1936,41 @@
         // nights, visits, excursions and flights in the order above (Admin → Settings holds the
         // sentences); a night can carry a person's own wording instead.
         const itineraryCard = (() => {
+            // tf-journey-r1: "Your Sri Lanka journey" — each day its own block: the number, a heading from the booking, the
+            // wording (hotel names in bold), the night's hotel, the day's picture beside it; Edit wording and the picture per day
             const I = it.itinerary; if (!I || (!(it.days || []).length)) return '';
-            const byDay = I.days || {};
-            const lines = (it.days || []).map(d => {
-                const w = byDay[d.day_no] || byDay[String(d.day_no)];
-                if (!w) return '';
-                return `<div class="itinline ${it.locked ? '' : 'edit'}" ${it.locked ? '' : `data-day="${d.id}"`} title="${it.locked ? '' : 'Edit this night to write your own wording'}">
-                    <span class="mono dayno">Day ${d.day_no}</span><span class="txt">${esc(w.text)}</span>${w.source === 'own' ? '<span class="pill pill-blue">own wording</span>' : ''}</div>`;
-            }).join('');
-            const dep = I.departure && !(it.days || []).some(d => Number(d.day_no) === Number(I.departure.day_no)) ? `<div class="itinline ${it.locked || !(it.departure_day && it.departure_day.editable) ? '' : 'edit depwords'}" ${it.locked || !(it.departure_day && it.departure_day.editable) ? '' : 'data-depwording'} title="${it.locked ? '' : 'Click to write your own wording for the departure day'}"><span class="mono dayno">Day ${I.departure.day_no}</span><span class="txt">${esc(I.departure.text)}</span>${I.departure.source === 'own' ? '<span class="pill pill-blue">own wording</span>' : ''}</div>` : '';
-            return `<div class="tf-card" id="itin_card"><div class="tf-card-h"><h6>How the quotation reads</h6>
-                <span class="help">Written from the nights, visits, excursions and flights above, in the order they stand — the arrival, each touring day, the departure. Click a night to put your own words on it.${CAN_MANAGE ? ` The sentences themselves are set under <a href="${MANAGE_BASE}?tab=settings">Admin → Settings</a>.` : ''}</span></div>
-                <div class="tf-card-b">${lines}${dep}${I.error ? `<div class="help" style="color:var(--tf-red)">${esc(I.error)}</div>` : ''}</div></div>`;
+            const byDay = I.days || {}, J = I.journey || { headings: {}, hotels: [], overnight: {} };
+            const PH = (it.photos && it.photos.days) || {};
+            const bold = t => { let h = esc(t || ''); (J.hotels || []).forEach(n => { const e = esc(n); if (!e) return; h = h.split(e).join('\u0000' + e + '\u0001'); }); return h.replace(/\u0000/g, '<b>').replace(/\u0001/g, '</b>'); };
+            const pad = n => String(n).padStart(2, '0');
+            const block = (n, w, editAttr, photoDay) => {
+                const p = photoDay ? (PH[photoDay] || PH[String(photoDay)]) : null;
+                const pic = p && p.photo_id ? `<div class="jr-pic"><img src="${esc(p.thumb_url || p.url)}" alt=""></div>` : '';
+                const hotel = (J.overnight || {})[n] || (J.overnight || {})[String(n)];
+                return `<div class="jr-day">
+                    <div class="jr-no"><span>Day</span><b>${pad(n)}</b></div>
+                    <div class="jr-body">
+                        <div class="jr-h">${esc((J.headings || {})[n] || (J.headings || {})[String(n)] || 'Day ' + n)}${w.source === 'own' ? ' <span class="jr-own">own wording</span>' : ''}</div>
+                        <div class="jr-row"><div class="jr-txt">${bold(w.text)}${hotel ? `<div class="jr-night">Overnight <b>${esc(hotel)}</b></div>` : ''}</div>${pic}</div>
+                        ${it.locked ? '' : `<div class="jr-acts">${photoDay ? `<button type="button" class="jr-btn jr-addpic" data-photoday="${photoDay}"><i class="bi bi-image"></i> ${p && p.photo_id ? 'Change picture' : 'Add picture'}</button>` : ''}<button type="button" class="jr-btn jr-edit" ${editAttr}>Edit wording</button></div>`}
+                    </div></div>`;
+            };
+            const lines = (it.days || []).map(d => { const w = byDay[d.day_no] || byDay[String(d.day_no)]; return w ? block(d.day_no, w, `data-day="${d.id}"`, d.day_no) : ''; }).join('');
+            const depEditable = !it.locked && it.departure_day && it.departure_day.editable;
+            const dep = I.departure && !(it.days || []).some(d => Number(d.day_no) === Number(I.departure.day_no)) ? block(I.departure.day_no, I.departure, depEditable ? 'data-depwording' : 'disabled', null) : '';
+            const nDays = (it.days || []).length + (I.departure ? 1 : 0);
+            const places = []; (it.days || []).forEach(d => { const h = (J.headings || {})[d.day_no] || ''; const pl = h.split(' · ')[0].split(' to ').pop().replace(/^Arrival$/, ''); if (pl && !places.includes(pl) && pl !== 'Arrival') places.push(pl); });
+            const pls = (it.days || []).map(d => ((J.headings || {})[d.day_no] || '')).map(h => h.includes(' · ') ? h.split(' · ')[h.startsWith('Arrival') ? 1 : 0] : h.split(' to ').pop()).filter((v, i, a) => v && a.indexOf(v) === i);
+            return `<div class="tf-card jr-card" id="itin_card">
+                <div class="tf-card-h"><h6>How the quotation reads</h6><span class="help">Review the wording and picture for each day.</span>
+                    <button type="button" class="btn btn-light btn-sm ms-auto" id="jr_client"><i class="bi bi-eye"></i> View as client</button></div>
+                <div class="jr-sheet">
+                    <div class="jr-brand"><div><div class="jr-logo">AVENIR</div><div class="jr-logo2">HOLIDAYS</div></div><div class="jr-tag">Itinerary preview</div></div>
+                    <div class="jr-title">Your Sri Lanka journey</div>
+                    <div class="jr-sub">${nDays} days${pls.length ? ' · ' + esc(pls.slice(0, 4).join(' & ').replace(/ & (?=.* & )/g, ', ')) : ''}</div>
+                    ${lines}${dep}${I.error ? `<div class="help" style="color:var(--tf-red)">${esc(I.error)}</div>` : ''}
+                    <div class="jr-foot"><span></span>Avenir Holidays</div>
+                </div></div>`;
         })();
 
         // The pictures the client quotation shows for each day — the library's own pick from the
@@ -2761,7 +2814,7 @@
 
             ${itineraryCard}
 
-            ${photosCard}
+            ${''/* tf-journey-r1: the day pictures sit in the journey above */}
 
             <div class="tf-card" id="ea_card"><div class="tf-card-h"><h6>Entrance &amp; Activities</h6>
                 <span class="help">The single source of the entrance and activity cost — the quotation receives its total</span>
@@ -2861,6 +2914,7 @@
         document.querySelectorAll('#detail_cols .fld').forEach(b => b.addEventListener('click', () => openField(b.dataset.field)));
         document.querySelectorAll('#detail_cols [data-day]').forEach(b => b.addEventListener('click', () => openDay(Number(b.dataset.day))));
         document.querySelectorAll('#detail_cols [data-photoday]').forEach(b => b.addEventListener('click', () => openPhotoPicker(Number(b.dataset.photoday))));
+        document.getElementById('jr_client')?.addEventListener('click', e => { const c = document.getElementById('itin_card'); const on = c.classList.toggle('jr-client'); e.currentTarget.innerHTML = on ? '<i class="bi bi-pencil"></i> Back to editing' : '<i class="bi bi-eye"></i> View as client'; });
         document.querySelectorAll('#detail_cols [data-reprice]').forEach(b => b.addEventListener('click', async (ev) => {
             ev.stopPropagation();
             b.disabled = true;

@@ -166,7 +166,14 @@ final class ItineraryWriter
             $mealsSaid = false;
             if ($i === 0) {
                 $kind = 'arrival';
-                $text = $this->say('itin_arrival', ['airport' => $s['itin_airport'], 'flight' => $this->flight($it['arrival_flight'] ?? null, 'in'), 'representative' => $s['itin_representative'], 'in_area' => $place !== '' ? ' in ' . $place : ($hotel !== '' ? ', ' . $hotel : '')]);
+                $txA = (array) (($it['hotel_transfers'] ?? [])['arrival'] ?? []);
+                if (($txA['by'] ?? '') === 'hotel' && $hotel !== '') {
+                    // tf-journey-r1: the hotel collects them — the sentence says so, never "our representative"
+                    $text = 'Arrive at ' . $s['itin_airport'] . $this->flight($it['arrival_flight'] ?? null, 'in') . ' and transfer to ' . $hotel . '. Your airport pick-up is arranged by '
+                        . (!empty($txA['hotel']) && (int) ($txA['night'] ?? 0) === $dayNo ? 'the hotel' : (!empty($txA['hotel']) ? self::tidyName((string) $txA['hotel']) : 'the hotel')) . '.';
+                } else {
+                    $text = $this->say('itin_arrival', ['airport' => $s['itin_airport'], 'flight' => $this->flight($it['arrival_flight'] ?? null, 'in'), 'representative' => $s['itin_representative'], 'in_area' => $place !== '' ? ' in ' . $place : ($hotel !== '' ? ', ' . $hotel : '')]);
+                }
                 if ($lunches) {
                     $items = array_merge($items, $lunches);
                     $mealsSaid = true;
@@ -261,6 +268,17 @@ final class ItineraryWriter
             $text = $items
                 ? $this->say('itin_departure_visits', $vars + ['visits' => $this->phrase($items)])
                 : $this->say('itin_departure', $vars);
+            $txD = (array) (($it['hotel_transfers'] ?? [])['departure'] ?? []);
+            $lastHotel = self::tidyName((string) ($prev['hotel_name_raw'] ?? $prev['hotel'] ?? ''));
+            if (($txD['by'] ?? '') === 'hotel') {
+                // tf-journey-r1: the hotel takes them to the airport — from the last hotel, said so
+                $by   = !empty($txD['hotel']) && (int) ($txD['night'] ?? 0) === (int) ($prev['day_no'] ?? -1) ? 'the hotel' : (!empty($txD['hotel']) ? self::tidyName((string) $txD['hotel']) : 'the hotel');
+                $from = $lastHotel !== '' ? ' from ' . $lastHotel : '';
+                $text = $items
+                    ? $morning . ', ' . $this->phrase($items) . '. Thereafter, transfer' . $from . ' to ' . $s['itin_airport'] . ' for your departure flight' . $vars['to'] . $flight . '.'
+                    : 'Transfer' . $from . ' to ' . $s['itin_airport'] . ' for your departure flight' . $vars['to'] . $flight . '.';
+                $text .= ' Your airport drop-off is arranged by ' . $by . '.';
+            }
             $text .= $this->mealWords($svcs, true);
             $own = trim((string) ($it['departure_text'] ?? ''));
             foreach ($extra as $e) {
@@ -620,6 +638,94 @@ final class ItineraryWriter
      * Dambulla / Kandalama" the part the hotel's name carries (Heritance Kandalama: Kandalama),
      * else the first. The whole area still counts when a visit is placed (areaWords).
      */
+    /**
+     * tf-journey-r1: the day headings of "Your Sri Lanka journey" — from the booking itself, never invented:
+     * the first day "Arrival · Kandalama", a night at the same hotel "Kandalama · At leisure" (or the day's own
+     * visits by name), a move "Kandalama to Negombo", and the last "Departure · Airport transfer". Also the hotel
+     * names the text is to show in bold, and the hotel each night stays at.
+     *
+     * @param array $days each with day_no, area, a hotel name (hotel_name_raw or hotel), services and excursions
+     * @return array{headings: array<int,string>, hotels: string[], overnight: array<int,string>}
+     */
+    public static function journey(array $days, ?int $depNo, array $transfers = []): array
+    {
+        usort($days, static fn ($a, $b) => (int) $a['day_no'] <=> (int) $b['day_no']);
+        $short = static function (array $d): string {
+            $hotel = self::tidyName((string) ($d['hotel_name_raw'] ?? $d['hotel'] ?? ''));
+            $place = self::placeName((string) ($d['area'] ?? ''), $hotel);
+            if ($place !== '') {
+                return $place;
+            }
+            $w = preg_split('/\s+/', $hotel) ?: [];
+            if (count($w) > 1 && in_array(strtolower($w[0]), ['heritance', 'jetwing', 'cinnamon', 'amaya', 'hotel', 'the', 'avani', 'anantara', 'uga', 'mandara'], true)) {
+                array_shift($w);
+            }
+            return trim(implode(' ', $w));
+        };
+        $out = ['headings' => [], 'hotels' => [], 'overnight' => [], 'transfers' => ['arrival' => $transfers['arrival']['by'] ?? 'car', 'departure' => $transfers['departure']['by'] ?? 'car']];
+        $prev = null;
+        foreach ($days as $i => $d) {
+            $n = (int) $d['day_no'];
+            if ($depNo !== null && $n >= $depNo) {
+                continue;
+            }
+            $hotel = self::tidyName((string) ($d['hotel_name_raw'] ?? $d['hotel'] ?? ''));
+            $place = $short($d);
+            if ($hotel !== '') {
+                $out['hotels'][] = $hotel;
+                $out['overnight'][$n] = $hotel;
+            }
+            $visits = [];
+            foreach ((array) ($d['services'] ?? []) as $sv) {
+                $k = (string) ($sv['kind'] ?? '');
+                if (in_array($k, ['lunch', 'dinner', 'guide', 'transport', 'meal'], true) || in_array((string) ($sv['pay_mode'] ?? ''), ['not_arranged'], true) || !empty($sv['meal_id'])) {
+                    continue;
+                }
+                $visits[] = self::tidyName((string) ($sv['title'] ?? ''));
+            }
+            foreach ((array) ($d['excursions'] ?? []) as $x) {
+                $visits[] = self::tidyName((string) ($x['name'] ?? ''));
+            }
+            $visits = array_values(array_unique(array_filter($visits)));
+            $prevHotel = $prev ? self::tidyName((string) ($prev['hotel_name_raw'] ?? $prev['hotel'] ?? '')) : null;
+            if ($i === 0 || $prev === null) {
+                $h = 'Arrival' . ($place !== '' ? ' · ' . $place : '');
+            } elseif ($hotel !== '' && $prevHotel !== null && strcasecmp($hotel, $prevHotel) === 0) {
+                $h = ($place !== '' ? $place . ' · ' : '') . ($visits ? implode(' & ', array_slice($visits, 0, 2)) : 'At leisure');
+            } else {
+                $from = $short($prev);
+                $h = $from !== '' && $place !== '' && strcasecmp($from, $place) !== 0 ? $from . ' to ' . $place : ($place !== '' ? $place : 'Day ' . $n);
+            }
+            $out['headings'][$n] = $h;
+            $prev = $d;
+        }
+        if ($depNo !== null) {
+            $out['headings'][$depNo] = 'Departure · Airport transfer';
+        }
+        foreach ($transfers as $t) {
+            if (($t['by'] ?? '') === 'hotel' && !empty($t['hotel'])) {
+                $out['hotels'][] = self::tidyName((string) $t['hotel']);
+            }
+        }
+        $out['hotels'] = array_values(array_unique(array_filter($out['hotels'])));
+        usort($out['hotels'], static fn ($a, $b) => mb_strlen($b) <=> mb_strlen($a));   // the longer name first, so a short one never splits it
+        return $out;
+    }
+
+    /** tf-journey-r1: escaped text with each hotel name in bold (HTML), for the journey on screen and on paper. */
+    public static function boldHotels(string $text, array $hotels): string
+    {
+        $html = esc($text);
+        foreach ($hotels as $h) {
+            $e = esc((string) $h);
+            if ($e === '') {
+                continue;
+            }
+            $html = (string) preg_replace('/(?<![>\w])' . preg_quote($e, '/') . '(?![\w<])/u', '<b>' . $e . '</b>', $html);
+        }
+        return $html;
+    }
+
     public static function placeName(string $area, string $hotel = ''): string
     {
         $area = self::tidyName($area);

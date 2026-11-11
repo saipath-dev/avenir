@@ -196,53 +196,63 @@ if ($logo && is_file($logo)) {
 </table>
 <?php endif; ?>
 
-<h3 style="font-size:14px; color:<?= $P ?>; margin:20px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">Itinerary</h3>
-<table width="100%" cellpadding="6" cellspacing="0" style="font-size:11.5px;">
-    <?php $depRow = false; foreach ($c['days'] as $d): $dp = $dayPhotos[(int) $d['day_no']] ?? null;
+<?php
+// tf-journey-r1: "Your Sri Lanka journey" — each day its own block: the number, a heading from the booking, the wording with the
+// hotel names in bold, the night's hotel, and the day's picture beside it (a day with no picture has no empty box)
+$W  = \App\Libraries\TourFlow\ItineraryWriter::class;
+$J  = is_array($itin['journey'] ?? null) ? $itin['journey'] : $W::journey($c['days'], (int) $c['nights'] > 0 ? (int) $c['nights'] + 1 : null);
+$jb = static fn (string $t): string => nl2br($W::boldHotels($t, (array) ($J['hotels'] ?? [])));
+$jh = static fn (int $n): string => (string) (($J['headings'] ?? [])[$n] ?? (($J['headings'] ?? [])[(string) $n] ?? ('Day ' . $n)));
+$NUM = 'style="font-family:Georgia,\'Times New Roman\',serif; font-size:26px; color:' . $P . '; line-height:1.1;"';
+$DAYW = 'style="font-size:8.5px; letter-spacing:1px; color:' . $MUTED . '; font-weight:bold;"';
+$CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
+?>
+<h3 style="font-size:17px; color:#1f1f24; font-family:Georgia,'Times New Roman',serif; font-weight:normal; margin:22px 0 2px 0;">Your Sri Lanka journey</h3>
+<div style="border-bottom:2px solid <?= $P ?>; margin-bottom:6px; font-size:1px;">&nbsp;</div>
+<table width="100%" cellpadding="9" cellspacing="0" style="font-size:12px;">
+    <?php $depRow = false; foreach ($c['days'] as $d): $n = (int) $d['day_no']; $dp = $dayPhotos[$n] ?? null; $hasPic = $dp && !empty($dp['photo_id']) && $picTag($dp, 150, 'x') !== '';
         // a row past the nights the dates give is the departure day written as a night: it reads as the departure
-        $isDep = (int) $c['nights'] > 0 && (int) $d['day_no'] > (int) $c['nights'] && !$d['hotel'];
-        $depRow = $depRow || $isDep; ?>
-    <tr style="border-bottom:1px solid <?= $LINE ?>;">
-        <td width="<?= $hasPhotos ? '15%' : '17%' ?>" style="vertical-align:top; border-bottom:1px solid <?= $LINE ?>;"><b style="color:<?= $P ?>;">Day <?= (int) $d['day_no'] ?></b><br><span style="color:<?= $MUTED ?>;"><?= $fmtD($d['date']) ?></span></td>
-        <?php if ($hasPhotos): ?><td width="24%" style="vertical-align:top; border-bottom:1px solid <?= $LINE ?>; text-align:center;" class="daypic"><?= $dp ? $picTag($dp, 150, 'width:100%;max-width:170px;height:auto;border-radius:4px;display:inline-block') : '' ?><?= $dp && !empty($dp['photo_id']) && $dp['caption'] ? '<div style="font-size:9.5px;color:' . $MUTED . ';margin-top:2px;">' . esc($dp['caption']) . '</div>' : '' ?></td><?php endif; ?>
-        <td width="<?= $hasPhotos ? '61%' : '83%' ?>" style="vertical-align:top; border-bottom:1px solid <?= $LINE ?>;">
-            <?php if ($isDep): ?>
-            <b><?= esc($d['area'] ?: '') ?></b>
-            <div class="daytext" style="margin-top:4px; line-height:1.5;"><?= $depText !== '' ? nl2br(esc($depText)) : 'Transfer to the airport for departure.' ?></div>
-            <?php else: ?>
-            <b><?= esc($d['area'] ?: '') ?></b><?= $d['hotel'] ? ($d['area'] ? ' — ' : '') . esc($d['hotel']) : '' ?>
-            <?php if ($d['room_type'] || $d['meal_plan']): ?><br><span style="color:<?= $MUTED ?>;"><?= esc($d['room_type'] ?: '') ?><?= $d['room_type'] && $d['meal_plan'] ? ' · ' : '' ?><?= esc($meals[$d['meal_plan']] ?? ($d['meal_plan'] ?: '')) ?></span><?php endif; ?>
-            <?php if ($dayText((int) $d['day_no']) !== ''): ?>
-                <div class="daytext" style="margin-top:4px; line-height:1.5;"><?= nl2br(esc($dayText((int) $d['day_no']))) ?></div>
+        $isDep = (int) $c['nights'] > 0 && $n > (int) $c['nights'] && !$d['hotel'];
+        $depRow = $depRow || $isDep;
+        $txt = $isDep ? ($depText !== '' ? $depText : 'Transfer to the airport for departure.') : $dayText($n); ?>
+    <tr>
+        <td width="12%" style="<?= $CELL ?> text-align:center;"><span <?= $DAYW ?>>DAY</span><br><span <?= $NUM ?>><?= sprintf('%02d', $n) ?></span><br><span style="color:<?= $MUTED ?>; font-size:9.5px;"><?= $fmtD($d['date']) ?></span></td>
+        <td width="<?= $hasPic ? '58%' : '88%' ?>" <?= $hasPic ? '' : 'colspan="2"' ?> style="<?= $CELL ?>">
+            <b style="font-size:14px; color:#1f1f24;"><?= esc($isDep ? 'Departure · Airport transfer' : $jh($n)) ?></b>
+            <?php if ($txt !== ''): ?>
+                <div class="daytext" style="margin-top:5px; line-height:1.6; color:#33333a; font-size:12.5px;"><?= $jb($txt) ?></div>
                 <?php // what the priced list and the excursion master say about a stop, and anything payable direct or the party's own
                 foreach (array_merge($d['services'], $d['excursions']) as $s): $name = $s['title'] ?? $s['name']; if (!empty($s['description']) || !empty($s['note'])): ?>
-                    <div style="color:<?= $MUTED ?>; font-size:10.5px; margin-top:2px;"><i><?= esc($name) ?></i><?= !empty($s['note']) ? ' (' . esc($s['note']) . ')' : '' ?><?= !empty($s['description']) ? ' — ' . nl2br(esc($s['description'])) : '' ?></div>
+                    <div style="color:<?= $MUTED ?>; font-size:10.5px; margin-top:3px;"><i><?= esc($name) ?></i><?= !empty($s['note']) ? ' (' . esc($s['note']) . ')' : '' ?><?= !empty($s['description']) ? ' — ' . nl2br(esc($s['description'])) : '' ?></div>
                 <?php endif; endforeach; ?>
             <?php else: ?>
-            <?php foreach ($d['services'] as $s): ?>
+                <?php foreach ($d['services'] as $s): ?>
                 <br><span style="color:<?= $INK ?>;">&#8226; <?= esc($s['title']) ?><?= $s['note'] ? ' <i style="color:' . $MUTED . '">(' . esc($s['note']) . ')</i>' : '' ?></span>
                 <?php if (!empty($s['description'])): ?><br><span style="color:<?= $MUTED ?>; font-size:11px;"><?= nl2br(esc($s['description'])) ?></span><?php endif; ?>
-            <?php endforeach; ?>
-            <?php foreach ($d['excursions'] as $x): ?>
+                <?php endforeach; ?>
+                <?php foreach ($d['excursions'] as $x): ?>
                 <br><span style="color:<?= $INK ?>;">&#8226; <?= esc($x['name']) ?><?= !empty($x['includes_transport']) ? ' <i style="color:' . $MUTED . '">(transport included)</i>' : '' ?></span>
                 <?php if (!empty($x['description'])): ?><br><span style="color:<?= $MUTED ?>; font-size:11px;"><?= nl2br(esc($x['description'])) ?></span><?php endif; ?>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php endif; ?>
+            <?php if (!$isDep && $d['hotel']): ?>
+                <div style="margin-top:7px; color:<?= $MUTED ?>; font-size:11px;">Overnight <b style="color:#111; font-size:12.5px;"><?= esc($d['hotel']) ?></b><?php if ($d['room_type'] || $d['meal_plan']): ?> · <?= esc($d['room_type'] ?: '') ?><?= $d['room_type'] && $d['meal_plan'] ? ' · ' : '' ?><?= esc($meals[$d['meal_plan']] ?? ($d['meal_plan'] ?: '')) ?><?php endif; ?></div>
             <?php endif; ?>
         </td>
+        <?php if ($hasPic): ?><td width="30%" style="<?= $CELL ?> text-align:right;" class="daypic"><?= $picTag($dp, 150, 'width:100%;max-width:210px;height:auto;border-radius:6px;display:inline-block') ?></td><?php endif; ?>
     </tr>
     <?php endforeach; ?>
-    <?php if (!$depRow): ?>
-    <tr><td width="<?= $hasPhotos ? '15%' : '17%' ?>" style="vertical-align:top;"><b style="color:<?= $P ?>;">Day <?= (int) $c['nights'] + 1 ?></b><br><span style="color:<?= $MUTED ?>;"><?= $fmtD($c['departure']) ?></span></td>
-        <?php if ($hasPhotos): ?><td width="24%"></td><?php endif; ?>
-        <td width="<?= $hasPhotos ? '61%' : '83%' ?>" style="vertical-align:top;" class="daytext"><?= $depText !== '' ? nl2br(esc($depText)) : 'Transfer to the airport for departure.' ?></td></tr>
+    <?php if (!$depRow): $dn = (int) $c['nights'] + 1; ?>
+    <tr><td width="12%" style="<?= $CELL ?> text-align:center;"><span <?= $DAYW ?>>DAY</span><br><span <?= $NUM ?>><?= sprintf('%02d', $dn) ?></span><br><span style="color:<?= $MUTED ?>; font-size:9.5px;"><?= $fmtD($c['departure']) ?></span></td>
+        <td width="88%" colspan="2" style="<?= $CELL ?>"><b style="font-size:14px; color:#1f1f24;">Departure · Airport transfer</b>
+            <div class="daytext" style="margin-top:5px; line-height:1.6; color:#33333a; font-size:12.5px;"><?= $jb($depText !== '' ? $depText : 'Transfer to the airport for departure.') ?></div></td></tr>
     <?php endif; ?>
 </table>
 
 <h3 style="font-size:14px; color:<?= $P ?>; margin:20px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">The price includes</h3>
 <table width="100%" cellpadding="3" cellspacing="0" style="font-size:11.5px;">
     <tr><td width="4%" style="vertical-align:top;">&#8226;</td><td width="96%">Accommodation for <?= (int) $c['nights'] ?> night<?= (int) $c['nights'] === 1 ? '' : 's' ?> in the hotels and room types listed, on the meal basis shown<?= $mixWords ? ', in ' . esc(implode(', ', $mixWords)) : '' ?>.</td></tr>
-    <?php if ($vehicles): ?><tr><td style="vertical-align:top;">&#8226;</td><td>Transport throughout by <?= esc(implode(' and ', $vehicles)) ?><?= $c['crew'] ? ' with ' . esc(implode(' and ', $c['crew'])) : '' ?>, including airport transfers.</td></tr><?php endif; ?>
+    <?php if ($vehicles): ?><tr><td style="vertical-align:top;">&#8226;</td><td>Transport throughout by <?= esc(implode(' and ', $vehicles)) ?><?= $c['crew'] ? ' with ' . esc(implode(' and ', $c['crew'])) : '' ?><?php $tA = $J['transfers']['arrival'] ?? 'car'; $tD = $J['transfers']['departure'] ?? 'car'; ?><?= $tA === 'hotel' && $tD === 'hotel' ? '; airport pick-up and drop-off by the hotel' : ($tA === 'hotel' ? ', including the airport drop-off; airport pick-up by the hotel' : ($tD === 'hotel' ? ', including the airport pick-up; airport drop-off by the hotel' : ', including airport transfers')) ?>.</td></tr><?php endif; ?>
     <?php if ($included): ?><tr><td style="vertical-align:top;">&#8226;</td><td><?= esc(implode(', ', array_unique($included))) ?>.</td></tr><?php endif; ?>
 </table>
 <?php if ($direct): ?>
