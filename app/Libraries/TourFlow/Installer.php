@@ -687,6 +687,18 @@ final class Installer
                 'agent_note'       => "ALTER TABLE `customers` ADD COLUMN `agent_note` VARCHAR(255) NULL AFTER `agent_set_at`",
             ],
             'tf_intake' => [
+                // tf-transfer-r1: how the clients reach the first hotel and leave the last one (our car, or the hotel's own
+                // transfer), and the per-unit fee typed on the inquiry over the hotel's own (HotelTransfers)
+                'arrival_by'   => "ALTER TABLE `tf_intake` ADD COLUMN `arrival_by` ENUM('car','hotel') NULL",
+                'departure_by' => "ALTER TABLE `tf_intake` ADD COLUMN `departure_by` ENUM('car','hotel') NULL",
+                'pickup_fee'   => "ALTER TABLE `tf_intake` ADD COLUMN `pickup_fee` DECIMAL(10,2) NULL",
+                'drop_fee'     => "ALTER TABLE `tf_intake` ADD COLUMN `drop_fee` DECIMAL(10,2) NULL",
+                // tf-transfer-r2: the hotel that does the transfer is chosen — it need not be the hotel they stay at
+                'arrival_hotel_id'   => "ALTER TABLE `tf_intake` ADD COLUMN `arrival_hotel_id` INT UNSIGNED NULL",
+                'departure_hotel_id' => "ALTER TABLE `tf_intake` ADD COLUMN `departure_hotel_id` INT UNSIGNED NULL",
+                // tf-transfer-r3: the date of the hotel transfer (empty: the arrival / departure date of the tour)
+                'arrival_transfer_date'   => "ALTER TABLE `tf_intake` ADD COLUMN `arrival_transfer_date` DATE NULL",
+                'departure_transfer_date' => "ALTER TABLE `tf_intake` ADD COLUMN `departure_transfer_date` DATE NULL",
                 // schema 49 (tf-child-r1): each child's age and bedding, for the Child Fare Review
                 'child_json' => "ALTER TABLE `tf_intake` ADD COLUMN `child_json` TEXT NULL AFTER `pax_children`",
                 'confirmed_at' => "ALTER TABLE `tf_intake` ADD COLUMN `confirmed_at` DATETIME NULL AFTER `converted_by`",

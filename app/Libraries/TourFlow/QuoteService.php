@@ -374,12 +374,45 @@ final class QuoteService
                 $line['supplements'][] = ['name' => (string) $s['name'], 'per' => $per, 'qty' => $qty, 'rate' => (float) $s['amount'], 'amount' => $tot];
                 $amount += $tot;
             }
+            // tf-transfer-r1: the hotel's own airport pick-up (first night) or drop (last night), paid with this hotel's bill
+            foreach ((array) ($it['hotel_transfers'] ?? []) as $tx) {
+                if (($tx['by'] ?? '') !== 'hotel' || (int) ($tx['night'] ?? 0) !== (int) $n || !empty($tx['missing']) || $tx['amount'] === null) {
+                    continue;
+                }
+                $fc  = strtoupper((string) ($tx['currency'] ?: 'USD'));
+                $amt = (float) $tx['amount'];
+                if ($fc !== $cur) {
+                    $amt = $fc === 'USD' && $cur === 'LKR' && $rate ? round($amt * $rate, 2) : ($fc === 'LKR' && $cur === 'USD' ? ($toUsd($amt) ?? 0.0) : $amt);
+                }
+                $line['supplements'][] = ['name' => $tx['label'] . (!empty($tx['date']) ? ' on ' . date('j M Y', strtotime((string) $tx['date'])) : '') . ' (USD ' . number_format((float) $tx['unit'], 2) . ' per car)', 'per' => 'car', 'qty' => (int) $tx['qty'], 'rate' => (float) $tx['unit'], 'amount' => round($amt, 2), 'transfer' => $tx['side']];
+                $amount += $amt;
+            }
             $line['amount']     = round($amount, 2);
             $line['amount_usd'] = $cur === 'USD' ? $line['amount'] : $toUsd($line['amount']);
             if ($line['amount_usd'] !== null) {
                 $hotelUsd += $line['amount_usd'];
             }
             $hotels[] = $line;
+        }
+
+        // tf-transfer-r1: a hotel transfer with no fee on file stops the quotation — it is never left out unseen
+        $transferStays = [];
+        foreach ((array) ($it['hotel_transfers'] ?? []) as $tx) {
+            if (($tx['by'] ?? '') !== 'hotel') {
+                continue;
+            }
+            $what = $tx['side'] === 'arrival' ? 'Airport pick-up' : 'Airport drop';
+            if (!empty($tx['missing'])) {
+                $blockers[] = ['code' => 'transfer_' . $tx['side'], 'label' => $what . ' by hotel: ' . ($tx['why'] ?? 'missing information') . ' (Airport transfers card).'];
+                continue;
+            }
+            if ($tx['night'] === null) {
+                // tf-transfer-r2: a hotel they do not stay at — its own line, payable to that hotel, counted once under Hotels
+                $usdAmt = round((float) $tx['amount'], 2);
+                $hotelUsd += $usdAmt;
+                $transferStays[] = ['key' => mb_strtolower((string) $tx['hotel']), 'hotel' => (string) $tx['hotel'], 'area' => null, 'nights' => [], 'amount_usd' => $usdAmt, 'complete' => true,
+                                    'last_day' => 0, 'transfer' => $tx['side'], 'label' => $what . (!empty($tx['date']) ? ' on ' . date('j M Y', strtotime((string) $tx['date'])) : '') . ' — USD ' . number_format((float) $tx['unit'], 2) . ' per car × ' . (int) $tx['qty']];
+            }
         }
 
         // ---- transport: each vehicle line, its charged kilometres × its rate ----------
@@ -733,7 +766,8 @@ final class QuoteService
             // the costing read in three (schema 29): hotels, paid activities and services, transport —
             // the same figures as the sections, grouped; the three add up to the tour cost
             'parts'       => $parts,
-            'hotel_subtotals' => self::hotelSubtotals($hotels),
+            'hotel_subtotals' => array_merge(self::hotelSubtotals($hotels), $transferStays ?? []),
+            'transfer_stays'  => $transferStays ?? [],
             // tf-child-r1: what the Child Fare Review decided, kept with the version
             'child_review' => $childReview === null ? null : ['children' => $childReview['children'], 'adults' => $childReview['adults'], 'open' => $childReview['open'],
                 'items' => array_map(static fn ($i) => ['key' => $i['key'], 'kind' => $i['kind'], 'title' => $i['title'], 'days' => $i['day_from'] . ($i['day_to'] !== $i['day_from'] ? '–' . $i['day_to'] : ''),

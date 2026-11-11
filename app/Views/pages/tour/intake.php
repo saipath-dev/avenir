@@ -2757,6 +2757,8 @@
                 <div class="tf-card-b help" style="padding-top:8px">Press <b>Choose hotel</b> on a night to pick the hotel from the Hotel Rates panel and set the meal plan; the hotel's normal room type is filled in from the master and the published rate for that room and meal is copied beside the night — never typed, and a tactical or special-offer rate is never used. <b>Edit</b> the night to choose another room type for this booking, or to word it as the booking does; the master is never changed from here. Two nights at the same hotel become one stay when the tour is confirmed. <b>Add a night</b> puts another row at the end; a night past the dates moves the departure a day later, and says so first. The departure day is never a night: it follows the last night by itself.</div>
             </div>
 
+            ${transferBlock(it)}
+
             ${itineraryCard}
 
             ${photosCard}
@@ -4894,6 +4896,84 @@
         }));
         document.querySelectorAll('#meals_card [data-lpfill]').forEach(b => b.addEventListener('click', () => rowPost('/meals/fill', {}, 'Done.')));
     }
+
+    // tf-transfer-r1: the airport pick-up and drop — our car, or the hotel's own transfer with its fee on the hotel's bill
+    // tf-transfer-r2: Airport transfers — our car, or a hotel's own transfer: the hotel chosen from the master (any hotel,
+    // not assumed to be where they stay), the rate in USD per car, and the bill it goes on. Nothing is sent to the hotel from here.
+    function transferBlock(it) {
+        const T = it.hotel_transfers;
+        if (!T) return '';
+        const row = (t, key, hotelKey, feeKey, title, hotelWord) => {
+            const hotel = t.by === 'hotel';
+            const seg = (v, label, icon) => `<button type="button" class="tr-seg ${t.by === v ? 'on' : ''}" data-trby="${key}" data-v="${v}" aria-pressed="${t.by === v}" ${it.locked ? 'disabled' : ''}><i class="bi ${icon}"></i><span>${label}</span></button>`;
+            return `<div class="tr-row">
+                <div class="tr-head"><span class="tr-t">${title} · ${hotelWord}${hotel ? `<input type="date" class="form-control tr-date" data-trdate="${t.side}_transfer_date" value="${esc(t.date || '')}" ${it.locked ? 'disabled' : ''} title="${t.date_typed ? 'Date typed for this transfer' : 'The tour\'s ' + t.side + ' date — change it if the transfer is on another day'}">` : (t.date ? `<span class="tr-dtxt">${fmtDate(t.date)}</span>` : '')}</span>
+                    <span class="tr-segs" role="group">${seg('car', 'Our car', 'bi-car-front-fill')}${seg('hotel', hotelWord, 'bi-building')}</span></div>
+                ${hotel ? `<div class="tr-pick">
+                    <input class="form-control tr-hotel ${t.hotel_id ? '' : 'is-invalid'}" data-trhotel="${hotelKey}" value="${esc(t.hotel || '')}" placeholder="Select hotel ▾" autocomplete="off" ${it.locked ? 'disabled' : ''}>
+                    <div class="tr-list" data-trlist="${hotelKey}"></div></div>
+                <div class="tr-rate"><input type="number" min="0" step="0.01" class="form-control tr-fee ${t.unit == null ? 'is-invalid' : ''}" data-trfee="${feeKey}" value="${t.unit != null ? Number(t.unit) : ''}" placeholder="Rate" ${it.locked ? 'disabled' : ''}>
+                    <span class="tr-unit">USD per car</span>${t.amount != null && Number(t.qty) > 1 ? `<span class="help">× ${Number(t.qty)} cars = USD ${Number(t.amount).toFixed(2)}</span>` : ''}</div>
+                <div class="tr-bill">${t.hotel ? `On ${esc(t.hotel)}’s bill` : 'On selected hotel’s bill'}</div>` : ''}
+            </div>`;
+        };
+        return `<div class="tf-card tr-card" id="tr_block">
+            <style>
+              .tr-card .tr-h{background:#842484;color:#fff;padding:10px 16px;border-radius:10px 10px 0 0;font-size:18px;font-weight:600}
+              .tr-card .tr-row{padding:12px 16px;border-bottom:1px solid #eee}.tr-card .tr-row:last-child{border-bottom:0}
+              .tr-card .tr-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+              .tr-card .tr-t{font-size:15px;color:#333}
+              .tr-card .tr-segs{display:inline-flex;padding:3px;gap:2px;background:#f6f1f6;border:1px solid #eadcea;border-radius:999px}
+              .tr-card .tr-seg{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:#7a6a7a;font-size:13px;font-weight:500;padding:6px 14px;border-radius:999px;cursor:pointer;transition:background .18s,color .18s,box-shadow .18s}
+              .tr-card .tr-seg i{font-size:14px;opacity:.85}
+              .tr-card .tr-seg:hover:not(.on):not(:disabled){color:#842484;background:#fff}
+              .tr-card .tr-seg.on{background:#78b848;color:#fff;box-shadow:0 2px 6px rgba(120,184,72,.35)}
+              .tr-card .tr-seg.on i{opacity:1}
+              .tr-card .tr-seg:focus-visible{outline:2px solid #842484;outline-offset:1px}
+              .tr-card .tr-seg:disabled{cursor:default;opacity:.7}
+              .tr-card .tr-pick{position:relative;max-width:520px}.tr-card .tr-hotel{font-size:18px;font-weight:500;color:#111;height:44px}
+              .tr-card .tr-list{position:absolute;left:0;right:0;top:100%;z-index:30;background:#fff;border:1px solid #ddd;border-radius:6px;box-shadow:0 6px 16px rgba(0,0,0,.08);display:none;max-height:260px;overflow:auto}
+              .tr-card .tr-list div{padding:7px 12px;cursor:pointer}.tr-card .tr-list div:hover{background:#f6eef6}.tr-card .tr-list small{color:#888;margin-left:6px}
+              .tr-card .tr-rate{display:flex;align-items:center;gap:10px;margin-top:8px}.tr-card .tr-fee{width:120px;height:40px;font-size:16px}.tr-card .tr-unit{font-size:15px;color:#222}
+              .tr-card .tr-bill{color:#777;font-size:13px;margin-top:6px}
+              .tr-card .tr-t{display:inline-flex;align-items:center;gap:10px}.tr-card .tr-date{width:150px;height:34px;font-size:14px;display:inline-block}.tr-card .tr-dtxt{color:#888;font-size:13px}
+            </style>
+            <div class="tr-h">Airport transfers</div>
+            ${row(T.arrival, 'arrival_by', 'arrival_hotel_id', 'pickup_fee', 'Arrival', 'Hotel pick-up')}
+            ${row(T.departure, 'departure_by', 'departure_hotel_id', 'drop_fee', 'Departure', 'Hotel drop')}
+        </div>`;
+    }
+    let trTimer = null;
+    document.addEventListener('click', e => {
+        const by = e.target.closest && e.target.closest('#tr_block [data-trby]');
+        if (by && !by.classList.contains('on')) { rowPost('/transfers', { [by.dataset.trby]: by.dataset.v }, 'Airport transfer saved.'); return; }
+        const pick = e.target.closest && e.target.closest('#tr_block [data-pickhotel]');
+        if (pick) { rowPost('/transfers', { [pick.dataset.key]: Number(pick.dataset.pickhotel) }, 'Hotel selected.'); return; }
+        document.querySelectorAll('#tr_block .tr-list').forEach(l => { if (!l.contains(e.target)) l.style.display = 'none'; });
+    });
+    const trSearch = async inp => {
+        const list = document.querySelector(`#tr_block [data-trlist="${inp.dataset.trhotel}"]`);
+        const q = inp.value.trim();
+        if (!q) { list.style.display = 'none'; return; }
+        const j = await api('/transfer_hotels?q=' + encodeURIComponent(q));
+        const rows = (j && j.data) || [];
+        list.innerHTML = rows.length ? rows.map(h => `<div data-pickhotel="${h.id}" data-key="${inp.dataset.trhotel}">${esc(h.name)}${h.area ? `<small>${esc(h.area)}</small>` : ''}</div>`).join('') : '<div class="help" style="cursor:default">No hotel in the master matches</div>';
+        list.style.display = 'block';
+    };
+    document.addEventListener('input', e => {
+        const inp = e.target.closest && e.target.closest('#tr_block [data-trhotel]');
+        if (inp) { clearTimeout(trTimer); trTimer = setTimeout(() => trSearch(inp), 200); }
+    });
+    document.addEventListener('focusin', e => {
+        const inp = e.target.closest && e.target.closest('#tr_block [data-trhotel]');
+        if (inp) { inp.select(); if (inp.value.trim()) trSearch(inp); }
+    });
+    document.addEventListener('change', e => {
+        const dt = e.target.closest && e.target.closest('#tr_block [data-trdate]');
+        if (dt) { rowPost('/transfers', { [dt.dataset.trdate]: dt.value }, 'Transfer date saved.'); return; }
+        const fee = e.target.closest && e.target.closest('#tr_block [data-trfee]');
+        if (fee) rowPost('/transfers', { [fee.dataset.trfee]: fee.value }, fee.value === '' ? 'Rate cleared — the transfer now waits for a rate.' : 'Rate saved.');
+    });
 
     async function rowPost(path, body, okMsg) {
         const j = await post('/intake/' + CURRENT.id + path, body || {});

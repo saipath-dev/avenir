@@ -549,6 +549,20 @@ CREATE TABLE IF NOT EXISTS `tf_google_distance` (
 -- Every figure here is typed by a person and changed only by a person. The seeds are
 -- the company's own current practice: 80 km for a stay day is what management set,
 -- and 30 km garage mileage is the flat figure the driver log report has always used.
+-- tf-transfer-r1: a hotel's own airport pick-up and drop charge (paid with the hotel's bill); see HotelTransfers
+CREATE TABLE IF NOT EXISTS `tf_hotel_transfer_fee` (
+  `hotel_id`        INT UNSIGNED NOT NULL,
+  `pickup_amount`   DECIMAL(10,2) NULL,
+  `drop_amount`     DECIMAL(10,2) NULL,
+  `currency`        CHAR(3) NOT NULL DEFAULT 'USD',
+  `basis`           ENUM('vehicle','person') NOT NULL DEFAULT 'vehicle',
+  `pax_per_vehicle` TINYINT UNSIGNED NULL,
+  `note`            VARCHAR(255) NULL,
+  `updated_by`      VARCHAR(100) NULL,
+  `updated_at`      DATETIME NULL,
+  PRIMARY KEY (`hotel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `tf_mileage_allowance` (
   `code`       VARCHAR(30) NOT NULL,
   `name`       VARCHAR(80) NOT NULL,

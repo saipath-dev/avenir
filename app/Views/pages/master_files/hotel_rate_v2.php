@@ -1130,6 +1130,14 @@ php spark hotelrates:migrate</pre>
             <div class="col-md-8"><label class="form-label">Supplier accounts <span class="help">(ledger, 6-9-11-…)</span></label><div class="form-control form-control-sm mono" style="background:#f8f9fb">${h.accounts.map(a => a.sup_acc_no + (a.is_primary == 1 ? ' (primary)' : '') + (a.legacy_name ? ' · ' + esc(a.legacy_name) : '')).join('<br>')}</div></div>
             <div class="col-md-6"><label class="form-label">Bank details</label><textarea class="form-control" rows="3" data-h="bank_details">${esc(val(h.bank_details))}</textarea></div>
             <div class="col-md-6"><label class="form-label">Notes</label><textarea class="form-control" rows="3" data-h="notes">${esc(val(h.notes))}</textarea></div>
+            ${S.detail.transfer_fee_on ? (() => { const tf = S.detail.transfer_fee || {}; const tv = k => tf[k] == null ? '' : tf[k]; return `
+            <div class="col-12 mt-2"><div style="border-top:1px solid #eef0f3;padding-top:8px"><b>Airport pick-up &amp; drop by the hotel</b> <span class="help">— charged on this hotel's bill when the hotel takes the clients from or to the airport instead of our car. Used by the inquiry when Arrival or Departure is set to "Hotel transfer".</span></div></div>
+            <div class="col-md-2"><label class="form-label">Airport pick-up fee</label><input type="number" min="0" step="0.01" class="form-control form-control-sm" data-h="tf_pickup_amount" value="${esc(tv('pickup_amount'))}" placeholder="not set"></div>
+            <div class="col-md-2"><label class="form-label">Airport drop fee</label><input type="number" min="0" step="0.01" class="form-control form-control-sm" data-h="tf_drop_amount" value="${esc(tv('drop_amount'))}" placeholder="not set"></div>
+            <div class="col-md-2"><label class="form-label">Currency</label>${sel({ USD: 'USD', LKR: 'LKR' }, tf.currency || 'USD', 'class="form-select form-select-sm" data-h="tf_currency"')}</div>
+            <div class="col-md-2"><label class="form-label">Charged</label>${sel({ vehicle: 'per vehicle', person: 'per person' }, tf.basis || 'vehicle', 'class="form-select form-select-sm" data-h="tf_basis"')}</div>
+            <div class="col-md-2"><label class="form-label">People per vehicle</label><input type="number" min="1" max="60" class="form-control form-control-sm" data-h="tf_pax_per_vehicle" value="${esc(tv('pax_per_vehicle'))}" placeholder="all in one"></div>
+            <div class="col-md-2"><label class="form-label">Transfer note</label><input class="form-control form-control-sm" data-h="tf_note" value="${esc(tv('note'))}" placeholder="e.g. book 24 h ahead"></div>`; })() : ''}
             </div><div class="mt-3"><button class="btn btn-primary btn-sm" id="h_save">Save hotel</button></div>`;
         box.querySelector('#h_save').addEventListener('click', async () => {
             const body = {}; box.querySelectorAll('[data-h]').forEach(i => body[i.dataset.h] = i.value);

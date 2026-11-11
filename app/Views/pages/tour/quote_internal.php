@@ -101,6 +101,9 @@ $costOnParts = $costOn;   // tf-margin-r1: the roll-ups print only for Pricing
 $stays = $c['hotel_subtotals'] ?? $QS::hotelSubtotals($c['hotels'] ?? []);
 $stayEnd = [];
 foreach ($stays as $st) {
+    if (!empty($st['transfer'])) {
+        continue;   // tf-transfer-r2: shown on its own row below the nights
+    }
     $stayEnd[(int) $st['last_day']] = $st;
 }
 $nightsWord = static function (array $ns): string {
@@ -191,6 +194,9 @@ $mx = $c['pax_matrix'] ?? null;
     <?php endif; ?>
     <?php endforeach; ?>
     <?php if (!$c['hotels']): ?><tr><td colspan="7" <?= $td ?>><span style="color:<?= $MUTED ?>">No nights on this inquiry.</span></td></tr><?php endif; ?>
+    <?php foreach (($c['transfer_stays'] ?? []) as $ts): /* tf-transfer-r2: a hotel airport transfer by a hotel they do not stay at — payable to that hotel */ ?>
+    <tr><td <?= $td ?>><?= $ts['transfer'] === 'arrival' ? 'arrival' : 'departure' ?></td><td colspan="4" <?= $td ?>><b><?= esc($ts['hotel']) ?></b><br><span style="color:<?= $AMB ?>"><?= esc($ts['label']) ?></span></td><td <?= $tdr ?>>USD <?= $n2($ts['amount_usd']) ?></td><td <?= $tdr ?>><?= $n2($ts['amount_usd']) ?></td></tr>
+    <?php endforeach; ?>
     <?php if ($costOn): ?><tr><td colspan="6" <?= $partLbl ?>>Hotel cost</td><td <?= $partRow ?> data-part-total="hotels"><?= $n2($parts['hotels']['usd']) ?></td></tr><?php endif; ?>
 </table>
 

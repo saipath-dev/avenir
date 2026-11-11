@@ -251,6 +251,9 @@ class HotelRateV2Controller extends BaseController
                 'contracts' => $svc->contracts((int) $id),
                 'coverage' => $svc->coverage((int) $id, $from, $to, ['market' => $market]),
                 'locations' => $svc->locations(),
+                // tf-transfer-r1: the hotel's own airport pick-up / drop charge
+                'transfer_fee' => \App\Libraries\TourFlow\HotelTransfers::installed(\Config\Database::connect()) ? \App\Libraries\TourFlow\HotelTransfers::fee(\Config\Database::connect(), (int) $id) : null,
+                'transfer_fee_on' => \App\Libraries\TourFlow\HotelTransfers::installed(\Config\Database::connect()),
             ]]);
         } catch (\Throwable $e) {
             return $this->fail($e);
@@ -262,6 +265,16 @@ class HotelRateV2Controller extends BaseController
     {
         try {
             $b = $this->body();
+            // tf-transfer-r1: the airport pick-up / drop fee sits beside the hotel's record (TourFlow's own table)
+            if (array_key_exists('tf_pickup_amount', $b) || array_key_exists('tf_drop_amount', $b)) {
+                $tdb = \Config\Database::connect();
+                if (\App\Libraries\TourFlow\HotelTransfers::installed($tdb)) {
+                    \App\Libraries\TourFlow\HotelTransfers::save($tdb, (int) $id, [
+                        'pickup_amount' => $b['tf_pickup_amount'] ?? '', 'drop_amount' => $b['tf_drop_amount'] ?? '', 'currency' => $b['tf_currency'] ?? 'USD',
+                        'basis' => $b['tf_basis'] ?? 'vehicle', 'pax_per_vehicle' => $b['tf_pax_per_vehicle'] ?? '', 'note' => $b['tf_note'] ?? '',
+                    ], (string) (session()->get('username') ?? session()->get('user_name') ?? 'user'));
+                }
+            }
             $fields = array_intersect_key($b, array_flip(HotelRateService::HOTEL_FIELDS));
             if (array_key_exists('location_name', $b)) {
                 $fields['location_id'] = trim((string) $b['location_name']) === '' ? null : $this->svc()->ensureLocation((string) $b['location_name']);

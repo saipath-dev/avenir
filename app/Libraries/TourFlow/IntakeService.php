@@ -526,6 +526,12 @@ final class IntakeService
         $it['programme_basis']     = self::programmeBasis($it['programme_days'], $it['tour_dates']['departure_day_no'] ?? null);
         $it['crew']           = $this->crewWithDays($it);
         $it['tour_services'] = $byDay[0] ?? [];
+        // tf-transfer-r1: the airport pick-up / drop by the hotel, and its fee on the hotel's bill
+        try {
+            $it['hotel_transfers'] = HotelTransfers::forInquiry($this->db, $it);
+        } catch (\Throwable $e) {
+            $it['hotel_transfers'] = null;
+        }
         unset($it['fields_json']);
         // the email: whether the working copy differs from the paste, and what the date check says of it
         $it['source_edited'] = !empty($it['source_edited_at']) || (isset($it['source_text_original']) && $it['source_text_original'] !== null && (string) $it['source_text_original'] !== (string) $it['source_text']);
@@ -2675,6 +2681,15 @@ final class IntakeService
         $base      = trim((string) ($this->meta('vehicle_base') ?? ''));
         $position  = trim((string) ($this->meta('position_on_arrival') ?? '1')) === '1';
         [$garageOut, $garageBack] = $this->allowances()->garageKm();
+        // tf-transfer-r1: the hotel collects the clients at the airport, or takes them there — our car starts at the
+        // first hotel the next morning, or ends at the last hotel on the day they arrive there
+        $arrHotelMode = $depHotelMode = false;
+        if (HotelTransfers::installed($this->db)) {
+            $tr = $this->db->query('SELECT * FROM tf_intake WHERE id = ?', [$id])->getRowArray() ?: [];
+            $tr['days'] = $this->db->query('SELECT narrative, special_note, source_quote FROM tf_intake_day WHERE intake_id = ? ORDER BY day_no, id LIMIT 1', [$id])->getResultArray();
+            $arrHotelMode = HotelTransfers::mode($tr, 'arrival')[0] === 'hotel';
+            $depHotelMode = HotelTransfers::mode($tr, 'departure')[0] === 'hotel';
+        }
 
         $firstDayNo = (int) $days[0]['day_no'];
         $lastDayNo  = (int) $days[count($days) - 1]['day_no'];
@@ -2703,6 +2718,25 @@ final class IntakeService
             $to    = max($from, min($to, $lastDayNo));
             // does the party this vehicle carries leave the country when the vehicle's days end?
             $partyLeaves = $to === $lastDayNo || ($grp && self::intOrNull($grp['day_to']) === $to);
+            // tf-transfer-r1: a vehicle for the whole party, on the plan's own days, follows the hotel transfers
+            $whole = $line['day_from'] === null && $line['day_to'] === null && $grp === null;
+            $arrHotel = $whole && $arrHotelMode && $from === $firstDayNo && $lastDayNo > $firstDayNo;
+            $hotelOut = false;
+            if ($whole && $depHotelMode && $to === $lastDayNo) {
+                $lastHid = self::intOrNull($byNo[$lastDayNo]['hotel_id'] ?? null);
+                $startLast = $lastDayNo;
+                while ($lastHid !== null && isset($byNo[$startLast - 1]) && self::intOrNull($byNo[$startLast - 1]['hotel_id'] ?? null) === $lastHid) {
+                    $startLast--;
+                }
+                if ($lastHid !== null && $startLast >= $from + ($arrHotel ? 1 : 0)) {
+                    $to = $startLast;
+                    $partyLeaves = false;
+                    $hotelOut = true;
+                }
+            }
+            if ($arrHotel) {
+                $from = $firstDayNo + 1;
+            }
 
             $legs  = [];
             $prev  = null;
@@ -2727,6 +2761,22 @@ final class IntakeService
                     $note = '';
                 }
 
+                if ($first && !empty($arrHotel)) {
+                    // tf-transfer-r1: the hotel brought them from the airport; the car comes out from the garage to that hotel
+                    $first = false;
+                    $d0 = $byNo[$firstDayNo] ?? null;
+                    [$p0] = $d0 ? $this->placeFor($d0, $km) : [null, ''];
+                    $prev = $p0;
+                    $prevHotel = $d0 ? self::intOrNull($d0['hotel_id'] ?? null) : null;
+                    $prevAlias = null;
+                    if ($garageOut > 0 && $p0 !== null) {
+                        $legs[] = [$dayNo, 'Garage', $p0, 'garage', 'The tour starts at the first hotel: the clients come from the airport by the hotel\'s own transfer (Airport pick-up fee on the hotel bill).'];
+                    }
+                    if ($hotelId !== null && $hotelId === $prevHotel && $prev !== null) {
+                        $here = $prev;
+                        $note = '';
+                    }
+                }
                 if ($first) {
                     $first = false;
                     if ($garageOut > 0) {
@@ -2814,6 +2864,11 @@ final class IntakeService
                 }
                 if ($garageBack > 0) {
                     $legs[] = [$endDay, $gateOut !== '' ? $gateOut : ($prev ?? ''), 'Garage', 'garage', ''];
+                }
+            } elseif (!empty($hotelOut)) {
+                // tf-transfer-r1: the tour ends at the last hotel — the hotel takes them to the airport; the car goes home from there
+                if ($garageBack > 0 && $prev !== null) {
+                    $legs[] = [$to, $prev, 'Garage', 'garage', 'The tour ends at the last hotel: the clients go to the airport by the hotel\'s own transfer (Airport drop fee on the hotel bill).'];
                 }
             } else {
                 // the vehicle's days end but the party stays on: it runs back to base
@@ -3534,6 +3589,66 @@ final class IntakeService
     }
 
     /** Hand the whole itinerary's driving back to the history, losing every hand-typed leg. */
+    /**
+     * tf-transfer-r1: how the clients arrive and leave — our car or the hotel's own transfer — and the per-unit fee typed
+     * over the hotel's own. 'auto' puts a side back to what the email says. The route is laid again (legs typed by hand stay).
+     */
+    public function saveTransfers(int $id, array $b): array
+    {
+        $this->assertOpen($id);
+        if (!HotelTransfers::installed($this->db)) {
+            throw new \RuntimeException('The airport transfer fields are not on this install yet. The System Administrator runs Install on Tour Inquiry.');
+        }
+        $sets = [];
+        $bind = [];
+        foreach (['arrival_by', 'departure_by'] as $k) {
+            if (array_key_exists($k, $b)) {
+                $v = (string) $b[$k];
+                $sets[] = "{$k} = ?";
+                $bind[] = in_array($v, ['car', 'hotel'], true) ? $v : null;
+            }
+        }
+        // tf-transfer-r3: the date of the transfer; empty is the tour's own arrival / departure date
+        foreach (['arrival_transfer_date', 'departure_transfer_date'] as $k) {
+            if (array_key_exists($k, $b)) {
+                $v = trim((string) $b[$k]);
+                if ($v !== '' && (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $v) || strtotime($v) === false)) {
+                    throw new \InvalidArgumentException('The transfer date is a date (YYYY-MM-DD).');
+                }
+                $sets[] = "{$k} = ?";
+                $bind[] = $v === '' ? null : $v;
+            }
+        }
+        // tf-transfer-r2: the hotel that does the transfer, from the hotel master (not assumed to be the hotel they stay at)
+        foreach (['arrival_hotel_id', 'departure_hotel_id'] as $k) {
+            if (array_key_exists($k, $b)) {
+                $hid = (int) $b[$k];
+                if ($hid > 0 && !$this->db->query('SELECT id FROM hr2_hotel WHERE id = ?', [$hid])->getRowArray()) {
+                    throw new \InvalidArgumentException('That hotel is not in the hotel master.');
+                }
+                $sets[] = "{$k} = ?";
+                $bind[] = $hid > 0 ? $hid : null;
+            }
+        }
+        foreach (['pickup_fee', 'drop_fee'] as $k) {
+            if (array_key_exists($k, $b)) {
+                $v = trim(str_replace(',', '', (string) $b[$k]));
+                if ($v !== '' && (!is_numeric($v) || (float) $v < 0)) {
+                    throw new \InvalidArgumentException('The fee is an amount, 0 or more — or empty for the hotel\'s own.');
+                }
+                $sets[] = "{$k} = ?";
+                $bind[] = $v === '' ? null : round((float) $v, 2);
+            }
+        }
+        if ($sets) {
+            $bind[] = $id;
+            $this->db->query('UPDATE tf_intake SET ' . implode(', ', $sets) . ' WHERE id = ?', $bind);
+            $this->planSectors($id);
+            $this->touch($id);
+        }
+        return $this->get($id);
+    }
+
     public function autoSectors(int $id): array
     {
         $this->assertOpen($id);
@@ -6666,8 +6781,8 @@ final class IntakeService
             $on[(int) $s['day_no']] = true;
         }
         foreach (($it['services'] ?? []) as $s) {
-            if ((int) $s['day_no'] <= 0 || (string) ($s['pay_mode'] ?? '') === 'not_arranged') {
-                continue;
+            if ((int) $s['day_no'] <= 0 || in_array((string) ($s['pay_mode'] ?? ''), ['not_arranged', 'in_rate'], true)) {
+                continue;   // tf-transfer-r1: a programme included in the hotel's rate happens at the hotel — no crew needed for it
             }
             $on[(int) $s['day_no']] = true;
         }

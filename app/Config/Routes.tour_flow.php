@@ -473,6 +473,8 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->post('crew/rate', [TourIntakeController::class, 'crewRate']);
     $routes->post('intake/(:num)/vehicle', [TourIntakeController::class, 'vehicle']);
     $routes->post('intake/(:num)/crew', [TourIntakeController::class, 'intakeCrew']);
+    $routes->post('intake/(:num)/transfers', [TourIntakeController::class, 'transfers']);
+    $routes->get('transfer_hotels', [TourIntakeController::class, 'transferHotels']);   // tf-transfer-r2: hotel search for the transfer   // tf-transfer-r1: airport pick-up / drop by the hotel
     $routes->post('intake/(:num)/accom', [TourIntakeController::class, 'accom']);
     $routes->post('setup', [TourIntakeController::class, 'setup']);
 

@@ -1100,6 +1100,22 @@ class TourIntakeController extends BaseController
     //   {code, delete:1}                                — take the line off
     //   {auto:1}                                        — driver and guide from the agent's market again
     // The bata never travels in the body: it is the master's for the role (Master Files → Crew Bata).
+    // POST intake/(:num)/transfers {arrival_by?, departure_by?, pickup_fee?, drop_fee?} — tf-transfer-r1
+    public function transfers($id)
+    {
+        try {
+            return $this->json(['status' => 200, 'message' => 'Airport transfers saved. The route and the costing follow.', 'data' => $this->svc()->saveTransfers((int) $id, $this->body())]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // GET transfer_hotels?q= — tf-transfer-r2: hotels of the master whose name holds what was typed
+    public function transferHotels()
+    {
+        return $this->json(['status' => 200, 'data' => \App\Libraries\TourFlow\HotelTransfers::search($this->db(), (string) ($this->request->getGet('q') ?? ''))]);
+    }
+
     public function intakeCrew($id)
     {
         try {
@@ -1709,6 +1725,15 @@ class TourIntakeController extends BaseController
     {
         try {
             $q = $this->quotes()->quote((int) $qid);
+            if (!$q && (int) $qid > 0) {
+                // tf-pdf-r1: a draft is replaced each time Go for Quotation runs, so a page opened before that points at a
+                // version that no longer exists — opened on the inquiry's latest version instead of a dead end
+                $latest = $this->db()->query('SELECT id FROM tf_quote WHERE intake_id = ? ORDER BY version DESC, id DESC LIMIT 1', [(int) $id])->getRowArray();
+                if ($latest) {
+                    $qs = $this->request->getUri()->getQuery();
+                    return redirect()->to(site_url(self::URL . '/intake/' . (int) $id . '/quote/' . (int) $latest['id']) . ($qs !== '' ? '?' . $qs : ''));
+                }
+            }
             if (!$q || (int) $q['intake_id'] !== (int) $id) {
                 return $this->response->setStatusCode(404)->setBody('That quotation is not on this inquiry.');
             }
@@ -1828,6 +1853,24 @@ class TourIntakeController extends BaseController
         $tpl = $view === 'client' ? 'pages/tour/quote_client' : 'pages/tour/quote_internal';
         if (!$pdf) {
             return view($tpl, $data);
+        }
+        // tf-pdf-r1: TCPDF writes its working images (a PNG logo with transparency) to a cache folder. On UAT the PHP temp
+        // folder is not writable by the web server, so the PDF stopped with "imagepng(...): Permission denied". The app's
+        // own writable folder is used instead, defined before the library loads (it reads K_PATH_CACHE once).
+        if (!defined('K_PATH_CACHE')) {
+            foreach ([rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'tcpdf' . DIRECTORY_SEPARATOR, rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR, rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR, rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR, '/tmp/'] as $cacheDir) {
+                if (!is_dir($cacheDir)) {
+                    @mkdir($cacheDir, 0775, true);
+                }
+                if (is_dir($cacheDir) && is_writable($cacheDir)) {
+                    define('K_PATH_CACHE', $cacheDir);
+                    break;
+                }
+            }
+        }
+        if (!defined('K_PATH_CACHE') || !is_writable(K_PATH_CACHE)) {
+            // nowhere to write the logo's working image: the PDF goes out without the logo rather than not at all
+            $data['logo'] = null;
         }
         if (!class_exists('\TCPDF')) {
             // the library sits where composer puts it (vendor/tecnickcom/tcpdf) but composer's autoloader was
