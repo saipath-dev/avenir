@@ -505,7 +505,7 @@
     .inq .inq-f, .inq .inq-rm { border-left:1px solid var(--line); padding-left:12px; }
     .inq .inq-rate { border:1px solid #DCC6DD; border-radius:8px; padding:5px 12px 6px; font-size:12.5px; line-height:1.45; background:#fff; }
     .inq .inq-rate .t { font-weight:700; color:var(--p); font-size:12px; } .inq .inq-rate .v span { font-size:11px; color:var(--mut); } .inq .inq-rate .v b { font-size:14px; } .inq .inq-rate .v em { font-style:normal; color:#B9AEBF; margin:0 6px; }
-    .inq .inq-rate a { color:var(--p); font-weight:600; font-size:12px; text-decoration:none; } .inq .inq-rate .v .ns { display:inline-block; background:#FCE2B0; color:#8A4B00; font-size:13px; border-radius:5px; padding:1px 10px; }
+    .inq .inq-rate a { color:var(--p); font-weight:600; font-size:12px; text-decoration:none; } .inq .inq-rate .v .ns { display:inline-block; background:#ffffff; color:#1a1a1a; border:1px solid #d9d3dd; font-size:13px; border-radius:5px; padding:1px 10px; }
     .inq .inq-link { display:flex; align-items:center; gap:14px; height:40px; padding:0 14px; border:1px solid var(--line); border-radius:8px; margin-bottom:10px; color:var(--ink); text-decoration:none; font-size:14.5px; }
     .inq .inq-link:hover { border-color:var(--p); } .inq .inq-link i:first-child { color:var(--p); font-size:18px; } .inq .inq-link i:last-child { margin-left:auto; color:var(--p); }
     .inq .inq-rm, .inq .inq-ml { font-size:13.5px; display:flex; align-items:center; gap:8px; white-space:nowrap; } .inq .inq-ml b { font-weight:700; }
