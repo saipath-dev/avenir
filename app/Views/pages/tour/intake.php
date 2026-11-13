@@ -455,6 +455,86 @@
         .tf .trk-dkm { min-width:0; margin-left:auto; }
         .tf .trk-tkm { font-size:19px; }
     }
+
+    /* ================= tf-inquiry-r1 (13 Nov 2026): the Tour Inquiry page to Shantha's mock-up — a layout over the same cards, nothing removed ================= */
+    .tf .inq-on #flow, .tf .inq-on #dates_bar, .tf .inq-on #summary { display:none !important; }
+    .tf:has(#view_detail.inq-on:not([style*="none"])) .tf-title .sub, .tf:has(#view_detail.inq-on:not([style*="none"])) .inq-hide { display:none !important; }
+    .tf .inq-on .review { display:block; }
+    .tf .inq-on .sidecol { display:none; }
+    .inq { --p:#842484; --p-soft:#F7EEF7; --g:#78B848; --g-soft:#EAF5DF; --ink:#1A1A1A; --mut:#5E5964; --line:#E6DFEA; color:var(--ink); font-size:14px; }
+    .inq .inq-crumb { font-size:13px; color:var(--mut); margin:2px 0 10px; } .inq .inq-crumb a { color:var(--mut); text-decoration:none; } .inq .inq-crumb b { color:var(--p); }
+    .inq .inq-head { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
+    .inq .inq-head h2 { font-size:26px; font-weight:700; margin:0; color:var(--ink); letter-spacing:-.01em; }
+    .inq .inq-st { display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 14px; border-radius:16px; font-size:13.5px; font-weight:600; background:#EEE9F1; color:var(--ink); }
+    .inq .inq-st.ok { background:var(--g); color:#fff; } .inq .inq-st.bad { background:#FBE7E5; color:#B3261E; }
+    .inq .inq-acts { margin-left:auto; display:flex; gap:10px; flex-wrap:wrap; }
+    .tf .inq .inq-btn { display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 16px; border:1px solid #CFC7D4; border-radius:8px; background:#fff; color:var(--ink); font-size:13.5px; font-weight:600; cursor:pointer; text-decoration:none; }
+    .tf .inq .inq-btn:hover { border-color:var(--p); color:var(--p); }
+    .tf .inq .inq-btn.pri { background:var(--p); border-color:var(--p); color:#fff; } .tf .inq .inq-btn.pri:hover { background:#6E1E6E; color:#fff; }
+    .tf .inq .inq-btn[disabled] { opacity:.55; cursor:not-allowed; }
+    .inq .inq-cells { display:flex; flex-wrap:wrap; align-items:center; row-gap:10px; min-width:0; }
+    .inq .inq-strip { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 8px 12px 6px; margin-bottom:14px; }
+    .inq .inq-cells { justify-content:space-between; }
+    .inq .inq-cell { display:flex; align-items:center; gap:10px; padding:4px 14px; border-right:1px solid var(--line); min-width:0; flex:1 1 auto; }
+    .inq .inq-cell:last-of-type { border-right:0; }
+    .inq .inq-ico { flex:0 0 36px; width:36px; height:36px; border-radius:50%; background:var(--p-soft); color:var(--p); display:flex; align-items:center; justify-content:center; font-size:17px; }
+    .inq .inq-k { font-size:12px; color:var(--mut); line-height:1.3; } .inq .inq-v { font-size:14.5px; font-weight:700; line-height:1.35; white-space:nowrap; } .inq .inq-v small { font-weight:400; font-size:12px; color:var(--mut); display:block; white-space:normal; }
+    .inq .inq-crew { display:flex; justify-content:center; align-items:center; gap:0; flex-wrap:wrap; margin-top:10px; }
+    .inq .inq-crewcol { display:flex; align-items:center; gap:12px; padding:2px 24px; } .inq .inq-crewcol + .inq-crewcol { border-left:1px solid var(--line); }
+    .inq .inq-crewcol > i { font-size:22px; color:var(--p); } .inq .inq-crewcol label { font-size:14.5px; margin:0; color:var(--ink); white-space:nowrap; }
+    .tf .inq .inq-crewcol select { width:230px; max-width:60vw; height:32px; border:1px solid #BFB6C6; border-radius:6px; background:#fff; font-size:14px; padding:0 10px; color:var(--ink); }
+    .inq .inq-crewcol .more { font-size:12px; color:var(--p); }
+    .inq .inq-tabs { display:flex; gap:2px; flex-wrap:wrap; margin-bottom:-1px; position:relative; z-index:1; padding-left:2px; }
+    .tf .inq .inq-tab { display:inline-flex; align-items:center; gap:9px; height:42px; padding:0 22px; border:1px solid var(--line); border-bottom:0; border-radius:10px 10px 0 0; background:#fff; color:var(--ink); font-size:14px; font-weight:500; cursor:pointer; }
+    .tf .inq .inq-tab i { font-size:16px; } .tf .inq .inq-tab.on { background:linear-gradient(#8E2E8E,#7A1F7A); border-color:#7A1F7A; color:#fff; font-weight:600; }
+    .inq .inq-pane { display:none; } .inq .inq-pane.on { display:block; }
+    .inq .inq-grid { display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:16px; align-items:start; }
+    .inq .inq-card { background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:16px; }
+    .inq .inq-card > .h { display:flex; align-items:center; gap:10px; padding:11px 18px; background:var(--p-soft); font-size:15.5px; font-weight:700; color:var(--p); }
+    .inq .inq-card > .h.g { background:var(--g-soft); color:#3F7F1F; } .inq .inq-card > .h i { font-size:18px; } .inq .inq-card > .h .inq-btn { margin-left:auto; height:28px; font-size:12px; padding:0 12px; white-space:nowrap; flex:0 0 auto; }
+    .inq .inq-card > .b { padding:8px 18px 12px; }
+    .inq .inq-day { display:grid; grid-template-columns:128px minmax(150px,1.25fr) 108px 76px 118px minmax(196px,1fr) 34px; gap:14px; align-items:center; padding:9px 0; border-bottom:1px solid var(--line); position:relative; }
+    .inq .inq-day:last-child { border-bottom:0; }
+    .inq .inq-dn { position:relative; padding-left:26px; } .inq .inq-dn::before { content:""; position:absolute; left:6px; top:-12px; bottom:-12px; width:2px; background:var(--g); }
+    .inq .inq-drow:first-child .inq-dn::before { top:12px; } .inq .inq-drow:last-child .inq-dn::before { bottom:auto; height:24px; }
+    .inq .inq-dn::after { content:""; position:absolute; left:1px; top:6px; width:12px; height:12px; border-radius:50%; background:var(--g); }
+    .inq .inq-dn .pill { display:inline-block; background:var(--g); color:#fff; font-size:12.5px; font-weight:600; border-radius:12px; padding:2px 12px; } .inq .inq-dn .d { font-size:12.5px; color:var(--mut); margin-top:3px; }
+    .inq .inq-place b { display:block; font-size:15px; font-weight:700; } .inq .inq-place span { font-size:13px; color:#3B3341; }
+    .inq .inq-ph { width:112px; height:50px; border-radius:6px; object-fit:cover; background:linear-gradient(135deg,#EDE3EE,#DDEFD0); display:flex; align-items:center; justify-content:center; color:#A98BAA; font-size:20px; }
+    .inq .inq-f span { display:block; font-size:12px; color:var(--mut); } .inq .inq-f b { font-size:14px; font-weight:700; }
+    .inq .inq-f, .inq .inq-rm { border-left:1px solid var(--line); padding-left:12px; }
+    .inq .inq-rate { border:1px solid #DCC6DD; border-radius:8px; padding:5px 12px 6px; font-size:12.5px; line-height:1.45; background:#fff; }
+    .inq .inq-rate .t { font-weight:700; color:var(--p); font-size:12px; } .inq .inq-rate .v span { font-size:11px; color:var(--mut); } .inq .inq-rate .v b { font-size:14px; } .inq .inq-rate .v em { font-style:normal; color:#B9AEBF; margin:0 6px; }
+    .inq .inq-rate a { color:var(--p); font-weight:600; font-size:12px; text-decoration:none; } .inq .inq-rate.none .t { color:#B3261E; } .inq .inq-rate.none .v { color:var(--mut); }
+    .inq .inq-link { display:flex; align-items:center; gap:14px; height:40px; padding:0 14px; border:1px solid var(--line); border-radius:8px; margin-bottom:10px; color:var(--ink); text-decoration:none; font-size:14.5px; }
+    .inq .inq-link:hover { border-color:var(--p); } .inq .inq-link i:first-child { color:var(--p); font-size:18px; } .inq .inq-link i:last-child { margin-left:auto; color:var(--p); }
+    .inq .inq-rm, .inq .inq-ml { font-size:13.5px; display:flex; align-items:center; gap:8px; white-space:nowrap; } .inq .inq-ml b { font-weight:700; }
+    .tf .inq .inq-chev { width:30px; height:30px; border-radius:50%; border:0; background:var(--p-soft); color:var(--p); font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform .15s; }
+    .inq .inq-drow.open .inq-chev { transform:rotate(180deg); }
+    .inq .inq-more { display:none; margin:0 0 10px 26px; padding:12px 14px; background:#FBF8FC; border:1px solid var(--line); border-radius:8px; font-size:13px; }
+    .inq .inq-drow.open .inq-more { display:block; }
+    .inq .inq-more .kv { display:grid; grid-template-columns:150px minmax(0,1fr); gap:5px 14px; } .inq .inq-more .kv > span:nth-child(odd) { color:var(--mut); }
+    .inq .inq-more .acts { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; } .inq .inq-more .acts .inq-btn { height:30px; font-size:12.5px; padding:0 12px; }
+    .inq .inq-sum { display:grid; grid-template-columns:30px 96px minmax(0,1fr); gap:0 6px; align-items:start; font-size:13.5px; }
+    .inq .inq-sum > * { padding:9px 0; border-bottom:1px solid var(--line); } .inq .inq-sum i { color:var(--p); font-size:17px; } .inq .inq-sum b { font-weight:700; }
+    .inq .inq-sum .last { border-bottom:0; }
+    .inq .inq-two { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:16px; }
+    .inq .inq-tr { display:flex; align-items:center; gap:10px; padding:9px 0; font-size:14px; border-bottom:1px solid var(--line); } .inq .inq-tr:last-child { border-bottom:0; }
+    .inq .inq-tr .pl { margin-left:auto; background:var(--g-soft); color:#3F7F1F; font-weight:600; font-size:12.5px; border-radius:14px; padding:3px 14px; white-space:nowrap; }
+    .inq .inq-q b { font-size:15px; font-style:italic; } .inq .inq-q .inq-btn { float:right; margin-top:6px; border-color:var(--p); color:var(--p); }
+    .inq .inq-sec { margin:4px 0 12px; } .inq .inq-sec > summary { cursor:pointer; font-weight:700; color:var(--p); font-size:14px; padding:8px 2px; list-style-position:inside; }
+    .inq .inq-back { display:inline-flex; align-items:center; gap:6px; margin-bottom:12px; color:var(--p); font-weight:600; font-size:13.5px; cursor:pointer; background:none; border:0; padding:0; }
+    .inq .inq-panebox { background:#fff; border:1px solid var(--line); border-radius:0 12px 12px 12px; padding:16px; margin-bottom:16px; }
+    .inq .inq-pane > .inq-panebox > .tf-card:last-child { margin-bottom:0; }
+    .inq .inq-pane .tf-card-h > .help:not([id]) { display:none; }   /* the long explanations beside each heading: off the page, the cards and their buttons unchanged */
+    .inq #comms_card { border:0; margin:0 !important; box-shadow:none; } .inq #comms_card > .tf-card-h { display:none; }
+    @media (max-width:1200px) { .inq .inq-grid { grid-template-columns:minmax(0,1fr); } .inq .inq-day { grid-template-columns:120px minmax(130px,1fr) 96px 70px minmax(180px,1fr) 34px; } .inq .inq-day > .inq-rm { display:none; } }
+    @media (max-width:760px) {
+        .inq .inq-head h2 { font-size:21px; } .inq .inq-acts { margin-left:0; } .inq .inq-cell { border-right:0; padding:6px 10px; flex:1 1 45%; }
+        .inq .inq-crewcol { padding:4px 6px; flex-wrap:wrap; } .inq .inq-crewcol + .inq-crewcol { border-left:0; }
+        .inq .inq-day { grid-template-columns:104px minmax(0,1fr) 30px; } .inq .inq-day > .inq-f, .inq .inq-day > .inq-rm, .inq .inq-day > .inq-rate { display:none; }
+        .inq .inq-two { grid-template-columns:minmax(0,1fr); } .tf .inq .inq-tab { padding:0 12px; font-size:13px; }
+    }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -494,8 +574,8 @@
                     <b>No <?= esc($reader_label ?? 'API') ?> key is configured</b>, so emails cannot be read automatically yet. Everything else works — paste the email and fill the fields in by hand. Set <span class="mono"><?= esc($reader_key ?? 'ANTHROPIC_API_KEY') ?></span> in the project's <span class="mono">.env</span> to switch reading on.
                 </div></div>
                 <?php else: ?>
-                <div class="help mb-2">Emails are read by <b><?= esc($reader_label ?? '') ?></b><?= !empty($reader_model) ? ' · ' . esc($reader_model) : '' ?>. Every value it returns is checked back against the email before it is shown.</div>
-                <div class="mb-2" style="font-size:12.5px"><a href="#" id="rc_btn" title="Ask each AI service whether this server's key still works. Only the outcome is shown — never the key."><i class="bi bi-plug"></i> Check the reader</a>
+                <div class="help mb-2 inq-hide">Emails are read by <b><?= esc($reader_label ?? '') ?></b><?= !empty($reader_model) ? ' · ' . esc($reader_model) : '' ?>. Every value it returns is checked back against the email before it is shown.</div>
+                <div class="mb-2 inq-hide" style="font-size:12.5px"><a href="#" id="rc_btn" title="Ask each AI service whether this server's key still works. Only the outcome is shown — never the key."><i class="bi bi-plug"></i> Check the reader</a>
                     <div id="rc_out" class="mt-1" style="line-height:1.6"></div></div>
                 <?php endif; ?>
 
@@ -1752,6 +1832,7 @@
 
     function renderDetail() {
         const it = CURRENT;
+        inqPark();   // tf-inquiry-r1
         const gapCount = (it.gaps || []).length;
         renderFlow(it);
         // schema 32: one line for the tour's shape — the dates decide everything below it
@@ -3221,6 +3302,248 @@
         document.getElementById('d_checklist')?.addEventListener('click', () => { CHECK.fixed = 0; openChecklist(); });
         // a save re-renders: if the checklist is being worked through, it comes back by itself
         checklistAfterRender();
+        try { inqLayout(it); } catch (e) { console.error('tf-inquiry-r1', e); }   // tf-inquiry-r1: the mock-up layout over the cards above
+    }
+
+    // =====================================================================
+    //  tf-inquiry-r1 (13 Nov 2026, Shantha's mock-up): the Tour Inquiry page as one tidy screen — header, the
+    //  booking strip with Driver and Guide, tabs, the day-by-day itinerary, the tour summary. It is a LAYOUT over
+    //  the cards renderDetail() already made: every card is moved (never rebuilt) into a tab, so every button,
+    //  rule, endpoint and audit line is the existing one. Driver / Guide write through POST intake/{id}/crew.
+    // =====================================================================
+    let INQ_TAB = 'itin', INQ_OPEN = {}, INQ_ID = null;
+    function inqPark() {   // before detail_cols is rebuilt: the cards that live beside the inquiry go back to their column
+        const side = document.querySelector('#view_detail .sidecol'); if (!side) return;
+        [document.getElementById('masters_card'), document.getElementById('comms_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')]
+            .forEach(el => { if (el && el.closest('.inq')) side.appendChild(el); });
+    }
+    function inqShow(tab) {
+        INQ_TAB = tab;
+        document.querySelectorAll('.inq .inq-pane').forEach(p => p.classList.toggle('on', p.dataset.pane === tab));
+        document.querySelectorAll('.inq .inq-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+    }
+    function inqReveal(el) { const p = el && el.closest ? el.closest('.inq-pane') : null; if (p && !p.classList.contains('on')) inqShow(p.dataset.pane); const d = el && el.closest ? el.closest('details.inq-sec') : null; if (d) d.open = true; }
+    function inqLayout(it) {
+        const host = document.getElementById('detail_cols'); if (!host || !it) return;
+        document.getElementById('view_detail').classList.add('inq-on');
+        if (INQ_ID !== it.id) { INQ_ID = it.id; INQ_TAB = 'itin'; INQ_OPEN = {}; }
+        const kids = [...host.children];
+        const wrap = kids.find(k => k.querySelector(':scope > #ea_card')) || kids.find(k => !k.classList.contains('tf-card') && k.querySelector(':scope > .tf-card'));
+        if (!wrap) return;
+        const bar = kids[kids.length - 1] && kids[kids.length - 1].querySelector('#d_back') ? kids[kids.length - 1] : null;
+        const strip = kids.filter(k => k !== wrap && k !== bar && k.id !== 'act_card');
+        const title = c => ((c.querySelector(':scope > .tf-card-h h6') || {}).textContent || '').trim();
+        const where = c => { const t = title(c), id = c.id;
+            if (t === 'Agent & booking' || t === 'Dates & party') return 'book';
+            if (t === 'Party & rooms' || t === 'Passengers') return 'pax';
+            if (t === 'Requested itinerary') return 'hotels';
+            if (id === 'tr_block' || id === 'mil_card' || t === 'Vehicles' || / allocation$/.test(t)) return 'trans';
+            if (id === 'itin_card' || id === 'photo_card' || id === 'cf_card' || t === 'Quotation' || /^Pricing/.test(t)) return 'quote';
+            if (id === 'ea_card' || id === 'meals_card' || t === 'Excursions') return 'svc';
+            return 'notes'; };
+        const bins = { book: [], pax: [], hotels: [], trans: [], quote: [], svc: [], notes: [] };
+        [...wrap.children].forEach(c => { if (c.classList && c.classList.contains('tf-card')) bins[where(c)].push(c); else bins.notes.push(c); });
+
+        // ---- what the page says, from the inquiry as it stands ----
+        const p = it.progress || null, td = it.tour_dates || {}, days = it.days || [];
+        const quotes = (it.quotes || []).slice().sort((a, b) => Number(b.version) - Number(a.version));
+        const latest = quotes.find(q => q.status === 'issued') || quotes[0] || null;
+        const D = d => { const t = new Date(d + 'T00:00:00'); return isNaN(t) ? null : t; };
+        const dm = (d, o) => { const t = d ? D(d) : null; return t ? t.toLocaleDateString('en-GB', o) : ''; };
+        const a = it.arrival_date, z = it.departure_date;
+        const range = a && z ? (a.slice(0, 7) === z.slice(0, 7) ? dm(a, { day:'numeric' }) + ' – ' + dm(z, { day:'numeric', month:'short', year:'numeric' })
+            : dm(a, { day:'numeric', month:'short' }) + ' – ' + dm(z, { day:'numeric', month:'short', year:'numeric' })) : (a ? dm(a, { day:'numeric', month:'short', year:'numeric' }) : 'Dates not set');
+        const nights = td.nights != null ? td.nights : days.length, ndays = td.days != null ? td.days : (days.length ? days.length + 1 : 0);
+        const shape = nights ? `${nights} Night${nights === 1 ? '' : 's'} / ${ndays} Day${ndays === 1 ? '' : 's'}` : '';
+        const R = it.rooms || {}, roomsTxt = ['sgl', 'dbl', 'twn', 'tpl'].filter(k => Number(R[k]) > 0).map(k => R[k] + ' ' + k.toUpperCase()).join(', ') || (it.rooms_note || '—');
+        const ST = { new:'New', working:'In progress', quoted:'Quoted', confirmed:'Confirmed', declined:'Declined', cancelled:'Cancelled' };
+        const stCls = it.status === 'confirmed' ? 'ok' : (['declined', 'cancelled'].includes(it.status) ? 'bad' : '');
+        const cb = document.getElementById('d_confirm_top') || document.getElementById('d_confirm');
+        const canConfirm = !!cb && !cb.disabled;
+        const I = it.itinerary || {}, J = I.journey || { headings: {}, overnight: {} }, PH = (it.photos && it.photos.days) || {};
+        const place = d => { const h = (J.headings || {})[d.day_no] || (J.headings || {})[String(d.day_no)] || '';
+            let pl = h.includes(' to ') ? h.split(' to ').pop() : (h.startsWith('Arrival · ') ? h.slice(10) : h.split(' · ')[0]);
+            if (!pl || pl === 'Arrival') pl = d.area || d.hotel_name_raw || 'Day ' + d.day_no;
+            return (Number(d.day_no) === 1 ? 'Arrival / ' : '') + pl; };
+        const dayThings = n => [].concat((it.services || []).filter(s => Number(s.day_no) === Number(n)).map(s => s.title || s.name || ''),
+            (it.excursions || []).filter(x => Number(x.day_no) === Number(n)).map(x => x.title || x.name || '')).filter(Boolean);
+        const cellHtml = (tr, i) => { if (!tr || !tr.children[i]) return ''; const c = tr.children[i].cloneNode(true); c.querySelectorAll('button, a, input, select, .rowdel, i.bi-pencil').forEach(x => x.remove()); return c.innerHTML.trim(); };
+        // the published rate beside the night: the figure for each room kind the party uses, as the Hotel Rates panel gave it
+        const SITE = BASE.replace(/tour\/intake$/, '');
+        const rateBox = d => {
+            const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
+            const want = [['SGL', Number(R.sgl) > 0, d.rate_sgl], ['DBL', Number(R.dbl) > 0, d.rate_dbl], ['TWN', Number(R.twn) > 0, d.rate_dbl], ['TPL', Number(R.tpl) > 0, d.rate_tpl]];
+            let shown = want.filter(w => w[1] && f(w[2]) !== null);
+            if (!shown.length) shown = [['SGL', 1, d.rate_sgl], ['DBL', 1, d.rate_dbl], ['TPL', 1, d.rate_tpl]].filter(w => f(w[2]) !== null);
+            const link = ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>`
+                : `<a href="#" data-inqrates="${d.day_no}">View rates <i class="bi bi-box-arrow-up-right"></i></a>`;
+            return `<div class="inq-rate ${d.rate_state === 'rate' && shown.length ? '' : 'none'}"><div class="t">${d.rate_state === 'rate' && shown.length ? 'Published Rate (' + esc(cur) + ')' : 'Published rate missing'}</div>
+                <div class="v">${d.rate_state === 'rate' && shown.length ? shown.map(w => `<span>${w[0]}</span> <b>${esc(cur)} ${f(w[2])}</b>`).join(' <em>|</em> ') : (d.hotel_name_raw ? 'See the details' : 'Choose the hotel first')}</div>${link}</div>`;
+        };
+        const dayRow = d => {
+            const tr = (host.querySelector(`table.itin [data-day="${d.id}"]`) || { closest: () => null }).closest('tr');
+            const w = (I.days || {})[d.day_no] || (I.days || {})[String(d.day_no)], things = dayThings(d.day_no);
+            const rate = cellHtml(tr, 6), note = (n => /^Add a note$/i.test(n.replace(/<[^>]+>/g, '').trim()) ? '' : n)(cellHtml(tr, 8));
+            return `<div class="inq-drow ${INQ_OPEN[d.day_no] ? 'open' : ''}" data-inqday="${d.day_no}">
+                <div class="inq-day">
+                    <div class="inq-dn"><span class="pill">Day ${d.day_no}</span><div class="d">${esc(dm(d.day_date, { weekday:'short', day:'numeric', month:'short' }))}</div></div>
+                    <div class="inq-place"><b>${esc(place(d))}</b><span>${esc(d.hotel_name_raw || 'Hotel not chosen')}</span></div>
+                    <div class="inq-f"><span>Room Type</span><b>${esc(d.room_type_name || '—')}</b></div>
+                    <div class="inq-f"><span>Meal Plan</span><b>${esc(d.meal_plan || '—')}</b></div>
+                    <div class="inq-rm"><i class="bi bi-door-closed"></i>${esc(d.rooms || roomsTxt)}</div>
+                    ${rateBox(d)}
+                    <button type="button" class="inq-chev" data-inqtoggle="${d.day_no}" aria-label="Show the details of day ${d.day_no}"><i class="bi bi-chevron-down"></i></button>
+                </div>
+                <div class="inq-more"><div class="kv">
+                    <span>Hotel</span><span><b>${esc(d.hotel_name_raw || '—')}</b>${d.room_type_name ? ' · ' + esc(d.room_type_name) : ''}</span>
+                    <span>Rooms and meals</span><span>${esc(d.rooms || roomsTxt)} · ${esc(d.meal_plan || 'meal plan not set')}</span>
+                    <span>Hotel rate</span><span>${rate || '—'}</span>
+                    <span>Activities</span><span>${things.length ? esc(things.join(', ')) : '—'}</span>
+                    ${note ? `<span>Special note</span><span>${note}</span>` : ''}
+                    ${w && w.text ? `<span>Itinerary text</span><span>${esc(w.text)}</span>` : ''}
+                </div>${it.locked ? '' : `<div class="acts"><button type="button" class="inq-btn" data-inqedit="${d.id}"><i class="bi bi-building"></i> ${d.hotel_name_raw ? 'Change hotel or meal plan' : 'Choose hotel'}</button>
+                    <button type="button" class="inq-btn" data-inqsvc="${d.day_no}"><i class="bi bi-plus-lg"></i> Activities and services</button></div>`}</div></div>`;
+        };
+        const T = it.hotel_transfers || {};
+        const dep = it.departure_day, depNo = dep ? dep.day_no : null;
+        const depRow = dep && !days.some(d => Number(d.day_no) === Number(depNo)) ? `<div class="inq-drow"><div class="inq-day">
+            <div class="inq-dn"><span class="pill">Day ${depNo}</span><div class="d">${esc(dm(dep.date, { weekday:'short', day:'numeric', month:'short' }))}</div></div>
+            <div class="inq-place" style="grid-column:2 / span 5"><b>Departure</b><span>${esc(dm(dep.date, { day:'numeric', month:'short' }))} &nbsp;•&nbsp; Airport transfer${T.departure ? ' (' + (T.departure.by === 'car' ? 'our car' : 'hotel drop-off') + ')' : ''} &nbsp;•&nbsp; ${it.departure_flight ? 'Flight ' + esc(it.departure_flight) : 'Flight details not given'}</span></div>
+            <button type="button" class="inq-chev" data-inqgo="trans" aria-label="Open Transfers"><i class="bi bi-chevron-down"></i></button></div></div>` : '';
+        const hotelsN = new Set(days.map(d => d.hotel_name_raw).filter(Boolean)).size;
+        const mealsBy = {}; days.forEach(d => { if (d.meal_plan) mealsBy[d.meal_plan] = (mealsBy[d.meal_plan] || 0) + 1; });
+        const by = t => t ? (t.by === 'car' ? 'Our Car' : 'Hotel') : '—';
+        const trSum = T.arrival || T.departure ? (by(T.arrival) === by(T.departure) ? `Arrival &amp; Departure (${by(T.arrival)})` : `Arrival (${by(T.arrival)}) · Departure (${by(T.departure)})`) : '—';
+        const acts = [].concat(...days.map(d => dayThings(d.day_no)), dep ? dayThings(depNo) : []);
+        const trLine = (t, word) => t ? `<div class="inq-tr"><b>${word}</b> (${esc(dm(t.date, { day:'numeric', month:'short' }))}): ${t.by === 'car' ? 'Airport ' + (word === 'Arrival' ? 'pick-up' : 'drop-off') : 'Hotel ' + (word === 'Arrival' ? 'pick-up' : 'drop-off')}<span class="pl">${t.by === 'car' ? 'Our Car' : esc(t.hotel || 'Hotel')}</span></div>` : '';
+        const pls = days.map(d => place(d).replace(/^Arrival \/ /, '')).filter((v, i, x) => v && x.indexOf(v) === i);
+        const crewCol = kind => { const n = (it.crew || []).filter(c => c.kind === kind).length;
+            return `<div class="inq-crewcol"><i class="bi ${kind === 'driver' ? 'bi-car-front' : 'bi-person'}"></i><label for="inq_${kind}">Select ${kind === 'driver' ? 'Driver' : 'Guide'}</label>
+                <select id="inq_${kind}" data-inqcrew="${kind}" ${it.locked ? 'disabled' : ''}><option>Not selected</option></select>
+                ${n > 1 ? `<a href="#" class="more" data-inqgo="trans">+${n - 1} more</a>` : ''}</div>`; };
+
+        const shell = document.createElement('div'); shell.className = 'inq';
+        shell.innerHTML = `
+            <div class="inq-crumb"><a href="#" data-inqlist>Tour Desk</a> &nbsp;›&nbsp; <a href="#" data-inqlist>Tour Inquiry</a> &nbsp;›&nbsp; <b>${esc(it.inquiry_no || '')}</b></div>
+            <div class="inq-head"><h2>Tour Inquiry – ${esc(it.inquiry_no || '')}</h2><span class="inq-st ${stCls}">${it.status === 'confirmed' ? '<i class="bi bi-check-lg"></i>' : ''}${esc(ST[it.status] || it.status || '')}</span>
+                <div class="inq-acts">
+                    <button type="button" class="inq-btn" data-inqgo="book"><i class="bi bi-pencil-square"></i> Edit</button>
+                    <a class="inq-btn" target="_blank" href="${latest ? `${BASE}/intake/${it.id}/quote/${latest.id}?view=client&pdf=1` : `${BASE}/intake/${it.id}/preview?view=client`}"><i class="bi bi-printer"></i> Print</a>
+                    ${latest ? `<a class="inq-btn" target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client"><i class="bi bi-send"></i> Send Quotation</a>` : `<button type="button" class="inq-btn" data-inqgo="quote"><i class="bi bi-send"></i> Send Quotation</button>`}
+                    <button type="button" class="inq-btn pri" id="inq_confirm" ${canConfirm ? '' : 'disabled'} title="${esc(canConfirm ? 'The agent accepted the quotation' : (it.status === 'confirmed' ? 'This tour is already confirmed' : ((cb && cb.title) || 'Issue a quotation version first')))}"><i class="bi bi-check-lg"></i> Confirm Tour</button>
+                </div></div>
+            <div class="inq-strip"><div class="inq-cells">
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-person"></i></span><div><div class="inq-k">Agent</div><div class="inq-v">${esc(it.agent_name || 'Not set')}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-upc-scan"></i></span><div><div class="inq-k">Tour Code</div><div class="inq-v">${esc((p && p.tour_no) || '—')}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-calendar3"></i></span><div><div class="inq-k">Travel Dates</div><div class="inq-v">${esc(range)}${shape ? `<small>(${shape})</small>` : ''}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-people"></i></span><div><div class="inq-k">Travellers</div><div class="inq-v">${Number(it.pax_adults || 0)} Adult${Number(it.pax_adults || 0) === 1 ? '' : 's'}${Number(it.pax_children || 0) ? ', ' + Number(it.pax_children) + ' Child' + (Number(it.pax_children) === 1 ? '' : 'ren') : ''}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-door-closed"></i></span><div><div class="inq-k">Rooms</div><div class="inq-v">${esc(roomsTxt)}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane" style="transform:rotate(45deg)"></i></span><div><div class="inq-k">Arrival</div><div class="inq-v">${esc(dm(a, { day:'numeric', month:'short', year:'numeric' }) || '—')}${it.arrival_flight ? `<small>${esc(it.arrival_flight)}</small>` : ''}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane"></i></span><div><div class="inq-k">Departure</div><div class="inq-v">${esc(dm(z, { day:'numeric', month:'short', year:'numeric' }) || '—')}${it.departure_flight ? `<small>${esc(it.departure_flight)}</small>` : ''}</div></div></div>
+                </div><div class="inq-crew">${crewCol('driver')}${crewCol('guide')}</div>
+            </div>
+            <div class="inq-tabs" role="tablist">
+                <button type="button" class="inq-tab" data-tab="itin"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
+                <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-building"></i> Hotels (${hotelsN})</button>
+                <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Transfers</button>
+                <button type="button" class="inq-tab" data-tab="pax"><i class="bi bi-people"></i> Passengers (${Number(it.pax_total || 0)})</button>
+                <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
+            </div>
+            <div class="inq-pane" data-pane="itin">
+                <div class="inq-grid">
+                    <div>
+                        <div class="inq-card"><div class="h"><i class="bi bi-map"></i>Tour Itinerary${shape ? ' (' + shape + ')' : ''}</div>
+                            <div class="b">${days.map(dayRow).join('') + depRow || '<div class="help" style="padding:10px 0">No itinerary yet.</div>'}</div></div>
+                        <div class="inq-two">
+                            <div class="inq-card"><div class="h"><i class="bi bi-car-front"></i>Airport Transfers<button type="button" class="inq-btn" data-inqgo="trans">Details</button></div>
+                                <div class="b">${trLine(T.arrival, 'Arrival') + trLine(T.departure, 'Departure') || '<div class="help" style="padding:8px 0">Not set.</div>'}</div></div>
+                            <div class="inq-card"><div class="h"><i class="bi bi-file-text"></i>Quotation Preview</div>
+                                <div class="b inq-q" style="padding-top:12px"><b>“Your Sri Lanka journey${shape ? ' – ' + shape : ''}”</b><div>${esc(pls.join(' – ') || '—')}</div>
+                                    <button type="button" class="inq-btn" data-inqgo="quote">View Full Text</button></div></div>
+                        </div>
+                        <details class="inq-sec" id="inq_svc"><summary>Activities, entrances and meals — details</summary></details>
+                    </div>
+                    <div>
+                        <div class="inq-card"><div class="h g"><i class="bi bi-compass"></i>Tour Summary</div><div class="b"><div class="inq-sum">
+                            <i class="bi bi-building"></i><b>Hotels</b><span>${nights} night${nights === 1 ? '' : 's'} / ${hotelsN} hotel${hotelsN === 1 ? '' : 's'}</span>
+                            <i class="bi bi-cup-hot"></i><b>Meals</b><span>${Object.keys(mealsBy).map(k => esc(k) + ' × ' + mealsBy[k]).join(' &nbsp;|&nbsp; ') || '—'}</span>
+                            <i class="bi bi-car-front"></i><b>Transfers</b><span>${trSum}</span>
+                            <i class="bi bi-ticket-perforated"></i><b>Activities</b><span>${acts.length ? esc(acts.slice(0, 4).join(', ')) + (acts.length > 4 ? ` +${acts.length - 4} more` : '') : '—'}</span>
+                            <i class="bi bi-cash-coin last"></i><b class="last">Costs (Internal)</b><span class="last" style="text-align:right"><button type="button" class="inq-btn" data-inqgo="quote" style="height:30px;border-color:var(--p);color:var(--p)"><i class="bi bi-eye"></i> Show Cost</button></span>
+                        </div></div></div>
+                        <div class="inq-card"><div class="h"><i class="bi bi-chat-left-text"></i>Communications &amp; History</div><div class="b" style="padding-top:14px">
+                            <a class="inq-link" href="${BASE}/comms/${it.id}"><i class="bi bi-envelope"></i><b>View booking communications</b><i class="bi bi-chevron-right"></i></a>
+                            <a class="inq-link" href="#" data-inqgo="notes"><i class="bi bi-clock-history"></i><b>Open full history</b><i class="bi bi-chevron-right"></i></a></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="inq-pane" data-pane="hotels"></div>
+            <div class="inq-pane" data-pane="trans"></div>
+            <div class="inq-pane" data-pane="pax"></div>
+            <div class="inq-pane" data-pane="notes"></div>
+            <div class="inq-pane" data-pane="quote"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to the itinerary</button></div>
+            <div class="inq-pane" data-pane="book"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to the itinerary</button></div>`;
+        host.insertBefore(shell, host.firstChild);
+        const pane = k => shell.querySelector(`.inq-pane[data-pane="${k}"]`);
+        strip.forEach(c => pane('hotels').appendChild(c));
+        ['hotels', 'trans', 'pax', 'notes', 'quote', 'book'].forEach(k => bins[k].forEach(c => pane(k).appendChild(c)));
+        bins.svc.forEach(c => shell.querySelector('#inq_svc').appendChild(c));
+        const act = document.getElementById('act_card'); if (act) pane('notes').appendChild(act);
+        [document.getElementById('masters_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')].forEach(el => { if (el) pane('notes').appendChild(el); });
+        const cc = document.getElementById('comms_card'); if (cc) pane('notes').appendChild(cc);
+        wrap.remove();
+        if (bar) shell.appendChild(bar);
+
+        shell.querySelectorAll('.inq-tab').forEach(b => b.addEventListener('click', () => inqShow(b.dataset.tab)));
+        shell.querySelectorAll('[data-inqrates]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); const r = b.closest('.inq-drow'); INQ_OPEN[b.dataset.inqrates] = true; r.classList.add('open'); }));
+        shell.querySelectorAll('[data-inqgo]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); inqShow(b.dataset.inqgo); (pane(b.dataset.inqgo) || shell).scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+        shell.querySelectorAll('[data-inqlist]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); (document.getElementById('d_back') || document.getElementById('btn_list')).click(); }));
+        shell.querySelectorAll('[data-inqtoggle]').forEach(b => b.addEventListener('click', () => { const n = b.dataset.inqtoggle; INQ_OPEN[n] = !INQ_OPEN[n]; b.closest('.inq-drow').classList.toggle('open', !!INQ_OPEN[n]); }));
+        shell.querySelectorAll('[data-inqedit]').forEach(b => b.addEventListener('click', () => { const t = host.querySelector(`table.itin [data-day="${b.dataset.inqedit}"]`); if (t) t.click(); }));
+        shell.querySelectorAll('[data-inqsvc]').forEach(b => b.addEventListener('click', () => openServices(Number(b.dataset.inqsvc))));
+        document.getElementById('inq_confirm').addEventListener('click', () => { const c = document.getElementById('d_confirm_top') || document.getElementById('d_confirm'); if (c && !c.disabled) c.click(); });
+        inqShow(shell.querySelector(`.inq-pane[data-pane="${INQ_TAB}"]`) ? INQ_TAB : 'itin');
+        inqCrew(it, shell);
+    }
+    // Driver and Guide in the booking strip: the type and the person of the inquiry's own crew line, saved through the
+    // crew endpoint the Driver / Guide allocation cards use — so the bata, the days, the vehicle seats and the block rules follow.
+    async function inqCrew(it, shell) {
+        const C = await loadCrew(); if (!CURRENT || CURRENT.id !== it.id || !shell.isConnected) return;
+        ['driver', 'guide'].forEach(kind => {
+            const line = (it.crew || []).find(c => c.kind === kind) || null;
+            const sel = shell.querySelector(`[data-inqcrew="${kind}"]`); if (!sel) return;
+            const roles = (C.roles || []).filter(r => r.kind === kind);
+            if (line && !roles.some(r => r.code === line.role_code)) roles.push({ code: line.role_code, name: line.role_name || line.role_code, language: line.language });
+            const people = (C.freelancers || []).filter(f => kind === 'guide' ? f.is_guide : f.is_driver);
+            // a person is offered under a type when their language is the type's, or when the ledger gives them no language
+            const fits = (f, r) => !f.language || !r.language || String(f.language).toLowerCase().includes(String(r.language).toLowerCase());
+            const label = r => kind === 'driver' ? `${r.name} (${r.code})` : r.name;
+            sel.innerHTML = '<option value="">Not selected</option>' + (kind === 'guide' && line ? '<option value="-">Not required</option>' : '')
+                + roles.map(r => `<optgroup label="${esc(label(r))}"><option value="${esc(r.code)}|">${esc(label(r))}</option>`
+                    + people.filter(f => fits(f, r)).map(f => `<option value="${esc(r.code)}|${esc(f.acc)}">${esc(kind === 'driver' ? r.code + ' – ' : '')}${esc(f.name)}</option>`).join('') + '</optgroup>').join('');
+            const now = line ? line.role_code + '|' + (line.supplier_acc || '') : '';
+            if (line && line.supplier_acc && ![...sel.options].some(o => o.value === now)) {
+                const g = [...sel.querySelectorAll('optgroup')].find(x => x.firstElementChild && x.firstElementChild.value === line.role_code + '|');
+                if (g) g.insertAdjacentHTML('beforeend', `<option value="${esc(now)}">${esc(line.person_name || line.supplier_acc)}</option>`);
+            }
+            sel.value = now;
+            const send = async body => {
+                const j = await post('/intake/' + it.id + '/crew', body);
+                if (j.status !== 200) { toast('error', j.message); renderDetail(); return; }
+                CURRENT = j.data; renderDetail(); toast('success', j.message);
+            };
+            const keep = l => ({ days: l.days_by !== 'auto' ? (l.days ?? '') : '', note: l.note || '' });
+            sel.addEventListener('change', () => {
+                const v = sel.value;
+                if (v === '' || v === '-') {   // a guide may be taken off; a driver line is removed on the Transfers tab, never by this list
+                    if (line && kind === 'guide' && v === '-') send({ code: line.role_code, delete: 1 }); else sel.value = now;
+                    return;
+                }
+                const [code, acc] = v.split('|');
+                if (line) send(Object.assign({ code, supplier_acc: acc || '' }, keep(line), code !== line.role_code ? { change_from: line.role_code } : {}));
+                else send({ code, days: '', supplier_acc: acc || '', note: '' });
+            });
+        });
     }
 
     // =====================================================================
@@ -3936,6 +4259,7 @@
     function jumpTo(target, hint, focus, highlightSel) {
         const el = typeof target === 'string' ? document.querySelector(target) : target;
         if (!el) { toast('error', 'That part of the screen is not open — scroll to the card and fix it there.'); return; }
+        inqReveal(el);   // tf-inquiry-r1
         const box = highlightSel ? (document.querySelector(highlightSel) || el) : (el.closest('.crewrow, tr, .accom, .tf-card') || el);
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         box.classList.add('chk-target');

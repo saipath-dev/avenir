@@ -265,13 +265,15 @@ final class ResDesk
         } catch (\Throwable $e) {
         }
         $rows = [];
+        $elsewhere = [];
         $counts = ['pending' => 0, 'confirmed' => 0, 'other' => 0];
         foreach ($tours as $t) {
             $tid = (int) $t['id'];
             $names = $pax[(int) $t['intake_id']] ?? [];
             $client = $names ? self::clientName($names[0]) : '';
             $hay = mb_strtolower(implode(' | ', array_merge([(string) $t['inquiry_no'], (string) $t['tour_no'], (string) $t['agent_name'], (string) $t['tour_name'], $client], $names, $t['arrival_date'] ? [(string) $t['arrival_date'], date('j M Y', strtotime((string) $t['arrival_date'])), date('d M Y', strtotime((string) $t['arrival_date'])), date('d/m/Y', strtotime((string) $t['arrival_date']))] : [])));
-            if ($q !== '' && !str_contains($hay, mb_strtolower($q))) {
+            // "INQ 1056", "inq-1056", "1056" all find INQ 1056: spaces, dashes and dots are ignored on both sides
+            if ($q !== '' && !str_contains($hay, mb_strtolower($q)) && !str_contains(preg_replace('/[^a-z0-9]+/u', '', $hay), preg_replace('/[^a-z0-9]+/u', '', mb_strtolower($q)))) {
                 continue;
             }
             if (($from !== '' && (string) $t['arrival_date'] < $from) || ($to !== '' && (string) $t['arrival_date'] > $to)) {
@@ -304,12 +306,16 @@ final class ResDesk
                 'group' => $t['tour_name'], 'arrival_date' => $t['arrival_date'], 'departure_date' => $t['departure_date'], 'pax_total' => $t['pax_total'],
                 'is_new' => empty($t['hotel_seen_at']), 'hotels' => count($hj), 'hotels_confirmed' => $conf, 'hotels_unsent' => $unsent, 'hotel_light' => $hl,
                 'other_light' => $ol, 'other_total' => count($sj), 'other_done' => $sj ? count(array_filter($sj, static fn ($s) => in_array($s, TourService::SERVICE_DONE, true))) : 0];
+            $where = $hl === 'red' || $hl === 'yellow' ? 'pending' : ($hl === 'green' ? 'confirmed' : 'no_hotels');
             if ($hl === 'red' || $hl === 'yellow') {
                 $counts['pending']++;
                 if ($list === 'pending') { $rows[] = $row; }
             } elseif ($hl === 'green') {
                 $counts['confirmed']++;
                 if ($list === 'confirmed') { $rows[] = $row; }
+            }
+            if ($q !== '' && $list !== 'other' && $where !== $list) {
+                $elsewhere[] = ['inquiry_no' => $t['inquiry_no'] ?: $t['tour_no'], 'where' => $where];   // a searched inquiry that sits in the other list, or has no hotel stay yet
             }
             if ($ol !== null) {
                 $counts['other']++;
@@ -319,6 +325,6 @@ final class ResDesk
         $total = count($rows);
         $pages = max(1, (int) ceil($total / $per));
         $page = min($page, $pages);
-        return ['rows' => array_slice($rows, ($page - 1) * $per, $per), 'total' => $total, 'page' => $page, 'per' => $per, 'pages' => $pages, 'counts' => $counts, 'list' => $list];
+        return ['rows' => array_slice($rows, ($page - 1) * $per, $per), 'total' => $total, 'page' => $page, 'per' => $per, 'pages' => $pages, 'counts' => $counts, 'list' => $list, 'elsewhere' => array_slice($elsewhere, 0, 5)];
     }
 }

@@ -603,7 +603,8 @@
         TOURS = d.rows;
         const searching = document.getElementById('f_q').value.trim() || document.getElementById('f_from').value || document.getElementById('f_to').value;
         if (!d.rows.length) {
-            tb.innerHTML = `<div class="rdl-empty">${searching ? 'No reservation matches the search.' : (list === 'pending' ? 'No pending hotel reservations.' : list === 'confirmed' ? 'No confirmed hotel reservations yet.' : 'No other reservations.')}</div>`;
+            const ew = (d.elsewhere || []).map(x => `${esc(x.inquiry_no)} is in ${x.where === 'pending' ? 'Pending Reservations' : x.where === 'confirmed' ? 'Confirmed Hotel Reservations' : 'no list yet — its tour has no hotel stay to book'}.`).join(' ');
+            tb.innerHTML = `<div class="rdl-empty">${searching ? (ew || 'No reservation matches the search.') : (list === 'pending' ? 'No pending hotel reservations.' : list === 'confirmed' ? 'No confirmed hotel reservations yet.' : 'No other reservations.')}</div>`;
         } else {
             tb.innerHTML = d.rows.map(t => {
                 const c = list === 'other' ? t.other_light : t.hotel_light;
