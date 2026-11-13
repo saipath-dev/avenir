@@ -43,9 +43,9 @@
     .trm .trm-search input { border:0; outline:0; flex:1; min-width:0; font-size:15px; background:transparent; color:var(--ink); }
     .tf .trm .trm-manual { display:inline-flex; align-items:center; gap:10px; height:38px; padding:0 18px; border:1.5px solid var(--p); border-radius:6px; background:#fff; color:var(--p); font-size:15px; font-weight:700; cursor:pointer; }
     .trm .trm-table { width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; }
-    .trm .trm-table thead th { background:#F1E4F3; color:var(--p); font-size:19px; font-weight:800; text-align:left; padding:10px 18px; vertical-align:middle; }
-    .trm .trm-table thead th small { display:block; font-size:13.5px; font-weight:600; color:#3B3341; }
-    .trm .trm-table tbody td { padding:7px 18px; border-top:1px solid var(--line); vertical-align:middle; }
+    .trm .trm-table > thead > tr > th { background:#F1E4F3; color:var(--p); font-size:19px; font-weight:800; text-align:left; padding:10px 18px; vertical-align:middle; }
+    .trm .trm-table > thead > tr > th small { display:block; font-size:13.5px; font-weight:600; color:#3B3341; }
+    .trm .trm-table > tbody > tr > td { padding:7px 18px; border-top:1px solid var(--line); vertical-align:middle; }
     .trm .trm-cat { font-size:19px; font-weight:800; color:var(--ink); white-space:nowrap; }
     .trm .trm-cat .ret { font-size:11.5px; font-weight:700; color:#B3261E; background:#FBE7E5; border-radius:4px; padding:2px 7px; margin-left:8px; vertical-align:middle; }
     .trm .trm-amt { font-size:19px; font-weight:800; color:var(--ink); white-space:nowrap; }
@@ -59,13 +59,13 @@
     .tf .trm .trm-hist i { transition:transform .15s; display:inline-block; } .tf .trm .trm-hist.open i { transform:rotate(180deg); }
     .trm tr.trm-more > td { background:#FBF8FC; padding:12px 18px 14px; }
     .trm .trm-h { width:100%; border-collapse:collapse; font-size:13.5px; background:#fff; border:1px solid var(--line); border-radius:8px; }
-    .trm .trm-h th { text-align:left; font-size:12px; color:var(--mut); font-weight:700; padding:7px 10px; border-bottom:1px solid var(--line); }
+    .trm .trm-h th { text-align:left; font-size:12px; color:var(--mut); font-weight:700; padding:7px 10px; border-bottom:1px solid var(--line); background:#fff; white-space:nowrap; }
     .trm .trm-h td { padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top; } .trm .trm-h tr:last-child td { border-bottom:0; }
     .trm .trm-cap { display:flex; gap:18px; align-items:center; flex-wrap:wrap; font-size:13.5px; margin-top:10px; color:#2B2530; }
     .trm .trm-cap .lk { color:var(--p); font-weight:700; background:none; border:0; padding:0; cursor:pointer; font-size:13.5px; }
     .trm details.trm-fleet { margin-top:16px; } .trm details.trm-fleet > summary { cursor:pointer; color:var(--p); font-weight:700; font-size:14px; padding:6px 2px; }
     #avh-root .avh-fab { display:none !important; }   /* the manual opens from the User Manual button beside the search — nothing floats over the table */
-    @media (max-width: 1100px) { .trm .trm-acts { flex-wrap:wrap; } .trm .trm-table thead th, .trm .trm-table tbody td { padding-left:10px; padding-right:10px; } .trm h1 { font-size:30px; } }
+    @media (max-width: 1100px) { .trm .trm-acts { flex-wrap:wrap; } .trm .trm-table > thead > tr > th, .trm .trm-table > tbody > tr > td { padding-left:10px; padding-right:10px; } .trm h1 { font-size:30px; } }
     @media (max-width: 720px) { .trm .trm-table thead { display:none; } .trm .trm-table tbody tr.trm-row { display:grid; grid-template-columns:1fr 1fr; } .trm .trm-table tbody tr.trm-row td { border-top:0; padding:6px 10px; }
         .trm .trm-table tbody tr.trm-row td:first-child, .trm .trm-table tbody tr.trm-row td:last-child { grid-column:1 / -1; } .trm .trm-table tbody tr.trm-row td:first-child { border-top:1px solid var(--line); padding-top:10px; }
         .trm .trm-table tbody tr.trm-row td[data-l]::before { content:attr(data-l); display:block; font-size:11.5px; color:var(--mut); font-weight:600; } .tf .trm .trm-btn { width:auto; flex:1; } }
