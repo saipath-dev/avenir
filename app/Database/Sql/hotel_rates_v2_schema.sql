@@ -676,3 +676,30 @@ CREATE TABLE IF NOT EXISTS `hr2_hotel_code` (
   UNIQUE KEY `uq_hr2_hotel_code_hotel` (`hotel_id`),
   KEY `idx_hr2_hotel_code_acc` (`sup_acc_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- tf-hr-docs-r1 (12 Nov 2026): supporting documents of a hotel (contract_id NULL) or of one rate plan.
+-- Files are stored outside the public folder under writable/hotel_rate_docs/<hotel_id>/; rows are never deleted
+-- (removed_at / removed_by / removed_reason hide a document and keep the trail).
+CREATE TABLE IF NOT EXISTS `hr2_document` (
+  `id`              INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hotel_id`        INT UNSIGNED NOT NULL,
+  `contract_id`     INT UNSIGNED NULL,
+  `kind`            VARCHAR(20) NOT NULL DEFAULT 'rate_sheet',
+  `original_name`   VARCHAR(255) NOT NULL,
+  `stored_name`     VARCHAR(120) NOT NULL,
+  `ext`             VARCHAR(10) NOT NULL,
+  `mime`            VARCHAR(120) NULL,
+  `size_bytes`      INT UNSIGNED NOT NULL DEFAULT 0,
+  `sha256`          CHAR(64) NOT NULL,
+  `note`            VARCHAR(300) NULL,
+  `uploaded_by`     VARCHAR(100) NULL,
+  `uploaded_at`     DATETIME NOT NULL,
+  `removed_at`      DATETIME NULL,
+  `removed_by`      VARCHAR(100) NULL,
+  `removed_reason`  VARCHAR(300) NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_hr2_document_hotel` (`hotel_id`, `removed_at`),
+  KEY `idx_hr2_document_contract` (`contract_id`, `removed_at`),
+  KEY `idx_hr2_document_sha` (`sha256`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -58,6 +58,12 @@ $routes->group('master_files/hotel_rate_v2', static function ($routes) {
     $routes->post('import/(:num)/commit', [HotelRateV2Controller::class, 'importCommit']);   // as drafts here
     $routes->get('import/(:num)', [HotelRateV2Controller::class, 'importGet']);
     $routes->get('imports', [HotelRateV2Controller::class, 'imports']);
+    // tf-hr-docs-r1: supporting documents of a hotel / rate plan (attach, open, remove — never hard-deleted)
+    $routes->get('hotel/(:num)/documents', [HotelRateV2Controller::class, 'hotelDocuments']);
+    $routes->get('contract/(:num)/documents', [HotelRateV2Controller::class, 'contractDocuments']);
+    $routes->post('documents/upload', [HotelRateV2Controller::class, 'uploadDocument']);
+    $routes->get('document/(:num)', [HotelRateV2Controller::class, 'document']);
+    $routes->post('document/(:num)/remove', [HotelRateV2Controller::class, 'removeDocument']);
     $routes->get('duplicates', [HotelRateV2Controller::class, 'duplicates']);
     $routes->get('similar', [HotelRateV2Controller::class, 'similar']);                   // hotel-dup-r1: near-duplicate names (read-only)
     $routes->get('hotel/(:num)/deps', [HotelRateV2Controller::class, 'hotelDeps']);     // hotel-dup-r1: dependency review (read-only)

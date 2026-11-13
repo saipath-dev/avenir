@@ -303,6 +303,7 @@ $u = $usd ?? null;
     <button type="button" class="hb solid" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
 </header>
 
+<div class="ck-clock" style="max-width:1340px;margin:12px auto 0;padding:0 4px"><?= view('partials/world_clock') ?></div><?php /* tf-clock-r1 */ ?>
 <div class="ck-frame"><div class="ck-in">
     <span class="ck-rv" style="left:14px;top:14px"></span><span class="ck-rv" style="right:14px;top:14px"></span><span class="ck-rv" style="left:14px;bottom:14px"></span><span class="ck-rv" style="right:14px;bottom:14px"></span>
     <div class="ck-top">

@@ -1764,7 +1764,7 @@ final class IntakeService
         // says it is an extra night — no "Departure - BIA" hotel is ever needed for the departure
         if (array_key_exists('hotel_name_raw', $d) && trim((string) $d['hotel_name_raw']) !== '') {
             // tf-stage8: a hotel under "no new work" or "suspended" cannot be put on a night
-            $bh = $this->matchHotel(trim((string) $d['hotel_name_raw']));
+            $bh = $this->matchHotel(trim((string) $d['hotel_name_raw']), (string) ($d['area'] ?? ($row['area'] ?? '')));
             if ($bh && ($why = Blocks::workRefusal($this->db, ['hotel' => (string) (int) $bh['id']], 'inquiry night (INQ ' . $id . ')', $this->user))) {
                 throw new \InvalidArgumentException($why);
             }
@@ -4511,10 +4511,10 @@ final class IntakeService
             return 0;
         }
         $n = 0;
-        foreach ($this->db->query("SELECT id, hotel_name_raw FROM tf_intake_day WHERE intake_id = ? AND hotel_id IS NOT NULL AND rate_frozen_at IS NOT NULL AND rate_key IS NOT NULL AND rate_key <> ''", [$id])->getResultArray() as $d) {
+        foreach ($this->db->query("SELECT id, hotel_name_raw, area FROM tf_intake_day WHERE intake_id = ? AND hotel_id IS NOT NULL AND rate_frozen_at IS NOT NULL AND rate_key IS NOT NULL AND rate_key <> ''", [$id])->getResultArray() as $d) {
             try {
                 // a name the panel no longer matches is left exactly as it is (checkHotels would clear its figure); Check hotels again stays the place for that
-                if ($this->matchHotel(trim((string) $d['hotel_name_raw'])) === null) {
+                if ($this->matchHotel(trim((string) $d['hotel_name_raw']), (string) ($d['area'] ?? '')) === null) {
                     continue;
                 }
                 $this->checkHotels($id, (int) $d['id']);
@@ -4546,7 +4546,7 @@ final class IntakeService
                 $this->db->query('UPDATE tf_intake_day SET hotel_id = NULL, hotel_acc = NULL, match_note = NULL, rate_state = ?, rate_note = NULL, checked_at = ? WHERE id = ?', ['nothing_named', $now, $d['id']]);
                 continue;
             }
-            $hotel = $this->matchHotel($raw);
+            $hotel = $this->matchHotel($raw, (string) ($d['area'] ?? ''));
             if ($hotel === null) {
                 $sheet = $this->sheetWaitingFor($raw);
                 // a near miss is offered, never taken: "kandalmaa" is probably Kandalama, but the person chooses
@@ -6409,13 +6409,36 @@ final class IntakeService
      * screens still use), so an email that says "Kynrock Airport hotel" still lands on the
      * hotel now called Kynrock Katunayake; then a one-letter slip on either.
      */
-    public function matchHotel(string $raw): ?array
+    public function matchHotel(string $raw, ?string $area = null): ?array
     {
         $key = HotelRateService::nameKey($raw);
         if ($key === '') {
             return null;
         }
         $rows = $this->db->query("SELECT id, name, primary_sup_acc_no FROM hr2_hotel WHERE status <> 'merged'")->getResultArray();
+        // tf-hotel-area-r1 (12 Nov 2026, Shantha): "QUEENS HOTEL" on a Kandy night is the master's "Queens Hotel Kandy" —
+        // the agent's name plus the night's own town (before or after it) is the same hotel. Taken only when exactly one
+        // hotel fits, so two hotels of the same name in different towns are still told apart by the town.
+        $areaKey = $area !== null ? HotelRateService::nameKey($area) : '';
+        if ($areaKey !== '' && strlen($key) >= 3) {
+            $byArea = [];
+            foreach ($rows as $h) {
+                $hk = HotelRateService::nameKey((string) $h['name']);
+                if ($hk === $key . $areaKey || $hk === $areaKey . $key) {
+                    $byArea[(int) $h['id']] = $h;
+                }
+            }
+            if (count($byArea) === 1) {
+                $exact = null;
+                foreach ($rows as $h) {
+                    if (HotelRateService::nameKey((string) $h['name']) === $key) {
+                        $exact = $h;
+                        break;
+                    }
+                }
+                return $exact ?? array_values($byArea)[0];
+            }
+        }
         $near = null;
         $begins = [];   // tf-intake-r1: "AMAGI ARIA" → "Amagi Aria Negombo" — the master's name begins with the agent's; taken only when it is the one such hotel
         foreach ($rows as $h) {

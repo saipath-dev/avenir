@@ -245,10 +245,15 @@ class HotelRateV2Controller extends BaseController
             $market = (string) ($this->request->getGet('market') ?: $svc->settings()->get('default_market'));
             $from = date('Y-m-d');
             $to = date('Y-m-d', strtotime('+' . (int) $svc->settings()->get('coverage_days') . ' days'));
+            $contracts = $svc->contracts((int) $id);
+            $docSvc = $this->docs();
             return $this->json(['status' => 200, 'data' => [
                 'hotel' => $hotel,
                 'room_types' => $svc->roomTypes((int) $id),
-                'contracts' => $svc->contracts((int) $id),
+                'contracts' => $contracts,
+                // tf-hr-docs-r1: paperclip counts — documents per plan, and the hotel-wide ones shown under every plan
+                'doc_counts' => (object) $docSvc->countsForContracts(array_column($contracts, 'id')),
+                'doc_hotel' => $docSvc->hotelWideCount((int) $id),
                 'coverage' => $svc->coverage((int) $id, $from, $to, ['market' => $market]),
                 'locations' => $svc->locations(),
                 // tf-transfer-r1: the hotel's own airport pick-up / drop charge
@@ -899,6 +904,97 @@ class HotelRateV2Controller extends BaseController
     }
 
     // ------------------------------------------------------------------
+    //  tf-hr-docs-r1: supporting documents (rate sheet PDF, contract, factsheet, e-mail) of a hotel / plan
+    // ------------------------------------------------------------------
+
+    private function docs(): \App\Libraries\HotelRates\RateDocuments
+    {
+        return new \App\Libraries\HotelRates\RateDocuments(\Config\Database::connect(), (string) session()->get('username'));
+    }
+
+    // GET hotel/{id}/documents — every active document of the hotel (hotel-wide ones and each plan's)
+    public function hotelDocuments($id)
+    {
+        try {
+            $d = $this->docs();
+            return $this->json(['status' => 200, 'data' => ['documents' => $d->forHotel((int) $id), 'installed' => $d->installed(), 'storage_ok' => $d->storageRoot() !== null, 'max_mb' => \App\Libraries\HotelRates\RateDocuments::MAX_MB, 'kinds' => \App\Libraries\HotelRates\RateDocuments::KINDS, 'can_approve' => $this->canApprove(), 'user' => (string) session()->get('username')]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    // GET contract/{id}/documents — the plan's own documents, then the hotel-wide ones
+    public function contractDocuments($id)
+    {
+        try {
+            $d = $this->docs();
+            return $this->json(['status' => 200, 'data' => ['documents' => $d->forContract((int) $id), 'installed' => $d->installed(), 'storage_ok' => $d->storageRoot() !== null, 'max_mb' => \App\Libraries\HotelRates\RateDocuments::MAX_MB, 'kinds' => \App\Libraries\HotelRates\RateDocuments::KINDS, 'can_approve' => $this->canApprove(), 'user' => (string) session()->get('username')]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    // POST documents/upload   multipart: document, hotel_id, contract_id?, kind?, note?
+    public function uploadDocument()
+    {
+        try {
+            $file = $this->request->getFile('document');
+            if (!$file || !$file->isValid()) {
+                $err = $file ? $file->getErrorString() : 'No file received.';
+                return $this->json(['status' => 400, 'message' => 'The file was not received: ' . $err]);
+            }
+            $hotelId = (int) $this->request->getPost('hotel_id');
+            $contractId = (int) $this->request->getPost('contract_id') ?: null;
+            if (!$hotelId) {
+                return $this->json(['status' => 400, 'message' => 'hotel_id is required.']);
+            }
+            $doc = $this->docs()->add($hotelId, $contractId, $file->getTempName(), $file->getClientName(), (string) ($this->request->getPost('kind') ?: 'rate_sheet'), $this->request->getPost('note'));
+            return $this->json(['status' => 200, 'message' => '"' . $doc['original_name'] . '" attached' . ($doc['contract_id'] ? ' to the plan.' : ' to the hotel.'), 'data' => $doc]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // GET document/{id}[?download=1] — the file itself, through the panel only
+    public function document($id)
+    {
+        try {
+            $d = $this->docs();
+            $doc = $d->get((int) $id);
+            if (!$doc) {
+                return $this->json(['status' => 404, 'message' => 'Document not found.'], 404);
+            }
+            $path = $d->path($doc);
+            if (!$path) {
+                return $this->json(['status' => 404, 'message' => 'The file is missing on the server.'], 404);
+            }
+            $inline = $doc['inline'] && !$this->request->getGet('download');
+            $name = str_replace(['"', "\r", "\n"], '', (string) $doc['original_name']);
+            $types = ['pdf' => 'application/pdf', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp', 'txt' => 'text/plain; charset=UTF-8'];
+            return $this->response
+                ->setHeader('Content-Type', $types[$doc['ext']] ?? 'application/octet-stream')
+                ->setHeader('Content-Disposition', ($inline ? 'inline' : 'attachment') . '; filename="' . $name . '"; filename*=UTF-8\'\'' . rawurlencode($name))
+                ->setHeader('X-Content-Type-Options', 'nosniff')
+                ->setHeader('Cache-Control', 'private, max-age=0')
+                ->setBody((string) file_get_contents($path));
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    // POST document/{id}/remove {reason} — hidden from the lists; row, file and reason kept
+    public function removeDocument($id)
+    {
+        try {
+            $b = $this->body();
+            $doc = $this->docs()->remove((int) $id, (string) ($b['reason'] ?? ''), $this->canApprove());
+            return $this->json(['status' => 200, 'message' => '"' . $doc['original_name'] . '" removed (kept in the audit trail).', 'data' => $doc]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // ------------------------------------------------------------------
     //  Duplicates, locations, markets, system check
     // ------------------------------------------------------------------
 
@@ -1076,6 +1172,19 @@ class HotelRateV2Controller extends BaseController
                 $d['warnings'] = $counts['warnings'] ?? 0;
             }
             unset($d);
+            // tf-hr-docs-r1: how many supporting documents each draft carries (its own + the hotel-wide ones)
+            try {
+                $docSvc = $this->docs();
+                $own = $docSvc->countsForContracts(array_column($drafts, 'id'));
+                $hw = [];
+                foreach ($drafts as &$d) {
+                    $hid = (int) $d['hotel_id'];
+                    $hw[$hid] = $hw[$hid] ?? $docSvc->hotelWideCount($hid);
+                    $d['docs'] = ($own[(int) $d['id']] ?? 0) + $hw[$hid];
+                }
+                unset($d);
+            } catch (\Throwable $e) {
+            }
             $recent = $db->query(
                 "SELECT c.id, c.name, c.plan_type, c.approved_by, c.approved_at, h.id AS hotel_id, h.name AS hotel FROM hr2_contract c JOIN hr2_hotel h ON h.id = c.hotel_id
                  WHERE c.status = 'approved' AND c.approved_at IS NOT NULL ORDER BY c.approved_at DESC LIMIT 20"

@@ -222,6 +222,17 @@
     .hr2 .modal-content { border-radius: 12px; }
     .hr2 .drop { border: 2px dashed var(--hr-line); border-radius: 10px; padding: 18px; text-align: center; color: var(--hr-muted); font-size: 12.5px; }
     .hr2 .wf { max-width: 100%; }
+/* tf-hr-docs-r1: supporting documents */
+.doc-drop{border:2px dashed #cdbfe2;border-radius:12px;padding:16px;text-align:center;background:#faf8fd;color:#4b3b66;cursor:pointer;transition:background .15s,border-color .15s}
+.doc-drop:hover,.doc-drop:focus{border-color:#6b4c9a;outline:none}
+.doc-drop.over{border-color:#78b848;background:#f3faee}
+.doc-drop i{font-size:26px;color:#6b4c9a;display:block;margin-bottom:2px}
+.doc-up{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:10px}
+.doc-list .doc-ico{font-size:20px;width:30px;text-align:center;color:#6b4c9a}
+.doc-list .doc-pdf{color:#c0392b}.doc-list .doc-xls{color:#1e7e45}.doc-list .doc-doc{color:#2b5797}
+.doc-clip{display:inline-flex;align-items:center;gap:2px;font-size:11.5px;font-weight:600;color:#5b3f8a;background:#efe9f8;border-radius:10px;padding:1px 7px;margin-left:6px;border:0;cursor:pointer;vertical-align:middle}
+.doc-clip.none{color:#9a6b00;background:#fff4dc;cursor:default}
+.doc-group{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#5b3f8a;margin:16px 0 6px}
 </style>
 <body>
 <div id="layout-wrapper">
@@ -365,6 +376,7 @@ php spark hotelrates:migrate</pre>
                                 <?php endif; ?>
                                 <button class="hr-tab" data-tab="coverage">Coverage</button>
                                 <button class="hr-tab" data-tab="rooms">Room types <span class="cnt" id="cnt_rooms"></span></button>
+                                <button class="hr-tab" data-tab="docs" title="Rate sheets, contracts, factsheets and e-mails kept with this hotel and its plans"><i class="bi bi-paperclip"></i> Documents <span class="cnt" id="cnt_docs"></span></button>
                                 <button class="hr-tab" data-tab="hotel">Hotel details</button>
                                 <button class="hr-tab" data-tab="history">History</button>
                             </div>
@@ -404,6 +416,7 @@ php spark hotelrates:migrate</pre>
                                     <button class="btn btn-light btn-sm" id="cov_refresh">Refresh</button>
                                 </div></div><div class="hr-card-b" id="coverage_box"></div></div></div>
                             <div id="tab_rooms" class="tabpane" style="display:none"><div class="hr-card"><div class="hr-card-b" id="rooms_box"></div></div></div>
+                            <div id="tab_docs" class="tabpane" style="display:none"><div class="hr-card"><div class="hr-card-b" id="docs_box"></div></div></div>
                             <div id="tab_hotel" class="tabpane" style="display:none"><div class="hr-card"><div class="hr-card-b" id="hotel_box"></div></div></div>
                             <div id="tab_history" class="tabpane" style="display:none"><div class="hr-card"><div class="hr-card-b" id="history_box"></div></div></div>
 
@@ -598,7 +611,7 @@ php spark hotelrates:migrate</pre>
     const SECTIONS = [
         ['overview', 'Overview', 'bi-card-heading'], ['seasons', 'Seasons & rates', 'bi-calendar3'], ['rooms', 'Room supplements & meal deltas', 'bi-door-open'],
         ['supplements', 'Supplements & meals', 'bi-plus-square'], ['children', 'Children & extra beds', 'bi-people'], ['guide', 'Guide, driver & FOC', 'bi-person-badge'],
-        ['offers', 'Offers & restrictions', 'bi-tag'], ['cancel', 'Cancellation & payment', 'bi-receipt'], ['extras', 'Extras', 'bi-bicycle'], ['issues', 'Checks', 'bi-shield-check'],
+        ['offers', 'Offers & restrictions', 'bi-tag'], ['cancel', 'Cancellation & payment', 'bi-receipt'], ['extras', 'Extras', 'bi-bicycle'], ['documents', 'Documents', 'bi-paperclip'], ['issues', 'Checks', 'bi-shield-check'],
     ];
     const S = { hotels: [], hotel: null, detail: null, sheet: null, ro: false, section: 'overview', filters: {}, importId: null, importSheets: [], covMarket: DEFAULT_MARKET, rateDate: (PRESELECT_DATE || TODAY), rateTo: (PRESELECT_TO || null), roMarket: DEFAULT_MARKET };
 
@@ -725,11 +738,129 @@ php spark hotelrates:migrate</pre>
         renderAbsorbed();
         document.getElementById('cnt_plans').textContent = OFFERS_READY ? S.detail.contracts.filter(c => !offerKind(c)).length : S.detail.contracts.length;
         document.getElementById('cnt_rooms').textContent = S.detail.room_types.length;
+        setDocCount();   // tf-hr-docs-r1
         renderContracts(); renderCoverage(S.detail.coverage); renderRooms(); renderHotelForm(); renderHotels();
         loadOffers();
         loadHistory();
         loadRatesOn();
     }
+
+    // ---------------- tf-hr-docs-r1: supporting documents (rate sheet PDF, contract, factsheet, e-mail) ----------------
+    // A document belongs to one rate plan, or to the whole hotel (then it shows under every plan of the hotel).
+    // Files are kept on the server outside the public folder and opened through this panel; "Remove" hides a file
+    // but keeps it, with the reason, in the audit trail (uploader or a Hotel Rate approver; approved plans: approvers only).
+    const DOC_ICON = { pdf: 'bi-file-earmark-pdf doc-pdf', jpg: 'bi-file-earmark-image', jpeg: 'bi-file-earmark-image', png: 'bi-file-earmark-image', webp: 'bi-file-earmark-image', xlsx: 'bi-file-earmark-excel doc-xls', xls: 'bi-file-earmark-excel doc-xls', docx: 'bi-file-earmark-word doc-doc', doc: 'bi-file-earmark-word doc-doc', eml: 'bi-envelope', msg: 'bi-envelope', txt: 'bi-file-earmark-text', csv: 'bi-file-earmark-spreadsheet' };
+    const DOC_ACCEPT = '.pdf,.jpg,.jpeg,.png,.webp,.xlsx,.xls,.docx,.doc,.eml,.msg,.txt,.csv';
+    const docSize = b => b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+    const docUrl = (id, dl) => BASE + '/document/' + id + (dl ? '?download=1' : '');
+    function docCountsTotal() { const dc = (S.detail && S.detail.doc_counts) || {}; return Object.values(dc).reduce((a, n) => a + Number(n), 0) + Number((S.detail && S.detail.doc_hotel) || 0); }
+    function setDocCount() { const el = document.getElementById('cnt_docs'); if (el) el.textContent = docCountsTotal() || ''; }
+    const mayRemoveDoc = (doc, info) => info.can_approve || (doc.contract_status !== 'approved' && String(doc.uploaded_by || '').toLowerCase() === String(info.user || '').toLowerCase());
+    function docTable(list, info, showPlan) {
+        if (!list.length) return '<div class="empty">No documents attached yet.</div>';
+        return `<div class="table-responsive"><table class="hr-table doc-list"><thead><tr><th></th><th>Document</th><th>Type</th>${showPlan ? '<th>Belongs to</th>' : ''}<th class="num">Size</th><th>Attached</th><th></th></tr></thead><tbody>
+            ${list.map(doc => `<tr>
+                <td class="doc-ico"><i class="bi ${DOC_ICON[doc.ext] || 'bi-file-earmark'}"></i></td>
+                <td><a href="${docUrl(doc.id)}" target="_blank" rel="noopener" class="fw-semibold">${esc(doc.original_name)}</a>${doc.note ? `<div class="help">${esc(doc.note)}</div>` : ''}</td>
+                <td>${pill('grey', doc.kind_label)}</td>
+                ${showPlan ? `<td>${doc.contract_id ? `${esc(doc.contract_name || 'plan #' + doc.contract_id)} ${doc.contract_status ? statusPill(doc.contract_status) : ''}` : '<span class="help">Whole hotel — shown under every plan</span>'}</td>` : ''}
+                <td class="num">${docSize(doc.size_bytes)}</td>
+                <td class="help">${esc(doc.uploaded_by || '')}<br>${esc(String(doc.uploaded_at || '').slice(0, 16))}</td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-light" href="${docUrl(doc.id)}" target="_blank" rel="noopener" title="${doc.inline ? 'Open in a new browser tab' : 'Download'}"><i class="bi ${doc.inline ? 'bi-eye' : 'bi-download'}"></i> ${doc.inline ? 'Open' : 'Download'}</a>
+                    ${doc.inline ? `<a class="btn btn-sm btn-light" href="${docUrl(doc.id, 1)}" title="Download"><i class="bi bi-download"></i></a>` : ''}
+                    ${mayRemoveDoc(doc, info) ? `<button class="btn btn-sm btn-light text-danger" data-doc-remove="${doc.id}" title="Remove — the file stays in the audit trail"><i class="bi bi-x-lg"></i></button>` : ''}
+                </td></tr>`).join('')}
+            </tbody></table></div>`;
+    }
+    // the upload area; contractId undefined = the hotel tab (choose where the file belongs), else fixed to that plan
+    function docUploader(contractId, info) {
+        const plans = (S.detail.contracts || []).filter(c => c.status !== 'cancelled');
+        const target = contractId === undefined
+            ? `<div><label class="form-label">Attach to</label><select class="form-select form-select-sm" data-doc-target style="min-width:260px"><option value="">Choose where it belongs…</option><option value="0">Whole hotel (shown under every plan)</option>${plans.map(c => `<option value="${c.id}">Plan: ${esc(c.name)} (${esc(c.status)})</option>`).join('')}</select></div>`
+            : '';
+        return `<div class="doc-drop" data-doc-drop tabindex="0" role="button" aria-label="Attach documents"><i class="bi bi-cloud-arrow-up"></i><b>Drop files here</b> or click to choose<div class="help">PDF, pictures, Excel, Word, e-mail (EML / MSG), TXT or CSV — up to ${info.max_mb || 20} MB each</div><input type="file" multiple accept="${DOC_ACCEPT}" data-doc-file hidden></div>
+            <div class="doc-up">${target}
+                <div><label class="form-label">Type</label>${sel(info.kinds || {}, 'rate_sheet', 'class="form-select form-select-sm" data-doc-kind')}</div>
+                <div style="flex:1 1 220px"><label class="form-label">Note (optional)</label><input class="form-control form-control-sm" data-doc-note maxlength="300" placeholder="e.g. received from the hotel by e-mail on 12 Nov"></div>
+            </div>
+            <div class="help mt-1" data-doc-status></div>`;
+    }
+    async function uploadDocs(box, files, contractId, info, reload) {
+        const st = box.querySelector('[data-doc-status]');
+        let target = contractId;
+        if (target === undefined) {
+            const v = box.querySelector('[data-doc-target]').value;
+            if (v === '') { toast('warning', 'Choose where the document belongs: the whole hotel or one rate plan.'); return; }
+            target = Number(v) || null;
+        }
+        const kind = box.querySelector('[data-doc-kind]').value, note = box.querySelector('[data-doc-note]').value;
+        const done = [], failed = [];
+        for (const f of files) {
+            if (st) st.textContent = `Attaching ${f.name}…`;
+            const fd = new FormData(); fd.append('document', f); fd.append('hotel_id', S.hotel.id); if (target) fd.append('contract_id', target); fd.append('kind', kind); if (note) fd.append('note', note);
+            let j; try { j = await fetch(BASE + '/documents/upload', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd }).then(r => r.json()); } catch (e) { j = { status: 500, message: 'The upload failed: ' + e.message }; }
+            (j.status === 200 ? done : failed).push(j.status === 200 ? f.name : f.name + ': ' + (j.message || 'not attached'));
+        }
+        if (st) st.textContent = '';
+        if (failed.length) Swal.fire({ icon: done.length ? 'warning' : 'error', title: done.length ? `${done.length} attached, ${failed.length} not` : 'Not attached', html: failed.map(esc).join('<br>') });
+        else toast('success', done.length === 1 ? `"${done[0]}" attached.` : `${done.length} documents attached.`);
+        await reload();
+    }
+    function bindDocs(box, contractId, info, reload) {
+        const drop = box.querySelector('[data-doc-drop]'), input = box.querySelector('[data-doc-file]');
+        if (drop && input) {
+            drop.addEventListener('click', () => input.click());
+            drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+            input.addEventListener('change', () => { if (input.files.length) uploadDocs(box, [...input.files], contractId, info, reload); input.value = ''; });
+            ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+            ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+            drop.addEventListener('drop', e => { const fl = [...(e.dataTransfer.files || [])]; if (fl.length) uploadDocs(box, fl, contractId, info, reload); });
+        }
+        box.querySelectorAll('[data-doc-remove]').forEach(b => b.addEventListener('click', async () => {
+            const r = await Swal.fire({ icon: 'question', title: 'Remove this document?', text: 'It disappears from the lists but stays on the server and in the audit trail.', input: 'text', inputLabel: 'Reason (required)', inputPlaceholder: 'e.g. wrong file, replaced by the revised sheet', showCancelButton: true, confirmButtonText: 'Remove', inputValidator: v => (!v || !v.trim()) ? 'Please give a reason.' : undefined });
+            if (!r.isConfirmed) return;
+            const j = await post('/document/' + b.dataset.docRemove + '/remove', { reason: r.value });
+            if (j.status !== 200) return toast('error', j.message);
+            toast('success', j.message); await reload();
+        }));
+    }
+    function docCountsFrom(list) {
+        const dc = {}; let hw = 0;
+        list.forEach(doc => { if (doc.contract_id) dc[doc.contract_id] = (dc[doc.contract_id] || 0) + 1; else hw++; });
+        S.detail.doc_counts = dc; S.detail.doc_hotel = hw; setDocCount();
+    }
+    async function loadHotelDocs() {
+        const box = document.getElementById('docs_box'); if (!box || !S.hotel) return;
+        box.innerHTML = '<div class="empty">Loading…</div>';
+        const j = await api('/hotel/' + S.hotel.id + '/documents');
+        if (j.status !== 200) { box.innerHTML = `<div class="issue error">${esc(j.message)}</div>`; return; }
+        const info = j.data, list = info.documents;
+        docCountsFrom(list); renderContracts();
+        const hotelWide = list.filter(d => !d.contract_id), perPlan = list.filter(d => d.contract_id);
+        box.innerHTML = `<div class="ed-lead">Keep the original rate sheet, contract, factsheet or e-mail with the hotel, so whoever approves a plan can open the source beside the figures. A document attached to the <b>whole hotel</b> shows under every plan.</div>
+            ${info.storage_ok ? docUploader(undefined, info) : '<div class="issue error">The server has no writable folder for documents yet (writable/hotel_rate_docs) — ask the administrator. Nothing can be attached until then.</div>'}
+            <div class="doc-group">Whole hotel <span class="help">(${hotelWide.length})</span></div>${docTable(hotelWide, info, false)}
+            <div class="doc-group">Rate plans <span class="help">(${perPlan.length})</span></div>${docTable(perPlan, info, true)}`;
+        bindDocs(box, undefined, info, loadHotelDocs);
+    }
+    async function loadPlanDocs() {
+        const box = document.getElementById('ed_docs'); if (!box || !S.sheet) return;
+        const c = S.sheet.contract;
+        if (!c.id) { box.innerHTML = '<div class="empty">Save the draft first — then attach the rate sheet here.</div>'; return; }
+        const j = await api('/contract/' + c.id + '/documents');
+        if (j.status !== 200) { box.innerHTML = `<div class="issue error">${esc(j.message)}</div>`; return; }
+        const info = j.data, list = info.documents;
+        const own = list.filter(d => d.contract_id), hotelWide = list.filter(d => !d.contract_id);
+        S.detail.doc_counts = S.detail.doc_counts || {}; S.detail.doc_counts[c.id] = own.length; S.detail.doc_hotel = hotelWide.length; setDocCount(); renderContracts();
+        const canAdd = info.storage_ok;   // evidence can be added to an approved plan too: it changes no rate
+        box.innerHTML = `${canAdd ? docUploader(c.id, info) : ''}
+            <div class="doc-group">This plan <span class="help">(${own.length})</span></div>${docTable(own, info, false)}
+            <div class="doc-group">Whole hotel <span class="help">(${hotelWide.length}) — attach or remove these under the hotel's Documents tab</span></div>${docTable(hotelWide, info, false)}`;
+        box.querySelectorAll('[data-doc-remove]').forEach(b => { if (hotelWide.some(d => String(d.id) === b.dataset.docRemove)) b.remove(); });
+        bindDocs(box, c.id, info, loadPlanDocs);
+    }
+    document.addEventListener('click', e => { const b = e.target.closest('[data-docs-open]'); if (!b) return; e.preventDefault(); showTab('docs'); });
 
     // ---------------- rate on a date / a stay ----------------
     // The first thing shown for a hotel: what it costs tonight (or any night, or every night of a
@@ -905,6 +1036,7 @@ php spark hotelrates:migrate</pre>
         if (window.TfView && S.hotel) TfView.setParams({ tab: name !== 'plans' ? name : null });   // tf-refresh-r1
         document.querySelectorAll('.hr-tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
         document.querySelectorAll('.tabpane').forEach(p => p.style.display = p.id === 'tab_' + name ? '' : 'none');
+        if (name === 'docs') loadHotelDocs();   // tf-hr-docs-r1
         if (!['plans', 'tactical', 'early_bird'].includes(name)) closeEditor();
     }
 
@@ -912,10 +1044,11 @@ php spark hotelrates:migrate</pre>
         const tb = document.querySelector('#contract_table tbody');
         // with the three areas, this tab holds the published rates only; tacticals and early birds have their own tabs
         const list = OFFERS_READY ? S.detail.contracts.filter(c => !offerKind(c)) : S.detail.contracts;
+        const dcount = (S.detail && S.detail.doc_counts) || {};   // tf-hr-docs-r1
         tb.innerHTML = list.map(c => {
             const closed = c.book_to && c.book_to < TODAY;
             return `<tr>
-            <td><div class="fw-semibold">${esc(c.name)}</div><div class="help">${c.rate_code ? '<span class="mono">' + esc(c.rate_code) + '</span> · ' : ''}${esc(c.source_type)}${c.source_file ? ' · ' + esc(c.source_file) : ''}${c.parent_name ? ' · addendum to <i>' + esc(c.parent_name) + '</i>' : ''}</div></td>
+            <td><div class="fw-semibold">${esc(c.name)}${dcount[c.id] ? `<button class="doc-clip" data-docs-open="${c.id}" title="${dcount[c.id]} document(s) attached to this plan — open the Documents tab"><i class="bi bi-paperclip"></i>${dcount[c.id]}</button>` : ''}</div><div class="help">${c.rate_code ? '<span class="mono">' + esc(c.rate_code) + '</span> · ' : ''}${esc(c.source_type)}${c.source_file ? ' · ' + esc(c.source_file) : ''}${c.parent_name ? ' · addendum to <i>' + esc(c.parent_name) + '</i>' : ''}</div></td>
             <td>${typePill(c.plan_type)}${c.applies_to === 'payment' ? ' ' + pill('green', 'payment only') : c.applies_to === 'quotation' ? ' ' + pill('grey', 'quotation only') : ''}</td>
             <td><div>${esc(c.market_list ? c.market_list.replace(/,/g, ', ') : 'All markets')}</div><div class="help">${c.tier !== 'all' ? esc(OPT.tier[c.tier] || c.tier) + (c.tier_min_rooms || c.tier_max_rooms ? ` (${c.tier_min_rooms || 1}–${c.tier_max_rooms || '∞'} rooms)` : '') : ''}</div></td>
             <td class="mono">${c.valid_from} → ${c.valid_to}</td>
@@ -1259,6 +1392,7 @@ php spark hotelrates:migrate</pre>
             const ofBtn = ed.querySelector('#ed_offer'); if (ofBtn) ofBtn.addEventListener('click', () => save(false, false, true));
         }
         bindSection();
+        if (S.section === 'documents') loadPlanDocs();   // tf-hr-docs-r1
         ed.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     function issueCounts(issues) {
@@ -1283,6 +1417,9 @@ php spark hotelrates:migrate</pre>
         const f = (label, key, type, extra, col) => `<div class="${col || 'col-md-3 col-6'}"><label class="form-label">${label}</label><input type="${type || 'text'}" class="form-control form-control-sm" data-c="${key}" value="${esc(val(c[key]))}" ${extra || ''} ${d(ro)}></div>`;
         const fs = (label, key, opts, col, blank) => `<div class="${col || 'col-md-3 col-6'}"><label class="form-label">${label}</label>${sel(opts, c[key], `class="form-select form-select-sm" data-c="${key}" ${d(ro)}`, blank)}</div>`;
         const ta = (label, key, rows, col) => `<div class="${col || 'col-md-6'}"><label class="form-label">${label}</label><textarea class="form-control" rows="${rows || 2}" data-c="${key}" ${d(ro)}>${esc(val(c[key]))}</textarea></div>`;
+        if (sec === 'documents') {   // tf-hr-docs-r1
+            return `<h6>Documents</h6><div class="ed-lead">The original rate sheet, contract or e-mail this plan was entered from — the approver opens it beside the figures. Attach it once; it stays with the plan.</div><div id="ed_docs"><div class="empty">Loading…</div></div>`;
+        }
         if (sec === 'overview') {
             const parents = (S.detail.contracts || []).filter(p => p.id !== c.id && p.status !== 'cancelled').map(p => `<option value="${p.id}" ${String(c.parent_contract_id || '') === String(p.id) ? 'selected' : ''}>${esc(p.name)} (${p.status})</option>`).join('');
             const marketChips = Object.entries(MARKETS).filter(([k]) => k !== 'ALL').map(([k, v]) => { const m = (c.markets || []).find(x => x.code === k); const cls = m ? (m.mode === 'exclude' ? 'on' : 'on') : ''; return `<span class="chip ${cls}" data-mk="${k}" style="${m && m.mode === 'exclude' ? 'background:#b23a32;border-color:#b23a32' : ''}" title="${esc(v)} — click: include, click again: exclude, third click: off">${k}${m && m.mode === 'exclude' ? ' ✕' : ''}</span>`; }).join('');
@@ -1754,7 +1891,7 @@ php spark hotelrates:migrate</pre>
                 <button class="btn btn-sm btn-light ms-auto" id="aq_clear" title="Clear the search and filters">&times; Clear</button>
             </div>
             <div class="aq-scroll"><table class="hr-table" id="aq_table"><thead><tr><th>Hotel</th><th>Plan</th><th>Type</th><th>Stay dates</th><th class="num">Seasons</th><th class="num">Rows</th><th>Checks</th><th>Entered by</th><th class="aq-act text-end">Actions</th></tr></thead><tbody>
-            ${d.drafts.map(c => `<tr data-aq="${esc([c.hotel, c.name, c.source_type, c.entered_by, c.plan_type].join(' ').toLowerCase())}" data-aqtype="${esc(c.plan_type || '')}" data-aqcheck="${Number(c.errors) ? 'err' : (Number(c.warnings) ? 'warn' : 'clean')}" data-aqhotel="${esc((c.hotel || '').toLowerCase())}" data-aqat="${esc(c.updated_at || '')}" data-aqfrom="${esc(c.valid_from || '')}"><td class="fw-semibold aq-hotel">${esc(c.hotel)}</td><td class="aq-plan">${esc(c.name)}<div class="help">${esc(c.source_type)}</div></td><td>${typePill(c.plan_type)}</td><td class="mono aq-dates">${c.valid_from} → ${c.valid_to}</td><td class="num">${c.seasons}</td><td class="num">${c.rate_rows}</td>
+            ${d.drafts.map(c => `<tr data-aq="${esc([c.hotel, c.name, c.source_type, c.entered_by, c.plan_type].join(' ').toLowerCase())}" data-aqtype="${esc(c.plan_type || '')}" data-aqcheck="${Number(c.errors) ? 'err' : (Number(c.warnings) ? 'warn' : 'clean')}" data-aqhotel="${esc((c.hotel || '').toLowerCase())}" data-aqat="${esc(c.updated_at || '')}" data-aqfrom="${esc(c.valid_from || '')}"><td class="fw-semibold aq-hotel">${esc(c.hotel)}</td><td class="aq-plan">${esc(c.name)}${c.docs === undefined ? '' : (Number(c.docs) ? `<span class="doc-clip" title="${c.docs} supporting document(s) — open the draft, Documents page"><i class="bi bi-paperclip"></i>${c.docs}</span>` : '<span class="doc-clip none" title="No rate sheet or contract attached yet">no document</span>')}<div class="help">${esc(c.source_type)}</div></td><td>${typePill(c.plan_type)}</td><td class="mono aq-dates">${c.valid_from} → ${c.valid_to}</td><td class="num">${c.seasons}</td><td class="num">${c.rate_rows}</td>
                 <td>${Number(c.errors) ? pill('red', c.errors + ' error(s)') : ''} ${Number(c.warnings) ? pill('amber', c.warnings + ' warning(s)') : ''}${!Number(c.errors) && !Number(c.warnings) ? pill('green', 'clean') : ''}</td>
                 <td class="help aq-by">${esc(c.entered_by || '')}<br>${(c.updated_at || '').slice(0, 16)}</td>
                 <td class="text-nowrap text-end aq-act"><a class="btn btn-sm btn-primary" href="${BASE}?contract=${c.id}&from=queue" title="Open this draft where the rates were entered: correct the hotel name, rates, dates, seasons and supplements, save (still a draft) and come back here to approve"><i class="bi bi-pencil-square"></i> Edit</a> ${CAN_APPROVE && !Number(c.errors) ? `<button class="btn btn-sm btn-success" data-qapprove="${c.hotel_id}:${c.id}">Approve</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="9"><div class="empty">Nothing waiting for approval.</div></td></tr>'}
