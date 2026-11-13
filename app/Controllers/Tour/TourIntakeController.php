@@ -323,7 +323,10 @@ class TourIntakeController extends BaseController
     {
         // tf-guided-r1 (2 Nov 2026): the Tour Desk menu opens the Guided Inquiry panel. The classic panel
         // is unchanged and one click away at tour/intake?classic=1 — nothing here was removed.
-        if ((string) $this->request->getGet('classic') === '') {
+        // tf-inquiry-r2 (14 Nov 2026, Shantha): Tour Desk → Tour Inquiry opens the redesigned inquiry page (this panel)
+        // directly, for new and existing inquiries. The Guided panel is kept and reachable at tour/intake/guided, or
+        // with ?guided=1 here; nothing was removed.
+        if ((string) $this->request->getGet('guided') !== '') {
             $q = $this->request->getGet('id');
             return redirect()->to(base_url(self::URL . '/guided' . ($q !== null && $q !== '' ? '?id=' . (int) $q : '')));
         }

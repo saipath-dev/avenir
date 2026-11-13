@@ -505,7 +505,7 @@
     .inq .inq-f, .inq .inq-rm { border-left:1px solid var(--line); padding-left:12px; }
     .inq .inq-rate { border:1px solid #DCC6DD; border-radius:8px; padding:5px 12px 6px; font-size:12.5px; line-height:1.45; background:#fff; }
     .inq .inq-rate .t { font-weight:700; color:var(--p); font-size:12px; } .inq .inq-rate .v span { font-size:11px; color:var(--mut); } .inq .inq-rate .v b { font-size:14px; } .inq .inq-rate .v em { font-style:normal; color:#B9AEBF; margin:0 6px; }
-    .inq .inq-rate a { color:var(--p); font-weight:600; font-size:12px; text-decoration:none; } .inq .inq-rate.none .t { color:#B3261E; } .inq .inq-rate.none .v { color:var(--mut); }
+    .inq .inq-rate a { color:var(--p); font-weight:600; font-size:12px; text-decoration:none; } .inq .inq-rate .v .ns { display:inline-block; background:#FCE2B0; color:#8A4B00; font-size:13px; border-radius:5px; padding:1px 10px; }
     .inq .inq-link { display:flex; align-items:center; gap:14px; height:40px; padding:0 14px; border:1px solid var(--line); border-radius:8px; margin-bottom:10px; color:var(--ink); text-decoration:none; font-size:14.5px; }
     .inq .inq-link:hover { border-color:var(--p); } .inq .inq-link i:first-child { color:var(--p); font-size:18px; } .inq .inq-link i:last-child { margin-left:auto; color:var(--p); }
     .inq .inq-rm, .inq .inq-ml { font-size:13.5px; display:flex; align-items:center; gap:8px; white-space:nowrap; } .inq .inq-ml b { font-weight:700; }
@@ -3377,8 +3377,8 @@
             if (!shown.length) shown = [['SGL', 1, d.rate_sgl], ['DBL', 1, d.rate_dbl], ['TPL', 1, d.rate_tpl]].filter(w => f(w[2]) !== null);
             const link = ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>`
                 : `<a href="#" data-inqrates="${d.day_no}">View rates <i class="bi bi-box-arrow-up-right"></i></a>`;
-            return `<div class="inq-rate ${d.rate_state === 'rate' && shown.length ? '' : 'none'}"><div class="t">${d.rate_state === 'rate' && shown.length ? 'Published Rate (' + esc(cur) + ')' : 'Published rate missing'}</div>
-                <div class="v">${d.rate_state === 'rate' && shown.length ? shown.map(w => `<span>${w[0]}</span> <b>${esc(cur)} ${f(w[2])}</b>`).join(' <em>|</em> ') : (d.hotel_name_raw ? 'See the details' : 'Choose the hotel first')}</div>${link}</div>`;
+            return `<div class="inq-rate ${d.rate_state === 'rate' && shown.length ? '' : 'none'}"><div class="t">${d.rate_state === 'rate' && shown.length ? 'Published Rate (' + esc(cur) + ')' : 'Published Rate'}</div>
+                <div class="v">${d.rate_state === 'rate' && shown.length ? shown.map(w => `<span>${w[0]}</span> <b>${esc(cur)} ${f(w[2])}</b>`).join(' <em>|</em> ') : '<b class="ns">Not set</b>'}</div>${link}</div>`;
         };
         const dayRow = d => {
             const tr = (host.querySelector(`table.itin [data-day="${d.id}"]`) || { closest: () => null }).closest('tr');
@@ -3468,8 +3468,8 @@
                             <i class="bi bi-building"></i><b>Hotels</b><span>${nights} night${nights === 1 ? '' : 's'} / ${hotelsN} hotel${hotelsN === 1 ? '' : 's'}</span>
                             <i class="bi bi-cup-hot"></i><b>Meals</b><span>${Object.keys(mealsBy).map(k => esc(k) + ' × ' + mealsBy[k]).join(' &nbsp;|&nbsp; ') || '—'}</span>
                             <i class="bi bi-car-front"></i><b>Transfers</b><span>${trSum}</span>
-                            <i class="bi bi-ticket-perforated"></i><b>Activities</b><span>${acts.length ? esc(acts.slice(0, 4).join(', ')) + (acts.length > 4 ? ` +${acts.length - 4} more` : '') : '—'}</span>
-                            <i class="bi bi-cash-coin last"></i><b class="last">Costs (Internal)</b><span class="last" style="text-align:right"><button type="button" class="inq-btn" data-inqgo="quote" style="height:30px;border-color:var(--p);color:var(--p)"><i class="bi bi-eye"></i> Show Cost</button></span>
+                            <i class="bi bi-ticket-perforated ${SEES_PRICING ? '' : 'last'}"></i><b class="${SEES_PRICING ? '' : 'last'}">Activities</b><span class="${SEES_PRICING ? '' : 'last'}">${acts.length ? esc(acts.slice(0, 4).join(', ')) + (acts.length > 4 ? ` +${acts.length - 4} more` : '') : '—'}</span>
+${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></i><b class="last">Costs (Internal)</b><span class="last" style="text-align:right"><button type="button" class="inq-btn" data-inqgo="quote" style="height:30px;border-color:var(--p);color:var(--p)"><i class="bi bi-eye"></i> Show Cost</button></span>` : ''}
                         </div></div></div>
                         <div class="inq-card"><div class="h"><i class="bi bi-chat-left-text"></i>Communications &amp; History</div><div class="b" style="padding-top:14px">
                             <a class="inq-link" href="${BASE}/comms/${it.id}"><i class="bi bi-envelope"></i><b>View booking communications</b><i class="bi bi-chevron-right"></i></a>

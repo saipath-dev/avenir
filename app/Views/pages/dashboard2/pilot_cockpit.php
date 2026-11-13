@@ -40,8 +40,8 @@ $GH = 25;
 // no longer open the old search window; each goes to its new screen (the subtitle says which).
 $ghAction = [
     'Tour Search'      => ['tour/board', 'opens the Tour Board'],
-    'New Inquiry'      => ['tour/intake/guided', 'opens the Guided Inquiry'],
-    'New Booking'      => ['tour/intake/guided', 'a booking starts as an inquiry: opens the Guided Inquiry'],
+    'New Inquiry'      => ['tour/intake', 'opens Tour Inquiry'],
+    'New Booking'      => ['tour/intake', 'a booking starts as an inquiry: opens Tour Inquiry'],
     'Hotel Management' => ['tour/hotel_bookings', 'opens Hotel reservations & bookings'],
     'Transport'        => ['tour/transport_ops', 'opens Transport Operations'],
     'Transport Portal' => ['tour/transport_ops', 'opens Transport Operations'],
@@ -74,15 +74,15 @@ $cardIcon = static function (string $name): string {
 // Screens that were never redesigned (their current screen is the only version) are kept as they are. The old screens
 // themselves are untouched on the server, only unlinked from this panel.
 $NEW = [
-    'inquiries' => 'tour/intake/guided', 'tour/intake' => 'tour/intake/guided', 'tour/quotation' => 'tour/intake/guided',
-    'tour/tour' => 'tour/intake/guided', 'tour/tour_dashboard' => 'tour/intake/guided', 'dashboard2/tour_search/new_quotation' => 'tour/intake/guided',
+    'inquiries' => 'tour/intake', 'tour/intake' => 'tour/intake', 'tour/quotation' => 'tour/intake',
+    'tour/tour' => 'tour/intake', 'tour/tour_dashboard' => 'tour/intake', 'dashboard2/tour_search/new_quotation' => 'tour/intake',
     'tour/tour_accounts/hotel_rate_confirm' => 'tour/hotel_bookings',
     'dashboard2/transport/transport_portal' => 'tour/transport_ops', 'dashboard2/transport/driver_allow/pending_tours' => 'tour/transport_ops',
     'tour/tour_details_search' => 'tour/board', 'tour/tour_details' => 'tour/board',
     'accounts/bank_reconcil' => 'accounts/daily_bank_rec/prepare',
 ];
 $NEW_NAME = [
-    'tour/intake/guided' => 'Tour Inquiry (Guided)', 'tour/hotel_bookings' => 'Hotel Bookings', 'tour/transport_ops' => 'Transport Operations',
+    'tour/intake' => 'Tour Inquiry', 'tour/hotel_bookings' => 'Hotel Bookings', 'tour/transport_ops' => 'Transport Operations',
     'tour/board' => 'Tour Board', 'accounts/daily_bank_rec/prepare' => 'Daily Bank Reconciliation — prepare (import, match, propose)',
 ];
 $NOT_READY = [
