@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Quotation readiness (tf-hr-ready-r1) — the Hotel Rates panel's tokens, read-only ---------- */
-    .hrq { --q-navy:#1e3553; --q-teal:#0f8b7e; --q-amber:#b7791f; --q-amber-soft:#fdf3e1; --q-red:#b23a32; --q-red-soft:#fbe9e7;
+    .hrq { --q-navy:#1e3553; --q-teal:#0f8b7e; --q-amber:#1a1a1a; --q-amber-soft:#ffffff; --q-red:#b23a32; --q-red-soft:#fbe9e7;
            --q-green:#1f8a4c; --q-green-soft:#e4f4ea; --q-blue-soft:#e6eef8; --q-ink:#1d2733; --q-muted:#5f6f80; --q-line:#dfe5ec;
            --q-bg:#f4f6f9; --q-card:#fff; --q-radius:10px; color:var(--q-ink); }
     .hrq .q-title { display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:14px; }
@@ -42,7 +42,7 @@
     .hrq .pill { display:inline-block; font-size:10.5px; font-weight:600; border-radius:20px; padding:2px 8px; line-height:1.6; white-space:nowrap; }
     .hrq .pill-green { background:var(--q-green-soft); color:var(--q-green); }
     .hrq .pill-red { background:var(--q-red-soft); color:var(--q-red); }
-    .hrq .pill-amber { background:var(--q-amber-soft); color:var(--q-amber); }
+    .hrq .pill-amber { background:var(--q-amber-soft); border:1px solid #d9d3dd; color:var(--q-amber); }
     .hrq .pill-blue { background:var(--q-blue-soft); color:var(--q-navy); }
     .hrq .pill-grey { background:#eef1f5; color:var(--q-muted); }
     .hrq .why { font-weight:600; }
@@ -50,7 +50,7 @@
     .hrq .notes { display:flex; flex-direction:column; gap:3px; align-items:flex-start; }
     .hrq .notes .pill { white-space:normal; text-align:left; }
     .hrq .empty { color:var(--q-muted); font-size:12.5px; padding:16px 0; text-align:center; }
-    .hrq .not-installed { padding:14px 16px; border-radius:8px; background:var(--q-amber-soft); color:var(--q-amber); font-size:13px; }
+    .hrq .not-installed { padding:14px 16px; border-radius:8px; background:var(--q-amber-soft); border:1px solid #d9d3dd; color:var(--q-amber); font-size:13px; }
     .hrq .loading { color:var(--q-muted); font-size:12px; }
 </style>
 <body>

@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Email Templates (the Tour Desk master skin) ---------- */
-    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1;
+    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
           --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
@@ -28,11 +28,11 @@
     .tf .pill { display:inline-block; font-size:10.5px; font-weight:600; border-radius:20px; padding:2px 8px; line-height:1.6; white-space:nowrap; }
     .tf .pill-green { background:var(--tf-green-soft); color:var(--tf-green); }
     .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
-    .tf .pill-amber { background:var(--tf-amber-soft); color:var(--tf-amber); }
+    .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
     .tf .words { display:flex; flex-wrap:wrap; gap:5px; }
     .tf .word { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:11.5px; background:var(--tf-blue-soft); color:var(--tf-navy); border-radius:5px; padding:2px 7px; cursor:pointer; border:0; }
     .tf .word:hover { background:var(--tf-navy); color:#fff; }
-    .tf .note { padding:10px 12px; border-radius:8px; background:var(--tf-amber-soft); color:var(--tf-amber); font-size:12.5px; }
+    .tf .note { padding:10px 12px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:12.5px; }
     .tf .ok { padding:10px 12px; border-radius:8px; background:var(--tf-green-soft); color:var(--tf-green); font-size:12.5px; }
     .tf .bad { padding:10px 12px; border-radius:8px; background:var(--tf-red-soft); color:var(--tf-red); font-size:12.5px; }
     .tf textarea.form-control { font-size:13px; line-height:1.6; }

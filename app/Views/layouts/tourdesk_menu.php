@@ -46,7 +46,7 @@
     .td-hist .row0 { padding:8px 0; border-bottom:1px dashed #e4e8ee; }
     .td-hist .row0:last-child { border-bottom:0; }
     .td-hist .lane { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:1px 6px; border-radius:4px; margin-right:6px; background:#eef1f5; color:#6c757d; }
-    .td-hist .lane.quotation { background:#f3e7f3; color:#842484; } .td-hist .lane.hotel { background:#e6eef8; color:#1878c0; } .td-hist .lane.transport { background:#fdf3e1; color:#b8640f; } .td-hist .lane.tour { background:#e4f4ea; color:#1f8a4c; } .td-hist .lane.service { background:#e3f4f1; color:#0f8b7e; }
+    .td-hist .lane.quotation { background:#f3e7f3; color:#842484; } .td-hist .lane.hotel { background:#e6eef8; color:#1878c0; } .td-hist .lane.transport { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; } .td-hist .lane.tour { background:#e4f4ea; color:#1f8a4c; } .td-hist .lane.service { background:#e3f4f1; color:#0f8b7e; }
     .td-hist .who { font-size:11.5px; color:#6c757d; margin-top:2px; }
     .td-hist details { margin-top:4px; }
     .td-hist summary { cursor:pointer; font-size:11.5px; color:#842484; }

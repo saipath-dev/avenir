@@ -218,7 +218,7 @@ $u = $usd ?? null;
     .ck-c { display:flex; align-items:center; gap:14px; background:#fff; border:1.5px solid var(--ln); border-radius:12px; padding:7px 14px; min-height:48px; font-weight:600; font-size:.82rem; line-height:1.25; transition:border-color .12s, box-shadow .12s; }
     .ck-c:hover { border-color:var(--g); box-shadow:0 3px 8px rgba(90,154,46,.15); }
     .ck-c .v { font-size:1.4rem; font-weight:800; color:var(--gd); min-width:30px; text-align:center; padding-right:14px; border-right:2px solid var(--ln); font-variant-numeric:tabular-nums; }
-    .ck-c.has { border-color:#f0d08a; background:#fffaf0; } .ck-c.has .v { color:#b7791f; }
+    .ck-c.has { border-color:#d9d3dd; background:#ffffff; } .ck-c.has .v { color:#1a1a1a; }
     .ck-sc { display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; padding-top:10px; border-top:1.5px dashed var(--ln); }
     .ck-sc a { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1.5px solid #d9cbc0; border-radius:9px; padding:5px 9px; font-size:.74rem; font-weight:700; color:var(--pd); white-space:nowrap; }
     .ck-sc a:hover { border-color:var(--p); background:#fbf2fb; }

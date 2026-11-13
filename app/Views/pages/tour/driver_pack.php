@@ -34,7 +34,7 @@ $fmt   = static function (?string $ymd): string {
 $num   = static fn ($n): string => $n === null || $n === '' ? '—' : rtrim(rtrim(number_format((float) $n, 1, '.', ','), '0'), '.');
 $money = static fn ($n): string => $n === null || $n === '' ? '—' : number_format((float) $n, 2);
 $meals = ['RO' => 'room only', 'BB' => 'bed & breakfast', 'HB' => 'half board', 'FB' => 'full board', 'AI' => 'all inclusive'];
-$INK = '#1d2733'; $MUTED = '#5f6f80'; $LINE = '#b9c2cc'; $SOFT = '#e3e8ee'; $NAVY = '#1e3553'; $GRN = '#1f8a4c'; $AMB = '#b7791f'; $RED = '#b23a32';
+$INK = '#1d2733'; $MUTED = '#5f6f80'; $LINE = '#b9c2cc'; $SOFT = '#e3e8ee'; $NAVY = '#1e3553'; $GRN = '#1f8a4c'; $AMB = '#1a1a1a'; $RED = '#b23a32';
 $th  = 'style="text-align:left; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; color:' . $MUTED . '; padding:5px 6px; border-bottom:1px solid ' . $LINE . ';"';
 $td  = 'style="font-size:11px; padding:6px 6px; border-bottom:1px solid ' . $SOFT . '; vertical-align:top; color:' . $INK . ';"';
 $tdr = 'style="font-size:11px; padding:6px 6px; border-bottom:1px solid ' . $SOFT . '; vertical-align:top; color:' . $INK . '; text-align:right; font-family:Courier, monospace;"';
@@ -73,7 +73,7 @@ $title = $title ?? ['hotels' => 'Hotel list', 'allowance' => 'Allowance sheet', 
 <?php if (!$pdf): ?>
 <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button> <button onclick="history.back()" style="margin-left:6px">&larr; Back</button> <span style="color:<?= $MUTED ?>; font-size:11px;">Printed <?= date('j M Y H:i') ?> by <?= $e($user ?? '') ?></span></div>
 <?php endif; ?>
-<?php if (!empty($no_pdf_lib)): ?><div class="toolbar" style="font-size:12px;color:#b7791f;background:#fdf3e1;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
+<?php if (!empty($no_pdf_lib)): ?><div class="toolbar" style="font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
 
 <table cellpadding="0" cellspacing="0" width="100%" style="border-bottom:2px solid <?= $NAVY ?>;">
     <tr>

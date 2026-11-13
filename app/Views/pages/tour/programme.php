@@ -58,7 +58,7 @@ $tdTop = 'style="vertical-align:top; padding:0;"';
 </head>
 <body<?= $pdf ? ' style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#1d2733;"' : '' ?>>
 <?php if (!$pdf): ?><div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button> <button onclick="history.back()" style="margin-left:6px">&larr; Back</button> <span class="muted small">Printed <?= date('j M Y H:i') ?> by <?= esc($user ?? '') ?></span></div><?php endif; ?>
-<?php if (!empty($no_pdf_lib)): ?><div class="toolbar" style="font-size:12px;color:#b7791f;background:#fdf3e1;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
+<?php if (!empty($no_pdf_lib)): ?><div class="toolbar" style="font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
 <table cellpadding="<?= $pdf ? '3' : '0' ?>" cellspacing="0" width="100%"<?= $pdf ? '' : ' class="head" style="border-bottom:2px solid #1e3553;"' ?>>
     <tr>
         <td width="62%" <?= $tdTop ?>>

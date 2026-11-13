@@ -99,7 +99,7 @@ if ($logo && is_file($logo)) {
     .bar a:hover, .bar button:hover { background:#f4f6f9; }
     .bar .primary { background:linear-gradient(135deg, <?= $M ?> 0%, #8f2a8d 100%); color:#fff; border:0; }
     .bar .note { margin-left:auto; font-size:12px; color:<?= $MUTED ?>; }
-    .bar .preview { background:#fdf3e1; color:#b7791f; border-color:#f0d9a8; }
+    .bar .preview { background:#ffffff; color:#1a1a1a; border-color:#d9d3dd; }
     .sheet { width:210mm; min-height:297mm; margin:22px auto; background:#fff; padding:18mm 16mm; box-shadow:0 8px 30px rgba(0,0,0,.08); box-sizing:border-box; }
     table { border-collapse:collapse; }
     .staff, .mailbox { font-family:"Segoe UI", Helvetica, Arial, sans-serif; }
@@ -114,7 +114,7 @@ if ($logo && is_file($logo)) {
     .mailbox .acts button { font:inherit; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid #dfe5ec; background:#fff; color:<?= $INK ?>; cursor:pointer; }
     .mailbox .acts button.send { background:linear-gradient(135deg, <?= $M ?> 0%, #8f2a8d 100%); color:#fff; border:0; }
     .mailbox .acts button[disabled] { opacity:.55; cursor:not-allowed; }
-    .mailbox .warn { background:#fdf3e1; color:#8a5a00; border:1px solid #f0d9a8; border-radius:8px; padding:8px 12px; font-size:12.5px; margin-top:10px; }
+    .mailbox .warn { background:#ffffff; color:#1a1a1a; border:1px solid #d9d3dd; border-radius:8px; padding:8px 12px; font-size:12.5px; margin-top:10px; }
     .mailbox .ok { background:#e6f4ea; color:#1e6b34; border:1px solid #bfe3c9; border-radius:8px; padding:8px 12px; font-size:12.5px; margin-top:10px; }
     .mailbox .err { background:#fbe9e6; color:#8a2a22; border:1px solid #f0b8b0; border-radius:8px; padding:8px 12px; font-size:12.5px; margin-top:10px; }
     .mailbox .hist { font-size:12px; color:<?= $MUTED ?>; margin-top:12px; border-top:1px solid #eef2f6; padding-top:8px; }
@@ -142,7 +142,7 @@ if ($logo && is_file($logo)) {
     <?php if (!empty($preview)): ?><span class="preview" style="padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600">Preview — follows the inquiry as it stands; nothing is issued</span>
     <?php elseif ($q): ?><span class="note">Version <?= (int) $q['version'] ?> · <?= esc($q['status']) ?><?= $q['issued_at'] ? ' · issued ' . esc(substr((string) $q['issued_at'], 0, 16)) . ' by ' . esc((string) $q['issued_by']) : '' ?></span><?php endif; ?>
 </div>
-<?php if (!empty($no_pdf_lib)): ?><div style="width:210mm;margin:14px auto -8px;font-size:12px;color:#b7791f;background:#fdf3e1;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
+<?php if (!empty($no_pdf_lib)): ?><div style="width:210mm;margin:14px auto -8px;font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
 <div class="sheet">
 <?php endif; ?>
 
@@ -263,7 +263,7 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
 <table width="100%" cellpadding="8" cellspacing="0" style="margin-top:22px; border:1px solid <?= $LINE ?>; background:#faf5fa;">
     <tr>
         <td width="55%" style="font-size:12px; color:<?= $MUTED ?>; vertical-align:middle;">Total for <?= (int) $c['pax'] ?> passenger<?= (int) $c['pax'] === 1 ? '' : 's' ?>, in US dollars <span style="display:inline-block; margin-left:6px; padding:1px 7px; border:1px solid <?= $P ?>; border-radius:10px; color:<?= $P ?>; font-size:10px; font-weight:bold; letter-spacing:.04em;">AS REQUESTED</span></td>
-        <td width="45%" align="right" style="font-size:20px; font-weight:bold; color:<?= $P ?>; vertical-align:middle;"><?= $c['total_usd'] !== null ? $usd($c['total_usd']) : '<span style="font-size:12px;color:#b7791f">price to follow</span>' ?></td>
+        <td width="45%" align="right" style="font-size:20px; font-weight:bold; color:<?= $P ?>; vertical-align:middle;"><?= $c['total_usd'] !== null ? $usd($c['total_usd']) : '<span style="font-size:12px;color:#1a1a1a">price to follow</span>' ?></td>
     </tr>
     <?php if ($c['per_person_usd'] !== null): ?>
     <tr><td style="font-size:12px; color:<?= $MUTED ?>; border-top:1px solid <?= $LINE ?>;">Per person, for the party of <?= (int) $c['pax'] ?> requested</td>
@@ -356,7 +356,7 @@ $rows    = $staffUi ? $ppAll : $pp;
     <div class="modal">
         <div class="hd"><h3 id="em_mtitle">Preview — this is how it will go</h3><button type="button" id="em_close" aria-label="Close">×</button></div>
         <div class="env" id="em_env"></div>
-        <div id="em_warn" style="display:none; margin:0 18px; padding:8px 12px; background:#fdf3e1; border:1px solid #f0d9a8; border-radius:8px; color:#7a4b00; font-size:12.5px;"></div>
+        <div id="em_warn" style="display:none; margin:0 18px; padding:8px 12px; background:#ffffff; border:1px solid #d9d3dd; border-radius:8px; color:#1a1a1a; font-size:12.5px;"></div>
         <div class="body"><div id="em_html"></div><p style="margin:14px 0 0"><a class="att" id="em_att" href="#" target="_blank" rel="noopener">📎 <span id="em_attname"></span> · open</a></p></div>
         <div class="ft"><button type="button" id="em_mclose">Close</button><button type="button" class="send" id="em_msend">Send now</button></div>
     </div>
@@ -412,7 +412,7 @@ $rows    = $staffUi ? $ppAll : $pp;
         return post('/email/preview', fields()).then(function (j) {
             if (j.status !== 200) { say('err', j.message || 'The preview could not be made.'); return false; }
             var d = j.data;
-            $('em_env').innerHTML = '<b>From</b><span>' + esc(d.from_name || '') + (d.from ? ' &lt;' + esc(d.from) + '&gt;' : ' <span style="color:#8a5a00">(no mailbox set up on your account)</span>') + '</span>'
+            $('em_env').innerHTML = '<b>From</b><span>' + esc(d.from_name || '') + (d.from ? ' &lt;' + esc(d.from) + '&gt;' : ' <span style="color:#1a1a1a">(no mailbox set up on your account)</span>') + '</span>'
                 + '<b>To</b><span>' + esc(d.to) + '</span>' + (d.cc ? '<b>CC</b><span>' + esc(d.cc) + '</span>' : '') + '<b>Subject</b><span>' + esc(d.subject) + '</span>'
                 + '<b>Attachment</b><span>' + esc(d.attachment) + (d.max_pax ? ' — price rows up to ' + esc(d.max_pax) + ' travellers' : '') + '</span>';
             $('em_html').innerHTML = d.html;

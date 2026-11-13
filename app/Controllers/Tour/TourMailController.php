@@ -145,10 +145,10 @@ class TourMailController extends BaseController
         } catch (\Throwable $e) {
             // the letter's own greeting and subject
         }
-        $body = view('pages/tour/hotel_document', [
-            'doc' => $doc, 'rate' => null, 'rate_basis' => HotelLetter::rateBasis($db, $svc->hotelJob($jobId)), 'remarks' => null,
-            'logo' => HotelLetter::logoUrl(), 'sender' => $sender, 'email' => true, 'message' => $message !== null ? mb_substr(str_replace("\r", '', $message), 0, 4000) : null,
-        ]);
+        // tf-resdesk-r2: the Hotel Booking Request e-mail — the reservation control number first, no price; the PDF voucher goes with it
+        $control = \App\Libraries\TourFlow\HotelBookingDocs::voucherNo($doc);
+        $subject = 'Hotel Booking Request — Reservation Control No. ' . $control . ' — ' . ($doc['hotel']['name'] ?: 'hotel') . ', ' . date('j M Y', strtotime((string) $doc['stay']['check_in'])) . ' to ' . date('j M Y', strtotime((string) $doc['stay']['check_out']));
+        $body = view('pages/tour/hotel_booking_email', ['doc' => $doc, 'control' => $control, 'message' => $message !== null ? mb_substr(str_replace("\r", '', $message), 0, 4000) : null]);
         return ['subject' => $subject, 'body' => $body];
     }
 

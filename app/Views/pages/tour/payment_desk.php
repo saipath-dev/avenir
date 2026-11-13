@@ -12,7 +12,7 @@ $P = $tpd_perms ?? [];
 <style>
     .pdk { --p:#842484; --p2:#8f2a8d; --soft:#f3e7f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; --bg:#f6f7fa; --card:#fff; --radius:14px;
            --green:#1f8a4c; --green-soft:#e4f4ea; --blue:#2563eb; --blue-soft:#e8effd; --violet:#7c3aed; --violet-soft:#f1eafe; --teal:#0f766e; --teal-soft:#dff4f1;
-           --amber:#b7791f; --amber-soft:#fdf3e1; --red:#b23a32; --red-soft:#fbe9e7; --grey:#6c757d; --grey-soft:#eef0f3; color:var(--ink); font-size:13.5px; }
+           --amber:#1a1a1a; --amber-soft:#ffffff; --red:#b23a32; --red-soft:#fbe9e7; --grey:#6c757d; --grey-soft:#eef0f3; color:var(--ink); font-size:13.5px; }
     .pdk .card { border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 1px 3px rgba(16,24,40,.05); }
     .pdk .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .pdk .btn-p:hover { background:var(--p2); border-color:var(--p2); color:#fff; }
     .pdk .btn-outline-p { border:1px solid var(--p); color:var(--p); background:#fff; } .pdk .btn-outline-p:hover { background:var(--soft); color:var(--p); }
@@ -33,7 +33,7 @@ $P = $tpd_perms ?? [];
     .pdk table.pt td { padding:9px 10px; border-bottom:1px dashed var(--line); vertical-align:top; } .pdk table.pt tr:hover td { background:#fcfbfd; } .pdk table.pt tr.focus td { background:var(--soft); }
     .pdk .pill { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:3px 9px; font-size:11.5px; font-weight:700; white-space:nowrap; }
     .pdk .pill.grey { background:var(--grey-soft); color:var(--grey); } .pdk .pill.blue { background:var(--blue-soft); color:var(--blue); } .pdk .pill.violet { background:var(--violet-soft); color:var(--violet); }
-    .pdk .pill.teal { background:var(--teal-soft); color:var(--teal); } .pdk .pill.green { background:var(--green-soft); color:var(--green); } .pdk .pill.amber { background:var(--amber-soft); color:var(--amber); } .pdk .pill.red { background:var(--red-soft); color:var(--red); }
+    .pdk .pill.teal { background:var(--teal-soft); color:var(--teal); } .pdk .pill.green { background:var(--green-soft); color:var(--green); } .pdk .pill.amber { background:var(--amber-soft); border:1px solid #d9d3dd; color:var(--amber); } .pdk .pill.red { background:var(--red-soft); color:var(--red); }
     .pdk .acts { display:flex; flex-wrap:wrap; gap:5px; } .pdk .acts .btn { border-radius:10px; font-size:12px; padding:4px 10px; white-space:nowrap; }
     .pdk .empty { color:var(--muted); padding:18px; text-align:center; }
     .pdk .note-box { border-left:3px solid var(--amber); background:#fff; padding:8px 12px; font-size:12.5px; margin:0 18px 10px; } .pdk .note-box.red { border-color:var(--red); } .pdk .note-box.blue { border-color:var(--blue); }

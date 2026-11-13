@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Confirmed Tours (tf-confirmed-r1) — the Board's tokens and list, read-only ---------- */
-    .tf { --tf-navy:#1e3553; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1;
+    .tf { --tf-navy:#1e3553; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
           --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
@@ -10,10 +10,10 @@
     .tf .tf-title h4 { margin:0; font-weight:600; color:var(--tf-navy); }
     .tf .tf-title .sub { color:var(--tf-muted); font-size:12.5px; max-width:820px; }
     .tf .help { font-size:12px; color:var(--tf-muted); }
-    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); color:var(--tf-amber); font-size:13px; }
+    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
     .tf .tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
     .tf .tbl th { text-align:left; font-weight:600; color:var(--tf-muted); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:8px 10px; border-bottom:1px solid var(--tf-line); white-space:nowrap; }
-    .tf .tbl th.lh { color:#1878c0; } .tf .tbl th.lt { color:#b8640f; }
+    .tf .tbl th.lh { color:#1878c0; } .tf .tbl th.lt { color:#1a1a1a; }
     .tf .tbl td { padding:10px 10px; border-bottom:1px solid var(--tf-line); vertical-align:top; }
     .tf .tbl tr:last-child td { border-bottom:0; }
     .tf .tbl tr.trow:hover td { background:var(--tf-bg); }
@@ -21,7 +21,7 @@
     .tf .pill-green { background:var(--tf-green-soft); color:var(--tf-green); }
     .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
     .tf .pill-blue { background:var(--tf-blue-soft); color:var(--tf-navy); }
-    .tf .pill-amber { background:var(--tf-amber-soft); color:var(--tf-amber); }
+    .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
     .tf .pill-red { background:var(--tf-red-soft); color:var(--tf-red); }
     .tf .pill-teal { background:var(--tf-teal-soft); color:var(--tf-teal); }
     .tf .chips { display:flex; gap:6px; flex-wrap:wrap; }

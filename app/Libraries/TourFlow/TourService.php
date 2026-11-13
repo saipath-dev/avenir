@@ -2265,7 +2265,7 @@ final class TourService
                 'needs_hotel' => (int) $j['needs_hotel'], 'needs_meal' => (int) $j['needs_meal'], 'needs_supplier' => (int) $j['needs_supplier'],
             ],
             'passengers' => $pax,
-            'subject'   => trim(($j['tour_no'] ?? '') . ' — ' . ($j['tour_name'] ?: ($j['agent_name'] ?? '')) . ' — ' . ($hotel['name'] ?: 'hotel') . ' — ' . ($kind === 'voucher' ? 'Hotel voucher ' . ($j['voucher_no'] ?? '') : 'Booking request')),
+            'subject'   => trim(($j['tour_no'] ?? '') . ' — ' . ($j['tour_name'] ?: '') . ' — ' . ($hotel['name'] ?: 'hotel') . ' — ' . ($kind === 'voucher' ? 'Hotel voucher ' . ($j['voucher_no'] ?? '') : 'Booking request')),
         ];
     }
 

@@ -168,7 +168,7 @@
 
     .pd-header-requests { background: linear-gradient(120deg, #1d4ed8 0%, #4338ca 100%); }
     .pd-header-expenses  { background: linear-gradient(120deg, #047857 0%, #059669 100%); }
-    .pd-header-utility   { background: linear-gradient(120deg, #b45309 0%, #d97706 100%); }
+    .pd-header-utility   { background: linear-gradient(120deg, #1a1a1a 0%, #d97706 100%); }
     .pd-header-allocation { background: linear-gradient(120deg, #be185d 0%, #9d174d 100%); }
 
     .pd-section .card-body {
@@ -626,8 +626,8 @@
                                                                                             <?php $rtName = !empty($sr['room_type_name']) ? esc($sr['room_type_name']) . ' ' : ''; ?>
                                                                                             <tr>
                                                                                                 <?php if ($sr['amount'] !== null): ?>
-                                                                                                    <td class="p-0 pe-1" style="border:0; white-space:nowrap; color:#92400e;"><?= $rtName ?><?= esc($sr['label']) ?></td>
-                                                                                                    <td class="p-0" style="border:0; white-space:nowrap; color:#92400e;">= $<?= number_format($sr['amount'], 2) ?></td>
+                                                                                                    <td class="p-0 pe-1" style="border:0; white-space:nowrap; color:#1a1a1a;"><?= $rtName ?><?= esc($sr['label']) ?></td>
+                                                                                                    <td class="p-0" style="border:0; white-space:nowrap; color:#1a1a1a;">= $<?= number_format($sr['amount'], 2) ?></td>
                                                                                                 <?php else: ?>
                                                                                                     <td class="p-0 pe-1 text-danger" colspan="2" style="border:0; white-space:nowrap;" title="No matching Hotel Rate found">Missing Rate</td>
                                                                                                 <?php endif; ?>

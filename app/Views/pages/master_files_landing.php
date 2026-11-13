@@ -16,7 +16,7 @@ $adds     = $mf_add ?? [];
 <body class="mfl-body">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap">
 <style>
-    :root { --mf-bg:#f6f4f7; --mf-card:#fff; --mf-fg:#22202a; --mf-mut:#6b6577; --mf-line:#e3dde6; --mf-p:#842484; --mf-p-soft:#f3e6f3; --mf-g:#78b848; --mf-g-dark:#5d9634; --mf-g-soft:#eef6e6; --mf-amber:#b7791f; --mf-amber-soft:#fcf1dc; --mf-red:#b23a32; --mf-red-soft:#fbe9e7; --mf-gold:#e0a526;
+    :root { --mf-bg:#f6f4f7; --mf-card:#fff; --mf-fg:#22202a; --mf-mut:#6b6577; --mf-line:#e3dde6; --mf-p:#842484; --mf-p-soft:#f3e6f3; --mf-g:#78b848; --mf-g-dark:#5d9634; --mf-g-soft:#eef6e6; --mf-amber:#1a1a1a; --mf-amber-soft:#fcf1dc; --mf-red:#b23a32; --mf-red-soft:#fbe9e7; --mf-gold:#e0a526;
             --mf-display:"Source Serif 4", Georgia, serif; --mf-body:"Source Sans 3", "Segoe UI", Arial, sans-serif; }
     body.mfl-body { background:var(--mf-bg) !important; color:var(--mf-fg); font-family:var(--mf-body); font-size:15px; line-height:1.45; }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }

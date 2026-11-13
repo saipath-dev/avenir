@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Transport Operations (same tokens as the Tour Inquiry panel; the Tour Desk bar re-points them) ---------- */
-    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1;
+    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
           --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
@@ -16,7 +16,7 @@
     .tf .btn-light { background:#fff; border:1px solid var(--tf-line); color:var(--tf-ink); }
     .tf .btn-light:hover { background:var(--tf-bg); }
     .tf .btn-success { background:var(--tf-green); border-color:var(--tf-green); }
-    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); color:var(--tf-amber); font-size:13px; }
+    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
     .tf .tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
     .tf .tbl th { text-align:left; font-weight:600; color:var(--tf-muted); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:8px 10px; border-bottom:1px solid var(--tf-line); white-space:nowrap; }
     .tf .tbl td { padding:9px 10px; border-bottom:1px solid var(--tf-line); vertical-align:top; }
@@ -26,7 +26,7 @@
     .tf .pill-green { background:var(--tf-green-soft); color:var(--tf-green); }
     .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
     .tf .pill-blue { background:var(--tf-blue-soft); color:var(--tf-navy); }
-    .tf .pill-amber { background:var(--tf-amber-soft); color:var(--tf-amber); }
+    .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
     .tf .pill-red { background:var(--tf-red-soft); color:var(--tf-red); }
     .tf .pill-teal { background:var(--tf-teal-soft); color:var(--tf-teal); }
     .tf .flag { display:block; font-size:11.5px; color:var(--tf-amber); font-weight:600; margin-top:2px; }

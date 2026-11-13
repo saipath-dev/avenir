@@ -5,7 +5,7 @@
 <style>body{margin:0;background:#f6f3f8;font:14px/1.45 system-ui,"Segoe UI",Roboto,Arial,sans-serif;color:#241d2b}
 main{max-width:980px;margin:0 auto;padding:18px}h1{font-size:20px;color:#4b2a5c}table{width:100%;border-collapse:collapse;background:#fff}
 td,th{border:1px solid #e6dcef;padding:6px 8px;text-align:left;vertical-align:top}th{background:#f3edf7}
-.ok{color:#0f7b55;font-weight:700}.bad{color:#b42318;font-weight:700}.p{color:#7a4b00;font-size:13px}a{color:#4b2a5c}</style></head>
+.ok{color:#0f7b55;font-weight:700}.bad{color:#b42318;font-weight:700}.p{color:#1a1a1a;font-size:13px}a{color:#4b2a5c}</style></head>
 <body><main>
 <p><a href="<?= esc(base_url('help'), 'attr') ?>">← User Manual</a></p>
 <h1>User Manual — checked against this system</h1>

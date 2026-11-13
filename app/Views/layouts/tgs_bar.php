@@ -37,7 +37,7 @@ $tgsShown = array_values(array_filter($tgsItems, static fn ($it) => $tgsAllowed 
 ?>
 <style>
     .tgsbar { --tg-purple:#842484; --tg-magenta:#e90c8b; --tg-ink:#2c3e50; --tg-muted:#6c757d; --tg-line:rgba(132,36,132,.18); --tg-tint:rgba(132,36,132,.07);
-              --tg-amber:#b7791f; --tg-amber-soft:#fdf3e1; --tg-teal:#0f8b7e; --tg-teal-soft:#e3f4f1;
+              --tg-amber:#1a1a1a; --tg-amber-soft:#ffffff; --tg-teal:#0f8b7e; --tg-teal-soft:#e3f4f1;
               display:flex; align-items:stretch; gap:8px; flex-wrap:wrap; margin:-8px 0 16px; padding:8px 10px; background:#fff; border:1px solid var(--tg-line);
               border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.05); font-family:inherit; color:var(--tg-ink); }
     .tgsbar .tg-brand { display:flex; align-items:center; gap:10px; padding:4px 14px 4px 4px; border-right:1px solid var(--tg-line); min-width:0; }

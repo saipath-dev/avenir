@@ -39,7 +39,7 @@
     .brc .s-matched_by { background:#e4f4ea; color:#1f7a43; } .brc .s-restored { background:#f4ebff; color:#6b21a8; } .brc .s-before { background:#fff4e0; color:#8a5300; }
     .brc .banner { border-radius:12px; padding:10px 14px; font-size:13.5px; margin-bottom:10px; border:1px solid; }
     .brc .banner b { font-weight:700; } .brc .banner .bsub { display:block; margin-top:2px; font-size:12px; }
-    .brc .banner-pending { background:#fff7e6; border-color:#f3c46b; color:#5c3a00; }
+    .brc .banner-pending { background:#ffffff; border-color:#f3c46b; color:#5c3a00; }
     .brc .banner-review { background:#fdecec; border-color:#f1a9a0; color:#7a1c12; }
     .brc .banner-ok { background:#ecf8f0; border-color:#a6dcb7; color:#14532d; }
     .brc .banner-info { background:#eef4ff; border-color:#b8cdf5; color:#1e3a8a; }

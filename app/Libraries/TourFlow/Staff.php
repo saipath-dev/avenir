@@ -89,6 +89,11 @@ final class Staff
         } catch (\Throwable $e) {
             // a column this install lacks: the document goes without that line
         }
+        // tf-resdesk-r2: with the local test mailbox on, every message is caught on this computer — a mailbox is not needed
+        if (!$out['can_send'] && TestMailbox::active()) {
+            $out['can_send'] = true;
+            $out['email'] = $out['email'] ?? 'test-mailbox@localhost';
+        }
         return $out;
     }
 

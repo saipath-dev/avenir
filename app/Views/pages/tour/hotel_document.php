@@ -58,7 +58,7 @@ if ($isV) {
 }
 $rows = array_merge($rows, [
     ['Hotel', trim(($h['name'] ?: 'not named') . ($h['acc'] ? '  ·  ' . $h['acc'] : ''))],
-    ['Guest / group', trim(($t['tour_name'] ?: '—') . ($t['agent_name'] ? '  ·  via ' . $t['agent_name'] : '') . ($t['market_code'] ? ' (' . $t['market_code'] . ')' : ''))],
+    ['Guest / group', trim(($t['tour_name'] ?: '—') . ($t['market_code'] ? ' (' . $t['market_code'] . ')' : ''))],   // tf-resdesk-r2: the agent's name is internal — never on a hotel's letter
     ['Check-in', $fmt($s['check_in'])],
     ['Check-out', $fmt($s['check_out'])],
     ['Nights', $nights . ' night' . ($nights === 1 ? '' : 's')],

@@ -23,7 +23,7 @@ $town = static fn (string $p): string => \App\Libraries\TourFlow\RouteMap::locat
 $FONT = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';   // the PDF library's core fonts have no arrows or bullets; DejaVu has
 $MONO = $pdf ? 'dejavusansmono' : 'Courier, monospace';
 // tf-route-map-r1c: the system's own colours, as the map picture (brand purple #842484 and its tint #f3e7f3, ink #2c3e50, muted #6c757d)
-$INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#ced4da'; $SOFT = '#e9ecef'; $NAVY = '#842484'; $GRN = '#1f8a4c'; $AMB = '#b7791f'; $RED = '#b23a32'; $BAND = '#f3e7f3';
+$INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#ced4da'; $SOFT = '#e9ecef'; $NAVY = '#842484'; $GRN = '#1f8a4c'; $AMB = '#1a1a1a'; $RED = '#b23a32'; $BAND = '#f3e7f3';
 $th  = 'style="text-align:left; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; color:' . $MUTED . '; padding:5px 6px; border-bottom:1px solid ' . $LINE . ';"';
 $thr = 'style="text-align:right; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; color:' . $MUTED . '; padding:5px 6px; border-bottom:1px solid ' . $LINE . ';"';
 $td  = 'style="font-size:11px; padding:5px 6px; border-bottom:1px solid ' . $SOFT . '; vertical-align:top; color:' . $INK . ';"';
@@ -61,7 +61,7 @@ $vehicle = $r['vehicle'] !== '' ? $r['vehicle'] : '—';
     <span style="color:<?= $MUTED ?>; font-size:11px;">Printed <?= date('j M Y H:i') ?> by <?= $e($user ?? '') ?> · planned mileage, actual driving may vary</span>
 </div>
 <?php endif; ?>
-<?php if (!empty($no_pdf_lib)): ?><div class="toolbar" style="font-size:12px;color:#b7791f;background:#fdf3e1;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog, or send the picture.</div><?php endif; ?>
+<?php if (!empty($no_pdf_lib)): ?><div class="toolbar" style="font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog, or send the picture.</div><?php endif; ?>
 
 <table cellpadding="0" cellspacing="0" width="100%" style="border-bottom:2px solid <?= $NAVY ?>;">
     <tr>

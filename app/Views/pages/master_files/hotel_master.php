@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Hotel Incomplete Work (same tokens as the Hotel Rates panel) ---------- */
-    .hr2 { --hr-navy: #1e3553; --hr-navy-2: #2c4a73; --hr-teal: #0f8b7e; --hr-teal-soft: #e3f4f1; --hr-amber: #b7791f; --hr-amber-soft: #fdf3e1; --hr-red: #b23a32; --hr-red-soft: #fbe9e7; --hr-green: #1f8a4c; --hr-green-soft: #e4f4ea; --hr-blue-soft: #e6eef8; --hr-ink: #1d2733; --hr-muted: #5f6f80; --hr-line: #dfe5ec; --hr-bg: #f4f6f9; --hr-card: #ffffff; --hr-radius: 10px; color: var(--hr-ink); }
+    .hr2 { --hr-navy: #1e3553; --hr-navy-2: #2c4a73; --hr-teal: #0f8b7e; --hr-teal-soft: #e3f4f1; --hr-amber: #1a1a1a; --hr-amber-soft: #ffffff; --hr-red: #b23a32; --hr-red-soft: #fbe9e7; --hr-green: #1f8a4c; --hr-green-soft: #e4f4ea; --hr-blue-soft: #e6eef8; --hr-ink: #1d2733; --hr-muted: #5f6f80; --hr-line: #dfe5ec; --hr-bg: #f4f6f9; --hr-card: #ffffff; --hr-radius: 10px; color: var(--hr-ink); }
     .hr2 .hr-card { background: var(--hr-card); border: 1px solid var(--hr-line); border-radius: var(--hr-radius); box-shadow: 0 1px 2px rgba(16,24,40,.04); }
     .hr2 .hr-card + .hr-card { margin-top: 14px; }
     .hr2 .hr-card-b { padding: 14px 16px; }
@@ -20,7 +20,7 @@
     .hr2 .btn-green-soft { background: var(--hr-green-soft); border-color: transparent; color: var(--hr-green); }
     .hr2 .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .02em; line-height: 1.6; white-space: nowrap; }
     .hr2 .pill-green { background: var(--hr-green-soft); color: var(--hr-green); }
-    .hr2 .pill-amber { background: var(--hr-amber-soft); color: var(--hr-amber); }
+    .hr2 .pill-amber { background: var(--hr-amber-soft); border:1px solid #d9d3dd; color: var(--hr-amber); }
     .hr2 .pill-red { background: var(--hr-red-soft); color: var(--hr-red); }
     .hr2 .pill-blue { background: var(--hr-blue-soft); color: var(--hr-navy); }
     .hr2 .pill-grey { background: #eef1f5; color: var(--hr-muted); }
@@ -54,7 +54,7 @@
     .hr2 table.wk tr.grp td { background: var(--hr-bg); border-top: 2px solid var(--hr-line); padding: 8px 12px; font-size: 12.5px; }  /* one heading row per kind (6 Oct 2026) */
     .hr2 table.wk tr.grp .pill { font-size: 11.5px; }
     .hr2 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
-    .hr2 .dot.red { background: var(--hr-red); } .hr2 .dot.amber { background: var(--hr-amber); } .hr2 .dot.blue { background: var(--hr-navy); }
+    .hr2 .dot.red { background: var(--hr-red); } .hr2 .dot.amber { background: #b7791f; } .hr2 .dot.blue { background: var(--hr-navy); }
     .hr2 .ttl { font-weight: 600; color: var(--hr-ink); }
     .hr2 .dtl { color: var(--hr-muted); font-size: 12px; margin-top: 3px; max-width: 900px; white-space: pre-line; }
     .hr2 .meta { font-size: 11.5px; color: var(--hr-muted); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; }
@@ -67,7 +67,7 @@
     .hr2 .empty b { color: var(--hr-green); }
     .hr2 .modal-content { border-radius: 12px; }
     .hr2 textarea.form-control { font-size: 12.5px; }
-    .hr2 .not-installed { padding: 14px 16px; border-radius: 8px; background: var(--hr-amber-soft); color: var(--hr-amber); font-size: 13px; }
+    .hr2 .not-installed { padding: 14px 16px; border-radius: 8px; background: var(--hr-amber-soft); border:1px solid #d9d3dd; color: var(--hr-amber); font-size: 13px; }
 </style>
 <style>
     /* ---------- Hotel Master — add, edit or remove hotels (hotel-dup-r1, 27 Oct 2026) ---------- */

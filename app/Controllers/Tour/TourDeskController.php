@@ -266,7 +266,10 @@ class TourDeskController extends BaseController
     {
         try {
             $svc = $this->svc();
-            return $this->json(['status' => 200, 'data' => ['tours' => $svc->deskTours('hotel', $this->tourFilters()), 'counts' => $svc->deskCounts('hotel')]]);
+            // tf-resdesk-r2: each row carries "New booking" (not yet opened by this desk) and the hotel confirmation progress
+            $rd = new \App\Libraries\TourFlow\ResDesk($this->db());
+            return $this->json(['status' => 200, 'data' => ['tours' => $rd->enrichTours($svc->deskTours('hotel', $this->tourFilters())), 'counts' => $svc->deskCounts('hotel'),
+                'test_mailbox' => \App\Libraries\TourFlow\TestMailbox::active()]]);
         } catch (\Throwable $e) {
             return $this->fail($e, 500);
         }
@@ -283,9 +286,14 @@ class TourDeskController extends BaseController
             if (!$tour) {
                 return $this->json(['status' => 404, 'message' => 'Tour not found.'], 404);
             }
+            // tf-resdesk-r2: opening the tour takes its "New booking" label off (who and when are kept) — it confirms nothing
+            $rd = new \App\Libraries\TourFlow\ResDesk($this->db());
+            $firstOpen = $rd->markSeen($id, $this->actorName());
+            $tour = $rd->enrichTours([$tour])[0];
             return $this->json(['status' => 200, 'data' => [
                 'tour'       => $tour,
-                'stays'      => $svc->hotelQueue(['status' => 'all', 'tour_id' => $id]),
+                'first_open' => $firstOpen,
+                'stays'      => $rd->enrichStays($svc->hotelQueue(['status' => 'all', 'tour_id' => $id])),
                 'activities' => $svc->serviceQueue(['status' => 'all', 'tour_id' => $id]),
                 'reasons'    => $svc->reasons('hotel_problem'),
                 'a_reasons'  => $svc->reasons('service_problem'),
@@ -318,6 +326,193 @@ class TourDeskController extends BaseController
         } catch (\Throwable $e) {
             return $this->fail($e, 500);
         }
+    }
+
+    // ---- tf-resdesk-r2 (12 Nov 2026): Confirm Booking, the payment request it raises, the documents, the test mailbox ----
+
+    /** The chain's own payment-request handler, called in place (it stays private there and has no route of its own). */
+    private function chainRaiser(): callable
+    {
+        $req = $this->request;
+        $res = $this->response;
+        return static function (array $payload, string $user) use ($req, $res) {
+            $c = new \App\Controllers\Tour\TourAccountsController();
+            $c->initController($req, $res, \Config\Services::logger());
+            $fn = \Closure::bind(function (array $p, string $u) {
+                $key = 'req|' . (string) $p['tourId'] . '|' . (string) $p['hotelAcc'] . '|Hotel';
+                return \App\Libraries\TourPayments\PayDesk::withItemLock(\Config\Database::connect(), $key, fn () => $this->paymentRequestFrom(static fn ($k) => $p[$k] ?? null, $u, true))
+                    ?? json_encode(['status' => 409, 'message' => 'Another request for this item is being saved at this moment.']);
+            }, $c, \App\Controllers\Tour\TourAccountsController::class);
+            return $fn($payload, $user);
+        };
+    }
+
+    private function raisePayment(int $jobId): array
+    {
+        $svc  = $this->svc();
+        $card = $svc->hotelJob($jobId);
+        $tour = $this->db()->query('SELECT t.*, i.inquiry_no FROM tf_tour t LEFT JOIN tf_intake i ON i.id = t.intake_id WHERE t.id = ?', [(int) $card['tour_id']])->getRowArray();
+        $it   = (new IntakeService($this->db(), $this->user()))->get((int) $card['intake_id']) ?: [];
+        $r = (new \App\Libraries\TourFlow\HotelPayLink($this->db(), $this->user()))->raise($card, $tour, $it, $this->chainRaiser());
+        try {
+            $svc->event((int) $card['intake_id'], (int) $card['tour_id'], 'hotel', $jobId, $r['state'] === 'failed' ? 'payment_not_raised' : 'payment_raised', (string) $card['status'], (string) $card['status'], $r['message']);
+        } catch (\Throwable $e) {
+        }
+        return $r;
+    }
+
+    // GET tour/hotel_bookings/lists?list=pending|confirmed|other&q=&arrival=&page=&per= — tf-resdesk-r2: the Reservation Desk lists
+    public function resLists()
+    {
+        try {
+            $g = fn ($k) => (string) ($this->request->getGet($k) ?? '');
+            $out = (new \App\Libraries\TourFlow\ResDesk($this->db()))->lists(['list' => $g('list'), 'q' => $g('q'), 'arrival' => $g('arrival'), 'from' => $g('from'), 'to' => $g('to'), 'page' => $g('page'), 'per' => $g('per')]);
+            return $this->json(['status' => 200, 'data' => $out + ['test_mailbox' => \App\Libraries\TourFlow\TestMailbox::active()]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 500);
+        }
+    }
+
+    // POST tour/hotel_bookings/card/(:num)/confirm_booking  multipart: ref, with, confirmed_on, note, evidence (file)
+    // The hotel answered and confirmed: its reference (and the evidence, when there is a file) is recorded with who and when;
+    // only then is the stay's hotel payment request raised to Payment Approval.
+    public function confirmBooking($jobId)
+    {
+        $id = (int) $jobId;
+        try {
+            $db = $this->db();
+            \App\Libraries\TourFlow\HotelBookingDocs::ensure($db);
+            $svc = $this->svc();
+            $ref = trim((string) ($this->request->getPost('ref') ?? ''));
+            $with = trim((string) ($this->request->getPost('with') ?? '')) ?: null;
+            $note = trim((string) ($this->request->getPost('note') ?? '')) ?: null;
+            $on = trim((string) ($this->request->getPost('confirmed_on') ?? '')) ?: date('Y-m-d');
+            if ($ref === '') {
+                return $this->json(['status' => 400, 'message' => 'Enter the hotel\'s confirmation reference (number, or the name of the person who confirmed).']);
+            }
+            if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $on) || strtotime($on) === false || $on > date('Y-m-d')) {
+                return $this->json(['status' => 400, 'message' => 'The confirmation date must be a real date, today or earlier.']);
+            }
+            $file = $this->request->getFile('evidence');
+            $hasFile = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
+            if ($hasFile && !$file->isValid()) {
+                return $this->json(['status' => 400, 'message' => 'The evidence file did not arrive: ' . $file->getErrorString()]);
+            }
+            // tf-resdesk-r2 (13 Nov 2026): the hotel's reply is recorded with its reference — its words, or the file it sent
+            $reply = trim(str_replace("\r", '', (string) ($this->request->getPost('reply') ?? '')));
+            if ($reply === '' && !$hasFile) {
+                return $this->json(['status' => 400, 'message' => 'Record the hotel\'s reply: paste what it wrote, or attach its e-mail / PDF.']);
+            }
+            $was = $this->before('hotel_job', $id);
+            if ($reply !== '') {
+                $svc->hotelReply($id, mb_substr($reply, 0, 4000), $this->actorName());
+            }
+            $card = $svc->hotelConfirm($id, $ref, $with, $note);
+            $db->query('UPDATE tf_hotel_job SET hotel_confirmed_on = ? WHERE id = ?', [$on, $id]);
+            $docMsg = '';
+            if ($hasFile) {
+                try {
+                    $doc = (new \App\Libraries\TourFlow\HotelBookingDocs($db, $this->actorName()))->addEvidence($id, (int) $card['tour_id'], $file->getTempName(), $file->getClientName(), $file->getClientMimeType(), 'Hotel confirmation ' . $ref);
+                    $svc->event((int) $card['intake_id'], (int) $card['tour_id'], 'hotel', $id, 'evidence', 'confirmed', 'confirmed', 'Confirmation evidence kept: ' . $doc['original_name']);
+                } catch (\Throwable $e) {
+                    $docMsg = ' The evidence file was NOT kept: ' . $e->getMessage() . ' Add it again from the stay.';
+                }
+            }
+            $this->after('hotel_job', $id, $was, 'confirm_booking', $card);
+            $pay = $this->raisePayment($id);
+            return $this->json(['status' => 200, 'message' => 'Hotel confirmed (ref ' . $ref . ', ' . date('j M Y', strtotime($on)) . ').' . $docMsg . ' ' . $pay['message'], 'data' => ['pay' => $pay]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    // POST tour/hotel_bookings/card/(:num)/raise_payment — a confirmed stay whose payment request could not be raised, tried again
+    public function raisePaymentAgain($jobId)
+    {
+        try {
+            $card = $this->svc()->hotelJob((int) $jobId);
+            if (!in_array((string) $card['status'], ['confirmed', 'voucher_issued'], true)) {
+                return $this->json(['status' => 400, 'message' => 'Only a stay the hotel has confirmed goes to Payment Approval.']);
+            }
+            $r = $this->raisePayment((int) $jobId);
+            return $this->json(['status' => $r['ok'] ? 200 : 400, 'message' => $r['message'], 'data' => ['pay' => $r]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    // POST tour/hotel_bookings/card/(:num)/evidence  multipart: evidence (file), note — more confirmation evidence on a confirmed stay
+    public function addEvidence($jobId)
+    {
+        try {
+            $db = $this->db();
+            \App\Libraries\TourFlow\HotelBookingDocs::ensure($db);
+            $card = $this->svc()->hotelJob((int) $jobId);
+            $file = $this->request->getFile('evidence');
+            if (!$file || !$file->isValid()) {
+                return $this->json(['status' => 400, 'message' => 'Choose the file to keep.']);
+            }
+            $doc = (new \App\Libraries\TourFlow\HotelBookingDocs($db, $this->actorName()))->addEvidence((int) $jobId, (int) $card['tour_id'], $file->getTempName(), $file->getClientName(), $file->getClientMimeType(), trim((string) ($this->request->getPost('note') ?? '')) ?: null);
+            $this->svc()->event((int) $card['intake_id'], (int) $card['tour_id'], 'hotel', (int) $jobId, 'evidence', (string) $card['status'], (string) $card['status'], 'Confirmation evidence kept: ' . $doc['original_name']);
+            return $this->json(['status' => 200, 'message' => 'Kept: ' . $doc['original_name'] . '.']);
+        } catch (\Throwable $e) {
+            return $this->fail($e);
+        }
+    }
+
+    // GET tour/hotel_bookings/doc/(:num) — a kept document (booking voucher version, confirmation evidence), exactly as kept
+    public function hotelDoc($docId)
+    {
+        $docs = new \App\Libraries\TourFlow\HotelBookingDocs($this->db(), $this->actorName());
+        $d = $docs->get((int) $docId);
+        $p = $d ? $docs->path($d) : null;
+        if (!$p) {
+            return $this->response->setStatusCode(404)->setBody('Document not found.');
+        }
+        $inline = in_array(strtolower(pathinfo((string) $d['original_name'], PATHINFO_EXTENSION)), ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'txt'], true) && !$this->request->getGet('download');
+        $name = str_replace(['"', "\r", "\n"], '', (string) $d['original_name']);
+        return $this->response->setHeader('Content-Type', $d['mime'] ?: 'application/octet-stream')->setHeader('X-Content-Type-Options', 'nosniff')
+            ->setHeader('Content-Disposition', ($inline ? 'inline' : 'attachment') . '; filename="' . $name . '"')->setBody(file_get_contents($p));
+    }
+
+    // GET tour/hotel_bookings/message/(:num) — the e-mail as it went (or failed): who to, when, subject, attachment, body
+    public function hotelMessage($msgId)
+    {
+        $m = $this->db()->query('SELECT m.*, j.hotel_name, t.tour_no FROM tf_hotel_message m JOIN tf_hotel_job j ON j.id = m.job_id JOIN tf_tour t ON t.id = m.tour_id WHERE m.id = ?', [(int) $msgId])->getRowArray();
+        if (!$m) {
+            return $this->response->setStatusCode(404)->setBody('Message not found.');
+        }
+        $doc = null;
+        if (!empty($m['doc_id'])) {
+            $doc = (new \App\Libraries\TourFlow\HotelBookingDocs($this->db(), $this->actorName()))->get((int) $m['doc_id']);
+        }
+        // tf-resdesk-r2: the Rooming List that went with the same message
+        $more = $this->db()->query("SELECT id, original_name, version FROM tf_hotel_doc WHERE message_id = ? AND kind = 'rooming_list'", [(int) $msgId])->getResultArray();
+        return view('pages/tour/hotel_sent_email', ['m' => $m, 'doc' => $doc, 'more' => $more]);
+    }
+
+    // GET tour/hotel_bookings/test_mailbox — the local test mailbox (only while it is switched on, on this computer)
+    public function testMailbox()
+    {
+        if (!\App\Libraries\TourFlow\TestMailbox::active()) {
+            return $this->response->setStatusCode(404)->setBody('The test mailbox is not switched on here.');
+        }
+        return view('pages/tour/test_mailbox', ['messages' => \App\Libraries\TourFlow\TestMailbox::messages(), 'fail' => \App\Libraries\TourFlow\TestMailbox::failList()]);
+    }
+
+    // GET tour/hotel_bookings/test_mailbox/(:segment)/(:segment) — one caught message's body or attachment
+    public function testMailboxFile($id, $name)
+    {
+        if (!\App\Libraries\TourFlow\TestMailbox::active()) {
+            return $this->response->setStatusCode(404);
+        }
+        $p = \App\Libraries\TourFlow\TestMailbox::file((string) $id, (string) $name);
+        if (!$p) {
+            return $this->response->setStatusCode(404)->setBody('Not found.');
+        }
+        $ext = strtolower(pathinfo($p, PATHINFO_EXTENSION));
+        $type = ['html' => 'text/html; charset=utf-8', 'pdf' => 'application/pdf', 'png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg'][$ext] ?? 'application/octet-stream';
+        return $this->response->setHeader('Content-Type', $type)->setHeader('X-Content-Type-Options', 'nosniff')->setHeader('Content-Disposition', 'inline; filename="' . basename($p) . '"')->setBody(file_get_contents($p));
     }
 
     // ---- activities & tickets: the same desk, the same privilege (schema 20) ----
@@ -859,17 +1054,44 @@ class TourDeskController extends BaseController
                     $kind = ($b['kind'] ?? 'request') === 'voucher' ? 'voucher' : 'request';
                     $d    = $this->documentData($id, $kind, !empty($b['rate']), $b['remarks'] ?? null);
                     $msg0 = trim(str_replace("\r", '', (string) ($b['message'] ?? '')));
-                    $body = view('pages/tour/hotel_document', $d + ['email' => true, 'message' => $msg0 !== '' ? mb_substr($msg0, 0, 4000) : null]);
+                    $body = $kind === 'request'
+                        // tf-resdesk-r2: the Hotel Booking Request e-mail (reservation control number, no price; the PDF voucher attached)
+                        ? view('pages/tour/hotel_booking_email', ['doc' => $d['doc'], 'control' => \App\Libraries\TourFlow\HotelBookingDocs::voucherNo($d['doc']), 'message' => $msg0 !== '' ? mb_substr($msg0, 0, 4000) : null])
+                        : view('pages/tour/hotel_document', $d + ['email' => true, 'message' => $msg0 !== '' ? mb_substr($msg0, 0, 4000) : null]);
                     $to   = trim((string) ($b['to'] ?? ''));
                     $cc   = array_values(array_filter(array_map('trim', preg_split('/[;,\s]+/', (string) ($b['cc'] ?? '')) ?: [])));
                     $subject = trim((string) ($b['subject'] ?? '')) ?: $d['doc']['subject'];
                     if (!$d['sender']['can_send']) {
                         return $this->json(['status' => 400, 'message' => 'Your account has no mailbox set up to send from (email, password and host on your user profile). Print the letter, or record that you sent it another way.']);
                     }
-                    $r = HotelMail::send($to, $subject, $body, $cc);
+                    // tf-resdesk-r2: a booking request carries the Hotel Booking Voucher (PDF), kept with the copy sent
+                    $bv = null;
+                    $att = [];
+                    if ($kind === 'request') {
+                        \App\Libraries\TourFlow\HotelBookingDocs::ensure($this->db());
+                        $both = (new \App\Libraries\TourFlow\HotelBookingDocs($this->db(), $this->actorName()))->bookingDocs($svc, $id, $d['sender']);
+                        $bv = $both['request'];
+                        $rlDoc = $both['rooming'];
+                        $att = [['path' => $bv['path'], 'name' => $bv['original_name']], ['path' => $rlDoc['path'], 'name' => $rlDoc['original_name']]];
+                    }
+                    $r = HotelMail::send($to, $subject, $body, $cc, $att);
+                    $rlDoc = $rlDoc ?? null;
+                    $linkBv = function () use ($bv, $rlDoc, $id) {
+                        if ($bv) {
+                            $m = $this->db()->query('SELECT MAX(id) AS id FROM tf_hotel_message WHERE job_id = ?', [$id])->getRowArray();
+                            if (!empty($m['id'])) {
+                                $hd = new \App\Libraries\TourFlow\HotelBookingDocs($this->db(), $this->actorName());
+                                $hd->linkMessage((int) $bv['id'], (int) $m['id']);
+                                if ($rlDoc) {
+                                    $hd->linkMessage((int) $rlDoc['id'], (int) $m['id']);
+                                }
+                            }
+                        }
+                    };
                     if (!$r['ok']) {
                         try {
                             $svc->recordHotelMessage($id, $kind, 'email', $to, implode(', ', $cc), $subject, $body, 'failed', $r['error'], $this->actorName());
+                            $linkBv();
                         } catch (\Throwable $e) {
                             // the failure is reported either way
                         }
@@ -878,6 +1100,7 @@ class TourDeskController extends BaseController
                     $card = $kind === 'voucher'
                         ? $svc->hotelVoucherSent($id, 'email', $to, implode(', ', $cc), $subject, $body, $this->actorName())
                         : $svc->hotelRequestSent($id, 'email', $to, implode(', ', $cc), $subject, $body, $this->actorName());
+                    $linkBv();
                     $msg  = ($kind === 'voucher' ? 'Voucher' : 'Booking request') . ' sent to ' . $to . '. The copy is kept on the stay.';
                     // tf-walkfix-r1 (point 5): on purpose, and only for a holder of Hotel Rates, the address typed here can
                     // go on the Hotel Master as the hotel's Reservations e-mail — otherwise the master is never touched

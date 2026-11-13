@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Tour Inquiry (same tokens as the Hotel Rates panel) ---------- */
-    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1;
+    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
           --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
@@ -13,7 +13,7 @@
     .tf .tf-pastebox:focus { border-color:#842484; box-shadow:0 0 0 .2rem rgba(132,36,132,.18); outline:0; }
     .tf .tf-pastebox::placeholder { color:#8a8f99; font-family:inherit; }
     .tf .bnr-saved { display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-radius:10px; margin:0 0 10px; border:1px solid #cde7bd; background:#f1f9ea; color:#1f2430; }
-    .tf .bnr-saved.warn { border-color:#f1d39a; background:#fff7e6; }
+    .tf .bnr-saved.warn { border-color:#f1d39a; background:#ffffff; }
     .tf .bnr-saved .ref { font-size:18px; font-weight:700; color:#842484; }
     .tf .bnr-saved .acts { margin-left:auto; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
     .tf .btn-avgreen { background:#78b848; border-color:#78b848; color:#1f2430; font-weight:600; }
@@ -29,7 +29,7 @@
     .tf .btn-primary:hover { background:var(--tf-navy-2); border-color:var(--tf-navy-2); }
     .tf .btn-light { background:#fff; border:1px solid var(--tf-line); color:var(--tf-ink); }
     .tf .btn-light:hover { background:var(--tf-bg); }
-    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); color:var(--tf-amber); font-size:13px; }
+    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
     .tf .sugwrap { position:relative; }
     .tf .sugg { position:absolute; left:0; right:0; top:100%; z-index:1080; background:#fff; border:1px solid var(--tf-line); border-radius:8px; box-shadow:0 8px 24px -8px rgba(16,24,40,.25); max-height:280px; overflow-y:auto; margin-top:3px; }
     .tf .sugg .it { padding:7px 10px; cursor:pointer; font-size:12.5px; border-bottom:1px solid var(--tf-line); }
@@ -40,7 +40,7 @@
     .tf .sugg .none { padding:8px 10px; font-size:12px; color:var(--tf-muted); }
     .tf .pill { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px; white-space:nowrap; }
     .tf .pill-green { background:var(--tf-green-soft); color:var(--tf-green); }
-    .tf .pill-amber { background:var(--tf-amber-soft); color:var(--tf-amber); }
+    .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
     .tf .pill-red { background:var(--tf-red-soft); color:var(--tf-red); }
     .tf .pill-blue { background:var(--tf-blue-soft); color:var(--tf-navy); }
     .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
@@ -159,7 +159,7 @@
     .tf .sm .k { font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--tf-muted); font-weight:600; }
     .tf .sm .v { font-size:14.5px; font-weight:600; }
     .tf .sm .v small { display:block; font-weight:400; font-size:11.5px; color:var(--tf-muted); }
-    .tf .sm.flag { background:var(--tf-amber-soft); } .tf .sm.flag .k, .tf .sm.flag .v { color:var(--tf-amber); }
+    .tf .sm.flag { background:var(--tf-amber-soft); border:1px solid #d9d3dd; } .tf .sm.flag .k, .tf .sm.flag .v { color:var(--tf-amber); }
 
     /* review grid */
     /* tf-inqnav-r1 (1 Nov 2026): the side column carries three reference cards - Masters, Communications & History
@@ -193,7 +193,7 @@
     .tf .fld.human { border-left-color:var(--tf-navy); }
     .tf .tag { font-size:9.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:1px 5px; border-radius:3px; }
     .tf .tag-src { background:var(--tf-teal-soft); color:var(--tf-teal); }
-    .tf .tag-ask { background:var(--tf-amber-soft); color:var(--tf-amber); }
+    .tf .tag-ask { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
     .tf .tag-you { background:var(--tf-blue-soft); color:var(--tf-navy); }
     .tf .tag-bad { background:var(--tf-red-soft); color:var(--tf-red); }
 
@@ -232,7 +232,7 @@
     .tf .errow .words { color:var(--tf-muted); overflow-wrap:anywhere; }
     .tf .errow .words b { color:var(--tf-ink); font-weight:600; }
     .tf .ernote { background:var(--tf-bg); border-radius:7px; padding:8px 10px; font-size:12px; margin-bottom:10px; }
-    .tf .ernote.warn { background:var(--tf-amber-soft); color:var(--tf-ink); }
+    .tf .ernote.warn { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-ink); }
     .tf .ernote.stop { background:var(--tf-red-soft); color:var(--tf-ink); }
     /* the check: Current → New, and everything that follows */
     .tf .erwords { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
@@ -253,7 +253,7 @@
     .tf .reqrow { display:grid; grid-template-columns:auto 1fr auto; gap:10px; padding:9px 0; border-bottom:1px solid #eef2f6; align-items:start; }
     .tf .reqrow:last-child { border-bottom:0; }
     .tf .reqrow .dot { width:7px; height:7px; border-radius:50%; margin-top:6px; background:var(--tf-teal); }
-    .tf .reqrow.q .dot { background:var(--tf-amber); }
+    .tf .reqrow.q .dot { background:#b7791f; }
     .tf .reqrow q { display:block; font-style:normal; color:var(--tf-muted); font-size:12px; margin-top:2px; }
     .tf .paxgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:7px; }
     /* the itinerary as the quotation says it */
@@ -490,7 +490,7 @@
                 <?php else: ?>
 
                 <?php if (empty($ai_ready)): ?>
-                <div class="tf-card mb-3"><div class="tf-card-b" style="background:var(--tf-amber-soft);color:var(--tf-amber);font-size:12.5px;border-radius:var(--tf-radius)">
+                <div class="tf-card mb-3"><div class="tf-card-b" style="background:var(--tf-amber-soft); border:1px solid #d9d3dd;color:var(--tf-amber);font-size:12.5px;border-radius:var(--tf-radius)">
                     <b>No <?= esc($reader_label ?? 'API') ?> key is configured</b>, so emails cannot be read automatically yet. Everything else works — paste the email and fill the fields in by hand. Set <span class="mono"><?= esc($reader_key ?? 'ANTHROPIC_API_KEY') ?></span> in the project's <span class="mono">.env</span> to switch reading on.
                 </div></div>
                 <?php else: ?>
@@ -2004,7 +2004,7 @@
             const sn = SAVED_NOTICE; const link = BASE + '?id=' + encodeURIComponent(it.id);
             const head = sn.duplicate ? 'Already saved as' : 'Saved as';
             const sub = sn.read === true ? 'The email was read: check the details below, correct anything, fill the gaps.' : (sn.read === false ? 'Saved — but the email could not be read automatically; see the notice below. Nothing was lost: the email is on the right, fill the fields in by hand.' : 'Saved without reading. The email is on the right; fill the fields in by hand or press Try reading it.');
-            savedHtml = `<div class="bnr-saved ${sn.read === false ? 'warn' : ''}"><i class="bi ${sn.read === false ? 'bi-exclamation-circle' : 'bi-check-circle-fill'}" style="font-size:22px;color:${sn.read === false ? '#b7791f' : '#78b848'}"></i>
+            savedHtml = `<div class="bnr-saved ${sn.read === false ? 'warn' : ''}"><i class="bi ${sn.read === false ? 'bi-exclamation-circle' : 'bi-check-circle-fill'}" style="font-size:22px;color:${sn.read === false ? '#1a1a1a' : '#78b848'}"></i>
                 <div><div>${head} <span class="ref">${esc(sn.inquiry_no || it.inquiry_no)}</span></div><div class="help" style="color:inherit">${esc(sub)}</div></div>
                 <div class="acts"><a class="btn btn-avgreen btn-sm" href="${link}"><i class="bi bi-box-arrow-up-right"></i> Open ${esc(sn.inquiry_no || it.inquiry_no)}</a>
                 <button class="btn btn-light btn-sm" id="sv_mail" title="Jump to the saved email"><i class="bi bi-envelope-open"></i> View email</button>
@@ -4275,7 +4275,7 @@
                     <span class="pill pill-grey" style="margin-left:6px">${esc(s.kind)}</span>
                     ${s.origin === 'human' ? '<span class="pill pill-blue" style="margin-left:4px">yours</span>' : ''}
                     ${s.on_time ? `<span class="pill pill-teal" style="margin-left:4px" title="The hour agreed; it travels with the line into the tour">${esc((s.on_time || '').slice(0, 5))}</span>` : ''}
-                    <div class="help">${esc(free ? PAY_LABEL.no_charge : (PAY_LABEL[s.pay_mode] || s.pay_mode))}${free ? '' : (PER_PERSON_KINDS.includes(s.kind) && !s.meal_id ? (Number(s.qty_override) === 1 ? ` · <b style="color:#b7791f">attendance override: ${Number(s.qty)} of ${CURRENT.pax_total || '?'}</b>${s.qty_reason ? ' (' + esc(s.qty_reason) + ')' : ''}` : ' · the whole party' + (CURRENT.pax_total ? ' (' + CURRENT.pax_total + ')' : '')) : (s.qty ? ' · ' + s.qty + ' of them' : ' · one per person'))}${s.unit_usd != null && !free ? ' · $' + Number(s.unit_usd).toFixed(2) + ' each' : ''}</div>
+                    <div class="help">${esc(free ? PAY_LABEL.no_charge : (PAY_LABEL[s.pay_mode] || s.pay_mode))}${free ? '' : (PER_PERSON_KINDS.includes(s.kind) && !s.meal_id ? (Number(s.qty_override) === 1 ? ` · <b style="color:#1a1a1a">attendance override: ${Number(s.qty)} of ${CURRENT.pax_total || '?'}</b>${s.qty_reason ? ' (' + esc(s.qty_reason) + ')' : ''}` : ' · the whole party' + (CURRENT.pax_total ? ' (' + CURRENT.pax_total + ')' : '')) : (s.qty ? ' · ' + s.qty + ' of them' : ' · one per person'))}${s.unit_usd != null && !free ? ' · $' + Number(s.unit_usd).toFixed(2) + ' each' : ''}</div>
                     ${s.match_note ? `<div class="help" style="color:${free ? 'var(--tf-green)' : (unsure ? 'var(--tf-amber)' : 'var(--tf-red)')}">${esc(s.match_note)}</div>` : ''}
                     ${offer}
                     ${s.source_quote ? `<q>“${esc(s.source_quote)}”</q>` : ''}
@@ -4605,9 +4605,9 @@
         const r = await Swal.fire({
             icon: 'warning',
             title: 'Confirm ' + it.inquiry_no + '?',
-            html: `<div style="text-align:left;font-size:13.5px"><div style="background:#fdf3e1;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;margin-bottom:10px;color:#7a4b00"><b>This cannot be undone from here.</b> The tour is marked <b>Confirmed</b>, given its number, and released to Hotel Bookings and Transport, who start work on it. Only Management can cancel it afterwards, with a reason.</div>
+            html: `<div style="text-align:left;font-size:13.5px"><div style="background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;margin-bottom:10px;color:#1a1a1a"><b>This cannot be undone from here.</b> The tour is marked <b>Confirmed</b>, given its number, and released to Hotel Bookings and Transport, who start work on it. Only Management can cancel it afterwards, with a reason.</div>
                 The agent has accepted <b>quotation version ${issued.version}</b>${issued.sell_usd ? ` (USD ${Number(issued.sell_usd).toLocaleString()})` : ''}. Confirm Tour takes this inquiry off the Open list as <b>confirmed</b>, and puts <b>one job on Hotel Bookings</b> (${nights} night${nights === 1 ? '' : 's'} in ${stays} hotel stay${stays === 1 ? '' : 's'}, ${arranged} activity or ticket line${arranged === 1 ? '' : 's'}) and <b>one job on Transport</b> (${vehicles} vehicle${vehicles === 1 ? '' : 's'}); both red counts go up by one. This inquiry becomes read-only, the record of what was sold.
-                ${unnamed ? `<br><br><span style="color:#b7791f">${unnamed} night${unnamed === 1 ? ' has' : 's have'} no hotel named. ${unnamed === 1 ? 'It' : 'They'} will be put on the desk flagged, not filled in.</span>` : ''}
+                ${unnamed ? `<br><br><span style="color:#1a1a1a">${unnamed} night${unnamed === 1 ? ' has' : 's have'} no hotel named. ${unnamed === 1 ? 'It' : 'They'} will be put on the desk flagged, not filled in.</span>` : ''}
                 <br><br>${mail ? `<b>E-mails, the moment you press Confirm Tour:</b> ${mail.sending} hotel booking request${mail.sending === 1 ? '' : 's'}${mail.notSending ? ` (<span style="color:#b23a32">${mail.notSending} will NOT be sent — listed after</span>)` : ''} and each restaurant's booking voucher as listed before, from your mailbox. ` : ''}No invoice is raised and nothing is written to the old tour tables. Your name and the time go on the tour and the Activity log.</div>`,
             showCancelButton: true, cancelButtonText: 'Cancel', confirmButtonText: 'Confirm Tour', confirmButtonColor: '#78b448', focusCancel: true,
         });
@@ -4625,7 +4625,7 @@
         if (j.status !== 200) { toast('error', j.message); return; }
         CURRENT = j.data; renderDetail(); loadList();
         const p = CURRENT.progress || {};
-        const SB = { sent: ['emailed', '#1d6f47'], kept: ['already sent', '#1d6f47'], not_sent: ['not sent', '#b7791f'], not_issued: ['no voucher', '#b23a32'] };
+        const SB = { sent: ['emailed', '#1d6f47'], kept: ['already sent', '#1d6f47'], not_sent: ['not sent', '#1a1a1a'], not_issued: ['no voucher', '#b23a32'] };
         const mb = (j.meal_bookings || []).map(b => `<tr><td style="padding:3px 6px">${esc(b.restaurant)}</td><td style="padding:3px 6px">${esc(b.voucher_no || '—')}</td><td style="padding:3px 6px;color:${(SB[b.status] || ['', '#333'])[1]}">${esc((SB[b.status] || [b.status])[0])}${b.to && ['sent', 'kept'].includes(b.status) ? ' to ' + esc(b.to) : ''}${b.why && !['sent', 'kept'].includes(b.status) ? '<div style="font-size:11.5px;color:#6b7a8c">' + esc(b.why) + '</div>' : ''}</td></tr>`).join('');
         // tf-tourmail-r1: what happened to every hotel's and restaurant's mail — the ones that did not go in red, with why
         const tm = window.AvhTourMails && (j.hotel_mails || []).length ? window.AvhTourMails.resultsHtml(j.hotel_mails, j.meal_bookings) : '';
@@ -4649,8 +4649,8 @@
         const btnCss = 'margin:0;padding:2px 10px;font-size:12px;background:#eef1f5;color:#1d2733';
         // where each restaurant's booking voucher will go, and what it states (the Meal Master's LKR rates)
         const book = l => {
-            const lk = l.lkr != null ? `LKR ${n2(l.lkr)}` : '<span style="color:#b7791f">no LKR rate — no voucher</span>';
-            const to = l.book_email ? esc(l.book_email) : '<span style="color:#b7791f">no email — not sent</span>';
+            const lk = l.lkr != null ? `LKR ${n2(l.lkr)}` : '<span style="color:#1a1a1a">no LKR rate — no voucher</span>';
+            const to = l.book_email ? esc(l.book_email) : '<span style="color:#1a1a1a">no email — not sent</span>';
             return `${lk}<div style="font-size:11px;color:#6b7a8c">${to}${l.book_contact ? ' · ' + esc(l.book_contact) : ''}${l.book_phone ? ' · ' + esc(l.book_phone) : ''}</div>`;
         };
         let nVouchers = 0, nShort = 0;
@@ -4664,7 +4664,7 @@
                 vcell = mine.map(book).join('');
                 btn = `<button type="button" class="swal2-styled" style="${btnCss}" data-lprev="${r.day_no}|${mine[0].id}">Change</button>`;
             } else if (old.length) {
-                cell = `<span style="color:#b7791f">“${esc(old[0].title)}” — no restaurant</span>`;
+                cell = `<span style="color:#1a1a1a">“${esc(old[0].title)}” — no restaurant</span>`;
                 btn = `<button type="button" class="swal2-styled" style="${btnCss}" data-lprev="${r.day_no}|${old[0].id}">+</button>`;
             } else if (notOurs.length) cell = `<span style="color:#6b7a8c">${esc(notOurs[0].title)} — not ours</span>`;
             else {
@@ -4684,7 +4684,7 @@
             title: 'Restaurants — ' + it.inquiry_no, width: 980,
             html: `<div style="text-align:left;font-size:13px"><div style="margin-bottom:8px">When you confirm, <b>each restaurant below is booked at once</b>: its booking voucher (the amount in LKR from the Meal Master) is emailed to the booking email shown, from your mailbox. Change or add a lunch place here first if needed.</div>
                 <table style="width:100%;border-collapse:collapse" id="lprev_tbl"><thead><tr style="font-size:11px;text-transform:uppercase;color:#6b7a8c"><th style="text-align:left;padding:4px 6px">Day</th><th style="text-align:left;padding:4px 6px">Route</th><th style="text-align:left;padding:4px 6px">Lunch place (in-house USD)</th><th style="text-align:left;padding:4px 6px">Booking voucher</th><th></th></tr></thead><tbody>${rows}</tbody></table>
-                <div style="margin-top:8px;font-size:12px">${nVouchers} booking voucher${nVouchers === 1 ? '' : 's'} to send${nShort ? ` — <span style="color:#b7791f">${nShort} cannot go yet (no LKR rate or no email); the Activities desk finishes ${nShort === 1 ? 'it' : 'them'}</span>` : ''}. Meals now <b>USD ${Number(M.meals_usd || 0).toFixed(2)}</b>${iss ? ` · quotation version ${iss.version} carries <b>USD ${Number(iss.meals_usd).toFixed(2)}</b>${moved ? ' — <span style="color:#b7791f">changed since it was issued: the price sold stays as version ' + iss.version + '; only the cost moves</span>' : ''}` : ''}</div></div>`,
+                <div style="margin-top:8px;font-size:12px">${nVouchers} booking voucher${nVouchers === 1 ? '' : 's'} to send${nShort ? ` — <span style="color:#1a1a1a">${nShort} cannot go yet (no LKR rate or no email); the Activities desk finishes ${nShort === 1 ? 'it' : 'them'}</span>` : ''}. Meals now <b>USD ${Number(M.meals_usd || 0).toFixed(2)}</b>${iss ? ` · quotation version ${iss.version} carries <b>USD ${Number(iss.meals_usd).toFixed(2)}</b>${moved ? ' — <span style="color:#1a1a1a">changed since it was issued: the price sold stays as version ' + iss.version + '; only the cost moves</span>' : ''}` : ''}</div></div>`,
             showCancelButton: true, confirmButtonText: 'Continue to confirm', cancelButtonText: 'Cancel', confirmButtonColor: '#78b448',
             didOpen: () => { Swal.getHtmlContainer().querySelectorAll('[data-lprev]').forEach(b => b.addEventListener('click', () => { pick = b.dataset.lprev; Swal.close(); })); },
         });
@@ -4912,7 +4912,7 @@
         if (j.status === 409 && j.conflict === 'hotel_gives') {
             document.getElementById('mm_outside').hidden = false;
             const d = MM.day;
-            document.getElementById('mm_conflict').innerHTML = `<div class="p-2 mb-2" style="background:var(--tf-amber-soft);color:var(--tf-amber);border-radius:8px;font-size:12.5px">${esc(j.message)}
+            document.getElementById('mm_conflict').innerHTML = `<div class="p-2 mb-2" style="background:var(--tf-amber-soft); border:1px solid #d9d3dd;color:var(--tf-amber);border-radius:8px;font-size:12.5px">${esc(j.message)}
                 <div class="d-flex gap-2 mt-2 flex-wrap">${j.can_switch && d.day_id ? `<button class="btn btn-light btn-sm" id="mm_switch">The hotel gives ${d.hb_meal === 'dinner' ? 'lunch' : 'dinner'} on this night</button>` : ''}<span class="help">or tick "Arrange it outside as well" below and give the reason.</span></div></div>`;
             document.getElementById('mm_switch')?.addEventListener('click', async () => {
                 const k = await post('/intake/' + CURRENT.id + '/day/' + d.day_id + '/hb_meal', { hb_meal: d.hb_meal === 'dinner' ? 'lunch' : 'dinner' });

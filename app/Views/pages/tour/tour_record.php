@@ -30,7 +30,7 @@ $HL = ['to_book' => 'To book', 'requested' => 'Requested', 'confirmed' => 'Confi
 $AL = ['to_book' => 'To book', 'requested' => 'Requested', 'confirmed' => 'Confirmed', 'not_needed' => 'Nothing to arrange', 'problem' => 'Problem', 'cancelled' => 'Cancelled', 'pay_at_gate' => 'Pay at gate'];
 $TL = ['to_allocate' => 'To allocate', 'allocated' => 'Allocated', 'scheduled' => 'Scheduled', 'pack_issued' => 'Pack issued', 'running' => 'Running', 'returned' => 'Returned', 'settled' => 'Settled', 'cancelled' => 'Cancelled'];
 $pill = static function (string $text, string $kind = 'grey') use ($e): string {
-    $c = ['green' => '#e4f4ea;color:#1f8a4c', 'red' => '#fbe9e7;color:#b23a32', 'amber' => '#fdf3e1;color:#b7791f', 'blue' => '#e8f1fb;color:#1a5fa8', 'grey' => '#eef1f5;color:#5f6f80', 'purple' => '#f3e6f3;color:#842484'][$kind] ?? '#eef1f5;color:#5f6f80';
+    $c = ['green' => '#e4f4ea;color:#1f8a4c', 'red' => '#fbe9e7;color:#b23a32', 'amber' => '#ffffff;color:#1a1a1a;border:1px solid #d9d3dd', 'blue' => '#e8f1fb;color:#1a5fa8', 'grey' => '#eef1f5;color:#5f6f80', 'purple' => '#f3e6f3;color:#842484'][$kind] ?? '#eef1f5;color:#5f6f80';
     return '<span style="display:inline-block;padding:1px 9px;border-radius:12px;font-size:11.5px;font-weight:600;background:' . $c . '">' . $e($text) . '</span>';
 };
 $stageKind = ['confirmed' => 'green', 'operating' => 'blue', 'completed' => 'grey', 'closed' => 'grey', 'cancelled' => 'red'];
@@ -77,7 +77,7 @@ foreach ($r['confirmations'] as $c) {
     .hist .w { color:<?= $MUTED ?>; font-size:11.5px; }
     .hist table.ch { margin:4px 0 0 0; font-size:11.5px; }
     .lane { font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; margin-right:6px; }
-    .lane.hotel { color:#1878c0; } .lane.transport { color:#b8640f; } .lane.quotation { color:#842484; } .lane.tour { color:<?= $INK ?>; } .lane.service { color:#0f8b7e; }
+    .lane.hotel { color:#1878c0; } .lane.transport { color:#1a1a1a; } .lane.quotation { color:#842484; } .lane.tour { color:<?= $INK ?>; } .lane.service { color:#0f8b7e; }
     .counts { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 4px; }
     .counts span { background:#faf5fa; border:1px solid <?= $LINE ?>; border-radius:8px; padding:5px 10px; font-size:12px; }
     .counts b { font-size:14px; }
@@ -146,7 +146,7 @@ foreach ($r['confirmations'] as $c) {
 <?php foreach ($d['days'] ?? [] as $day): ?>
 <tr><td class="mono">Day <?= (int) $day['day_no'] ?><div class="note"><?= $fmt($day['date']) ?></div></td>
     <td><?= $e($day['area'] ?? '') ?><?= !empty($day['hotel']) ? '<br><b>' . $e($day['hotel']) . '</b>' : '<br><span style="color:#b23a32">no hotel named</span>' ?></td>
-    <td><?= $day['rooms'] !== null && $day['rooms'] !== '' ? (int) $day['rooms'] . ' room' . ((int) $day['rooms'] === 1 ? '' : 's') : '—' ?><?= !empty($day['rooms_note']) ? ' · ' . $e($day['rooms_note']) : '' ?><br><?= $e($day['meal_plan'] ?? '') ?: '<span style="color:#b7791f">meal plan not stated</span>' ?></td>
+    <td><?= $day['rooms'] !== null && $day['rooms'] !== '' ? (int) $day['rooms'] . ' room' . ((int) $day['rooms'] === 1 ? '' : 's') : '—' ?><?= !empty($day['rooms_note']) ? ' · ' . $e($day['rooms_note']) : '' ?><br><?= $e($day['meal_plan'] ?? '') ?: '<span style="color:#1a1a1a">meal plan not stated</span>' ?></td>
     <td><?= !empty($day['wording']) ? $e($day['wording']) : $e($day['narrative'] ?? '') ?>
         <?php foreach (array_merge($day['services'] ?? [], $day['excursions'] ?? []) as $x): ?><div class="note">• <?= $e($x['title'] ?? $x['name'] ?? '') ?><?= !empty($x['pay_mode']) && $x['pay_mode'] !== 'in_tour' ? ' (' . $e(str_replace('_', ' ', (string) $x['pay_mode'])) . ')' : '' ?></div><?php endforeach; ?>
         <?= !empty($day['special_note']) ? '<div class="note">Special: ' . $e($day['special_note']) . '</div>' : '' ?></td>
@@ -223,8 +223,8 @@ foreach ($r['confirmations'] as $c) {
     <div><b><?= $e($j['vehicle_type']) ?><?= (int) ($j['qty'] ?? 1) > 1 ? ' × ' . (int) $j['qty'] : '' ?></b> · <?= $j['km_total'] !== null ? number_format((float) $j['km_total']) . ' km' : '—' ?> · <?= (int) ($j['days'] ?? 0) ?> day<?= (int) ($j['days'] ?? 0) === 1 ? '' : 's' ?>
         <span style="float:right"><?= $pill($TL[$j['status']] ?? $j['status'], in_array($j['status'], ['allocated', 'scheduled', 'pack_issued', 'running', 'returned', 'settled'], true) ? 'green' : ($j['status'] === 'cancelled' ? 'red' : 'grey')) ?><?= (int) ($j['amended'] ?? 0) ? ' ' . $pill('amended', 'amber') : '' ?></span></div>
     <div class="kv" style="margin-top:6px">
-        <b>Vehicle</b><span><?= trim((string) ($j['vehicle_reg'] ?? '')) !== '' ? '<b>' . $e($j['vehicle_reg']) . '</b>' . (!empty($j['reg_is_type']) ? ' <span style="color:#b7791f">(no registration on the vehicle master)</span>' : '') . (!empty($j['vehicle_note']) && !preg_match('/^Vehicle \d+$/', trim((string) $j['vehicle_note'])) ? ' · ' . $e($j['vehicle_note']) : '') . (!empty($j['allocated_at']) ? ' · allocated ' . $when($j['allocated_at']) . ' by ' . $e($j['allocated_by']) : '') : '<span style="color:#b7791f">to allocate</span>' ?></span>
-        <b>Crew</b><span><?php $crew = $j['crew'] ?? []; if (!$crew): ?>—<?php endif; ?><?php foreach ($crew as $c): ?><div><?= $e($c['role_name'] ?? ucfirst((string) $c['kind'])) ?>: <?= trim((string) ($c['person_name'] ?? '')) !== '' ? '<b>' . $e($c['person_name']) . '</b>' . (!empty($c['person_phone']) ? ' · ' . $e($c['person_phone']) : '') : '<span style="color:#b7791f">nobody yet</span>' ?> · <?= $e(str_replace('_', ' ', (string) $c['status'])) ?><?= !empty($c['date_from']) ? ' · ' . $fmt($c['date_from']) . ' – ' . $fmt($c['date_to']) : '' ?><?= !empty($c['replaced_note']) ? ' · ' . $e($c['replaced_note']) : '' ?></div><?php endforeach; ?></span>
+        <b>Vehicle</b><span><?= trim((string) ($j['vehicle_reg'] ?? '')) !== '' ? '<b>' . $e($j['vehicle_reg']) . '</b>' . (!empty($j['reg_is_type']) ? ' <span style="color:#1a1a1a">(no registration on the vehicle master)</span>' : '') . (!empty($j['vehicle_note']) && !preg_match('/^Vehicle \d+$/', trim((string) $j['vehicle_note'])) ? ' · ' . $e($j['vehicle_note']) : '') . (!empty($j['allocated_at']) ? ' · allocated ' . $when($j['allocated_at']) . ' by ' . $e($j['allocated_by']) : '') : '<span style="color:#1a1a1a">to allocate</span>' ?></span>
+        <b>Crew</b><span><?php $crew = $j['crew'] ?? []; if (!$crew): ?>—<?php endif; ?><?php foreach ($crew as $c): ?><div><?= $e($c['role_name'] ?? ucfirst((string) $c['kind'])) ?>: <?= trim((string) ($c['person_name'] ?? '')) !== '' ? '<b>' . $e($c['person_name']) . '</b>' . (!empty($c['person_phone']) ? ' · ' . $e($c['person_phone']) : '') : '<span style="color:#1a1a1a">nobody yet</span>' ?> · <?= $e(str_replace('_', ' ', (string) $c['status'])) ?><?= !empty($c['date_from']) ? ' · ' . $fmt($c['date_from']) . ' – ' . $fmt($c['date_to']) : '' ?><?= !empty($c['replaced_note']) ? ' · ' . $e($c['replaced_note']) : '' ?></div><?php endforeach; ?></span>
         <?php if (!empty($j['docs'])): ?><b>Driver's pack</b><span><?= implode(' · ', array_map(static fn ($x) => $e($x['name'] ?? $x['code'] ?? '') . ' ' . $e($x['state'] ?? ''), $j['docs'])) ?></span><?php endif; ?>
         <?php if (!empty($j['scheduled_at'])): ?><b>Scheduled</b><span><?= $when($j['scheduled_at']) ?> by <?= $e($j['scheduled_by']) ?></span><?php endif; ?>
         <?php if (!empty($j['returned_at'])): ?><b>Returned</b><span><?= $when($j['returned_at']) ?> by <?= $e($j['returned_by']) ?></span><?php endif; ?>

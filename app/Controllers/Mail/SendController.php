@@ -15,6 +15,12 @@ class SendController extends BaseController
     {
         // tf-tourmail-r1: once per request — a second mail in the same request (every hotel at Confirm Tour, two
         // restaurants' vouchers) declared PHPMailer's classes again and stopped with a fatal error
+        // tf-resdesk-r2: on a development copy with the test mailbox switched on (.env tourflow.testMailbox = on, and only
+        // when the page is opened on this computer) nothing goes to a mail server — the message and its attachments are
+        // kept in writable/test_mailbox, readable on Hotel Bookings → Test mailbox
+        if (\App\Libraries\TourFlow\TestMailbox::active()) {
+            return \App\Libraries\TourFlow\TestMailbox::deliver($to, $subject, $body, $cc, $attachments);
+        }
         require_once ROOTPATH . 'vendor/phpmailer/phpmailer/src/Exception.php';
         require_once ROOTPATH . 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
         require_once ROOTPATH . 'vendor/phpmailer/phpmailer/src/SMTP.php';

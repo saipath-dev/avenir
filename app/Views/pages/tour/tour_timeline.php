@@ -70,8 +70,8 @@
                         }
 
                         .accordion-button.status-in_progress:not(.collapsed) {
-                            background-color: #fef3c7;
-                            color: #92400e;
+                            background-color: #ffffff; border:1px solid #d9d3dd;
+                            color: #1a1a1a;
                         }
 
                         .accordion-button.status-not_started:not(.collapsed) {

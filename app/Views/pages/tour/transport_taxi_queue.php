@@ -14,7 +14,7 @@
     /* tf-taxiq-r2: the supplied mockups — orchid purple headings (#842484), Avenir green actions (#78b848),
        the mockup's card sizes, spacing and status colours, with the status spelled out in words on every card. */
     .tq { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#842484; --p-soft:rgba(132,36,132,.08); --g:#78b848;
-          --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber:#b7791f; --amber-soft:#fdf3e1; --red:#8a1c30; --red-soft:#fbe9e7;
+          --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber:#1a1a1a; --amber-soft:#ffffff; --red:#8a1c30; --red-soft:#fbe9e7;
           --grey-soft:#eef1f5; color:var(--ink); font-size:14px; }
     .tq .band { background:var(--p); color:#fff; border-radius:14px; padding:18px 22px; margin-bottom:18px; }
     .tq .band .eyebrow { font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.85; font-weight:700; }
@@ -52,10 +52,10 @@
     .tq .drv .why { font-size:12px; color:var(--red); margin-top:6px; line-height:1.5; }
     .tq .drv .last { font-size:11.5px; color:var(--muted); margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); }
     .tq .s-ready { background:var(--g-soft); color:var(--g-ink); }
-    .tq .s-tour  { background:var(--amber-soft); color:var(--amber); }
+    .tq .s-tour  { background:var(--amber-soft); border:1px solid #d9d3dd; color:var(--amber); }
     .tq .s-alloc { background:var(--p-soft); color:var(--p); }
     .tq .s-rest  { background:var(--grey-soft); color:var(--muted); }
-    .tq .s-away  { background:var(--amber-soft); color:var(--amber); }
+    .tq .s-away  { background:var(--amber-soft); border:1px solid #d9d3dd; color:var(--amber); }
     .tq .s-block { background:var(--red-soft); color:var(--red); }
     .tq .rate { border:1px solid var(--line); border-radius:12px; padding:14px 16px; height:100%; }
     .tq .rate .lbl { font-size:12px; color:var(--muted); }

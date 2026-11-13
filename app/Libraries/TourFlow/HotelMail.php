@@ -21,9 +21,10 @@ final class HotelMail
 
     /**
      * @param string[] $cc
+     * @param array $attachments tf-resdesk-r2: files to attach (paths, or ['path' => …, 'name' => …])
      * @return array{ok:bool, error:?string}
      */
-    public static function send(string $to, string $subject, string $body, array $cc = []): array
+    public static function send(string $to, string $subject, string $body, array $cc = [], array $attachments = []): array
     {
         $to = trim($to);
         if ($to === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
@@ -32,9 +33,9 @@ final class HotelMail
         $cc = array_values(array_filter(array_map('trim', $cc), static fn ($x) => $x !== '' && filter_var($x, FILTER_VALIDATE_EMAIL)));
         try {
             if (self::$transport !== null) {
-                $r = (self::$transport)($to, $subject, $body, $cc);
+                $r = (self::$transport)($to, $subject, $body, $cc, $attachments);
             } elseif (class_exists('\App\Controllers\Mail\SendController')) {
-                $r = (new \App\Controllers\Mail\SendController())->send($to, $subject, $body, $cc ?: null);
+                $r = (new \App\Controllers\Mail\SendController())->send($to, $subject, $body, $cc ?: null, $attachments);
             } else {
                 return ['ok' => false, 'error' => 'Email sending is not set up on this install. Print the letter and send it as you do today.'];
             }

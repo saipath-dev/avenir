@@ -14,8 +14,8 @@ $TPD_READY = !empty($tpd_ready);
     /* ---------- tf-paydesk-r1: the system's colours (Tour Desk theme) ---------- */
     .tpd { --p:#842484; --p2:#8f2a8d; --soft:#f3e7f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; --bg:#f6f7fa; --card:#fff; --radius:14px;
            --green:#1f8a4c; --green-soft:#e4f4ea; --blue:#2563eb; --blue-soft:#e8effd; --indigo:#4f46e5; --indigo-soft:#eceafd; --violet:#7c3aed; --violet-soft:#f1eafe;
-           --teal:#0f766e; --teal-soft:#dff4f1; --amber:#b7791f; --amber-soft:#fdf3e1; --red:#b23a32; --red-soft:#fbe9e7; --purple:#6d28d9; --purple-soft:#ede9fe;
-           --grey:#6c757d; --grey-soft:#eef0f3; --yellow:#a16207; --yellow-soft:#fef9c3; --olive:#4d7c0f; --olive-soft:#ecfccb;
+           --teal:#0f766e; --teal-soft:#dff4f1; --amber:#1a1a1a; --amber-soft:#ffffff; --red:#b23a32; --red-soft:#fbe9e7; --purple:#6d28d9; --purple-soft:#ede9fe;
+           --grey:#6c757d; --grey-soft:#eef0f3; --yellow:#1a1a1a; --yellow-soft:#ffffff; --olive:#4d7c0f; --olive-soft:#ecfccb;
            color:var(--ink); font-size:13.5px; }
     .tpd .card { border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 1px 3px rgba(16,24,40,.05); }
     .tpd .btn-p { background:var(--p); border-color:var(--p); color:#fff; }
@@ -87,7 +87,7 @@ $TPD_READY = !empty($tpd_ready);
     .tpd .line { display:grid; grid-template-columns: 44px minmax(0,1.5fr) minmax(0,.9fr) minmax(0,.9fr) minmax(0,.9fr) minmax(0,.9fr) 150px 170px; gap:10px 12px; align-items:start; padding:12px 18px; border-top:1px dashed var(--line); }
     .tpd .line:hover { background:#fcfbfd; }
     .tpd .line .ico { width:40px; height:40px; border-radius:12px; background:var(--grey-soft); display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--ink); }
-    .tpd .line .ico.hotel { background:#eef2ff; color:#3730a3; } .tpd .line .ico.meal { background:#fef3c7; color:#92400e; } .tpd .line .ico.entrance { background:#fee2e2; color:#991b1b; }
+    .tpd .line .ico.hotel { background:#eef2ff; color:#3730a3; } .tpd .line .ico.meal { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; } .tpd .line .ico.entrance { background:#fee2e2; color:#991b1b; }
     .tpd .line .ico.activity { background:#dcfce7; color:#166534; } .tpd .line .ico.transport, .tpd .line .ico.driver_advance, .tpd .line .ico.driver_settlement { background:#e0f2fe; color:#075985; } .tpd .line .ico.guide { background:#fae8ff; color:#86198f; }
     .tpd .line .sup { font-weight:700; font-size:14px; }
     .tpd .line .desc { color:var(--muted); font-size:12.5px; }
@@ -103,7 +103,7 @@ $TPD_READY = !empty($tpd_ready);
     .tpd .pill.grey { background:var(--grey-soft); color:var(--grey); } .tpd .pill.blue { background:var(--blue-soft); color:var(--blue); } .tpd .pill.indigo { background:var(--indigo-soft); color:var(--indigo); }
     .tpd .pill.violet { background:var(--violet-soft); color:var(--violet); } .tpd .pill.teal { background:var(--teal-soft); color:var(--teal); } .tpd .pill.green { background:var(--green-soft); color:var(--green); }
     .tpd .pill.olive { background:var(--olive-soft); color:var(--olive); } .tpd .pill.purple { background:var(--purple-soft); color:var(--purple); } .tpd .pill.yellow { background:var(--yellow-soft); color:var(--yellow); }
-    .tpd .pill.red { background:var(--red-soft); color:var(--red); } .tpd .pill.amber { background:var(--amber-soft); color:var(--amber); }
+    .tpd .pill.red { background:var(--red-soft); color:var(--red); } .tpd .pill.amber { background:var(--amber-soft); border:1px solid #d9d3dd; color:var(--amber); }
     .tpd .pill.sm { font-size:11px; padding:2px 8px; }
     .tpd .stages { display:flex; gap:3px; margin-top:6px; }
     .tpd .stages i { display:block; height:5px; flex:1; border-radius:3px; background:var(--grey-soft); }
@@ -163,7 +163,7 @@ $TPD_READY = !empty($tpd_ready);
     .tpd-upcoming-row { cursor:pointer; transition:background-color .12s ease; } .tpd-upcoming-row:hover { background:#f8fafc; }
     .tpd-cat-card { border-radius:10px; border:1px solid #e9ecef; padding:12px 16px; background:#fff; }
     .category-icon-circle { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
-    .color-primary { background:#dbeafe; color:#1d4ed8; } .color-success { background:#d1fae5; color:#065f46; } .color-info { background:#cffafe; color:#0e7490; } .color-purple { background:#ede9fe; color:#6d28d9; } .color-warning { background:#fef3c7; color:#b45309; }
+    .color-primary { background:#dbeafe; color:#1d4ed8; } .color-success { background:#d1fae5; color:#065f46; } .color-info { background:#cffafe; color:#0e7490; } .color-purple { background:#ede9fe; color:#6d28d9; } .color-warning { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; }
     .tpd-progress-wrap { background:#f1f5f9; border-radius:8px; height:6px; } .tpd-progress-bar { border-radius:8px; height:6px; }
     #no-tour-msg { display:none; } #tour-content { display:none; } #upcoming-tours-panel { display:block; }
     @media print { .no-print, .page-topbar, .app-menu, .tpd-head .btn, .filters, .line .acts { display:none !important; } .main-content { margin-left:0 !important; } }
@@ -403,7 +403,7 @@ $TPD_READY = !empty($tpd_ready);
         </div>
         <div class="mb-2"><label class="form-label fw-semibold small">Internal payment note (optional)</label><input type="text" class="form-control" id="ap_note" maxlength="300" placeholder="e.g. advance for the first two nights"></div>
         <!-- tf-paydesk-r3: Pay Individually Now straight after the approval (management with the batch privilege) -->
-        <div class="border rounded p-2 mb-2" id="ap_paynow_wrap" style="display:none; background:#fffaf0;">
+        <div class="border rounded p-2 mb-2" id="ap_paynow_wrap" style="display:none; background:#ffffff; border:1px solid #d9d3dd;">
             <label class="d-flex gap-2 align-items-start small fw-semibold"><input type="checkbox" id="ap_paynow" class="mt-1" onchange="document.getElementById('ap_paynow_fields').style.display = this.checked ? '' : 'none'"> <span><i class="ri-flashlight-line me-1"></i>Pay individually now — do not wait for the supplier's bulk batch</span></label>
             <div id="ap_paynow_fields" style="display:none;" class="mt-2">
                 <div class="row g-2">
@@ -1409,7 +1409,7 @@ const UPCOMING_STATUS_COLORS = {
     'Requested':                 '#8b5cf6',
     'Advance Paid':              '#3b82f6',
     'Payment on Process':        '#14b8a6',
-    'Waiting Rate Confirmation': '#92400e',
+    'Waiting Rate Confirmation': '#1a1a1a',
     'Not Paid':                  '#f97316',
     'Payment Not Requested':     '#ef4444',
     'Cancelled':                 '#6b7280',

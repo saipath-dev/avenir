@@ -22,6 +22,11 @@ final class AutoSend
 
     public static function on($db): bool
     {
+        // tf-resdesk-r2: with the local test mailbox on nothing can reach a real supplier, so automatic sending is
+        // exercised in full (the letters are caught in writable/test_mailbox)
+        if (TestMailbox::active()) {
+            return true;
+        }
         try {
             $r = $db->query('SELECT v FROM tf_meta WHERE k = ?', [self::KEY])->getRowArray();
             if ($r !== null) {

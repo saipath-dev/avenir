@@ -168,7 +168,7 @@
         align-items: flex-start;
         gap: 0.4rem;
         font-size: 0.72rem;
-        color: #b45309;
+        color: #1a1a1a;
         background: #fff7ed;
         border: 1px solid #fde3c0;
         border-radius: 8px;

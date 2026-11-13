@@ -11,7 +11,7 @@ $dt = static function ($s, $f = 'j M Y') { $s = trim((string) ($s ?? '')); if ($
 $pdf = !empty($for_pdf);
 $INK = '#2c3e50'; $MUTED = '#6c757d'; $P = '#842484'; $SOFT = '#f3e7f3'; $LINE = '#ced4da';
 $lines = []; foreach ($D['lines'] as $l) { $lines[$l['key']] = $l; }
-$colors = ['grey' => '#6c757d', 'blue' => '#2563eb', 'indigo' => '#4f46e5', 'violet' => '#7c3aed', 'teal' => '#0f766e', 'green' => '#1f8a4c', 'olive' => '#4d7c0f', 'purple' => '#6d28d9', 'yellow' => '#a16207', 'red' => '#b23a32', 'amber' => '#b7791f'];
+$colors = ['grey' => '#6c757d', 'blue' => '#2563eb', 'indigo' => '#4f46e5', 'violet' => '#7c3aed', 'teal' => '#0f766e', 'green' => '#1f8a4c', 'olive' => '#4d7c0f', 'purple' => '#6d28d9', 'yellow' => '#1a1a1a', 'red' => '#b23a32', 'amber' => '#1a1a1a'];
 $th = 'style="text-align:left; font-size:8.5px; letter-spacing:.04em; text-transform:uppercase; color:' . $MUTED . '; padding:4px 5px; border-bottom:1px solid ' . $LINE . ';"';
 $td = 'style="font-size:9.5px; padding:4px 5px; border-bottom:1px solid #e9ecef; vertical-align:top; color:' . $INK . ';"';
 $tdr = $td . ' align="right"';
@@ -21,7 +21,7 @@ $font = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';
 <!doctype html><html><head><meta charset="utf-8"><title>Payment sheet — <?= $e($T['manual_id']) ?></title><meta name="viewport" content="width=device-width, initial-scale=1">
 <style> body { font-family: Arial, Helvetica, sans-serif; color:<?= $INK ?>; margin:16px; max-width:1100px; } .toolbar { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center; } .toolbar a, .toolbar button { font:inherit; font-size:13px; padding:7px 12px; border:1px solid <?= $LINE ?>; border-radius:8px; background:#fff; color:<?= $INK ?>; text-decoration:none; cursor:pointer; } .toolbar a.main { background:<?= $P ?>; border-color:<?= $P ?>; color:#fff; font-weight:bold; } @media print { .toolbar { display:none; } body { margin:0; } } table { border-collapse:collapse; }</style></head><body>
 <div class="toolbar"><a class="main" href="?manual_id=<?= rawurlencode($T['manual_id']) ?>&pdf=1" target="_blank">⬇ PDF</a><button onclick="window.print()">Print</button><a href="<?= base_url('tour/tour_payment_dashboard?manual_id=' . rawurlencode($T['manual_id'])) ?>">← Dashboard</a>
-<span style="font-size:12px; color:<?= $MUTED ?>;">Printed <?= date('j M Y H:i') ?> by <?= $e($user) ?></span><?php if (!empty($no_pdf_lib)): ?><span style="font-size:12px;color:#b7791f;">The PDF library is not installed on this server yet — use Print → Save as PDF.</span><?php endif; ?></div>
+<span style="font-size:12px; color:<?= $MUTED ?>;">Printed <?= date('j M Y H:i') ?> by <?= $e($user) ?></span><?php if (!empty($no_pdf_lib)): ?><span style="font-size:12px;color:#1a1a1a;">The PDF library is not installed on this server yet — use Print → Save as PDF.</span><?php endif; ?></div>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0" width="100%" style="font-family:<?= $font ?>; color:<?= $INK ?>;">
 <tr><td width="60%" style="padding:10px 12px; background:<?= $P ?>; color:#fff;">
@@ -49,7 +49,7 @@ $font = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';
     <?php foreach ($day['lines'] as $key): $l = $lines[$key] ?? null; if (!$l) continue; $usd = $l['currency'] === 'USD'; ?>
     <tr>
         <td <?= $td ?>><b><?= $e($l['supplier']) ?></b><br><span style="color:<?= $MUTED ?>;"><?= $e($l['category']) ?><?= $l['nights'] ? ' · ' . (int) $l['nights'] . ' night(s)' : '' ?><?= $l['description'] && $l['description'] !== $l['supplier'] && !ctype_digit(trim((string) $l['description'])) ? ' · ' . $e($l['description']) : '' ?></span>
-            <?php foreach ($l['warnings'] as $w): ?><br><span style="color:<?= $w['level'] === 'danger' ? '#b23a32' : ($w['level'] === 'warning' ? '#b7791f' : '#2563eb') ?>; font-size:8.5px;">▲ <?= $e($w['text']) ?></span><?php endforeach; ?>
+            <?php foreach ($l['warnings'] as $w): ?><br><span style="color:<?= $w['level'] === 'danger' ? '#b23a32' : ($w['level'] === 'warning' ? '#1a1a1a' : '#2563eb') ?>; font-size:8.5px;">▲ <?= $e($w['text']) ?></span><?php endforeach; ?>
             <?php if ($usd && $l['rate_label']): ?><br><span style="color:<?= $MUTED ?>; font-size:8.5px;"><?= $e($l['rate_label']) ?></span><?php endif; ?></td>
         <td <?= $td ?>><?= $e($l['invoice_no'] ?: '—') ?></td>
         <td <?= $tdr ?>><?= $usd ? 'USD ' . $m($l['usd_amount']) : 'LKR ' . $m($l['amount']) ?></td>
@@ -57,7 +57,7 @@ $font = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';
         <td <?= $tdr ?>><?= $l['lkr_amount'] > 0 ? $m($l['lkr_amount']) . ($l['lkr_is_indicative'] ? '*' : '') : '—' ?></td>
         <td <?= $tdr ?>><?= $m($l['paid_lkr']) ?></td>
         <td <?= $tdr ?>><?= $m($l['balance_lkr']) ?></td>
-        <td <?= $td ?>><?= $dt($l['request_date']) ?><br><?= $dt($l['due_date']) ?><?= $l['urgency'] ? '<br><b style="color:' . ($l['urgency'] === 'overdue' ? '#b23a32' : '#b7791f') . ';">' . $e($l['urgency_label']) . '</b>' : '' ?></td>
+        <td <?= $td ?>><?= $dt($l['request_date']) ?><br><?= $dt($l['due_date']) ?><?= $l['urgency'] ? '<br><b style="color:' . ($l['urgency'] === 'overdue' ? '#b23a32' : '#1a1a1a') . ';">' . $e($l['urgency_label']) . '</b>' : '' ?></td>
         <td <?= $td ?>><b style="color:<?= $colors[$l['color']] ?? $INK ?>;"><?= $e($l['status_label']) ?></b><?= $l['notify_label'] ? '<br><span style="font-size:8.5px;">' . $e($l['notify_label']) . '</span>' : '' ?><?= $l['partly'] ? '<br><span style="font-size:8.5px; color:#6d28d9;">Partly paid</span>' : '' ?>
             <?php foreach ($l['transactions'] as $tx): if (!$tx['vnum']) continue; ?><br><span style="font-size:8.5px; color:<?= $MUTED ?>;">Payment Voucher No. <?= (int) $tx['vnum'] ?><?= !empty($tx['batch']) ? ' · batch ' . esc($tx['batch']['no']) : '' ?> · LKR <?= $m($tx['voucher_amount']) ?><?= $tx['usd_rate'] ? ' @ ' . $m($tx['usd_rate']) : '' ?><?= !empty($tx['approval_rate']) && !empty($tx['paid_rate']) && abs($tx['paid_rate'] - $tx['approval_rate']) > 0.00001 ? ' (approval ' . $m($tx['approval_rate']) . ' → paid ' . $m($tx['paid_rate']) . ', diff ' . ($tx['fx_diff'] > 0 ? '+' : '') . $m($tx['fx_diff']) . ')' : '' ?><?= $tx['finalized'] ? ' · paid ' . $dt($tx['paid_date']) : '' ?></span><?php endforeach; ?></td>
     </tr>

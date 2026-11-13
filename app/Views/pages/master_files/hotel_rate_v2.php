@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Hotel Rates design tokens (scoped) ---------- */
-    .hr2 { --hr-navy: #1e3553; --hr-navy-2: #2c4a73; --hr-teal: #0f8b7e; --hr-teal-soft: #e3f4f1; --hr-amber: #b7791f; --hr-amber-soft: #fdf3e1; --hr-red: #b23a32; --hr-red-soft: #fbe9e7; --hr-green: #1f8a4c; --hr-green-soft: #e4f4ea; --hr-blue-soft: #e6eef8; --hr-ink: #1d2733; --hr-muted: #5f6f80; --hr-line: #dfe5ec; --hr-bg: #f4f6f9; --hr-card: #ffffff; --hr-radius: 10px; color: var(--hr-ink); }
+    .hr2 { --hr-navy: #1e3553; --hr-navy-2: #2c4a73; --hr-teal: #0f8b7e; --hr-teal-soft: #e3f4f1; --hr-amber: #1a1a1a; --hr-amber-soft: #ffffff; --hr-red: #b23a32; --hr-red-soft: #fbe9e7; --hr-green: #1f8a4c; --hr-green-soft: #e4f4ea; --hr-blue-soft: #e6eef8; --hr-ink: #1d2733; --hr-muted: #5f6f80; --hr-line: #dfe5ec; --hr-bg: #f4f6f9; --hr-card: #ffffff; --hr-radius: 10px; color: var(--hr-ink); }
     .hr2 .hr-shell { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; align-items: start; }
     @media (max-width: 1100px) { .hr2 .hr-shell { grid-template-columns: 1fr; } }
     .hr2 .hr-card { background: var(--hr-card); border: 1px solid var(--hr-line); border-radius: var(--hr-radius); box-shadow: 0 1px 2px rgba(16,24,40,.04); }
@@ -59,7 +59,7 @@
     /* pills */
     .hr2 .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .02em; line-height: 1.6; white-space: nowrap; }
     .hr2 .pill-green { background: var(--hr-green-soft); color: var(--hr-green); }
-    .hr2 .pill-amber { background: var(--hr-amber-soft); color: var(--hr-amber); }
+    .hr2 .pill-amber { background: var(--hr-amber-soft); border:1px solid #d9d3dd; color: var(--hr-amber); }
     .hr2 .pill-red { background: var(--hr-red-soft); color: var(--hr-red); }
     .hr2 .pill-blue { background: var(--hr-blue-soft); color: var(--hr-navy); }
     .hr2 .pill-teal { background: var(--hr-teal-soft); color: var(--hr-teal); }
@@ -95,7 +95,7 @@
     .hr2 .area b { font-weight: 600; }
     .hr2 .area.ok { border-color: #bfe3cc; background: #f3faf6; }
     .hr2 .area.none { border-color: #f1cfca; background: #fdf6f5; color: #9b3029; }
-    .hr2 .area.warn { border-color: #f2dfb8; background: #fffaf0; }
+    .hr2 .area.warn { border-color: #f2dfb8; background: #ffffff; }
     .hr2 .offer-intro { font-size: 12px; color: var(--hr-muted); max-width: 760px; }
     /* hotel header */
     .hr2 .hotel-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
@@ -156,7 +156,7 @@
     .hr2 .ed-nav a.on { background: #fff; border-left-color: var(--hr-teal); font-weight: 600; }
     .hr2 .ed-nav .n { margin-left: auto; font-size: 10.5px; padding: 1px 6px; border-radius: 999px; background: #eef1f5; color: var(--hr-muted); }
     .hr2 .ed-nav .n.err { background: var(--hr-red-soft); color: var(--hr-red); }
-    .hr2 .ed-nav .n.warn { background: var(--hr-amber-soft); color: var(--hr-amber); }
+    .hr2 .ed-nav .n.warn { background: var(--hr-amber-soft); border:1px solid #d9d3dd; color: var(--hr-amber); }
     .hr2 .ed-body { padding: 16px 18px; min-height: 420px; }
     .hr2 .ed-section { display: none; }
     .hr2 .ed-section.on { display: block; }
@@ -176,7 +176,7 @@
     .hr2 .sticky-actions { position: sticky; bottom: 0; background: #fff; padding: 10px 16px; border-top: 1px solid var(--hr-line); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; border-radius: 0 0 var(--hr-radius) var(--hr-radius); z-index: 5; }
     .hr2 .issue { padding: 6px 10px; border-radius: 6px; font-size: 12.5px; margin-bottom: 4px; cursor: pointer; }
     .hr2 .issue.error { background: var(--hr-red-soft); color: #7f2a24; }
-    .hr2 .issue.warning { background: var(--hr-amber-soft); color: #7a5011; }
+    .hr2 .issue.warning { background: var(--hr-amber-soft); border:1px solid #d9d3dd; color: #7a5011; }
     .hr2 .issue b { font-family: Consolas, Menlo, monospace; margin-right: 6px; }
     .hr2 .readonly input, .hr2 .readonly select, .hr2 .readonly textarea { background: #f8f9fb; }
     /* coverage */

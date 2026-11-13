@@ -14,7 +14,7 @@ $esc = static fn ($s) => esc((string) $s);
     .tf th { background:var(--p); color:#fff; font-weight:600; padding:8px 10px; text-align:left; font-size:12px; }
     .tf td { padding:8px 10px; border-bottom:1px solid #eef1f5; vertical-align:top; }
     .tf .pill { display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:700; }
-    .tf .ev-bypass { background:#fbe9e7; color:var(--red); } .tf .ev-not_available { background:#fdf3e1; color:#b7791f; } .tf .ev-accepted { background:rgba(120,184,72,.2); color:#2d5a1a; } .tf .ev-car_rate_accepted { background:rgba(132,36,132,.12); color:var(--p); }
+    .tf .ev-bypass { background:#fbe9e7; color:var(--red); } .tf .ev-not_available { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; } .tf .ev-accepted { background:rgba(120,184,72,.2); color:#2d5a1a; } .tf .ev-car_rate_accepted { background:rgba(132,36,132,.12); color:var(--p); }
     .tf .help { color:var(--tf-muted); font-size:12px; }
     .tf .btn-p { background:var(--p); color:#fff; border:0; }
 </style>

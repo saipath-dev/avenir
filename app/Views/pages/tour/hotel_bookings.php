@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Hotel Bookings (same tokens as the Tour Inquiry panel; the Tour Desk bar re-points them) ---------- */
-    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1;
+    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1A1A1A; --tf-amber-soft:#FFFFFF;
           --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
@@ -65,7 +65,243 @@
     .tf .msg .k.reply { color:var(--tf-teal); }
     .tf .msg .k.failed { color:var(--tf-red); }
     .modal .modal-content { border-radius:12px; }
+    /* tf-resdesk-r2: the Reservation Desk — new bookings, each hotel's stage, its documents (Avenir purple and green, dark text) */
+    .tf { --rd-purple:#7B2382; --rd-purple-d:#5A1A5D; --rd-purple-soft:#F3E8F5; --rd-green:#2F6E16; --rd-green-soft:#EAF6E2; --rd-red:#8C1D18; --rd-red-soft:#FBE9E7; }
+    .tf .tbl tr.rd-new td { background:var(--rd-green-soft); }
+    .tf .tbl tr.rd-new td:first-child { box-shadow:inset 4px 0 0 #4E9A2A; }
+    .tf .tbl tr.rd-new:hover td { background:#DDF0D0; }
+    .tf .rd-newtag { display:inline-block; margin-top:3px; background:#2F6E16; color:#fff; border-radius:5px; padding:1px 7px; font-size:10.5px; font-weight:700; letter-spacing:.04em; }
+    .tf .rd-prog { display:flex; gap:3px; margin-bottom:3px; } .tf .rd-prog i { flex:1; height:7px; border-radius:4px; background:#D5CCDA; min-width:10px; }
+    .tf .rd-prog i.c { background:#2F6E16; } .tf .rd-prog i.f { background:#B3261E; } .tf .rd-prog i.p { background:#7B2382; }
+    .tf .rd-stays { display:flex; flex-direction:column; }
+    .tf .rd-stay { padding:14px 16px; border-top:1px solid var(--tf-line); }
+    .tf .rd-stay:first-child { border-top:0; }
+    .tf .rd-stay h5 { margin:0; font-size:15.5px; font-weight:700; color:#1F1A24; }
+    .tf .rd-sub { color:#3B3341; font-size:13px; margin-top:2px; }
+    .tf .rd-stage { display:inline-block; border-radius:16px; padding:4px 12px; font-size:12.5px; font-weight:700; margin:8px 0 6px; }
+    .tf .rd-t-blue { background:#E6EEF8; color:#1E3553; } .tf .rd-t-purple { background:var(--rd-purple-soft); color:var(--rd-purple-d); }
+    .tf .rd-t-teal { background:#E3F4F1; color:#0B5F56; } .tf .rd-t-green { background:var(--rd-green-soft); color:var(--rd-green); }
+    .tf .rd-t-red { background:var(--rd-red-soft); color:var(--rd-red); border:1px solid #F0B8B0; } .tf .rd-t-amber { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; } .tf .rd-t-grey { background:#EEF1F5; color:#4A5562; }
+    .tf .rd-facts { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:4px 18px; font-size:13px; color:#1F1A24; margin:4px 0 10px; }
+    .tf .rd-facts b { color:#4A1450; font-weight:600; }
+    .tf .rd-btns { display:flex; gap:8px; flex-wrap:wrap; }
+    .tf .rd-btn { border:1px solid #CDBFD3; background:#fff; color:#3B1440; border-radius:9px; padding:7px 13px; font-size:13px; font-weight:600; text-decoration:none; cursor:pointer; }
+    .tf .rd-btn:hover { background:var(--rd-purple-soft); color:#3B1440; }
+    .tf .rd-btn.primary { background:var(--rd-purple); border-color:var(--rd-purple); color:#fff; } .tf .rd-btn.primary:hover { background:var(--rd-purple-d); color:#fff; }
+    .tf .rd-btn.green { background:#2F6E16; border-color:#2F6E16; color:#fff; }
+    .tf .rd-btn[disabled] { opacity:.55; cursor:not-allowed; }
+    .tf .rd-err { color:var(--rd-red); font-size:12.5px; font-weight:600; margin:-4px 0 8px; }
+    .tf .rd-dept { background:#F4F1F6; border-radius:8px; padding:9px 13px; font-size:13px; color:#2B2430; margin:0 14px 10px; }
     .tf .cancel-flag { background:#fbe9e6; color:#8a2a22; border:1px solid #f0b8b0; border-radius:8px; padding:8px 12px; margin:8px 0; font-size:13px; }
+
+    /* ================= tf-resdesk-r2 DESIGN (12 Nov 2026, Shantha's mock-up): Avenir purple #842484, green #78b848, dark text ================= */
+    .tf { --av-p:#842484; --av-p-d:#5E1660; --av-p-soft:#F5EAF5; --av-g:#78b848; --av-g-d:#5E9A33; --av-g-ink:#10300A; --av-ink:#1B1620; --av-ink2:#3A3340; --av-line:#E4DAE6; color:var(--av-ink); }
+    .tf .rd2-hero { background:linear-gradient(0deg,#842484,#842484); color:#fff; border-radius:16px; padding:22px 26px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:12px; box-shadow:0 2px 6px rgba(80,20,80,.18); }
+    .tf .rd2-kicker { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#F6DCF6; }
+    .tf .rd2-h1 { margin:2px 0 4px; font-size:26px; font-weight:800; color:#fff; letter-spacing:-.01em; }
+    .tf .rd2-sub { font-size:14px; color:#FBEFFB; max-width:760px; }
+    .tf .rd2-hero-r { display:flex; gap:8px; flex-wrap:wrap; }
+    .tf .rd2-hbtn { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.45); color:#fff; border-radius:10px; padding:8px 14px; font-size:13.5px; font-weight:600; text-decoration:none; }
+    .tf .rd2-hbtn:hover { background:rgba(255,255,255,.26); color:#fff; }
+    .tf .rd2-steps { display:flex; gap:10px; flex-wrap:wrap; margin:0 0 16px; }
+    .tf .rd2-step { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--av-line); color:var(--av-ink2); border-radius:12px; padding:10px 18px; font-size:14px; font-weight:600; text-decoration:none; }
+    .tf .rd2-step span { width:22px; height:22px; border-radius:50%; background:#EFE6F0; color:var(--av-p); display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+    .tf .rd2-step.on { background:var(--av-p); border-color:var(--av-p); color:#fff; } .tf .rd2-step.on span { background:#fff; color:var(--av-p); }
+    .tf .rd2-step:hover:not(.on) { border-color:var(--av-p); color:var(--av-p); }
+    .tf .rd2-card { border:1px solid var(--av-line); border-radius:16px; overflow:hidden; box-shadow:0 1px 3px rgba(40,10,40,.06); }
+    .tf .rd2-card > .tf-card-h, .tf #tour_view .tf-card > .tf-card-h { background:#FBF7FB; border-bottom:1px solid var(--av-line); padding:12px 18px; }
+    .tf #tour_view .tf-card > .tf-card-h h6 { font-size:16px; font-weight:800; color:var(--av-p-d); }
+    .tf .chip { border-radius:20px; padding:6px 14px; font-size:13px; border-color:var(--av-line); color:var(--av-ink2); }
+    .tf .chip.on { background:var(--av-p); color:#fff; } .tf .chip.on .n { color:#F6DCF6; }
+    .tf .rd2-card .tbl { font-size:13.5px; }
+    .tf .rd2-card .tbl thead th { background:var(--av-p); color:#fff; font-size:11.5px; letter-spacing:.06em; padding:11px 12px; border:0; }
+    .tf .rd2-card .tbl td { padding:13px 12px; border-bottom:1px solid #EFE7F0; vertical-align:middle; color:var(--av-ink); }
+    .tf .rd2-card .tbl td.num, .tf .rd2-card .tbl th.num { text-align:center; }
+    .tf .rd2-card .tbl tr.rowlink:hover td { background:#FAF5FA; }
+    .tf .rd2-card .tbl tr.rd-new td { background:#EEF7E6; } .tf .rd2-card .tbl tr.rd-new:hover td { background:#E3F1D6; }
+    .tf .rd2-card .tbl tr.rd-new td:first-child { box-shadow:inset 5px 0 0 var(--av-g); }
+    .tf .rd2-tno { font-weight:800; font-size:14px; color:var(--av-ink); white-space:nowrap; }
+    .tf .rd2-grp { font-weight:600; } .tf .rd2-muted { color:#5B5361; font-size:12px; margin-top:2px; }
+    .tf .rd2-date { white-space:nowrap; font-variant-numeric:tabular-nums; }
+    .tf .rd-newtag { background:var(--av-g); color:var(--av-g-ink); border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; margin-top:4px; display:inline-block; }
+    .tf .rd2-btn { display:inline-flex; align-items:center; gap:6px; border:1px solid #CBBBD0; background:#fff; color:#2E1532; border-radius:10px; padding:8px 15px; font-size:13.5px; font-weight:700; text-decoration:none; cursor:pointer; line-height:1.2; white-space:nowrap; }
+    .tf .rd2-btn:hover { border-color:var(--av-p); color:var(--av-p); background:#FCF8FC; }
+    .tf .rd2-btn.go { background:var(--av-g); border-color:var(--av-g); color:var(--av-g-ink); }
+    .tf .rd2-btn.go:hover { background:var(--av-g-d); border-color:var(--av-g-d); color:#fff; }
+    .tf .rd2-btn.ghost { background:transparent; }
+    .tf .rd2-btn[disabled] { opacity:.5; cursor:not-allowed; }
+    .tf .rd2-act { text-align:right; white-space:nowrap; }
+    .tf .rd2-tvhead { display:block !important; padding:18px 22px !important; }
+    .tf .rd2-tv-top { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+    .tf .rd2-tv-tools { display:flex; gap:8px; flex-wrap:wrap; }
+    .tf .rd2-h2 { margin:0; font-size:24px; font-weight:800; color:var(--av-ink); } .tf .rd2-h2 span { color:var(--av-p); font-weight:700; }
+    .tf .rd2-tv-sub { color:var(--av-ink2); font-size:14px; margin-top:3px; }
+    .tf .rd2-facts3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-top:14px; }
+    .tf .rd2-facts3 > div { background:#FAF6FA; border:1px solid #EFE5F0; border-radius:10px; padding:9px 12px; }
+    .tf .rd2-facts3 label { display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6A5F70; margin:0 0 2px; }
+    .tf .rd2-facts3 b { font-size:14.5px; color:var(--av-ink); }
+    .tf .rd2-tv-mark:empty { display:none; } .tf .rd2-tv-mark { margin-top:12px; }
+    .tf .rd2-strip { margin-top:12px; } .tf .rd2-strip summary, .tf #tv_details_wrap summary { cursor:pointer; font-size:12px !important; font-weight:700; color:var(--av-p) !important; letter-spacing:.04em; }
+    .tf .rd-dept { margin:14px 18px 4px; background:var(--av-p-soft); border:1px solid #EAD7EB; color:#2E1532; border-radius:10px; padding:11px 14px; font-size:13.5px; }
+    .tf .rd-stays { padding:6px 0 4px; }
+    .tf .rd-stay { margin:12px 18px; border:1px solid var(--av-line); border-radius:14px; padding:16px 18px; background:#fff; border-top:1px solid var(--av-line) !important; }
+    .tf .rd-stay h5 { font-size:17px; font-weight:800; color:var(--av-ink); }
+    .tf .rd-sub { color:var(--av-ink2); font-size:13.5px; margin-top:3px; }
+    .tf .rd-stage { font-size:13px; padding:5px 13px; margin:10px 0 12px; }
+    .tf .rd-facts { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px 22px; margin:0 0 14px; padding:12px 14px; background:#FBF8FB; border-radius:10px; border:1px solid #F0E7F1; }
+    .tf .rd-facts .f label { display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6A5F70; margin:0 0 2px; }
+    .tf .rd-facts .f span { font-size:13.5px; color:var(--av-ink); }
+    .tf .rd-btns { gap:8px; }
+    .tf .rd-err { margin:0 0 12px; }
+    .tf .rd2-card .tf-card-h .chips { gap:8px; }
+    .tf .form-control-sm, .tf .form-select-sm { border-radius:9px; border-color:#D9CDDD; }
+    .tf .td-dots { border-radius:9px; }
+    .tf #acts_card .tbl thead th, .tf #sreq_card .tbl thead th { background:#F5EDF6; color:#4A1450; }
+    .tf .rd2-card .tbl td.mono { white-space:nowrap; }
+    .tf .rd2-card .pill { font-size:12px; padding:4px 11px; }
+    .tf .rd2-card .pill-blue { background:#F5EAF5; color:#5E1660; }
+    .tf .rd2-card .pill-amber { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; }
+
+    /* ================= tf-resdesk-r2 DESIGN v2 — the mock-up (12 Nov 2026). Everything under .rd3; nothing from .tf reaches it. ================= */
+    .rd3 { --p:#842484; --p-d:#6A1C6A; --ink:#111111; --ink2:#55505A; --line:#E3E0E6; --soft:#F2F0F5; --ok:#3B7A1F; --bad:#A3261E;
+           font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif; color:var(--ink); font-size:16px; line-height:1.5; }
+    .rd3 *, .rd3 *::before, .rd3 *::after { box-sizing:border-box; }
+    .rd3-shell { max-width:860px; margin:4px auto 32px; background:#fff; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; }
+    .rd3-hero { background:var(--p); padding:22px 22px 26px; }
+    .rd3-brand { font-size:20px; font-weight:800; color:#1A0E1B; line-height:1.25; }
+    .rd3-desk { font-size:15px; color:#FFFFFF; margin-top:14px; }
+    .rd3-nav { display:flex; flex-wrap:wrap; gap:8px; padding:14px 22px 16px; border-bottom:1px solid var(--line); }
+    .rd3 .rd3-navb { display:inline-flex; align-items:center; min-height:38px; padding:8px 13px; border:1px solid #D6D2DA; border-radius:8px; background:#fff; color:var(--ink); font-size:15px; font-weight:500; text-decoration:none; }
+    .rd3 .rd3-navb.on { background:var(--p); border-color:var(--p); color:#fff; }
+    .rd3 .rd3-navb:hover:not(.on) { border-color:var(--p); color:var(--p); }
+    .rd3-main { padding:18px 14px 24px; }
+    .rd3 .rd3-h1 { font-size:26px; font-weight:800; line-height:1.25; margin:0 0 8px; color:var(--ink); letter-spacing:-.01em; }
+    .rd3 .rd3-summary { font-size:15px; color:var(--ink2); margin:0 0 12px; }
+    .rd3 .rd3-b { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:8px 13px; border:1px solid #D6D2DA; border-radius:8px; background:#fff; color:var(--ink); font-size:15px; font-weight:500; text-decoration:none; cursor:pointer; line-height:1.2; }
+    .rd3 .rd3-b:hover { border-color:var(--p); color:var(--p); }
+    .rd3 .rd3-b.primary { background:var(--p); border-color:var(--p); color:#fff; }
+    .rd3 .rd3-b.primary:hover { background:var(--p-d); color:#fff; }
+    .rd3 .rd3-b[disabled] { opacity:.45; cursor:not-allowed; }
+    .rd3-btns { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+    .rd3-dept { background:var(--soft); color:var(--ink); font-size:15px; padding:14px 14px; margin:16px 0 8px; }
+    .rd3-hotels { margin-top:6px; }
+    .rd3-hotel { padding:18px 0 20px; border-bottom:1px solid var(--line); }
+    .rd3-hotel-top { display:flex; align-items:flex-start; gap:10px; }
+    .rd3 .rd3-hname { flex:1; font-size:17px; font-weight:700; margin:0; line-height:1.3; color:var(--ink); }
+    .rd3 .rd3-hline { font-size:14.5px; color:var(--ink2); margin:5px 0 12px; }
+    .rd3-status { display:inline-block; background:var(--soft); color:var(--ink); font-size:14.5px; border-radius:20px; padding:4px 12px; margin-bottom:12px; }
+    .rd3-status.warn { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; } .rd3-status.bad { background:#FBE7E5; color:var(--bad); font-weight:600; }
+    .rd3-paid { flex:none; background:var(--soft); color:var(--ok); font-size:14.5px; border-radius:22px; padding:7px 12px; }
+    .rd3-dates { display:grid; grid-template-columns:minmax(0,max-content) minmax(0,max-content); column-gap:20px; row-gap:18px; font-size:14px; letter-spacing:-.005em; color:var(--ink); margin:2px 0 8px; }
+    @media (max-width: 600px) { .rd3 { margin-left:-12px; margin-right:-12px; } .rd3-shell { margin-top:0; } .rd3-dates { font-size:13.5px; column-gap:16px; } .rd3-dates span { white-space:nowrap; } }
+    .rd3 .rd3-bad { color:var(--bad); font-size:14px; font-weight:600; margin:4px 0; }
+    .rd3-warn { color:#6A4208; font-size:13.5px; margin:-4px 0 10px; }
+    .rd3-fold { margin-top:12px; }
+    .rd3-fold > summary { cursor:pointer; color:var(--p); font-size:14.5px; font-weight:600; list-style:revert; }
+    .rd3-more { margin-top:22px; padding-top:14px; border-top:1px solid var(--line); }
+    .rd3-more > summary { font-size:16px; }
+    .rd3-dl { display:grid; grid-template-columns:1fr; gap:10px; margin:12px 0 4px; padding:14px; background:#FAF9FB; border:1px solid var(--line); border-radius:10px; }
+    .rd3-dl > div { display:grid; grid-template-columns:1fr; gap:1px; min-width:0; }
+    .rd3-dl dd { overflow-wrap:anywhere; min-width:0; }
+    .rd3-dl dt { font-weight:600; color:var(--ink2); font-size:14px; } .rd3-dl dd { margin:0; font-size:14.5px; color:var(--ink); }
+    .rd3-dl a { color:var(--p); }
+    .rd3-chips { display:flex; gap:8px; flex-wrap:wrap; margin:4px 0 6px; }
+    .rd3 .chip { border:1px solid #D6D2DA; background:#fff; border-radius:8px; padding:7px 12px; font-size:14.5px; color:var(--ink); cursor:pointer; }
+    .rd3 .chip .n { font-size:13px; color:var(--ink2); margin-left:5px; }
+    .rd3 .chip.on { background:var(--p); border-color:var(--p); color:#fff; } .rd3 .chip.on .n { color:#F2DDF2; }
+    .rd3-filterrow { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:flex-end; }
+    .rd3-lab { display:flex; flex-direction:column; gap:4px; font-size:13.5px; color:var(--ink2); }
+    .rd3-lab input, .rd3-lab select { min-height:38px; border:1px solid #D6D2DA; border-radius:8px; padding:6px 10px; font-size:15px; color:var(--ink); background:#fff; }
+    .rd3-links { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+    .rd3-tours { margin-top:12px; }
+    .rd3-tour { padding:16px 14px 18px; border-bottom:1px solid var(--line); cursor:pointer; border-radius:0; }
+    .rd3-tour:hover { background:#FCFAFC; }
+    .rd3-tour.is-new { background:#F6ECF6; border-left:5px solid var(--p); }
+    .rd3-tour-top { display:flex; align-items:center; gap:10px; }
+    .rd3 .rd3-tour-no { flex:1; font-size:18px; font-weight:800; margin:0; color:var(--ink); }
+    .rd3-new { background:var(--p); color:#fff; font-size:13px; font-weight:700; border-radius:20px; padding:3px 11px; }
+    .rd3 .rd3-sub { font-size:14.5px; color:var(--ink2); margin-top:3px; }
+    .rd3-tour-prog { font-size:14.5px; color:var(--ink); margin-top:8px; }
+    .rd3-empty { color:var(--ink2); font-size:15px; padding:18px 0; }
+    .rd3-strip { margin-top:12px; }
+    .rd3 #acts_card, .rd3 #sreq_card { margin-top:14px; }
+    @media (min-width: 900px) {
+        .rd3-hero { padding:26px 32px 30px; } .rd3-nav { padding:16px 32px 18px; } .rd3-main { padding:24px 32px 32px; }
+        .rd3 .rd3-h1 { font-size:30px; } .rd3-dept { padding:15px 18px; }
+        .rd3-dl { grid-template-columns:1fr 1fr; column-gap:24px; }
+        .rd3-dl > div { grid-template-columns:1fr; gap:2px; }
+    }
+
+
+    /* ================= tf-resdesk-r2 (13 Nov 2026): Pending Reservations / Confirmed Hotel Reservations — Shantha's two mock-ups ================= */
+    .rd3:not(.in-tour) .rd3-hero, .rd3:not(.in-tour) .rd3-nav { display:none; }
+    .rd3:not(.in-tour) .rd3-shell { max-width:1240px; border-radius:30px; box-shadow:0 2px 14px rgba(40,20,50,.08); background:#F8F7FA; }
+    .rd3:not(.in-tour) .rd3-main { padding:36px 36px 30px; }
+    .rdl { font-family:"Segoe UI", "Noto Sans", Inter, Arial, sans-serif; color:#111; }
+    .rd3 .rdl-h1 { font-size:44px; font-weight:700; color:#111; margin:0 0 34px; padding-left:28px; position:relative; line-height:1.1; border:0; letter-spacing:-.01em; }
+    .rd3 .rdl-h1::before { content:""; position:absolute; left:0; top:2px; bottom:2px; width:8px; border-radius:4px; background:#78B848; }
+    .rdl-tabs { display:flex; gap:16px; flex-wrap:wrap; padding-bottom:14px; border-bottom:4px solid #78B848; margin-bottom:20px; }
+    .rd3 .rdl-tab { width:354px; max-width:100%; height:62px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; color:#111; font-size:24px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+    .rd3 .rdl-tab[data-desk="other"] { width:334px; }
+    .rd3 .rdl-tab.on { background:#842484; border-color:#842484; color:#fff; }
+    .rdl-sub { display:flex; gap:14px; flex-wrap:wrap; margin:0 0 20px; }
+    .rd3 .rdl-subb { height:44px; padding:0 34px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; color:#111; font-size:21px; font-weight:500; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+    .rd3 .rdl-subb.on { background:#78B848; border-color:#78B848; color:#fff; font-weight:600; }
+    .rd3 .rdl-subb.on[data-list="pending"] { background:#842484; border-color:#842484; }
+    .rdl-search { display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin:0 0 24px; }
+    .rd3 .rdl-q { flex:0 1 515px; display:flex; align-items:center; gap:14px; height:48px; border:1.5px solid #C9C4CD; border-radius:6px; padding:0 18px; background:#fff; margin:0; }
+    .rd3 .rdl-q input { border:0; outline:0; flex:1; min-width:0; font-size:21px; color:#111; background:transparent; }
+    .rd3 .rdl-q input::placeholder { color:#5E5964; }
+    .rd3 .rdl-date { position:relative; display:inline-flex; align-items:center; gap:12px; height:48px; width:220px; padding:0 16px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; margin:0; cursor:pointer; font-size:20px; color:#222; }
+    .rd3 .rdl-date .rdl-dtxt { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .rd3 .rdl-date input { position:absolute; inset:0; opacity:0; width:100%; height:100%; cursor:pointer; border:0; }
+    .rd3 .rdl-go { height:44px; width:134px; border:0; border-radius:6px; background:#78B848; color:#fff; font-size:22px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.12); margin-left:auto; }
+    .rd3 .rdl-go:hover { background:#6AA53D; }
+    .rdl-table { border:1.5px solid #D9D6DC; border-radius:8px; overflow:hidden; background:#fff; }
+    .rdl-head, .rdl-row { display:grid; grid-template-columns:236px 122px 386px minmax(200px,1fr) 150px; align-items:center; padding:0 18px 0 40px; }
+    .rdl-head { background:#ECEAEF; height:58px; font-size:24px; font-weight:700; color:#111; }
+    .rdl-row { height:62px; border-top:1px solid #E8E5EA; font-size:26px; color:#111; }
+    .rdl-row > span:nth-child(2) { padding-left:18px; }
+    .rdl-client { font-weight:700; }
+    .rdl-oc { text-align:right; }
+    .rd3 .rdl-open { display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 20px; border:0; border-radius:6px; background:#78B848; color:#fff; font-size:19px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.18); white-space:nowrap; }
+    .rd3 .rdl-open:hover { background:#6AA53D; }
+    .rdl-light { display:inline-flex; flex-direction:column; gap:3px; background:#3A383D; border-radius:8px; padding:4px 5px; vertical-align:middle; box-shadow:inset 0 0 0 1px #1E1D20; }
+    .rdl-light i { width:12px; height:12px; border-radius:50%; background:#77737B; display:block; }
+    .rdl-light i.on-r { background:#FF3B30; box-shadow:0 0 7px 2px rgba(255,60,50,.75); }
+    .rdl-light i.on-y { background:#FFE21A; box-shadow:0 0 7px 2px rgba(255,226,26,.75); }
+    .rdl-light i.on-g { background:#47DE36; box-shadow:0 0 7px 2px rgba(80,230,60,.75); }
+    .rdl-empty { padding:24px 40px; font-size:22px; color:#222; border-top:1px solid #E8E5EA; }
+    .rdl-legend { display:flex; gap:34px; flex-wrap:wrap; margin:22px 0 0; font-size:21px; color:#111; }
+    .rdl-legend .dot { display:inline-block; width:22px; height:22px; border-radius:50%; vertical-align:-4px; margin-right:10px; }
+    .rdl-legend .dot.red { background:#E3242B; } .rdl-legend .dot.yellow { background:#FFE03A; } .rdl-legend .dot.green { background:#78B848; }
+    .rdl-legend b { font-weight:700; }
+    .rdl-pager { display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-top:22px; font-size:20px; color:#111; }
+    .rdl-rpp { display:inline-flex; align-items:center; gap:16px; margin:0; font-weight:400; }
+    .rdl-sel { position:relative; display:inline-flex; align-items:center; }
+    .rd3 .rdl-sel select { appearance:none; -webkit-appearance:none; height:38px; width:76px; padding:0 30px 0 14px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; font-size:20px; font-weight:700; color:#111; }
+    .rdl-sel .rdl-chev { position:absolute; right:10px; pointer-events:none; }
+    .rdl-sep { width:1.5px; height:34px; background:#CFCAD3; }
+    .rdl-pbtns { margin-left:auto; display:flex; gap:18px; }
+    .rd3 .rdl-pbtns button { height:38px; padding:0 22px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; font-size:19px; font-weight:700; color:#111; cursor:pointer; }
+    .rd3 .rdl-pbtns button b { font-size:22px; line-height:1; }
+    .rd3 .rdl-pbtns button[disabled] { color:#111; opacity:1; cursor:default; }
+    @media (max-width: 1100px) {
+        .rdl-head, .rdl-row { grid-template-columns:minmax(120px,1.2fr) 80px minmax(140px,1.6fr) minmax(140px,1.6fr) 120px; padding:0 14px 0 20px; }
+        .rdl-head { font-size:18px; } .rdl-row { font-size:19px; } .rdl-row > span:nth-child(2) { padding-left:8px; }
+        .rd3 .rdl-go { margin-left:0; }
+    }
+    @media (max-width: 760px) {
+        .rd3:not(.in-tour) .rd3-main { padding:22px 16px; }
+        .rd3 .rdl-h1 { font-size:32px; padding-left:22px; } .rd3 .rdl-tab { width:auto; flex:1; font-size:18px; height:52px; }
+        .rd3 .rdl-subb { font-size:16px; padding:0 14px; flex:1; }
+        .rd3 .rdl-q, .rd3 .rdl-date { flex:1 1 100%; width:auto; }
+        .rdl-head { display:none; }
+        .rdl-row { grid-template-columns:1fr auto; grid-template-areas:"inq light" "agent agent" "client open"; height:auto; row-gap:6px; padding:14px 16px; font-size:18px; }
+        .rdl-row > span:nth-child(1) { grid-area:inq; } .rdl-row > span:nth-child(2) { grid-area:light; padding:0; } .rdl-row > span:nth-child(3) { grid-area:agent; }
+        .rdl-row > span:nth-child(4) { grid-area:client; } .rdl-row > span:nth-child(5) { grid-area:open; }
+        .rdl-legend { font-size:16px; gap:16px; } .rdl-pager { font-size:16px; } .rdl-pbtns { margin-left:0; }
+    }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -75,64 +311,66 @@
         <div class="page-content tf" id="tf">
             <div class="container-fluid">
 
-                <?= view('layouts/tourdesk_bar', ['tourdesk_desk_only' => 'reservation']) /* tf-resdesk-r1: the Hotel Reservation Desk strip */ ?>
                 <?= view('layouts/tourdesk_menu') ?>
 
-                <div class="tf-title">
-                    <div>
-                        <h4>Hotel Bookings <a class="btn btn-light btn-sm ms-2" style="vertical-align:middle" href="<?= base_url('tour/hotel_bookings/mails') ?>" title="Every hotel and restaurant e-mail, sent or not sent (tf-tourmail-r1)"><i class="bi bi-envelope-paper"></i> Sent Mails</a></h4>
-                        <div class="sub">One row per confirmed tour — the tour's one job on this desk, put here the moment the Quotation Desk presses Confirm Tour. Open the tour to see every hotel it needs, with dates, rooms, meal plan and requests, and every activity or ticket to arrange. Send each hotel its booking request from the stay, record what it answers, issue the voucher. When every voucher is issued and every line is done, mark <b>Hotel work complete</b>: the tour leaves the red count and stays under Completed with its whole history. Nothing here changes the quotation.</div>
-                    </div>
-                </div>
-
+                <!-- tf-resdesk-r2 design v2 (Shantha's mock-up, 12 Nov 2026): one column, purple header → three steps → the tour → its hotels.
+                     Every style of this page sits under .rd3, so the Tour Desk's compact table styles never reach it. -->
+                <div class="rd3">
+                  <div class="rd3-shell">
+                    <header class="rd3-hero">
+                        <div class="rd3-brand">Avenir Holidays</div>
+                        <div class="rd3-desk">Hotel Reservation Desk</div>
+                    </header>
+                    <nav class="rd3-nav" aria-label="Reservation and payment steps">
+                        <a class="rd3-navb on" href="<?= base_url('tour/hotel_bookings') ?>">Hotel reservations</a>
+                        <a class="rd3-navb" href="<?= base_url('tour/tour_accounts/payment_approval_v2') ?>">Payment Approval</a>
+                        <a class="rd3-navb" href="<?= base_url('report/bank_payment_check') ?>">Bank Payment</a>
+                    </nav>
+                    <main class="rd3-main">
                 <?php if (empty($installed)): ?>
-                <div class="not-installed">The Tour Desk tables are not at the current version. Open <a href="<?= base_url($intake_url ?? 'tour/intake') ?>">Inquiries</a> and press Install; this screen then works.</div>
+                <div class="rd3-dept">The Tour Desk tables are not at the current version. Open <a href="<?= base_url($intake_url ?? 'tour/intake') ?>">Inquiries</a> and press Install; this screen then works.</div>
                 <?php else: ?>
 
-                <!-- the list: one row per tour -->
-                <div class="tf-card" id="list_card">
-                    <div class="tf-card-h">
-                        <div class="chips" id="chips"></div>
-                        <div class="d-flex gap-2 align-items-center flex-wrap">
-                            <select class="form-select form-select-sm" id="f_handler" style="width:auto;max-width:190px" title="Handling agent — whose tour it is">
-                                <option value="">Any handling agent</option>
-                                <?php foreach ((array) ($handlers ?? []) as $h): ?>
-                                <option value="<?= esc($h['id'] !== null ? (string) $h['id'] : (string) $h['name']) ?>"><?= esc($h['name']) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                            <input class="form-control form-control-sm" id="f_q" placeholder="Tour, inquiry, agent, group…" style="width:200px">
-                            <input type="date" class="form-control form-control-sm" id="f_from" style="width:auto" title="Arriving from">
-                            <input type="date" class="form-control form-control-sm" id="f_to" style="width:auto" title="Arriving to">
-                            <button class="btn btn-light btn-sm" id="f_clear" type="button" title="Clear every filter"><i class="bi bi-x-lg"></i></button>
-                        </div>
+                <!-- tf-resdesk-r2 (13 Nov 2026, Shantha's mock-up): the Reservation Desk — Hotel Reservations (Pending / Confirmed) and Other Reservations -->
+                <section id="list_card" class="rdl">
+                    <h1 class="rdl-h1">Reservation Desk</h1>
+                    <div class="rdl-tabs" role="tablist">
+                        <button class="rdl-tab on" data-desk="hotel" role="tab" type="button">Hotel Reservations</button>
+                        <button class="rdl-tab" data-desk="other" role="tab" type="button">Other Reservations</button>
                     </div>
-                    <div style="overflow-x:auto">
-                        <table class="tbl">
-                            <thead><tr><th>Tour No.</th><th>Inquiry No.</th><th>Agent</th><th>Tour / group</th><th>Arrival</th><th>Departure</th><th style="width:50px">Pax</th><th>Hotels</th><th>Activities</th><th>Status</th><th>Handler</th><th style="width:70px"></th></tr></thead>
-                            <tbody id="tours"><tr><td colspan="12" class="empty">Loading…</td></tr></tbody>
-                        </table>
+                    <div class="rdl-sub" id="rdl_sub">
+                        <button class="rdl-subb on" data-list="pending" type="button">Pending Reservations</button>
+                        <button class="rdl-subb" data-list="confirmed" type="button">Confirmed Hotel Reservations</button>
                     </div>
-                </div>
+                    <div class="rdl-search">
+                        <label class="rdl-q"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#78B848" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.3"/><path d="M15.3 15.3L20 20"/></svg><input id="f_q" placeholder="Inquiry number or customer name" aria-label="Inquiry number or customer name"></label>
+                        <label class="rdl-date"><svg class="rdl-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#78B848" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span class="rdl-dtxt" data-empty="Arrival from">Arrival from</span><svg class="rdl-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg><input type="date" id="f_from" aria-label="Arrival from"></label>
+                        <label class="rdl-date"><svg class="rdl-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#78B848" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span class="rdl-dtxt" data-empty="Arrival to">Arrival to</span><svg class="rdl-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg><input type="date" id="f_to" aria-label="Arrival to"></label>
+                        <button class="rdl-go" id="f_search" type="button">Search</button>
+                    </div>
+                    <div class="rdl-table" role="table">
+                        <div class="rdl-head" role="row"><span>Inquiry Number</span><span>Status</span><span>Agent Name</span><span>Client Name</span><span></span></div>
+                        <div id="tours"><div class="rdl-empty">Loading…</div></div>
+                    </div>
+                    <div class="rdl-legend" id="rdl_legend"></div>
+                    <div class="rdl-pager">
+                        <label class="rdl-rpp">Rows per page: <span class="rdl-sel"><select id="f_per"><option>10</option><option>25</option><option>50</option></select><svg class="rdl-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></label>
+                        <span class="rdl-sep"></span><span id="rdl_showing"></span>
+                        <span class="rdl-pbtns"><button type="button" id="pg_prev"><b>‹</b> Previous</button><button type="button" id="pg_next">Next <b>›</b></button></span>
+                    </div>
+                    <span id="rd_testbox" hidden></span><button id="f_clear" type="button" hidden></button>
+                    <select id="f_handler" hidden><option value=""></option></select><div id="chips" hidden></div>
+                </section>
 
-                <!-- the tour opened: its hotels and its activity lines -->
-                <div id="tour_view" style="display:none">
-                    <div class="tf-card mb-3">
-                        <div class="tv-head" id="tv_head"></div>
-                        <div style="padding:0 14px 12px">
-                            <details id="tv_details_wrap"><summary style="cursor:pointer;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--tf-muted);font-weight:700">The whole tour — programme, passengers, flights, requests</summary><div id="tv_details" class="mt-2"></div></details>
-                        </div>
-                    </div>
-                    <div class="tf-card">
-                        <div class="tf-card-h">
-                            <div><h6>Hotels required for this tour</h6><div class="help">Every stay the quotation carried, in order. Open a stay to send the booking request, record the hotel's answer and issue the voucher.</div></div>
-                        </div>
-                        <div style="overflow-x:auto">
-                            <table class="tbl">
-                                <thead><tr><th>Hotel</th><th style="width:150px">Dates</th><th style="width:190px">Rooms · meal</th><th style="width:60px">Party</th><th style="width:230px">Status</th><th style="width:120px"></th></tr></thead>
-                                <tbody id="rows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
-                            </table>
-                        </div>
-                    </div>
+                <!-- the tour opened: its hotels, then everything else folded under Tour details -->
+                <section id="tour_view" style="display:none">
+                    <div id="tv_head"></div>
+                    <div class="rd3-dept">Hotel Reservations department · Confirm each hotel after receiving its reply.</div>
+                    <div class="rd3-hotels" id="rows"><div class="rd3-empty">Loading…</div></div>
+                    <details class="rd3-fold rd3-more" id="rd3_more">
+                        <summary>Tour details</summary>
+                        <div id="tv_more"></div>
+                        <details id="tv_details_wrap" class="rd3-fold"><summary>The whole tour — programme, passengers, flights, requests</summary><div id="tv_details" class="mt-2"></div></details>
                     <div class="tf-card mt-3" id="acts_card">
                         <div class="tf-card-h">
                             <div>
@@ -160,9 +398,13 @@
                         </div>
                         <div class="tf-card-b" id="sreq_body"><div class="empty">Loading…</div></div>
                     </div>
-                </div>
+                    </details>
+                </section>
 
                 <?php endif; ?>
+                    </main>
+                  </div>
+                </div>
             </div>
             <?= view('layouts/brand') ?>
         </div>
@@ -195,6 +437,25 @@
 <div class="modal fade" id="m_card" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content tf">
     <div class="modal-header"><h6 class="modal-title" id="c_title">Stay</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
     <div class="modal-body" id="c_body"></div>
+</div></div></div>
+
+<!-- tf-resdesk-r2: Confirm Booking — the hotel's reply recorded; only then is the payment request raised -->
+<div class="modal fade" id="m_cb" tabindex="-1"><div class="modal-dialog"><div class="modal-content tf">
+    <div class="modal-header"><h6 class="modal-title" id="cb_title">Record Hotel Confirmation</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <div class="help mb-2" id="cb_stay"></div>
+        <div class="row g-2">
+            <div class="col-md-7"><label class="form-label help" for="cb_ref">Hotel's confirmation reference <span class="text-danger">*</span></label><input class="form-control form-control-sm" id="cb_ref" maxlength="100" placeholder="e.g. QHK/2612/0458"></div>
+            <div class="col-md-5"><label class="form-label help" for="cb_on">Confirmed by the hotel on</label><input type="date" class="form-control form-control-sm" id="cb_on"></div>
+            <div class="col-12"><label class="form-label help" for="cb_with">Confirmed by (hotel person)</label><input class="form-control form-control-sm" id="cb_with" maxlength="160" placeholder="e.g. Ms. Perera, Reservations"></div>
+            <div class="col-12"><label class="form-label help" for="cb_reply">Hotel's reply <span class="text-danger">*</span> <span class="text-muted">(paste what the hotel wrote, or attach its e-mail below)</span></label><textarea class="form-control form-control-sm" id="cb_reply" rows="3" maxlength="4000"></textarea></div>
+            <div class="col-12"><label class="form-label help" for="cb_file">Evidence — the hotel's confirmation (PDF, picture, .eml / .msg, max 20 MB)</label><input type="file" class="form-control form-control-sm" id="cb_file" accept=".pdf,.jpg,.jpeg,.png,.webp,.eml,.msg,.txt,.doc,.docx"></div>
+            <div class="col-12"><label class="form-label help" for="cb_note">Note</label><input class="form-control form-control-sm" id="cb_note" maxlength="300"></div>
+        </div>
+        <div class="help mt-2">Your name and the time are recorded with the confirmation. The stay's hotel payment request is then raised to <b>Payment Approval</b>; the payment voucher is created only after the payment is approved there.</div>
+        <input type="hidden" id="cb_id">
+    </div>
+    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-sm" style="background:#7B2382;color:#fff" id="cb_ok">Confirm Hotel</button></div>
 </div></div></div>
 
 <!-- a letter as it was sent -->
@@ -269,6 +530,21 @@
         const pct = Math.round(100 * x.done / x.of);
         return `<span class="prog ${x.problem ? 'problem' : ''}" title="${esc(x.done)} of ${esc(x.of)} ${esc(word)}"><span class="bar"><i style="width:${pct}%"></i></span><b>${x.done}</b>/${x.of}${x.problem ? ` <span class="pill pill-red">${x.problem} ${esc(problemWord || 'problem')}</span>` : ''}</span>`;
     }
+    // tf-resdesk-r2: hotel confirmation progress — a block per hotel: green confirmed, red e-mail failed / not sent, grey awaiting
+    function rdProg(r) {
+        if (!r || !r.total) return '<span>No hotel on this tour</span>';
+        const bits = [`${r.confirmed} of ${r.total} hotels confirmed`];
+        if (r.awaiting) bits.push(`${r.awaiting} awaiting hotel confirmation`);
+        if (r.requested) bits.push(`${r.requested} awaiting payment approval`);
+        if (r.approved) bits.push(`${r.approved} payment approved`);
+        if (r.paid) bits.push(`${r.paid} paid`);
+        if (r.unraised) bits.push(`${r.unraised} payment request not raised`);
+        const bad = [];
+        if (r.failed) bad.push(`${r.failed} email failed`);
+        if (r.not_sent) bad.push(`${r.not_sent} not sent`);
+        if (r.problem) bad.push(`${r.problem} problem`);
+        return `<span>${esc(bits.join(' · '))}</span>${bad.length ? `<span class="rd3-bad"> · ${esc(bad.join(' · '))}</span>` : ''}`;
+    }
     // A cancelled tour is flagged in red wherever it shows, with the reason, who cancelled it and when
     const cancelFlag = (t, big) => t.stage !== 'cancelled' ? '' : (big
         ? `<div class="cancel-flag"><i class="bi bi-x-octagon-fill"></i> <b>CANCELLED</b> ${t.cancelled_at ? when(t.cancelled_at) : ''}${t.cancelled_by ? ' by ' + esc(t.cancelled_by) : ''}${t.cancel_why ? ' — ' + esc(t.cancel_why) : ''}<div class="help" style="color:inherit">Do no further work on this tour: every card is marked cancelled. Work already done stays on the trail.</div></div>`
@@ -302,41 +578,67 @@
         document.querySelectorAll('[data-chip]').forEach(c => c.addEventListener('click', () => { WHICH = c.dataset.chip; loadTours(); }));
     }
     const filterQs = () => new URLSearchParams({ which: WHICH, q: document.getElementById('f_q').value || '', handler: document.getElementById('f_handler').value || '', from: document.getElementById('f_from').value || '', to: document.getElementById('f_to').value || '' }).toString();
-    async function loadTours() {
-        const j = await api('/tours?' + filterQs());
-        if (j.status !== 200) { toast('error', j.message); return; }
-        renderChips(j.data.counts || {});
-        updateBadge((j.data.counts || {}).pending);
-        const rows = TOURS = j.data.tours || [];
-        const tb = document.getElementById('tours');
-        if (!rows.length) {
-            const empty = { pending: 'No tour is waiting for hotel work. Every confirmed tour has its hotels booked, vouchers issued and activities done.', completed: 'No tour marked complete yet.', cancelled: 'No cancelled tour.', all: 'No confirmed tour yet.' }[WHICH];
-            tb.innerHTML = `<tr><td colspan="12" class="empty">${document.getElementById('f_q').value || document.getElementById('f_handler').value ? 'Nothing matches the filter.' : empty}</td></tr>`;
-            return;
-        }
-        tb.innerHTML = rows.map(t => `<tr class="rowlink" data-tour="${t.id}">
-            <td><b>${esc(t.tour_no)}</b>${Number(t.amending) ? '<div class="flag">being amended</div>' : ''}${t.amended ? '<div class="flag">amended — check the cards</div>' : ''}</td>
-            <td class="mono">${esc(t.inquiry_no || '—')}</td>
-            <td>${esc(t.agent_name || '—')}</td>
-            <td>${esc(t.tour_name || '—')}${t.hotel_class ? `<div class="help">${esc(t.hotel_class)}</div>` : ''}</td>
-            <td class="mono">${fmtY(t.arrival_date)}</td>
-            <td class="mono">${fmtY(t.departure_date)}<div class="help">${t.nights ?? '?'} nights</div></td>
-            <td class="mono">${esc(t.pax_total ?? '?')}</td>
-            <td>${prog(t.strip && t.strip.hotels, 'stays with the voucher issued')}${t.strip && t.strip.hotels && t.strip.hotels.confirmed ? `<div class="help">${t.strip.hotels.confirmed} confirmed, voucher to issue</div>` : ''}${t.strip && t.strip.hotels && t.strip.hotels.flags ? `<div class="flag">${t.strip.hotels.flags} to ask the Quotation Desk</div>` : ''}</td>
-            <td>${prog(t.strip && t.strip.activities, 'activity and ticket lines done')}</td>
-            <td>${workPill(t)}</td>
-            <td>${t.handler_name ? esc(t.handler_name) : '<span class="pill pill-amber">nobody</span>'}</td>
-            <td style="white-space:nowrap"><button class="btn btn-light btn-sm" data-open-tour="${t.id}">Open</button>${CAN_MANAGE ? ` <button class="td-dots" data-tmanage="${t.id}" title="Admin" type="button">···</button>` : ''}</td></tr>`).join('');
-        tb.querySelectorAll('[data-open-tour]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openTour(Number(b.dataset.openTour)); }));
-        tb.querySelectorAll('tr[data-tour]').forEach(r => r.addEventListener('click', () => openTour(Number(r.dataset.tour))));
-        tb.querySelectorAll('[data-tmanage]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); const t = TOURS.find(x => Number(x.id) === Number(b.dataset.tmanage)); if (t) tourManageMenu(b, t); }));
+    // tf-resdesk-r2: the Reservation Desk lists — Pending Reservations, Confirmed Hotel Reservations, Other Reservations.
+    // The light is the server's, worked out from the bookings; opening a tour changes nothing in it.
+    let DESK = 'hotel', LIST = 'pending', PAGE = 1, PER = 10;
+    const LIGHT = { red: 'Red', yellow: 'Yellow', green: 'Green' };
+    const light = c => `<span class="rdl-light" role="img" aria-label="${c ? LIGHT[c] : 'No status'}"><i class="${c === 'red' ? 'on-r' : ''}"></i><i class="${c === 'yellow' ? 'on-y' : ''}"></i><i class="${c === 'green' ? 'on-g' : ''}"></i></span>`;
+    function legend() {
+        const h = [['red', 'Red:', 'Not sent'], ['yellow', 'Yellow:', 'Awaiting confirmation'], ['green', 'Green:', 'All hotels confirmed']];
+        const o = [['red', 'Red:', 'Not requested'], ['yellow', 'Yellow:', 'Awaiting confirmation'], ['green', 'Green:', 'All confirmed']];
+        if (DESK !== 'other' && LIST === 'confirmed') { document.getElementById('rdl_legend').innerHTML = '<span><i class="dot green"></i><b>All hotels confirmed</b></span>'; return; }
+        document.getElementById('rdl_legend').innerHTML = (DESK === 'other' ? o : h).map(([c, b, t]) => `<span><i class="dot ${c}"></i><b>${b}</b> ${t}</span>`).join('');
     }
+    async function loadTours() {
+        const list = DESK === 'other' ? 'other' : LIST;
+        const qs = new URLSearchParams({ list, q: document.getElementById('f_q').value.trim(), from: document.getElementById('f_from').value || '', to: document.getElementById('f_to').value || '', page: PAGE, per: PER }).toString();
+        const j = await api('/lists?' + qs);
+        if (j.status !== 200) { toast('error', j.message); return; }
+        const d = j.data;
+        const tbx = document.getElementById('rd_testbox'); if (tbx) tbx.style.display = d.test_mailbox ? '' : 'none';
+        document.getElementById('f_q').placeholder = list === 'pending' ? 'Search by inquiry number, agent or client' : 'Inquiry number or customer name';
+        updateBadge(d.counts.pending);
+        legend();
+        const tb = document.getElementById('tours');
+        TOURS = d.rows;
+        const searching = document.getElementById('f_q').value.trim() || document.getElementById('f_from').value || document.getElementById('f_to').value;
+        if (!d.rows.length) {
+            tb.innerHTML = `<div class="rdl-empty">${searching ? 'No reservation matches the search.' : (list === 'pending' ? 'No pending hotel reservations.' : list === 'confirmed' ? 'No confirmed hotel reservations yet.' : 'No other reservations.')}</div>`;
+        } else {
+            tb.innerHTML = d.rows.map(t => {
+                const c = list === 'other' ? t.other_light : t.hotel_light;
+                const what = list === 'other' ? `${t.other_done} of ${t.other_total} done` : `${t.hotels_confirmed} of ${t.hotels} hotel${t.hotels === 1 ? '' : 's'} confirmed${t.hotels_unsent ? ' · ' + t.hotels_unsent + ' not sent' : ''}`;
+                return `<div class="rdl-row" role="row" data-tour="${t.id}">
+                    <span class="rdl-inq">${esc(t.inquiry_no || t.tour_no)}</span>
+                    <span title="${esc(what)}">${light(c)}</span>
+                    <span>${esc(t.agent_name || '—')}</span>
+                    <span class="rdl-client" title="${esc(what)} · arrival ${fmtY(t.arrival_date)}">${esc(t.client_name || '—')}</span>
+                    <span class="rdl-oc"><button class="rdl-open" data-open-tour="${t.id}" type="button">Open <span aria-hidden="true">→</span></button></span>
+                </div>`;
+            }).join('');
+            tb.querySelectorAll('[data-open-tour]').forEach(b => b.addEventListener('click', () => openTour(Number(b.dataset.openTour), false, DESK === 'other')));
+        }
+        const a = d.total ? (d.page - 1) * d.per + 1 : 0, z = Math.min(d.total, d.page * d.per);
+        document.getElementById('rdl_showing').textContent = `Showing ${a}–${z} of ${d.total}`;
+        document.getElementById('pg_prev').disabled = d.page <= 1;
+        document.getElementById('pg_next').disabled = d.page >= d.pages;
+    }
+    document.querySelectorAll('.rdl-tab').forEach(b => b.addEventListener('click', () => { DESK = b.dataset.desk; PAGE = 1;
+        document.querySelectorAll('.rdl-tab').forEach(x => x.classList.toggle('on', x === b));
+        document.getElementById('rdl_sub').style.display = DESK === 'other' ? 'none' : ''; loadTours(); }));
+    document.querySelectorAll('.rdl-subb').forEach(b => b.addEventListener('click', () => { LIST = b.dataset.list; PAGE = 1;
+        document.querySelectorAll('.rdl-subb').forEach(x => x.classList.toggle('on', x === b)); loadTours(); }));
+    document.getElementById('f_per').addEventListener('change', e => { PER = Number(e.target.value); PAGE = 1; loadTours(); });
+    document.getElementById('pg_prev').addEventListener('click', () => { if (PAGE > 1) { PAGE--; loadTours(); } });
+    document.getElementById('pg_next').addEventListener('click', () => { PAGE++; loadTours(); });
+    document.getElementById('f_search').addEventListener('click', () => { PAGE = 1; loadTours(); });
+    document.getElementById('f_q').addEventListener('keydown', e => { if (e.key === 'Enter') { PAGE = 1; loadTours(); } });
 
     // =====================================================================
     //  The tour opened: its hotels and its activity lines
     // =====================================================================
     let ITEMS = [], A_ITEMS = [], A_REASONS = [], ACT = null, DETAILS = {};
-    async function openTour(id, quiet) {
+    async function openTour(id, quiet, other) {
         const j = await api('/tour/' + id + '/work');
         if (j.status !== 200) { toast('error', j.message); return; }
         TOUR = j.data.tour; REASONS = j.data.reasons || []; A_REASONS = j.data.a_reasons || [];
@@ -350,7 +652,9 @@
         renderActs();
         loadSupplierRequests(id);
         loadDetails(id, 'tv_details');
-        if (!quiet) window.scrollTo({ top: 0 });
+        document.querySelector('.rd3').classList.add('in-tour');
+        if (other) { const m = document.getElementById('rd3_more'); m.open = true; setTimeout(() => document.getElementById('acts_card').scrollIntoView({ block: 'start' }), 60); }
+        else if (!quiet) window.scrollTo({ top: 0 });
     }
 
     // =====================================================================
@@ -446,6 +750,7 @@
         TOUR = null;
         document.getElementById('tour_view').style.display = 'none';
         document.getElementById('list_card').style.display = '';
+        document.querySelector('.rd3').classList.remove('in-tour');
         if (window.TfView) { if (!backToList.fromHistory) TfView.setParams({ tour: null }, { push: true }); } else { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
         loadTours();
     }
@@ -459,22 +764,31 @@
         const mark = t.stage === 'cancelled' ? '' : (s.reservations_confirmed
             ? `<span class="pill pill-green" style="font-size:12px;padding:4px 10px"><i class="bi bi-patch-check-fill"></i> Hotel work complete · ${esc(s.reservations_confirmed_by || '')} ${when(s.reservations_confirmed_at)}</span> <button class="btn btn-light btn-sm" data-unmark="${t.id}" title="Take the mark off (say why)">undo</button>`
             : (s.reservations_ready
-                ? `<button class="btn btn-success btn-sm" data-mark="${t.id}"><i class="bi bi-patch-check"></i> Mark hotel work complete</button>`
-                : `<span class="help" title="Every stay with its voucher issued and every activity line confirmed, or with nothing to arrange">Mark complete once every voucher is issued and every line is done</span>`));
+                ? `<button class="rd3-b" data-mark="${t.id}">Mark hotel work complete</button>`
+                : ''));
+        const guests = (() => { const a = Number(t.pax_adults || 0), c = Number(t.pax_children || 0); if (a || c) return [a ? a + ' adult' + (a === 1 ? '' : 's') : '', c ? c + ' child' + (c === 1 ? '' : 'ren') : ''].filter(Boolean).join(' + '); return (t.pax_total ?? '?') + ' guests'; })();
         document.getElementById('tv_head').innerHTML = `
-            <div>
-                <button class="btn btn-light btn-sm mb-2" id="tv_back"><i class="bi bi-arrow-left"></i> All tours</button>
-                <div class="who">${esc(t.tour_no)} · ${esc(t.tour_name || '—')} <small>· ${esc(t.agent_name || '—')} · inquiry ${esc(t.inquiry_no || '—')}</small></div>
-                <div class="help">${t.dates_line ? esc(t.dates_line) : `${fmtY(t.arrival_date)} – ${fmtY(t.departure_date)} · ${t.nights ?? '?'} nights`} · ${esc(t.pax_total ?? '?')} pax${t.hotel_class ? ' · ' + esc(t.hotel_class) : ''} · handled by ${t.handler_name ? `<b>${esc(t.handler_name)}</b>` : '<span class="pill pill-amber">nobody</span>'}${t.quote_version ? ' · sold as v' + t.quote_version : ''}${t.stage === 'cancelled' ? ' · <span class="pill pill-grey">cancelled</span>' : ''}</div>
-                ${cancelFlag(t, true)}
-                <div class="mt-2" id="tv_strip">${window.tdStrip(s, { compact: true })}</div>
-            </div>
-            <div class="tv-mark">${mark}${t.stage === 'cancelled' ? '' : `<button class="btn btn-primary btn-sm" id="tv_mailall" title="The booking request to every hotel still to book — listed first, sent on OK"><i class="bi bi-envelope"></i> Email all hotels</button>`}<button class="btn btn-light btn-sm" id="tv_mails" title="Every hotel and restaurant e-mail of this tour, sent or not sent"><i class="bi bi-envelope-paper"></i> Mails</button><a class="btn btn-light btn-sm" href="${BASE}/tour/${t.id}/programme" target="_blank"><i class="bi bi-printer"></i> Print the programme</a></div>`;
+            <h1 class="rd3-h1">${esc(t.tour_no)} · Hotel reservations</h1>
+            <p class="rd3-summary">${esc(t.tour_name || t.agent_name || '—')} · ${esc(guests)} · Arrival ${fmtY(t.arrival_date)}</p>
+            ${cancelFlag(t, true)}
+            <button class="rd3-b" id="tv_back" type="button">← Tour orders</button>`;
+        document.getElementById('tv_more').innerHTML = `
+            <dl class="rd3-dl">
+                <div><dt>Inquiry</dt><dd>${esc(t.inquiry_no || '—')}</dd></div>
+                <div><dt>Agent</dt><dd>${esc(t.agent_name || '—')}</dd></div>
+                <div><dt>Dates</dt><dd>${fmtY(t.arrival_date)} – ${fmtY(t.departure_date)} · ${t.nights ?? '?'} nights</dd></div>
+                <div><dt>Party</dt><dd>${esc(t.pax_total ?? '?')} pax</dd></div>
+                <div><dt>Handled by</dt><dd>${t.handler_name ? esc(t.handler_name) : '—'}</dd></div>
+                <div><dt>Hotels</dt><dd>${t.rd ? rdProg(t.rd) : '—'}</dd></div>
+            </dl>
+            <div class="rd3-btns">${t.stage === 'cancelled' ? '' : `<button class="rd3-b" id="tv_mailall" type="button">Email all hotels</button>`}<button class="rd3-b" id="tv_mails" type="button">Mails of this tour</button><a class="rd3-b" href="${BASE}/tour/${t.id}/programme" target="_blank">Print the programme</a></div>
+            <div class="rd3-btns">${mark}</div>
+            <div class="rd3-strip" id="tv_strip">${window.tdStrip(s, { compact: true })}</div>`;
         document.getElementById('tv_back').addEventListener('click', backToList);
         // tf-tourmail-r1: every hotel's request in one go (listed first, sent on OK), and the tour's mails as they went
         const ma = document.getElementById('tv_mailall'); if (ma) ma.addEventListener('click', () => mailAllHotels(t));
         document.getElementById('tv_mails').addEventListener('click', () => window.AvhTourMails && window.AvhTourMails.showTourMails(BASE, t.id, t.tour_no));
-        wireMarks(document.getElementById('tv_head'));
+        wireMarks(document.getElementById('tv_more'));
     }
     /** tf-tourmail-r1: the booking request to every hotel of the tour still to book — the list first, sent only on OK. */
     async function mailAllHotels(t) {
@@ -529,22 +843,141 @@
         if (Number(j.amended)) out += `<span class="flag">The quotation was amended after this card moved — check it</span>`;
         return out;
     }
+    // tf-resdesk-r2: one card per hotel — the stay, its stage, the e-mail, the payment dates, the documents, Confirm Booking
+    const dt = s => s ? new Date(String(s).replace(' ', 'T')).toLocaleString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+    const dOnly = s => s ? fmtY(String(s).slice(0, 10)) : '—';
+    // tf-resdesk-r2 design v2: one layout for every hotel — the mock-up's order: name, stay line, status, the three dates,
+    // the buttons; everything else under "Booking details". The stage words come from the records (ResDesk::stage).
+    const MEAL = { RO: 'Room only', BB: 'Bed and breakfast', HB: 'Half board', FB: 'Full board', AI: 'All inclusive' };
+    const range = (a, b) => { if (!a || !b) return '—'; const x = new Date(a + 'T00:00:00'), y = new Date(b + 'T00:00:00');
+        const m = d => d.toLocaleDateString('en-GB', { month: 'short' });
+        return x.getFullYear() === y.getFullYear() && x.getMonth() === y.getMonth() ? `${x.getDate()}–${y.getDate()} ${m(y)} ${y.getFullYear()}` : `${x.getDate()} ${m(x)} – ${y.getDate()} ${m(y)} ${y.getFullYear()}`; };
+    function roomWords(j) {
+        const n = String(j.rooms_note || '').split('—')[0].trim();
+        if (n) return n.replace(/(\d+)\s*SGL/gi, '$1 single').replace(/(\d+)\s*DBL/gi, '$1 double').replace(/(\d+)\s*TWN/gi, '$1 twin').replace(/(\d+)\s*TPL/gi, '$1 triple').replace(/\s*·\s*/g, ' · ');
+        return j.rooms ? j.rooms + ' room' + (Number(j.rooms) === 1 ? '' : 's') : 'Rooms not stated';
+    }
+    function guestWords(j) {
+        const a = Number(TOUR && TOUR.pax_adults || 0), c = Number(TOUR && TOUR.pax_children || 0);
+        if (a || c) return [a ? a + ' adult' + (a === 1 ? '' : 's') : '', c ? c + ' child' + (c === 1 ? '' : 'ren') : ''].filter(Boolean).join(' + ');
+        return j.pax ? j.pax + ' guests' : '';
+    }
+    function stageWords(j) {
+        const st = j.rd_stage || {}, p = j.rd_pay || {};
+        switch (st.key) {
+            case 'awaiting': return ['Awaiting hotel confirmation', ''];
+            case 'confirmed': return p.stage === 'requested' ? ['Awaiting payment approval', ''] : (p.stage === 'held' ? ['Payment held for rate review', 'warn'] : ['Hotel confirmed — payment request not raised', 'warn']);
+            case 'approved': return ['Payment approved — with Bank Payment', ''];
+            case 'paid': return ['Paid', 'paid'];
+            case 'pay_rejected': return ['Payment request rejected', 'bad'];
+            case 'failed': return ['Email failed — booking voucher not sent', 'bad'];
+            case 'not_sent': return ['Booking voucher not sent yet', 'bad'];
+            case 'problem': return ['Problem — see booking details', 'bad'];
+            default: return [st.label || j.status, ''];
+        }
+    }
     function renderStays() {
         const items = ITEMS.filter(j => !j.archived_at);
-        const tb = document.getElementById('rows');
-        if (!items.length) { tb.innerHTML = `<tr><td colspan="6" class="empty">No hotel stay on this tour.</td></tr>`; return; }
-        tb.innerHTML = items.map(j => {
-            const rooms = [j.rooms ? j.rooms + ' room' + (Number(j.rooms) === 1 ? '' : 's') : null, j.rooms_note, j.meal_plan || '<span class="pill pill-amber">meal plan not stated</span>'].filter(Boolean).join(' · ');
-            return `<tr class="${Number(j.amended) ? 'amended' : ''}">
-                <td>${j.hotel_name ? `<b>${esc(j.hotel_name)}</b>` : '<span class="pill pill-red">no hotel named</span>'}<div class="help">${esc(j.area || '')}${j.day_from ? ` · night${j.day_to !== j.day_from ? 's' : ''} ${j.day_from}${j.day_to !== j.day_from ? '–' + j.day_to : ''}` : ''}</div>${flags(j)}</td>
-                <td class="mono">${fmt(j.check_in)} → ${fmt(j.check_out)}<div class="help">${j.nights} night${Number(j.nights) === 1 ? '' : 's'}</div></td>
-                <td>${rooms}${j.special_note ? `<div class="help" title="${esc(j.special_note)}">${esc(String(j.special_note).slice(0, 80))}${String(j.special_note).length > 80 ? '…' : ''}</div>` : ''}</td>
-                <td class="mono">${esc(j.pax ?? '')}</td>
-                <td>${pill(j)}<div class="help">${statusLine(j)}</div></td>
-                <td style="white-space:nowrap"><button class="btn btn-light btn-sm" data-open="${j.id}">Open</button>${CAN_MANAGE ? ` <button class="td-dots" data-manage="${j.id}" title="Manage" type="button">···</button>` : ''}</td></tr>`;
+        const box = document.getElementById('rows');
+        if (!items.length) { box.innerHTML = `<div class="rd3-empty">No hotel stay on this tour.</div>`; return; }
+        box.innerHTML = items.map(j => {
+            const m = j.rd_mail, p = j.rd_pay || {}, docs = j.rd_docs || [];
+            const bv = m && m.doc_id ? docs.find(d => Number(d.id) === Number(m.doc_id)) : docs.find(d => d.kind === 'booking_voucher');
+            const ev = docs.filter(d => d.kind === 'confirmation');
+            const versions = docs.filter(d => d.kind === 'booking_voucher');
+            const rlist = (m && docs.find(d => d.kind === 'rooming_list' && Number(d.message_id) === Number(m.id))) || docs.find(d => d.kind === 'rooming_list');
+            const [stage, tone] = stageWords(j);
+            const sentOk = m && (m.state === 'sent' || m.state === 'recorded');
+            const emailSent = sentOk ? dt(m.at) : (m && m.state === 'failed' ? 'Failed ' + dt(m.at) : '—');
+            const canConfirm = ['to_book', 'requested', 'problem'].includes(j.status);
+            const confirmed = ['confirmed', 'voucher_issued'].includes(j.status);
+            const control = (TOUR && TOUR.tour_no ? TOUR.tour_no : '') + '-H' + String(j.day_from || 0).padStart(2, '0');
+            const line = [range(j.check_in, j.check_out), roomWords(j), guestWords(j), j.meal_plan ? (MEAL[j.meal_plan] || j.meal_plan) : 'Meal plan not stated'].filter(Boolean).join(' · ');
+            return `<article class="rd3-hotel">
+                <div class="rd3-hotel-top"><h2 class="rd3-hname">${j.hotel_name ? esc(j.hotel_name) : 'No hotel named'}</h2>${tone === 'paid' ? '<span class="rd3-paid">Paid</span>' : ''}${CAN_MANAGE ? `<button class="td-dots" data-manage="${j.id}" title="Manage" type="button">···</button>` : ''}</div>
+                <p class="rd3-hline">${esc(line)}</p>
+                ${flags(j) ? `<div class="rd3-warn">${flags(j)}</div>` : ''}
+                ${tone === 'paid' ? '' : `<span class="rd3-status ${tone}">${esc(stage)}</span>`}
+                <div class="rd3-dates">
+                    <span>Email sent: ${esc(emailSent)}</span>
+                    <span>Payment approved: ${p.approved_at ? esc(dOnly(p.approved_at)) : '—'}</span>
+                    <span>Paid date: ${p.paid && p.paid_date ? esc(dOnly(p.paid_date)) : '—'}</span>
+                </div>
+                ${m && m.state === 'failed' && !sentOk ? `<p class="rd3-bad">${esc(m.error || 'The e-mail was not sent.')}</p>` : ''}
+                ${confirmed && p.link_state === 'failed' ? `<p class="rd3-bad">${esc(p.link_message || 'The payment request was not raised.')}</p>` : ''}
+                <div class="rd3-btns">
+                    ${bv ? `<a class="rd3-b" href="${BASE}/doc/${bv.id}" target="_blank">View Booking Voucher</a>` : '<button class="rd3-b" disabled>View Booking Voucher</button>'}
+                    ${rlist ? `<a class="rd3-b" href="${BASE}/doc/${rlist.id}" target="_blank">View Rooming List</a>` : ''}
+                    ${m ? `<a class="rd3-b" href="${BASE}/message/${m.id}" target="_blank">View Sent Email</a>` : '<button class="rd3-b" disabled>View Sent Email</button>'}
+                    ${p.voucher_no ? `<a class="rd3-b" href="<?= base_url('accounts/voucher_print') ?>/${encodeURIComponent(p.voucher_no)}?id=${encodeURIComponent(p.voucher_no)}" target="_blank">View Payment Voucher</a>` : ''}
+                    ${(!m || !sentOk) && !confirmed ? `<button class="rd3-b" data-open="${j.id}">Send booking voucher</button>` : ''}
+                    ${confirmed && !p.payment_request_id && p.link_state !== 'held' ? `<button class="rd3-b" data-raise="${j.id}">Raise payment request</button>` : ''}
+                    ${canConfirm ? `<button class="rd3-b primary" data-cb="${j.id}">Record Hotel Confirmation</button>` : ''}
+                </div>
+                <details class="rd3-fold rd3-bd"><summary>Booking details</summary>
+                    <dl class="rd3-dl">
+                        <div><dt>Reservation control no.</dt><dd><b>${esc(control)}</b></dd></div>
+                        <div><dt>Hotel confirmation reference</dt><dd>${j.confirmation_ref ? '<b>' + esc(j.confirmation_ref) + '</b>' : '—'}</dd></div>
+                        <div><dt>Confirmed by the hotel</dt><dd>${confirmed ? esc(dOnly(j.hotel_confirmed_on || j.confirmed_at)) + (j.confirmed_with ? ' · ' + esc(j.confirmed_with) : '') : '—'}</dd></div>
+                        <div><dt>Recorded by</dt><dd>${confirmed ? esc(j.confirmed_by || '—') + ' · ' + esc(dt(j.confirmed_at)) : '—'}</dd></div>
+                        <div><dt>Email recipient</dt><dd>${esc(m && m.to_addr ? m.to_addr : '—')}${m && m.cc_addr ? ' · CC ' + esc(m.cc_addr) : ''}</dd></div>
+                        <div><dt>Email status</dt><dd>${m ? (sentOk ? (confirmed ? 'Voucher emailed — the hotel has confirmed' : 'Voucher emailed — awaiting hotel confirmation') : 'FAILED — ' + esc(m.error || '')) : 'Not sent yet'}</dd></div>
+                        <div><dt>Payment request</dt><dd>${p.payment_request_id ? '#' + p.payment_request_id + (p.amount_usd ? ' · USD ' + Number(p.amount_usd).toFixed(2) : '') + (p.requested_at ? ' · ' + esc(dt(p.requested_at)) : '') : (confirmed ? esc(p.link_message || 'Not raised') : '—')}</dd></div>
+                        <div><dt>Payment approved by</dt><dd>${p.approved_by ? esc(p.approved_by) : '—'}</dd></div>
+                        <div><dt>Payment voucher</dt><dd>${p.voucher_no ? 'PV ' + esc(p.voucher_no) : '—'}</dd></div>
+                        <div><dt>Booking voucher versions</dt><dd>${versions.length ? versions.map(d => `<a href="${BASE}/doc/${d.id}" target="_blank">v${d.version}</a> (${esc(dt(d.at))})`).join(' · ') : '—'}</dd></div>
+                        <div><dt>Hotel confirmation evidence</dt><dd>${ev.length ? ev.map(d => `<a href="${BASE}/doc/${d.id}" target="_blank">${esc(d.original_name)}</a>`).join(' · ') : '—'}</dd></div>
+                    </dl>
+                    <div class="rd3-hist"><div class="rd3-hist-h">Email and reply history</div>
+                    ${(j.rd_msgs || []).length ? (j.rd_msgs || []).map(x => {
+                        const kindW = x.kind === 'reply' ? 'Hotel reply' : (x.kind === 'voucher' ? 'Hotel voucher' : 'Booking request');
+                        const ok = x.state === 'sent' || x.state === 'recorded';
+                        const att = [x.doc_id, x.doc2_id].filter(Boolean).map(id => docs.find(d => Number(d.id) === Number(id))).filter(Boolean);
+                        return `<div class="rd3-hrow"><div><b>${esc(kindW)}</b> · ${esc(dt(x.at))}${x.by_name ? ' · ' + esc(x.by_name) : ''}</div>
+                            ${x.kind === 'reply' ? `<div class="rd3-hmeta">${esc(x.reply_text || '')}</div>` : `<div class="rd3-hmeta">To ${esc(x.to_addr || '—')}${x.cc_addr ? ' · CC ' + esc(x.cc_addr) : ''} · <span class="${ok ? 'ok' : 'bad'}">${ok ? (x.channel === 'email' ? 'Sent' : 'Recorded as sent') : 'FAILED — ' + esc(x.error || '')}</span></div>
+                            <div class="rd3-hmeta">Attachments: ${att.length ? att.map(d => `<a href="${BASE}/doc/${d.id}" target="_blank">${esc(d.original_name)}</a>`).join(' · ') : 'none'} · <a href="${BASE}/message/${x.id}" target="_blank">View email</a></div>`}</div>`;
+                    }).join('') : '<div class="rd3-hmeta">Nothing sent or received yet.</div>'}</div>
+                    <div class="rd3-btns"><button class="rd3-b" data-open="${j.id}">Full history and letters</button></div>
+                </details>
+            </article>`;
         }).join('');
-        tb.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openCard(Number(b.dataset.open))));
-        tb.querySelectorAll('[data-manage]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); const c = ITEMS.find(x => Number(x.id) === Number(b.dataset.manage)); if (c) manageMenu(b, c); }));
+        box.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openCard(Number(b.dataset.open))));
+        box.querySelectorAll('[data-cb]').forEach(b => b.addEventListener('click', () => openConfirmBooking(Number(b.dataset.cb))));
+        box.querySelectorAll('[data-raise]').forEach(b => b.addEventListener('click', () => raiseAgain(Number(b.dataset.raise), b)));
+        box.querySelectorAll('[data-manage]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); const c = ITEMS.find(x => Number(x.id) === Number(b.dataset.manage)); if (c) manageMenu(b, c); }));
+    }
+    function openConfirmBooking(id) {
+        const j = ITEMS.find(x => Number(x.id) === Number(id)); if (!j) return;
+        document.getElementById('cb_id').value = id;
+        document.getElementById('cb_title').textContent = 'Confirm Hotel — ' + (j.hotel_name || 'hotel');
+        document.getElementById('cb_stay').textContent = `${fmtY(j.check_in)} – ${fmtY(j.check_out)} · ${j.nights} night(s) · ${j.rooms_note || ''} · ${j.meal_plan || ''}`;
+        ['cb_ref', 'cb_with', 'cb_note', 'cb_reply'].forEach(k => document.getElementById(k).value = '');
+        document.getElementById('cb_file').value = '';
+        const t = new Date(); document.getElementById('cb_on').value = t.toISOString().slice(0, 10); document.getElementById('cb_on').max = t.toISOString().slice(0, 10);
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('m_cb')).show();
+    }
+    document.getElementById('cb_ok') && document.getElementById('cb_ok').addEventListener('click', async e => {
+        const btn = e.currentTarget, id = document.getElementById('cb_id').value;
+        const ref = document.getElementById('cb_ref').value.trim();
+        if (!ref) { toast('error', "Enter the hotel's confirmation reference."); return; }
+        if (!document.getElementById('cb_reply').value.trim() && !document.getElementById('cb_file').files[0]) { toast('error', "Record the hotel's reply: paste what it wrote, or attach its e-mail / PDF."); return; }
+        const fd = new FormData();
+        fd.append('ref', ref); fd.append('with', document.getElementById('cb_with').value.trim()); fd.append('note', document.getElementById('cb_note').value.trim());
+        fd.append('confirmed_on', document.getElementById('cb_on').value); fd.append('reply', document.getElementById('cb_reply').value.trim());
+        const f = document.getElementById('cb_file').files[0]; if (f) fd.append('evidence', f);
+        btn.disabled = true;
+        try {
+            const r = await fetch(BASE + '/card/' + id + '/confirm_booking', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd });
+            const j = await r.json();
+            if (j.status !== 200) { toast('error', j.message); return; }
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('m_cb')).hide();
+            Swal.fire({ icon: j.data && j.data.pay && j.data.pay.state === 'failed' ? 'warning' : 'success', text: j.message });
+            await refreshTour();
+        } finally { btn.disabled = false; }
+    });
+    async function raiseAgain(id, btn) {
+        btn.disabled = true;
+        try { const j = await post('/card/' + id + '/raise_payment', {}); Swal.fire({ icon: j.status === 200 ? 'success' : 'warning', text: j.message }); await refreshTour(); } finally { btn.disabled = false; }
     }
 
     // =====================================================================
@@ -1118,9 +1551,11 @@
         CARD = j.data; renderCard(); toast('success', j.message); refreshTour();
     }
 
-    document.getElementById('f_q').addEventListener('input', () => { clearTimeout(window.__hq); window.__hq = setTimeout(loadTours, 250); });
-    ['f_handler', 'f_from', 'f_to'].forEach(id => document.getElementById(id).addEventListener('change', loadTours));
-    document.getElementById('f_clear').addEventListener('click', () => { ['f_handler', 'f_q', 'f_from', 'f_to'].forEach(id => document.getElementById(id).value = ''); WHICH = 'pending'; loadTours(); });
+    document.getElementById('f_q').addEventListener('input', () => { clearTimeout(window.__hq); window.__hq = setTimeout(() => { PAGE = 1; loadTours(); }, 250); });
+    ['f_from', 'f_to'].forEach(id => { const el = document.getElementById(id); const t = el.parentElement.querySelector('.rdl-dtxt');
+        el.addEventListener('change', () => { t.textContent = el.value ? fmtY(el.value) : t.dataset.empty; el.parentElement.classList.toggle('set', !!el.value); PAGE = 1; loadTours(); });
+        el.parentElement.addEventListener('click', e => { if (e.target !== el) { e.preventDefault(); try { el.showPicker(); } catch (x) { el.focus(); } } }); });
+    document.getElementById('f_clear').addEventListener('click', () => { ['f_q', 'f_from', 'f_to'].forEach(id => document.getElementById(id).value = ''); PAGE = 1; loadTours(); });
     if (window.TfView) TfView.restoreList(false);   // tf-refresh-r1: this tab's search and filters
     const P0 = new URLSearchParams(location.search);
     if (P0.get('handler')) document.getElementById('f_handler').value = P0.get('handler');

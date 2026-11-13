@@ -3,12 +3,12 @@
     /* ---------- Tour Discounts (Pilot) — tf-discount-r2, the approved mock-up ---------- */
     .td { --td-plum:#842484; --td-plum-d:#6b1d6b; --td-plum-soft:#f7edf7; --td-green:#78b848; --td-green-d:#67a23c;
           --td-ink:#241f28; --td-muted:#6b6472; --td-line:#e4dfe8; --td-bg:#faf8fb; --td-card:#fff;
-          --td-amber-soft:#fdf3e1; --td-amber:#9a6b12; --td-red:#b23a32; --td-red-soft:#fbe9e7;
+          --td-amber-soft:#ffffff; --td-amber:#1a1a1a; --td-red:#b23a32; --td-red-soft:#fbe9e7;
           color:var(--td-ink); font-size:14px; }
     .td h4, .td h5, .td h6 { color:var(--td-plum); margin:0; font-weight:700; }
     .td .td-head { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
     .td .td-head h4 { font-size:26px; letter-spacing:-.01em; }
-    .td .td-mode { background:var(--td-amber-soft); color:var(--td-amber); border-radius:999px; padding:6px 14px; font-size:12.5px; font-weight:600; }
+    .td .td-mode { background:var(--td-amber-soft); border:1px solid #d9d3dd; color:var(--td-amber); border-radius:999px; padding:6px 14px; font-size:12.5px; font-weight:600; }
     .td .card2 { background:var(--td-card); border:1px solid var(--td-line); border-radius:14px; box-shadow:0 1px 3px rgba(36,31,40,.06); overflow:hidden; margin-bottom:16px; }
     .td .card2 > .hd { background:var(--td-plum); color:#fff; padding:13px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
     .td .card2 > .hd h5 { color:#fff; font-size:15.5px; }
@@ -47,7 +47,7 @@
     .td .done h5 { font-size:23px; color:#2c7a1f; margin-top:16px; line-height:1.35; }
     .td .done h5 .ty { font-size:20px; font-weight:600; }
     .td .done .sub { color:var(--td-muted); margin-top:5px; }
-    .td .testnote { background:var(--td-amber-soft); color:var(--td-amber); border-radius:10px; padding:11px 15px; font-size:13px; font-weight:600; margin:18px 0; display:flex; gap:9px; align-items:center; }
+    .td .testnote { background:var(--td-amber-soft); border:1px solid #d9d3dd; color:var(--td-amber); border-radius:10px; padding:11px 15px; font-size:13px; font-weight:600; margin:18px 0; display:flex; gap:9px; align-items:center; }
     .td .testnote.ok { background:#e4f4ea; color:#1f8a4c; }
     .td .testnote .ic { font-size:15px; line-height:1; }
     .td .panel { border:1px solid var(--td-line); border-radius:12px; overflow:hidden; }
@@ -67,7 +67,7 @@
     .td .muted { color:var(--td-muted); font-size:12.5px; }
     .td .mono { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric:tabular-nums; }
     .td .pill { display:inline-block; font-size:11px; font-weight:700; border-radius:999px; padding:3px 11px; }
-    .td .pill-amber { background:var(--td-amber-soft); color:var(--td-amber); }
+    .td .pill-amber { background:var(--td-amber-soft); border:1px solid #d9d3dd; color:var(--td-amber); }
     .td .pill-green { background:#e4f4ea; color:#1f8a4c; }
     .td .pill-grey  { background:#eceaef; color:var(--td-muted); }
     .td .pill-plum  { background:var(--td-plum-soft); color:var(--td-plum); }

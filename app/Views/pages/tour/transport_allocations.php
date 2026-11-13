@@ -8,7 +8,7 @@
 $esc = static fn ($s) => esc((string) $s);
 ?>
 <style>
-    .tf { --tf-navy:#1e3553; --tf-teal:#0f8b7e; --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1; --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
+    .tf { --tf-navy:#1e3553; --tf-teal:#0f8b7e; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff; --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --p:#842484; --g:#78b848; --gold:#e0a526; color:var(--tf-ink); }
     .tf .tf-title { display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px; }
     .tf .tf-title h4 { margin:0; font-weight:700; color:var(--p); }
@@ -24,7 +24,7 @@ $esc = static fn ($s) => esc((string) $s);
     .tf .rcard .hd .meta { color:var(--tf-muted); font-size:12.5px; }
     .tf .rcard .bd { padding:14px 16px; }
     .tf .pill { display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:700; }
-    .tf .pill-p { background:rgba(132,36,132,.12); color:var(--p); } .tf .pill-g { background:var(--tf-green-soft); color:var(--tf-green); } .tf .pill-a { background:var(--tf-amber-soft); color:var(--tf-amber); } .tf .pill-r { background:var(--tf-red-soft); color:var(--tf-red); } .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
+    .tf .pill-p { background:rgba(132,36,132,.12); color:var(--p); } .tf .pill-g { background:var(--tf-green-soft); color:var(--tf-green); } .tf .pill-a { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); } .tf .pill-r { background:var(--tf-red-soft); color:var(--tf-red); } .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
     .tf .prop { display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; padding:14px; border:1px solid rgba(120,184,72,.6); background:rgba(120,184,72,.08); border-radius:12px; }
     .tf .prop .who { flex:1; min-width:260px; }
     .tf .prop .who b { font-size:16px; }
@@ -34,7 +34,7 @@ $esc = static fn ($s) => esc((string) $s);
     .tf .btn-g { background:var(--g); color:#1f2a14; border:0; font-weight:700; } .tf .btn-g:hover { filter:brightness(1.06); color:#1f2a14; }
     .tf .paybox { padding:10px 12px; border:1px solid rgba(132,36,132,.25); background:rgba(132,36,132,.04); border-radius:10px; font-size:13px; }
     .tf .paybox b.amt { color:var(--p); }
-    .tf .carrate { margin-top:10px; padding:10px 12px; border:1px dashed var(--gold); background:#fffaf0; border-radius:10px; font-size:13px; }
+    .tf .carrate { margin-top:10px; padding:10px 12px; border:1px dashed var(--gold); background:#ffffff; border-radius:10px; font-size:13px; }
     .tf .carrate b.amt { font-size:15px; color:var(--p); }
     .tf .nobody { padding:12px 14px; border:1px dashed var(--tf-red); background:var(--tf-red-soft); border-radius:10px; font-size:13px; }
     .tf table.cand { width:100%; font-size:12.5px; margin-top:10px; }

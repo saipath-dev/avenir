@@ -24,7 +24,7 @@ $invoices = array_values(array_unique(array_filter(array_merge([$x['invoice_no']
 <style> body { font-family: Arial, Helvetica, sans-serif; color:<?= $INK ?>; margin:16px; max-width:800px; } .toolbar { display:flex; gap:8px; margin-bottom:12px; } .toolbar a, .toolbar button { font:inherit; font-size:13px; padding:7px 12px; border:1px solid <?= $LINE ?>; border-radius:8px; background:#fff; color:<?= $INK ?>; text-decoration:none; cursor:pointer; } .toolbar a.main { background:<?= $P ?>; border-color:<?= $P ?>; color:#fff; font-weight:bold; } @media print { .toolbar { display:none; } }</style></head><body>
 <div class="toolbar"><a class="main" href="<?= base_url('tour/tour_payment_dashboard/remittance_pdf/' . (int) $v['Vnum']) ?>" target="_blank">⬇ PDF</a><button onclick="window.print()">Print</button><a href="javascript:history.back()">← Back</a>
 <?php if ($rem): ?><span style="font-size:12px; color:<?= $MUTED ?>; align-self:center;">Status: <b><?= $e($rem['status']) ?></b><?= $rem['sent_at'] ? ' · sent ' . $dt($rem['sent_at'], 'j M Y H:i') . ' to ' . $e($rem['to_email']) : '' ?></span><?php endif; ?>
-<?php if (!empty($no_pdf_lib)): ?><span style="font-size:12px;color:#b7791f;">The PDF library is not installed on this server yet — use Print → Save as PDF.</span><?php endif; ?></div>
+<?php if (!empty($no_pdf_lib)): ?><span style="font-size:12px;color:#1a1a1a;">The PDF library is not installed on this server yet — use Print → Save as PDF.</span><?php endif; ?></div>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0" width="100%" style="font-family:<?= $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif' ?>; color:<?= $INK ?>; font-size:11px;">
 <tr><td width="58%" style="padding:12px; background:<?= $P ?>; color:#fff;">

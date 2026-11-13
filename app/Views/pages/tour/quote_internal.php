@@ -24,7 +24,7 @@ $ref  = ($c['inquiry_no'] ?? '') . ($q ? ' / v' . (int) $q['version'] : ' / prev
 $fmtD = static fn ($d) => $d ? date('j M Y', strtotime((string) $d)) : '—';
 $n2   = static fn ($v) => $v === null ? '—' : number_format((float) $v, 2);
 $n1   = static fn ($v) => $v === null ? '—' : number_format((float) $v, 1);
-$P = '#842484'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbe6'; $RED = '#b23a32'; $AMB = '#b7791f'; $GRN = '#1f8a4c';
+$P = '#842484'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbe6'; $RED = '#b23a32'; $AMB = '#1a1a1a'; $GRN = '#1f8a4c';
 $th = 'style="font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:' . $MUTED . '; border-bottom:1px solid ' . $LINE . '; text-align:left; padding:5px 6px;"';
 $thr = 'style="font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:' . $MUTED . '; border-bottom:1px solid ' . $LINE . '; text-align:right; padding:5px 6px;"';
 $td = 'style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; vertical-align:top;"';
@@ -53,7 +53,7 @@ $mixShort = static function (array $m): string {
     .bar a:hover, .bar button:hover { background:#f4f6f9; }
     .bar .primary { background:linear-gradient(135deg, #e90c8b 0%, #8f2a8d 100%); color:#fff; border:0; }
     .bar .note { margin-left:auto; font-size:12px; color:<?= $MUTED ?>; }
-    .bar .preview { background:#fdf3e1; color:#b7791f; border-color:#f0d9a8; }
+    .bar .preview { background:#ffffff; color:#1a1a1a; border-color:#d9d3dd; }
     .sheet { width:210mm; margin:22px auto; background:#fff; padding:14mm 14mm; box-shadow:0 8px 30px rgba(0,0,0,.08); box-sizing:border-box; }
     table { border-collapse:collapse; width:100%; }
     @media print { body { background:#fff; } .bar { display:none; } .sheet { margin:0; box-shadow:none; width:auto; padding:0; } }
@@ -66,7 +66,7 @@ $mixShort = static function (array $m): string {
     <?php if (!empty($preview)): ?><span class="preview" style="padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600">Preview — follows the inquiry as it stands</span>
     <?php elseif ($q): ?><span class="note">Version <?= (int) $q['version'] ?> · <?= esc($q['status']) ?> · frozen <?= esc(substr((string) $q['created_at'], 0, 16)) ?> by <?= esc((string) $q['created_by']) ?></span><?php endif; ?>
 </div>
-<?php if (!empty($no_pdf_lib)): ?><div style="width:210mm;margin:14px auto -8px;font-size:12px;color:#b7791f;background:#fdf3e1;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
+<?php if (!empty($no_pdf_lib)): ?><div style="width:210mm;margin:14px auto -8px;font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
 <div class="sheet">
 <?php endif; ?>
 
@@ -86,7 +86,7 @@ $mixShort = static function (array $m): string {
 </table>
 <?php endif; ?>
 <?php if (!empty($c['warnings'])): ?>
-<table cellpadding="5" cellspacing="0" style="margin-top:8px; border:1px solid #f0d9a8; background:#fdf3e1;">
+<table cellpadding="5" cellspacing="0" style="margin-top:8px; border:1px solid #d9d3dd; background:#ffffff;">
     <tr><td style="font-size:11px; color:<?= $AMB ?>;"><b>Worth an eye:</b><br>
     <?php foreach ($c['warnings'] as $wn): /* not $w: that is the column-width helper the tables below use */ ?>&#8226; <?= esc($wn['label']) ?><br><?php endforeach; ?></td></tr>
 </table>
@@ -276,7 +276,7 @@ $mx = $c['pax_matrix'] ?? null;
 </table>
 
 <?php if ($mgmt): ?>
-<table cellpadding="5" cellspacing="0" style="margin-top:10px; border:1px solid #f0d9a8; background:#fdf3e1;">
+<table cellpadding="5" cellspacing="0" style="margin-top:10px; border:1px solid #d9d3dd; background:#ffffff;">
     <tr><td style="font-size:11px; color:<?= $AMB ?>;"><b>MANAGEMENT ONLY — markup &amp; profit.</b> Not shown to the desk, never on the client quotation.</td></tr>
     <tr><td style="font-size:11.5px;">Markup <b><?= $c['markup']['pct'] !== null ? $n2($c['markup']['pct']) . '%' : 'not set' ?></b> (<?= esc($c['markup']['source']) ?><?= $c['markup']['set_by'] ? ', set by ' . esc($c['markup']['set_by']) . ' ' . esc(substr((string) $c['markup']['set_at'], 0, 16)) : '' ?>)
         &nbsp;·&nbsp; Profit <b style="color:<?= $GRN ?>;"><?= $c['markup']['profit_usd'] !== null ? 'USD ' . $n2($c['markup']['profit_usd']) : '—' ?></b></td></tr>

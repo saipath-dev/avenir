@@ -376,6 +376,8 @@ final class TourMailer
             }
             $subject = null;
             $body = null;
+            $voucher = null;
+            $rooming = null;
             // tf-autosend-r1: an automatic send on an installation where automatic sending is off — the letter is
             // still written and kept on the stay, with the reason; the desk sends it when it chooses
             if ($why === null && $automatic && !AutoSend::on($this->db)) {
@@ -393,13 +395,29 @@ final class TourMailer
                     $doc = $render($id, $sender);
                     $subject = $doc['subject'];
                     $body = $doc['body'];
-                    $r = HotelMail::send($to, $subject, $body, $cc);
-                    if (!empty($r['ok'])) {
-                        $svc->hotelRequestSent($id, 'email', $to, implode(', ', $cc), $subject, $body, $this->actor);
-                        $out[] = ['job_id' => $id, 'hotel' => $hotel, 'status' => 'sent', 'to' => $to, 'why' => null];
-                        continue;
+                    // tf-resdesk-r2: the Hotel Booking Voucher (PDF) goes with the letter, and is kept with the copy sent
+                    $voucher = null;
+                    try {
+                        HotelBookingDocs::ensure($this->db);
+                        $both = (new HotelBookingDocs($this->db, $this->actor))->bookingDocs($svc, $id, $sender);
+                        $voucher = $both['request'];
+                        $rooming = $both['rooming'];
+                    } catch (\Throwable $e) {
+                        $voucher = null;
+                        $why = 'The Hotel Booking Voucher could not be made: ' . $e->getMessage();
                     }
-                    $why = (string) ($r['error'] ?? 'The mail server did not take it.');
+                    if ($voucher !== null) {
+                        // tf-resdesk-r2: the Hotel Booking Request and the Hotel Rooming List go together, with the same control number
+                        $r = HotelMail::send($to, $subject, $body, $cc, [['path' => $voucher['path'], 'name' => $voucher['original_name']], ['path' => $rooming['path'], 'name' => $rooming['original_name']]]);
+                        if (!empty($r['ok'])) {
+                            $svc->hotelRequestSent($id, 'email', $to, implode(', ', $cc), $subject, $body, $this->actor);
+                            $this->linkVoucher($id, (int) $voucher['id']);
+                            $this->linkVoucher($id, (int) $rooming['id']);
+                            $out[] = ['job_id' => $id, 'hotel' => $hotel, 'status' => 'sent', 'to' => $to, 'why' => null];
+                            continue;
+                        }
+                        $why = (string) ($r['error'] ?? 'The mail server did not take it.');
+                    }
                 } catch (\Throwable $e) {
                     $why = MailServer::readable($e->getMessage());
                 }
@@ -410,12 +428,30 @@ final class TourMailer
             // not sent: kept on the stay with the reason — it is on the "Mails not sent" alert until it goes
             try {
                 $svc->recordHotelMessage($id, 'request', 'email', $to, $cc ? implode(', ', $cc) : null, $subject, $body, 'failed', mb_substr((string) $why, 0, 400), $this->actor);
+                if (!empty($voucher['id'])) {
+                    $this->linkVoucher($id, (int) $voucher['id']);   // tf-resdesk-r2: the documents that would have gone
+                    if (!empty($rooming['id'])) {
+                        $this->linkVoucher($id, (int) $rooming['id']);
+                    }
+                }
                 $svc->event($intakeId, $tourId, 'hotel', $id, 'request_not_sent', null, null, 'Booking request not sent: ' . $why);
             } catch (\Throwable $e) {
             }
             $out[] = ['job_id' => $id, 'hotel' => $hotel, 'status' => 'not_sent', 'to' => $to, 'why' => $why];
         }
         return $out;
+    }
+
+    /** tf-resdesk-r2: the voucher version names the message it went with (the latest message of the stay). */
+    private function linkVoucher(int $jobId, int $docId): void
+    {
+        try {
+            $m = $this->db->query('SELECT MAX(id) AS id FROM tf_hotel_message WHERE job_id = ?', [$jobId])->getRowArray();
+            if (!empty($m['id'])) {
+                (new HotelBookingDocs($this->db, $this->actor))->linkMessage($docId, (int) $m['id']);
+            }
+        } catch (\Throwable $e) {
+        }
     }
 
     private function intakeOf(int $tourId): int

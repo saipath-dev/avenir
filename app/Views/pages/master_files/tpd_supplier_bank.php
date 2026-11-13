@@ -10,7 +10,7 @@ $show = !empty($can_edit) || !empty($can_verify);
     .tpdm .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tpdm .btn-p:hover { background:#8f2a8d; color:#fff; }
     .tpdm .card { border:1px solid var(--line); border-radius:14px; }
     .tpdm .pill { display:inline-block; border-radius:999px; padding:2px 9px; font-size:11.5px; font-weight:700; }
-    .tpdm .pill.verified { background:#e4f4ea; color:#1f8a4c; } .tpdm .pill.unverified { background:#fdf3e1; color:#b7791f; } .tpdm .pill.changed { background:#fbe9e7; color:#b23a32; } .tpdm .pill.inactive { background:#eef0f3; color:#6c757d; }
+    .tpdm .pill.verified { background:#e4f4ea; color:#1f8a4c; } .tpdm .pill.unverified { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; } .tpdm .pill.changed { background:#fbe9e7; color:#b23a32; } .tpdm .pill.inactive { background:#eef0f3; color:#6c757d; }
     .tpdm .mono { font-family: ui-monospace, Menlo, Consolas, monospace; }
     .tpdm td, .tpdm th { font-size:13px; }
 </style>

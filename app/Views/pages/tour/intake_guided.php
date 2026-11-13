@@ -3,7 +3,7 @@
     /* ---------- Guided Inquiry (tf-guided-r2) — the approved palette ---------- */
     .gi { --gi-plum:#842484; --gi-plum-d:#6b1d6b; --gi-plum-soft:#f7edf7; --gi-green:#78b848; --gi-green-d:#67a23c;
           --gi-ink:#241f28; --gi-muted:#6b6472; --gi-line:#e4dfe8; --gi-bg:#faf8fb; --gi-card:#fff;
-          --gi-amber-soft:#fdf3e1; --gi-amber:#9a6b12; --gi-red:#b23a32; --gi-red-soft:#fbe9e7;
+          --gi-amber-soft:#ffffff; --gi-amber:#1a1a1a; --gi-red:#b23a32; --gi-red-soft:#fbe9e7;
           color:var(--gi-ink); font-size:14px; }
     .gi h4, .gi h5, .gi h6 { color:var(--gi-plum); margin:0; font-weight:700; }
     .gi .gi-head { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
@@ -52,9 +52,9 @@
     .gi .pill { display:inline-block; font-size:11px; font-weight:700; border-radius:999px; padding:3px 11px; }
     .gi .pill-plum { background:var(--gi-plum-soft); color:var(--gi-plum); }
     .gi .pill-green { background:#e4f4ea; color:#1f8a4c; }
-    .gi .pill-amber { background:var(--gi-amber-soft); color:var(--gi-amber); }
+    .gi .pill-amber { background:var(--gi-amber-soft); border:1px solid #d9d3dd; color:var(--gi-amber); }
     .gi .pill-red { background:var(--gi-red-soft); color:var(--gi-red); }
-    .gi .note { background:var(--gi-amber-soft); color:var(--gi-amber); border-radius:10px; padding:11px 15px; font-size:13px; font-weight:600; margin-bottom:16px; }
+    .gi .note { background:var(--gi-amber-soft); border:1px solid #d9d3dd; color:var(--gi-amber); border-radius:10px; padding:11px 15px; font-size:13px; font-weight:600; margin-bottom:16px; }
     .gi .err { background:var(--gi-red-soft); color:var(--gi-red); border-radius:10px; padding:11px 15px; font-size:13.5px; margin-bottom:14px; }
     .gi .sec { border:1px solid var(--gi-line); border-radius:12px; margin-bottom:10px; overflow:hidden; }
     .gi .sec > summary { cursor:pointer; list-style:none; padding:13px 16px; display:flex; justify-content:space-between; align-items:center; font-weight:700; color:var(--gi-plum); background:var(--gi-bg); gap:12px; }

@@ -2,7 +2,7 @@
 <style>
     /* ---------- Place to Visit / Entrance Fee Master (tf-safari-r1 redesign) — Avenir orchid #842484 and green #78b848 ---------- */
     .tf { --av-orchid:#842484; --av-orchid-2:#6d1d6d; --av-orchid-soft:#f6e9f6; --av-green:#78b848; --av-green-2:#5f9a36; --av-green-soft:#eef7e6;
-          --tf-amber:#b7791f; --tf-amber-soft:#fdf3e1; --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-blue-soft:#eef1f8;
+          --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff; --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-blue-soft:#eef1f8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#e2e6ec; --tf-bg:#f5f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
     .tf .tf-card-h { padding:12px 16px; border-bottom:1px solid var(--tf-line); display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
@@ -39,7 +39,7 @@
     .tf .pill { display:inline-block; font-size:10.5px; font-weight:600; border-radius:20px; padding:2px 9px; line-height:1.6; white-space:nowrap; }
     .tf .pill-green { background:var(--av-green-soft); color:var(--av-green-2); }
     .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
-    .tf .pill-amber { background:var(--tf-amber-soft); color:var(--tf-amber); }
+    .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
     .tf .pill-red { background:var(--tf-red-soft); color:var(--tf-red); }
     .tf .pill-orchid { background:var(--av-orchid-soft); color:var(--av-orchid); }
     .tf .missing { color:var(--tf-red); font-weight:600; font-size:12px; }

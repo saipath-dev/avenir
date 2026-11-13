@@ -4162,12 +4162,12 @@
                 var box = $('.rate_flags[data-date="' + date + '"]');
                 if (!box.length) { return; }
                 var esc = function(t) { return $('<div>').text(t === null || t === undefined ? '' : t).html(); };
-                var colour = { red: '#b23a32', amber: '#b7791f', blue: '#1e3553', green: '#1f8a4c' };
+                var colour = { red: '#b23a32', amber: '#1a1a1a', blue: '#1e3553', green: '#1f8a4c' };
                 var html = '';
                 if (data && data.status == 200 && data.source === 'panel') {
                     html += '<div style="color:#1f8a4c;" title="Priced by the Hotel Rates panel' + (data.market ? ' for market ' + esc(data.market) : '') + '">&#10003; ' + esc(data.plan || 'plan') + (data.season ? ' &middot; ' + esc(data.season) : '') + '</div>';
                 } else if (data && data.status == 200) {
-                    html += '<div style="color:#b7791f;" title="No approved plan in the Hotel Rates panel covers this night — the old Hotel Rate row was used. It is listed in Hotel Incomplete Work.">&#9888; old rate row &mdash; no plan</div>';
+                    html += '<div style="color:#1a1a1a;" title="No approved plan in the Hotel Rates panel covers this night — the old Hotel Rate row was used. It is listed in Hotel Incomplete Work.">&#9888; old rate row &mdash; no plan</div>';
                 } else if (data) {
                     html += '<div style="color:#b23a32;" title="Neither the Hotel Rates panel nor the old rows price this night. Listed in Hotel Incomplete Work.">&#9888; no rate found</div>';
                 }

@@ -9,7 +9,7 @@
 $sapBase = base_url('master_files/staff');
 ?>
 <style>
-.sap{--p:#842484;--p2:#a64aa6;--pl:#f6eef6;--pll:#fbf7fb;--g:#78b848;--gd:#5a9a2e;--gl:#eef7e6;--r:#c0392b;--rl:#fbeceb;--a:#b7791f;--al:#fdf4e3;--ink:#1f1a24;--mut:#6b6272;--ln:#e8e1ea;--bg:#ffffff;font-size:14px;color:var(--ink)}
+.sap{--p:#842484;--p2:#a64aa6;--pl:#f6eef6;--pll:#fbf7fb;--g:#78b848;--gd:#5a9a2e;--gl:#eef7e6;--r:#c0392b;--rl:#fbeceb;--a:#1a1a1a;--al:#ffffff;--ink:#1f1a24;--mut:#6b6272;--ln:#e8e1ea;--bg:#ffffff;font-size:14px;color:var(--ink)}
 .sap *{box-sizing:border-box}
 .sap .sap-top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:4px 0 14px}
 .sap .sap-mode{display:inline-flex;background:var(--pl);border-radius:999px;padding:4px;gap:4px}
@@ -104,7 +104,7 @@ $sapBase = base_url('master_files/staff');
 .sap-modal ul{margin:0;padding-left:18px}
 .sap-modal li{margin:3px 0}
 .sap-modal textarea{width:100%;min-height:76px;border:1px solid #d9cfdc;border-radius:10px;padding:10px;font-size:14px}
-.sap-modal .warn{background:#fdf4e3;border:1px solid #f2dfb5;color:#7a5512;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px}
+.sap-modal .warn{background:#ffffff;border:1px solid #f2dfb5;color:#7a5512;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px}
 .sap-modal .err{background:#fbeceb;border:1px solid #f2cfcb;color:#9b2c21;border-radius:10px;padding:10px 12px;margin-top:10px}
 .sap-modal .bq{border:1px solid #d9cfdc;background:#fff;border-radius:10px;padding:9px 16px;font-weight:600;cursor:pointer}
 .sap-modal .bp{border:0;background:#78b848;color:#fff;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer}
@@ -298,7 +298,7 @@ $sapBase = base_url('master_files/staff');
         const affected = list.filter(s => now(s) !== to && !(to === 'open' && s.role));
         const title = scope === 'cat' ? MAP.find(c => c.key === key).title : (() => { const [ck, tk] = key.split('.'); return MAP.find(c => c.key === ck).tasks.find(t => t.key === tk).title; })();
         if (!affected.length) { Swal.fire({ icon: 'info', text: 'Nothing to change: every switchable row in "' + title + '" is already ' + LBL[to] + (skipped.length ? ' (payment roles are never opened from a heading)' : '') + '.' }); return; }
-        const html = '<div style="text-align:left"><p>This will mark <b>' + affected.length + '</b> row(s) as <b>' + LBL[to] + '</b> (not saved until you review):</p><ul style="max-height:240px;overflow:auto">' + affected.map(s => '<li>' + esc(s.desc) + ' <span class="url" style="font-family:monospace;color:#842484">' + esc(s.url) + '</span></li>').join('') + '</ul>' + (skipped.length ? '<div style="background:#fdf4e3;border:1px solid #f2dfb5;border-radius:8px;padding:8px;margin-top:8px">Not included — payment roles are opened only on their own row:<br>' + skipped.map(s => esc(s.desc) + ' (role ' + s.role + ')').join('<br>') + '</div>' : '') + '</div>';
+        const html = '<div style="text-align:left"><p>This will mark <b>' + affected.length + '</b> row(s) as <b>' + LBL[to] + '</b> (not saved until you review):</p><ul style="max-height:240px;overflow:auto">' + affected.map(s => '<li>' + esc(s.desc) + ' <span class="url" style="font-family:monospace;color:#842484">' + esc(s.url) + '</span></li>').join('') + '</ul>' + (skipped.length ? '<div style="background:#ffffff;border:1px solid #f2dfb5;border-radius:8px;padding:8px;margin-top:8px">Not included — payment roles are opened only on their own row:<br>' + skipped.map(s => esc(s.desc) + ' (role ' + s.role + ')').join('<br>') + '</div>' : '') + '</div>';
         Swal.fire({ title: LBL[to] + ' — ' + title, html, showCancelButton: true, confirmButtonText: 'Add to my changes', confirmButtonColor: '#842484' }).then(r => { if (!r.isConfirmed) return; affected.forEach(s => stage(s.id, to, true)); renderPerson(); });
     }
 

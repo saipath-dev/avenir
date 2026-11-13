@@ -50,7 +50,7 @@ $manyReq = $link && !$r && count($link['requests']) > 1;
 <div class="toolbar">
     <a class="main" href="?pdf=1" target="_blank">⬇ PDF</a><button onclick="window.print()">Print</button><a href="javascript:history.back()">← Back</a>
     <span style="color:<?= $MUTED ?>; font-size:12px;">Printed <?= date('j M Y H:i') ?> by <?= $e($d['perms']['admin'] ?? false ? session()->get('username') : session()->get('username')) ?></span>
-    <?php if (!empty($no_pdf_lib)): ?><span style="font-size:12px;color:#b7791f;">The PDF library is not installed on this server yet — use Print → Save as PDF.</span><?php endif; ?>
+    <?php if (!empty($no_pdf_lib)): ?><span style="font-size:12px;color:#1a1a1a;">The PDF library is not installed on this server yet — use Print → Save as PDF.</span><?php endif; ?>
 </div>
 <?php endif; ?>
 <table cellpadding="0" cellspacing="0" width="100%" style="font-family:<?= $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif' ?>; color:<?= $INK ?>; font-size:10.5px;">
@@ -127,7 +127,7 @@ $manyReq = $link && !$r && count($link['requests']) > 1;
         </table></td><td width="50%">
         <table cellpadding="0" cellspacing="0" width="100%">
             <?= $kv('Currency / SWIFT', $e(trim($sup['currency'] . ($sup['swift'] ? ' · ' . $sup['swift'] : '')))) ?>
-            <?= $kv('Verification', $sup['status'] === 'verified' ? '<b style="color:#1f8a4c;">Verified</b> by ' . $e($sup['verified_by']) . ' on ' . $dt($sup['verified_at'], 'j M Y H:i') : ($sup['status'] === 'changed' ? '<b style="color:#b23a32;">CHANGED since verification — confirm before paying</b>' : '<b style="color:#b7791f;">Not verified — confirm before paying</b>')) ?>
+            <?= $kv('Verification', $sup['status'] === 'verified' ? '<b style="color:#1f8a4c;">Verified</b> by ' . $e($sup['verified_by']) . ' on ' . $dt($sup['verified_at'], 'j M Y H:i') : ($sup['status'] === 'changed' ? '<b style="color:#b23a32;">CHANGED since verification — confirm before paying</b>' : '<b style="color:#1a1a1a;">Not verified — confirm before paying</b>')) ?>
             <?= $kv('Remittance e-mail', $e($sup['remittance_email'])) ?>
             <?= $kv('Invoice e-mail', $e($sup['invoice_email'])) ?>
         </table></td></tr>

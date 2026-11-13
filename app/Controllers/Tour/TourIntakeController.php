@@ -1488,7 +1488,19 @@ class TourIntakeController extends BaseController
                 return $this->json(['status' => 403, 'ok' => false, 'message' => $auth['message']]);
             }
             $tourSvc = new TourService($this->db(), $this->user(), $svc);
-            $tour = $tourSvc->confirm((int) $id);
+            // tf-resdesk-r2: one Confirm at a time per inquiry — a double click or a second screen pressing Confirm at the
+            // same moment waits here and is then refused by confirm() ("Already confirmed"), so no second order and no
+            // second hotel e-mail is made. The lock is released when this request ends (below, or by MySQL at disconnect).
+            $lock = $this->db()->query('SELECT GET_LOCK(?, 30) AS l', ['tf_confirm_tour_' . (int) $id])->getRowArray();
+            if ((int) ($lock['l'] ?? 0) !== 1) {
+                return $this->json(['status' => 409, 'ok' => false, 'message' => 'This inquiry is being confirmed at this moment from another screen. Reload in a minute; nothing was changed here.']);
+            }
+            try {
+                $tour = $tourSvc->confirm((int) $id);
+            } catch (\Throwable $e) {
+                $this->db()->query('SELECT RELEASE_LOCK(?)', ['tf_confirm_tour_' . (int) $id]);
+                throw $e;
+            }
             // schema 40: each restaurant of the Meal Master on the tour is booked at once — its booking voucher issued and emailed
             // from this person's mailbox (never in the way of the confirmation: what could not go is said, for the Activities desk)
             $booked = $this->bookRestaurants($tourSvc, (int) $tour['id']);
@@ -1505,6 +1517,7 @@ class TourIntakeController extends BaseController
             } catch (\Throwable $e) {
                 // the confirmation stands; the tour's own trail line was written by the service
             }
+            $this->db()->query('SELECT RELEASE_LOCK(?)', ['tf_confirm_tour_' . (int) $id]);
             return $this->json([
                 'status'  => 200,
                 'message' => "Confirmed as tour {$tour['tour_no']}. One job is on Hotel Bookings ({$h} hotel stay(s), {$a} activity or ticket line(s)) and one on Transport ({$t} vehicle(s)). The inquiry is now read-only." . self::bookedText($booked) . ($hotelMails ? ' ' . TourMailController::resultText($hotelMails) : ''),

@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Tactical rates & Early Bird offers (tf-offers-r1) — the Hotel Rates panel's tokens, read-only ---------- */
-    .hro { --o-navy:#1e3553; --o-teal:#0f8b7e; --o-amber:#b7791f; --o-amber-soft:#fdf3e1; --o-red:#b23a32; --o-red-soft:#fbe9e7;
+    .hro { --o-navy:#1e3553; --o-teal:#0f8b7e; --o-amber:#1a1a1a; --o-amber-soft:#ffffff; --o-red:#b23a32; --o-red-soft:#fbe9e7;
            --o-green:#1f8a4c; --o-green-soft:#e4f4ea; --o-blue-soft:#e6eef8; --o-violet:#6d28d9; --o-violet-soft:#efe9fb; --o-ink:#1d2733; --o-muted:#5f6f80; --o-line:#dfe5ec;
            --o-bg:#f4f6f9; --o-card:#fff; --o-radius:10px; color:var(--o-ink); }
     .hro .o-title { display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:14px; }
@@ -43,12 +43,12 @@
     .hro .pill { display:inline-block; font-size:10.5px; font-weight:600; border-radius:20px; padding:2px 8px; line-height:1.6; white-space:nowrap; }
     .hro .pill-green { background:var(--o-green-soft); color:var(--o-green); }
     .hro .pill-red { background:var(--o-red-soft); color:var(--o-red); }
-    .hro .pill-amber { background:var(--o-amber-soft); color:var(--o-amber); }
+    .hro .pill-amber { background:var(--o-amber-soft); border:1px solid #d9d3dd; color:var(--o-amber); }
     .hro .pill-blue { background:var(--o-blue-soft); color:var(--o-navy); }
     .hro .pill-violet { background:var(--o-violet-soft); color:var(--o-violet); }
     .hro .pill-grey { background:#eef1f5; color:var(--o-muted); }
     .hro .empty { color:var(--o-muted); font-size:12.5px; padding:16px 0; text-align:center; }
-    .hro .not-installed { padding:14px 16px; border-radius:8px; background:var(--o-amber-soft); color:var(--o-amber); font-size:13px; }
+    .hro .not-installed { padding:14px 16px; border-radius:8px; background:var(--o-amber-soft); border:1px solid #d9d3dd; color:var(--o-amber); font-size:13px; }
     .hro .loading { color:var(--o-muted); font-size:12px; }
     .hro .fav { color:#e0a100; }
 </style>

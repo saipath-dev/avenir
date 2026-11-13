@@ -9,7 +9,7 @@
 ?>
 <style>
     .ta { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#842484; --p-soft:rgba(132,36,132,.08);
-          --g:#78b848; --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber-soft:#fdf3e1; --amber:#b7791f; --red:#8a1c30; color:var(--ink); font-size:14px; }
+          --g:#78b848; --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber-soft:#ffffff; --amber:#1a1a1a; --red:#8a1c30; color:var(--ink); font-size:14px; }
     .ta .band { background:var(--p); color:#fff; border-radius:14px; padding:18px 22px; margin-bottom:18px; }
     .ta .band .eyebrow { font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.85; font-weight:700; }
     .ta .band h4 { margin:6px 0 4px; font-weight:800; font-size:24px; color:#fff; }
@@ -20,7 +20,7 @@
     .ta .req { border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:12px; }
     .ta .req.done { background:#fbfcfe; }
     .ta .pill { display:inline-block; border-radius:999px; padding:3px 10px; font-size:11px; font-weight:800; letter-spacing:.04em; }
-    .ta .p-wait { background:var(--amber-soft); color:var(--amber); }
+    .ta .p-wait { background:var(--amber-soft); border:1px solid #d9d3dd; color:var(--amber); }
     .ta .p-ok { background:var(--g-soft); color:var(--g-ink); }
     .ta .p-no { background:#fbe9e7; color:var(--red); }
     .ta .btn-g { background:var(--g); border:0; color:#fff; font-weight:700; border-radius:10px; padding:9px 18px; font-size:14px; }

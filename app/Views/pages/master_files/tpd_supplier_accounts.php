@@ -26,7 +26,7 @@ $counts = ['all' => count($rows), 'missing' => 0, 'incomplete' => 0, 'unverified
     .sar .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
     .sar .mut { color:var(--mut); font-weight:400; }
     .sar .pill { display:inline-block; border-radius:999px; padding:2px 9px; font-size:11px; font-weight:700; white-space:nowrap; }
-    .sar .pill.verified { background:#e4f4ea; color:#1f8a4c; } .sar .pill.unverified { background:#fdf3e1; color:#b7791f; } .sar .pill.changed { background:#fbe9e7; color:#b23a32; }
+    .sar .pill.verified { background:#e4f4ea; color:#1f8a4c; } .sar .pill.unverified { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; } .sar .pill.changed { background:#fbe9e7; color:#b23a32; }
     .sar .pill.inactive { background:#eef0f3; color:#6c757d; } .sar .pill.default { background:var(--soft); color:var(--p); } .sar .pill.incomplete { background:#fde8e8; color:#9b1c1c; } .sar .pill.missing { background:#fde8e8; color:#9b1c1c; }
     .sar .act .btn { padding:2px 8px; font-size:12px; }
     .sar .hist td { font-size:12px; }

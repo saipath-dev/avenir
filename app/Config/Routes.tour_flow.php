@@ -96,6 +96,15 @@ $routes->group('tour/hotel_bookings', ['filter' => ['UserSessionFilter', 'UserPe
     $routes->get('card/(:num)', [TourDeskController::class, 'hotelCard']);
     // the booking request and the voucher: a page to print, or the body that goes by email
     $routes->get('card/(:num)/document/(:segment)', [TourDeskController::class, 'hotelDocument']);
+    // tf-resdesk-r2: Confirm Booking (with the evidence), the payment request it raises, the kept documents, the test mailbox
+    $routes->get('lists', [TourDeskController::class, 'resLists']);
+    $routes->post('card/(:num)/confirm_booking', [TourDeskController::class, 'confirmBooking']);
+    $routes->post('card/(:num)/raise_payment', [TourDeskController::class, 'raisePaymentAgain']);
+    $routes->post('card/(:num)/evidence', [TourDeskController::class, 'addEvidence']);
+    $routes->get('doc/(:num)', [TourDeskController::class, 'hotelDoc']);
+    $routes->get('message/(:num)', [TourDeskController::class, 'hotelMessage']);
+    $routes->get('test_mailbox', [TourDeskController::class, 'testMailbox']);
+    $routes->get('test_mailbox/(:segment)/(:segment)', [TourDeskController::class, 'testMailboxFile']);
     $routes->post('card/(:num)/(:segment)', [TourDeskController::class, 'hotelAction']);
     // activities and tickets: the same desk, the same privilege (schema 20)
     $routes->get('activities', [TourDeskController::class, 'activityData']);
