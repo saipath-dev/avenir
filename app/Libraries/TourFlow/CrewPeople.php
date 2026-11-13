@@ -426,7 +426,7 @@ final class CrewPeople
         try {
             $tr = new TransportRates($this->db, $this->user);
             foreach ($out as $code => &$c) {
-                $cur = $tr->current($code);
+                $cur = $tr->currentDriver($code);   // tf-kmrate-r1: the driver's lane — LKR per km; the USD quotation rate is never a driver's rate
                 $c['rate_km'] = $cur ? (float) $cur['rate_km'] : null;
                 $c['currency'] = $cur['currency'] ?? 'LKR';
                 $c['valid_from'] = $cur['valid_from'] ?? null;
@@ -465,7 +465,7 @@ final class CrewPeople
             return null;
         }
         try {
-            $cur = (new TransportRates($this->db, $this->user))->current($classCode, $on);
+            $cur = (new TransportRates($this->db, $this->user))->currentDriver($classCode, $on);   // tf-kmrate-r1: LKR per km
         } catch (\Throwable $e) {
             return null;
         }

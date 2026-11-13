@@ -105,6 +105,53 @@ final class TourService
     }
 
     /** schema 44: the crew line carries the person's category and the rate per km copied the day they were engaged. */
+    /**
+     * tf-kmrate-r1 (13 Nov 2026, Shantha): the driver's tour contract. The day a driver is engaged, the LKR rate per km
+     * copied onto their line (their own special rate, else the size's LKR rate on Transport Rates) and the kilometres of
+     * the tour as scheduled that day are AGREED on the line and stay there: the driver is paid the agreed rate on the
+     * contracted kilometres. A rate changed on a master later, or the quotation's USD rate, never moves it; kilometres
+     * driven beyond the contract are shown apart and wait for the company's approval (a settlement adjustment).
+     */
+    private ?bool $hasAgreedKm = null;
+
+    private function hasAgreedKm(): bool
+    {
+        if ($this->hasAgreedKm === null) {
+            try {
+                if (!$this->db->query("SHOW COLUMNS FROM `tf_transport_crew` LIKE 'agreed_km'")->getResultArray()) {
+                    $this->db->query("ALTER TABLE `tf_transport_crew` ADD COLUMN `agreed_km` DECIMAL(10,1) NULL AFTER `person_rate_class`, ADD COLUMN `agreed_at` DATETIME NULL AFTER `agreed_km`, ADD COLUMN `agreed_by` VARCHAR(100) NULL AFTER `agreed_at`");
+                }
+                $this->hasAgreedKm = true;
+            } catch (\Throwable $e) {
+                $this->hasAgreedKm = false;
+            }
+        }
+        return $this->hasAgreedKm;
+    }
+
+    /** The contracted kilometres of a driver's line: set when the driver is engaged, cleared when nobody is. */
+    private function agreeDriverKm(int $crewId): void
+    {
+        if (!$this->hasAgreedKm()) {
+            return;
+        }
+        $c = $this->db->query('SELECT c.kind, c.status, c.person_name, j.km_total, j.extra_km_total, j.km_quoted, j.extra_km_quoted
+            FROM tf_transport_crew c JOIN tf_transport_job j ON j.id = c.job_id WHERE c.id = ?', [$crewId])->getRowArray();
+        if (!$c) {
+            return;
+        }
+        $km = null;
+        if ((string) $c['kind'] === 'driver' && (string) $c['status'] === 'engaged' && trim((string) ($c['person_name'] ?? '')) !== '') {
+            if ($c['km_total'] !== null && $c['km_total'] !== '') {
+                $km = round((float) $c['km_total'] + (float) ($c['extra_km_total'] ?? 0), 1);
+            } elseif ($c['km_quoted'] !== null && $c['km_quoted'] !== '') {
+                $km = round((float) $c['km_quoted'] + (float) ($c['extra_km_quoted'] ?? 0), 1);
+            }
+        }
+        $this->db->query('UPDATE tf_transport_crew SET agreed_km = ?, agreed_at = ?, agreed_by = ? WHERE id = ?',
+            [$km, $km !== null ? $this->now() : null, $km !== null ? $this->user : null, $crewId]);
+    }
+
     private function hasCrewRateColumns(): bool
     {
         if ($this->hasCrewRate === null) {
@@ -3302,6 +3349,14 @@ final class TourService
         // 'special' — the driver's own agreed rate; 'general' — the Transport Rates master's rate for the vehicle's class the day
         // they were engaged; 'class' — the rate the quotation copied onto the card (a line engaged before the master, or with no class)
         $j['rate_source'] = 'class';
+        // tf-kmrate-r1: the quotation's rate is the customer's (USD). A driver is paid in LKR on the rate agreed on
+        // their line; where no LKR rate is agreed the hire is "Not set" — the USD figure is never used or converted.
+        if ($cur !== 'LKR') {
+            $rate = null;
+            $cur  = 'LKR';
+            $j['rate_source'] = 'none';
+        }
+        $this->hasAgreedKm();
         foreach ($j['crew'] as $c) {
             if ((string) $c['kind'] === 'driver' && (string) $c['status'] === 'engaged' && isset($c['person_km_rate']) && $c['person_km_rate'] !== null && $c['person_km_rate'] !== '') {
                 $rate = (float) $c['person_km_rate'];
@@ -3459,6 +3514,7 @@ final class TourService
 
     public function engageCrew(int $crewId, ?string $supplierAcc, ?string $personName, $personBata = null, string $status = 'engaged', ?string $note = null, ?int $personId = null, bool $acknowledge = false, ?string $changeReason = null): array
     {
+        $this->hasAgreedKm();   // tf-kmrate-r1: before any transaction opens
         $c = $this->db->query('SELECT * FROM tf_transport_crew WHERE id = ?', [$crewId])->getRowArray();
         if (!$c) {
             throw new \RuntimeException('Crew line not found.');
@@ -3536,6 +3592,13 @@ final class TourService
             $this->db->query('UPDATE tf_transport_crew SET person_category = ?, person_km_rate = ?, person_rate_from = ?, person_rate_source = ?, person_rate_class = ?, person_bata_from = ?, person_overnight = ?, person_bata_source = ?, person_overnight_from = ?, person_overnight_source = ? WHERE id = ?',
                 array_merge([$person['category'] ?? null, $drv ? $person['km_rate'] : null, $drv ? $person['rate_from'] : null, $drv ? $person['rate_source'] : null, $drv ? $person['rate_class'] : null],
                     self::bataSnapshot($person, $bata), [$crewId]));
+        }
+        if ($crewChanged || (string) $c['status'] !== 'engaged') {
+            $this->agreeDriverKm($crewId);   // tf-kmrate-r1: the contracted kilometres, with the LKR rate just copied
+        } elseif ($this->hasCrewRateColumns() && ($c['person_km_rate'] ?? null) !== null && $c['person_km_rate'] !== '') {
+            // tf-kmrate-r1: the same driver, still engaged (a note or the bata was edited) — the agreed rate stays as agreed
+            $this->db->query('UPDATE tf_transport_crew SET person_km_rate = ?, person_rate_from = ?, person_rate_source = ?, person_rate_class = ? WHERE id = ?',
+                [$c['person_km_rate'], $c['person_rate_from'] ?? null, $c['person_rate_source'] ?? null, $c['person_rate_class'] ?? null, $crewId]);
         }
         $this->event((int) $j['intake_id'], (int) $j['tour_id'], 'transport', (int) $c['job_id'], 'crew', (string) $c['status'], $status, trim($c['role_name'] . ': ' . ($name ?? 'nobody') . ($person ? ' (from the master)' : '') . ($note ? ' — ' . $note : '')));
         if ($status !== 'engaged' || $personChanged) {
@@ -4508,7 +4571,7 @@ final class TourService
         $hireActual = $hireOf($kmActual);
         $split  = $j['hire_split'] ?? null;
         $manual = false;
-        $whyNoHire = $rate === null ? 'No rate per kilometre on this card, so the vehicle hire cannot be worked out; the payable is the bata alone.' : ($kmCosted === null ? 'No costed kilometres on this card.' : null);
+        $whyNoHire = $rate === null ? 'LKR rate per km: Not set. No LKR rate is agreed for the driver, so the vehicle hire cannot be worked out; the payable is the bata alone. Set the LKR rate for this size under Master Files → Transport Rates (or the driver\'s own rate) and engage the driver again. The USD quotation rate is never used for a payment.' : ($kmCosted === null ? 'No costed kilometres on this card.' : null);
         if ($split !== null) {
             if ($split['known']) {
                 // the hire split by each driver's actual kilometres at their own copied rate: that is the hire, on actual
@@ -4523,17 +4586,37 @@ final class TourService
         }
         $basis = $hireActual !== null ? ($split !== null ? 'split' : 'actual') : ($hireSched !== null ? 'scheduled' : ($hireCosted !== null ? 'costed' : ($manual ? 'manual' : 'costed')));
         $hireNow = $hireActual ?? $hireSched ?? $hireCosted;
+        // tf-kmrate-r1: the driver's contract — the agreed LKR rate on the contracted kilometres is what is payable.
+        // Kilometres driven beyond the contract are shown apart and paid only once the company approves them (a
+        // settlement adjustment). A card whose driver was replaced mid-tour keeps the split above.
+        $agreedKm = null;
+        $agreedAt = null;
+        foreach ($j['crew'] ?? [] as $c) {
+            if ((string) $c['kind'] === 'driver' && (string) $c['status'] === 'engaged' && isset($c['agreed_km']) && $c['agreed_km'] !== null && $c['agreed_km'] !== '') {
+                $agreedKm = (float) $c['agreed_km'];
+                $agreedAt = $c['agreed_at'] ?? null;
+                break;
+            }
+        }
+        $hireAgreed = ($split === null && $agreedKm !== null) ? $hireOf($agreedKm) : null;
+        $kmOver     = ($split === null && $agreedKm !== null && $kmActual !== null && $kmActual > $agreedKm) ? round($kmActual - $agreedKm, 1) : null;
+        if ($hireAgreed !== null) {
+            $hireNow = $hireAgreed;
+            $basis   = 'agreed';
+        }
         $j['money'] = [
             'currency'   => $cur,
             'has_rate'   => $rate !== null,
             'qty'        => $qty,
-            'hire'       => ['costed' => $hireCosted, 'scheduled' => $hireSched, 'actual' => $hireActual, 'km_costed' => $kmCosted, 'km_scheduled' => $kmScheduled, 'km_actual' => $kmActual, 'now' => $hireNow, 'basis' => $basis],
+            'hire'       => ['costed' => $hireCosted, 'scheduled' => $hireSched, 'actual' => $hireActual, 'km_costed' => $kmCosted, 'km_scheduled' => $kmScheduled, 'km_actual' => $kmActual, 'now' => $hireNow, 'basis' => $basis,
+                             'agreed' => $hireAgreed, 'km_agreed' => $agreedKm, 'agreed_at' => $agreedAt, 'rate_agreed' => $agreedKm !== null ? $rate : null,
+                             'km_over' => $kmOver, 'over_amount' => $kmOver !== null && $rate !== null ? round($kmOver * $rate * $qty, 2) : null],
             'split'      => $split,
             'manual_hire' => $manual,
             'bata'       => ['lines' => $bata, 'total' => round($bataT, 2)],
             // the advance base: the costed hire plus the bata — on a card whose driver was replaced mid-tour, the split hire
             // (there is no one costed figure for two drivers on two rates)
-            'payable_before' => round((($split !== null && $split['known'] ? $split['hire'] : $hireCosted) ?? 0) + $bataT, 2),
+            'payable_before' => round((($split !== null && $split['known'] ? $split['hire'] : ($hireAgreed ?? $hireCosted)) ?? 0) + $bataT, 2),
             'payable_now'    => round(($hireNow ?? 0) + $bataT, 2),
             'why_no_hire'    => $whyNoHire,
         ];
@@ -4658,7 +4741,9 @@ final class TourService
             'currency'    => $m['currency'],
             'hire'        => $m['hire']['now'],
             'hire_basis'  => $m['hire']['basis'],
-            'hire_km'     => in_array($m['hire']['basis'], ['actual', 'split'], true) ? $m['hire']['km_actual'] : ($m['hire']['basis'] === 'scheduled' ? $m['hire']['km_scheduled'] : ($m['hire']['basis'] === 'manual' ? null : $m['hire']['km_costed'])),
+            'hire_km'     => $m['hire']['basis'] === 'agreed' ? $m['hire']['km_agreed'] : (in_array($m['hire']['basis'], ['actual', 'split'], true) ? $m['hire']['km_actual'] : ($m['hire']['basis'] === 'scheduled' ? $m['hire']['km_scheduled'] : ($m['hire']['basis'] === 'manual' ? null : $m['hire']['km_costed']))),
+            'km_over'     => $m['hire']['km_over'] ?? null,   // tf-kmrate-r1: driven beyond the contract — awaits the company's approval
+            'over_amount' => $m['hire']['over_amount'] ?? null,
             'hire_split'  => $m['split'] ?? null,
             'manual_hire' => !empty($m['manual_hire']),
             'bata'        => $m['bata']['total'],

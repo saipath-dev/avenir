@@ -46,19 +46,37 @@ final class TransportRates
     // =====================================================================
 
     /**
+     * tf-kmrate-r1 (13 Nov 2026, Shantha): every size carries TWO rates per kilometre, kept and revised apart —
+     *   quote   USD per km — what an inquiry and a quotation are costed on;
+     *   driver  LKR per km — what a driver's tour contract and payment are worked out on.
+     * Neither is ever converted into the other. Each stays in force until a person sets a new one from a date; the
+     * one it replaces is closed the day before and kept. A lane with no rate is "Not set" — the other lane is never
+     * used in its place.
+     */
+    public const LANE_QUOTE  = 'quote';
+    public const LANE_DRIVER = 'driver';
+    public const LANES = [self::LANE_QUOTE => 'USD', self::LANE_DRIVER => 'LKR'];
+
+    /** The LKR rate per kilometre a driver is paid on, in force for a size on a date. */
+    public function currentDriver(string $classCode, ?string $on = null): ?array
+    {
+        return $this->current($classCode, $on, self::LANE_DRIVER);
+    }
+
+    /**
      * The rate in force for a size on a date. Today when no date is given.
      *
      * @return array{id:int, class_code:string, rate_km:float, currency:string, valid_from:string, valid_to:?string, reason:?string, set_by:?string}|null
      */
-    public function current(string $classCode, ?string $on = null): ?array
+    public function current(string $classCode, ?string $on = null, string $lane = self::LANE_QUOTE): ?array
     {
         $on = self::dateOrNull($on) ?? date('Y-m-d');
         try {
             $r = $this->db->query(
                 'SELECT * FROM tf_transport_rate
-                 WHERE class_code = ? AND valid_from <= ? AND (valid_to IS NULL OR valid_to >= ?)
+                 WHERE class_code = ? AND currency = ? AND valid_from <= ? AND (valid_to IS NULL OR valid_to >= ?)
                  ORDER BY valid_from DESC, id DESC LIMIT 1',
-                [trim($classCode), $on, $on]
+                [trim($classCode), self::LANES[$lane] ?? 'USD', $on, $on]
             )->getRowArray();
         } catch (\Throwable $e) {
             return null;
@@ -81,7 +99,12 @@ final class TransportRates
             $code = (string) $c['code'];
             $cur  = $this->current($code);
             $next = $this->db->query(
-                'SELECT * FROM tf_transport_rate WHERE class_code = ? AND valid_from > CURDATE() ORDER BY valid_from LIMIT 1',
+                "SELECT * FROM tf_transport_rate WHERE class_code = ? AND currency = 'USD' AND valid_from > CURDATE() ORDER BY valid_from LIMIT 1",
+                [$code]
+            )->getRowArray();
+            $curD  = $this->currentDriver($code);
+            $nextD = $this->db->query(
+                "SELECT * FROM tf_transport_rate WHERE class_code = ? AND currency = 'LKR' AND valid_from > CURDATE() ORDER BY valid_from LIMIT 1",
                 [$code]
             )->getRowArray();
             $out[] = [
@@ -92,6 +115,9 @@ final class TransportRates
                 'active'      => (int) $c['active'] === 1,
                 'current'     => $cur,
                 'upcoming'    => $next ? self::row($next) : null,
+                // tf-kmrate-r1: the driver's lane, LKR per km — null is "Not set", never the USD figure
+                'driver'          => $curD,
+                'driver_upcoming' => $nextD ? self::row($nextD) : null,
                 'used_on'     => $cur ? $this->usedOn((int) $cur['id']) : 0,
                 'history_n'   => (int) ($this->db->query('SELECT COUNT(*) n FROM tf_transport_rate WHERE class_code = ?', [$code])->getRowArray()['n'] ?? 0),
                 // what the vehicle master holds for a vehicle of this kind, shown as a hint
@@ -118,6 +144,7 @@ final class TransportRates
         $out   = [];
         foreach ($rows as $r) {
             $row = self::row($r);
+            $row['lane']    = $row['currency'] === 'LKR' ? self::LANE_DRIVER : self::LANE_QUOTE;
             $row['used_on'] = $this->usedOn((int) $r['id']);
             $row['state']   = $row['valid_from'] > $today ? 'upcoming'
                 : (($row['valid_to'] === null || $row['valid_to'] >= $today) ? 'current' : 'superseded');
@@ -154,26 +181,27 @@ final class TransportRates
 
         // A rate cannot start before one that already starts later: the periods would
         // overlap and two rates would be "current" on the same day.
+        // (tf-kmrate-r1: within its own lane only — the USD and the LKR rate of a size never block each other)
         $later = $this->db->query(
-            'SELECT valid_from FROM tf_transport_rate WHERE class_code = ? AND valid_from >= ? ORDER BY valid_from LIMIT 1',
-            [$code, $from]
+            'SELECT valid_from FROM tf_transport_rate WHERE class_code = ? AND currency = ? AND valid_from >= ? ORDER BY valid_from LIMIT 1',
+            [$code, $cur, $from]
         )->getRowArray();
         if ($later) {
             throw new \InvalidArgumentException(
-                'A rate for this size already starts on ' . $later['valid_from'] . '. Choose a later date, or use Correct to put a mistake right.'
+                'A ' . $cur . ' rate for this size already starts on ' . $later['valid_from'] . '. Choose a later date, or use Correct to put a mistake right.'
             );
         }
 
         // the rate this one follows, for the history line
-        $prev = $this->db->query('SELECT rate_km, valid_from FROM tf_transport_rate WHERE class_code = ? AND valid_from < ? ORDER BY valid_from DESC LIMIT 1', [$code, $from])->getRowArray();
+        $prev = $this->db->query('SELECT rate_km, valid_from FROM tf_transport_rate WHERE class_code = ? AND currency = ? AND valid_from < ? ORDER BY valid_from DESC LIMIT 1', [$code, $cur, $from])->getRowArray();
 
         $now = date('Y-m-d H:i:s');
         $this->db->transStart();
         // close whatever is open, the day before the new one starts
         $this->db->query(
             'UPDATE tf_transport_rate SET valid_to = DATE_SUB(?, INTERVAL 1 DAY)
-             WHERE class_code = ? AND (valid_to IS NULL OR valid_to >= ?) AND valid_from < ?',
-            [$from, $code, $from, $from]
+             WHERE class_code = ? AND currency = ? AND (valid_to IS NULL OR valid_to >= ?) AND valid_from < ?',
+            [$from, $code, $cur, $from, $from]
         );
         $this->db->query(
             'INSERT INTO tf_transport_rate (class_code, rate_km, currency, valid_from, valid_to, reason, set_by, set_at)
@@ -181,13 +209,26 @@ final class TransportRates
             [$code, $r, $cur, $from, self::cut($reason, 200), $this->user, $now]
         );
         $id = (int) $this->db->insertID();
+        // tf-kmrate-r1: a new rate saved on a retired size puts the size back in use — its history is untouched
+        $wasOff = (int) ($this->db->query('SELECT active FROM tf_vehicle_class WHERE code = ?', [$code])->getRowArray()['active'] ?? 1) !== 1;
+        if ($wasOff) {
+            $this->db->query('UPDATE tf_vehicle_class SET active = 1 WHERE code = ?', [$code]);
+        }
         $this->db->transComplete();
         if ($this->db->transStatus() === false) {
             throw new \RuntimeException('The rate could not be saved; nothing was changed.');
         }
+        if ($wasOff) {
+            Activity::master($this->db, $this->user, 'vehicle_class', 0, 'Vehicle sizes: ' . $code . ' reinstated (a new rate was saved on it)', [['what' => $code . ' active', 'from' => 0, 'to' => 1]]);
+        }
         Activity::master($this->db, $this->user, 'transport_rate', $id, 'Transport Rates: ' . $code . ' ' . ($prev ? (float) $prev['rate_km'] . ' → ' : 'set at ') . $r . ' ' . $cur . ' per km from ' . $from . ($reason ? ' — ' . trim($reason) : ''),
             [['what' => $code . ' rate per km', 'from' => $prev['rate_km'] ?? null, 'to' => $r], ['what' => $code . ' valid from', 'from' => $prev['valid_from'] ?? null, 'to' => $from]]);
-        return $this->history($code)[0] ?? ['id' => $id];
+        foreach ($this->history($code) as $h) {
+            if ((int) $h['id'] === $id) {
+                return $h + ['reinstated' => $wasOff];
+            }
+        }
+        return ['id' => $id, 'valid_from' => $from, 'currency' => $cur, 'reinstated' => $wasOff];
     }
 
     /**

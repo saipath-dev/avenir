@@ -47,7 +47,7 @@
                 <div class="tf-title">
                     <div>
                         <h4>Transport Rates <span class="help">· Transport &amp; Guide Services</span></h4>
-                        <div class="sub">What a kilometre costs, by vehicle size. Rates are typed here and changed here, by a person, when management decides — nothing updates them on its own. A rate is never overwritten: setting a new one keeps the old in the history, and a quotation already sent keeps the rate it went out with.</div>
+                        <div class="sub">Two rates per kilometre for every vehicle size, kept apart: <b>USD</b> for inquiry and quotation costing, <b>LKR</b> for driver contracts and payments. Neither is converted into the other. A rate stays in force until a new one is set here; the old one is kept in the history, a quotation already issued keeps its USD rate and a driver already engaged keeps the LKR rate agreed.</div>
                     </div>
                 </div>
 
@@ -68,13 +68,13 @@
                                     <div class="help mt-1" id="f_hint"></div>
                                 </div>
                                 <div class="row g-2">
-                                    <div class="col-7">
-                                        <label class="form-label help">Rate per kilometre</label>
-                                        <input type="number" min="0" step="0.01" class="form-control form-control-sm" id="f_rate" placeholder="e.g. 95.00">
+                                    <div class="col-12">
+                                        <label class="form-label help">Rate for</label>
+                                        <select class="form-select form-select-sm" id="f_cur"><option value="USD">Quotation — USD per km</option><option value="LKR">Driver payment — LKR per km</option></select>
                                     </div>
-                                    <div class="col-5">
-                                        <label class="form-label help">Currency</label>
-                                        <select class="form-select form-select-sm" id="f_cur"><option value="LKR">LKR</option><option value="USD">USD</option></select>
+                                    <div class="col-12">
+                                        <label class="form-label help" id="f_rate_l">Rate per kilometre (USD)</label>
+                                        <input type="number" min="0" step="0.01" class="form-control form-control-sm" id="f_rate" placeholder="e.g. 0.70">
                                     </div>
                                 </div>
                                 <div class="mt-2">
@@ -97,9 +97,9 @@
 
                     <div class="col-lg-8">
                         <div class="tf-card">
-                            <div class="tf-card-h"><h6>Current rates</h6><span class="help">One rate per size. The vehicle master's figure, where it has one, is shown as a hint and never copied in.</span></div>
+                            <div class="tf-card-h"><h6>Current rates</h6><span class="help">Each size has a USD rate (quotations) and an LKR rate (driver payments), set and revised separately.</span></div>
                             <div class="tf-card-b" style="overflow-x:auto"><table class="tbl" id="board"><thead><tr>
-                                <th>Vehicle size</th><th>Seats</th><th title="The ladder: a party up to this many travels in this size — for new vehicle choices and the pax matrix">Carries up to</th><th>Rate per kilometre</th><th>Effective from</th><th>Status</th><th></th>
+                                <th>Vehicle size</th><th>Seats</th><th title="The ladder: a party up to this many travels in this size — for new vehicle choices and the pax matrix">Carries up to</th><th>USD per km<div class="help" style="font-weight:400">quotation</div></th><th>LKR per km<div class="help" style="font-weight:400">driver payment</div></th><th>Status</th><th></th>
                             </tr></thead><tbody></tbody></table></div>
                         </div>
                         <div class="tf-card" style="margin-top:16px" id="fleet_card">
@@ -121,7 +121,7 @@
 <div class="modal fade tf" id="m_hist" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content">
     <div class="modal-header"><h6 class="modal-title" id="h_title">Rate history</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
     <div class="modal-body" style="overflow-x:auto">
-        <table class="tbl"><thead><tr><th>Rate per kilometre</th><th>From</th><th>To</th><th>Set by</th><th>Reason</th><th>Used on</th><th>Status</th><th></th></tr></thead><tbody id="h_rows"></tbody></table>
+        <table class="tbl"><thead><tr><th>Rate for</th><th>Rate per kilometre</th><th>From</th><th>To</th><th>Set by</th><th>Reason</th><th>Used on</th><th>Status</th><th></th></tr></thead><tbody id="h_rows"></tbody></table>
         <div class="help mt-2">A rate is never edited once set. Correct puts a typing mistake right in place and is logged as a correction — the old figure, who fixed it and when — so it never reads as a price change. Inquiry lines that already copied a figure keep it.</div>
     </div>
 </div></div></div>
@@ -164,6 +164,9 @@
     const ROOTB = '<?= rtrim(base_url(), '/') ?>';
     let CREW_URL = ROOTB + '/master_files/crew_people', CREW_MASTER = false;   // Transport & Guide Services: the people whose vehicle is in a class
 
+    // tf-kmrate-r1: one cell per lane — the rate in force, since when and why; "Not set" when the lane has none
+    const rateCell = (c, up) => (c ? `<span class="rate mono">${money(c.rate_km, c.currency)}</span><div class="help">from ${fmtDate(c.valid_from)}${c.reason ? ' · ' + esc(c.reason) : ''}</div>${c.corrected_at ? '<div class="help">corrected from ' + money(c.corrected_from) + '</div>' : ''}` : '<span class="pill pill-red">Not set</span>')
+        + (up ? `<div class="help">then ${money(up.rate_km, up.currency)} from ${fmtDate(up.valid_from)}</div>` : '');
     function render() {
         const sel = document.getElementById('f_class');
         const keep = sel.value;
@@ -174,25 +177,24 @@
         document.querySelector('#board tbody').innerHTML = BOARD.map(b => {
             const c = b.current;
             const st = !b.active ? '<span class="pill pill-grey">retired</span>'
-                : (c ? '<span class="pill pill-green">current</span>' : '<span class="pill pill-red">no rate</span>');
-            const up = b.upcoming ? `<div class="help">then ${money(b.upcoming.rate_km, b.upcoming.currency)} from ${fmtDate(b.upcoming.valid_from)}</div>` : '';
+                : (c && b.driver ? '<span class="pill pill-green">both rates set</span>' : (c ? '<span class="pill pill-amber">LKR not set</span>' : (b.driver ? '<span class="pill pill-amber">USD not set</span>' : '<span class="pill pill-red">no rate</span>')));
             const hintTxt = (!c && b.vehicle_master) ? `<div class="help">vehicle master says ${b.vehicle_master.rates.map(r => Number(r).toLocaleString()).join(' / ')} for ${esc(b.vehicle_master.types.join(', '))} — labelled per hour there, so confirm before typing it in</div>` : '';
             return `<tr class="${b.active ? '' : 'off'}">
                 <td><b>${esc(b.name)}</b><div class="help mono">${esc(b.code)}</div></td>
                 <td class="mono">${b.seats ?? '—'}</td>
                 <td><span class="mono" data-maxpax-of="${esc(b.code)}">${b.max_pax}</span> <button class="btn btn-link btn-sm p-0 align-baseline" data-maxpax="${esc(b.code)}" title="Change how many passengers this size carries on the ladder">change</button></td>
-                <td>${c ? `<span class="rate mono">${money(c.rate_km, c.currency)}</span>` : '<span class="pill pill-red">not set</span>'}${up}${hintTxt}
-                    ${c && c.corrected_at ? '<div class="help">corrected from ' + money(c.corrected_from) + '</div>' : ''}</td>
-                <td>${c ? fmtDate(c.valid_from) + (c.reason ? `<div class="help">${esc(c.reason)}</div>` : '') : '—'}</td>
+                <td>${rateCell(c, b.upcoming)}${hintTxt}</td>
+                <td>${rateCell(b.driver, b.driver_upcoming)}</td>
                 <td>${st}${c && b.used_on ? `<div class="help">used on ${b.used_on} inquiry line${b.used_on === 1 ? '' : 's'}</div>` : ''}${b.crew ? `<div class="help">${CREW_MASTER ? `<a href="${CREW_URL}?class=${encodeURIComponent(b.code)}" title="The people on Drivers &amp; Guides whose vehicle is in this class — this is their general rate">${b.crew} on Drivers &amp; Guides</a>` : b.crew + ' on Drivers &amp; Guides'}${!c && b.active ? ' <span class="pill pill-amber" title="They have no general rate until this class has one">no general rate for them</span>' : ''}</div>` : ''}</td>
                 <td style="white-space:nowrap">
-                    <button class="btn btn-light btn-sm" data-set="${esc(b.code)}">${c ? 'Change rate' : 'Set rate'}</button>
+                    <button class="btn btn-light btn-sm" data-set="${esc(b.code)}" data-lane="USD">${c ? 'Change USD' : 'Set USD'}</button>
+                    <button class="btn btn-light btn-sm" data-set="${esc(b.code)}" data-lane="LKR">${b.driver ? 'Change LKR' : 'Set LKR'}</button>
                     <button class="btn btn-light btn-sm" data-hist="${esc(b.code)}" ${b.history_n ? '' : 'disabled'}>History${b.history_n ? ' (' + b.history_n + ')' : ''}</button>
                     <button class="btn btn-light btn-sm" data-act="${esc(b.code)}" data-on="${b.active ? 0 : 1}" title="${b.active ? 'Stop offering this size' : 'Offer this size again'}">${b.active ? 'Retire' : 'Reinstate'}</button>
                 </td></tr>`;
         }).join('') || '<tr><td colspan="7" class="empty">No vehicle sizes are set up.</td></tr>';
 
-        document.querySelectorAll('[data-set]').forEach(b => b.addEventListener('click', () => { sel.value = b.dataset.set; hint(); document.getElementById('f_rate').focus(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+        document.querySelectorAll('[data-set]').forEach(b => b.addEventListener('click', () => { sel.value = b.dataset.set; document.getElementById('f_cur').value = b.dataset.lane || 'USD'; hint(); document.getElementById('f_rate').focus(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
         document.querySelectorAll('[data-hist]').forEach(b => b.addEventListener('click', () => openHistory(b.dataset.hist)));
         document.querySelectorAll('[data-maxpax]').forEach(btn => btn.addEventListener('click', async () => {
             const b = BOARD.find(x => x.code === btn.dataset.maxpax);
@@ -224,9 +226,12 @@
         const b = BOARD.find(x => x.code === document.getElementById('f_class').value);
         const h = document.getElementById('f_hint');
         if (!b) { h.textContent = ''; return; }
-        h.innerHTML = b.current
-            ? `Now ${money(b.current.rate_km, b.current.currency)} since ${fmtDate(b.current.valid_from)}. Saving a new figure starts a new period; the current one is kept.`
-            : (b.vehicle_master ? `No rate yet. The vehicle master holds ${b.vehicle_master.rates.join(' / ')} for ${esc(b.vehicle_master.types.join(', '))}, labelled per hour there — confirm it is per kilometre before using it.` : 'No rate yet for this size.');
+        const lkr = document.getElementById('f_cur').value === 'LKR', now = lkr ? b.driver : b.current;
+        document.getElementById('f_rate_l').textContent = 'Rate per kilometre (' + (lkr ? 'LKR' : 'USD') + ')';
+        document.getElementById('f_rate').placeholder = lkr ? 'e.g. 95.00' : 'e.g. 0.70';
+        h.innerHTML = (b.active ? '' : '<b>This size is retired.</b> Saving a rate puts it back in use; its history is kept. ')
+            + (now ? `${lkr ? 'Driver payment' : 'Quotation'} rate now ${money(now.rate_km, now.currency)} since ${fmtDate(now.valid_from)}. Saving a new figure starts a new period; the current one is kept.`
+                   : `${lkr ? 'LKR driver payment rate' : 'USD quotation rate'}: Not set for this size.`);
     }
 
     async function load() {
@@ -259,6 +264,7 @@
     loadFleet();
 
     document.getElementById('f_class').addEventListener('change', hint);
+    document.getElementById('f_cur').addEventListener('change', hint);
     document.getElementById('f_clear').addEventListener('click', () => { document.getElementById('f_rate').value = ''; document.getElementById('f_reason').value = ''; document.getElementById('f_from').value = ''; });
     document.getElementById('f_save').addEventListener('click', async () => {
         const j = await post('/rate', {
@@ -278,6 +284,7 @@
         const j = await api('/history/' + encodeURIComponent(code));
         if (j.status !== 200) { toast('error', j.message); return; }
         document.getElementById('h_rows').innerHTML = (j.data || []).map(r => `<tr>
+            <td>${r.currency === 'LKR' ? 'Driver payment' : 'Quotation'}</td>
             <td class="mono"><b>${money(r.rate_km, r.currency)}</b>${r.corrected_at ? `<div class="help">corrected from ${money(r.corrected_from)} by ${esc(r.corrected_by || '')}</div>` : ''}</td>
             <td>${fmtDate(r.valid_from)}</td><td>${r.valid_to ? fmtDate(r.valid_to) : '<span class="help">open</span>'}</td>
             <td>${esc(r.set_by || '—')}<div class="help">${esc((r.set_at || '').slice(0, 16))}</div></td>
@@ -285,7 +292,7 @@
             <td class="mono">${r.used_on} line${r.used_on === 1 ? '' : 's'}</td>
             <td><span class="pill ${r.state === 'current' ? 'pill-green' : (r.state === 'upcoming' ? 'pill-blue' : 'pill-grey')}">${esc(r.state)}</span></td>
             <td><button class="btn btn-light btn-sm" data-fix="${r.id}" data-rate="${r.rate_km}">Correct</button></td>
-        </tr>`).join('') || '<tr><td colspan="8" class="empty">No rate has ever been set for this size.</td></tr>';
+        </tr>`).join('') || '<tr><td colspan="9" class="empty">No rate has ever been set for this size.</td></tr>';
         document.querySelectorAll('[data-fix]').forEach(x => x.addEventListener('click', () => {
             document.getElementById('x_id').value = x.dataset.fix;
             document.getElementById('x_rate').value = x.dataset.rate;

@@ -196,7 +196,8 @@ class TransportController extends BaseController
                 (string) ($b['class_code'] ?? ''), $b['rate_km'] ?? null, (string) ($b['currency'] ?? 'LKR'),
                 $b['valid_from'] ?? null, $b['reason'] ?? null
             );
-            return $this->json(['status' => 200, 'message' => 'Rate saved. It applies from ' . $row['valid_from'] . '; the one before it is kept in the history.', 'data' => $this->ratesSvc()->board()]);
+            $lane = ($row['currency'] ?? '') === 'LKR' ? 'LKR driver payment rate' : 'USD quotation rate';   // tf-kmrate-r1
+            return $this->json(['status' => 200, 'message' => $lane . ' saved. It applies from ' . $row['valid_from'] . '; the one before it is kept in the history.' . (!empty($row['reinstated']) ? ' The size was retired — it is back in use.' : ''), 'data' => $this->ratesSvc()->board()]);
         } catch (\Throwable $e) {
             return $this->fail($e);
         }
