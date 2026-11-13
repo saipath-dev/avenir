@@ -336,7 +336,8 @@ final class TransportRates
         $out = [];
         foreach ($rows as $r) {
             $cur = $this->current((string) $r['class_code']);
-            if ($cur !== null && (int) $cur['id'] !== (int) $r['rate_id']) {
+            // tf-kmrate-r2: a rate re-saved at the same amount is not an "earlier rate" — only a different figure is reported
+            if ($cur !== null && (int) $cur['id'] !== (int) $r['rate_id'] && ($r['km_rate'] === null || abs((float) $cur['rate_km'] - (float) $r['km_rate']) > 0.004)) {
                 $out[] = ['id' => (int) $r['id'], 'inquiry_no' => (string) $r['inquiry_no'], 'class_code' => (string) $r['class_code'],
                           'km_rate' => $r['km_rate'] === null ? null : (float) $r['km_rate'], 'current' => (float) $cur['rate_km']];
             }
