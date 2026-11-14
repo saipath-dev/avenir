@@ -676,6 +676,109 @@
     .inq-ms-i { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid #EEE9F0; line-height:1.4; } .inq-ms-i .inq-dot { margin-top:4px; } .inq-ms-i span { flex:1 1 auto; } .inq-ms-i.opt { color:#5E5964; font-size:13px; }
     .inq-ms-b { flex:none; border:1px solid #842484; color:#842484; background:#fff; border-radius:7px; padding:3px 14px; font-weight:700; font-size:13px; cursor:pointer; } .inq-ms-b:hover { background:#842484; color:#fff; }
     .inq-ms-ok { font-size:15px; color:#1E7A1E; font-weight:600; } .inq-ms-ok i { margin-right:6px; }
+    /* tf-tiq-r2: the Tour Inquiry list, homepage style (14 Nov 2026). Mobile first where it matters: everything stacks on a phone. */
+    .tf .tq { --p:#842484; --pd:#3D0F45; --g:#2E8B2E; --ink:#1A1A1A; --mut:#5E5964; --line:#E7E1EA; color:var(--ink); }
+    .tf .tq-hero { position:relative; display:flex; gap:24px; align-items:center; background:linear-gradient(135deg,#4A1250 0%,#3D0F45 100%); border-radius:18px; padding:34px 36px 96px; color:#fff; overflow:hidden; }
+    .tf .tq-hero-t { flex:1 1 56%; min-width:0; position:relative; z-index:1; }
+    .tf .tq-chip { display:inline-block; background:rgba(255,255,255,.14); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; letter-spacing:.02em; margin-bottom:16px; }
+    .tf .tq-hero h1 { font-size:42px; font-weight:800; line-height:1.12; margin:0 0 16px; color:#fff; letter-spacing:-.01em; }
+    .tf .tq-hero p { font-size:16px; line-height:1.6; max-width:520px; margin:0 0 22px; color:#EFE3F1; }
+    .tf .tq-cta { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .tf .tq-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; height:48px; padding:0 22px; border-radius:10px; font-size:15px; font-weight:700; text-decoration:none; white-space:nowrap; border:1.5px solid transparent; cursor:pointer; }
+    .tf .tq-btn.g { background:#2E8B2E; color:#fff; } .tf .tq-btn.g:hover { background:#267726; color:#fff; }
+    .tf .tq-btn.o { border-color:rgba(255,255,255,.7); color:#fff; background:transparent; } .tf .tq-btn.o:hover { background:#fff; color:var(--pd); }
+    .tf .tq-btn.l { background:#B6E388; color:#1A1A1A; height:40px; padding:0 18px; font-size:14px; } .tf .tq-btn.l:hover { background:#A5D874; color:#1A1A1A; }
+    .tf .tq-how { display:inline-flex; align-items:center; gap:8px; height:48px; padding:0 8px; border:0; background:none; color:#D9F2B8; font-size:14.5px; font-weight:700; cursor:pointer; } .tf .tq-how span { text-decoration:underline; text-underline-offset:3px; } .tf .tq-how:hover { color:#fff; }
+    .tf .tq-hero-a { flex:0 1 380px; min-width:0; align-self:flex-end; margin-bottom:-30px; } .tf .tq-hero-a svg { width:100%; height:auto; display:block; }
+    .tf .tq-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin:-66px 18px 18px; position:relative; z-index:2; }
+    .tf .tq-stat { background:#fff; border-radius:14px; padding:18px 18px 16px; box-shadow:0 4px 14px rgba(40,10,50,.12); }
+    .tf .tq-stat .h { display:flex; justify-content:space-between; align-items:center; gap:8px; } .tf .tq-stat .h b { font-size:13.5px; font-weight:700; }
+    .tf .tq-stat .h span { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; flex:none; }
+    .tf .tq-stat em { display:block; font-style:normal; font-size:36px; font-weight:800; line-height:1.15; margin:8px 0 6px; color:var(--ink); } .tf .tq-stat small { display:block; font-size:12.5px; color:var(--mut); }
+    .tf .tq-stat.a .h b { color:#6A1A6E; } .tf .tq-stat.a .h span { background:#F0DFF2; color:#6A1A6E; }
+    .tf .tq-stat.b .h b { color:#17509A; } .tf .tq-stat.b .h span { background:#E1EEFB; color:#17509A; }
+    .tf .tq-stat.c .h b { color:#1A1A1A; } .tf .tq-stat.c .h span { background:#fff; border:1.5px solid #E7E1EA; color:#D98E00; }
+    .tf .tq-stat.d .h b { color:#1E6A14; } .tf .tq-stat.d .h span { background:#E3F3DA; color:#1E6A14; }
+    .tf .tq-journey { display:flex; align-items:center; gap:16px; background:#fff; border-radius:14px; padding:14px 18px; margin-bottom:26px; box-shadow:0 1px 4px rgba(40,10,50,.06); } .tf .tq-journey > b { font-size:14px; white-space:nowrap; }
+    .tf .tq-jr { display:flex; align-items:center; gap:12px; overflow-x:auto; padding-bottom:2px; } .tf .tq-jr > i { color:#9A93A1; flex:none; }
+    .tf .tq-jr .j { flex:none; border-radius:16px; padding:5px 14px; font-size:13px; font-weight:700; white-space:nowrap; text-decoration:none; }
+    .tf .tq-jr .a { background:#F0DFF2; color:#5A1560; } .tf .tq-jr .b { background:#E1EEFB; color:#17509A; } .tf .tq-jr .c { background:#fff; border:1.5px solid #E7E1EA; color:#1A1A1A; } .tf .tq-jr .d { background:#E3F3DA; color:#1E6A14; }
+    .tf .tq-jr .e { border:1.5px dashed #9A93A1; color:#1A1A1A; background:#fff; } .tf .tq-jr .e:hover { border-color:var(--p); color:var(--p); }
+    .tf .tq-sec { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin:0 2px 12px; } .tf .tq-sec h2 { font-size:21px; font-weight:800; margin:0; } .tf .tq-sec span { font-size:13px; color:var(--mut); }
+    .tf .tq-high { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-bottom:26px; }
+    .tf .tq-hc { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 1px 5px rgba(40,10,50,.08); } .tf .tq-hc svg, .tf .tq-hc img { width:100%; height:110px; display:block; object-fit:cover; }
+    /* tf-tiq-r3: the hero is Shantha's photograph of the bay across the whole panel, the Avenir Holidays logo on the left, a smaller headline, no paragraph */
+    .tf .tq-hero.ph2 { display:block; min-height:500px; padding:30px 36px 110px; background-color:#1C6FA8; background-size:cover; background-position:center 50%; background-repeat:no-repeat; position:relative; }
+    .tf .tq-hero.ph2::before { content:''; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(90deg,rgba(6,40,84,.34) 0%,rgba(6,40,84,.16) 34%,rgba(6,40,84,0) 60%); }   /* the photograph keeps its own colours: only a light blue shade behind the words */
+    .tf .tq-hero.ph2 .tq-hero-t { position:relative; z-index:1; max-width:640px; }
+    .tf .tq-logo { display:inline-block; margin:0 0 20px -4px; } .tf .tq-logo img { display:block; height:84px; width:auto; filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #fff) drop-shadow(0 0 10px rgba(255,255,255,.85)); }
+    .tf .tq-hero.ph2 .tq-chip { display:table; background:rgba(4,30,62,.45); backdrop-filter:blur(4px); margin-bottom:12px; }
+    .tf .tq-hero.ph2 h1 { font-size:31px; font-weight:800; line-height:1.18; margin:0 0 22px; text-shadow:0 1px 3px rgba(4,26,56,.75), 0 2px 14px rgba(4,26,56,.6); }
+    .tf .tq-hero.ph2 .tq-btn.o { background:rgba(4,30,62,.45); backdrop-filter:blur(3px); border-color:#fff; } .tf .tq-hero.ph2 .tq-how { color:#fff; text-shadow:0 1px 3px rgba(4,26,56,.9), 0 1px 10px rgba(4,26,56,.7); }
+    @media (max-width:1100px) { .tf .tq-hero.ph2 h1 { font-size:28px; } }
+    @media (max-width:700px) { .tf .tq-hero.ph2 { min-height:0; padding:18px 18px 84px; background-position:70% 50%; } .tf .tq-hero.ph2::before { background:linear-gradient(0deg,rgba(6,40,84,.30) 0%,rgba(6,40,84,.22) 100%); }
+        .tf .tq-logo { margin-bottom:14px; } .tf .tq-logo img { height:60px; } .tf .tq-hero.ph2 h1 { font-size:24px; margin-bottom:16px; } }
+    .tf .tq-high.n4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .tf .tq-hero-a.ph { flex:0 1 46%; align-self:stretch; margin:-34px -36px -96px 0; position:relative; min-height:300px; }
+    .tf .tq-hero-a.ph img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 62%; }
+    .tf .tq-hero-a.ph::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#3F1047 0%,rgba(63,16,71,.55) 22%,rgba(63,16,71,0) 55%), linear-gradient(0deg,rgba(61,15,69,.75) 0%,rgba(61,15,69,0) 34%); }
+    @media (max-width:1100px) { .tf .tq-high.n4 { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:700px) { .tf .tq-high.n4 { grid-template-columns:none; } .tf .tq-hero { padding-top:0; } .tf .tq-hero-a.ph { display:block; order:-1; flex:none; height:170px; min-height:0; margin:-22px -18px 18px; } .tf .tq-hero-a.ph::after { background:linear-gradient(0deg,#431149 0%,rgba(67,17,73,0) 60%); } }
+    .tf .tq-hc > div { padding:12px 16px 14px; } .tf .tq-hc b { display:block; font-size:15.5px; } .tf .tq-hc span { font-size:13px; color:var(--mut); }
+    .tf .tq-main { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:18px; align-items:start; }
+    .tf .tq-card { background:#fff; border-radius:14px; box-shadow:0 1px 5px rgba(40,10,50,.08); }
+    .tf .tq-lh { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:18px 20px 14px; } .tf .tq-lh h2 { font-size:21px; font-weight:800; margin:0; }
+    .tf .tq-search { display:flex; align-items:center; gap:10px; flex:1 1 300px; max-width:520px; height:44px; padding:0 14px; margin:0; border:1.5px solid var(--line); border-radius:10px; background:#fff; } .tf .tq-search i { color:var(--mut); }
+    .tf .tq-search input { border:0; outline:0; flex:1 1 auto; min-width:0; font-size:14.5px; background:transparent; color:var(--ink); } .tf .tq-search:focus-within, .tf .tq-sel:focus-within { border-color:var(--p); box-shadow:0 0 0 3px rgba(132,36,132,.14); }
+    .tf .tq-fl { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:0 20px 14px; border-bottom:1px solid var(--line); }
+    .tf .tq-pf { height:36px; padding:0 16px; border-radius:18px; border:1.5px solid var(--line); background:#fff; color:var(--ink); font-size:13.5px; font-weight:700; cursor:pointer; white-space:nowrap; }
+    .tf .tq-pf.on { background:#5A1560; border-color:#5A1560; color:#fff; } .tf .tq-pf:hover:not(.on) { border-color:var(--p); color:var(--p); }
+    .tf .tq-sel { display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 12px; margin:0; border:1.5px solid var(--line); border-radius:18px; background:#fff; font-size:13.5px; font-weight:700; white-space:nowrap; }
+    .tf .tq-sel > span::after { content:':'; } .tf .tq-sel select, .tf .tq-sel input { border:0; outline:0; background:transparent; font:inherit; font-weight:600; color:var(--ink); height:30px; max-width:150px; } .tf .tq-sel.dt input { font-size:12.5px; max-width:124px; } .tf .tq-sel i { font-style:normal; color:var(--mut); }
+    .tf .tq-clear { height:36px; padding:0 12px; border:0; background:none; color:var(--mut); font-size:13px; font-weight:700; cursor:pointer; } .tf .tq-clear:hover { color:var(--p); }
+    .tf table.tq-tbl { width:100%; border-collapse:collapse; } .tf table.tq-tbl th { text-align:left; font-size:11.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--mut); font-weight:700; padding:14px 20px 10px; white-space:nowrap; }
+    .tf table.tq-tbl td { padding:15px 20px; border-top:1px solid var(--line); font-size:14.5px; vertical-align:middle; color:var(--ink); } .tf table.tq-tbl td.empty { text-align:center; color:var(--mut); padding:30px 20px; }
+    .tf table.tq-tbl tr.att td:first-child { box-shadow:inset 4px 0 0 #C8101A; } .tf table.tq-tbl tbody tr:hover td { background:#FBF8FC; }
+    .tf table.tq-tbl td b { display:block; font-weight:800; } .tf table.tq-tbl td small { display:block; font-size:12.5px; color:var(--mut); margin-top:2px; } .tf table.tq-tbl td small.bad { color:#C8101A; font-weight:700; }
+    .tf table.tq-tbl td.px { font-weight:800; } .tf table.tq-tbl td.ac { text-align:right; white-space:nowrap; } .tf table.tq-tbl td.ac .td-dots { margin-left:8px; }
+    .tf .tq-st { display:inline-flex; align-items:center; gap:7px; border-radius:16px; padding:5px 13px; font-size:13px; font-weight:700; white-space:nowrap; border:1.5px solid transparent; } .tf .tq-st::before { content:''; width:8px; height:8px; border-radius:50%; background:currentColor; }
+    .tf .tq-st.b { background:#E1EEFB; color:#17509A; } .tf .tq-st.c { background:#fff; border-color:var(--line); color:#1A1A1A; } .tf .tq-st.c::before { background:#F2A900; } .tf .tq-st.d { background:#E3F3DA; color:#1E6A14; } .tf .tq-st.x { background:#EEF0F3; color:#4A5361; }
+    .tf .tq-flag { display:block; font-size:12px; font-weight:700; color:#C8101A; margin-top:5px; white-space:nowrap; }
+    .tf .tq-open { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 18px; border:0; border-radius:9px; background:#2E7D32; color:#fff; font-size:14.5px; font-weight:700; cursor:pointer; white-space:nowrap; } .tf .tq-open:hover { background:#256828; }
+    .tf .tq-foot { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:14px 20px 16px; border-top:1px solid var(--line); font-size:13.5px; color:var(--mut); } .tf .tq-foot a { color:var(--p); font-weight:700; text-decoration:none; }
+    .tf .tq-side { display:flex; flex-direction:column; gap:16px; } .tf .tq-side .tq-card { padding:18px; } .tf .tq-side h3 { font-size:16px; font-weight:800; margin:0 0 12px; display:flex; gap:8px; align-items:center; } .tf .tq-att h3 i { color:#C8101A; }
+    .tf .tq-ai { border:1.5px solid var(--line); border-left:4px solid #C8101A; border-radius:10px; padding:10px 12px; margin-bottom:10px; background:#fff; } .tf .tq-ai:last-child { margin-bottom:0; }
+    .tf .tq-ai b { display:block; font-size:14px; } .tf .tq-ai span { display:block; font-size:13px; line-height:1.45; margin:3px 0 5px; } .tf .tq-ai a { font-size:13px; font-weight:700; color:#5A1560; text-decoration:underline; cursor:pointer; }
+    .tf .tq-none { font-size:13px; color:var(--mut); }
+    .tf .tq-ar { display:flex; gap:12px; align-items:center; padding:6px 0; cursor:pointer; } .tf .tq-ar .d { width:48px; height:52px; border-radius:10px; background:#F0DFF2; color:#5A1560; display:flex; flex-direction:column; align-items:center; justify-content:center; flex:none; }
+    .tf .tq-ar .d small { font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; } .tf .tq-ar .d b { font-size:19px; font-weight:800; line-height:1; } .tf .tq-ar div b { display:block; font-size:14px; } .tf .tq-ar div span { font-size:12.5px; color:var(--mut); }
+    .tf .tq-dark { background:linear-gradient(135deg,#4A1250,#3D0F45); color:#fff; border-radius:14px; padding:18px; } .tf .tq-dark h3 { color:#fff; margin-bottom:8px; } .tf .tq-dark p { font-size:13.5px; line-height:1.55; color:#EFE3F1; margin:0 0 14px; }
+    .tf .tq-end { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:26px 2px 6px; padding-top:14px; border-top:1px solid var(--line); font-size:12.5px; color:var(--mut); }
+    .tf .tiq-admin { margin-top:10px; font-size:12.5px; color:#5E5964; } .tf .tiq-admin summary { cursor:pointer; font-weight:700; color:#5E5964; } .tf .tiq-admin > div { margin-top:6px; }
+    /* tablet */
+    @media (max-width:1100px) { .tf .tq-main { grid-template-columns:minmax(0,1fr); } .tf .tq-side { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); } .tf .tq-side .tq-dark { grid-column:1 / -1; }
+        .tf .tq-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .tf .tq-hero h1 { font-size:34px; } .tf .tq-hero-a { flex-basis:260px; } }
+    /* phone */
+    @media (max-width:700px) {
+        .tf .tq-hero { flex-direction:column; align-items:stretch; padding:22px 18px 80px; border-radius:14px; } .tf .tq-hero h1 { font-size:28px; } .tf .tq-hero h1 br { display:none; } .tf .tq-hero p { font-size:14.5px; }
+        .tf .tq-hero-a { display:none; } .tf .tq-cta { flex-direction:column; align-items:stretch; } .tf .tq-btn { height:52px; font-size:16px; } .tf .tq-how { justify-content:center; }
+        .tf .tq-stats { margin:-60px 10px 14px; gap:10px; } .tf .tq-stat { padding:13px 13px 12px; } .tf .tq-stat em { font-size:28px; margin:4px 0 2px; } .tf .tq-stat small { font-size:11.5px; }
+        .tf .tq-journey { flex-direction:column; align-items:flex-start; gap:10px; } .tf .tq-jr { width:100%; }
+        .tf .tq-high { grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:78%; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:6px; } .tf .tq-hc { scroll-snap-align:start; } .tf .tq-sec span { display:none; }
+        .tf .tq-side { display:flex; } .tf .tq-lh { padding:14px 14px 10px; } .tf .tq-search { flex-basis:100%; max-width:none; height:48px; } .tf .tq-search input { font-size:16px; }
+        .tf .tq-fl { padding:0 14px 12px; flex-wrap:nowrap; overflow-x:auto; } .tf .tq-pf, .tf .tq-sel, .tf .tq-clear { flex:none; height:40px; }
+        /* the table becomes one card an inquiry */
+        .tf table.tq-tbl thead { display:none; } .tf table.tq-tbl, .tf table.tq-tbl tbody { display:block; } .tf table.tq-tbl tr { display:grid; grid-template-columns:1fr auto; gap:6px 12px; padding:14px; border-top:1px solid var(--line); }
+        .tf table.tq-tbl td { display:block; padding:0; border:0; } .tf table.tq-tbl tr.att { box-shadow:inset 4px 0 0 #C8101A; } .tf table.tq-tbl tr.att td:first-child { box-shadow:none; }
+        .tf table.tq-tbl td.c1 { grid-column:1; } .tf table.tq-tbl td.st { grid-column:2; grid-row:1; text-align:right; } .tf table.tq-tbl td.c2, .tf table.tq-tbl td.dt { grid-column:1 / -1; }
+        .tf table.tq-tbl td.px { grid-column:1; align-self:center; font-weight:600; } .tf table.tq-tbl td.px::before { content:'Pax '; color:var(--mut); font-weight:500; } .tf table.tq-tbl td.ac { grid-column:2; } .tf .tq-open { height:46px; padding:0 22px; font-size:15.5px; }
+        .tf table.tq-tbl td.empty { grid-column:1 / -1; padding:18px 0; } .tf .tq-foot { padding:12px 14px 14px; }
+    }
+    /* How It Works (in the dialog) */
+    .tiq-steps { text-align:left; margin:0; padding:0 0 0 4px; list-style:none; counter-reset:tiq; max-height:62vh; overflow:auto; font-size:14.5px; color:#1A1A1A; }
+    .tiq-steps li { counter-increment:tiq; position:relative; padding:9px 0 9px 46px; border-bottom:1px solid #EEE9F0; line-height:1.45; } .tiq-steps li:last-child { border-bottom:0; }
+    .tiq-steps li::before { content:counter(tiq); position:absolute; left:0; top:8px; width:30px; height:30px; border-radius:50%; background:#842484; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:14px; }
+    .tiq-steps li b { display:block; font-size:15px; }
     .inq-on #d_confirm { display:none !important; }   /* Confirm Tour lives in Before Tour Confirmation; the lower bar no longer carries it */
     @media (max-width:1200px) { .inq .chk-grid, .inq .chk-row { grid-template-columns:minmax(0,1fr); } .inq .chk-chips { grid-template-columns:repeat(2,minmax(0,1fr)); } .inq .chk-do { align-items:flex-start; max-width:none; } .inq .chk-step { text-align:left; } .inq .chk-src { position:static; } }
     .inq .inq-pane .tf-card-h > .help:not([id]) { display:none; }   /* the long explanations beside each heading: off the page, the cards and their buttons unchanged */
@@ -696,13 +799,12 @@
         <div class="page-content tf" id="tf">
             <div class="container-fluid">
 
-                <?= view('layouts/tourdesk_bar', ['tourdesk_desk_only' => true]) /* tf-tdbar-r1: the Tour Desk's five functions only on this panel */ ?>
+                <?= view('layouts/tourdesk_bar', ['tourdesk_desk_only' => true]) /* tf-tdbar-r1: the Tour Desk's five functions only on this panel; tf-tiq-r4: hidden on the list only (setView), always shown inside an inquiry */ ?>
                 <?= view('layouts/tourdesk_menu') ?>
 
                 <div class="tf-title">
                     <div>
                         <h4>Tour Inquiry <button class="btn btn-light btn-sm ms-2 align-middle" id="btn_list" type="button" style="font-weight:500"><i class="bi bi-inbox"></i> All inquiries</button> <button class="btn btn-light btn-sm ms-1 align-middle" id="btn_nav" type="button" aria-expanded="false" title="Show or hide the list of sections on this screen" style="font-weight:500"><i class="bi bi-list-ul"></i> <span id="btn_nav_t">Show Navigation</span></button> <a class="btn btn-sm ms-1 align-middle" id="comm_top" style="background:#842484;border-color:#842484;color:#fff;font-weight:500;display:none" href="#" title="This inquiry's complete record: correspondence, attachments, agreed arrangements, follow-ups, hand-over"><i class="bi bi-chat-left-text"></i> Communications &amp; History</a></h4>
-                        <div class="sub">Two ways in, one record either way. Paste what the agent sent and it is read for you — with the exact words each value came from, nothing the email does not say filled in with a guess, and the original kept alongside to check against. Or start it by hand and type the same fields yourself. Reading is there to save typing; it never has the last word, and it never has to work for you to get on.</div>
                     </div>
 
                 </div>
@@ -721,54 +823,89 @@
                 </div></div>
                 <?php else: ?>
 
-                <?php if (empty($ai_ready)): ?>
-                <div class="tf-card mb-3"><div class="tf-card-b" style="background:var(--tf-amber-soft); border:1px solid #d9d3dd;color:var(--tf-amber);font-size:12.5px;border-radius:var(--tf-radius)">
-                    <b>No <?= esc($reader_label ?? 'API') ?> key is configured</b>, so emails cannot be read automatically yet. Everything else works — paste the email and fill the fields in by hand. Set <span class="mono"><?= esc($reader_key ?? 'ANTHROPIC_API_KEY') ?></span> in the project's <span class="mono">.env</span> to switch reading on.
-                </div></div>
-                <?php else: ?>
-                <div class="help mb-2 inq-hide">Emails are read by <b><?= esc($reader_label ?? '') ?></b><?= !empty($reader_model) ? ' · ' . esc($reader_model) : '' ?>. Every value it returns is checked back against the email before it is shown.</div>
-                <div class="mb-2 inq-hide" style="font-size:12.5px"><a href="#" id="rc_btn" title="Ask each AI service whether this server's key still works. Only the outcome is shown — never the key."><i class="bi bi-plug"></i> Check the reader</a>
-                    <div id="rc_out" class="mt-1" style="line-height:1.6"></div></div>
-                <?php endif; ?>
-
                 <!-- ============ LIST ============ -->
                 <div id="view_list">
-                    <div class="tf-card">
-                        <div class="tf-card-h">
-                            <h6>Inquiries</h6>
-                            <div class="d-flex gap-2 align-items-center flex-wrap" id="filters">
-                                <select class="form-select form-select-sm" id="f_status" style="width:auto" title="Status">
-                                    <option value="open">Open</option>
+                    <!-- tf-tiq-r2 (14 Nov 2026): the Tour Inquiry list in the "homepage style" Shantha approved — hero, counts, the journey, highlights, the list beside what needs attention. Works on a phone. -->
+                    <div class="tq">
+                    <section class="tq-hero ph2" style="background-image:url('<?= base_url('assets/images/tour_inquiry/beach-hero.jpg') ?>')">
+                        <div class="tq-hero-t">
+                            <span class="tq-logo"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></span>
+                            <span class="tq-chip">Tour Desk · Sri Lanka inbound</span>
+                            <h1>Every journey starts <br>with an inquiry.</h1>
+                            <div class="tq-cta">
+                                <a class="tq-btn g" href="<?= base_url('tour/intake?start=paste') ?>" data-tiqstart="paste"><i class="bi bi-envelope"></i> Paste Email Inquiry</a>
+                                <a class="tq-btn o" href="<?= base_url('tour/intake?start=manual') ?>" data-tiqstart="manual"><i class="bi bi-pencil"></i> Enter Inquiry Manually</a>
+                                <button type="button" class="tq-how" id="tiq_how"><i class="bi bi-question-circle"></i> <span>How it works</span></button>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="tq-stats">
+                        <div class="tq-stat a"><div class="h"><b>Active inquiries</b><span><i class="bi bi-file-earmark-text"></i></span></div><em id="tiq_n_active">–</em><small>All open inquiries on the desk</small></div>
+                        <div class="tq-stat b"><div class="h"><b>In progress</b><span><i class="bi bi-hourglass-split"></i></span></div><em id="tiq_n_progress">–</em><small>Itinerary being built</small></div>
+                        <div class="tq-stat c"><div class="h"><b>Quotation sent</b><span><i class="bi bi-send"></i></span></div><em id="tiq_n_sent">–</em><small>Marked as quoted</small></div>
+                        <div class="tq-stat d"><div class="h"><b>Ready to confirm</b><span><i class="bi bi-check-circle"></i></span></div><em id="tiq_n_ready">–</em><small>Quotation issued, awaiting the customer</small></div>
+                    </div>
+                    <div class="tq-journey"><b>The journey</b><div class="tq-jr"><span class="j a">1 · Inquiry received</span><i class="bi bi-arrow-right"></i><span class="j b">2 · Itinerary &amp; quotation</span><i class="bi bi-arrow-right"></i><span class="j c">3 · Quotation sent</span><i class="bi bi-arrow-right"></i><span class="j d">4 · Ready to confirm</span><i class="bi bi-arrow-right"></i><a class="j e" href="<?= base_url('tour/intake/confirmed') ?>">Confirmed Tours <i class="bi bi-arrow-right"></i></a></div></div>
+                    <div class="tq-sec"><h2>Sri Lanka highlights</h2><span>Favourite stops our guests ask for</span></div>
+                    <div class="tq-high n4">
+                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/kandy-temple-of-the-tooth.jpg') ?>" alt="Kandy" loading="lazy" style="object-position:center 38%"><div><b>Kandy</b><span>Temple of the Sacred Tooth Relic and Kandy Lake</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/colombo-fort-cargills-york-street.jpg') ?>" alt="Colonial Colombo" loading="lazy" style="object-position:center 30%"><div><b>Colonial Colombo</b><span>The Cargills building on York Street, Colombo Fort</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/coast-infinity-pool.jpg') ?>" alt="Coastal stays" loading="lazy" style="object-position:center 55%"><div><b>Coastal stays</b><span>An infinity pool above the bay</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/coast-pool-palms.jpg') ?>" alt="Palm-fringed coast" loading="lazy" style="object-position:center 45%"><div><b>Palm-fringed coast</b><span>Palms, cliffs and the Indian Ocean</span></div></div>
+                    </div>
+                    <div class="tq-main">
+                        <div class="tq-card tq-listcard">
+                            <div class="tq-lh"><h2>Inquiries</h2><label class="tq-search"><i class="bi bi-search"></i><input id="f_q" placeholder="Search by INQ no., customer or tour" title="Inquiry number, customer (agent), group or tour name"></label></div>
+                            <div class="tq-fl" id="filters">
+                                <button type="button" class="tq-pf on" data-prog="">All · <span id="tiq_c_all">0</span></button>
+                                <button type="button" class="tq-pf" data-prog="b">In progress</button>
+                                <button type="button" class="tq-pf" data-prog="c">Quotation sent</button>
+                                <button type="button" class="tq-pf" data-prog="d">Ready to confirm</button>
+                                <label class="tq-sel"><span>Status</span><select id="f_status" title="Status">
+                                    <option value="open">Active</option>
                                     <option value="new">New</option>
                                     <option value="working">Working</option>
                                     <option value="quoted">Quoted</option>
                                     <option value="follow_up" id="f_follow">Follow-ups due</option>
-                                    <option value="confirmed">Confirmed</option>
                                     <option value="declined">Declined</option>
                                     <option value="cancelled">Cancelled</option>
-                                    <option value="all">All</option>
                                     <option value="archived">Archived</option>
-                                </select>
-                                <select class="form-select form-select-sm" id="f_handler" style="width:auto;max-width:200px" title="Handling agent — whose tour it is">
-                                    <option value="">Any handling agent</option>
+                                </select></label>
+                                <label class="tq-sel"><span>Agent</span><select id="f_handler" title="Handling agent — whose tour it is">
+                                    <option value="">All</option>
                                     <?php foreach ((array) ($handlers ?? []) as $h): ?>
                                     <option value="<?= esc($h['id'] !== null ? (string) $h['id'] : (string) $h['name']) ?>"><?= esc($h['name']) ?></option>
                                     <?php endforeach; ?>
                                     <option value="none">No handling agent</option>
-                                </select>
-                                <input class="form-control form-control-sm" id="f_q" placeholder="Customer, group, number…" style="width:210px" title="Customer (agent), group or tour name, inquiry number">
-                                <input type="date" class="form-control form-control-sm" id="f_from" style="width:auto" title="Arriving from">
-                                <input type="date" class="form-control form-control-sm" id="f_to" style="width:auto" title="Arriving to">
-                                <button class="btn btn-light btn-sm" id="f_clear" type="button" title="Clear every filter"><i class="bi bi-x-lg"></i></button>
+                                </select></label>
+                                <label class="tq-sel"><span>Customer</span><select id="f_customer" title="Customer (agent)"><option value="">All</option></select></label>
+                                <label class="tq-sel dt"><span>Travel date</span><input type="date" id="f_from" title="Arriving from"><i>–</i><input type="date" id="f_to" title="Arriving to"></label>
+                                <button class="tq-clear" id="f_clear" type="button" title="Clear every filter"><i class="bi bi-x-lg"></i> Clear</button>
                             </div>
-                        </div>
-                        <div style="overflow-x:auto">
-                            <table class="tbl">
-                                <thead><tr><th style="width:110px">Inquiry</th><th>Customer</th><th>Tour / group</th><th style="width:150px">Handling agent</th><th style="width:160px">Dates</th><th style="width:60px">Pax</th><th style="width:130px">Rooms</th><th style="width:180px">Needs attention</th><th style="width:120px"></th></tr></thead>
-                                <tbody id="rows"><tr><td colspan="9" class="empty">Loading…</td></tr></tbody>
+                            <table class="tq-tbl">
+                                <thead><tr><th>Inquiry</th><th>Customer / Tour</th><th>Travel dates</th><th>Pax</th><th>Status</th><th></th></tr></thead>
+                                <tbody id="rows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
                             </table>
+                            <div class="tq-foot"><span id="list_foot"></span><a href="<?= base_url('tour/intake/confirmed') ?>">Confirmed tours <i class="bi bi-arrow-right"></i></a></div>
                         </div>
-                        <div class="tf-card-b help" id="list_foot" style="padding-top:8px"></div>
+                        <aside class="tq-side">
+                            <div class="tq-card tq-att"><h3><i class="bi bi-exclamation-triangle"></i> Needs attention</h3><div id="tiq_att"><div class="tq-none">Reading…</div></div></div>
+                            <div class="tq-card tq-arr"><h3>Upcoming arrivals</h3><div id="tiq_arr"><div class="tq-none">Reading…</div></div></div>
+                            <div class="tq-dark"><h3>New inquiry by email?</h3><p>Paste the agent's email and the desk fills in dates, pax and requests for you to review.</p><a class="tq-btn l" href="<?= base_url('tour/intake?start=paste') ?>" data-tiqstart="paste">Paste email</a></div>
+                        </aside>
+                    </div>
+                    <div class="tq-end"><span>Avenir Holidays · Tour Desk</span><span>Sri Lanka inbound tours</span></div>
+                    <?php if (!empty($is_sysadmin)): ?>
+                    <details class="tiq-admin" <?= empty($ai_ready) ? 'open' : '' ?>><summary><i class="bi bi-gear"></i> Administrator diagnostics</summary>
+                        <?php if (empty($ai_ready)): ?>
+                        <div><b>No <?= esc($reader_label ?? 'API') ?> key is configured</b>, so emails cannot be read automatically yet. Everything else works — paste the email and fill the fields in by hand. Set <span class="mono"><?= esc($reader_key ?? 'ANTHROPIC_API_KEY') ?></span> in the project's <span class="mono">.env</span> to switch reading on.</div>
+                        <?php else: ?>
+                        <div>Emails are read by <b><?= esc($reader_label ?? '') ?></b><?= !empty($reader_model) ? ' · ' . esc($reader_model) : '' ?>. Every value it returns is checked back against the email before it is shown.</div>
+                        <div><a href="#" id="rc_btn" title="Ask each AI service whether this server's key still works. Only the outcome is shown — never the key."><i class="bi bi-plug"></i> Check the reader</a>
+                            <div id="rc_out" class="mt-1" style="line-height:1.6"></div></div>
+                        <?php endif; ?>
+                    </details>
+                    <?php endif; ?>
                     </div>
                 </div>
 
@@ -1505,6 +1642,8 @@
         if (!opts.force && VIEW && (VIEW !== which || VIEW_ID !== id) && window.TfView && !TfView.confirmLeave(VIEW === 'view_detail' && VIEW_ID ? 'this inquiry' : 'this page')) return false;
         ['view_list','view_paste','view_manual','view_detail'].forEach(v => { const el = document.getElementById(v); if (el) el.style.display = (v === which ? '' : 'none'); });
         const ct = document.getElementById('comm_top'); if (ct && which !== 'view_detail') ct.style.display = 'none';   // tf-comms-r3
+        const tt = document.querySelector('.tf .tf-title'); if (tt) tt.style.display = which === 'view_list' ? 'none' : '';
+        const tb = document.querySelector('.tf .tdbar'); if (tb) tb.style.display = which === 'view_list' ? 'none' : '';   // tf-tiq-r4: the Tour Desk bar stays on the inquiry, paste and manual views   // tf-tiq-r1: the list has its own heading
         if (window.TfView && !FROM_HISTORY) {
             const params = { id: id, start: which === 'view_paste' ? 'paste' : (which === 'view_manual' ? 'manual' : null) };
             const changed = VIEW !== which || VIEW_ID !== id;
@@ -1541,49 +1680,83 @@
     // Every filter combines with every other — status, handling agent, customer text, the
     // arrival window — so one colleague's quoted tours for one customer in March is one list.
     const filterValues = () => ({
-        status: document.getElementById('f_status').value, q: document.getElementById('f_q').value.trim(),
+        status: document.getElementById('f_status').value || 'open', q: document.getElementById('f_q').value.trim(),   // tf-tiq-r1: never the confirmed ones — they live in Confirmed Tours
         handler: document.getElementById('f_handler').value, from: document.getElementById('f_from').value, to: document.getElementById('f_to').value,
     });
+    // tf-tiq-r1/r2: where an active inquiry stands, read from what is already on it — nothing is stored and no status is changed by showing it
+    const tiqProg = it => !['new', 'working', 'quoted'].includes(it.status) ? ['x', '', statusWord2(it.status)]
+        : (it.issued_version ? ['d', 'bi-check-circle-fill', 'Ready to confirm'] : (it.status === 'quoted' ? ['c', 'bi-send-fill', 'Quotation sent'] : ['b', 'bi-hourglass-split', 'In progress']));
+    const statusWord2 = st => ({ declined: 'Declined', cancelled: 'Cancelled', confirmed: 'Confirmed', converted: 'Converted' })[st] || st;
+    // what an active inquiry still lacks before anything else can be done with it
+    const tiqLacks = it => { const l = []; if (!it.agent_name) l.push('agent not identified'); if (!it.arrival_date) l.push('travel dates missing'); if (it.pax_total == null || Number(it.pax_total) === 0) l.push('passengers not set'); if (!it.handler_name) l.push('no handling agent');
+        if (it.follow_up_on && it.follow_up_on <= new Date().toISOString().slice(0, 10)) l.push('follow-up due'); return l; };
+    let TIQ_CUST = '', TIQ_PROG = '';
+    async function tiqStats(items) {
+        // the counts and the side cards are of every active inquiry, whatever the filters show: asked for once more only when the list on screen is filtered
+        const f = filterValues();
+        if (f.status !== 'open' || f.q || f.handler || f.from || f.to) { const j = await api('/list?status=open'); if (j.status !== 200) return; items = j.data.items || []; }
+        const n = { active: items.length, b: 0, c: 0, d: 0 }; items.forEach(it => { n[tiqProg(it)[0]] = (n[tiqProg(it)[0]] || 0) + 1; });
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        set('tiq_n_active', n.active); set('tiq_n_progress', n.b); set('tiq_n_sent', n.c); set('tiq_n_ready', n.d); set('tiq_c_all', n.active);
+        const sel = document.getElementById('f_customer');
+        if (sel) { const names = [...new Set(items.map(it => (it.agent_name || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+            sel.innerHTML = '<option value="">All</option>' + names.map(x => `<option ${x === TIQ_CUST ? 'selected' : ''}>${esc(x)}</option>`).join('') + (TIQ_CUST && !names.includes(TIQ_CUST) ? `<option selected>${esc(TIQ_CUST)}</option>` : ''); }
+        // Needs attention: active inquiries with something basic still missing
+        const att = document.getElementById('tiq_att');
+        if (att) { const list = items.map(it => [it, tiqLacks(it)]).filter(x => x[1].length).slice(0, 4);
+            att.innerHTML = list.length ? list.map(([it, l]) => `<div class="tq-ai"><b>${esc(it.inquiry_no)}</b><span>${esc(l.join(', ').replace(/^./, c => c.toUpperCase()))}.</span><a data-tiqopen="${it.id}">Complete details</a></div>`).join('') : '<div class="tq-none">Nothing needs attention right now.</div>';
+            att.querySelectorAll('[data-tiqopen]').forEach(a => a.addEventListener('click', () => openIntake(Number(a.dataset.tiqopen)))); }
+        // Upcoming arrivals: the next arrivals among the active inquiries
+        const arr = document.getElementById('tiq_arr');
+        if (arr) { const today = new Date().toISOString().slice(0, 10), up = items.filter(it => it.arrival_date && it.arrival_date >= today).sort((a, b) => a.arrival_date.localeCompare(b.arrival_date)).slice(0, 3);
+            arr.innerHTML = up.length ? up.map(it => { const t = new Date(it.arrival_date + 'T00:00:00'); return `<div class="tq-ar" data-tiqopen="${it.id}"><span class="d"><small>${t.toLocaleDateString('en-GB', { month: 'short' })}</small><b>${t.getDate()}</b></span><div><b>${esc(it.inquiry_no)}${it.pax_total ? ' · ' + it.pax_total + ' pax' : ''}</b><span>${esc(tiqProg(it)[2])}${it.nights ? ' · ' + it.nights + ' night' + (Number(it.nights) === 1 ? '' : 's') : ''}</span></div></div>`; }).join('') : '<div class="tq-none">No arrivals ahead on the active inquiries.</div>';
+            arr.querySelectorAll('[data-tiqopen]').forEach(a => a.addEventListener('click', () => openIntake(Number(a.dataset.tiqopen)))); }
+    }
+    function tiqHow() {
+        Swal.fire({ title: 'How a tour inquiry works', width: 760, showCloseButton: true, confirmButtonText: 'Close', confirmButtonColor: '#842484', html: `<ol class="tiq-steps">
+            <li><b>An inquiry arrives.</b>Usually the agent's email; sometimes a call or a message.</li>
+            <li><b>Start the inquiry.</b>Press <i>Paste Email Inquiry</i> and paste the email as it arrived — the dates, party, hotels and requests are read for you. Or press <i>Enter Inquiry Manually</i> and type them. Saving gives the inquiry its INQ number.</li>
+            <li><b>Check it against the original.</b>The pasted email stays with the inquiry. Correct anything that was read wrongly, set the customer (agent) and the handling agent.</li>
+            <li><b>Complete the hotels.</b>For every night: the hotel, room type, meal plan and rooms. Rates come from the Hotel Rates master; they are never typed in here.</li>
+            <li><b>Complete each day's activities.</b>Add the visits, entrances and activities, then mark the day as checked — or tick <i>No activities required</i>.</li>
+            <li><b>Complete the transfers.</b>Airport transfers, the vehicle, the legs and their kilometres, the driver and the guide.</li>
+            <li><b>Watch the traffic light.</b>Red is not started, yellow is incomplete, green is ready. Click it to see what is still missing and go straight there.</li>
+            <li><b>Go for Quotation.</b>The system checks every rate and figure and freezes a numbered quotation version for the customer.</li>
+            <li><b>Send the quotation.</b>Possible only on green. Preview it, then send it to the agent; the inquiry becomes Quoted. If the agent asks for changes, edit the inquiry and make a new version.</li>
+            <li><b>Review before confirming.</b>When the customer agrees, open <i>Before Tour Confirmation</i>, look over Hotels, Transfers, Entrance Fees and Activities, and press <i>Confirm Tour</i>. You are asked for your password, and the hotels get their booking requests.</li>
+            <li><b>The tour moves on.</b>A confirmed inquiry leaves this list and continues under <i>Confirmed Tours</i> with the same INQ number, its quotations and its full history.</li></ol>` });
+    }
     let LIST = [];
     async function loadList() {
         const f = filterValues();
         const j = await api('/list?' + new URLSearchParams(f).toString());
         const tb = document.getElementById('rows');
-        if (j.status !== 200) { tb.innerHTML = `<tr><td colspan="9" class="empty">${esc(j.message)}</td></tr>`; return; }
-        const items = LIST = j.data.items || [];
+        if (j.status !== 200) { tb.innerHTML = `<tr><td colspan="6" class="empty">${esc(j.message)}</td></tr>`; return; }
+        let items = j.data.items || [];
+        TIQ_CUST = (document.getElementById('f_customer') || {}).value || '';
+        tiqStats(items);
+        if (TIQ_CUST) items = items.filter(it => (it.agent_name || '').trim() === TIQ_CUST);
+        if (TIQ_PROG) items = items.filter(it => tiqProg(it)[0] === TIQ_PROG);
+        LIST = items;
         const c = j.data.counts || {};
-        const filtered = f.q || f.handler || f.from || f.to;
-        document.getElementById('list_foot').innerHTML = `${items.length} shown · ${c.open ?? 0} open, ${c.confirmed ?? 0} confirmed, ${c.declined ?? 0} declined${c.archived ? `, ${c.archived} archived` : ''}${c.follow_up ? ` · <b style="color:var(--tf-amber)">${c.follow_up} follow-up${c.follow_up === 1 ? '' : 's'} due</b>` : ''}${filtered ? ' · <b>filtered</b>' : ''}`;
+        const filtered = f.q || f.handler || f.from || f.to || TIQ_CUST || TIQ_PROG;
+        document.getElementById('list_foot').innerHTML = `Showing ${items.length} inquir${items.length === 1 ? 'y' : 'ies'}${c.follow_up ? ` · <b style="color:#C8101A">${c.follow_up} follow-up${c.follow_up === 1 ? '' : 's'} due</b>` : ''}${filtered || f.status !== 'open' ? ' · <b>filtered</b>' : ''}`;
         const fo = document.getElementById('f_follow');
         if (fo) fo.textContent = 'Follow-ups due' + (c.follow_up ? ` (${c.follow_up})` : '');
         if (!items.length) {
-            tb.innerHTML = `<tr><td colspan="9" class="empty">${filtered || f.status !== 'open' ? '<b>Nothing matches these filters.</b> Clear one of them, or press ✕ to clear them all.' : '<b>No inquiries yet.</b> Press <b>New quote</b> and paste an agent\'s email.'}</td></tr>`;
+            tb.innerHTML = `<tr><td colspan="6" class="empty">${filtered || f.status !== 'open' ? '<b>Nothing matches these filters.</b> Clear one of them, or press ✕ to clear them all.' : '<b>No active inquiries.</b> Press <b>Paste Email Inquiry</b> or <b>Enter Inquiry Manually</b> to start one.'}</td></tr>`;
             return;
         }
         tb.innerHTML = items.map(it => {
-            const needs = [];
-            if (Number(it.has_email) === 0) needs.push('<span class="pill pill-grey"><i class="bi bi-pencil"></i> By hand</span>');
-            else if (it.extract_error) needs.push('<span class="pill pill-amber">Could not be read</span>');
-            else if (!it.extracted_at) needs.push('<span class="pill pill-blue">Not read yet</span>');
-            if (it.open_days) needs.push(`<span class="pill pill-red">${it.open_days} hotel${it.open_days > 1 ? 's' : ''} unpriceable</span>`);
-            if (it.open_questions) needs.push(`<span class="pill pill-amber">${it.open_questions} question${it.open_questions > 1 ? 's' : ''}</span>`);
-            if (it.follow_up_on && ['new', 'working', 'quoted'].includes(it.status)) {
-                const due = it.follow_up_on <= new Date().toISOString().slice(0, 10);
-                needs.push(`<span class="pill ${due ? 'pill-red' : 'pill-blue'}" title="${esc(it.follow_up_note || '')}"><i class="bi bi-bell"></i> ${due ? 'Follow up' : 'Follow up ' + fmtDate(it.follow_up_on)}</span>`);
-            }
-            if (!needs.length) needs.push('<span class="pill pill-green">Nothing outstanding</span>');
-            const dates = it.arrival_date ? (fmtDate(it.arrival_date) + (it.departure_date ? ' – ' + fmtDate(it.departure_date) : '')) : '<span class="pill pill-amber">No dates</span>';
-            const mine = MY_ID && Number(it.handler_id) === MY_ID;
-            return `<tr class="${it.archived_at ? 'released' : ''}" data-row="${it.id}">
-                <td class="mono">${esc(it.inquiry_no)}<div class="help">${statusPill(it.status)}${it.archived_at ? ' <span class="pill pill-grey">archived</span>' : ''}</div></td>
-                <td><b>${esc(it.agent_name || 'Agent not identified')}</b>${it.agent_acc ? `<div class="help mono">${esc(it.agent_acc)}</div>` : ''}</td>
-                <td>${it.tour_name ? esc(it.tour_name) : '<span class="help">no group name</span>'}</td>
-                <td>${it.handler_name ? `<b>${esc(it.handler_name)}</b>${mine ? ' <span class="pill pill-teal">you</span>' : ''}` : '<span class="pill pill-amber">nobody</span>'}${it.updated_by && staffName(it.updated_by) !== it.handler_name && it.updated_by !== it.handler_name ? `<div class="help" title="Last edited ${esc(it.updated_at || '')}">edited by ${esc(staffName(it.updated_by))}</div>` : ''}</td>
-                <td>${dates}${it.nights ? `<div class="help">${it.nights} nights</div>` : ''}</td>
-                <td>${it.pax_total ?? '<span class="pill pill-amber">?</span>'}</td>
-                <td>${esc(it.rooms_note || '—')}</td>
-                <td>${needs.join(' ')}</td>
-                <td style="white-space:nowrap">${!it.archived_at && ['new', 'working', 'quoted'].includes(it.status) && it.issued_version ? `<button class="btn btn-success btn-sm" data-confirm="${it.id}" title="Quotation v${esc(it.issued_version)} was issued — the agent said yes"><i class="bi bi-check2-circle"></i> Confirm Tour</button> ` : ''}<button class="btn btn-light btn-sm" data-open="${it.id}">Open</button>${CAN_MANAGE ? ` <button class="td-dots" data-manage="${it.id}" title="Manage" type="button">···</button>` : ''}</td></tr>`;
+            const lacks = ['new', 'working', 'quoted'].includes(it.status) ? tiqLacks(it) : [], due = lacks.includes('follow-up due');
+            const mine = MY_ID && Number(it.handler_id) === MY_ID, pg = tiqProg(it);
+            return `<tr class="${it.archived_at ? 'released' : ''} ${lacks.length ? 'att' : ''}" data-row="${it.id}">
+                <td class="c1"><b>${esc(it.inquiry_no)}</b>${it.handler_name ? `<small>Agent: ${esc(it.handler_name)}${mine ? ' · You' : ''}</small>` : '<small class="bad">No handling agent</small>'}${it.archived_at ? '<small>archived</small>' : ''}</td>
+                <td class="c2">${it.agent_name ? `<b>${esc(it.agent_name)}</b>` : '<small class="bad">Agent not identified</small>'}<small>${it.tour_name ? esc(it.tour_name) : 'No tour name'}</small></td>
+                <td class="dt">${it.arrival_date ? `${fmtDate(it.arrival_date)}${it.departure_date ? ' – ' + fmtDate(it.departure_date) : ''}${it.nights ? `<small>${it.nights} night${Number(it.nights) === 1 ? '' : 's'}</small>` : ''}` : '<small class="bad">No dates yet</small>'}</td>
+                <td class="px">${it.pax_total ?? '—'}</td>
+                <td class="st"><span class="tq-st ${pg[0]}">${esc(pg[2])}</span>${due ? `<span class="tq-flag" title="${esc(it.follow_up_note || '')}"><i class="bi bi-bell-fill"></i> Follow-up due</span>` : ''}</td>
+                <td class="ac"><button class="tq-open" data-open="${it.id}" type="button">Open <i class="bi bi-arrow-right"></i></button>${CAN_MANAGE ? `<button class="td-dots" data-manage="${it.id}" title="Manage" type="button">···</button>` : ''}</td></tr>`;
         }).join('');
         tb.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openIntake(Number(b.dataset.open))));
         tb.querySelectorAll('[data-confirm]').forEach(b => b.addEventListener('click', async () => { await openIntake(Number(b.dataset.confirm)); confirmTour(); }));
@@ -5986,6 +6159,10 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     document.getElementById('btn_new')?.addEventListener('click', openPaste);
     // The Tour Desk bar's New quote on THIS page opens the view in place; on any other
     // panel the same items are plain links here with ?start=, picked up at boot below.
+    // tf-tiq-r1: the two buttons of the heading open the same paste and manual-entry views the menu used to — nothing is rebuilt
+    document.querySelectorAll('[data-tiqstart]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); if (a.dataset.tiqstart === 'manual') openManual(); else openPaste(); }));
+    document.getElementById('tiq_how')?.addEventListener('click', tiqHow);
+    document.querySelectorAll('.tq-pf').forEach(b => b.addEventListener('click', () => { TIQ_PROG = b.dataset.prog || ''; document.querySelectorAll('.tq-pf').forEach(x => x.classList.toggle('on', x === b)); loadList(); }));
     document.querySelectorAll('.tdbar [data-start]').forEach(a => a.addEventListener('click', e => {
         e.preventDefault();
         if (a.dataset.start === 'manual') { openManual(); } else { openPaste(); }
@@ -6354,12 +6531,13 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
 
     // ---------- go ----------
     if (INSTALLED) {
-        ['f_status', 'f_handler', 'f_from', 'f_to'].forEach(id => document.getElementById(id).addEventListener('change', loadList));
+        ['f_status', 'f_handler', 'f_from', 'f_to', 'f_customer'].forEach(id => document.getElementById(id)?.addEventListener('change', loadList));
         let t = null;
         document.getElementById('f_q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(loadList, 250); });
         document.getElementById('f_clear').addEventListener('click', () => {
             document.getElementById('f_status').value = 'open';
-            ['f_handler', 'f_q', 'f_from', 'f_to'].forEach(id => document.getElementById(id).value = '');
+            ['f_handler', 'f_q', 'f_from', 'f_to', 'f_customer'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            TIQ_PROG = ''; document.querySelectorAll('.tq-pf').forEach(x => x.classList.toggle('on', !x.dataset.prog));
             loadList();
         });
         // tf-refresh-r1: the search and filters this tab last used come back (layouts/tf_viewstate keeps them per tab)
