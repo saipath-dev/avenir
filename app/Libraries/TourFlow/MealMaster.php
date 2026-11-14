@@ -393,7 +393,7 @@ final class MealMaster
         $rows = $this->db->query('SELECT * FROM tf_meal' . ($where ? ' WHERE ' . implode(' AND ', $where) : '') . ' ORDER BY meal_type, location, restaurant, valid_from, id', $bind)->getResultArray();
         $routes = [];
         foreach ($this->db->query('SELECT * FROM tf_meal_route ORDER BY meal_id, sort_order, id')->getResultArray() as $r) {
-            $routes[(int) $r['meal_id']][] = ['from' => $r['from_place'], 'to' => $r['to_place']];
+            $routes[(int) $r['meal_id']][] = ['from' => $r['from_place'], 'to' => $r['to_place'], 'via' => $r['via'] ?? null, 'default' => !empty($r['is_default'])];   // tf-lunch-r1
         }
         $used = [];
         try {
@@ -435,7 +435,7 @@ final class MealMaster
         if (!$r) {
             return null;
         }
-        $routes = array_map(static fn ($x) => ['from' => $x['from_place'], 'to' => $x['to_place']], $this->db->query('SELECT * FROM tf_meal_route WHERE meal_id = ? ORDER BY sort_order, id', [$id])->getResultArray());
+        $routes = array_map(static fn ($x) => ['from' => $x['from_place'], 'to' => $x['to_place'], 'via' => $x['via'] ?? null, 'default' => !empty($x['is_default'])], $this->db->query('SELECT * FROM tf_meal_route WHERE meal_id = ? ORDER BY sort_order, id', [$id])->getResultArray());
         $m = $this->shape($r, $routes, $on ?? date('Y-m-d'));
         try {
             $u = $this->db->query('SELECT COUNT(*) n, SUM(CASE WHEN i.status = \'confirmed\' THEN 1 ELSE 0 END) c FROM tf_intake_service s JOIN tf_intake i ON i.id = s.intake_id WHERE s.meal_id = ?', [$id])->getRowArray();
@@ -460,6 +460,7 @@ final class MealMaster
             'adult_lkr' => isset($r['adult_lkr']) && $r['adult_lkr'] !== null ? (float) $r['adult_lkr'] : null, 'child_lkr' => isset($r['child_lkr']) && $r['child_lkr'] !== null ? (float) $r['child_lkr'] : null,
             'tax_pct' => (float) $r['tax_pct'], 'tax_included' => (int) $r['tax_included'] === 1, 'tax_note' => $r['tax_note'] ?? null,
             'valid_from' => $r['valid_from'], 'valid_to' => $r['valid_to'] ?? null, 'active' => (int) $r['active'] === 1, 'remarks' => $r['remarks'] ?? null,
+            'dietary' => $r['dietary'] ?? null, 'child_from' => isset($r['child_from']) ? (int) $r['child_from'] : null, 'child_to' => isset($r['child_to']) ? (int) $r['child_to'] : null, 'rate_status' => $r['rate_status'] ?? 'approved',
             'routes' => $routes, 'route_text' => implode('; ', array_map(static fn ($x) => $x['from'] . ' → ' . $x['to'], $routes)),
             'created_at' => $r['created_at'] ?? null, 'created_by' => $r['created_by'] ?? null, 'updated_at' => $r['updated_at'] ?? null, 'updated_by' => $r['updated_by'] ?? null,
         ];
@@ -669,7 +670,7 @@ final class MealMaster
             if (self::words($f) === self::words($t)) {
                 throw new \InvalidArgumentException('A route leg goes from one place to another: ' . $f . ' → ' . $t . ' is not a leg.');
             }
-            $legs[self::words($f) . '>' . self::words($t)] = ['from' => $f, 'to' => $t];
+            $legs[self::words($f) . '>' . self::words($t)] = ['from' => $f, 'to' => $t, 'via' => self::cut($leg['via'] ?? null, 160), 'default' => !empty($leg['default']) ? 1 : 0];   // tf-lunch-r1
         }
         if (count($legs) > 30) {
             throw new \InvalidArgumentException('Thirty route legs at most for one meal.');
@@ -705,10 +706,11 @@ final class MealMaster
                 array_merge(array_values($row), [$this->now(), $this->user, $this->now(), $this->user]));
             $id = (int) ($this->db->query('SELECT LAST_INSERT_ID() AS id')->getRowArray()['id'] ?? 0);
         }
+        LunchArrangement::ensure($this->db);   // tf-lunch-r1: the via / default columns
         $this->db->query('DELETE FROM tf_meal_route WHERE meal_id = ?', [$id]);
         $i = 0;
         foreach ($legs as $leg) {
-            $this->db->query('INSERT INTO tf_meal_route (meal_id, from_place, to_place, sort_order) VALUES (?,?,?,?)', [$id, $leg['from'], $leg['to'], $i++]);
+            $this->db->query('INSERT INTO tf_meal_route (meal_id, from_place, to_place, sort_order, via, is_default) VALUES (?,?,?,?,?,?)', [$id, $leg['from'], $leg['to'], $i++, ($leg['via'] ?? '') === '' ? null : $leg['via'], (int) ($leg['default'] ?? 0)]);
         }
 
         $changes = [];
@@ -788,7 +790,7 @@ final class MealMaster
             $this->inUse ??= $this->meals(['status' => 'in_use']);
             $out = [];
             foreach ($this->inUse as $m) {
-                if ($m['meal_type'] !== $type) {
+                if ($m['meal_type'] !== $type || ($m['rate_status'] ?? 'approved') !== 'approved') {   // tf-lunch-r1: a rate awaiting approval is not offered
                     continue;
                 }
                 $st = self::standing($m, $date ?? date('Y-m-d'));
@@ -1219,11 +1221,17 @@ final class MealMaster
             $score = 0;
             $why   = null;
             $onLeg = null;
+            $isDef = false;   // tf-lunch-r1: this restaurant is the route's default
             foreach ($m['routes'] as $r) {
                 foreach ($legs as $l) {
                     if (self::placeMatch($r['from'], $l['from']) && self::placeMatch($r['to'], $l['to'])) {
-                        $onLeg = $r['from'] . ' → ' . $r['to'];
-                        break 2;
+                        if ($onLeg === null || !empty($r['default'])) {
+                            $onLeg = $r['from'] . ' → ' . $r['to'];
+                            $isDef = !empty($r['default']);
+                        }
+                        if ($isDef) {
+                            break 2;
+                        }
                     }
                 }
             }
@@ -1233,7 +1241,7 @@ final class MealMaster
             $tonight = $departure ? 'where the day starts' : 'where the party stays that night';
             if ($type === 'lunch') {
                 if ($onLeg !== null) {
-                    [$score, $why] = [30, 'On the ' . $onLeg . ' route'];
+                    [$score, $why] = $isDef ? [40, 'Default for the ' . $onLeg . ' route'] : [30, 'On the ' . $onLeg . ' route'];
                 } elseif ($inTown) {
                     [$score, $why] = [20, 'In ' . $m['location'] . ', on the day\'s route'];
                 } elseif ($inNight) {
@@ -1251,11 +1259,12 @@ final class MealMaster
                 }
             }
             if ($score > 0) {
-                $out[] = self::option($m) + ['score' => $score, 'why' => $why, 'adult_usd' => $this->adultUsd($m, $date)];
+                $out[] = self::option($m) + ['score' => $score, 'why' => $why, 'adult_usd' => $this->adultUsd($m, $date), 'default' => $isDef && $type === 'lunch'];
             }
         }
         // the route first (the leg, then a town on it, then where the party sleeps), then the cheapest an adult with the taxes
-        usort($out, static fn ($a, $b) => [$b['score'], $a['adult_usd'] ?? PHP_FLOAT_MAX, $a['restaurant']] <=> [$a['score'], $b['adult_usd'] ?? PHP_FLOAT_MAX, $b['restaurant']]);
+        // tf-lunch-r1: the route's default first, then the others on the route by name — the cheapest is no longer chosen
+        usort($out, static fn ($a, $b) => [$b['score'], $a['restaurant']] <=> [$a['score'], $b['restaurant']]);
         return $out;
     }
 
@@ -1624,6 +1633,9 @@ final class MealMaster
             $line  = $lines[0] ?? null;
             $where = $r['where'] ?? ['towns' => [], 'night' => [], 'last_to' => null];
             $best  = $this->suggest('lunch', $r['date'], $r['legs'], $where['towns'], $where['night'], $where['last_to'], $r['departure'])[0] ?? null;
+            if ($best !== null && empty($best['default'])) {
+                $best = null;   // tf-lunch-r1: only the route's designated default is put on a day automatically
+            }
             $split = self::partySplit($it, $r['party']);
             $a = (int) $split['adults'];
             $k = (int) $split['children'];

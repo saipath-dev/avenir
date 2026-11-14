@@ -680,6 +680,71 @@
     @media (min-width:1101px) { .inq .inq-head { flex-wrap:nowrap; padding:4px 0 6px; } .inq .inq-head h2 { white-space:nowrap; } .inq .inq-sig { flex:0 1 auto; min-width:0; } }
     /* tf-compact-r4: the folded working table and the bottom row (status, follow-up, Back to list, Check hotels again, management) are not shown on an open inquiry; they stay in the page so the hotel and note editors keep working */
     .tf .inq #inq_full { display:none !important; } .tf .inq > .d-flex.justify-content-between { display:none !important; }
+    /* tf-notes-r1: Notes & History in four sections (Email Communications, Requests & Corrections, Change History, Reference Information) — the same cards and records, only arranged */
+    .inq .nh-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:14px; }
+    .tf .inq .nh-tab { display:flex; align-items:center; justify-content:center; gap:9px; height:42px; padding:0 10px; border:1px solid #D9D3DD; border-radius:9px; background:#F7F5F8; color:#1A1A1A; font-size:14.5px; font-weight:700; cursor:pointer; white-space:nowrap; overflow:hidden; }
+    .tf .inq .nh-tab i { font-size:17px; } .tf .inq .nh-tab span { font-weight:600; } .tf .inq .nh-tab.on { background:#842484; border-color:#842484; color:#fff; box-shadow:0 2px 6px rgba(132,36,132,.3); } .tf .inq .nh-tab:not(.on):hover { border-color:#842484; color:#842484; }
+    .inq .nh-sec { display:none; } .inq .nh-sec.on { display:block; }
+    .inq .nh-mail { display:grid; grid-template-columns:minmax(260px,340px) minmax(0,1fr); gap:14px; align-items:start; }
+    .inq .nh-left, .inq .nh-right { background:#fff; border:1px solid #E1DCE5; border-radius:12px; overflow:hidden; box-shadow:0 1px 4px rgba(16,24,40,.06); }
+    .inq .nh-lhead { display:flex; align-items:center; gap:8px; padding:12px; }
+    .tf .inq .nh-new { display:inline-flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:linear-gradient(#78B848,#5E9C33); color:#fff; font-weight:700; font-size:14px; text-decoration:none; white-space:nowrap; } .tf .inq .nh-new:hover { filter:brightness(1.06); color:#fff; }
+    .tf .inq .nh-lhead select { margin-left:auto; height:36px; border:1px solid #D9D3DD; border-radius:8px; background:#fff; font-size:13.5px; padding:0 8px; min-width:0; max-width:140px; color:#1A1A1A; }
+    .tf .inq .nh-reload { width:36px; height:36px; border:1px solid #D9D3DD; border-radius:8px; background:#fff; color:#5E5964; cursor:pointer; flex:none; } .tf .inq .nh-reload:hover { border-color:#842484; color:#842484; }
+    .inq .nh-list { max-height:62vh; overflow:auto; border-top:1px solid #ECE7EF; }
+    .tf .inq .nh-item { display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; padding:11px 14px; border:0; border-bottom:1px solid #ECE7EF; border-left:4px solid transparent; background:#fff; cursor:pointer; }
+    .tf .inq .nh-item > i { font-size:18px; color:#842484; margin-top:1px; } .tf .inq .nh-item > span { min-width:0; flex:1 1 auto; }
+    .tf .inq .nh-item b { display:block; font-size:13.5px; font-weight:700; color:#1A1A1A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .tf .inq .nh-item em { font-style:normal; font-size:12.5px; color:#5E5964; }
+    .tf .inq .nh-item:hover { background:#FBF8FC; } .tf .inq .nh-item.on { background:#EAF2FD; border-left-color:#1565C0; } .tf .inq .nh-item.bad b, .tf .inq .nh-item.bad > i { color:#C8101A; }
+    .inq .nh-vh { display:flex; justify-content:space-between; gap:12px; align-items:baseline; padding:14px 18px; background:#F6F3F8; border-bottom:1px solid #ECE7EF; } .inq .nh-vh h3 { font-size:18px; font-weight:800; margin:0; color:#1A1A1A; word-break:break-word; } .inq .nh-vh span { font-size:13px; color:#5E5964; white-space:nowrap; }
+    .inq .nh-vb { padding:14px 18px 18px; } .inq .nh-meta { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:flex-end; padding-bottom:12px; border-bottom:1px solid #ECE7EF; }
+    .inq .nh-addr div { font-size:14px; color:#1A1A1A; word-break:break-word; } .inq .nh-addr em { display:inline-block; width:52px; font-style:normal; color:#5E5964; }
+    .inq .nh-acts { display:flex; gap:8px; flex-wrap:wrap; } .tf .inq .nh-act { display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; border:1px solid #CFC7D4; border-radius:8px; background:#fff; color:#1A1A1A; font-size:13.5px; font-weight:600; text-decoration:none; } .tf .inq .nh-act:hover { border-color:#842484; color:#842484; }
+    .inq .nh-pill { display:inline-block; border-radius:10px; padding:2px 10px; font-size:12px; font-weight:700; margin:10px 6px 0 0; } .inq .nh-pill.in { background:#E3F0FC; color:#0F4C97; } .inq .nh-pill.out { background:#E6F4DF; color:#1E6A14; } .inq .nh-pill.bad { background:#FDE7E7; color:#C8101A; } .inq .nh-pill.int { background:#EEF0F3; color:#4A5361; }
+    .inq .nh-err { font-size:13px; color:#C8101A; margin-top:6px; } .inq .nh-body { white-space:pre-wrap; word-break:break-word; font-size:14.5px; line-height:1.55; padding:14px 0; color:#1A1A1A; }
+    .inq .nh-att { border:1px solid #E1DCE5; border-radius:10px; padding:10px 12px; } .inq .nh-att > b { display:block; font-size:13.5px; margin-bottom:6px; } .tf .inq .nh-att a { display:inline-flex; align-items:center; gap:6px; border:1px solid #E1DCE5; border-radius:8px; padding:6px 10px; margin:0 6px 6px 0; font-size:13.5px; color:#1A1A1A; text-decoration:none; } .tf .inq .nh-att a:hover { border-color:#842484; }
+    .inq .nh-frame { display:block; width:100%; height:520px; border:1px solid #ECE7EF; border-radius:10px; margin:14px 0; background:#fff; }
+    .inq .nh-foot { font-size:12.5px; color:#5E5964; margin-top:12px; } .inq .nh-empty { padding:26px 18px; color:#5E5964; font-size:14px; line-height:1.5; }
+    @media (max-width:900px) { .inq .nh-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); } .inq .nh-mail { grid-template-columns:minmax(0,1fr); } .inq .nh-list { max-height:40vh; } }
+    /* tf-compact-r5: the Entrance & Activities card is not shown on the Activities tab (Meals stays); it remains in the page, with what it holds */
+    .tf .inq .inq-pane[data-pane="acts"] #ea_card { display:none !important; }
+    /* tf-lunch-r1: Activities in two parts (Meals & Restaurants | Activities / Tickets) and the daily Meal Arrangement, to the mock-up of 14 Nov 2026 */
+    .inq .ma-bar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+    .tf .inq .ma-tab { height:38px; padding:0 18px; border:1px solid #D9D3DD; border-radius:9px; background:#F7F5F8; color:#1A1A1A; font-size:14.5px; font-weight:700; cursor:pointer; } .tf .inq .ma-tab.on { background:#842484; border-color:#842484; color:#fff; box-shadow:0 2px 6px rgba(132,36,132,.3); }
+    .tf .inq .ma-link { margin-left:auto; display:inline-flex; align-items:center; gap:7px; height:36px; padding:0 14px; border:1px solid #CFC7D4; border-radius:8px; background:#fff; color:#1A1A1A; font-size:13.5px; font-weight:700; text-decoration:none; } .tf .inq .ma-link:hover { border-color:#842484; color:#842484; }
+    .inq .ma-sec { display:none; } .inq .ma-sec.on { display:block; }
+    .inq .ml-card { background:#fff; border:1px solid #E1DCE5; border-radius:12px; padding:14px 16px 16px; margin-bottom:16px; box-shadow:0 1px 4px rgba(16,24,40,.06); }
+    .inq .ml-card h3 { font-size:20px; font-weight:800; color:#842484; margin:0 0 10px; } .inq .ml-card h3 span { font-weight:700; }
+    .inq .ml-plan { display:flex; align-items:center; gap:12px; flex-wrap:wrap; border:1px solid #ECE7EF; border-radius:9px; padding:7px 12px; margin-bottom:10px; font-size:13.5px; } .inq .ml-pill { background:#842484; color:#fff; font-weight:700; border-radius:7px; padding:3px 12px; }
+    .inq .ml-wrap { overflow-x:auto; border:1px solid #E1DCE5; border-radius:10px; }
+    .tf .inq table.ml-tbl { width:100%; border-collapse:collapse; min-width:980px; } .tf .inq table.ml-tbl th { background:#F6F3F8; font-size:13.5px; font-weight:800; text-align:left; padding:9px 10px; white-space:nowrap; border-bottom:1px solid #E1DCE5; } .tf .inq table.ml-tbl th.p { color:#842484; }
+    .tf .inq table.ml-tbl td { padding:8px 10px; border-bottom:1px solid #ECE7EF; font-size:13.5px; vertical-align:middle; color:#1A1A1A; } .tf .inq table.ml-tbl tr:last-child td { border-bottom:0; } .tf .inq table.ml-tbl td.r { text-align:right; white-space:nowrap; font-weight:700; } .tf .inq table.ml-tbl td small { display:block; color:#5E5964; font-size:12px; }
+    .inq .ml-hb { display:inline-block; background:#F1E3F2; color:#5A1560; font-weight:800; font-size:11.5px; border-radius:8px; padding:1px 8px; margin-top:2px; }
+    .tf .inq .ml-arr { width:100%; min-width:190px; height:34px; border-radius:8px; border:1.5px solid #CFC7D4; font-size:13.5px; font-weight:700; padding:0 8px; background:#fff; color:#1A1A1A; }
+    .tf .inq .ml-arr.route { background:#E6F4DF; border-color:#78B848; } .tf .inq .ml-arr.driver { background:#E3F0FC; border-color:#6FA8E6; } .tf .inq .ml-arr.hotel { background:#fff; border-color:#C9A227; } .tf .inq .ml-arr.none { background:#FBE9F3; border-color:#D889B7; } .tf .inq .ml-arr.unset { border-color:#C8101A; }
+    .tf .inq .ml-rest { width:100%; min-width:210px; height:34px; border-radius:8px; border:1.5px solid #B58BB8; font-size:13.5px; font-weight:600; padding:0 8px; background:#fff; color:#1A1A1A; }
+    .inq .ml-need { color:#C8101A; font-weight:800; } .inq .ml-why { font-size:12px; color:#3F7F1F; font-weight:600; } .tf .inq .ml-ed { border:0; background:transparent; color:#3F8F1F; font-size:16px; cursor:pointer; padding:2px 6px; } .tf .inq a.ml-mr { font-size:12px; color:#842484; font-weight:600; }
+    .inq .ml-two { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:14px; margin-top:14px; } .inq .ml-box { border:1px solid #E1DCE5; border-radius:10px; overflow:hidden; } .inq .ml-box h4 { margin:0; padding:10px 14px; font-size:16.5px; font-weight:800; color:#842484; background:#F6F3F8; } .inq .ml-box h4 i { margin-right:8px; }
+    .tf .inq table.ml-rm { width:100%; border-collapse:collapse; } .tf .inq table.ml-rm th { text-align:left; font-size:13px; padding:7px 14px; border-bottom:1px solid #ECE7EF; } .tf .inq table.ml-rm td { padding:7px 14px; font-size:13.5px; border-bottom:1px solid #F1EDF3; } .tf .inq table.ml-rm tr:last-child td { border-bottom:0; }
+    .inq .ml-sum { padding:8px 14px 0; } .inq .ml-sum div { display:flex; justify-content:space-between; gap:12px; padding:4px 0; font-size:14px; } .inq .ml-sum div b { white-space:nowrap; } .inq .ml-tot { display:flex; justify-content:space-between; gap:12px; align-items:center; background:#842484; color:#fff; padding:10px 14px; margin-top:8px; font-weight:800; font-size:15px; } .inq .ml-tot b { font-size:19px; white-space:nowrap; } .inq .ml-note { padding:8px 14px; font-size:12.5px; color:#1A1A1A; background:#fff; border-top:1px solid #ECE7EF; }
+    @media (max-width:1000px) { .inq .ml-two { grid-template-columns:minmax(0,1fr); } }
+    /* tf-lunch-r2: the Meal Arrangement drawn to the approved mock-up */
+    .inq .ma-links { margin-left:auto; display:inline-flex; gap:10px; flex-wrap:wrap; } .tf .inq .ma-links .ma-link { margin-left:0; height:38px; padding:0 16px; font-size:14px; border-color:#BDB4C4; border-radius:9px; } .tf .inq .ma-link i { font-size:16px; color:#842484; }
+    .tf .inq .ma-tab { height:40px; padding:0 22px; font-size:15px; border-radius:9px; } .inq .ma-bar { background:#fff; border:1px solid #E1DCE5; border-radius:12px; padding:10px 12px; }
+    .inq .ml-card h3 { font-size:21px; } .inq .ml-plan { font-size:14px; padding:8px 14px; } .inq .ml-pill { padding:4px 14px; font-size:14px; }
+    .tf .inq table.ml-tbl th { font-size:14px; padding:10px; background:#F7F5F8; border-right:1px solid #ECE7EF; } .tf .inq table.ml-tbl th.c, .tf .inq table.ml-tbl td.c { text-align:center; } .tf .inq table.ml-tbl th.r { text-align:right; } .tf .inq table.ml-tbl td { font-size:14px; padding:6px 10px; } .tf .inq table.ml-tbl td.r { font-weight:500; }
+    .inq .ml-hb { background:#F3D9F1; color:#6A1A6E; font-size:12px; padding:1px 9px; border-radius:9px; }
+    .tf .inq .ml-dd { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; min-width:200px; height:34px; padding:0 12px; border-radius:8px; border:1.5px solid #CFC7D4; background:#fff; color:#1A1A1A; font-size:14px; font-weight:500; cursor:pointer; text-align:left; } .tf .inq .ml-dd i { font-size:13px; } .tf .inq .ml-dd:disabled { cursor:default; opacity:.8; }
+    .tf .inq .ml-dd.route { background:#E4F3D8; border-color:#78B848; } .tf .inq .ml-dd.driver { background:#DDEBFA; border-color:#6FA8E6; } .tf .inq .ml-dd.hotel { background:#FFF3C9; border-color:#E3C24F; } .tf .inq .ml-dd.none { background:#FBE1F1; border-color:#DE8FC0; } .tf .inq .ml-dd.unset { border-color:#C8101A; color:#C8101A; font-weight:700; }
+    .tf .inq .ml-rest { height:36px; border:1.5px solid #9A5AA0; border-radius:8px; font-weight:500; font-size:14px; } .tf .inq .ml-rest.need { border-color:#C8101A; color:#C8101A; font-weight:700; }
+    .inq .ml-boxed { display:block; border:1.5px solid #BDB4C4; border-radius:8px; padding:6px 12px; background:#fff; } .inq .ml-boxed.need { border-color:#C8101A; color:#C8101A; font-weight:700; }
+    .tf .inq .ml-ed { color:#3F8F1F; font-size:18px; }
+    .ml-menu { position:fixed; z-index:2000; width:310px; background:#fff; border:1px solid #D9D3DD; border-radius:10px; padding:8px; box-shadow:0 10px 28px rgba(40,10,50,.22); display:flex; flex-direction:column; gap:5px; }
+    .ml-menu button { display:flex; align-items:center; gap:12px; border:0; border-radius:7px; padding:7px 12px; text-align:left; cursor:pointer; color:#1A1A1A; font-family:inherit; } .ml-menu button i { font-size:22px; } .ml-menu button b { display:block; font-size:14px; font-weight:800; line-height:1.2; } .ml-menu button em { font-style:normal; font-size:12.5px; }
+    .ml-menu .route { background:linear-gradient(#4FA83A,#3A8C28); color:#fff; } .ml-menu .driver { background:#D6E8FA; } .ml-menu .driver i { color:#1B3F8F; } .ml-menu .hotel { background:#FFF0B8; } .ml-menu .hotel i { color:#C77700; } .ml-menu .none { background:#F9DDF0; } .ml-menu .none i { color:#D0111B; } .ml-menu button:hover { filter:brightness(.96); }
+    .inq .ml-box h4 { font-size:19px; background:#fff; padding:12px 16px 8px; } .inq .ml-box h4 span { font-weight:700; } .inq .ml-box h4 i { font-size:22px; } .inq .ml-box h4.g { background:linear-gradient(90deg,#fff,#E9F3DF); margin:8px 10px 0; border-radius:8px; padding:8px 12px; } .inq .ml-box.flash { box-shadow:0 0 0 3px rgba(132,36,132,.35); }
+    .tf .inq table.ml-rm th { font-size:14px; background:#F7F5F8; border-top:1px solid #ECE7EF; } .tf .inq table.ml-rm td { font-size:14.5px; } .tf .inq table.ml-rm td + td, .tf .inq table.ml-rm th + th { border-left:1px solid #ECE7EF; }
+    .inq .ml-sum div { font-size:15px; font-weight:700; padding:3px 12px; } .inq .ml-sum div b { font-weight:800; } .inq .ml-tot { margin:8px 10px 10px; border-radius:8px; background:linear-gradient(90deg,#842484,#5E1466); } .inq .ml-tot small { font-weight:500; font-size:13.5px; } .inq .ml-tot b { font-size:22px; } .inq .ml-note { font-size:12px; color:#5E5964; padding:0 14px 10px; border-top:0; }
     /* tf-backlist-r1: a small green way back to the list, at the left of the driver / guide line */
     .inq .inq-crew { position:relative; } .tf .inq .inq-backlist { position:absolute; left:14px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 14px 0 11px; border-radius:16px; background:linear-gradient(#84C254,#6CAB3E); color:#fff; font-size:13px; font-weight:700; text-decoration:none; box-shadow:0 1px 3px rgba(60,110,30,.35); white-space:nowrap; }
     .tf .inq .inq-backlist i { font-size:15px; transition:transform .15s; } .tf .inq .inq-backlist:hover { background:linear-gradient(#78B848,#5E9C33); color:#fff; } .tf .inq .inq-backlist:hover i { transform:translateX(-3px); }
@@ -3692,6 +3757,225 @@
     }
     function inqReveal(el) { const p = el && el.closest ? el.closest('.inq-pane') : null; if (p && !p.classList.contains('on')) inqShow(p.dataset.pane); const d = el && el.closest ? el.closest('details.inq-sec') : null; if (d) d.open = true; }
     window.tfInqShow = inqShow; window.tfInqReveal = inqReveal;   // tf-inqnav-r2: the header's Navigation list opens the right tab
+    // tf-notes-r1: Notes & History in four sections. Nothing is rebuilt: the existing cards (with their ids, buttons and safeguards) are moved under a heading,
+    // and Email Communications reads the same record the Communications page keeps (comms/<id>/data). Sending still happens on that page, with its own checks.
+    const NH = { sec: 'mail', sel: null, filter: '', rows: [], forId: null };
+    function inqNotes(pane, it) {
+        if (!pane) return;
+        const cards = [...pane.children].filter(c => c.classList && c.classList.contains('tf-card'));
+        const wrap = document.createElement('div'); wrap.className = 'nh';
+        wrap.innerHTML = `<div class="nh-tabs" role="tablist">
+            <button type="button" class="nh-tab" data-nh="mail"><i class="bi bi-envelope"></i> Email Communications <span id="nh_n_mail"></span></button>
+            <button type="button" class="nh-tab" data-nh="req"><i class="bi bi-pencil"></i> Requests &amp; Corrections</button>
+            <button type="button" class="nh-tab" data-nh="hist"><i class="bi bi-clock-history"></i> Change History <span id="nh_n_hist"></span></button>
+            <button type="button" class="nh-tab" data-nh="ref"><i class="bi bi-info-circle"></i> Reference Information</button></div>
+            <div class="nh-sec" data-nhsec="mail"><div class="nh-mail">
+                <div class="nh-left"><div class="nh-lhead"><a class="nh-new" target="avhComms" href="${BASE}/comms/${it.id}?compose=1" title="Opens the Communications page with a new e-mail ready to write; it is sent from there, with its checks"><i class="bi bi-plus-lg"></i> New Email</a>
+                    <select id="nh_filter" title="Which lines to list"><option value="">All Emails</option><option value="in">Received</option><option value="out">Sent</option><option value="bad">Not sent</option><option value="other">Notes &amp; calls</option></select>
+                    <button type="button" class="nh-reload" id="nh_reload" title="Read the communications again"><i class="bi bi-arrow-clockwise"></i></button></div>
+                    <div class="nh-list" id="nh_list"><div class="nh-empty">Reading the communications…</div></div></div>
+                <div class="nh-right" id="nh_view"></div></div></div>
+            <div class="nh-sec" data-nhsec="req"></div><div class="nh-sec" data-nhsec="hist"></div><div class="nh-sec" data-nhsec="ref"></div>`;
+        const sec = k => wrap.querySelector(`[data-nhsec="${k}"]`);
+        pane.insertBefore(wrap, pane.firstChild);
+        cards.forEach(c => {
+            if (c.id === 'comms_card') { c.style.display = 'none'; sec('hist').appendChild(c); return; }   // the "latest five" copy of the same history: kept in the page, not shown twice
+            sec(c.id === 'act_card' ? 'hist' : (c.id === 'er_card' || c.classList.contains('mailbox') || c.querySelector('#d_addreq')) ? 'req' : 'ref').appendChild(c);
+        });
+        const mb = sec('req').querySelector('.mailbox'); if (mb) sec('req').insertBefore(mb, sec('req').firstChild);   // the original request first, then the requests and the corrections
+        const show = k => { NH.sec = k; wrap.querySelectorAll('.nh-tab').forEach(b => b.classList.toggle('on', b.dataset.nh === k)); wrap.querySelectorAll('.nh-sec').forEach(x => x.classList.toggle('on', x.dataset.nhsec === k)); };
+        wrap.querySelectorAll('.nh-tab').forEach(b => b.addEventListener('click', () => show(b.dataset.nh)));
+        if (NH.forId !== it.id) { NH.sec = 'mail'; NH.sel = null; NH.filter = ''; NH.rows = []; NH.forId = it.id; }
+        show(NH.sec);
+        const fl = wrap.querySelector('#nh_filter'); fl.value = NH.filter; fl.addEventListener('change', () => { NH.filter = fl.value; nhDraw(); });
+        wrap.querySelector('#nh_reload').addEventListener('click', () => nhLoad(it.id));
+        const ac = document.getElementById('act_count'), setH = () => { const m = ((ac && ac.textContent) || '').match(/\d+/), el = document.getElementById('nh_n_hist'); if (el) el.textContent = m ? `(${m[0]})` : ''; };
+        setH(); if (ac && 'MutationObserver' in window) new MutationObserver(setH).observe(ac, { childList: true, characterData: true, subtree: true });
+        nhLoad(it.id);
+    }
+    async function nhLoad(id) {
+        let j; try { j = await api('/comms/' + id + '/data'); } catch (e) { j = { status: 0 }; }
+        if (!CURRENT || Number(CURRENT.id) !== Number(id)) return;
+        const list = document.getElementById('nh_list'), view = document.getElementById('nh_view'); if (!list) return;
+        if (!j || j.status !== 200) { list.innerHTML = `<div class="nh-empty">${esc((j && j.message) || 'The communications could not be read.')}</div>`; if (view) view.innerHTML = ''; return; }
+        NH.rows = ((j.data || {}).timeline || []).filter(r => r.kind === 'comm');
+        const n = document.getElementById('nh_n_mail'); if (n) n.textContent = `(${NH.rows.length})`;
+        nhDraw();
+    }
+    const nhState = r => r.direction === 'in' ? ['in', 'Received', 'bi-envelope-arrow-down'] : r.direction === 'out' ? (r.send_state === 'failed' ? ['bad', 'Not sent', 'bi-envelope-exclamation'] : ['out', 'Sent', 'bi-envelope-arrow-up']) : ['int', 'Internal', 'bi-journal-text'];
+    const NH_CH = { email: 'e-mail', whatsapp: 'WhatsApp', phone: 'call', call: 'call', meeting: 'meeting', note: 'note', handover: 'handover note' };
+    const nhWhen = v => { const t = String(v || ''), d = new Date(t.replace(' ', 'T')); return isNaN(d) ? t.slice(0, 16) : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + t.slice(11, 16); };
+    const nhSize = b => b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : b >= 1024 ? Math.round(b / 1024) + ' KB' : b + ' B';
+    function nhDraw() {
+        const list = document.getElementById('nh_list'), view = document.getElementById('nh_view'); if (!list || !view || !CURRENT) return;
+        const f = NH.filter, rows = NH.rows.filter(r => !f || (f === 'in' && r.direction === 'in') || (f === 'out' && r.direction === 'out' && r.send_state !== 'failed') || (f === 'bad' && r.send_state === 'failed') || (f === 'other' && r.channel !== 'email'));
+        if (!rows.length) {
+            list.innerHTML = `<div class="nh-empty">${NH.rows.length ? 'Nothing of this kind on this inquiry.' : 'No e-mail or message is recorded on this inquiry yet.'}</div>`;
+            view.innerHTML = `<div class="nh-empty">${NH.rows.length ? 'Choose another filter to see the other lines.' : 'E-mails sent from the system, replies collected from the mailbox and communications recorded by hand appear here, newest first. The request as it first arrived is kept under <b>Requests &amp; Corrections</b>.'}</div>`;
+            return;
+        }
+        if (!rows.some(r => r.id === NH.sel)) NH.sel = rows[0].id;
+        list.innerHTML = rows.map(r => { const [c, w, ic] = nhState(r), na = (r.attachments || []).length;
+            return `<button type="button" class="nh-item ${c}${r.id === NH.sel ? ' on' : ''}" data-nhid="${r.id}"><i class="bi ${ic}"></i><span><b>${esc(w)}${r.channel !== 'email' ? ' (' + esc(NH_CH[r.channel] || r.channel || '') + ')' : ''}: ${esc(r.subject || '(no subject)')}</b><em>${esc(nhWhen(r.at))}${na ? ` · <i class="bi bi-paperclip"></i>${na}` : ''}</em></span></button>`; }).join('');
+        list.querySelectorAll('[data-nhid]').forEach(b => b.addEventListener('click', () => { NH.sel = Number(b.dataset.nhid); nhDraw(); }));
+        const r = rows.find(x => x.id === NH.sel), [c, w] = nhState(r), id = CURRENT.id, att = r.attachments || [];
+        const line = (k, v) => v ? `<div><em>${k}:</em> ${esc(v)}</div>` : '';
+        view.innerHTML = `<div class="nh-vh"><h3>${esc(r.subject || '(no subject)')}</h3><span>${esc(nhWhen(r.at))}</span></div>
+            <div class="nh-vb"><div class="nh-meta"><div class="nh-addr">${line('From', r.from || (r.direction === 'out' ? r.sent_from : '') || (r.direction === 'internal' ? r.by : ''))}${line('To', r.to)}${line('Cc', r.cc)}${line('Bcc', r.bcc)}</div>
+                <div class="nh-acts">${r.channel === 'email' && r.direction !== 'internal' ? `<a class="nh-act" target="avhComms" href="${BASE}/comms/${id}?reply=${r.id}" title="Opens the Communications page with the reply ready to write; it is sent from there, with its checks"><i class="bi bi-reply"></i> Reply</a>` : ''}<a class="nh-act" target="avhComms" href="${BASE}/comms/${id}" title="The complete record: correct a line, add an attachment, record a reply, follow-ups"><i class="bi bi-box-arrow-up-right"></i> Open in Communications</a></div></div>
+                <span class="nh-pill ${c}">${esc(w)}${r.channel !== 'email' ? ' · ' + esc(NH_CH[r.channel] || r.channel || '') : ''}</span>${r.send_state === 'sent' ? '<span class="nh-pill out">accepted by the outgoing mail server</span>' : ''}${r.source === 'system' ? '<span class="nh-pill int">captured by the system</span>' : ''}${r.versions > 1 ? `<span class="nh-pill int">corrected ×${r.versions - 1}</span>` : ''}
+                ${r.send_state === 'failed' ? `<div class="nh-err"><i class="bi bi-exclamation-triangle"></i> This e-mail was NOT sent. ${esc(r.send_error || 'The mail server did not accept it.')}</div>` : ''}
+                ${/<(table|div|p|br|html|body|span)\b[^>]*>/i.test(r.body || '') ? `<iframe class="nh-frame" sandbox="" title="The e-mail as it was written" srcdoc="${esc(r.body)}"></iframe>` : `<div class="nh-body">${esc(r.body || '(no text)')}</div>`}
+                ${att.length ? `<div class="nh-att"><b><i class="bi bi-paperclip"></i> Attachments (${att.length})</b>${att.map(a => `<a href="${BASE}/comms/attachment/${a.id}" target="_blank"><i class="bi bi-file-earmark"></i> ${esc(a.original_name || 'attachment')} (${nhSize(Number(a.bytes || 0))})</a>`).join('')}</div>` : ''}
+                <div class="nh-foot">Recorded by ${esc(r.by || '')}${r.recorded_at ? ' on ' + esc(nhWhen(r.recorded_at)) : ''}${(r.links || []).length ? ' · ' + r.links.map(l => esc(l.label || l.kind)).join(' · ') : ''}${r.in_reply_to ? ' · reply to line #' + r.in_reply_to : ''}</div></div>`;
+    }
+    // tf-lunch-r1: the Activities tab in two parts, and the daily Meal Arrangement. The restaurant line, its rate, taxes and costing are the
+    // Meal Master's own (the same endpoints as before); what is new is the arrangement of each day and the driver's meal allowance.
+    const LCH = { forId: null, loaded: false, rows: {}, defaults: [], can_master: false, sub: 'meals' };
+    const ML_ARR = { route: 'Lunch on Route', driver: 'Driver-Arranged Lunch', hotel: 'Hotel Lunch', none: 'No Lunch' };
+    const mlMoney = (c, v) => c + ' ' + Number(v).toLocaleString(undefined, { minimumFractionDigits: c === 'USD' ? 2 : 0, maximumFractionDigits: 2 });
+    function inqMeals(pane, it) {
+        if (!pane || !it.meals || !it.meals.available) return;
+        if (LCH.forId !== it.id) { LCH.forId = it.id; LCH.loaded = false; LCH.rows = {}; LCH.defaults = []; LCH.sub = 'meals'; }
+        const root = BASE.replace(/\/tour\/intake$/, '');
+        const kids = [...pane.children];
+        const wrap = document.createElement('div');
+        wrap.innerHTML = `<div class="ma-bar"><button type="button" class="ma-tab" data-ma="meals">Meals &amp; Restaurants</button><button type="button" class="ma-tab" data-ma="tix">Activities / Tickets</button>
+            <span class="ma-links" id="ma_master" style="display:none"><a class="ma-link" target="avhMealMaster" href="${root}/master_files/meal_master" title="The restaurants, in the Meal Master"><i class="bi bi-shop"></i> Restaurant Master</a><a class="ma-link" target="avhMealMaster" href="${root}/master_files/meal_master" title="The meals and their rates"><i class="bi bi-envelope-paper" style="color:#3F8F1F"></i> Meal Master</a><a class="ma-link" href="#" id="ma_route" title="The default restaurant of each route"><i class="bi bi-geo-alt-fill" style="color:#3F8F1F"></i> Route Master</a></span></div>
+            <div class="ma-sec" data-masec="meals"><div class="ml-card" id="lunch_card"></div></div><div class="ma-sec" data-masec="tix"></div>`;
+        pane.insertBefore(wrap, pane.firstChild);
+        const sec = k => wrap.querySelector(`[data-masec="${k}"]`);
+        kids.forEach(c => sec(c.id === 'meals_card' ? 'meals' : 'tix').appendChild(c));
+        const show = k => { LCH.sub = k; wrap.querySelectorAll('.ma-tab').forEach(x => x.classList.toggle('on', x.dataset.ma === k)); wrap.querySelectorAll('.ma-sec').forEach(x => x.classList.toggle('on', x.dataset.masec === k)); };
+        wrap.querySelectorAll('.ma-tab').forEach(x => x.addEventListener('click', () => show(x.dataset.ma)));
+        window.tfActSub = show; show(LCH.sub);
+        wrap.querySelector('#ma_route').addEventListener('click', e => { e.preventDefault(); show('meals'); const el = document.querySelector('#lunch_card .ml-box.rm'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } });
+        const old = sec('meals').querySelector('#meals_card'); if (old) { const dt = document.createElement('details'); dt.className = 'inq-sec'; dt.innerHTML = '<summary>Dinners, vouchers and the detailed meal table</summary>'; sec('meals').appendChild(dt); dt.appendChild(old); }
+        mlDraw();
+        if (!LCH.loaded) api('/intake/' + it.id + '/lunch').then(j => { if (j && j.status === 200 && CURRENT && Number(CURRENT.id) === Number(it.id)) { LCH.loaded = true; LCH.rows = j.data.rows || {}; LCH.defaults = j.data.defaults || []; LCH.can_master = !!j.data.can_master; mlDraw(); } }).catch(() => {});
+    }
+    // tf-lunch-r2: drawn to the approved mock-up — the coloured arrangement menu, a pencil on every row, the figures in rupees
+    const ML_SUB = { route: ['bi-shop', 'Lunch on Route', '(Select restaurant from route master)'], driver: ['bi-car-front-fill', 'Driver-Arranged Lunch on Route', '(Give allowance to driver)'], hotel: ['bi-building', 'Hotel Lunch', '(Lunch provided by hotel)'], none: ['bi-slash-circle', 'No Lunch', '(Client\'s own arrangement)'] };
+    function mlDraw() {
+        const box = document.getElementById('lunch_card'), it = CURRENT; if (!box || !it || !it.meals) return;
+        const mm = document.getElementById('ma_master'); if (mm) mm.style.display = LCH.can_master ? '' : 'none';
+        const M = it.meals, lock = !!M.locked, lk = v => 'LKR ' + Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 });
+        const sum = { route: [0, 0, 0, false], driver: [0, 0, 0, false], hotel: 0, none: 0, unset: 0 };   // [days, LKR, USD, something missing]
+        const rows = (M.days || []).map(r => {
+            const c = r.meals.lunch, mine = c.lines.filter(l => l.meal_id), sv = LCH.rows[r.day_no];
+            const arr = sv ? sv.arrangement : (mine.length ? 'route' : c.by_hotel ? 'hotel' : c.skipped ? 'none' : '');
+            let det = '', rate = '—', cost = '—';
+            if (arr === 'route') {
+                const same = (a, b) => String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase(), okOn = d => d.active && d.rate_status === 'approved' && (!r.date || ((!d.valid_from || d.valid_from <= r.date) && (!d.valid_to || d.valid_to >= r.date)));
+                const onRoute = LCH.defaults.filter(d => (r.legs || []).some(l => same(l.from, d.from) && same(l.to, d.to)) && okOn(d)).filter((x, n, a) => a.findIndex(y => y.meal_id === x.meal_id) === n);
+                const cur = mine[0] || null, info = cur ? LCH.defaults.find(d => Number(d.meal_id) === Number(cur.meal_id)) : null, isDef = cur && onRoute.some(d => d.default && Number(d.meal_id) === Number(cur.meal_id));
+                const off = cur && onRoute.length && !onRoute.some(d => Number(d.meal_id) === Number(cur.meal_id));
+                const opts = (cur ? `<option value="${cur.meal_id}" selected>${esc(cur.restaurant || cur.title)}${cur.location ? ' – ' + esc(cur.location) : ''}${isDef ? ' (Default)' : ''}</option>` : '<option value="" selected>Restaurant selection required</option>')
+                    + onRoute.filter(d => !cur || Number(d.meal_id) !== Number(cur.meal_id)).map(d => `<option value="${d.meal_id}">${esc(d.restaurant)}${d.location ? ' – ' + esc(d.location) : ''}${d.default ? ' (Default)' : ''}</option>`).join('') + '<option value="other">Another restaurant…</option>';
+                det = `<select class="ml-rest${cur ? '' : ' need'}" data-mlrest="${r.day_no}|${cur ? cur.id : ''}" title="${esc(cur ? (cur.note || '') : 'This route has no default restaurant in the master — select one')}" ${lock ? 'disabled' : ''}>${opts}</select>${off ? '<small class="ml-need">Not on this day\'s route — check it still suits</small>' : ''}`;
+                if (cur && !cur.blocks && (cur.lkr != null || cur.amount_usd != null)) {
+                    if (cur.lkr != null) { cost = lk(cur.lkr); sum.route[1] += Number(cur.lkr); rate = info && info.adult_lkr != null ? lk(info.adult_lkr) : '—'; }
+                    else { cost = mlMoney('USD', cur.amount_usd); sum.route[2] += Number(cur.amount_usd); rate = info && info.adult_rate != null ? mlMoney('USD', info.adult_rate) : '—'; }
+                } else { cost = '<span class="ml-need">Rate required</span>'; sum.route[3] = true; }
+                sum.route[0]++;
+            } else if (arr === 'driver') {
+                const amt = sv && sv.allow_amount != null ? Number(sv.allow_amount) : null, cu = (sv && sv.allow_currency) || 'LKR', pp = !sv || sv.allow_basis !== 'day';
+                det = `<span class="ml-boxed${amt == null ? ' need' : ''}" title="${esc((sv && sv.driver_note) ? 'For the driver: ' + sv.driver_note : '')}">${amt == null ? 'Allowance required' : 'Allowance: ' + mlMoney(cu, amt) + (pp ? ' per pax' : ' for the day')}</span>`;
+                if (amt == null) { cost = '<span class="ml-need">Rate required</span>'; sum.driver[3] = true; } else { const t = pp ? amt * Number(r.party || 0) : amt; rate = mlMoney(cu, amt); cost = mlMoney(cu, t); sum.driver[cu === 'USD' ? 2 : 1] += t; }
+                sum.driver[0]++;
+            } else if (arr === 'hotel') { det = c.by_hotel ? '— (Included by hotel)' : '<span class="ml-need">The hotel plan that night does not give lunch — choose again</span>'; if (c.by_hotel) cost = 'LKR 0'; sum.hotel++; }
+            else if (arr === 'none') { det = 'Client\'s own arrangement'; cost = 'LKR 0'; sum.none++; }
+            else { det = '<span class="ml-need">Choose the lunch arrangement</span>'; sum.unset++; }
+            const probs = (c.problems || []).map(p => `<small class="ml-need">${esc(p.label || '')}</small>`).join('');
+            return `<tr><td class="c"><b>${r.day_no}</b></td><td>${r.date ? esc(fmtDate(r.date)) : '—'}</td><td>${esc(r.route || (r.departure ? 'Departure' : 'Local stay'))}</td>
+                <td class="c">${r.hotel ? esc(r.hotel) : (r.departure ? 'Departure day' : '—')}${r.meal_plan ? `<br><span class="ml-hb">${esc(r.meal_plan)}</span>` : ''}</td>
+                <td><button type="button" class="ml-dd ${arr || 'unset'}" data-mldd="${r.day_no}" ${lock ? 'disabled' : ''}><span>${arr ? ML_ARR[arr] : 'Choose…'}</span><i class="bi bi-chevron-down"></i></button></td>
+                <td>${det}${probs}</td><td class="r">${rate}</td><td class="c">${Number(r.party || 0)}</td><td class="r">${cost}</td><td class="c">${lock ? '' : `<button type="button" class="ml-ed" data-mled="${r.day_no}|${arr}" title="Edit this day's lunch"><i class="bi bi-pencil"></i></button>`}</td></tr>`;
+        }).join('');
+        const seen = {}, routes = LCH.defaults.filter(d => d.default && !seen[d.from + '>' + d.to] && (seen[d.from + '>' + d.to] = 1));
+        const dl = n => n + ' day' + (n === 1 ? '' : 's'), hbN = (M.count && M.count.hb_nights) || 0;
+        const amt = a => a[3] ? '<span class="ml-need">Rate required</span>' : ((a[1] || !a[2]) ? lk(a[1]) : '') + (a[2] ? (a[1] ? ' + ' : '') + mlMoney('USD', a[2]) : '');
+        const tl = sum.route[1] + sum.driver[1], tu = sum.route[2] + sum.driver[2], miss = sum.route[3] || sum.driver[3] || sum.unset;
+        box.innerHTML = `<h3>Meal Arrangement <span>(Meals &amp; Lunch on Route)</span></h3>
+            <div class="ml-plan"><b>Hotel Meal Plan:</b>${hbN ? '<span class="ml-pill">Half Board (HB)</span><span>Breakfast &amp; Dinner included by hotel. Arrange lunch as required on travel days.</span>' : '<span>Each night\'s plan is shown in its row. Arrange lunch as required on travel days.</span>'}</div>
+            <div class="ml-wrap"><table class="ml-tbl"><thead><tr><th class="c">Day</th><th>Date</th><th>Route / Travel Section</th><th class="c">Hotel &amp; Plan</th><th class="p">Lunch Arrangement</th><th>Details / Selection</th><th class="r">Rate (A/C)</th><th class="c">Pax</th><th class="r">Lunch Cost</th><th></th></tr></thead><tbody>${rows || '<tr><td colspan="10">No days on this inquiry yet.</td></tr>'}</tbody></table></div>
+            <div class="ml-two"><div class="ml-box rm"><h4><i class="bi bi-geo-alt-fill"></i>Route Master <span>(Restaurant Defaults)</span></h4><table class="ml-rm"><thead><tr><th>Route / Travel Section</th><th>Default Restaurant (Mandatory)</th></tr></thead><tbody>${routes.length ? routes.map(d => `<tr><td>${esc(d.from)} → ${esc(d.to)}</td><td>${esc(d.restaurant)}${d.location ? ' – ' + esc(d.location) : ''}</td></tr>`).join('') : '<tr><td colspan="2" style="color:#5E5964">No route has a default restaurant yet. Set one in the master.</td></tr>'}</tbody></table></div>
+            <div class="ml-box"><h4 class="g"><i class="bi bi-calculator-fill"></i>Lunch Cost Summary</h4><div class="ml-sum">
+                <div><span>Lunch on Route (${dl(sum.route[0])})</span><b>${amt(sum.route)}</b></div><div><span>Driver-Arranged Lunch (${dl(sum.driver[0])})</span><b>${amt(sum.driver)}</b></div>
+                <div><span>Hotel Lunch (${dl(sum.hotel)})</span><b>LKR 0</b></div><div><span>No Lunch (${dl(sum.none)})</span><b>LKR 0</b></div>${sum.unset ? `<div><span class="ml-need">Not chosen yet (${dl(sum.unset)})</span><b class="ml-need">to be chosen</b></div>` : ''}</div>
+                <div class="ml-tot"><span>Total Lunch Cost <small>(to be added to Quotation)</small></span><b>${miss ? 'Rate required' : ((tl || !tu) ? lk(tl) : '') + (tu ? (tl ? ' + ' : '') + mlMoney('USD', tu) : '')}</b></div>
+                ${sum.driver[0] ? '<div class="ml-note">The driver allowance is saved on the inquiry and in its history; it is not yet carried into the quotation costing.</div>' : ''}</div></div>`;
+        if (lock) return;
+        box.querySelectorAll('[data-mldd]').forEach(x => x.addEventListener('click', e => { e.stopPropagation(); mlMenu(x, Number(x.dataset.mldd)); }));
+        box.querySelectorAll('[data-mlrest]').forEach(x => x.addEventListener('change', () => { const [day, sid] = x.dataset.mlrest.split('|'); mlRestaurant(Number(day), sid ? Number(sid) : null, x.value); }));
+        box.querySelectorAll('[data-mled]').forEach(x => x.addEventListener('click', e => { e.stopPropagation(); const [day, arr] = x.dataset.mled.split('|'), r = mlDay(day), ln = r && r.meals.lunch.lines.find(l => l.meal_id);
+            if (arr === 'driver') mlArrange(Number(day), 'driver'); else if (arr === 'route') openMealPick(Number(day), 'lunch', ln ? ln.id : null, null); else mlMenu(box.querySelector(`[data-mldd="${day}"]`), Number(day)); }));
+    }
+    // the coloured menu of the four arrangements, as on the mock-up
+    function mlMenu(btn, day) {
+        document.querySelectorAll('.ml-menu').forEach(m => m.remove()); if (!btn) return;
+        const m = document.createElement('div'); m.className = 'ml-menu';
+        m.innerHTML = Object.entries(ML_SUB).map(([k, v]) => `<button type="button" class="${k}" data-k="${k}"><i class="bi ${v[0]}"></i><span><b>${v[1]}</b><em>${v[2]}</em></span></button>`).join('');
+        document.body.appendChild(m);
+        const b = btn.getBoundingClientRect(), h = m.offsetHeight;
+        m.style.left = Math.max(8, Math.min(b.left, innerWidth - m.offsetWidth - 8)) + 'px'; m.style.top = (b.bottom + h + 8 > innerHeight && b.top - h - 6 > 0 ? b.top - h - 6 : b.bottom + 6) + 'px';
+        const close = () => { m.remove(); document.removeEventListener('click', close); window.removeEventListener('scroll', close, true); };
+        m.querySelectorAll('button').forEach(x => x.addEventListener('click', e => { e.stopPropagation(); close(); mlArrange(day, x.dataset.k); }));
+        setTimeout(() => { document.addEventListener('click', close); window.addEventListener('scroll', close, true); }, 0);
+    }
+    // tf-lunch-r1: saving a day's arrangement. Every step uses the Meal Master's own endpoints, so its rules decide; the arrangement is recorded last.
+    const mlDay = n => ((CURRENT && CURRENT.meals && CURRENT.meals.days) || []).find(r => Number(r.day_no) === Number(n));
+    async function mlSave(day, body) { const j = await post('/intake/' + CURRENT.id + '/lunch/' + day, body); if (j.status !== 200) { toast('error', j.message); return false; } LCH.rows = j.data.rows || {}; return true; }
+    async function mlReload(msg) { const j = await api('/intake/' + CURRENT.id); if (j.status === 200) { CURRENT = j.data; renderDetail(); } if (msg) toast('success', msg); }
+    async function mlDrop(r) { for (const l of r.meals.lunch.lines.filter(x => x.meal_id)) { const j = await post('/intake/' + CURRENT.id + '/meal/' + l.id, { delete: 1 }); if (j.status !== 200) { toast('error', j.message); return false; } } return true; }
+    async function mlHotelBack(r) { if (r.day_id && r.hb_meal === 'lunch' && r.hb_meal_set) await post('/intake/' + CURRENT.id + '/day/' + r.day_id + '/hb_meal', { hb_meal: '' }); }
+    const mlParty = r => { const sp = (CURRENT.meals && CURRENT.meals.split) || {}; return { qty_adult: sp.adults != null ? sp.adults : Number(r.party || 0), qty_child: sp.children != null ? sp.children : 0 }; };
+    async function mlArrange(day, k) {
+        const r = mlDay(day); if (!r || !ML_ARR[k]) { mlDraw(); return; }
+        const c = r.meals.lunch, mine = c.lines.filter(l => l.meal_id), id = CURRENT.id, sv = LCH.rows[day];
+        if (k === 'route') {
+            await mlHotelBack(r);
+            const def = (c.suggestions || []).find(x => x.default);
+            if (def && !mine.length) { const j = await post('/intake/' + id + '/meal', Object.assign({ meal_type: 'lunch', day_no: day, meal_id: def.id }, mlParty(r))); if (j.status !== 200) toast('error', j.message); }
+            if (!(await mlSave(day, { arrangement: 'route' }))) { mlDraw(); return; }
+            return mlReload(def || mine.length ? 'Lunch on Route saved.' : 'Lunch on Route saved — this route has no default restaurant: select one.');
+        }
+        if (k === 'driver') {
+            const f = await Swal.fire({ title: 'Driver-arranged lunch — meal allowance', width: 560, showCancelButton: true, confirmButtonText: 'Save', confirmButtonColor: '#842484',
+                html: `<div style="text-align:left;font-size:14px"><p style="margin:0 0 10px">Day ${day}: money given to the driver to arrange a suitable lunch place along the route. It is a cost of the tour, not a free lunch.</p>
+                    <label style="display:block;font-weight:700;margin-bottom:3px">Allowance</label><div style="display:flex;gap:8px;margin-bottom:10px"><select id="mla_cur" class="swal2-select" style="margin:0;width:90px;font-size:14px"><option>LKR</option><option>USD</option></select><input id="mla_amt" class="swal2-input" style="margin:0;flex:1;font-size:14px" inputmode="decimal" placeholder="amount"><select id="mla_basis" class="swal2-select" style="margin:0;width:150px;font-size:14px"><option value="pp">per person</option><option value="day">total for the day</option></select></div>
+                    <label style="display:block;font-weight:700;margin-bottom:3px">Instructions for the driver</label><textarea id="mla_note" class="swal2-textarea" style="margin:0;width:100%;font-size:14px;height:70px" maxlength="500" placeholder="e.g. a clean restaurant with vegetarian options, before Dambulla"></textarea></div>`,
+                didOpen: () => { if (sv && sv.arrangement === 'driver') { document.getElementById('mla_cur').value = sv.allow_currency || 'LKR'; document.getElementById('mla_amt').value = sv.allow_amount != null ? sv.allow_amount : ''; document.getElementById('mla_basis').value = sv.allow_basis === 'day' ? 'day' : 'pp'; document.getElementById('mla_note').value = sv.driver_note || ''; } },
+                preConfirm: () => { const a = document.getElementById('mla_amt').value.trim(); if (a === '' || isNaN(Number(a)) || Number(a) < 0) { Swal.showValidationMessage('Enter the allowance amount.'); return false; } return { allow_currency: document.getElementById('mla_cur').value, allow_amount: a, allow_basis: document.getElementById('mla_basis').value, driver_note: document.getElementById('mla_note').value }; } });
+            if (!f.isConfirmed) { mlDraw(); return; }
+            if (!(await mlDrop(r))) { mlDraw(); return; }
+            await mlHotelBack(r);
+            if (!(await mlSave(day, Object.assign({ arrangement: 'driver' }, f.value)))) { mlDraw(); return; }
+            return mlReload('Driver meal allowance saved.');
+        }
+        if (k === 'hotel') {
+            if (!c.by_hotel) {
+                if (!(r.hb_switchable && r.day_id)) { toast('error', 'The hotel plan on this day does not include lunch, and it is not a Half Board night whose meal can be changed to lunch.'); mlDraw(); return; }
+                if (!(await mlDrop(r))) { mlDraw(); return; }
+                const j = await post('/intake/' + id + '/day/' + r.day_id + '/hb_meal', { hb_meal: 'lunch' }); if (j.status !== 200) { toast('error', j.message); mlDraw(); return; }
+            }
+            if (!(await mlSave(day, { arrangement: 'hotel' }))) { mlDraw(); return; }
+            return mlReload('Hotel lunch saved — it is not charged again.');
+        }
+        if (!(await mlDrop(r))) { mlDraw(); return; }
+        await mlHotelBack(r);
+        if (!(await mlSave(day, { arrangement: 'none' }))) { mlDraw(); return; }
+        return mlReload('No Lunch saved.');
+    }
+    async function mlRestaurant(day, sid, val) {
+        const r = mlDay(day); if (!r || val === '') { mlDraw(); return; }
+        if (val === 'other') { mlDraw(); openMealPick(day, 'lunch', sid, null); return; }
+        const line = sid ? r.meals.lunch.lines.find(l => Number(l.id) === Number(sid)) : null, pr = mlParty(r);
+        const j = await post('/intake/' + CURRENT.id + '/meal' + (sid ? '/' + sid : ''), { meal_type: 'lunch', day_no: day, meal_id: Number(val), qty_adult: line && line.qty_adult != null ? line.qty_adult : pr.qty_adult, qty_child: line && line.qty_child != null ? line.qty_child : pr.qty_child });
+        if (j.status !== 200) { toast('error', j.message); mlDraw(); return; }
+        await mlSave(day, { arrangement: 'route' });
+        return mlReload('Restaurant changed — the rate comes from the master.');
+    }
     function inqLayout(it) {
         const host = document.getElementById('detail_cols'); if (!host || !it) return;
         document.getElementById('view_detail').classList.add('inq-on');
@@ -3902,6 +4186,8 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const act = document.getElementById('act_card'); if (act) pane('notes').appendChild(act);
         [document.getElementById('masters_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')].forEach(el => { if (el) pane('notes').appendChild(el); });
         const cc = document.getElementById('comms_card'); if (cc) pane('notes').appendChild(cc);
+        inqNotes(pane('notes'), it);   // tf-notes-r1: after every card of this tab is in it
+        inqMeals(pane('acts'), it);   // tf-lunch-r1
         wrap.remove();
         if (bar) shell.appendChild(bar);
 
@@ -3981,7 +4267,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         document.querySelectorAll('.inq [data-actgo]').forEach(b => b.addEventListener('click', () => inqActGo(Number(b.dataset.actgo))));
         inqGate();
     }
-    function inqActGo(dayNo) { inqShow('acts'); const el = document.getElementById('inq_aday_' + dayNo) || document.getElementById('inq_acts'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } }
+    function inqActGo(dayNo) { inqShow('acts'); if (window.tfActSub) window.tfActSub('tix'); const el = document.getElementById('inq_aday_' + dayNo) || document.getElementById('inq_acts'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } }
     // 5 — Send Quotation (and Send Email) only on green: blocked here, and refused again by the server when the e-mail is sent
     function inqGate() {
         const s = INQ_SIG; if (!s) return;

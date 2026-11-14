@@ -188,6 +188,9 @@ class MealMasterController extends BaseController
             $b   = $this->body();
             $new = empty($b['id']);
             $m   = $this->master()->save($b);
+            // tf-lunch-r1: dietary options, the child age band, the rate's approval, one default per route
+            \App\Libraries\TourFlow\LunchArrangement::saveExtra(\Config\Database::connect(), (int) $m['id'], $b);
+            $m   = $this->master()->meal((int) $m['id']) ?? $m;
             $msg = ($new ? 'Meal added' : 'Meal saved') . ': ' . $m['code'] . ' — ' . $m['title'] . '.';
             if (!$m['active']) {
                 $msg .= ' Switched off: it is not offered for a booking.';

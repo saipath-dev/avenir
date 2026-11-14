@@ -477,6 +477,9 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->post('intake/(:num)/day/(:num)/hb_meal', [TourIntakeController::class, 'hbMeal']);
     $routes->post('intake/(:num)/meal_new', [TourIntakeController::class, 'mealNew']);
     $routes->post('intake/(:num)/meals/fill', [TourIntakeController::class, 'mealsFill']);
+    // tf-lunch-r1: the lunch arrangement of each tour day (Lunch on Route / Driver-Arranged / Hotel / No Lunch)
+    $routes->get('intake/(:num)/lunch', [TourIntakeController::class, 'lunch']);
+    $routes->post('intake/(:num)/lunch/(:num)', [TourIntakeController::class, 'lunchSet']);
 
     $routes->get('list', [TourIntakeController::class, 'list']);
     $routes->get('handlers', [TourIntakeController::class, 'handlers']);

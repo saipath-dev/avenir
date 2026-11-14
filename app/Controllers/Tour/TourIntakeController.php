@@ -1359,6 +1359,36 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // tf-lunch-r1 — GET intake/(:num)/lunch: each day's lunch arrangement and the route defaults of the Meal Master
+    public function lunch($id)
+    {
+        try {
+            $la = new \App\Libraries\TourFlow\LunchArrangement($this->db(), $this->user(), $this->userId(), $this->actorName());
+            return $this->json(['status' => 200, 'data' => ['rows' => (object) $la->forIntake((int) $id), 'defaults' => $la->routeDefaults(), 'can_master' => $this->holds(MealMaster::URL)]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // tf-lunch-r1 — POST intake/(:num)/lunch/(:num) {arrangement, allow_basis, allow_amount, allow_currency, driver_note}
+    public function lunchSet($id, $dayNo)
+    {
+        try {
+            $it = $this->svc()->get((int) $id);
+            if (!$it) {
+                return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
+            }
+            if (!empty($it['locked']) || in_array((string) ($it['status'] ?? ''), ['confirmed', 'cancelled'], true) || !empty($it['archived_at'])) {
+                return $this->json(['status' => 409, 'message' => 'This inquiry is read-only: the lunch arrangement cannot be changed.'], 409);
+            }
+            $la = new \App\Libraries\TourFlow\LunchArrangement($this->db(), $this->user(), $this->userId(), $this->actorName());
+            $la->set((int) $id, (int) $dayNo, $this->body());
+            return $this->json(['status' => 200, 'message' => 'Lunch arrangement saved.', 'data' => ['rows' => (object) $la->forIntake((int) $id)]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // POST intake/(:num)/day/(:num)/hb_meal {hb_meal: lunch | dinner | ''} — schema 40: on a Half Board night, the meal the hotel gives besides breakfast
     public function hbMeal($id, $dayId)
     {

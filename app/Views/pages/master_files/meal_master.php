@@ -35,7 +35,7 @@
     .tf .sec { font-weight:600; font-size:12px; color:var(--tf-navy); text-transform:uppercase; letter-spacing:.04em; margin:14px 0 6px; }
     .tf .sec:first-child { margin-top:0; }
     .tf .leg { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
-    .tf .leg input { max-width:220px; }
+    .tf .leg input { max-width:220px; } .tf .leg .legdef { display:inline-flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; color:#3F7F1F; white-space:nowrap; margin:0 4px; } .tf .leg .legdef input { max-width:none; }
     .tf .example { background:var(--tf-bg); border-radius:8px; padding:8px 10px; font-size:12px; }
     .tf dl.kv { display:grid; grid-template-columns:150px 1fr; gap:6px 12px; margin:0; font-size:12.5px; }
     .tf dl.kv dt { color:var(--tf-muted); font-weight:500; }
@@ -162,6 +162,13 @@
                 <div id="f_legs"></div>
                 <div class="d-flex gap-2"><button class="btn btn-light btn-sm" id="f_addleg" type="button"><i class="bi bi-plus-lg"></i> Add a leg</button>
                     <button class="btn btn-light btn-sm" id="f_back" type="button" title="Add the way back of every leg (Kandy → Colombo for Colombo → Kandy)">Add the way back</button></div>
+                <!-- tf-lunch-r1: dietary options, the child age band, the rate's approval -->
+                <div class="sec">Dietary options, child ages and rate approval</div>
+                <div class="row g-2">
+                    <div class="col-md-6"><label class="form-label help">Dietary options</label><input class="form-control form-control-sm" id="f_diet" maxlength="255" placeholder="e.g. vegetarian, vegan, halal, gluten-free"></div>
+                    <div class="col-md-3"><label class="form-label help">Child rate applies from age … to …</label><div class="d-flex gap-1 align-items-center"><input class="form-control form-control-sm" id="f_cfrom" inputmode="numeric" maxlength="2" placeholder="from"><span>–</span><input class="form-control form-control-sm" id="f_cto" inputmode="numeric" maxlength="2" placeholder="to"></div></div>
+                    <div class="col-md-3"><label class="form-label help">Rate status</label><select class="form-select form-select-sm" id="f_rstat"><option value="approved">Approved</option><option value="pending">Awaiting approval — not offered</option></select></div>
+                </div>
                 <div class="sec">Remarks</div>
                 <textarea class="form-control form-control-sm" id="f_remarks" rows="2" maxlength="1000"></textarea>
                 </details>
@@ -219,7 +226,7 @@
             <td><span class="pill ${m.meal_type === 'lunch' ? 'pill-amber' : 'pill-blue'}">${esc(m.type_name)}</span> <b>${esc(m.restaurant)}</b>
                 <div class="help">${m.supplier ? esc(m.supplier.name) + (m.supplier.acc ? ' · ' + esc(m.supplier.acc) : '') : (m.supplier_id ? '<span style="color:var(--tf-red)">supplier not in the Supplier master</span>' : '<span class="pill pill-amber" title="It can be booked; it is paid only once it is linked to its record of the Supplier master">supplier account to link</span>')}${m.cuisine ? ' · ' + esc(m.cuisine) : ''}</div>
                 ${m.description ? `<div class="help">${esc(m.description.length > 120 ? m.description.slice(0, 120) + '…' : m.description)}</div>` : ''}</td>
-            <td><b>${esc(m.location)}</b>${m.routes.length ? `<div class="help">${m.routes.map(r => esc(r.from) + ' → ' + esc(r.to)).join('<br>')}</div>` : '<div class="help">no route legs</div>'}</td>
+            <td><b>${esc(m.location)}</b>${m.routes.length ? `<div class="help">${m.routes.map(r => esc(r.from) + ' → ' + esc(r.to) + (r.via ? ' <span title="passing through">via ' + esc(r.via) + '</span>' : '') + (r.default ? ' <b style="color:#3F7F1F">· default</b>' : '')).join('<br>')}</div>` : '<div class="help">no route legs</div>'}${m.rate_status === 'pending' ? '<div class="help" style="color:#C8101A;font-weight:700">Rate awaiting approval — not offered</div>' : ''}</td>
             <td class="mono">${esc(m.currency)} ${money(m.adult_rate)}<div class="help">${m.child_rate == null ? 'child as adult' : (Number(m.child_rate) === 0 ? 'children free' : 'child ' + money(m.child_rate))}<br>${esc(m.tax_text)}</div>
                 ${m.adult_lkr != null ? `<div>LKR ${money(m.adult_lkr)}</div><div class="help">${m.child_lkr == null ? 'child as adult' : (Number(m.child_lkr) === 0 ? 'children free' : 'child ' + money(m.child_lkr))}</div>` : '<span class="pill pill-amber" title="The amount the restaurant charges, for the booking voucher">LKR rate to enter</span>'}</td>
             <td>${fmtDate(m.valid_from)} –<br>${m.valid_to ? fmtDate(m.valid_to) : '<span class="help">open</span>'}</td>
@@ -277,11 +284,13 @@
         div.className = 'leg';
         div.innerHTML = `<input class="form-control form-control-sm" data-lf list="dl_dest" placeholder="From" value="${esc(l ? l.from : '')}" maxlength="120" autocomplete="off"><span>→</span>
             <input class="form-control form-control-sm" data-lt list="dl_dest" placeholder="To" value="${esc(l ? l.to : '')}" maxlength="120" autocomplete="off">
+            <input class="form-control form-control-sm" data-lv placeholder="Passing through (e.g. Matale)" value="${esc(l && l.via ? l.via : '')}" maxlength="160" autocomplete="off" title="The stops this route passes, so the restaurant is offered only where it suits">
+            <label class="legdef" title="The default restaurant of this route: put on a day automatically. One default per route; the others are the approved alternatives."><input type="checkbox" data-ld ${l && l.default ? 'checked' : ''}> Default</label>
             <button class="btn btn-light btn-sm" type="button" title="Take this leg off" data-lx>&times;</button>`;
         div.querySelector('[data-lx]').addEventListener('click', () => div.remove());
         $('f_legs').appendChild(div);
     }
-    function legs() { return [...document.querySelectorAll('#f_legs .leg')].map(d => ({ from: d.querySelector('[data-lf]').value.trim(), to: d.querySelector('[data-lt]').value.trim() })).filter(l => l.from || l.to); }
+    function legs() { return [...document.querySelectorAll('#f_legs .leg')].map(d => ({ from: d.querySelector('[data-lf]').value.trim(), to: d.querySelector('[data-lt]').value.trim(), via: d.querySelector('[data-lv]').value.trim(), default: d.querySelector('[data-ld]').checked ? 1 : 0 })).filter(l => l.from || l.to); }
     function example() {
         const a = parseFloat($('f_adult').value), cRaw = $('f_child').value.trim(), c = cRaw === '' ? a : parseFloat(cRaw), t = parseFloat($('f_tax').value) || 0, inc = $('f_taxinc').checked, cur = $('f_cur').value;
         $('f_highwrap').hidden = !(cur === 'USD' && (a > 500 || c > 500));
@@ -323,6 +332,7 @@
         $('f_high').checked = false;
         $('f_legs').innerHTML = '';
         (m && m.routes.length ? m.routes : [null]).forEach(legRow);
+        $('f_diet').value = (m && m.dietary) || ''; $('f_cfrom').value = m && m.child_from != null ? m.child_from : ''; $('f_cto').value = m && m.child_to != null ? m.child_to : ''; $('f_rstat').value = (m && m.rate_status) || 'approved';   // tf-lunch-r1
         supNote(); example();
         show('#m_meal');
     }
@@ -360,7 +370,7 @@
                 location: $('f_loc').value, cuisine: $('f_cuisine').value, description: $('f_desc').value, address: $('f_addr').value, contact_name: $('f_cname').value,
                 contact_phone: $('f_cphone').value, contact_email: $('f_cemail').value, adult_rate: $('f_adult').value, child_rate: $('f_child').value, currency: 'USD', adult_lkr: $('f_alkr').value, child_lkr: $('f_clkr').value,
                 tax_pct: $('f_tax').value, tax_included: $('f_taxinc').checked ? 1 : 0, tax_note: $('f_taxnote').value, valid_from: $('f_from').value, valid_to: $('f_to').value,
-                active: $('f_active').checked ? 1 : 0, remarks: $('f_remarks').value, routes: legs(), confirm_high: $('f_high').checked ? 1 : 0,
+                active: $('f_active').checked ? 1 : 0, remarks: $('f_remarks').value, dietary: $('f_diet').value, child_from: $('f_cfrom').value, child_to: $('f_cto').value, rate_status: $('f_rstat').value, routes: legs(), confirm_high: $('f_high').checked ? 1 : 0,
             });
         } finally { btn.disabled = false; }
         if (j.status !== 200) { toast('error', j.message); return; }

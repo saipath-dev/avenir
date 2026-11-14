@@ -445,7 +445,8 @@
         const fid = document.getElementById('fu_id').value; const j = await post(`/${ID}/followup${fid ? '/' + fid : ''}`, body);
         toast(j.status === 200 ? 'success' : 'error', j.message); if (j.status === 200) { hideModal('#m_fu'); load(); }
     });
-    load();
+    // tf-notes-r1: the inquiry's Notes & History opens this page with ?compose=1 (a new e-mail) or ?reply=<line> (a reply): the same compose window as the green button, nothing is sent by opening it
+    load().then(() => { try { const u = new URLSearchParams(location.search), rp = Number(u.get('reply') || 0); if (rp) openCompose(rp); else if (u.get('compose')) openCompose(null); } catch (e) {} });
 })();
 </script>
 </body>
