@@ -20,6 +20,8 @@ use App\Libraries\TourFlow\QuoteMail;
 use App\Libraries\TourFlow\QuoteService;
 use App\Libraries\TourFlow\Reauth;
 use App\Libraries\TourFlow\HotelRateJump;
+use App\Libraries\TourFlow\InquiryReadiness;
+use App\Libraries\TourFlow\NotReadyToQuote;
 use App\Libraries\TourFlow\SectionChecks;
 use App\Libraries\TourFlow\SuperAdminOnly;
 use App\Libraries\TourFlow\Staff;
@@ -1679,6 +1681,38 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // GET intake/(:num)/readiness — the inquiry's traffic light (red / yellow / green), what is still missing and each day's
+    // activity status. Read-only: looking never changes a status.
+    public function readiness($id)
+    {
+        try {
+            $it = $this->svc()->get((int) $id);
+            if (!$it) {
+                return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
+            }
+            $rd = new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName());
+            return $this->json(['status' => 200, 'data' => $rd->state($it, $this->quotes()->costing((int) $id))]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // POST intake/(:num)/day_check {day_no, status: checked | none | clear} — a person ticks a day's activities
+    public function dayCheck($id)
+    {
+        try {
+            $b  = $this->body();
+            $it = $this->svc()->get((int) $id);
+            if (!$it) {
+                return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
+            }
+            $rd = new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName());
+            return $this->json(['status' => 200, 'message' => 'Saved.', 'data' => $rd->setDay($it, $this->quotes()->costing((int) $id), (int) ($b['day_no'] ?? 0), (string) ($b['status'] ?? ''))]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // GET intake/(:num)/day/(:num)/rate_jump — Edit hotel on the Hotels tab: where in the Hotel Rates master this night's rate is.
     // SUPER ADMIN ONLY, checked here (the button is hidden for everybody else, but the address itself is refused too).
     // Nothing is changed: a rate is corrected in the Hotel Rates panel, through its own save, approval and history.
@@ -2136,6 +2170,21 @@ class TourIntakeController extends BaseController
             // tf-comms-r3: a version the system drafted from a request e-mail goes nowhere until a person has reviewed it and pressed Issue
             if ($row['status'] === 'draft' && (int) ($row['review_required'] ?? 0) === 1) {
                 return $this->json(['status' => 400, 'message' => 'Version ' . $row['version'] . ' was drafted by the system from the request e-mail and is marked "Draft – Staff Review Required". Check every line against the e-mail, correct what is needed, and press Issue; only then can it be e-mailed.']);
+            }
+            // tf-signal-r1: Send Quotation only on green — checked again here, on the server, immediately before anything is sent.
+            // (A confirmed inquiry is the record of a sale already made; its quotation may be sent again.)
+            $itNow = $this->svc()->get((int) $id);
+            if ($itNow && in_array((string) ($itNow['status'] ?? ''), ['new', 'working', 'quoted'], true)) {
+                try {
+                    (new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName()))->assertReady($itNow, $q->costing((int) $id));
+                } catch (NotReadyToQuote $e) {
+                    try {
+                        (new Activity($this->db(), $this->user(), $this->userId(), $this->actorName()))->record('inquiry', (int) $id, (int) $id, null, 'quotation', 'Send Quotation v' . $row['version'] . ' refused: the inquiry is not green');
+                    } catch (\Throwable $e2) {
+                        // best effort
+                    }
+                    return $this->json(['status' => 409, 'blocked' => true, 'message' => $e->getMessage()]);
+                }
             }
             $m   = $this->emailFields($this->body(), $row);
             $who = Staff::contact($this->db(), $this->userId(), $this->user());

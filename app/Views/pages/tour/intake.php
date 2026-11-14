@@ -630,6 +630,52 @@
         .tf .inq .inq-tab, .tf .inq .inq-tab[data-tab="check"] { font-size:14.5px; padding:0 8px; } .inq .hcard .inq-place b { font-size:17px; } .inq .inq-rate2 .amt { font-size:21px; } }
     @media (max-width:1180px) { .inq .inq-day.hday { grid-template-columns:124px minmax(140px,1.3fr) 100px 104px minmax(150px,1fr) auto; } .inq .inq-day.hday > .inq-arr { display:none; } }
     @media (max-width:900px) { .tf .inq .inq-tabs { flex-wrap:wrap; } .inq .inq-day.hday { grid-template-columns:minmax(0,1fr) minmax(0,1fr); row-gap:12px; } .inq .inq-day.hday > * { border-left:0 !important; padding:0 !important; } .inq .inq-hlist { padding-left:0; } .inq .inq-hlist::before, .inq .inq-drow.hcard::before { display:none; } }
+    /* tf-signal-r1: the traffic light, the day statuses, the Requested Itinerary table of the mock-up of 14 Nov */
+    .inq-dot { display:inline-block; width:12px; height:12px; border-radius:50%; background:#C9CED6; flex:none; vertical-align:middle; }
+    .inq-dot.red { background:#D0111B; } .inq-dot.yellow { background:#F2A900; } .inq-dot.green { background:#1E8E1E; }
+    .inq .inq-sig { display:flex; align-items:center; gap:14px; padding:0 18px; margin-left:6px; border-left:2px solid #D9D3DD; border-right:2px solid #D9D3DD; min-height:64px; }
+    .inq .inq-light { display:flex; flex-direction:column; gap:5px; padding:7px 8px; background:#1B1B1B; border:2px solid #000; border-radius:10px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.25); }
+    .inq .inq-light i { display:block; width:20px; height:20px; border-radius:50%; background:#3A3A3A; box-shadow:inset 0 2px 4px rgba(0,0,0,.6); }
+    .inq .inq-sig.red .inq-light .r { background:#FF2A1F; box-shadow:0 0 10px 2px rgba(255,42,31,.75); }
+    .inq .inq-sig.yellow .inq-light .y { background:#FFC400; box-shadow:0 0 10px 2px rgba(255,196,0,.8); }
+    .inq .inq-sig.green .inq-light .g { background:#22C322; box-shadow:0 0 10px 2px rgba(34,195,34,.75); }
+    .inq .inq-sig-t b { display:block; font-size:18px; font-weight:800; line-height:1.25; white-space:nowrap; }
+    .inq .inq-sig.red .inq-sig-t b, .inq .inq-sig.yellow .inq-sig-t b { color:#C8101A; } .inq .inq-sig.green .inq-sig-t b { color:#1E7A1E; }
+    .inq .inq-sig-t a { font-size:15px; font-weight:600; color:#1558C0; text-decoration:underline; } .inq .inq-sig-t span { font-size:13.5px; color:#1A1A1A; }
+    .inq .inq-head .inq-acts { align-items:flex-start; } .inq .inq-sendwrap { display:flex; flex-direction:column; align-items:center; gap:3px; } .inq #inq_send_note { font-size:12px; color:#1A1A1A; min-height:15px; }
+    .tf .inq .inq-head .inq-btn.grn { border-color:#1E8E1E; color:#1E7A1E; font-weight:700; }
+    .tf .inq .inq-btn.blocked, .tf .inq .inq-btn.blocked:hover { background:#DDDDE0; border-color:#C9C9CE; color:#7A7A80; cursor:not-allowed; }
+    .tf .inq .inq-tab > i.inq-dot { display:inline-block; margin-left:8px; width:13px; height:13px; }
+    /* Requested Itinerary */
+    .inq .inq-rh { display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin:2px 0 12px; } .inq .inq-rh h3 { font-size:24px; font-weight:800; color:#842484; margin:0; padding-right:22px; border-right:2px solid #D9D3DD; }
+    .inq .inq-legend { display:flex; gap:22px; flex-wrap:wrap; font-size:14.5px; color:#1A1A1A; } .inq .inq-legend span { display:inline-flex; align-items:center; gap:8px; }
+    .inq table.inq-req { width:100%; border-collapse:separate; border-spacing:0; background:#fff; border:1px solid #D9D3DD; border-radius:10px; overflow:hidden; margin-bottom:14px; }
+    .inq table.inq-req th { background:#F1EFF4; text-align:left; font-size:16px; font-weight:800; color:#1A1A1A; padding:12px 18px; border-bottom:1px solid #D9D3DD; border-right:1px solid #E4DFE8; white-space:nowrap; }
+    .inq table.inq-req td { padding:12px 18px; border-bottom:1px solid #E4DFE8; border-right:1px solid #E4DFE8; vertical-align:middle; font-size:16px; color:#1A1A1A; }
+    .inq table.inq-req tr:last-child td { border-bottom:0; } .inq table.inq-req th:last-child, .inq table.inq-req td:last-child { border-right:0; }
+    .inq table.inq-req td.dd { white-space:nowrap; font-size:17px; } .inq table.inq-req td.ht b { display:block; font-size:18px; font-weight:800; line-height:1.25; } .inq table.inq-req td.ht b.lnk { cursor:pointer; } .inq table.inq-req td.ht b.lnk:hover { color:#842484; }
+    .inq table.inq-req td.ht span { display:block; font-size:15px; line-height:1.4; } .inq table.inq-req td.ht .rm { color:#E0661F; font-weight:700; } .inq table.inq-req td.ht .rm i { margin-right:5px; }
+    .inq table.inq-req td.mp, .inq table.inq-req td.rr { white-space:nowrap; font-size:17px; }
+    .inq [data-reqact] .st, .inq .inq-arow .st { display:flex; align-items:center; gap:8px; font-weight:800; font-size:14.5px; } .inq .st.red { color:#C8101A; } .inq .st.yellow { color:#B87A00; } .inq .st.green { color:#1E7A1E; }
+    .inq [data-reqact] .tx { font-style:italic; font-size:15px; margin:1px 0 6px; } .inq [data-reqact] .tx2 { font-size:13px; color:#5E5964; margin:-4px 0 6px; }
+    .tf .inq .inq-btn.act { height:32px; padding:0 20px; border:2px solid #1E8E1E; color:#1E7A1E; font-weight:800; font-size:14.5px; border-radius:7px; } .tf .inq .inq-btn.act:hover { background:#1E8E1E; color:#fff; }
+    .inq table.inq-req td.nt { font-size:15px; } .inq table.inq-req td.nt a { color:#2E9E2E; font-size:17px; font-weight:600; text-decoration:none; cursor:pointer; } .inq table.inq-req td.nt a:hover { text-decoration:underline; }
+    .inq .inq-rfoot { display:flex; gap:18px; align-items:flex-start; font-size:13px; color:#1A1A1A; margin-bottom:14px; } .inq .inq-rfoot i { color:#842484; font-size:16px; } .inq .inq-rfoot > div + div { border-left:1px solid #D9D3DD; padding-left:18px; font-style:italic; }
+    /* Activities tab */
+    .inq .inq-ah { display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin:2px 0 12px; } .inq .inq-ah h3 { font-size:24px; font-weight:800; color:#842484; margin:0; padding-right:22px; border-right:2px solid #D9D3DD; }
+    .inq .inq-alist { background:#fff; border:1px solid #D9D3DD; border-radius:10px; overflow:hidden; margin-bottom:10px; }
+    .inq .inq-arow { display:grid; grid-template-columns:150px 250px minmax(0,1fr) auto; gap:16px; align-items:center; padding:12px 16px; border-bottom:1px solid #E4DFE8; border-left:5px solid #D0111B; }
+    .inq .inq-arow.yellow { border-left-color:#F2A900; } .inq .inq-arow.green { border-left-color:#1E8E1E; } .inq .inq-arow:last-child { border-bottom:0; } .inq .inq-arow.flash { background:#F7EEF7; }
+    .inq .inq-arow .dn b { display:block; font-size:16px; } .inq .inq-arow .dn span { font-size:13.5px; color:#5E5964; } .inq .inq-arow .tx { font-size:13.5px; color:#1A1A1A; margin-top:2px; }
+    .inq .inq-arow .ti { display:flex; flex-wrap:wrap; gap:6px; font-size:14px; } .inq .inq-arow .ti span { background:#F4F1F6; border:1px solid #E4DFE8; border-radius:6px; padding:2px 9px; } .inq .inq-arow .ti em { color:#5E5964; }
+    .inq .inq-arow .ac { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; } .tf .inq .inq-arow .inq-btn { height:32px; font-size:13px; padding:0 12px; white-space:nowrap; } .tf .inq .inq-arow .inq-btn.ok { border-color:#1E8E1E; color:#1E7A1E; }
+    .inq .inq-anote { font-size:13px; color:#1A1A1A; margin:0 0 18px; } .inq .inq-anote i { color:#842484; }
+    @media (max-width:1100px) { .inq .inq-arow { grid-template-columns:1fr 1fr; } .inq .inq-sig-t b { white-space:normal; font-size:16px; } }
+    /* the missing-items list (in the dialog, outside .inq) */
+    .inq-ms { text-align:left; font-size:14px; color:#1A1A1A; max-height:60vh; overflow:auto; } .inq-ms-g { font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; font-weight:800; color:#842484; margin:14px 0 4px; } .inq-ms-g:first-child { margin-top:0; } .inq-ms-g.opt { color:#5E5964; }
+    .inq-ms-i { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid #EEE9F0; line-height:1.4; } .inq-ms-i .inq-dot { margin-top:4px; } .inq-ms-i span { flex:1 1 auto; } .inq-ms-i.opt { color:#5E5964; font-size:13px; }
+    .inq-ms-b { flex:none; border:1px solid #842484; color:#842484; background:#fff; border-radius:7px; padding:3px 14px; font-weight:700; font-size:13px; cursor:pointer; } .inq-ms-b:hover { background:#842484; color:#fff; }
+    .inq-ms-ok { font-size:15px; color:#1E7A1E; font-weight:600; } .inq-ms-ok i { margin-right:6px; }
     .inq-on #d_confirm { display:none !important; }   /* Confirm Tour lives in Before Tour Confirmation; the lower bar no longer carries it */
     @media (max-width:1200px) { .inq .chk-grid, .inq .chk-row { grid-template-columns:minmax(0,1fr); } .inq .chk-chips { grid-template-columns:repeat(2,minmax(0,1fr)); } .inq .chk-do { align-items:flex-start; max-width:none; } .inq .chk-step { text-align:left; } .inq .chk-src { position:static; } }
     .inq .inq-pane .tf-card-h > .help:not([id]) { display:none; }   /* the long explanations beside each heading: off the page, the cards and their buttons unchanged */
@@ -3441,7 +3487,7 @@
     function inqSettle(el) { const sh = el.closest('.inq') || el, cs = getComputedStyle(sh); const pin = (parseFloat(cs.getPropertyValue('--inq-pin')) || 70) + (parseFloat(cs.getPropertyValue('--inq-toph')) || 0);
         const t = el.getBoundingClientRect().top; if (t < pin || t > window.innerHeight * 0.6) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     window.addEventListener('resize', () => { if (INQ_SET) INQ_SET(); });
-    window.addEventListener('scroll', () => { if (INQ_SET) INQ_SET(); }, { passive: true, once: true });
+    let INQ_RAF = 0; window.addEventListener('scroll', () => { if (!INQ_SET || INQ_RAF) return; INQ_RAF = requestAnimationFrame(() => { INQ_RAF = 0; INQ_SET(); }); }, { passive: true });
     const INQ_SIDE = ['quote', 'book'];   // screens reached from a button (Show Cost, Edit), not from a tab
     function inqShow(tab) {
         if (INQ_SIDE.includes(tab) && !INQ_SIDE.includes(INQ_TAB)) INQ_PREV = INQ_TAB;   // tf-inqpin-r1: Back returns to the tab the person was on
@@ -3470,9 +3516,10 @@
             if (t === 'Requested itinerary') return 'hotels';
             if (id === 'tr_block' || id === 'mil_card' || t === 'Vehicles' || / allocation$/.test(t)) return 'trans';
             if (id === 'itin_card' || id === 'photo_card' || id === 'cf_card' || t === 'Quotation' || /^Pricing/.test(t)) return 'quote';
-            if (id === 'ea_card' || id === 'meals_card' || t === 'Excursions') return 'svc';
+            if (id === 'ea_card' || id === 'meals_card') return 'acts';   // tf-signal-r1: the Activities tab
+            if (t === 'Excursions') return 'trans';
             return 'notes'; };
-        const bins = { book: [], pax: [], hotels: [], trans: [], quote: [], svc: [], notes: [] };
+        const bins = { book: [], pax: [], hotels: [], trans: [], quote: [], acts: [], notes: [] };
         [...wrap.children].forEach(c => { if (c.classList && c.classList.contains('tf-card')) bins[where(c)].push(c); else bins.notes.push(c); });
 
         // ---- what the page says, from the inquiry as it stands ----
@@ -3543,6 +3590,20 @@
                 </div>${it.locked ? '' : `<div class="acts"><button type="button" class="inq-btn" data-inqedit="${d.id}"><i class="bi bi-building"></i> ${d.hotel_name_raw ? 'Change hotel or meal plan' : 'Choose hotel'}</button>
                     <button type="button" class="inq-btn" data-inqsvc="${d.day_no}"><i class="bi bi-plus-lg"></i> Activities and services</button></div>`}</div></div>`;
         };
+        // tf-signal-r1: the Requested Itinerary row of the mock-up — hotel in bold with room type and rate beneath, meal plan, rooms, the day's activities, the note
+        const reqRate = d => { const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
+            const want = [['SGL', Number(R.sgl) > 0, d.rate_sgl], ['DBL', Number(R.dbl) > 0, d.rate_dbl], ['TWN', Number(R.twn) > 0, d.rate_dbl], ['TPL', Number(R.tpl) > 0, d.rate_tpl]].filter(w => w[1] && f(w[2]) !== null);
+            if (d.rate_state === 'rate' && want.length) return `<span>Hotel rate: ${want.length === 1 ? esc(cur) + ' ' + f(want[0][2]) : want.map(w => w[0] + ' ' + esc(cur) + ' ' + f(w[2])).join(' · ')}</span>`;
+            return d.hotel_name_raw ? '<span class="rm"><i class="bi bi-exclamation-triangle-fill"></i>Rate missing</span>' : ''; };
+        const reqRow = d => `<tr><td class="dd">${d.day_no} / ${esc(dm(d.day_date, { day:'numeric', month:'short', year:'numeric' }))}</td>
+            <td class="ht">${d.hotel_name_raw ? `<b class="${it.locked ? '' : 'lnk'}" ${it.locked ? '' : `data-inqedit="${d.id}" title="Change the hotel, room type or meal plan"`}>${esc(d.hotel_name_raw)}</b>` : (it.locked ? '<b>Hotel not chosen</b>' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}
+                ${d.hotel_name_raw ? `<span>${esc(d.room_type_name || 'Room type pending')}</span>` : ''}${reqRate(d)}</td>
+            <td class="mp">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan).replace(/\b\w/g, c => c.toUpperCase()).replace('& B', '& B') : 'Not set')}</td>
+            <td class="rr">${esc(d.rooms || roomsTxt)}</td>
+            <td data-reqact="${d.day_no}"><div class="tx">…</div></td>
+            <td class="nt">${d.special_note ? esc(d.special_note) + (it.locked ? '' : ` <a data-inqedit="${d.id}" title="Change the note"><i class="bi bi-pencil"></i></a>`) : (it.locked ? '' : `<a data-inqedit="${d.id}">Add a note</a>`)}</td></tr>`;
+        const depX = it.departure_day, reqDep = depX && !days.some(d => Number(d.day_no) === Number(depX.day_no)) ? `<tr><td class="dd">${depX.day_no} / ${esc(dm(depX.date, { day:'numeric', month:'short', year:'numeric' }))}</td>
+            <td class="ht" colspan="3"><b>Departure day</b><span>No hotel night${it.departure_flight ? ' · Flight ' + esc(it.departure_flight) : ''}</span></td><td data-reqact="${depX.day_no}"><div class="tx">…</div></td><td class="nt">${esc((depX.note || ''))}</td></tr>` : '';
         const T = it.hotel_transfers || {};
         const dep = it.departure_day, depNo = dep ? dep.day_no : null;
         const depRow = dep && !days.some(d => Number(d.day_no) === Number(depNo)) ? `<div class="inq-drow hcard hdep"><div class="inq-dn"><span class="pill">Day ${depNo}</span><div class="d">${esc(dm(dep.date, { weekday:'short', day:'numeric', month:'short', year:'numeric' }))}</div></div>
@@ -3569,11 +3630,11 @@
             <div class="inq-top">
             <div class="inq-crumb"><a href="#" data-inqlist>Tour Desk</a> &nbsp;›&nbsp; <a href="#" data-inqlist>Tour Inquiry</a> &nbsp;›&nbsp; <b>${esc(it.inquiry_no || '')}</b></div>
             <div class="inq-head"><h2>Tour Inquiry – ${esc(it.inquiry_no || '')}</h2><span class="inq-st ${stCls}">${it.status === 'confirmed' ? '<i class="bi bi-check-lg"></i>' : ''}${esc(ST[it.status] || it.status || '')}</span>
+                <div class="inq-sig" id="inq_sig"><button type="button" class="inq-light" aria-label="Inquiry status"><i class="r"></i><i class="y"></i><i class="g"></i></button><div class="inq-sig-t" id="inq_sig_t"><b style="color:#5E5964">Checking the inquiry…</b></div></div>
                 <div class="inq-acts">
-                    <button type="button" class="inq-btn" data-inqgo="book"><i class="bi bi-pencil-square"></i> Edit</button>
-                    <a class="inq-btn" target="_blank" href="${latest ? `${BASE}/intake/${it.id}/quote/${latest.id}?view=client&pdf=1` : `${BASE}/intake/${it.id}/preview?view=client`}"><i class="bi bi-printer"></i> Print</a>
-                    ${latest ? `<a class="inq-btn" target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client"><i class="bi bi-send"></i> Send Quotation</a>` : `<button type="button" class="inq-btn" data-inqgo="quote"><i class="bi bi-send"></i> Send Quotation</button>`}
-                    <button type="button" class="inq-btn pri" id="inq_confirm" title="Opens Before Tour Confirmation: check the sections, email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Review &amp; Confirm</button>
+                    <button type="button" class="inq-btn grn" data-inqgo="book"><i class="bi bi-pencil-square"></i> Edit</button>
+                    <a class="inq-btn grn" target="_blank" href="${latest ? `${BASE}/intake/${it.id}/quote/${latest.id}?view=client&pdf=1` : `${BASE}/intake/${it.id}/preview?view=client`}"><i class="bi bi-printer"></i> Print</a>
+                    <div class="inq-sendwrap">${latest ? `<a class="inq-btn blocked" data-sendq target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client" data-ok-title="Opens quotation v${latest.version}: preview it, then send it to the agent"><i class="bi bi-send"></i> Send Quotation</a>` : `<button type="button" class="inq-btn blocked" data-sendq data-inqgo="quote" data-ok-title="Go for Quotation makes the version to send"><i class="bi bi-send"></i> Send Quotation</button>`}<span id="inq_send_note"></span></div>
                 </div></div>
             <div class="inq-strip"><div class="inq-cells">
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-person"></i></span><div><div class="inq-k">Agent</div><div class="inq-v">${esc(it.agent_name || 'Not set')}</div></div></div>
@@ -3588,7 +3649,8 @@
             <div class="inq-tabs" role="tablist">
                 <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
                 <button type="button" class="inq-tab" data-tab="itin"><i class="bi bi-building"></i> Hotels (${hotelsN})</button>
-                <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Transfers</button>
+                <button type="button" class="inq-tab" data-tab="acts" title="Each day's activities and whether they have been checked">Activities <i class="inq-dot" id="inq_act_dot"></i></button>
+                <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Airport Transfers &amp; Excursions</button>
                 <button type="button" class="inq-tab" data-tab="pax"><i class="bi bi-people"></i> Passengers (${Number(it.pax_total || 0)})</button>
                 <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
                 <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Tour Confirmation <span id="inq_chk_n" style="display:none"></span></button>
@@ -3607,7 +3669,6 @@
                                 <div class="b inq-q" style="padding-top:12px"><b>“Your Sri Lanka journey${shape ? ' – ' + shape : ''}”</b><div>${esc(pls.join(' – ') || '—')}</div>
                                     <button type="button" class="inq-btn" data-inqgo="quote">View Full Text</button></div></div>
                         </div>
-                        <details class="inq-sec" id="inq_svc"><summary>Activities, entrances and meals — details</summary></details>
                     </div>
                     <div>
                         <div class="inq-card"><div class="h g"><i class="bi bi-compass"></i>Tour Summary</div><div class="b"><div class="inq-sum">
@@ -3623,7 +3684,14 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
                     </div>
                 </div>
             </div>
-            <div class="inq-pane" data-pane="hotels"></div>
+            <div class="inq-pane" data-pane="hotels">
+                <div class="inq-rh"><h3>Requested Itinerary</h3><div class="inq-legend"><span><i class="inq-dot red"></i><b>Red:</b> Not started</span><span><i class="inq-dot yellow"></i><b>Yellow:</b> Incomplete</span><span><i class="inq-dot green"></i><b>Green:</b> Ready for quotation</span></div></div>
+                <table class="inq-req"><thead><tr><th>Day / Date</th><th>Hotel</th><th>Meal Plan</th><th>Rooms</th><th style="width:30%">Daily Visits &amp; Activities</th><th>Special Note</th></tr></thead>
+                    <tbody>${days.map(reqRow).join('') + reqDep || '<tr><td colspan="6" style="color:#5E5964">No nights on this inquiry yet. Open the working table below and add them.</td></tr>'}</tbody></table>
+                <div class="inq-rfoot"><div><i class="bi bi-info-circle"></i> Daily activities appear by date after import. Add or edit them through Activities. Airport transfers, excursions and mileage are under Airport Transfers &amp; Excursions.</div>
+                    <div>Send Quotation is enabled only when every required section is complete. It is checked again when the quotation is sent.</div></div>
+            </div>
+            <div class="inq-pane" data-pane="acts"><div id="inq_acts"><div class="help" style="padding:14px">Reading the days…</div></div></div>
             <div class="inq-pane" data-pane="trans"></div>
             <div class="inq-pane" data-pane="pax"></div>
             <div class="inq-pane" data-pane="notes"></div>
@@ -3633,8 +3701,13 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         host.insertBefore(shell, host.firstChild);
         const pane = k => shell.querySelector(`.inq-pane[data-pane="${k}"]`);
         strip.forEach(c => pane('hotels').appendChild(c));
-        ['hotels', 'trans', 'pax', 'notes', 'quote', 'book'].forEach(k => bins[k].forEach(c => pane(k).appendChild(c)));
-        bins.svc.forEach(c => shell.querySelector('#inq_svc').appendChild(c));
+        // Itinerary & Services: the Requested Itinerary of the mock-up first; the working table (add or remove a night, area, departure day) folds under it, every function kept
+        const full = document.createElement('details'); full.className = 'inq-sec'; full.id = 'inq_full'; full.open = !!INQ_OPEN.full;
+        full.innerHTML = '<summary>Edit the nights — full working table (add or remove a night, area, hotel, departure day)</summary>';
+        full.addEventListener('toggle', () => { INQ_OPEN.full = full.open; });
+        pane('hotels').appendChild(full);
+        bins.hotels.forEach(c => full.appendChild(c));
+        ['acts', 'trans', 'pax', 'notes', 'quote', 'book'].forEach(k => bins[k].forEach(c => pane(k).appendChild(c)));
         const act = document.getElementById('act_card'); if (act) pane('notes').appendChild(act);
         [document.getElementById('masters_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')].forEach(el => { if (el) pane('notes').appendChild(el); });
         const cc = document.getElementById('comms_card'); if (cc) pane('notes').appendChild(cc);
@@ -3656,18 +3729,100 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             if (w) w.location.href = j.data.url; else location.href = j.data.url;
         }));
         shell.querySelectorAll('[data-inqsvc]').forEach(b => b.addEventListener('click', () => openServices(Number(b.dataset.inqsvc))));
-        document.getElementById('inq_confirm').addEventListener('click', () => { inqShow('check'); (document.getElementById('inq_check') || shell).scrollIntoView({ behavior: 'smooth', block: 'start' }); });
         inqShow(shell.querySelector(`.inq-pane[data-pane="${INQ_TAB}"]`) ? INQ_TAB : 'itin');
         inqCrew(it, shell);
         inqPin(shell);
+        inqSignal(it);
         inqCheck(it, { latest, canConfirm, why: it.status === 'confirmed' ? 'This tour is already confirmed' : ((cb && cb.title) || '') });
+    }
+    // ---------- tf-signal-r1: the inquiry's traffic light, each day's activity status, and Send Quotation only on green ----------
+    // GET /readiness is read-only; a status changes only when a person ticks a day (POST /day_check). The server checks green
+    // again immediately before a quotation is sent — the buttons here are a convenience, not the rule.
+    let INQ_SIG = null, SIG_SEQ = 0;
+    const SIG_WORD = { red: 'Not started', yellow: 'Incomplete', green: 'Ready' };
+    async function inqSignal(it) {
+        const seq = ++SIG_SEQ;
+        const j = await api('/intake/' + it.id + '/readiness');
+        if (seq !== SIG_SEQ) return;
+        if (j.status !== 200) { const t = document.getElementById('inq_sig_t'); if (t) t.innerHTML = `<b>Status not read</b><span>${esc(j.message || '')}</span>`; return; }
+        INQ_SIG = j.data; inqSignalDraw(it);
+    }
+    function inqSignalDraw(it) {
+        const s = INQ_SIG; if (!s) return;
+        const D = d => { const t = new Date(d + 'T00:00:00'); return isNaN(t) ? null : t; };
+        const dd = d => { const t = d ? D(d) : null; return t ? t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''; };
+        // 1 — the light beside the title
+        const sig = document.getElementById('inq_sig');
+        if (sig) {
+            sig.className = 'inq-sig ' + s.light;
+            sig.innerHTML = `<button type="button" class="inq-light" id="inq_light" title="Show what is still missing" aria-label="Inquiry status: ${esc(s.title)}"><i class="r"></i><i class="y"></i><i class="g"></i></button>
+                <div class="inq-sig-t" id="inq_sig_t"><b>${esc(s.title.replace(' — ', ' — '))}</b>${s.ok ? '<span>Every required item is on the inquiry.</span>' : `<a href="#" id="inq_missing">View missing items (${s.missing})</a>`}</div>`;
+            sig.querySelector('#inq_light').addEventListener('click', () => inqMissing(it));
+            sig.querySelector('#inq_missing')?.addEventListener('click', e => { e.preventDefault(); inqMissing(it); });
+        }
+        // 2 — the Activities tab and every day
+        const dot = document.getElementById('inq_act_dot'); if (dot) { dot.className = 'inq-dot ' + s.activities; dot.title = 'Activities: ' + SIG_WORD[s.activities]; }
+        s.days.forEach(d => {
+            const cell = document.querySelector(`.inq [data-reqact="${d.day_no}"]`);
+            if (cell) cell.innerHTML = `<div class="st ${d.light}"><i class="inq-dot ${d.light}"></i>${esc(d.word)}</div><div class="tx">${d.titles.length ? esc(d.titles.slice(0, 4).join(', ')) + (d.titles.length > 4 ? ` +${d.titles.length - 4} more` : '') : esc(d.text)}</div>
+                ${d.titles.length && d.light !== 'green' ? `<div class="tx2">${esc(d.text)}</div>` : ''}<button type="button" class="inq-btn act" data-actgo="${d.day_no}">Open Activities</button>`;
+        });
+        const box = document.getElementById('inq_acts');
+        if (box) {
+            box.innerHTML = `<div class="inq-ah"><h3>Activities</h3><div class="inq-legend"><span><i class="inq-dot red"></i><b>Red:</b> Not started</span><span><i class="inq-dot yellow"></i><b>Yellow:</b> Incomplete</span><span><i class="inq-dot green"></i><b>Green:</b> Checked</span></div></div>
+                <div class="inq-alist">${s.days.map(d => `<div class="inq-arow ${d.light}" id="inq_aday_${d.day_no}">
+                    <div class="dn"><b>Day ${d.day_no}</b><span>${esc(dd(d.date))}${d.departure ? ' · departure' : ''}</span></div>
+                    <div class="stt"><div class="st ${d.light}"><i class="inq-dot ${d.light}"></i>${esc(d.word)}</div><div class="tx">${esc(d.text)}</div></div>
+                    <div class="ti">${d.titles.length ? d.titles.map(t => `<span>${esc(t)}</span>`).join('') : '<em>Nothing entered for this day</em>'}</div>
+                    <div class="ac">${s.locked ? '' : `<button type="button" class="inq-btn" data-inqsvc2="${d.day_no}"><i class="bi bi-plus-lg"></i> Add or edit</button>
+                        ${d.light === 'green' ? `<button type="button" class="inq-btn" data-dayset="${d.day_no}:clear">Reopen</button>`
+                            : (d.count ? `<button type="button" class="inq-btn ok" data-dayset="${d.day_no}:checked" ${d.can_check ? '' : 'disabled title="Complete the activities without a rate first"'}><i class="bi bi-check-lg"></i> Mark as checked</button>`
+                                : `<button type="button" class="inq-btn" data-dayset="${d.day_no}:none"><i class="bi bi-check-lg"></i> No activities required</button>`)}`}</div></div>`).join('') || '<div class="help" style="padding:12px">No days on this inquiry yet.</div>'}</div>
+                <div class="inq-anote"><i class="bi bi-info-circle"></i> A day is green when its activities are entered <b>and checked</b>, or when "No activities required" is ticked for it. Opening this panel changes nothing; adding, changing or removing an activity returns the day to yellow.</div>`;
+            box.querySelectorAll('[data-dayset]').forEach(b => b.addEventListener('click', async () => {
+                const [day_no, status] = b.dataset.dayset.split(':'); b.disabled = true;
+                const r = await post('/intake/' + it.id + '/day_check', { day_no: Number(day_no), status });
+                if (r.status !== 200) { b.disabled = false; toast('error', r.message); return; }
+                INQ_SIG = r.data; inqSignalDraw(it); document.getElementById('act_reload')?.click();
+            }));
+            box.querySelectorAll('[data-inqsvc2]').forEach(b => b.addEventListener('click', () => openServices(Number(b.dataset.inqsvc2))));
+        }
+        document.querySelectorAll('.inq [data-actgo]').forEach(b => b.addEventListener('click', () => inqActGo(Number(b.dataset.actgo))));
+        inqGate();
+    }
+    function inqActGo(dayNo) { inqShow('acts'); const el = document.getElementById('inq_aday_' + dayNo) || document.getElementById('inq_acts'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } }
+    // 5 — Send Quotation (and Send Email) only on green: blocked here, and refused again by the server when the e-mail is sent
+    function inqGate() {
+        const s = INQ_SIG; if (!s) return;
+        document.querySelectorAll('.inq [data-sendq]').forEach(b => {
+            const blocked = !s.ok && !s.locked;
+            b.classList.toggle('blocked', blocked); b.setAttribute('aria-disabled', blocked ? 'true' : 'false');
+            b.title = blocked ? 'Blocked: the inquiry is ' + (s.light === 'red' ? 'not started' : 'incomplete') + ' — ' + s.missing + ' item' + (s.missing === 1 ? '' : 's') + ' still needed' : (b.dataset.okTitle || '');
+            if (!b.dataset.gated) { b.dataset.gated = '1'; b.addEventListener('click', e => { if (b.classList.contains('blocked')) { e.preventDefault(); e.stopImmediatePropagation(); inqMissing(CURRENT); } }, true); }
+        });
+        const note = document.getElementById('inq_send_note'); if (note) note.textContent = s.ok || s.locked ? '' : 'Available when inquiry is green';
+    }
+    // 4 — what is missing, each with a way to the panel it is fixed on
+    function inqMissing(it) {
+        const s = INQ_SIG; if (!s) return;
+        const groups = {}; s.items.forEach((x, i) => { (groups[x.panel_label] = groups[x.panel_label] || []).push([x, i]); });
+        const html = s.ok ? `<div class="inq-ms-ok"><i class="bi bi-check-circle-fill"></i> Everything a quotation needs is on this inquiry. Send Quotation is available; nothing is sent until you send it.</div>`
+            : Object.keys(groups).map(g => `<div class="inq-ms-g">${esc(g)}</div>` + groups[g].map(([x, i]) => `<div class="inq-ms-i"><i class="inq-dot ${x.code.indexOf('act_day_') === 0 ? (s.days.find(d => d.day_no === x.day_no) || {}).light || 'yellow' : 'yellow'}"></i><span>${esc(x.label)}</span><button type="button" class="inq-ms-b" data-msgo="${i}">Open</button></div>`).join('')).join('')
+              + (s.optional.length ? `<div class="inq-ms-g opt">Optional — these do not block the quotation</div>` + s.optional.map(o => `<div class="inq-ms-i opt"><span>${esc(o.label)}</span></div>`).join('') : '');
+        Swal.fire({ title: s.title, html: `<div class="inq-ms">${html}</div>`, width: 720, showConfirmButton: false, showCloseButton: true,
+            didOpen: el => el.querySelectorAll('[data-msgo]').forEach(b => b.addEventListener('click', () => {
+                const x = s.items[Number(b.dataset.msgo)]; Swal.close();
+                if (x.code.indexOf('act_day_') === 0) { inqActGo(x.day_no); return; }
+                const f = fixFor(x); if (f && f.run) { f.run(); return; }
+                inqShow(x.panel); const p = document.querySelector('.inq .inq-pane.on'); if (p) inqSettle(p);
+            })) });
     }
     // ---------- Before Tour Confirmation (tf-check-r1): the check panel ----------
     // The four sections, read from the inquiry's own costing (GET /checks) — the same records the itinerary shows, grouped
     // for a last look. A person marks each one; nothing here confirms the tour. Send Email and Confirm Tour are two buttons.
     const CHK_ST = { needs_attention: ['Needs attention', 'na'], checked: ['Checked', 'ok'], not_required: ['Not required', 'nr'] };
     const CHK_ICON = { hotels: 'bi-building', transfers: 'bi-car-front', entrances: 'bi-ticket-perforated', activities: 'bi-binoculars' };
-    const CHK_OPEN = { hotels: ['hotels', null], transfers: ['trans', null], entrances: ['itin', '#ea_card'], activities: ['itin', '#ea_card'] };
+    const CHK_OPEN = { hotels: ['itin', null], transfers: ['trans', null], entrances: ['acts', '#ea_card'], activities: ['acts', '#ea_card'] };
     let CHK_SEQ = 0;
     async function inqCheck(it, ctx) {
         const box = document.getElementById('inq_check'); if (!box) return;
@@ -3713,7 +3868,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const latest = ctx.latest, issued = (it.quotes || []).find(q => q.status === 'issued');
         const confirmed = it.status === 'confirmed';
         const mailBtn = latest
-            ? `<a class="inq-btn chk-mail" target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client" title="Opens the client quotation v${latest.version} with its day-by-day itinerary: preview it, then email it to the agent from there. Customer documents only — no internal costs."><i class="bi bi-envelope"></i> Send Email</a>`
+            ? `<a class="inq-btn chk-mail" data-sendq target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client" title="Opens the client quotation v${latest.version} with its day-by-day itinerary: preview it, then email it to the agent from there. Customer documents only — no internal costs."><i class="bi bi-envelope"></i> Send Email</a>`
             : `<button type="button" class="inq-btn chk-mail" disabled title="There is no quotation version yet: Go for Quotation first"><i class="bi bi-envelope"></i> Send Email</button>`;
         const confBtn = confirmed ? '' : `<button type="button" class="inq-btn pri" id="chk_confirm" ${ctx.canConfirm ? '' : 'disabled'} title="${esc(ctx.canConfirm ? 'The customer agreed: confirm the tour' : (ctx.why || 'Issue a quotation version first'))}"><i class="bi bi-check-lg"></i> Confirm Tour</button>`;
         const stepNote = confirmed ? `Confirmed on ${esc((it.confirmed_at || '').slice(0, 16))}. This panel is the record of what was reviewed.`
@@ -3749,6 +3904,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         box.querySelectorAll('[data-chkopen]').forEach(b => b.addEventListener('click', () => { const o = CHK_OPEN[b.dataset.chkopen]; inqShow(o[0]); const t = o[1] ? document.querySelector(o[1]) : null; if (t) inqReveal(t); (t || document.querySelector('.inq .inq-tabs')).scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
         box.querySelectorAll('[data-chkgo]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById('chk_' + a.dataset.chkgo)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }));
         box.querySelectorAll('[data-inqgo]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); inqShow(a.dataset.inqgo); document.querySelector('.inq .inq-pane.on')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+        inqGate();
         document.getElementById('chk_confirm')?.addEventListener('click', () => { const b = document.getElementById('d_confirm_top') || document.getElementById('d_confirm'); if (b && !b.disabled) b.click(); });
     }
     // Driver and Guide in the booking strip: the type and the person of the inquiry's own crew line, saved through the
@@ -6239,7 +6395,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     paint(read());                                   // collapsed unless this screen was left with it open
     // tf-inqnav-r2 (14 Nov 2026): on the tabbed inquiry page the sections live inside the tabs, so the side list is never built.
     // There the button opens a list of every tab and its sections instead; an entry opens its tab and scrolls to the section.
-    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['notes', 'Notes & History'], ['check', 'Before Tour Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
+    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['acts', 'Activities'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['notes', 'Notes & History'], ['check', 'Before Tour Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
     function inqMode() { var d = document.getElementById('view_detail'); return !!(d && d.classList.contains('inq-on') && d.offsetParent !== null && d.querySelector('.inq-pane')); }
     function shown(el, stop) { for (var n = el; n && n !== stop; n = n.parentElement) { if (getComputedStyle(n).display === 'none') return false; } return true; }
     function label(h) { var c = h.cloneNode(true); c.querySelectorAll('button, a, .help, .pill, small, input, select').forEach(function (x) { x.remove(); }); return (c.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60); }
