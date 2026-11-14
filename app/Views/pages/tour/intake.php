@@ -911,7 +911,7 @@
                 <div id="view_list">
                     <!-- tf-tiq-r2 (14 Nov 2026): the Tour Inquiry list in the "homepage style" Shantha approved — hero, counts, the journey, highlights, the list beside what needs attention. Works on a phone. -->
                     <div class="tq">
-                    <section class="tq-hero ph2" style="background-image:url('<?= base_url('assets/images/tour_inquiry/beach-hero.jpg') ?>')">
+                    <section class="tq-hero ph2" style="background-image:url('<?= base_url('tour/intake/list_photo/beach-hero.jpg') ?>')">
                         <div class="tq-hero-t">
                             <span class="tq-logo"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></span>
                             <span class="tq-chip">Tour Desk · Sri Lanka inbound</span>
@@ -932,10 +932,10 @@
                     <div class="tq-journey"><b>The journey</b><div class="tq-jr"><span class="j a">1 · Inquiry received</span><i class="bi bi-arrow-right"></i><span class="j b">2 · Itinerary &amp; quotation</span><i class="bi bi-arrow-right"></i><span class="j c">3 · Quotation sent</span><i class="bi bi-arrow-right"></i><span class="j d">4 · Ready to confirm</span><i class="bi bi-arrow-right"></i><a class="j e" href="<?= base_url('tour/intake/confirmed') ?>">Confirmed Tours <i class="bi bi-arrow-right"></i></a></div></div>
                     <div class="tq-sec"><h2>Sri Lanka highlights</h2><span>Favourite stops our guests ask for</span></div>
                     <div class="tq-high n4">
-                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/kandy-temple-of-the-tooth.jpg') ?>" alt="Kandy" loading="lazy" style="object-position:center 38%"><div><b>Kandy</b><span>Temple of the Sacred Tooth Relic and Kandy Lake</span></div></div>
-                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/colombo-fort-cargills-york-street.jpg') ?>" alt="Colonial Colombo" loading="lazy" style="object-position:center 30%"><div><b>Colonial Colombo</b><span>The Cargills building on York Street, Colombo Fort</span></div></div>
-                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/coast-infinity-pool.jpg') ?>" alt="Coastal stays" loading="lazy" style="object-position:center 55%"><div><b>Coastal stays</b><span>An infinity pool above the bay</span></div></div>
-                        <div class="tq-hc"><img src="<?= base_url('assets/images/tour_inquiry/coast-pool-palms.jpg') ?>" alt="Palm-fringed coast" loading="lazy" style="object-position:center 45%"><div><b>Palm-fringed coast</b><span>Palms, cliffs and the Indian Ocean</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('tour/intake/list_photo/kandy-temple-of-the-tooth.jpg') ?>" alt="Kandy" loading="lazy" style="object-position:center 38%"><div><b>Kandy</b><span>Temple of the Sacred Tooth Relic and Kandy Lake</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('tour/intake/list_photo/colombo-fort-cargills-york-street.jpg') ?>" alt="Colonial Colombo" loading="lazy" style="object-position:center 30%"><div><b>Colonial Colombo</b><span>The Cargills building on York Street, Colombo Fort</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('tour/intake/list_photo/coast-infinity-pool.jpg') ?>" alt="Coastal stays" loading="lazy" style="object-position:center 55%"><div><b>Coastal stays</b><span>An infinity pool above the bay</span></div></div>
+                        <div class="tq-hc"><img src="<?= base_url('tour/intake/list_photo/coast-pool-palms.jpg') ?>" alt="Palm-fringed coast" loading="lazy" style="object-position:center 45%"><div><b>Palm-fringed coast</b><span>Palms, cliffs and the Indian Ocean</span></div></div>
                     </div>
                     <div class="tq-main">
                         <div class="tq-card tq-listcard">

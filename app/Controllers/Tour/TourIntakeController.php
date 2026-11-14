@@ -1359,6 +1359,17 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // tf-photos-r1 — GET list_photo/(:segment): the pictures of the Tour Inquiry list, kept in app/Assets so the deployment (which copies the app folder) carries them
+    public function listPhoto($name)
+    {
+        $ok = ['beach-hero.jpg', 'kandy-temple-of-the-tooth.jpg', 'colombo-fort-cargills-york-street.jpg', 'coast-infinity-pool.jpg', 'coast-pool-palms.jpg'];
+        $f  = APPPATH . 'Assets/tour_inquiry/' . (string) $name;
+        if (!in_array((string) $name, $ok, true) || !is_file($f)) {
+            return $this->response->setStatusCode(404);
+        }
+        return $this->response->setHeader('Content-Type', 'image/jpeg')->setHeader('Cache-Control', 'private, max-age=604800')->setBody((string) file_get_contents($f));
+    }
+
     // tf-lunch-r1 — GET intake/(:num)/lunch: each day's lunch arrangement and the route defaults of the Meal Master
     public function lunch($id)
     {
