@@ -745,6 +745,19 @@
     .inq .ml-box h4 { font-size:19px; background:#fff; padding:12px 16px 8px; } .inq .ml-box h4 span { font-weight:700; } .inq .ml-box h4 i { font-size:22px; } .inq .ml-box h4.g { background:linear-gradient(90deg,#fff,#E9F3DF); margin:8px 10px 0; border-radius:8px; padding:8px 12px; } .inq .ml-box.flash { box-shadow:0 0 0 3px rgba(132,36,132,.35); }
     .tf .inq table.ml-rm th { font-size:14px; background:#F7F5F8; border-top:1px solid #ECE7EF; } .tf .inq table.ml-rm td { font-size:14.5px; } .tf .inq table.ml-rm td + td, .tf .inq table.ml-rm th + th { border-left:1px solid #ECE7EF; }
     .inq .ml-sum div { font-size:15px; font-weight:700; padding:3px 12px; } .inq .ml-sum div b { font-weight:800; } .inq .ml-tot { margin:8px 10px 10px; border-radius:8px; background:linear-gradient(90deg,#842484,#5E1466); } .inq .ml-tot small { font-weight:500; font-size:13.5px; } .inq .ml-tot b { font-size:22px; } .inq .ml-note { font-size:12px; color:#5E5964; padding:0 14px 10px; border-top:0; }
+    /* tf-tidy-r1: the open inquiry stays in order in a narrower window (about 700–1100 px): one heading line, the seven facts on one line, the driver / guide line unbroken, every tab the same height */
+    .tf .inq .inq-tab[data-tab="check"] { height:32px; font-size:13.5px; }
+    .inq .inq-v small { white-space:normal; }
+    @media (min-width:701px) { .tf .inq .inq-cells { flex-wrap:nowrap; } .tf .inq .inq-cell { flex:1 1 auto; } .tf .inq .inq-cell > div { min-width:0; } .tf .inq .inq-v { white-space:normal; } }
+    @media (min-width:701px) and (max-width:1100px) {
+        .tf .inq .inq-head { flex-wrap:nowrap; gap:8px; padding:2px 0 4px; } .tf .inq .inq-head h2 { font-size:17px; white-space:nowrap; }
+        .tf .inq .inq-sig { flex:1 1 auto !important; min-width:0; padding:0 8px; gap:8px; } .tf .inq .inq-sig-t { min-width:0; } .tf .inq .inq-sig-t b { white-space:normal; font-size:13px; } .tf .inq .inq-sig-t a { white-space:normal; font-size:12px; } .tf .inq .inq-sig-t span { font-size:11.5px; }
+        .tf .inq .inq-head .inq-acts { margin-left:auto; gap:6px; } .tf .inq .inq-head .inq-btn { padding:0 9px; font-size:13px; gap:5px; }
+        .tf .inq .inq-sendwrap { flex-direction:column; gap:0; } .tf .inq #inq_send_note { max-width:none; text-align:center; font-size:10px; }
+        .tf .inq .inq-cells { flex-wrap:nowrap; } .tf .inq .inq-cell { flex:1 1 auto; padding:4px 7px; gap:7px; } .tf .inq .inq-cell > div { min-width:0; } .tf .inq .inq-ico { flex:0 0 28px; width:28px; height:28px; font-size:14px; } .tf .inq .inq-v { white-space:normal; font-size:13px; } .tf .inq .inq-k { font-size:11.5px; } .tf .inq .inq-v small { font-size:11px; }
+        .tf .inq .inq-crew { flex-wrap:nowrap; justify-content:flex-start; gap:6px; } .tf .inq .inq-backlist { position:static; transform:none; margin:0 6px 0 8px; flex:0 0 auto; } .tf .inq .inq-crewcol { padding:2px 10px; gap:8px; min-width:0; flex:0 1 auto; } .tf .inq .inq-crewcol > i { font-size:18px; } .tf .inq .inq-crewcol label { font-size:13.5px; } .tf .inq .inq-crewcol select { width:170px; min-width:0; }
+        .tf .inq .inq-tab, .tf .inq .inq-tab[data-tab="check"] { font-size:12.5px; padding:0 6px; }
+    }
     /* tf-backlist-r1: a small green way back to the list, at the left of the driver / guide line */
     .inq .inq-crew { position:relative; } .tf .inq .inq-backlist { position:absolute; left:14px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 14px 0 11px; border-radius:16px; background:linear-gradient(#84C254,#6CAB3E); color:#fff; font-size:13px; font-weight:700; text-decoration:none; box-shadow:0 1px 3px rgba(60,110,30,.35); white-space:nowrap; }
     .tf .inq .inq-backlist i { font-size:15px; transition:transform .15s; } .tf .inq .inq-backlist:hover { background:linear-gradient(#78B848,#5E9C33); color:#fff; } .tf .inq .inq-backlist:hover i { transform:translateX(-3px); }
