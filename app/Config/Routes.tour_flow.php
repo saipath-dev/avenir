@@ -440,6 +440,10 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->post('intake/(:num)/excursion', [TourIntakeController::class, 'excursion']);
     $routes->post('intake/(:num)/excursion/(:num)', [TourIntakeController::class, 'excursion']);
     $routes->get('intake/(:num)/costing', [TourIntakeController::class, 'costing']);
+    // tf-check-r1: Before Tour Confirmation — the section statuses
+    $routes->get('intake/(:num)/checks', [TourIntakeController::class, 'checks']);
+    $routes->get('intake/(:num)/day/(:num)/rate_jump', [TourIntakeController::class, 'rateJump']);   // tf-ratejump-r1: Super Admin only
+    $routes->post('intake/(:num)/check', [TourIntakeController::class, 'check']);
     $routes->post('intake/(:num)/markup', [TourIntakeController::class, 'markup']);
     $routes->post('intake/(:num)/go', [TourIntakeController::class, 'go']);
     // tf-stage4: the deliberate, authorised, logged recalculation of saved figures, and its log

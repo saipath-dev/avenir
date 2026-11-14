@@ -148,6 +148,13 @@
     .hr2 .form-control-sm, .hr2 .form-select-sm { font-size: 12.5px; padding: 4px 8px; }
     .hr2 .help { font-size: 11.5px; color: var(--hr-muted); }
     /* editor */
+    /* tf-ratejump-r1: arriving from an inquiry night */
+    #jump_bar { position:sticky; top:72px; z-index:60; display:flex; gap:16px; align-items:center; background:#ffffff; border:1px solid #d9d3dd; border-left:5px solid #78b848; border-radius:10px; padding:10px 14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(16,24,40,.08); font-size:13.5px; color:#1a1a1a; }
+    #jump_bar.miss { border-left-color:#E0661F; } #jump_bar .t { flex:1 1 auto; min-width:0; } #jump_bar .s { margin-top:3px; font-size:13px; } #jump_bar.miss .s b { color:#E0661F; } #jump_bar .why { color:#1a1a1a; }
+    #jump_bar #jump_back { background:#842484; border-color:#842484; color:#fff; white-space:nowrap; font-weight:600; }
+    .hr2 .season.jump-season { outline:2px solid #842484; outline-offset:3px; border-radius:8px; }
+    .hr2 tr.jump-hit > td { background:#F3E6F3 !important; box-shadow:inset 0 2px 0 #842484, inset 0 -2px 0 #842484; }
+    .hr2 tr.jump-hit input.jump-cell { outline:3px solid #78b848; background:#ffffff; font-weight:700; }
     .hr2 .editor { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0; }
     @media (max-width: 900px) { .hr2 .editor { grid-template-columns: 1fr; } }
     .hr2 .ed-nav { border-right: 1px solid var(--hr-line); padding: 10px 0; background: #fafbfc; border-radius: var(--hr-radius) 0 0 var(--hr-radius); }
@@ -2052,6 +2059,56 @@ php spark hotelrates:migrate</pre>
         toast(j.status === 200 ? 'success' : 'error', j.message);
     });
 
+    // ---------------- tf-ratejump-r1: arriving from a night of a Tour Inquiry (Hotels tab → Edit hotel, Super Admin) ----------------
+    // The address names the inquiry and the night's hotel, date, room type, meal plan and occupancy. The plan opens on its
+    // Seasons & rates page with that row marked; when there is no such rate, the bar says what is missing. Nothing is changed
+    // by arriving: a correction goes through this panel's own Check / Save / Approve and its history, as always.
+    const JUMP = (() => { const q = new URLSearchParams(location.search); if (!q.get('inq')) return null;
+        return { inq: q.get('inq'), inqno: q.get('inqno') || ('inquiry ' + q.get('inq')), night: q.get('night') || '', date: q.get('date') || '', room: q.get('room') || '', meal: (q.get('meal') || '').toUpperCase(),
+                 occ: (q.get('occ') || '').split(',').filter(Boolean), occw: q.get('occw') || '', why: q.get('why') || '', found: q.get('found') === '1' }; })();
+    const JUMP_MEAL = { RO: 'Room only', BB: 'Bed & breakfast', HB: 'Half board', FB: 'Full board', AI: 'All inclusive' };
+    function jumpFind() {   // the season covering the date and, in it, the row for the room type and the meal plan
+        const out = { si: -1, ri: -1, seasons: [] }; if (!JUMP || !S.sheet) return out;
+        (S.sheet.seasons || []).forEach((s, si) => { if ((s.dates || []).some(dt => dt.from && dt.to && dt.from <= JUMP.date && JUMP.date <= dt.to)) out.seasons.push(si); });
+        const norm = v => String(v || '').trim().toLowerCase();
+        for (const si of out.seasons) { const ri = (S.sheet.seasons[si].rates || []).findIndex(r => norm(r.room_type) === norm(JUMP.room) && String(r.meal_plan || '').toUpperCase() === JUMP.meal); if (ri >= 0) { out.si = si; out.ri = ri; break; } }
+        if (out.si < 0 && out.seasons.length) out.si = out.seasons[0];
+        return out;
+    }
+    function jumpMark(scroll) {
+        if (!JUMP || !S.sheet || S.section !== 'seasons') return;
+        const f = jumpFind(), box = document.querySelector('#ed_body .season[data-si="' + f.si + '"]'); if (!box) return;
+        box.classList.add('jump-season');
+        const tr = f.ri >= 0 ? box.querySelector('tr[data-ri="' + f.ri + '"]') : null;
+        if (tr) { tr.classList.add('jump-hit'); JUMP.occ.forEach(k => { const c = tr.querySelector('[data-r="' + k + '"]'); if (c) c.classList.add('jump-cell'); }); }
+        if (scroll) setTimeout(() => (tr || box).scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+    }
+    function jumpBar() {
+        if (!JUMP) return;
+        const fmtD = JUMP.date ? new Date(JUMP.date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : '';
+        const what = [S.hotel ? S.hotel.name : '', fmtD, JUMP.room || 'room type not set', JUMP_MEAL[JUMP.meal] || JUMP.meal || 'meal plan not set', JUMP.occw].filter(Boolean).join(' · ');
+        let state, cls = 'ok';
+        if (S.sheet) {
+            const f = jumpFind(), row = f.ri >= 0 ? S.sheet.seasons[f.si].rates[f.ri] : null;
+            const figs = row ? JUMP.occ.map(k => [k.toUpperCase(), row[k]]) : [];
+            if (row && figs.length && figs.every(x => x[1] !== null && x[1] !== '' && x[1] !== undefined)) state = 'This is the rate the night uses, highlighted below: <b>' + figs.map(x => x[0] + ' ' + esc(String(S.sheet.contract.currency || '')) + ' ' + Number(x[1]).toFixed(2)).join(' · ') + '</b> per room / night.';
+            else { cls = 'miss'; state = '<b>No matching rate.</b> ' + (row ? 'The row for ' + esc(JUMP.room) + ' · ' + esc(JUMP.meal) + ' is highlighted, but it has no ' + esc(JUMP.occ.map(k => k.toUpperCase()).join(' / ')) + ' figure.'
+                : (f.seasons.length ? 'The season covering ' + esc(fmtD) + ' is highlighted, but it has no row for ' + esc(JUMP.room || 'this room type') + ' on ' + esc(JUMP.meal || 'this meal plan') + '.' : 'No season of this plan covers ' + esc(fmtD) + '.')) + (JUMP.why ? ' <span class="why">' + esc(JUMP.why) + '</span>' : ''); }
+        } else { cls = 'miss'; state = '<b>No approved rate plan for this night.</b> ' + esc(JUMP.why || 'No approved plan covers this date.') + ' The hotel is open below with the rates on ' + esc(fmtD) + '; add or approve a plan covering the date.'; }
+        let bar = document.getElementById('jump_bar'); if (!bar) { bar = document.createElement('div'); bar.id = 'jump_bar'; const host = document.querySelector('.hr2') || document.body; host.insertBefore(bar, host.firstChild); }
+        bar.className = cls;
+        bar.innerHTML = '<div class="t"><i class="bi bi-signpost-2"></i> From <b>' + esc(JUMP.inqno) + '</b> · night ' + esc(JUMP.night) + ' — ' + esc(what) + '<div class="s">' + state + ' Changes here follow the usual Check, Save and Approve, and are kept in the plan\'s history.</div></div>'
+            + '<button type="button" class="btn btn-sm" id="jump_back"><i class="bi bi-arrow-left"></i> Back to ' + esc(JUMP.inqno) + ' · Hotels</button>';
+        document.getElementById('jump_back').addEventListener('click', async () => {
+            if (S.sheet && !S.ro) { const go = await Swal.fire({ icon: 'question', title: 'Leave the rate plan?', text: 'Anything changed in this plan and not yet saved will be lost.', showCancelButton: true, confirmButtonText: 'Leave', cancelButtonText: 'Stay' }); if (!go.isConfirmed) return; }
+            const url = '<?= base_url('tour/intake') ?>?id=' + encodeURIComponent(JUMP.inq) + '&tab=itin';
+            // opened from the inquiry's own tab: that tab is still there with everything on it — close this one to return to it
+            if (window.opener && !window.opener.closed) { try { window.opener.focus(); } catch (e) {} window.close(); setTimeout(() => { location.href = url; }, 400); }
+            else location.href = url;
+        });
+    }
+    if (JUMP) { const __re = renderEditor; renderEditor = function () { __re.apply(this, arguments); jumpMark(false); }; }
+
     // ---------------- start ----------------
     (async () => {
         await loadHotels();
@@ -2063,7 +2120,8 @@ php spark hotelrates:migrate</pre>
         // tf-refresh-r1: any tab named in the address (Coverage, Room types, Hotel details, History too), and the place this tab was at
         const T0 = new URLSearchParams(location.search).get('tab');
         if (S.hotel && T0 && T0 !== PRESELECT_TAB && document.querySelector('.hr-tab[data-tab="' + T0 + '"]')) showTab(T0);
-        if (window.TfView) TfView.restoreScroll();
+        if (JUMP) { if (S.sheet) { S.section = 'seasons'; renderEditor(); jumpMark(true); } jumpBar(); }
+        else if (window.TfView) TfView.restoreScroll();
     })();
 })();
 </script>

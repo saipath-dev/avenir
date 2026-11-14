@@ -19,6 +19,9 @@ use App\Libraries\TourFlow\PaxMatrix;
 use App\Libraries\TourFlow\QuoteMail;
 use App\Libraries\TourFlow\QuoteService;
 use App\Libraries\TourFlow\Reauth;
+use App\Libraries\TourFlow\HotelRateJump;
+use App\Libraries\TourFlow\SectionChecks;
+use App\Libraries\TourFlow\SuperAdminOnly;
 use App\Libraries\TourFlow\Staff;
 use App\Libraries\TourFlow\TextChecks;
 use App\Libraries\TourFlow\TourMailer;
@@ -348,6 +351,7 @@ class TourIntakeController extends BaseController
         // what this person may see and do on top of the desk's own work: the markup
         // (Management), typing kilometres over the history (Management), the excursion master
         $data['sees_pricing']   = $this->holds(self::PRICING_URL);
+        $data['is_super']       = $this->isSysAdmin();   // tf-ratejump-r1: Edit hotel (the Hotel Rates master from a night) is the Super Admin's
         $data['can_mileage']    = $this->holds(self::MILEAGE_URL);
         $data['can_issue']      = $this->holds(\App\Libraries\TourFlow\StaffTaskMap::ISSUE_URL);   // tf-panel2-r1
         // tf-walkfix-r1: the desks and the Board are linked only for a sign-in that may open them — a link that
@@ -1670,6 +1674,86 @@ class TourIntakeController extends BaseController
     {
         try {
             return $this->json(['status' => 200, 'data' => $this->costForViewer($this->quotes()->costing((int) $id))]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // GET intake/(:num)/day/(:num)/rate_jump — Edit hotel on the Hotels tab: where in the Hotel Rates master this night's rate is.
+    // SUPER ADMIN ONLY, checked here (the button is hidden for everybody else, but the address itself is refused too).
+    // Nothing is changed: a rate is corrected in the Hotel Rates panel, through its own save, approval and history.
+    public function rateJump($id, $dayId)
+    {
+        try {
+            $it = $this->svc()->get((int) $id);
+            if (!$it) {
+                return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
+            }
+            $role = (int) ($this->menuData()['user_role'] ?? 0);
+            if ($role !== 1) {
+                HotelRateJump::resolve($role, $it, (int) $dayId);   // throws: refused before anything is read
+            }
+            $line = null;
+            try {
+                $dayNo = 0;
+                foreach ((array) ($it['days'] ?? []) as $d) {
+                    if ((int) $d['id'] === (int) $dayId) {
+                        $dayNo = (int) $d['day_no'];
+                    }
+                }
+                foreach ((array) ($this->quotes()->costing((int) $id)['hotels'] ?? []) as $h) {
+                    if ((int) $h['day_no'] === $dayNo) {
+                        $line = $h;
+                    }
+                }
+            } catch (\Throwable $e) {
+                // the costing only supplies the reason a rate is missing; the jump works without it
+            }
+            $r = HotelRateJump::resolve($role, $it, (int) $dayId, $line);
+            $r['url'] = base_url($r['path']);
+            try {
+                (new Activity($this->db(), $this->user(), $this->userId(), $this->actorName()))->record('inquiry', (int) $id, (int) $id, null, 'rate_jump',
+                    'Opened the Hotel Rates master from night ' . $r['night'] . ' (' . $r['summary'] . ')' . ($r['found'] ? '' : ' — rate missing'));
+            } catch (\Throwable $e) {
+                // best effort
+            }
+            return $this->json(['status' => 200, 'data' => $r]);
+        } catch (SuperAdminOnly $e) {
+            return $this->json(['status' => 403, 'message' => $e->getMessage()], 403);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // GET intake/(:num)/checks — Before Tour Confirmation: the four sections (Hotels, Transfers, Entrance Fees, Activities)
+    // read from the same costing the inquiry uses, each with its status and what is still missing. Totals are Pricing's.
+    public function checks($id)
+    {
+        try {
+            $it = $this->svc()->get((int) $id);
+            if (!$it) {
+                return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
+            }
+            $chk = new SectionChecks($this->db(), $this->user(), $this->userId(), $this->actorName());
+            return $this->json(['status' => 200, 'data' => $chk->state($it, $this->quotes()->costing((int) $id), $this->holds(self::PRICING_URL))]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // POST intake/(:num)/check {section, status} — a person marks a section Checked / Not required / Needs attention.
+    // It records who and when in the history. It never confirms the tour: Confirm Tour is its own action.
+    public function check($id)
+    {
+        try {
+            $b  = $this->body();
+            $it = $this->svc()->get((int) $id);
+            if (!$it) {
+                return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
+            }
+            $chk  = new SectionChecks($this->db(), $this->user(), $this->userId(), $this->actorName());
+            $data = $chk->set($it, $this->quotes()->costing((int) $id), (string) ($b['section'] ?? ''), (string) ($b['status'] ?? ''), $this->holds(self::PRICING_URL));
+            return $this->json(['status' => 200, 'message' => 'Saved.', 'data' => $data]);
         } catch (\Throwable $e) {
             return $this->fail($e, 400);
         }

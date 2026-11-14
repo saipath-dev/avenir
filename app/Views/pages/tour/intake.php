@@ -183,6 +183,17 @@
     /* tf-inqnav-r1: the section-link list is shown or hidden from the header. Nothing else moves: the side column is
        the same width either way, so no column is resized and the itinerary table is never reflowed by the control. */
     .tf.nav-off .tf-rail { display:none; }
+    /* tf-inqnav-r2: on the tabbed inquiry page the Navigation button opens this list; an entry opens its tab and goes to the section */
+    #inq_nav { position:absolute; z-index:1060; width:300px; max-height:70vh; overflow:auto; background:#ffffff; border:1px solid #d9d3dd; border-radius:10px;
+               box-shadow:0 8px 24px rgba(16,24,40,.16); padding:8px 6px; font-size:13px; }
+    #inq_nav .g { display:flex; align-items:center; gap:7px; width:100%; border:0; background:none; text-align:left; padding:7px 9px 5px; margin-top:4px;
+                  font-size:11px; letter-spacing:.05em; text-transform:uppercase; font-weight:700; color:#842484; border-radius:7px; cursor:pointer; }
+    #inq_nav .g:first-child { margin-top:0; }
+    #inq_nav .s { display:flex; align-items:center; gap:8px; width:100%; border:0; background:none; text-align:left; padding:5px 9px 5px 14px; color:#1a1a1a;
+                  border-radius:7px; line-height:1.3; cursor:pointer; }
+    #inq_nav .s::before { content:''; width:6px; height:6px; border-radius:50%; background:#cfd6de; flex:none; }
+    #inq_nav .g:hover, #inq_nav .s:hover, #inq_nav .g:focus-visible, #inq_nav .s:focus-visible { background:rgba(132,36,132,.08); outline:0; }
+    #inq_nav .g.on { background:rgba(132,36,132,.08); }
     .tf #btn_nav:focus-visible { outline:2px solid #842484 !important; outline-offset:2px !important;
                                  box-shadow:0 0 0 4px rgba(132,36,132,.18) !important; }
     .tf #btn_nav[aria-expanded="true"] { background:var(--tf-blue-soft); }
@@ -526,6 +537,101 @@
     .inq .inq-back { display:inline-flex; align-items:center; gap:6px; margin-bottom:12px; color:var(--p); font-weight:600; font-size:13.5px; cursor:pointer; background:none; border:0; padding:0; }
     .inq .inq-panebox { background:#fff; border:1px solid var(--line); border-radius:0 12px 12px 12px; padding:16px; margin-bottom:16px; }
     .inq .inq-pane > .inq-panebox > .tf-card:last-child { margin-bottom:0; }
+    .inq .inq-pane .mailbox { position:static !important; max-height:none !important; }   /* inside a tab the email box scrolls with the page; it no longer sticks over the cards below it */
+    /* tf-check-r1: Before Tour Confirmation — the check panel. Same records as the itinerary, grouped by section. */
+    .tf .inq .inq-tab[data-tab="check"] { margin-left:10px; border-color:#78B848; color:#3F7F1F; font-weight:600; }
+    .tf .inq .inq-tab[data-tab="check"].on { background:linear-gradient(#8E2E8E,#7A1F7A); border-color:#7A1F7A; color:#fff; }
+    .inq #inq_chk_n { display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px; padding:0 6px; border-radius:10px; background:#fff; border:1px solid #B42318; color:#B42318; font-size:11.5px; font-weight:700; }
+    .inq .chk-st { display:inline-flex; align-items:center; gap:4px; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:600; white-space:nowrap; border:1px solid transparent; }
+    .inq .chk-st.na { background:#fff; border-color:#B42318; color:#B42318; } .inq .chk-st.ok { background:#78B848; color:#fff; } .inq .chk-st.nr { background:#EEF0F3; color:#4A5361; border-color:#D5D9DF; }
+    .inq .chk-top > .h .chk-count { margin-left:auto; font-size:13px; font-weight:600; color:var(--mut); }
+    .inq .chk-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:start; padding-top:12px; }
+    .inq .chk-chips { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .inq .chk-chip { display:flex; gap:10px; align-items:flex-start; border:1px solid var(--line); border-left:4px solid #B42318; border-radius:10px; padding:10px 12px; text-decoration:none; color:var(--ink); background:#fff; }
+    .inq .chk-chip.ok { border-left-color:#78B848; } .inq .chk-chip.nr { border-left-color:#B8BEC8; }
+    .inq .chk-chip > i { font-size:18px; color:var(--p); margin-top:1px; } .inq .chk-chip b { display:block; font-size:13.5px; margin-bottom:4px; }
+    .inq .chk-chip em { display:block; font-style:normal; font-size:12px; color:#B42318; font-weight:600; margin-top:4px; }
+    .inq .chk-do { display:flex; flex-direction:column; align-items:flex-end; gap:8px; max-width:430px; }
+    .inq .chk-btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .tf .inq .chk-btns .inq-btn { height:40px; } .tf .inq .inq-btn.chk-mail { border-color:var(--p); color:var(--p); } .tf .inq #chk_confirm { background:#78B848; border-color:#78B848; color:#fff; margin-left:14px; }
+    .tf .inq #chk_confirm:hover { background:#67A53C; } .tf .inq #chk_confirm[disabled] { background:#fff; border-color:#CFC7D4; color:var(--mut); }
+    .inq .chk-step { font-size:12.5px; color:var(--mut); text-align:right; line-height:1.45; } .inq .chk-step a { color:var(--p); font-weight:600; }
+    .inq .chk-grid { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:16px; align-items:start; }
+    .inq .chk-sec { border-left:4px solid #B42318; } .inq .chk-sec.ok { border-left-color:#78B848; } .inq .chk-sec.nr { border-left-color:#B8BEC8; }
+    .inq .chk-sec > .h { flex-wrap:wrap; row-gap:6px; } .inq .chk-sec > .h .chk-st { margin-left:6px; }
+    .inq .chk-note { font-size:12px; font-weight:500; color:var(--mut); margin-left:8px; } .inq .chk-note i { font-size:13px !important; color:#B42318; }
+    .inq .chk-acts { margin-left:auto; display:flex; gap:8px; } .inq .inq-card > .h .chk-acts .inq-btn { margin-left:0; }
+    .tf .inq .inq-btn.chk-ok { border-color:#78B848; color:#3F7F1F; } .tf .inq .inq-btn.chk-ok:hover { background:#78B848; color:#fff; }
+    .inq table.chk-t { width:100%; border-collapse:collapse; } .inq table.chk-t td { padding:8px 10px; border-bottom:1px solid #F0EBF2; font-size:13.5px; vertical-align:top; }
+    .inq table.chk-t td.d { width:86px; color:var(--mut); white-space:nowrap; } .inq table.chk-t td.r { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:600; width:110px; }
+    .inq table.chk-t td .s { color:var(--mut); margin-left:8px; font-size:12.5px; } .inq table.chk-t td .w { display:block; color:#B42318; font-size:12.5px; margin-top:2px; }
+    .inq table.chk-t tr.miss td { background:#FEF6F5; } .inq table.chk-t .ns { display:inline-block; background:#fff; color:#1a1a1a; border:1px solid #d9d3dd; border-radius:5px; padding:0 8px; font-size:12.5px; font-weight:600; }
+    .inq .chk-flag { display:inline-block; background:#fff; border:1px solid #B42318; color:#B42318; border-radius:5px; padding:0 7px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin-left:8px; flex:none; }
+    .inq .chk-issues { margin-top:10px; border-top:1px dashed var(--line); padding-top:8px; } .inq .chk-issues.gen { margin-top:14px; }
+    .inq .chk-issue { display:flex; gap:10px; align-items:flex-start; padding:5px 0; font-size:13px; line-height:1.4; } .inq .chk-issue .chk-flag { margin-left:0; margin-top:1px; }
+    .inq .chk-issue > span:nth-child(2) { flex:1 1 auto; min-width:0; } .tf .inq .chk-issue .inq-btn { height:26px; font-size:12px; padding:0 10px; flex:none; }
+    .inq .chk-gh { font-size:11px; letter-spacing:.05em; text-transform:uppercase; font-weight:700; color:var(--mut); margin-bottom:4px; }
+    .inq .chk-empty { color:var(--mut); font-size:13px; padding:12px 0 4px; } .inq .chk-air { font-size:13px; color:var(--mut); padding:9px 10px 0; }
+    .inq .chk-tot { display:flex; align-items:center; gap:12px; padding:11px 18px; background:var(--p-soft); border-top:2px solid var(--p); }
+    .inq .chk-tot b { color:var(--p); font-size:14px; white-space:nowrap; } .inq .chk-tot span { font-size:12.5px; color:var(--mut); } .inq .chk-tot .amt { margin-left:auto; font-size:17px; font-weight:700; color:var(--ink); white-space:nowrap; }
+    .inq .chk-tot.inc { background:#fff; border-top:2px dashed #B42318; } .inq .chk-tot.inc b { color:#B42318; }
+    .inq .chk-tot.grand { margin-top:14px; border:1px solid var(--line); border-top-width:2px; border-radius:8px; }
+    .inq .chk-src { position:sticky; top:84px; } .inq .chk-pre { white-space:pre-wrap; word-break:break-word; font-family:inherit; font-size:12.5px; line-height:1.5; background:#FAF8FB; border:1px solid var(--line); border-radius:8px; padding:10px 12px; max-height:52vh; overflow:auto; margin:0; color:var(--ink); }
+    /* tf-inqpin-r1: heading, booking strip and tabs stay put; on a short window only the heading and the tabs are pinned, so the work keeps its room */
+    .inq .inq-top { position:sticky; top:var(--inq-pin,70px); z-index:40; background:var(--inq-bg,#f6f4f2); padding-top:8px; margin-top:-8px; box-shadow:0 1px 0 var(--line); }
+    .inq .inq-top .inq-tabs { background:var(--inq-bg,#f6f4f2); }
+    @media (max-height:900px) {
+        .inq .inq-top { display:contents; }
+        .inq .inq-head { position:sticky; top:var(--inq-pin,70px); z-index:41; background:var(--inq-bg,#f6f4f2); margin-bottom:0; padding:8px 0 10px; }
+        .inq .inq-strip { margin-top:4px; }
+        .inq .inq-tabs { position:sticky; top:calc(var(--inq-pin,70px) + var(--inq-headh,56px)); z-index:40; background:var(--inq-bg,#f6f4f2); box-shadow:0 1px 0 var(--line); }
+    }
+    .inq .inq-pane, .inq .tf-card, .inq .inq-card, .inq details.inq-sec { scroll-margin-top:calc(var(--inq-pin,70px) + var(--inq-toph,0px) + 12px); }
+    .inq .chk-src { top:calc(var(--inq-pin,70px) + var(--inq-toph,0px) + 12px); }
+    .tf .inq .inq-tab.was { border-color:var(--p); color:var(--p); box-shadow:inset 0 -3px 0 var(--p); }
+    /* the night's rate box stays inside the card on a mid-width window: the summary column narrows and the columns tighten */
+    @media (max-width:1400px) and (min-width:1201px) { .inq .inq-grid { grid-template-columns:minmax(0,1fr) 300px; }
+        .inq .inq-day { grid-template-columns:112px minmax(120px,1fr) 92px 64px 84px minmax(168px,.9fr) 30px; gap:10px; } }
+    .inq .inq-day > * { min-width:0; } .inq .inq-rate { overflow:hidden; } .tf .inq .inq-sum .inq-btn { white-space:nowrap; padding:0 10px; gap:6px; }
+    /* tf-hotels-r2: the Hotels tab as the mock-up of 14 Nov 2026 — a joined tab bar, one card a night, the subtotal under the list */
+    .tf .inq .inq-tabs { gap:0; flex-wrap:nowrap; border:1px solid #D9D3DD; border-radius:10px; overflow:hidden; background:#fff; margin:0 0 16px; padding:0; }
+    .tf .inq .inq-tab, .tf .inq .inq-tab[data-tab="check"] { flex:1 1 auto; justify-content:center; height:52px; padding:0 14px; margin:0; border:0; border-right:1px solid #D9D3DD; border-radius:0; background:#fff; color:#1A1A1A; font-size:16px; font-weight:600; white-space:nowrap; box-shadow:none; }
+    .tf .inq .inq-tab:last-child { border-right:0; } .tf .inq .inq-tab > i { display:none; }
+    .tf .inq .inq-tab.on, .tf .inq .inq-tab[data-tab="check"].on { background:#842484; color:#fff; }
+    .tf .inq .inq-tab.was { box-shadow:inset 0 -4px 0 #842484; color:#842484; }
+    .inq .inq-panebox { border-radius:12px; }
+    .inq .inq-hh { margin:2px 0 16px; } .inq .inq-hh h3 { font-size:30px; font-weight:800; margin:0 0 4px; color:#1A1A1A; letter-spacing:-.01em; } .inq .inq-hh > div { font-size:16px; color:#1A1A1A; }
+    .inq .inq-hlist { position:relative; padding-left:38px; margin-bottom:16px; }
+    .inq .inq-hlist::before { content:''; position:absolute; left:13px; top:34px; bottom:34px; width:3px; background:#78B848; border-radius:2px; }
+    .inq .inq-drow.hcard { position:relative; background:#fff; border:1px solid #DCD5E0; border-radius:12px; margin-bottom:12px; box-shadow:0 1px 3px rgba(16,24,40,.06); }
+    .inq .inq-drow.hcard::before { content:''; position:absolute; left:-35px; top:28px; width:18px; height:18px; border-radius:50%; background:#fff; border:3px solid #78B848; box-sizing:border-box; }
+    .inq .inq-day.hday { grid-template-columns:150px minmax(170px,1.35fr) 118px 120px 140px minmax(176px,1fr) auto; gap:0; padding:14px 16px; border-bottom:0; align-items:center; }
+    .inq .inq-day.hday > * { padding:0 16px; min-width:0; } .inq .inq-day.hday > *:first-child { padding-left:0; } .inq .inq-day.hday > .inq-hact { padding-right:0; }
+    .inq .inq-day.hday > .inq-place, .inq .inq-day.hday > .inq-f, .inq .inq-day.hday > .inq-rate2 { border-left:1px solid #DCD5E0; }
+    .inq .hcard .inq-dn { padding-left:0; } .inq .hcard .inq-dn::before, .inq .hcard .inq-dn::after { display:none; }
+    .inq .hcard .inq-dn .pill { display:inline-block; background:#78B848; color:#fff; border-radius:7px; padding:3px 12px; font-size:16px; font-weight:700; }
+    .inq .hcard .inq-dn .d { font-size:14.5px; color:#1A1A1A; margin-top:8px; white-space:nowrap; }
+    .inq .hcard .inq-place span { display:block; font-size:14.5px; color:#1A1A1A; margin-bottom:4px; } .inq .hcard .inq-place b { display:block; font-size:19px; font-weight:800; line-height:1.2; color:#1A1A1A; }
+    .inq .hcard .inq-f span { display:block; font-size:13px; color:#1A1A1A; margin-bottom:5px; } .inq .hcard .inq-f b { display:block; font-size:16.5px; font-weight:700; line-height:1.2; color:#1A1A1A; }
+    .inq .inq-rate2 .amt { display:block; font-size:24px; font-weight:800; line-height:1.15; color:#1A1A1A; white-space:nowrap; font-variant-numeric:tabular-nums; }
+    .inq .inq-rate2 .amt.sm { font-size:16px; } .inq .inq-rate2 .amt.sm span { font-size:12.5px; font-weight:600; color:var(--mut); }
+    .inq .inq-rate2 > span { display:block; font-size:13.5px; color:#1A1A1A; margin-top:2px; line-height:1.3; }
+    .inq .inq-rate2 em.ok { display:block; font-style:normal; font-weight:700; font-size:14.5px; color:#4E9A22; margin-top:2px; }
+    .inq .inq-rate2 .miss { display:block; font-size:20px; font-weight:800; color:#E0661F; line-height:1.2; }
+    .inq .inq-hact { display:flex; align-items:center; gap:8px; } .tf .inq .inq-hact .inq-btn { height:34px; padding:0 14px; font-size:14px; white-space:nowrap; border-color:#842484; }
+    .inq .hcard .inq-chev { width:30px; height:30px; flex:none; }
+    .inq .hcard .inq-more { border-top:1px solid #EEE8F0; margin:0 16px; padding:12px 0 14px; }
+    .inq .inq-drow.hdep { display:flex; align-items:center; gap:0; padding:12px 16px; background:#FBFAFC; } .inq .hdep .inq-dn { width:150px; flex:none; }
+    .inq .hdep .inq-place { flex:1 1 auto; padding:0 16px; border-left:1px solid #DCD5E0; } .inq .hdep .inq-place b { font-size:15px; font-weight:600; } .tf .inq .hdep .inq-btn { height:34px; }
+    .inq .inq-hsub { display:flex; align-items:center; justify-content:space-between; gap:16px; background:#E9D9EC; border-radius:10px; padding:16px 22px; margin-bottom:20px; }
+    .inq .inq-hsub b { display:block; font-size:22px; font-weight:800; color:#1A1A1A; } .inq .inq-hsub span { font-size:15px; color:#1A1A1A; }
+    .inq .inq-hsub .amt { font-size:30px; font-weight:800; color:#1A1A1A; white-space:nowrap; font-variant-numeric:tabular-nums; }
+    @media (max-width:1400px) { .inq .inq-day.hday { grid-template-columns:132px minmax(150px,1.3fr) 104px 108px 128px minmax(160px,1fr) auto; } .inq .inq-day.hday > * { padding:0 12px; }
+        .tf .inq .inq-tab, .tf .inq .inq-tab[data-tab="check"] { font-size:14.5px; padding:0 8px; } .inq .hcard .inq-place b { font-size:17px; } .inq .inq-rate2 .amt { font-size:21px; } }
+    @media (max-width:1180px) { .inq .inq-day.hday { grid-template-columns:124px minmax(140px,1.3fr) 100px 104px minmax(150px,1fr) auto; } .inq .inq-day.hday > .inq-arr { display:none; } }
+    @media (max-width:900px) { .tf .inq .inq-tabs { flex-wrap:wrap; } .inq .inq-day.hday { grid-template-columns:minmax(0,1fr) minmax(0,1fr); row-gap:12px; } .inq .inq-day.hday > * { border-left:0 !important; padding:0 !important; } .inq .inq-hlist { padding-left:0; } .inq .inq-hlist::before, .inq .inq-drow.hcard::before { display:none; } }
+    .inq-on #d_confirm { display:none !important; }   /* Confirm Tour lives in Before Tour Confirmation; the lower bar no longer carries it */
+    @media (max-width:1200px) { .inq .chk-grid, .inq .chk-row { grid-template-columns:minmax(0,1fr); } .inq .chk-chips { grid-template-columns:repeat(2,minmax(0,1fr)); } .inq .chk-do { align-items:flex-start; max-width:none; } .inq .chk-step { text-align:left; } .inq .chk-src { position:static; } }
     .inq .inq-pane .tf-card-h > .help:not([id]) { display:none; }   /* the long explanations beside each heading: off the page, the cards and their buttons unchanged */
     .inq #comms_card { border:0; margin:0 !important; box-shadow:none; } .inq #comms_card > .tf-card-h { display:none; }
     @media (max-width:1200px) { .inq .inq-grid { grid-template-columns:minmax(0,1fr); } .inq .inq-day { grid-template-columns:120px minmax(130px,1fr) 96px 70px minmax(180px,1fr) 34px; } .inq .inq-day > .inq-rm { display:none; } }
@@ -1233,6 +1339,7 @@
     const INSTALLED = <?= !empty($installed) ? 'true' : 'false' ?>;
     const OPEN_ID = <?= (int) ($open_id ?? 0) ?>;
     const SEES_PRICING = <?= !empty($sees_pricing) ? 'true' : 'false' ?>;
+    const IS_SUPER = <?= !empty($is_super) ? 'true' : 'false' ?>;   // tf-ratejump-r1: Edit hotel opens the Hotel Rates master — Super Admin only (the server refuses everybody else)
     const ML = <?= json_encode($masters_links ?? []) ?>;   // tf-stage9: which masters this sign-in may open
     const SITE = '<?= base_url() ?>';
     const CAN_MILEAGE = <?= !empty($can_mileage) ? 'true' : 'false' ?>;
@@ -3311,22 +3418,46 @@
     //  the cards renderDetail() already made: every card is moved (never rebuilt) into a tab, so every button,
     //  rule, endpoint and audit line is the existing one. Driver / Guide write through POST intake/{id}/crew.
     // =====================================================================
-    let INQ_TAB = 'itin', INQ_OPEN = {}, INQ_ID = null;
+    let INQ_TAB = 'itin', INQ_PREV = 'hotels', INQ_OPEN = {}, INQ_ID = null;
     function inqPark() {   // before detail_cols is rebuilt: the cards that live beside the inquiry go back to their column
         const side = document.querySelector('#view_detail .sidecol'); if (!side) return;
         [document.getElementById('masters_card'), document.getElementById('comms_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')]
             .forEach(el => { if (el && el.closest('.inq')) side.appendChild(el); });
     }
+    // tf-inqpin-r1: the inquiry's heading, booking strip and tab row stay in place while the page scrolls beneath them.
+    // The height of the pinned block is measured, so jumps and the sticky side column land just below it.
+    function inqPin(shell) {
+        const top = shell.querySelector('.inq-top'); if (!top) return;
+        const bar = document.getElementById('page-topbar');
+        const set = () => { const hb = bar ? Math.round(bar.getBoundingClientRect().bottom) : 70; shell.style.setProperty('--inq-pin', Math.max(0, hb) + 'px');
+            const head = shell.querySelector('.inq-head'), tabs = shell.querySelector('.inq-tabs'), whole = getComputedStyle(top).display !== 'contents';
+            shell.style.setProperty('--inq-headh', (head ? head.offsetHeight : 0) + 'px');
+            shell.style.setProperty('--inq-toph', (whole ? top.offsetHeight : (head ? head.offsetHeight : 0) + (tabs ? tabs.offsetHeight : 0)) + 'px'); };
+        set(); INQ_SET = set; setTimeout(set, 0); setTimeout(set, 500); if (INQ_RO) INQ_RO.disconnect();
+        if ('ResizeObserver' in window) { INQ_RO = new ResizeObserver(set); [top, shell, shell.querySelector('.inq-head'), shell.querySelector('.inq-tabs'), document.documentElement].forEach(el => { if (el) INQ_RO.observe(el); }); }
+    }
+    let INQ_RO = null, INQ_SET = null;
+    // the screen does not jump when a panel opens: it scrolls only if the panel's top is hidden behind the pinned rows or far down the window
+    function inqSettle(el) { const sh = el.closest('.inq') || el, cs = getComputedStyle(sh); const pin = (parseFloat(cs.getPropertyValue('--inq-pin')) || 70) + (parseFloat(cs.getPropertyValue('--inq-toph')) || 0);
+        const t = el.getBoundingClientRect().top; if (t < pin || t > window.innerHeight * 0.6) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    window.addEventListener('resize', () => { if (INQ_SET) INQ_SET(); });
+    window.addEventListener('scroll', () => { if (INQ_SET) INQ_SET(); }, { passive: true, once: true });
+    const INQ_SIDE = ['quote', 'book'];   // screens reached from a button (Show Cost, Edit), not from a tab
     function inqShow(tab) {
+        if (INQ_SIDE.includes(tab) && !INQ_SIDE.includes(INQ_TAB)) INQ_PREV = INQ_TAB;   // tf-inqpin-r1: Back returns to the tab the person was on
         INQ_TAB = tab;
+        const side = INQ_SIDE.includes(tab), prevBtn = document.querySelector(`.inq .inq-tab[data-tab="${INQ_PREV}"]`);
+        document.querySelectorAll('.inq .inq-tab').forEach(b => b.classList.toggle('was', side && b === prevBtn));
+        if (side) document.querySelectorAll('.inq .inq-back').forEach(b => { b.dataset.inqgo = INQ_PREV; b.innerHTML = '<i class="bi bi-arrow-left"></i> Back to ' + esc(prevBtn ? (prevBtn.childNodes[1] ? prevBtn.childNodes[1].textContent : prevBtn.textContent).trim() : 'the inquiry'); });
         document.querySelectorAll('.inq .inq-pane').forEach(p => p.classList.toggle('on', p.dataset.pane === tab));
         document.querySelectorAll('.inq .inq-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
     }
     function inqReveal(el) { const p = el && el.closest ? el.closest('.inq-pane') : null; if (p && !p.classList.contains('on')) inqShow(p.dataset.pane); const d = el && el.closest ? el.closest('details.inq-sec') : null; if (d) d.open = true; }
+    window.tfInqShow = inqShow; window.tfInqReveal = inqReveal;   // tf-inqnav-r2: the header's Navigation list opens the right tab
     function inqLayout(it) {
         const host = document.getElementById('detail_cols'); if (!host || !it) return;
         document.getElementById('view_detail').classList.add('inq-on');
-        if (INQ_ID !== it.id) { INQ_ID = it.id; INQ_TAB = 'itin'; INQ_OPEN = {}; }
+        if (INQ_ID !== it.id) { INQ_ID = it.id; INQ_TAB = new URLSearchParams(location.search).get('tab') || 'hotels'; INQ_PREV = 'hotels'; INQ_OPEN = {}; }   // the leftmost tab, Itinerary & Services, opens first
         const kids = [...host.children];
         const wrap = kids.find(k => k.querySelector(':scope > #ea_card')) || kids.find(k => !k.classList.contains('tf-card') && k.querySelector(':scope > .tf-card'));
         if (!wrap) return;
@@ -3370,34 +3501,42 @@
         const cellHtml = (tr, i) => { if (!tr || !tr.children[i]) return ''; const c = tr.children[i].cloneNode(true); c.querySelectorAll('button, a, input, select, .rowdel, i.bi-pencil').forEach(x => x.remove()); return c.innerHTML.trim(); };
         // the published rate beside the night: the figure for each room kind the party uses, as the Hotel Rates panel gave it
         const SITE = BASE.replace(/tour\/intake$/, '');
+        // tf-hotels-r2 (mock-up of 14 Nov 2026): one card a night — day, place and hotel, room type, meal plan, room arrangement, the rate, Edit hotel
+        const MEALW = { RO: 'Room only', BB: 'Bed & breakfast', HB: 'Half board', FB: 'Full board', AI: 'All inclusive' };
+        const ROOMW = { sgl: 'Single', dbl: 'Double', twn: 'Twin', tpl: 'Triple' };
+        const arrange = d => { const m = d.room_mix || {}; const t = ['sgl', 'dbl', 'twn', 'tpl'].filter(k => Number(m[k] != null ? m[k] : R[k]) > 0).map(k => Number(m[k] != null ? m[k] : R[k]) + ' ' + ROOMW[k]).join(', '); return t || (d.rooms || roomsTxt); };
+        const rateLink = d => ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>` : '';
         const rateBox = d => {
-            const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
-            const want = [['SGL', Number(R.sgl) > 0, d.rate_sgl], ['DBL', Number(R.dbl) > 0, d.rate_dbl], ['TWN', Number(R.twn) > 0, d.rate_dbl], ['TPL', Number(R.tpl) > 0, d.rate_tpl]];
+            const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null;
+            const want = [['Single', Number(R.sgl) > 0, d.rate_sgl], ['Double', Number(R.dbl) > 0, d.rate_dbl], ['Twin', Number(R.twn) > 0, d.rate_dbl], ['Triple', Number(R.tpl) > 0, d.rate_tpl]];
             let shown = want.filter(w => w[1] && f(w[2]) !== null);
-            if (!shown.length) shown = [['SGL', 1, d.rate_sgl], ['DBL', 1, d.rate_dbl], ['TPL', 1, d.rate_tpl]].filter(w => f(w[2]) !== null);
-            const link = ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>`
-                : `<a href="#" data-inqrates="${d.day_no}">View rates <i class="bi bi-box-arrow-up-right"></i></a>`;
-            return `<div class="inq-rate ${d.rate_state === 'rate' && shown.length ? '' : 'none'}"><div class="t">${d.rate_state === 'rate' && shown.length ? 'Published Rate (' + esc(cur) + ')' : 'Published Rate'}</div>
-                <div class="v">${d.rate_state === 'rate' && shown.length ? shown.map(w => `<span>${w[0]}</span> <b>${esc(cur)} ${f(w[2])}</b>`).join(' <em>|</em> ') : '<b class="ns">Not set</b>'}</div>${link}</div>`;
+            if (!shown.length) shown = [['Single', 1, d.rate_sgl], ['Double', 1, d.rate_dbl], ['Triple', 1, d.rate_tpl]].filter(w => f(w[2]) !== null);
+            if (d.rate_state === 'rate' && shown.length) {
+                const one = shown.every(w => f(w[2]) === f(shown[0][2]));
+                return `<div class="inq-rate2">${one ? `<b class="amt">${esc(cur)} ${f(shown[0][2])}</b>` : shown.map(w => `<b class="amt sm"><span>${w[0]}</span> ${esc(cur)} ${f(w[2])}</b>`).join('')}<span>per room / night</span><em class="ok">Rate available</em></div>`;
+            }
+            const why = !d.hotel_name_raw ? 'Hotel not chosen' : (d.rate_state === 'rate' ? 'No ' + (d.meal_plan ? d.meal_plan + ' ' : '') + 'rate for this date'
+                : (String(d.rate_note || '').split(/(?<=[.;])\s/)[0].replace(/[.;]$/, '').slice(0, 70) || 'No approved rate for this date'));
+            return `<div class="inq-rate2"><b class="miss">Rate missing</b><span data-hwhy="${d.day_no}">${esc(why)}</span></div>`;
         };
         const dayRow = d => {
             const tr = (host.querySelector(`table.itin [data-day="${d.id}"]`) || { closest: () => null }).closest('tr');
             const w = (I.days || {})[d.day_no] || (I.days || {})[String(d.day_no)], things = dayThings(d.day_no);
             const rate = cellHtml(tr, 6), note = (n => /^Add a note$/i.test(n.replace(/<[^>]+>/g, '').trim()) ? '' : n)(cellHtml(tr, 8));
-            return `<div class="inq-drow ${INQ_OPEN[d.day_no] ? 'open' : ''}" data-inqday="${d.day_no}">
-                <div class="inq-day">
-                    <div class="inq-dn"><span class="pill">Day ${d.day_no}</span><div class="d">${esc(dm(d.day_date, { weekday:'short', day:'numeric', month:'short' }))}</div></div>
-                    <div class="inq-place"><b>${esc(place(d))}</b><span>${esc(d.hotel_name_raw || 'Hotel not chosen')}</span></div>
-                    <div class="inq-f"><span>Room Type</span><b>${esc(d.room_type_name || '—')}</b></div>
-                    <div class="inq-f"><span>Meal Plan</span><b>${esc(d.meal_plan || '—')}</b></div>
-                    <div class="inq-rm"><i class="bi bi-door-closed"></i>${esc(d.rooms || roomsTxt)}</div>
+            return `<div class="inq-drow hcard ${INQ_OPEN[d.day_no] ? 'open' : ''}" data-inqday="${d.day_no}">
+                <div class="inq-day hday">
+                    <div class="inq-dn"><span class="pill">Day ${d.day_no}</span><div class="d">${esc(dm(d.day_date, { weekday:'short', day:'numeric', month:'short', year:'numeric' }))}</div></div>
+                    <div class="inq-place"><span>${esc(place(d))}</span><b>${esc(d.hotel_name_raw || 'Hotel not chosen')}</b></div>
+                    <div class="inq-f"><span>Room type</span><b class="${d.room_type_name ? '' : 'unset'}">${esc(d.room_type_name || 'Room type not set')}</b></div>
+                    <div class="inq-f"><span>Meal plan</span><b class="${d.meal_plan ? '' : 'unset'}">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan) : 'Meal plan not set')}</b></div>
+                    <div class="inq-f inq-arr"><span>Room arrangement</span><b>${esc(arrange(d))}</b></div>
                     ${rateBox(d)}
-                    <button type="button" class="inq-chev" data-inqtoggle="${d.day_no}" aria-label="Show the details of day ${d.day_no}"><i class="bi bi-chevron-down"></i></button>
+                    <div class="inq-hact">${d.hotel_name_raw ? (IS_SUPER ? `<button type="button" class="inq-btn" data-inqrate="${d.id}" title="Super Admin: opens the Hotel Rates master on the rate this night uses">Edit hotel</button>` : '') : (it.locked ? '' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}<button type="button" class="inq-chev" data-inqtoggle="${d.day_no}" title="More about this night" aria-label="Show the details of day ${d.day_no}"><i class="bi bi-chevron-down"></i></button></div>
                 </div>
                 <div class="inq-more"><div class="kv">
                     <span>Hotel</span><span><b>${esc(d.hotel_name_raw || '—')}</b>${d.room_type_name ? ' · ' + esc(d.room_type_name) : ''}</span>
                     <span>Rooms and meals</span><span>${esc(d.rooms || roomsTxt)} · ${esc(d.meal_plan || 'meal plan not set')}</span>
-                    <span>Hotel rate</span><span>${rate || '—'}</span>
+                    <span>Hotel rate</span><span>${rate || '—'} ${rateLink(d)}</span>
                     <span>Activities</span><span>${things.length ? esc(things.join(', ')) : '—'}</span>
                     ${note ? `<span>Special note</span><span>${note}</span>` : ''}
                     ${w && w.text ? `<span>Itinerary text</span><span>${esc(w.text)}</span>` : ''}
@@ -3406,10 +3545,9 @@
         };
         const T = it.hotel_transfers || {};
         const dep = it.departure_day, depNo = dep ? dep.day_no : null;
-        const depRow = dep && !days.some(d => Number(d.day_no) === Number(depNo)) ? `<div class="inq-drow"><div class="inq-day">
-            <div class="inq-dn"><span class="pill">Day ${depNo}</span><div class="d">${esc(dm(dep.date, { weekday:'short', day:'numeric', month:'short' }))}</div></div>
-            <div class="inq-place" style="grid-column:2 / span 5"><b>Departure</b><span>${esc(dm(dep.date, { day:'numeric', month:'short' }))} &nbsp;•&nbsp; Airport transfer${T.departure ? ' (' + (T.departure.by === 'car' ? 'our car' : 'hotel drop-off') + ')' : ''} &nbsp;•&nbsp; ${it.departure_flight ? 'Flight ' + esc(it.departure_flight) : 'Flight details not given'}</span></div>
-            <button type="button" class="inq-chev" data-inqgo="trans" aria-label="Open Transfers"><i class="bi bi-chevron-down"></i></button></div></div>` : '';
+        const depRow = dep && !days.some(d => Number(d.day_no) === Number(depNo)) ? `<div class="inq-drow hcard hdep"><div class="inq-dn"><span class="pill">Day ${depNo}</span><div class="d">${esc(dm(dep.date, { weekday:'short', day:'numeric', month:'short', year:'numeric' }))}</div></div>
+            <div class="inq-place"><span>Departure — no hotel night</span><b>Airport transfer${T.departure ? ' (' + (T.departure.by === 'car' ? 'our car' : 'hotel drop-off') + ')' : ''} &nbsp;•&nbsp; ${it.departure_flight ? 'Flight ' + esc(it.departure_flight) : 'Flight details not given'}</b></div>
+            <button type="button" class="inq-btn" data-inqgo="trans">Transfers</button></div>` : '';
         const hotelsN = new Set(days.map(d => d.hotel_name_raw).filter(Boolean)).size;
         const mealsBy = {}; days.forEach(d => { if (d.meal_plan) mealsBy[d.meal_plan] = (mealsBy[d.meal_plan] || 0) + 1; });
         const by = t => t ? (t.by === 'car' ? 'Our Car' : 'Hotel') : '—';
@@ -3422,15 +3560,20 @@
                 <select id="inq_${kind}" data-inqcrew="${kind}" ${it.locked ? 'disabled' : ''}><option>Not selected</option></select>
                 ${n > 1 ? `<a href="#" class="more" data-inqgo="trans">+${n - 1} more</a>` : ''}</div>`; };
 
+        const longRange = a && z ? dm(a, { day:'numeric', month:'long' }) + (a.slice(0, 4) === z.slice(0, 4) ? '' : ' ' + a.slice(0, 4)) + ' – ' + dm(z, { day:'numeric', month:'long', year:'numeric' }) : (a ? dm(a, { day:'numeric', month:'long', year:'numeric' }) : 'Dates not set');
+        const nAd = Number(it.pax_adults || 0), nCh = Number(it.pax_children || 0), nPx = Number(it.pax_total || 0);
+        const party = nAd || nCh ? [nAd ? nAd + ' adult' + (nAd === 1 ? '' : 's') : '', nCh ? nCh + ' child' + (nCh === 1 ? '' : 'ren') : ''].filter(Boolean).join(', ') : (nPx ? nPx + ' pax' : '');
+        const awaiting = days.filter(d => !(d.rate_state === 'rate' && [d.rate_sgl, d.rate_dbl, d.rate_tpl].some(v => v != null && v !== ''))).length;
         const shell = document.createElement('div'); shell.className = 'inq';
         shell.innerHTML = `
+            <div class="inq-top">
             <div class="inq-crumb"><a href="#" data-inqlist>Tour Desk</a> &nbsp;›&nbsp; <a href="#" data-inqlist>Tour Inquiry</a> &nbsp;›&nbsp; <b>${esc(it.inquiry_no || '')}</b></div>
             <div class="inq-head"><h2>Tour Inquiry – ${esc(it.inquiry_no || '')}</h2><span class="inq-st ${stCls}">${it.status === 'confirmed' ? '<i class="bi bi-check-lg"></i>' : ''}${esc(ST[it.status] || it.status || '')}</span>
                 <div class="inq-acts">
                     <button type="button" class="inq-btn" data-inqgo="book"><i class="bi bi-pencil-square"></i> Edit</button>
                     <a class="inq-btn" target="_blank" href="${latest ? `${BASE}/intake/${it.id}/quote/${latest.id}?view=client&pdf=1` : `${BASE}/intake/${it.id}/preview?view=client`}"><i class="bi bi-printer"></i> Print</a>
                     ${latest ? `<a class="inq-btn" target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client"><i class="bi bi-send"></i> Send Quotation</a>` : `<button type="button" class="inq-btn" data-inqgo="quote"><i class="bi bi-send"></i> Send Quotation</button>`}
-                    <button type="button" class="inq-btn pri" id="inq_confirm" ${canConfirm ? '' : 'disabled'} title="${esc(canConfirm ? 'The agent accepted the quotation' : (it.status === 'confirmed' ? 'This tour is already confirmed' : ((cb && cb.title) || 'Issue a quotation version first')))}"><i class="bi bi-check-lg"></i> Confirm Tour</button>
+                    <button type="button" class="inq-btn pri" id="inq_confirm" title="Opens Before Tour Confirmation: check the sections, email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Review &amp; Confirm</button>
                 </div></div>
             <div class="inq-strip"><div class="inq-cells">
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-person"></i></span><div><div class="inq-k">Agent</div><div class="inq-v">${esc(it.agent_name || 'Not set')}</div></div></div>
@@ -3443,17 +3586,20 @@
                 </div><div class="inq-crew">${crewCol('driver')}${crewCol('guide')}</div>
             </div>
             <div class="inq-tabs" role="tablist">
-                <button type="button" class="inq-tab" data-tab="itin"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
-                <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-building"></i> Hotels (${hotelsN})</button>
+                <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
+                <button type="button" class="inq-tab" data-tab="itin"><i class="bi bi-building"></i> Hotels (${hotelsN})</button>
                 <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Transfers</button>
                 <button type="button" class="inq-tab" data-tab="pax"><i class="bi bi-people"></i> Passengers (${Number(it.pax_total || 0)})</button>
                 <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
+                <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Tour Confirmation <span id="inq_chk_n" style="display:none"></span></button>
+            </div>
             </div>
             <div class="inq-pane" data-pane="itin">
+                <div class="inq-hh"><h3>Hotels</h3><div>${esc(longRange)}${nights ? ' · ' + nights + ' night' + (nights === 1 ? '' : 's') : ''}${party ? ' · ' + esc(party) : ''}</div></div>
+                <div class="inq-hlist">${days.map(dayRow).join('') + depRow || '<div class="help" style="padding:10px 0">No nights on this inquiry yet. Add them under Itinerary &amp; Services.</div>'}</div>
+                ${days.length ? `<div class="inq-hsub ${awaiting ? 'inc' : ''}" id="inq_hsub"><div><b>${awaiting ? (SEES_PRICING ? 'Hotel subtotal · incomplete' : 'Hotel rates · incomplete') : (SEES_PRICING ? 'Hotel total' : 'Hotel rates · complete')}</b><span>${awaiting ? awaiting + ' night' + (awaiting === 1 ? '' : 's') + ' awaiting rates' : 'Every night has a rate'}</span></div><div class="amt" id="inq_hsub_amt"></div></div>` : ''}
                 <div class="inq-grid">
                     <div>
-                        <div class="inq-card"><div class="h"><i class="bi bi-map"></i>Tour Itinerary${shape ? ' (' + shape + ')' : ''}</div>
-                            <div class="b">${days.map(dayRow).join('') + depRow || '<div class="help" style="padding:10px 0">No itinerary yet.</div>'}</div></div>
                         <div class="inq-two">
                             <div class="inq-card"><div class="h"><i class="bi bi-car-front"></i>Airport Transfers<button type="button" class="inq-btn" data-inqgo="trans">Details</button></div>
                                 <div class="b">${trLine(T.arrival, 'Arrival') + trLine(T.departure, 'Departure') || '<div class="help" style="padding:8px 0">Not set.</div>'}</div></div>
@@ -3481,8 +3627,9 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             <div class="inq-pane" data-pane="trans"></div>
             <div class="inq-pane" data-pane="pax"></div>
             <div class="inq-pane" data-pane="notes"></div>
-            <div class="inq-pane" data-pane="quote"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to the itinerary</button></div>
-            <div class="inq-pane" data-pane="book"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to the itinerary</button></div>`;
+            <div class="inq-pane" data-pane="check"><div id="inq_check"><div class="help" style="padding:14px">Reading the sections…</div></div></div>
+            <div class="inq-pane" data-pane="quote"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to Hotels</button></div>
+            <div class="inq-pane" data-pane="book"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to Hotels</button></div>`;
         host.insertBefore(shell, host.firstChild);
         const pane = k => shell.querySelector(`.inq-pane[data-pane="${k}"]`);
         strip.forEach(c => pane('hotels').appendChild(c));
@@ -3496,14 +3643,113 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
 
         shell.querySelectorAll('.inq-tab').forEach(b => b.addEventListener('click', () => inqShow(b.dataset.tab)));
         shell.querySelectorAll('[data-inqrates]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); const r = b.closest('.inq-drow'); INQ_OPEN[b.dataset.inqrates] = true; r.classList.add('open'); }));
-        shell.querySelectorAll('[data-inqgo]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); inqShow(b.dataset.inqgo); (pane(b.dataset.inqgo) || shell).scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+        shell.querySelectorAll('[data-inqgo]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); inqShow(b.dataset.inqgo); inqSettle(pane(b.dataset.inqgo) || shell); }));
         shell.querySelectorAll('[data-inqlist]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); (document.getElementById('d_back') || document.getElementById('btn_list')).click(); }));
         shell.querySelectorAll('[data-inqtoggle]').forEach(b => b.addEventListener('click', () => { const n = b.dataset.inqtoggle; INQ_OPEN[n] = !INQ_OPEN[n]; b.closest('.inq-drow').classList.toggle('open', !!INQ_OPEN[n]); }));
         shell.querySelectorAll('[data-inqedit]').forEach(b => b.addEventListener('click', () => { const t = host.querySelector(`table.itin [data-day="${b.dataset.inqedit}"]`); if (t) t.click(); }));
+        // Edit hotel (Super Admin): the Hotel Rates master opens in its own tab, so this inquiry — and anything typed on it and not yet saved — stays exactly as it is
+        shell.querySelectorAll('[data-inqrate]').forEach(b => b.addEventListener('click', async () => {
+            const w = window.open('', 'avhHotelRates'); b.disabled = true;
+            try { if (w) w.document.write('<p style="font:15px sans-serif;padding:24px">Opening the Hotel Rates master…</p>'); } catch (e) {}
+            const j = await api('/intake/' + it.id + '/day/' + b.dataset.inqrate + '/rate_jump'); b.disabled = false;
+            if (j.status !== 200) { if (w) w.close(); toast('error', j.message || 'The Hotel Rates master could not be opened.'); return; }
+            if (w) w.location.href = j.data.url; else location.href = j.data.url;
+        }));
         shell.querySelectorAll('[data-inqsvc]').forEach(b => b.addEventListener('click', () => openServices(Number(b.dataset.inqsvc))));
-        document.getElementById('inq_confirm').addEventListener('click', () => { const c = document.getElementById('d_confirm_top') || document.getElementById('d_confirm'); if (c && !c.disabled) c.click(); });
+        document.getElementById('inq_confirm').addEventListener('click', () => { inqShow('check'); (document.getElementById('inq_check') || shell).scrollIntoView({ behavior: 'smooth', block: 'start' }); });
         inqShow(shell.querySelector(`.inq-pane[data-pane="${INQ_TAB}"]`) ? INQ_TAB : 'itin');
         inqCrew(it, shell);
+        inqPin(shell);
+        inqCheck(it, { latest, canConfirm, why: it.status === 'confirmed' ? 'This tour is already confirmed' : ((cb && cb.title) || '') });
+    }
+    // ---------- Before Tour Confirmation (tf-check-r1): the check panel ----------
+    // The four sections, read from the inquiry's own costing (GET /checks) — the same records the itinerary shows, grouped
+    // for a last look. A person marks each one; nothing here confirms the tour. Send Email and Confirm Tour are two buttons.
+    const CHK_ST = { needs_attention: ['Needs attention', 'na'], checked: ['Checked', 'ok'], not_required: ['Not required', 'nr'] };
+    const CHK_ICON = { hotels: 'bi-building', transfers: 'bi-car-front', entrances: 'bi-ticket-perforated', activities: 'bi-binoculars' };
+    const CHK_OPEN = { hotels: ['hotels', null], transfers: ['trans', null], entrances: ['itin', '#ea_card'], activities: ['itin', '#ea_card'] };
+    let CHK_SEQ = 0;
+    async function inqCheck(it, ctx) {
+        const box = document.getElementById('inq_check'); if (!box) return;
+        const seq = ++CHK_SEQ;
+        const j = await api('/intake/' + it.id + '/checks');
+        if (seq !== CHK_SEQ || !box.isConnected) return;   // the screen was drawn again meanwhile: that draw asks again
+        if (j.status !== 200) { box.innerHTML = `<div class="help">${esc(j.message || 'The check panel could not be read.')}</div>`; return; }
+        inqCheckDraw(it, ctx, j.data);
+    }
+    function inqCheckDraw(it, ctx, c) {
+        const box = document.getElementById('inq_check'); if (!box) return;
+        const D = d => { const t = new Date(d + 'T00:00:00'); return isNaN(t) ? null : t; };
+        const usd = v => 'USD ' + Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const pill = st => `<span class="chk-st ${CHK_ST[st][1]}">${st === 'checked' ? '<i class="bi bi-check-lg"></i> ' : ''}${CHK_ST[st][0]}</span>`;
+        const secs = Object.values(c.sections), left = secs.filter(s => s.status === 'needs_attention').length;
+        c.sections.hotels.lines.forEach(l => { const el = l.missing && l.why ? document.querySelector('.inq [data-hwhy="' + l.day_no + '"]') : null; if (el) el.textContent = String(l.why).replace(/\.$/, ''); });   // the costing's own reason for a missing rate
+        const hAmt = document.getElementById('inq_hsub_amt'); if (hAmt && SEES_PRICING && c.sections.hotels.total_usd != null) hAmt.textContent = 'USD ' + Number(c.sections.hotels.total_usd).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const badge = document.getElementById('inq_chk_n');
+        if (badge) { badge.textContent = left ? String(left) : ''; badge.style.display = left ? '' : 'none'; badge.title = left ? left + ' section(s) need attention' : ''; }
+        const dayOf = n => { const d = (it.days || []).find(x => Number(x.day_no) === Number(n)); const t = d && d.day_date ? D(d.day_date) : null; return t ? t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : (n ? 'Day ' + n : ''); };
+        const fixBtn = (b, i, key) => { const f = fixFor(b); return `<div class="chk-issue"><span class="chk-flag">Missing</span><span>${esc(b.label)}${f.hint ? `<span class="fixhint">${esc(f.hint)}</span>` : ''}</span>${f.run && !c.locked ? `<button type="button" class="inq-btn" data-chkfix="${key}:${i}">${esc(f.text || 'Fix')}</button>` : ''}</div>`; };
+        const section = s => {
+            const rows = s.lines.map(l => `<tr class="${l.missing ? 'miss' : ''}">
+                <td class="d">${esc(l.day_no ? dayOf(l.day_no) : (l.sub || ''))}</td>
+                <td><b>${esc(l.title || 'Not named')}</b>${l.day_no && l.sub ? `<span class="s">${esc(l.sub)}</span>` : ''}${l.missing ? `<span class="chk-flag">Missing</span><span class="w">${esc(l.why || 'No rate or detail yet')}</span>` : ''}</td>
+                <td>${esc([l.a, l.b, l.c].filter(Boolean).join(' · '))}</td>
+                ${SEES_PRICING ? `<td class="r">${l.amount_usd != null ? Number(l.amount_usd).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '<span class="ns">Not set</span>'}</td>` : `<td class="r">${l.missing ? '<span class="ns">Not set</span>' : '<i class="bi bi-check-lg" style="color:var(--g)" title="Rate on file"></i>'}</td>`}</tr>`).join('');
+            const empty = `<div class="chk-empty">Nothing in this section on this inquiry.${s.status === 'needs_attention' ? ' If the tour needs none, mark it <b>Not required</b>.' : ''}</div>`;
+            const air = s.airport && s.airport.length ? `<div class="chk-air"><i class="bi bi-airplane"></i> Airport transfers — ${esc(s.airport.join(' · '))}</div>` : '';
+            const foot = SEES_PRICING
+                ? (s.count ? `<div class="chk-tot ${s.incomplete ? 'inc' : ''}"><b>${s.incomplete ? 'Subtotal — costs incomplete' : 'Total — ' + esc(s.label)}</b><span>${s.incomplete ? esc((s.issues.length || s.open_lines) + ' item' + ((s.issues.length || s.open_lines) === 1 ? '' : 's') + ' still without a figure') : s.count + ' line' + (s.count === 1 ? '' : 's')}</span><span class="amt">${usd(s.total_usd)}</span></div>` : '')
+                : (s.incomplete ? `<div class="chk-tot inc"><b>Costs incomplete</b><span>${esc((s.issues.length || s.open_lines) + ' item' + ((s.issues.length || s.open_lines) === 1 ? '' : 's') + ' still without a rate')}</span></div>` : '');
+            const was = s.was ? (s.changed ? `<span class="chk-note"><i class="bi bi-exclamation-circle"></i> Changed since ${esc(CHK_ST[s.was.status][0].toLowerCase())} by ${esc(s.was.by || '')} on ${esc((s.was.at || '').slice(0, 16))} — look again</span>`
+                : `<span class="chk-note">${esc(CHK_ST[s.was.status][0])} by ${esc(s.was.by || '')} · ${esc((s.was.at || '').slice(0, 16))}</span>`) : '';
+            const acts = c.locked ? '' : (s.status === 'needs_attention'
+                ? `${s.count ? `<button type="button" class="inq-btn chk-ok" data-chkset="${s.key}:checked" ${s.can_check ? '' : 'disabled title="Complete the missing details and rates first"'}><i class="bi bi-check-lg"></i> Mark as checked</button>` : ''}${s.can_skip ? `<button type="button" class="inq-btn" data-chkset="${s.key}:not_required">Not required</button>` : ''}`
+                : `<button type="button" class="inq-btn" data-chkset="${s.key}:needs_attention" title="Back to Needs attention">Reopen</button>`);
+            return `<div class="inq-card chk-sec ${CHK_ST[s.status][1]}" id="chk_${s.key}"><div class="h"><i class="bi ${CHK_ICON[s.key]}"></i>${esc(s.label)}${s.count ? ' (' + s.count + ')' : ''} ${pill(s.status)}${was}
+                    <span class="chk-acts"><button type="button" class="inq-btn" data-chkopen="${s.key}" title="Open this section in the working view"><i class="bi bi-pencil"></i> Open</button>${acts}</span></div>
+                <div class="b">${s.count ? `<table class="chk-t"><tbody>${rows}</tbody></table>` : empty}${air}
+                    ${s.issues.length ? `<div class="chk-issues">${s.issues.map((b, i) => fixBtn(b, i, s.key)).join('')}</div>` : ''}</div>${foot}</div>`;
+        };
+        const latest = ctx.latest, issued = (it.quotes || []).find(q => q.status === 'issued');
+        const confirmed = it.status === 'confirmed';
+        const mailBtn = latest
+            ? `<a class="inq-btn chk-mail" target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client" title="Opens the client quotation v${latest.version} with its day-by-day itinerary: preview it, then email it to the agent from there. Customer documents only — no internal costs."><i class="bi bi-envelope"></i> Send Email</a>`
+            : `<button type="button" class="inq-btn chk-mail" disabled title="There is no quotation version yet: Go for Quotation first"><i class="bi bi-envelope"></i> Send Email</button>`;
+        const confBtn = confirmed ? '' : `<button type="button" class="inq-btn pri" id="chk_confirm" ${ctx.canConfirm ? '' : 'disabled'} title="${esc(ctx.canConfirm ? 'The customer agreed: confirm the tour' : (ctx.why || 'Issue a quotation version first'))}"><i class="bi bi-check-lg"></i> Confirm Tour</button>`;
+        const stepNote = confirmed ? `Confirmed on ${esc((it.confirmed_at || '').slice(0, 16))}. This panel is the record of what was reviewed.`
+            : (!latest ? 'No quotation version yet. <a href="#" data-inqgo="quote">Go for Quotation</a> makes the customer documents; they can then be previewed and emailed.'
+            : (!issued ? `Quotation v${latest.version} is a draft. Sending it from the quotation page issues it; Confirm Tour opens once a version is issued.`
+            : (left ? `<b>${left} section${left === 1 ? '' : 's'} still need${left === 1 ? 's' : ''} attention.</b> Confirm Tour is a separate step and is never done automatically.` : 'Every section is reviewed. Confirm Tour when the customer agrees — it is never done automatically.')));
+        const src = (it.source_text || '').trim();
+        box.innerHTML = `
+            <div class="inq-card chk-top"><div class="h"><i class="bi bi-clipboard-check"></i>Review summary <span class="chk-count">${c.reviewed} of ${c.of} sections reviewed</span></div>
+                <div class="b"><div class="chk-row">
+                    <div class="chk-chips">${secs.map(s => `<a href="#chk_${s.key}" class="chk-chip ${CHK_ST[s.status][1]}" data-chkgo="${s.key}"><i class="bi ${CHK_ICON[s.key]}"></i><span><b>${esc(s.label)}</b>${pill(s.status)}${s.issues.length || s.open_lines ? `<em>${s.issues.length || s.open_lines} missing</em>` : ''}</span></a>`).join('')}</div>
+                    <div class="chk-do">
+                        <div class="chk-btns">${latest ? `<a class="inq-btn" target="_blank" href="${BASE}/intake/${it.id}/quote/${latest.id}?view=client&pdf=1" title="The customer's quotation and itinerary as a PDF"><i class="bi bi-file-earmark-pdf"></i> Preview</a>` : ''}${mailBtn}${confBtn}</div>
+                        <div class="chk-step">${stepNote}</div>
+                    </div></div>
+                    ${SEES_PRICING ? `<div class="chk-tot grand ${c.grand_incomplete ? 'inc' : ''}"><b>${c.grand_incomplete ? 'Subtotal — costs incomplete' : 'Total of the four sections'}</b><span>Hotels, Transfers, Entrance Fees and Activities${c.grand_incomplete ? ' — some figures are still missing' : ''}. Meals and the markup are in the costing.</span><span class="amt">${usd(c.grand_usd)}</span></div>` : ''}
+                    ${c.general.length ? `<div class="chk-issues gen"><div class="chk-gh">Also needed before quotation</div>${c.general.map((b, i) => fixBtn(b, i, 'general')).join('')}</div>` : ''}
+                </div></div>
+            <div class="chk-grid"><div>${secs.map(section).join('')}</div>
+                <div><div class="inq-card chk-src"><div class="h"><i class="bi bi-envelope-paper"></i>Original inquiry</div><div class="b">
+                    ${src ? `<div class="chk-gh">Not placed by the import${c.unplaced.length ? ' (' + c.unplaced.length + ')' : ''}</div>
+                        ${c.unplaced.length ? c.unplaced.map(u => `<div class="chk-issue"><span class="chk-flag">Check</span><span>${esc(u.label)}</span></div>`).join('') : '<div class="chk-empty" style="padding:6px 0 10px">Nothing is flagged: every item the reader recognised has a place. Compare with the text below all the same.</div>'}
+                        <div class="chk-gh" style="margin-top:12px">As pasted${it.source_edited ? ' (corrected text)' : ''}</div><pre class="chk-pre">${esc(src)}</pre>`
+                    : '<div class="chk-empty">This inquiry was entered by hand, so there is no pasted email to compare with. If the agent\'s email arrives later, paste it under Notes &amp; History.</div>'}
+                </div></div></div></div>`;
+        box.querySelectorAll('[data-chkset]').forEach(b => b.addEventListener('click', async () => {
+            const [section, status] = b.dataset.chkset.split(':'); b.disabled = true;
+            const r = await post('/intake/' + it.id + '/check', { section, status });
+            if (r.status !== 200) { b.disabled = false; toast('error', r.message); return; }
+            inqCheckDraw(it, ctx, r.data); document.getElementById('act_reload')?.click();
+        }));
+        box.querySelectorAll('[data-chkfix]').forEach(b => b.addEventListener('click', () => { const [key, i] = b.dataset.chkfix.split(':'); const list = key === 'general' ? c.general : c.sections[key].issues; const f = fixFor(list[Number(i)]); if (f.run) f.run(); }));
+        box.querySelectorAll('[data-chkopen]').forEach(b => b.addEventListener('click', () => { const o = CHK_OPEN[b.dataset.chkopen]; inqShow(o[0]); const t = o[1] ? document.querySelector(o[1]) : null; if (t) inqReveal(t); (t || document.querySelector('.inq .inq-tabs')).scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+        box.querySelectorAll('[data-chkgo]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById('chk_' + a.dataset.chkgo)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }));
+        box.querySelectorAll('[data-inqgo]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); inqShow(a.dataset.inqgo); document.querySelector('.inq .inq-pane.on')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+        document.getElementById('chk_confirm')?.addEventListener('click', () => { const b = document.getElementById('d_confirm_top') || document.getElementById('d_confirm'); if (b && !b.disabled) b.click(); });
     }
     // Driver and Guide in the booking strip: the type and the person of the inquiry's own crew line, saved through the
     // crew endpoint the Driver / Guide allocation cards use — so the bata, the days, the vehicle seats and the block rules follow.
@@ -5991,7 +6237,49 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         if (lab) lab.textContent = on ? 'Hide Navigation' : 'Show Navigation';
     }
     paint(read());                                   // collapsed unless this screen was left with it open
+    // tf-inqnav-r2 (14 Nov 2026): on the tabbed inquiry page the sections live inside the tabs, so the side list is never built.
+    // There the button opens a list of every tab and its sections instead; an entry opens its tab and scrolls to the section.
+    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['notes', 'Notes & History'], ['check', 'Before Tour Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
+    function inqMode() { var d = document.getElementById('view_detail'); return !!(d && d.classList.contains('inq-on') && d.offsetParent !== null && d.querySelector('.inq-pane')); }
+    function shown(el, stop) { for (var n = el; n && n !== stop; n = n.parentElement) { if (getComputedStyle(n).display === 'none') return false; } return true; }
+    function label(h) { var c = h.cloneNode(true); c.querySelectorAll('button, a, .help, .pill, small, input, select').forEach(function (x) { x.remove(); }); return (c.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60); }
+    function closeNav() { var m = document.getElementById('inq_nav'); if (m) m.remove(); btn.setAttribute('aria-expanded', 'false'); if (lab) lab.textContent = 'Show Navigation'; }
+    function go(pane, el) {
+        if (window.tfInqShow) window.tfInqShow(pane);
+        if (el && window.tfInqReveal) window.tfInqReveal(el);
+        if (el && el.classList.contains('tf-folded')) el.classList.remove('tf-folded');
+        var t = el || document.querySelector('.inq .inq-tabs') || document.querySelector('.inq .inq-pane.on');
+        closeNav();
+        if (t) setTimeout(function () { var sh = document.querySelector('.inq'), pin = sh ? (parseFloat(getComputedStyle(sh).getPropertyValue('--inq-pin')) || 70) + (parseFloat(getComputedStyle(sh).getPropertyValue('--inq-toph')) || 0) : 80; var y = t.getBoundingClientRect().top + window.pageYOffset - pin - 12; window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); }, 30);
+    }
+    function openNav() {
+        var m = document.createElement('div'); m.id = 'inq_nav'; m.setAttribute('role', 'menu'); m.setAttribute('aria-label', 'Sections of this inquiry');
+        PANES.forEach(function (p) {
+            var pane = document.querySelector('.inq .inq-pane[data-pane="' + p[0] + '"]'); if (!pane) return;
+            var secs = [];
+            pane.querySelectorAll('.tf-card > .tf-card-h > h6, .inq-card > .h, details.inq-sec > summary').forEach(function (h) {
+                var card = h.closest('.tf-card, .inq-card, details.inq-sec'); if (!card || card.closest('.modal') || !shown(card, pane)) return;
+                var t = label(h); if (t && !secs.some(function (x) { return x.t === t; })) secs.push({ t: t, el: card });
+            });
+            var tab = document.querySelector('.inq .inq-tab[data-tab="' + p[0] + '"]');
+            if (!tab && !secs.length) return;                      // Quotation / Booking: listed only when they hold something
+            var g = document.createElement('button'); g.type = 'button'; g.className = 'g' + (pane.classList.contains('on') ? ' on' : ''); g.setAttribute('role', 'menuitem');
+            g.textContent = tab ? (tab.textContent || '').replace(/\s+/g, ' ').trim() : p[1];
+            g.addEventListener('click', function () { go(p[0], null); }); m.appendChild(g);
+            secs.forEach(function (s) { var b = document.createElement('button'); b.type = 'button'; b.className = 's'; b.setAttribute('role', 'menuitem'); b.textContent = s.t;
+                b.addEventListener('click', function () { go(p[0], s.el); }); m.appendChild(b); });
+        });
+        document.body.appendChild(m);
+        var r = btn.getBoundingClientRect();
+        m.style.top = (r.bottom + window.pageYOffset + 6) + 'px';
+        m.style.left = Math.max(8, Math.min(r.left + window.pageXOffset, document.documentElement.clientWidth - 308)) + 'px';
+        btn.setAttribute('aria-expanded', 'true'); if (lab) lab.textContent = 'Hide Navigation';
+    }
+    try { var vd = document.getElementById('view_detail'); if (vd) new MutationObserver(function () { if (inqMode() && !document.getElementById('inq_nav')) closeNav(); }).observe(vd, { attributes: true, attributeFilter: ['class'] }); } catch (e) {}
+    document.addEventListener('click', function (e) { var m = document.getElementById('inq_nav'); if (m && !m.contains(e.target) && !btn.contains(e.target)) closeNav(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && document.getElementById('inq_nav')) { closeNav(); btn.focus(); } });
     btn.addEventListener('click', function () {
+        if (inqMode()) { if (document.getElementById('inq_nav')) closeNav(); else openNav(); return; }
         var on = !(btn.getAttribute('aria-expanded') === 'true');
         try { sessionStorage.setItem(KEY, on ? 'on' : 'off'); } catch (e) {}
         paint(on);
