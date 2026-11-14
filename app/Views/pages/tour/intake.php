@@ -758,6 +758,8 @@
         .tf .inq .inq-crew { flex-wrap:nowrap; justify-content:flex-start; gap:6px; } .tf .inq .inq-backlist { position:static; transform:none; margin:0 6px 0 8px; flex:0 0 auto; } .tf .inq .inq-crewcol { padding:2px 10px; gap:8px; min-width:0; flex:0 1 auto; } .tf .inq .inq-crewcol > i { font-size:18px; } .tf .inq .inq-crewcol label { font-size:13.5px; } .tf .inq .inq-crewcol select { width:170px; min-width:0; }
         .tf .inq .inq-tab, .tf .inq .inq-tab[data-tab="check"] { font-size:12.5px; padding:0 6px; }
     }
+    /* tf-tidy-r2: Arrival and Departure together in one small box, two lines */
+    .tf .inq .inq-ad { flex:0 1 auto; } .tf .inq .inq-adl { display:flex; align-items:baseline; gap:7px; line-height:1.35; white-space:nowrap; } .tf .inq .inq-adl span { font-size:11.5px; color:var(--mut); min-width:58px; } .tf .inq .inq-adl b { font-size:13px; font-weight:700; } .tf .inq .inq-adl small { font-size:11px; color:var(--mut); display:inline; white-space:normal; }
     /* tf-backlist-r1: a small green way back to the list, at the left of the driver / guide line */
     .inq .inq-crew { position:relative; } .tf .inq .inq-backlist { position:absolute; left:14px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 14px 0 11px; border-radius:16px; background:linear-gradient(#84C254,#6CAB3E); color:#fff; font-size:13px; font-weight:700; text-decoration:none; box-shadow:0 1px 3px rgba(60,110,30,.35); white-space:nowrap; }
     .tf .inq .inq-backlist i { font-size:15px; transition:transform .15s; } .tf .inq .inq-backlist:hover { background:linear-gradient(#78B848,#5E9C33); color:#fff; } .tf .inq .inq-backlist:hover i { transform:translateX(-3px); }
@@ -4131,8 +4133,9 @@
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-calendar3"></i></span><div><div class="inq-k">Travel Dates</div><div class="inq-v">${esc(range)}${shape ? `<small>(${shape})</small>` : ''}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-people"></i></span><div><div class="inq-k">Travellers</div><div class="inq-v">${Number(it.pax_adults || 0)} Adult${Number(it.pax_adults || 0) === 1 ? '' : 's'}${Number(it.pax_children || 0) ? ', ' + Number(it.pax_children) + ' Child' + (Number(it.pax_children) === 1 ? '' : 'ren') : ''}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-door-closed"></i></span><div><div class="inq-k">Rooms</div><div class="inq-v">${esc(roomsTxt)}</div></div></div>
-                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane" style="transform:rotate(45deg)"></i></span><div><div class="inq-k">Arrival</div><div class="inq-v">${esc(dm(a, { day:'numeric', month:'short', year:'numeric' }) || '—')}<small>${it.arrival_flight ? esc(it.arrival_flight) : 'Flight &amp; time not given'}</small></div></div></div>
-                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane"></i></span><div><div class="inq-k">Departure</div><div class="inq-v">${esc(dm(z, { day:'numeric', month:'short', year:'numeric' }) || '—')}<small>${it.departure_flight ? esc(it.departure_flight) : 'Flight &amp; time not given'}</small></div></div></div>
+                <div class="inq-cell inq-ad"><span class="inq-ico"><i class="bi bi-airplane"></i></span><div>
+                    <div class="inq-adl"><span>Arrival</span><b>${esc(dm(a, { day:'numeric', month:'short', year:'numeric' }) || '—')}</b><small>${it.arrival_flight ? esc(it.arrival_flight) : 'Flight &amp; time not given'}</small></div>
+                    <div class="inq-adl"><span>Departure</span><b>${esc(dm(z, { day:'numeric', month:'short', year:'numeric' }) || '—')}</b><small>${it.departure_flight ? esc(it.departure_flight) : 'Flight &amp; time not given'}</small></div></div></div>
                 </div><div class="inq-crew"><a href="#" class="inq-backlist" data-inqlist title="Back to the list of inquiries"><i class="bi bi-arrow-left"></i> Back to Inquiries</a>${crewCol('driver')}${crewCol('guide')}</div>
             </div>
             <div class="inq-tabs" role="tablist">
