@@ -671,6 +671,25 @@
     .inq .inq-arow .ac { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; } .tf .inq .inq-arow .inq-btn { height:32px; font-size:13px; padding:0 12px; white-space:nowrap; } .tf .inq .inq-arow .inq-btn.ok { border-color:#1E8E1E; color:#1E7A1E; }
     .inq .inq-anote { font-size:13px; color:#1A1A1A; margin:0 0 18px; } .inq .inq-anote i { color:#842484; }
     @media (max-width:1100px) { .inq .inq-arow { grid-template-columns:1fr 1fr; } .inq .inq-sig-t b { white-space:normal; font-size:16px; } }
+    /* tf-compact-r1: a lower pinned heading — title, traffic light and the three buttons on one line, so the working area below keeps its room */
+    .inq .inq-head { gap:10px; row-gap:4px; } .inq .inq-head h2 { font-size:21px; }
+    .inq .inq-sig { min-height:44px; gap:10px; padding:0 12px; margin-left:2px; } .inq .inq-light { gap:3px; padding:4px 5px; border-radius:7px; } .inq .inq-light i { width:11px; height:11px; }
+    .inq .inq-sig-t b { font-size:15px; line-height:1.2; } .inq .inq-sig-t a { font-size:13px; } .inq .inq-sig-t span { font-size:12.5px; }
+    .inq .inq-head .inq-acts { gap:8px; flex-wrap:nowrap; align-items:center; } .tf .inq .inq-head .inq-btn { height:34px; padding:0 13px; font-size:13.5px; } .inq #inq_send_note { font-size:11px; min-height:0; line-height:1.1; } .inq .inq-sendwrap { gap:1px; }
+    .tf .inq .inq-tabs { margin-bottom:10px; } .tf .inq .inq-tab { height:36px; }
+    @media (min-width:1101px) { .inq .inq-head { flex-wrap:nowrap; padding:4px 0 6px; } .inq .inq-head h2 { white-space:nowrap; } .inq .inq-sig { flex:0 1 auto; min-width:0; } }
+    /* tf-compact-r4: the folded working table and the bottom row (status, follow-up, Back to list, Check hotels again, management) are not shown on an open inquiry; they stay in the page so the hotel and note editors keep working */
+    .tf .inq #inq_full { display:none !important; } .tf .inq > .d-flex.justify-content-between { display:none !important; }
+    /* tf-backlist-r1: a small green way back to the list, at the left of the driver / guide line */
+    .inq .inq-crew { position:relative; } .tf .inq .inq-backlist { position:absolute; left:14px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 14px 0 11px; border-radius:16px; background:linear-gradient(#84C254,#6CAB3E); color:#fff; font-size:13px; font-weight:700; text-decoration:none; box-shadow:0 1px 3px rgba(60,110,30,.35); white-space:nowrap; }
+    .tf .inq .inq-backlist i { font-size:15px; transition:transform .15s; } .tf .inq .inq-backlist:hover { background:linear-gradient(#78B848,#5E9C33); color:#fff; } .tf .inq .inq-backlist:hover i { transform:translateX(-3px); }
+    @media (max-width:1100px) { .tf .inq .inq-backlist { position:static; transform:none; margin:0 12px 6px 0; } }
+    /* tf-compact-r2: the traffic light lies on its side and the heading goes lower still */
+    .inq .inq-light { flex-direction:row; gap:4px; padding:4px 6px; } .inq .inq-light i { width:12px; height:12px; } .inq .inq-sig { min-height:32px; }
+    .inq .inq-sig-t b { font-size:14.5px; line-height:1.15; white-space:nowrap; } .inq .inq-sig-t a { font-size:12.5px; line-height:1.15; white-space:nowrap; } .inq .inq-sig { flex:0 0 auto !important; }
+    .inq .inq-sendwrap { flex-direction:row-reverse; align-items:center; gap:8px; } .inq #inq_send_note { max-width:110px; text-align:right; }
+    .tf .inq .inq-head .inq-btn { height:30px; padding:0 12px; white-space:nowrap; flex:0 0 auto; } .inq .inq-head .inq-acts { flex:0 0 auto; } .tf .inq .inq-tab { height:32px; font-size:13.5px; } .tf .inq .inq-tabs { margin-bottom:8px; }
+    @media (min-width:1101px) { .inq .inq-head { padding:2px 0 4px; } .inq .inq-head h2 { font-size:19px; } }
     /* the missing-items list (in the dialog, outside .inq) */
     .inq-ms { text-align:left; font-size:14px; color:#1A1A1A; max-height:60vh; overflow:auto; } .inq-ms-g { font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; font-weight:800; color:#842484; margin:14px 0 4px; } .inq-ms-g:first-child { margin-top:0; } .inq-ms-g.opt { color:#5E5964; }
     .inq-ms-i { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid #EEE9F0; line-height:1.4; } .inq-ms-i .inq-dot { margin-top:4px; } .inq-ms-i span { flex:1 1 auto; } .inq-ms-i.opt { color:#5E5964; font-size:13px; }
@@ -1642,8 +1661,8 @@
         if (!opts.force && VIEW && (VIEW !== which || VIEW_ID !== id) && window.TfView && !TfView.confirmLeave(VIEW === 'view_detail' && VIEW_ID ? 'this inquiry' : 'this page')) return false;
         ['view_list','view_paste','view_manual','view_detail'].forEach(v => { const el = document.getElementById(v); if (el) el.style.display = (v === which ? '' : 'none'); });
         const ct = document.getElementById('comm_top'); if (ct && which !== 'view_detail') ct.style.display = 'none';   // tf-comms-r3
-        const tt = document.querySelector('.tf .tf-title'); if (tt) tt.style.display = which === 'view_list' ? 'none' : '';
-        const tb = document.querySelector('.tf .tdbar'); if (tb) tb.style.display = which === 'view_list' ? 'none' : '';   // tf-tiq-r4: the Tour Desk bar stays on the inquiry, paste and manual views   // tf-tiq-r1: the list has its own heading
+        const tt = document.querySelector('.tf .tf-title'); if (tt) tt.style.display = (which === 'view_list' || which === 'view_detail') ? 'none' : '';   // tf-compact-r3: an open inquiry starts at its own heading
+        const tb = document.querySelector('.tf .tdbar'); if (tb) tb.style.display = (which === 'view_list' || which === 'view_detail') ? 'none' : '';   // tf-tiq-r4: the Tour Desk bar stays on the inquiry, paste and manual views   // tf-tiq-r1: the list has its own heading
         if (window.TfView && !FROM_HISTORY) {
             const params = { id: id, start: which === 'view_paste' ? 'paste' : (which === 'view_manual' ? 'manual' : null) };
             const changed = VIEW !== which || VIEW_ID !== id;
@@ -2436,7 +2455,7 @@
         } else if (it.confirmed_at && !it.locked) {
             bn.innerHTML = `<div class="bnr bnr-amber"><i class="bi bi-pencil-square" style="font-size:15px"></i>
                 <div><b>Open for amendment.</b>Correct what changed and press Confirm again. Cards on the desks that have not moved are rebuilt; cards already in progress are kept and marked for their desk to check.</div></div>`;
-        } else if (!hasMail) {
+        } else if (!hasMail && false) {   // tf-compact-r3: the 'Entered by hand' note is no longer shown on an open inquiry
             bn.innerHTML = `<div class="bnr bnr-blue"><i class="bi bi-pencil" style="font-size:15px"></i>
                 <div><b>Entered by hand.</b>Fill in whatever you have — every field is optional and nothing is filled in for you.
                 <div class="help" style="color:inherit;opacity:.85">If the agent's email arrives later you can paste it on the right, and it joins this same inquiry.</div></div></div>`;
@@ -3815,9 +3834,9 @@
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-calendar3"></i></span><div><div class="inq-k">Travel Dates</div><div class="inq-v">${esc(range)}${shape ? `<small>(${shape})</small>` : ''}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-people"></i></span><div><div class="inq-k">Travellers</div><div class="inq-v">${Number(it.pax_adults || 0)} Adult${Number(it.pax_adults || 0) === 1 ? '' : 's'}${Number(it.pax_children || 0) ? ', ' + Number(it.pax_children) + ' Child' + (Number(it.pax_children) === 1 ? '' : 'ren') : ''}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-door-closed"></i></span><div><div class="inq-k">Rooms</div><div class="inq-v">${esc(roomsTxt)}</div></div></div>
-                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane" style="transform:rotate(45deg)"></i></span><div><div class="inq-k">Arrival</div><div class="inq-v">${esc(dm(a, { day:'numeric', month:'short', year:'numeric' }) || '—')}${it.arrival_flight ? `<small>${esc(it.arrival_flight)}</small>` : ''}</div></div></div>
-                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane"></i></span><div><div class="inq-k">Departure</div><div class="inq-v">${esc(dm(z, { day:'numeric', month:'short', year:'numeric' }) || '—')}${it.departure_flight ? `<small>${esc(it.departure_flight)}</small>` : ''}</div></div></div>
-                </div><div class="inq-crew">${crewCol('driver')}${crewCol('guide')}</div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane" style="transform:rotate(45deg)"></i></span><div><div class="inq-k">Arrival</div><div class="inq-v">${esc(dm(a, { day:'numeric', month:'short', year:'numeric' }) || '—')}<small>${it.arrival_flight ? esc(it.arrival_flight) : 'Flight &amp; time not given'}</small></div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-airplane"></i></span><div><div class="inq-k">Departure</div><div class="inq-v">${esc(dm(z, { day:'numeric', month:'short', year:'numeric' }) || '—')}<small>${it.departure_flight ? esc(it.departure_flight) : 'Flight &amp; time not given'}</small></div></div></div>
+                </div><div class="inq-crew"><a href="#" class="inq-backlist" data-inqlist title="Back to the list of inquiries"><i class="bi bi-arrow-left"></i> Back to Inquiries</a>${crewCol('driver')}${crewCol('guide')}</div>
             </div>
             <div class="inq-tabs" role="tablist">
                 <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
@@ -3860,9 +3879,8 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             <div class="inq-pane" data-pane="hotels">
                 <div class="inq-rh"><h3>Requested Itinerary</h3><div class="inq-legend"><span><i class="inq-dot red"></i><b>Red:</b> Not started</span><span><i class="inq-dot yellow"></i><b>Yellow:</b> Incomplete</span><span><i class="inq-dot green"></i><b>Green:</b> Ready for quotation</span></div></div>
                 <table class="inq-req"><thead><tr><th>Day / Date</th><th>Hotel</th><th>Meal Plan</th><th>Rooms</th><th style="width:30%">Daily Visits &amp; Activities</th><th>Special Note</th></tr></thead>
-                    <tbody>${days.map(reqRow).join('') + reqDep || '<tr><td colspan="6" style="color:#5E5964">No nights on this inquiry yet. Open the working table below and add them.</td></tr>'}</tbody></table>
-                <div class="inq-rfoot"><div><i class="bi bi-info-circle"></i> Daily activities appear by date after import. Add or edit them through Activities. Airport transfers, excursions and mileage are under Airport Transfers &amp; Excursions.</div>
-                    <div>Send Quotation is enabled only when every required section is complete. It is checked again when the quotation is sent.</div></div>
+                    <tbody>${days.map(reqRow).join('') + reqDep || '<tr><td colspan="6" style="color:#5E5964">No nights on this inquiry yet.</td></tr>'}</tbody></table>
+                
             </div>
             <div class="inq-pane" data-pane="acts"><div id="inq_acts"><div class="help" style="padding:14px">Reading the days…</div></div></div>
             <div class="inq-pane" data-pane="trans"></div>
