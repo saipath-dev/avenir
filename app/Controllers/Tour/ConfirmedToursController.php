@@ -112,6 +112,76 @@ class ConfirmedToursController extends BaseController
         return view('pages/tour/confirmed_tours', $data);
     }
 
+    // tf-control-r1: GET tour/intake/confirmed/(:num)/control — Confirmed Tour · Operations Control, one tour on one screen (reads only)
+    public function control($tourId)
+    {
+        $data = $this->menuData();
+        $data['user']       = $this->user();
+        $data['page_url']   = self::URL;
+        $data['intake_url'] = self::GATE;
+        $data['tour_id']    = (int) $tourId;
+        $data['can_hotel']     = $this->holds(TourDeskController::HOTEL);
+        $data['can_transport'] = $this->holds(TourDeskController::TRANSPORT);
+        $data['can_board']     = $this->holds(TourDeskController::BOARD);
+        return view('pages/tour/tour_control', $data);
+    }
+
+    // tf-control-r1: GET tour/intake/confirmed/(:num)/control/data — the tour, its jobs as the desks left them, and its progress. No money.
+    public function controlData($tourId)
+    {
+        try {
+            $db  = $this->db();
+            $svc = new TourService($db, $this->user());
+            $t   = $svc->get((int) $tourId);
+            if (!$t) {
+                return $this->json(['status' => 404, 'message' => 'No such tour.']);
+            }
+            $pick = static function (array $rows, array $keys): array {
+                $out = [];
+                foreach ($rows as $r) {
+                    if (!empty($r['archived_at'])) {
+                        continue;
+                    }
+                    $o = [];
+                    foreach ($keys as $k) {
+                        $o[$k] = $r[$k] ?? null;
+                    }
+                    $out[] = $o;
+                }
+                return $out;
+            };
+            $tour = [];
+            foreach (['id', 'tour_no', 'intake_id', 'stage', 'quote_id', 'quote_version', 'confirmed_at', 'final_confirmed_at', 'final_confirmed_by', 'cancelled_at'] as $k) {
+                $tour[$k] = $t[$k] ?? null;
+            }
+            // tf-control-r2: the rooming of each hotel stay, worked out as the hotel's rooming list is (RoomingList) — read, never typed here
+            $pax = $db->query('SELECT full_name, room_type, note FROM tf_intake_pax WHERE intake_id = ? ORDER BY sort_order, id', [(int) $t['intake_id']])->getResultArray();
+            $rooming = [];
+            foreach ((array) $t['hotel_jobs'] as $j) {
+                if (!empty($j['archived_at']) || (string) ($j['status'] ?? '') === 'cancelled') {
+                    continue;
+                }
+                $r = \App\Libraries\TourFlow\RoomingList::build($j, $pax, $j['room_type_text'] ?? null);
+                $rooms = [];
+                foreach ($r['rooms'] as $room) {
+                    $rooms[] = ['code' => $room['code'], 'beds' => $room['beds'], 'guests' => array_map(static fn ($g) => (string) $g['name'], $room['guests'])];
+                }
+                $rooming[] = ['job_id' => (int) $j['id'], 'hotel' => $j['hotel_name'], 'check_in' => $j['check_in'], 'check_out' => $j['check_out'],
+                    'rooms_note' => $j['rooms_note'], 'summary' => $r['summary'], 'rooms' => $rooms, 'unallocated' => $r['unallocated']];
+            }
+            return $this->json(['status' => 200, 'data' => [
+                'tour'      => $tour,
+                'rooming'   => $rooming,
+                'strip'     => $svc->stripFor((int) $tourId),
+                'hotels'    => $pick((array) $t['hotel_jobs'], ['id', 'hotel_name', 'check_in', 'check_out', 'nights', 'status', 'requested_at', 'confirmation_ref', 'confirmed_at', 'voucher_no', 'voucher_at', 'problem_note']),
+                'transport' => $pick((array) $t['transport_jobs'], ['id', 'vehicle_type', 'qty', 'vehicle_reg', 'status', 'allocated_at', 'pack_at', 'driver_name', 'guide_name']),
+                'services'  => $pick((array) ($t['service_jobs'] ?? []), ['id', 'title', 'kind', 'day_no', 'on_date', 'status', 'confirmation_ref', 'pay_mode']),
+            ]]);
+        } catch (\Throwable $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()]);
+        }
+    }
+
     // GET tour/intake/confirmed/data?q=&handler=&from=&to= — every confirmed tour (Admin-deleted ones excepted), nearest arrival first
     public function data()
     {

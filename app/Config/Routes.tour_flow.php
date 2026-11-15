@@ -427,6 +427,9 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     // tf-confirmed-r1: Confirmed Tours — one line per confirmed tour, read-only, under the Inquiries privilege (no menu entry of its own)
     $routes->get('confirmed', [ConfirmedToursController::class, 'index']);
     $routes->get('confirmed/data', [ConfirmedToursController::class, 'data']);
+    // tf-control-r1: Confirmed Tour · Operations Control — one tour, its traffic lights and outstanding work (reads only)
+    $routes->get('confirmed/(:num)/control', [ConfirmedToursController::class, 'control']);
+    $routes->get('confirmed/(:num)/control/data', [ConfirmedToursController::class, 'controlData']);
     // tf-workflow-r1: the Confirmed Tour Handler's final confirmation — refused until every section is green
     $routes->post('confirmed/(:num)/final', [ConfirmedToursController::class, 'finalConfirm']);
 
