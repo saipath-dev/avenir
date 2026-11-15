@@ -796,6 +796,24 @@
     .tf .mlv-c.calc .mlv-copy { height:48px; border-radius:24px; background:#161616; font-size:17px; } .tf .mlv-c.calc .mlv-copy:hover { background:#2a2a2a; filter:none; }
     .tf details.mlv-edit { max-width:none; }
     @media (max-width:600px) { .tf .mlv-h h3 { font-size:23px; } .tf .mlv-v > * { font-size:14.5px; height:44px; } .tf .mlv-c .fig b { font-size:17px; } .tf .mlv-c.calc .mlv-total b { font-size:26px; } }
+    /* tf-compact-r6: on Airport Transfers & Excursions nothing is shown below the Mileage calculation — the detailed table, Excursions, Vehicles, Driver allocation and Guide allocation stay in the page, not on screen */
+    .tf .inq .inq-pane[data-pane="trans"] #mil_card ~ .tf-card, .tf .inq .inq-pane[data-pane="trans"] #mil_edit, .tf .inq .inq-pane[data-pane="trans"] #tr_block { display:none !important; }   /* tf-compact-r7: the Airport transfers block (arrival / departure, our car or the hotel's) too */
+    /* tf-rail-r2: the Railway view to the approved mock-up */
+    .tf .rw-h { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; } .tf .rw-h h3 { font-size:22px; font-weight:800; color:#842484; margin:0; } .tf .rw-h h3 i { margin-right:8px; }
+    .tf .rw-sw { display:inline-flex; border:1px solid #D9D3DD; border-radius:9px; overflow:hidden; background:#fff; } .tf .rw-sw > * { display:inline-flex; align-items:center; gap:7px; height:36px; padding:0 16px; border:0; border-right:1px solid #D9D3DD; background:#fff; color:#1A1A1A; font-size:14px; font-weight:600; cursor:pointer; text-decoration:none; } .tf .rw-sw > *:last-child { border-right:0; } .tf .rw-sw .on { background:#842484; color:#fff; }
+    .tf .rw-veh { font-weight:800; color:#5A1560; margin:8px 2px; } .tf .rw-scroll { overflow-x:auto; overflow-y:hidden; padding:4px 2px 10px; }
+    .tf .rw-line { display:flex; align-items:flex-start; width:100%; min-width:min-content; position:relative; } .tf .rw-line.has-cards { padding-bottom:142px; } .tf .rw-line::before { content:''; position:absolute; left:65px; right:65px; top:52px; height:3px; background:#842484; } .tf .rw-stop { flex:0 0 auto; width:130px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; }
+    .tf .rw-ico { width:46px; height:40px; border-radius:10px; background:#F1E3F2; color:#842484; display:flex; align-items:center; justify-content:center; font-size:20px; } .tf .rw-dot { width:16px; height:16px; border-radius:50%; border:3.5px solid #842484; background:#fff; margin:6px 0 4px; position:relative; z-index:1; }
+    .tf .rw-stop > b { font-size:14.5px; font-weight:700; color:#1A1A1A; line-height:1.2; max-width:128px; min-height:35px; } .tf .rw-seg { flex:1 0 56px; position:relative; height:66px; }  .tf .rw-seg span { position:absolute; left:0; right:0; top:16px; text-align:center; font-size:15.5px; font-weight:800; color:#1A1A1A; white-space:nowrap; }
+    .tf .rw-seg span span { position:static; } .tf .rw-cards { display:flex; gap:10px; padding-top:14px; position:absolute; top:100%; left:50%; transform:translateX(-50%); margin-top:4px; } .tf .rw-cards::before { content:''; position:absolute; left:50%; top:0; height:14px; border-left:2px solid #842484; }
+    .tf .rw-card { width:190px; border:1.5px solid #D7B8DA; border-radius:12px; background:#FBF6FC; padding:9px 10px 10px; } .tf .rw-card b { display:block; font-size:15px; color:#842484; font-weight:800; } .tf .rw-card span { display:block; font-size:13.5px; color:#1A1A1A; margin:2px 0 6px; } .tf .rw-card em { display:inline-block; font-style:normal; font-size:19px; font-weight:800; color:#1A1A1A; background:#DDF0CF; border-radius:8px; padding:1px 18px; } .tf .rw-card em.bad { background:#FDE7E7; color:#B3261E; } .tf .rw-card small { display:block; font-size:11.5px; color:#5E5964; margin-top:3px; }
+    .tf .rw-flag { background:#FFF4EC; border:1px solid #F0B48A; color:#8A3A0A; border-radius:10px; padding:8px 12px; font-size:13.5px; font-weight:600; margin:6px 0 10px; }
+    .tf .rw-two { display:grid; grid-template-columns:minmax(0,3fr) minmax(250px,1fr); gap:16px; margin-top:12px; align-items:start; } .tf .rw-tw { overflow-x:auto; border:1px solid #D9D3DD; border-radius:10px; }
+    .tf table.rw-t { width:100%; border-collapse:collapse; min-width:620px; } .tf table.rw-t th { background:#842484; color:#fff; font-size:14px; font-weight:700; text-align:left; padding:8px 12px; white-space:nowrap; } .tf table.rw-t th.n, .tf table.rw-t td.n { text-align:center; } .tf table.rw-t td { padding:7px 12px; border-bottom:1px solid #EEE9F0; border-right:1px solid #EEE9F0; font-size:14px; color:#1A1A1A; } .tf table.rw-t tr:last-child td { border-bottom:0; } .tf table.rw-t td.d { background:#F8F0F9; color:#842484; font-weight:800; white-space:nowrap; } .tf table.rw-t td.n { font-variant-numeric:tabular-nums; }
+    .tf .rw-ms { border:1px solid #D9D3DD; border-radius:10px; overflow:hidden; background:#fff; } .tf .rw-ms h4 { margin:0; background:#842484; color:#fff; font-size:15.5px; font-weight:700; padding:9px 14px; } .tf .rw-ms h4 i { margin-right:8px; } .tf .rw-ms > div { padding:10px 14px 14px; } .tf .rw-ms b { display:block; font-size:14.5px; } .tf .rw-ms em { display:inline-block; font-style:normal; font-weight:800; font-size:16px; background:#DDF0CF; border-radius:7px; padding:2px 14px; margin:6px 0; } .tf .rw-ms span { display:block; font-size:13px; color:#1A1A1A; margin-bottom:10px; }
+    .tf .rw-btn { display:flex; align-items:center; justify-content:center; gap:8px; height:38px; border-radius:8px; background:linear-gradient(#78B848,#5E9C33); color:#fff; font-weight:700; font-size:14.5px; text-decoration:none; } .tf .rw-btn:hover { color:#fff; filter:brightness(1.06); }
+    .tf .rw-tot { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1.5px solid #D7B8DA; border-radius:12px; background:#FBF6FC; margin-top:16px; overflow:hidden; } .tf .rw-tot > div { text-align:center; padding:10px 8px 12px; border-right:1px solid #D7B8DA; } .tf .rw-tot > div:last-child { border-right:0; } .tf .rw-tot span { display:block; font-size:16px; font-weight:700; color:#1A1A1A; } .tf .rw-tot b { display:block; font-size:30px; font-weight:800; color:#842484; line-height:1.15; } .tf .rw-tot .g { background:#DDF0CF; } .tf .rw-tot small { display:block; font-size:12.5px; font-weight:700; } .tf .rw .bad { color:#B3261E; font-weight:700; }
+    @media (max-width:900px) { .tf .rw-two { grid-template-columns:minmax(0,1fr); } .tf .rw-tot { grid-template-columns:repeat(2,minmax(0,1fr)); } .tf .rw-tot b { font-size:23px; } }
     /* tf-backlist-r1: a small green way back to the list, at the left of the driver / guide line */
     .inq .inq-crew { position:relative; } .tf .inq .inq-backlist { position:absolute; left:14px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 14px 0 11px; border-radius:16px; background:linear-gradient(#84C254,#6CAB3E); color:#fff; font-size:13px; font-weight:700; text-decoration:none; box-shadow:0 1px 3px rgba(60,110,30,.35); white-space:nowrap; }
     .tf .inq .inq-backlist i { font-size:15px; transition:transform .15s; } .tf .inq .inq-backlist:hover { background:linear-gradient(#78B848,#5E9C33); color:#fff; } .tf .inq .inq-backlist:hover i { transform:translateX(-3px); }
@@ -2984,7 +3002,7 @@
         // sector is pointed at (hover) or tapped. Nothing is worked out here: every figure is the leg's own, as the list shows it.
         const MILVIEW = milView();
         const railStops = [];   // the places in order, for the Map view
-        const railBlock = (() => {
+        const railBlockOld = () => {
             const legRows = rows.filter(r => r.kind === 'leg');
             if (!legRows.length) return `${milTot}${addLegForm}`;
             const photos = it.station_photos || {};
@@ -3222,6 +3240,46 @@
                     <div class="trk-tip">Click or tap to keep this open and type a figure.</div></div>
                 <div class="trk-store" hidden>${store.join('')}</div>
             </div>`;
+        };   // tf-rail-r2: the earlier drawing, kept and no longer shown
+        // tf-rail-r2 (15 Nov 2026): the Railway view to the approved mock-up — the line of stops with the kilometres between them, the days at the hotel hung under their stop,
+        // the day-by-day table and the four totals. Every figure is a saved one: the same sectors, extra kilometres and allowances the List view and the costing use.
+        const railBlock = (() => {
+            const legsAll = rows.filter(r => r.kind === 'leg' && !r.s.removed_at);
+            if (!legsAll.length) return `${milTot}${addLegForm}`;
+            const kmf = v => Number(v).toLocaleString(undefined, { maximumFractionDigits: 1 }), low = v => String(v || '').trim().toLowerCase();
+            const dOf = n => { const d = (it.days || []).find(x => Number(x.day_no) === Number(n) && x.day_date), dep = it.departure_day; const v = d ? d.day_date : (dep && Number(dep.day_no) === Number(n) ? dep.date : null); const t = v ? new Date(String(v).slice(0, 10) + 'T00:00:00') : null; return t && !isNaN(t) ? t : null; };
+            const dayLbl = n => { const t = dOf(n); return 'Day ' + n + (t ? ' • ' + t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''); };
+            const hotels = (it.days || []).map(d => low(d.hotel_name_raw)).filter(Boolean);
+            const icon = p => low(p) === 'garage' ? 'bi-house-door-fill' : (/katunayake|airport|\bcmb\b|mattala/.test(low(p)) ? 'bi-airplane-fill' : (hotels.includes(low(p)) ? 'bi-building-fill' : 'bi-geo-alt-fill'));
+            // what a sector is, for the three totals: route (driven and garage), additional sightseeing (a city tour, and the extra kilometres on a leg), non-operating allowance (a stay day)
+            const part = sc => sc.kind === 'idle' ? 'allow' : (sc.kind === 'local' && !isDriven(sc) ? 'add' : 'route');
+            const days = {}, tot = { route: 0, add: 0, allow: 0 }; let missing = 0, stayKm = null; const conflicts = [];
+            legsAll.forEach(r => { const sc = r.s, d = days[r.day] = days[r.day] || { route: 0, add: 0, allow: 0, places: [], miss: 0, idle: false, driven: false, desc: [] };
+                const k = part(sc), waived = !!sc.waived_by, km = sc.km != null ? Number(sc.km) : null, ex = sc.extra_km != null ? Number(sc.extra_km) : 0;
+                if (k === 'route') { if (!d.places.length) d.places.push(sc.from_place || '?'); d.places.push(sc.to_place || 'Destination required'); if (sc.kind !== 'garage') d.driven = true; }
+                if (k === 'allow') { d.idle = true; if (sc.km_by === 'city_allowance' && km != null) stayKm = km; }
+                if (km == null) { if (k === 'route') { d.miss++; missing++; } return; }
+                if (waived) return;
+                d[k] += km; tot[k] += km; if (k === 'route' && ex) { d.add += ex; tot.add += ex; } });
+            Object.keys(days).forEach(n => { const d = days[n]; if (d.idle && d.driven) conflicts.push(Number(n)); d.text = d.places.length ? d.places.map(esc).join(' – ') : (d.idle ? 'Hotel stay / no scheduled work' : (d.add ? 'City tour' : '—')); if (d.places.length && d.idle) d.text += ' · hotel stay'; if (d.places.length && !d.idle && d.add && legsAll.some(r => r.day === Number(n) && part(r.s) === 'add')) d.text += ' · city tour'; });
+            const dayNos = Object.keys(days).map(Number).sort((a, b) => a - b), total = tot.route + tot.add + tot.allow;
+            // the line: every vehicle's route sectors in order; the days spent at a stop are hung beneath it
+            const seqs = [...new Set(legsAll.map(r => r.seq))];
+            const lines = seqs.map(seq => { const mine = legsAll.filter(r => r.seq === seq), stops = [];
+                mine.forEach(r => { const sc = r.s, k = part(sc);
+                    if (k === 'route') { if (!stops.length) stops.push({ name: sc.from_place || '?', cards: [] }); stops[stops.length - 1].next = sc.km != null ? kmf(sc.km) + ' km' : '<span class="bad">Missing</span>'; stops.push({ name: sc.to_place || 'Destination required', cards: [] }); }
+                    else { if (!stops.length) stops.push({ name: sc.from_place || '?', cards: [] }); stops[stops.length - 1].cards.push({ day: r.day, k, km: sc.km, waived: sc.waived_by }); } });
+                return `${multi ? `<div class="rw-veh"><i class="bi bi-truck"></i> ${esc(vehLabel(seq))}</div>` : ''}<div class="rw-scroll"><div class="rw-line${stops.some(x => x.cards.length) ? ' has-cards' : ''}">${stops.map((st, n) => `<div class="rw-stop"><span class="rw-ico"><i class="bi ${icon(st.name)}"></i></span><span class="rw-dot"></span><b>${esc(st.name)}</b>
+                    ${st.cards.length ? `<div class="rw-cards">${st.cards.map(c => `<div class="rw-card"><b><i class="bi bi-calendar3"></i> ${dayLbl(c.day)}</b><span>${c.k === 'allow' ? 'Non-operating day allowance' : 'City tour • Additional mileage'}</span><em class="${c.km == null ? 'bad' : ''}">${c.km != null ? kmf(c.km) + ' km' : 'Missing'}</em>${c.waived ? '<small>waived — not charged</small>' : ''}</div>`).join('')}</div>` : ''}</div>${n < stops.length - 1 ? `<div class="rw-seg"><span>${st.next || ''}</span></div>` : ''}`).join('')}</div></div>`; }).join('');
+            const cell = v => v ? kmf(v) : '0';
+            return `<div class="rw"><div class="rw-h"><h3><i class="bi bi-train-front-fill"></i> Railway view</h3><span class="rw-sw"><button type="button" class="on" data-mview="rail"><i class="bi bi-train-front"></i> Railway view</button><button type="button" data-mview="list"><i class="bi bi-list-ul"></i> List view</button>__MLV_MAP__</span></div>
+                ${lines}
+                ${conflicts.length ? `<div class="rw-flag"><i class="bi bi-exclamation-triangle-fill"></i> Review day ${conflicts.join(', ')}: it carries a non-operating day allowance and scheduled driving together.</div>` : ''}
+                <div class="rw-two"><div class="rw-tw"><table class="rw-t"><thead><tr><th>Day</th><th>Description</th><th class="n">Route km</th><th class="n">Additional km</th><th class="n">Allowance km</th><th class="n">Total km</th></tr></thead><tbody>
+                    ${dayNos.map(n => { const d = days[n]; return `<tr><td class="d">${dayLbl(n)}</td><td>${d.text}${d.miss ? ` <span class="bad">· ${d.miss} distance${d.miss === 1 ? '' : 's'} missing</span>` : ''}</td><td class="n">${cell(d.route)}</td><td class="n">${cell(d.add)}</td><td class="n">${cell(d.allow)}</td><td class="n"><b>${d.miss ? '<span class="bad">Incomplete</span>' : cell(d.route + d.add + d.allow)}</b></td></tr>`; }).join('')}</tbody></table></div>
+                    <div class="rw-ms"><h4><i class="bi bi-gear"></i> Transport Master settings</h4><div><b>Non-operating day mileage allowance</b><em>${stayKm != null ? kmf(stayKm) + ' km / day' : 'set in the master'}</em><span>Applies when there is no scheduled driving work. It is brought onto such a day automatically, once.</span>
+                        <a class="rw-btn" target="avhMaster" href="${BASE.replace(/\/tour\/intake$/, '')}/master_files/mileage_allowances"><i class="bi bi-pencil"></i> Edit in Transport Master</a></div></div></div>
+                <div class="rw-tot"><div><span>Route mileage</span><b>${kmf(tot.route)} km</b></div><div><span>+ Additional sightseeing</span><b>${kmf(tot.add)} km</b></div><div><span>+ Non-operating allowance</span><b>${kmf(tot.allow)} km</b></div><div class="g"><span>= Total chargeable</span><b>${kmf(total)} km</b>${missing ? `<small class="bad">Incomplete — ${missing} distance${missing === 1 ? '' : 's'} missing</small>` : ''}</div></div></div>`;
         })();
         // the Map view: the tour's places, in order, on Google Maps (the garage is left out; Google takes up to ten stops)
         const MAPURL = (() => {
@@ -3410,7 +3468,7 @@
 
             ${mealsCard(it)}
 
-            <div class="tf-card${MILVIEW === 'list' ? ' mlv-on' : ''}" id="mil_card"><div class="tf-card-h"><h6>Mileage by sector</h6>
+            <div class="tf-card mlv-on" id="mil_card"><div class="tf-card-h"><h6>Mileage by sector</h6>
                 <span class="help">${MILVIEW === 'list' ? `Google's road distance and the company's own driven record, side by side — the quotation is costed on ${(it.mileage && it.mileage.source) === 'actual' ? 'the driven record' : 'Google\'s figure'}` : 'The whole tour at a glance — point at a place or a sector (tap it on a phone) to see its details'}</span>
                 <span class="mv-switch ms-auto" role="group" aria-label="How the mileage is shown">
                     <button type="button" data-mview="rail" class="${MILVIEW === 'rail' ? 'on' : ''}" title="The tour as a railway line: places and the kilometres between them"><i class="bi bi-train-front"></i> Railway view</button>
@@ -3418,7 +3476,7 @@
                     ${MAPURL ? `<a href="${esc(MAPURL)}" target="_blank" rel="noopener" title="The tour's places in order on Google Maps (opens a new tab; Google shows up to ten stops)"><i class="bi bi-map"></i> Map view</a>` : ''}</span>
                 ${it.mileage && it.mileage.google_key && (it.mileage.google_unasked > 0 || it.mileage.google_missing > 0) ? `<button class="btn btn-light btn-sm" id="d_google" title="Ask Google about every driven leg that has no figure yet; a distance typed by hand is never replaced"><i class="bi bi-geo-alt"></i> Ask Google</button>` : ''}
                 <button class="btn btn-light btn-sm" id="d_autoleg" title="Work the whole itinerary's driving out again, losing any hand-typed legs"><i class="bi bi-magic"></i> Auto</button></div>
-                <div class="tf-card-b">${MILVIEW === 'list' ? mileageBlock.replace('__MLV_MAP__', MAPURL ? `<a href="${esc(MAPURL)}" target="_blank" rel="noopener"><i class="bi bi-map"></i> Map view</a>` : '<span class="na"><i class="bi bi-map"></i> Map view</span>') : railBlock}</div></div>
+                <div class="tf-card-b">${MILVIEW === 'list' ? mileageBlock.replace('__MLV_MAP__', MAPURL ? `<a href="${esc(MAPURL)}" target="_blank" rel="noopener"><i class="bi bi-map"></i> Map view</a>` : '<span class="na"><i class="bi bi-map"></i> Map view</span>') : railBlock.replace('__MLV_MAP__', MAPURL ? `<a href="${esc(MAPURL)}" target="_blank" rel="noopener"><i class="bi bi-map"></i> Map view</a>` : '')}</div></div>
 
             <div class="tf-card"><div class="tf-card-h"><h6>Excursions</h6>
                 <span class="help">Their own rates, from Master Files → Paid Activities &amp; Services, copied onto the line when added; one that includes transport waives that day's local running</span></div>
@@ -4223,7 +4281,7 @@
                 <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
                 <button type="button" class="inq-tab" data-tab="itin"><i class="bi bi-building"></i> Hotels (${hotelsN})</button>
                 <button type="button" class="inq-tab" data-tab="acts" title="Each day's activities and whether they have been checked">Activities <i class="inq-dot" id="inq_act_dot"></i></button>
-                <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Airport Transfers &amp; Excursions</button>
+                <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Transport</button>
                 <button type="button" class="inq-tab" data-tab="pax"><i class="bi bi-people"></i> Passengers (${Number(it.pax_total || 0)})</button>
                 <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
                 <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Tour Confirmation <span id="inq_chk_n" style="display:none"></span></button>
