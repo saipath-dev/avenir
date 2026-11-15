@@ -760,6 +760,42 @@
     }
     /* tf-tidy-r2: Arrival and Departure together in one small box, two lines */
     .tf .inq .inq-ad { flex:0 1 auto; } .tf .inq .inq-adl { display:flex; align-items:baseline; gap:7px; line-height:1.35; white-space:nowrap; } .tf .inq .inq-adl span { font-size:11.5px; color:var(--mut); min-width:58px; } .tf .inq .inq-adl b { font-size:13px; font-weight:700; } .tf .inq .inq-adl small { font-size:11px; color:var(--mut); display:inline; white-space:normal; }
+    /* tf-millist-r1: Mileage by sector — the List view to the agreed mock-up */
+    .tf .mlv-jb { display:flex; justify-content:space-between; align-items:center; gap:12px; background:#F5F3F6; border-radius:12px; padding:12px 16px; margin-bottom:12px; } .tf .mlv-jb b { display:block; font-size:18px; font-weight:800; color:#1A1A1A; } .tf .mlv-jb span { font-size:13.5px; color:#5E5964; }
+    .tf .mlv .tag { text-transform:none; letter-spacing:0; display:inline-block; background:#ECEAEE; color:#1A1A1A; font-weight:700; font-size:12.5px; border-radius:12px; padding:2px 11px; white-space:nowrap; } .tf .mlv .tag.warn { background:#FBE3D9; color:#A83A12; } .tf .mlv .tag.ok { background:#E6F4DF; color:#1E6A14; }
+    .tf .mlv-w { overflow-x:auto; border:1px solid #E1DCE5; border-radius:12px; background:#fff; } .tf table.mlv-t { width:100%; border-collapse:collapse; min-width:900px; }
+    .tf table.mlv-t th { background:#842484; color:#fff; font-size:13px; font-weight:700; text-align:left; padding:9px 12px; white-space:nowrap; } .tf table.mlv-t th.n, .tf table.mlv-t td.n { text-align:right; } .tf table.mlv-t td.c { text-align:center; }
+    .tf table.mlv-t td { padding:9px 12px; border-bottom:1px solid #EEEAF0; font-size:14px; color:#1A1A1A; vertical-align:top; } .tf table.mlv-t td.n { font-variant-numeric:tabular-nums; white-space:nowrap; } .tf table.mlv-t td small { display:block; font-size:11.5px; color:#5E5964; font-weight:400; }
+    .tf table.mlv-t tr.dayh td { background:#F6F1F7; color:#5A1560; font-weight:800; font-size:13.5px; padding:6px 12px; } .tf table.mlv-t tr.veh td { background:#EDE4EE; font-weight:800; padding:7px 12px; }
+    .tf table.mlv-t tr.sub td { background:#FAF8FB; font-weight:700; font-size:13.5px; border-bottom:2px solid #E1DCE5; } .tf table.mlv-t tr.off td { opacity:.6; } .tf table.mlv-t tr.miss td { background:#FFF8F5; }
+    .tf table.mlv-t .ar { color:#5E5964; } .tf table.mlv-t .ex { display:block; font-size:12px; color:#5E5964; margin-top:2px; } .tf .mlv .bad { color:#B3261E; font-weight:700; }
+    .tf .mlv-ed { border:0; background:transparent; color:#842484; font-size:15px; cursor:pointer; padding:2px 6px; } .tf tr.mlv-flash td { background:#F7EEF7 !important; }
+    .tf .mlv-calc { max-width:560px; margin:16px 0 4px auto; border:1px solid #E1DCE5; border-radius:14px; padding:14px 18px 16px; background:#fff; } .tf .mlv-calc h5 { display:flex; justify-content:space-between; align-items:center; font-size:20px; font-weight:800; margin:0 0 10px; color:#1A1A1A; } .tf .mlv-calc h5 i { color:#842484; font-size:18px; }
+    .tf .mlv-calc .r { display:flex; justify-content:space-between; gap:14px; padding:5px 0; font-size:14.5px; color:#5E5964; } .tf .mlv-calc .r b { color:#1A1A1A; font-weight:800; white-space:nowrap; font-variant-numeric:tabular-nums; } .tf .mlv-calc .r small { font-size:12px; } .tf .mlv-calc .r.big span, .tf .mlv-calc .r.big b { font-size:16.5px; color:#1A1A1A; font-weight:800; } .tf .mlv-calc hr { margin:8px 0; border-color:#E1DCE5; opacity:1; }
+    .tf .mlv-total { background:#F5F3F6; border-radius:10px; padding:12px 14px; margin:10px 0 12px; } .tf .mlv-total span { display:block; font-size:13.5px; color:#5E5964; } .tf .mlv-total b { display:block; font-size:26px; font-weight:800; color:#1A1A1A; line-height:1.2; font-variant-numeric:tabular-nums; } .tf .mlv-total em { display:block; font-style:normal; font-size:13.5px; font-weight:700; color:#B3261E; margin-top:2px; }
+    .tf .mlv-copy { display:flex; align-items:center; justify-content:center; gap:9px; width:100%; height:42px; border:0; border-radius:10px; background:linear-gradient(#78B848,#5E9C33); color:#fff; font-size:15px; font-weight:800; cursor:pointer; } .tf .mlv-copy:hover { filter:brightness(1.06); }
+    .tf details.mlv-edit { margin-top:14px; border-top:1px solid #E1DCE5; padding-top:10px; } .tf details.mlv-edit > summary { cursor:pointer; font-weight:700; color:#842484; font-size:14px; margin-bottom:10px; }
+    .tf #mil_card .mv-switch .on { background:#842484; color:#fff; border-color:#842484; }
+    /* tf-millist-r2: the List view exactly to the phone mock-up — a single column of cards */
+    .tf #mil_card.mlv-on > .tf-card-h h6, .tf #mil_card.mlv-on > .tf-card-h > .help, .tf #mil_card.mlv-on > .tf-card-h .mv-switch { display:none; } .tf #mil_card.mlv-on > .tf-card-h { justify-content:flex-end; border-bottom:0; padding-bottom:0; min-height:0; }
+    .tf .mlv { max-width:760px; margin:0 auto; } .tf .mlv-h { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; } .tf .mlv-h h3 { font-size:28px; font-weight:800; margin:0; color:#111; letter-spacing:-.01em; } .tf .mlv-h span { font-size:16px; color:#5E5964; }
+    .tf .mlv .tag { font-size:14.5px; padding:3px 13px; border-radius:14px; font-weight:800; } .tf .mlv-h .tag { color:#1A1A1A; font-size:15.5px; }
+    .tf .mlv-v { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:14px; } .tf .mlv-v > * { display:flex; align-items:center; justify-content:center; gap:8px; height:50px; border:1.5px solid #E1DCE5; border-radius:12px; background:#fff; color:#111; font-size:17px; font-weight:800; cursor:pointer; text-decoration:none; } .tf .mlv-v .on { background:#842484; border-color:#842484; color:#fff; } .tf .mlv-v .na { opacity:.45; cursor:default; }
+    .tf .mlv-jb { display:block; background:#F3F2F4; border-radius:16px; padding:16px 18px; margin-bottom:14px; } .tf .mlv-jb b { font-size:22px; } .tf .mlv-jb span { display:block; font-size:15.5px; margin-top:2px; }
+    .tf .mlv-veh { font-weight:800; color:#5A1560; margin:6px 2px 8px; }
+    .tf .mlv-c { background:#fff; border:1.5px solid #E4E1E7; border-radius:18px; padding:16px 18px; margin-bottom:14px; } .tf .mlv-c.off { opacity:.6; }
+    .tf .mlv-c .top { display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:16px; color:#5E5964; } .tf .mlv-c h4 { font-size:20px; font-weight:800; color:#111; margin:10px 0 14px; padding-bottom:16px; border-bottom:1px solid #E4E1E7; }
+    .tf .mlv-c .fig { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; } .tf .mlv-c .fig span { display:block; font-size:15px; color:#5E5964; } .tf .mlv-c .fig b { display:block; font-size:20px; font-weight:800; color:#111; margin-top:2px; }
+    .tf .mlv-c .fig b span { display:inline; font-size:inherit; color:inherit; }
+    .tf .mlv-c .warn { display:flex; align-items:center; gap:8px; font-size:15px; color:#5E5964; margin-top:10px; } .tf .mlv-c .warn i { color:#B3261E; }
+    .tf .mlv-c.calc h3 { display:flex; justify-content:space-between; align-items:center; font-size:26px; font-weight:800; color:#111; margin:2px 0 12px; } .tf .mlv-c.calc h3 i { color:#842484; font-size:18px; }
+    .tf .mlv-c.calc .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:10px; } .tf .mlv-c.calc label { display:block; font-size:16px; font-weight:700; color:#5E5964; margin:0; } .tf .mlv-c.calc input { display:block; width:100%; height:44px; margin-top:6px; border:1.5px solid #D9D5DD; border-radius:22px; padding:0 18px; font-size:17px; color:#111; background:#fff; } .tf .mlv-c.calc input:focus { outline:0; border-color:#842484; box-shadow:0 0 0 3px rgba(132,36,132,.15); }
+    .tf .mlv-c.calc .r { display:flex; justify-content:space-between; gap:12px; padding:7px 0; font-size:17px; color:#5E5964; } .tf .mlv-c.calc .r b { font-size:19px; font-weight:800; color:#111; white-space:nowrap; } .tf .mlv-c.calc .charge { padding:8px 0 12px; } .tf .mlv-c.calc .charge span, .tf .mlv-c.calc .charge b { display:block; font-size:21px; font-weight:800; color:#111; } .tf .mlv-c.calc hr { margin:4px 0 8px; border-color:#E4E1E7; opacity:1; }
+    .tf .mlv-c.calc details > summary { list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:18px; font-weight:800; color:#111; cursor:pointer; padding:6px 0 10px; } .tf .mlv-c.calc details > summary::-webkit-details-marker { display:none; } .tf .mlv-c.calc details:not([open]) > summary i { transform:rotate(180deg); }
+    .tf .mlv-c.calc .mlv-total { background:#F3F2F4; border-radius:14px; padding:14px 16px; margin:8px 0 14px; } .tf .mlv-c.calc .mlv-total span { font-size:15.5px; } .tf .mlv-c.calc .mlv-total b { font-size:32px; } .tf .mlv-c.calc .mlv-total em { font-size:15.5px; color:#8E1B14; }
+    .tf .mlv-c.calc .mlv-copy { height:48px; border-radius:24px; background:#161616; font-size:17px; } .tf .mlv-c.calc .mlv-copy:hover { background:#2a2a2a; filter:none; }
+    .tf details.mlv-edit { max-width:none; }
+    @media (max-width:600px) { .tf .mlv-h h3 { font-size:23px; } .tf .mlv-v > * { font-size:14.5px; height:44px; } .tf .mlv-c .fig b { font-size:17px; } .tf .mlv-c.calc .mlv-total b { font-size:26px; } }
     /* tf-backlist-r1: a small green way back to the list, at the left of the driver / guide line */
     .inq .inq-crew { position:relative; } .tf .inq .inq-backlist { position:absolute; left:14px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 14px 0 11px; border-radius:16px; background:linear-gradient(#84C254,#6CAB3E); color:#fff; font-size:13px; font-weight:700; text-decoration:none; box-shadow:0 1px 3px rgba(60,110,30,.35); white-space:nowrap; }
     .tf .inq .inq-backlist i { font-size:15px; transition:transform .15s; } .tf .inq .inq-backlist:hover { background:linear-gradient(#78B848,#5E9C33); color:#fff; } .tf .inq .inq-backlist:hover i { transform:translateX(-3px); }
@@ -2821,7 +2857,7 @@
                 ? `<div><span class="pill pill-blue" style="font-size:10px">quoted at ${Number(s.km).toLocaleString()} km, typed by hand</span></div>`
                 : (s.km_by === 'same_place'
                     ? '<div><span class="pill pill-blue" style="font-size:10px" title="The airport area: the airport and garage running the plan already carries covers this leg, so 0 km is quoted and nothing more is needed. Only Katunayake is treated so; a hotel in any other town has its leg priced as usual.">airport area — 0 km, not a blocker</span></div>'
-                    : (s.km == null ? '<div><span class="pill pill-red" style="font-size:10px">no distance — costs nothing</span></div>' : ''));
+                    : (s.km == null ? '<div><span class="pill pill-red" style="font-size:10px">Distance missing — cost incomplete</span></div>' : ''));
             row.cells = { gcell, acell, extraCell, override, release, kindLabel, waived, driven };   // tf-mileage-track-r1: the same cells, for the Railway view's window
             return head + `<tr class="${s.waived_by ? 'waived' : ''}"${driven && s.km == null ? ' data-unpriced="1"' : ''}>
                 <td class="mono">${s.day_no}</td>
@@ -2862,7 +2898,7 @@
             </div>
             <div class="help mt-2">Every driven leg carries two figures, always side by side: <b>Google</b> is the road distance Google gives for the two places, asked once and kept, never overwritten; <b>actual</b> is the kilometres actually driven — the company's own record from past tours (the middle journey, with the number behind it), and the actual runs entered on the Transport desk after each tour, which the record learns from first — or a figure typed in the box. The quotation is costed on ${mil.source === 'google' ? 'Google\'s figure by preference — it has an answer for a sector nobody has driven yet — and falls back to the actual where Google has none' : 'the actual figure, by the setting on Mileage Allowances, and takes Google\'s where there is none'}; a distance typed over in Edit stands over both. Delete takes a leg off for good (Restore brings it back); every edit and delete moves the totals and the costing at once. <b>Extra</b> is what the office gives the driver for the site visits and the city tour on that leg, on top of the journey itself: the destination town's figure from Master Files → Extra Kilometers, or what the drivers actually logged on that run — and you can type your own over it on the row, which is counted in the charged kilometres and paid at the same rate per km. A stay day is charged at the stay-day figure only while the vehicle is kept on; an excursion that brings its own transport waives that day's local running so nothing is charged twice. The <b>garage run</b>, the stay day and a city tour take their kilometres from Master Files → Mileage Allowances, and you can type over any of them on the row for this tour alone — blank puts the master's figure back. <b>Add a leg</b> below makes a garage run or any other kind.
             ${!mil.google_key ? `<br><span class="pill pill-grey">Google off</span> No Google Maps key is set — add <span class="mono">GOOGLE_MAPS_API_KEY</span> to the project's <span class="mono">.env</span>, then press <b>Ask Google</b> above.` : ''}
-            ${Number(mil.unpriced) > 0 ? `<br><span class="pill pill-red">${mil.unpriced} leg(s) with no distance</span> These cost nothing at all until the kilometres are typed in${CAN_MILEAGE ? '' : ' — by somebody with the Mileage override privilege'}.` : ''}
+            ${Number(mil.unpriced) > 0 ? `<br><span class="pill pill-red">${mil.unpriced} leg(s) with no distance</span> Their cost is unknown, and the total stays incomplete, until the kilometres are typed in${CAN_MILEAGE ? '' : ' — by somebody with the Mileage override privilege'}.` : ''}
             ${Number(mil.thin) > 0 ? `<br><span class="pill pill-amber">${mil.thin} thin</span> Quoted on one or two past journeys.` : ''}</div>`
             : `<div class="empty">Add the nights above and the driving is worked out from them.</div>`;
 
@@ -2894,7 +2930,52 @@
                     <input type="number" min="0" step="0.1" class="form-control form-control-sm" id="d_legkm" ${CAN_MILEAGE ? '' : 'disabled title="Typing kilometres needs the Mileage override privilege"'}></div>
                 <div class="col-md-2"><button class="btn btn-light btn-sm w-100" id="d_legadd">Add a leg</button></div>
             </div>`;
-        const mileageBlock = `${legTable}${milTot}${addLegForm}`;
+        // tf-millist-r1 (15 Nov 2026): the List view to the agreed mock-up — the journeys grouped by day with a subtotal each, then the calculation.
+        // Nothing is worked out differently here: the kilometres, the extra kilometres, the rate and the totals are the saved figures the Railway view and the costing use.
+        const mlv = (() => {
+            // tf-millist-r2: drawn exactly to the phone mock-up — one card per sector, then the Mileage calculation with its boxes
+            if (!(mil.legs > 0) && !rows.length) return '';
+            const m2 = v => Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), kmf = v => Number(v).toLocaleString(undefined, { maximumFractionDigits: 1 });
+            const dOf = n => { const d = (it.days || []).find(x => Number(x.day_no) === Number(n) && x.day_date), dep = it.departure_day; const v = d ? d.day_date : (dep && Number(dep.day_no) === Number(n) ? dep.date : null); const t = v ? new Date(String(v).slice(0, 10) + 'T00:00:00') : null; return t && !isNaN(t) ? t : null; };
+            const dayDate = n => { const t = dOf(n); return t ? t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''; };
+            const rateOf = seq => { const b = (mil.by_vehicle || []).find(x => Number(x.vehicle_seq) === Number(seq)); return b ? { rate: b.km_rate, cur: b.currency || mil.currency || 'LKR' } : { rate: mil.km_rate != null ? mil.km_rate : null, cur: mil.currency || 'LKR' }; };
+            const TYPE = { positioning: 'To collect', arrival: 'Arrival', transfer: 'Transfer', local: 'City tour', idle: 'Stay day', departure: 'Departure' };
+            const garages = {}; rows.forEach(r => { if (r.kind === 'leg' && r.s.kind === 'garage' && !r.s.removed_at) (garages[r.seq] = garages[r.seq] || []).push(r.s.id); });
+            const cur = mil.currency || ((mil.by_vehicle || [])[0] || {}).currency || 'LKR', unp = Number(mil.unpriced || 0);
+            let cards = '', lastSeq = null;
+            rows.forEach(row => {
+                if (multi && row.seq !== lastSeq) { lastSeq = row.seq; cards += `<div class="mlv-veh"><i class="bi bi-truck"></i> ${esc(vehLabel(row.seq))}</div>`; }
+                const dd = `Day ${row.day}${dayDate(row.day) ? ' · ' + dayDate(row.day) : ''}`;
+                if (row.kind === 'released') { cards += `<div class="mlv-c"><div class="top"><span>${dd}</span><span class="tag">Released</span></div><h4>Vehicle not kept on this day</h4><div class="warn" style="color:#5E5964">Nothing is charged for it.</div></div>`; return; }
+                const sc = row.s, driven = isDriven(sc), r = rateOf(row.seq), g = garages[row.seq] || [];
+                const type = sc.kind === 'garage' ? (g[0] === sc.id ? 'Garage departure' : (g[g.length - 1] === sc.id ? 'Garage return' : 'Garage run')) : (sc.kind === 'local' && driven ? 'Day out' : (TYPE[sc.kind] || sc.kind));
+                const to = String(sc.to_place || '').trim(), from = String(sc.from_place || '').trim(), title = `${from ? esc(from) : 'Start missing'} → ${to ? esc(to) : 'Destination missing'}`;
+                if (sc.removed_at) { cards += `<div class="mlv-c off"><div class="top"><span>${dd}</span><span class="tag">Taken off</span></div><h4><s>${title}</s></h4><div class="warn" style="color:#5E5964">Taken off by ${esc(sc.removed_by || 'a colleague')} — not charged.</div></div>`; return; }
+                const kmMiss = sc.km == null, bad = kmMiss || !to, ch = kmMiss ? null : Number(sc.km) + (sc.extra_km != null ? Number(sc.extra_km) : 0);
+                const cost = sc.waived_by ? 'Waived' : (kmMiss ? 'Pending' : `<span data-mlvcost="${ch}" data-rate="${r.rate != null ? r.rate : ''}">${r.rate != null ? esc(cur) + ' ' + m2(ch * Number(r.rate)) : 'Pending'}</span>`);
+                cards += `<div class="mlv-c"><div class="top"><span>${dd}</span><span class="tag${bad ? ' warn' : ''}">${bad ? 'Incomplete' : esc(type)}</span></div><h4>${title}</h4>
+                    <div class="fig"><div><span>Google KM</span><b>${driven && sc.google_km != null ? kmf(sc.google_km) + ' km' : '—'}</b></div><div><span>Actual KM</span><b>${kmMiss ? 'Missing' : kmf(sc.km) + ' km'}</b></div><div><span>Cost</span><b>${cost}</b></div></div>
+                    ${bad ? `<div class="warn"><i class="bi bi-exclamation-circle"></i> ${!to && kmMiss ? 'Destination and distance must be completed' : (!to ? 'Destination must be completed' : 'Distance must be completed')}</div>` : ''}</div>`;
+            });
+            const first = (it.days || []).map(d => d.day_no).concat(it.departure_day && it.departure_day.day_no ? [it.departure_day.day_no] : []), a0 = first.length ? dOf(Math.min(...first.map(Number))) : null, z0 = first.length ? dOf(Math.max(...first.map(Number))) : null;
+            const range = a0 && z0 ? (a0.getMonth() === z0.getMonth() && a0.getFullYear() === z0.getFullYear() ? `${a0.getDate()}–${z0.getDate()} ${z0.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}` : `${a0.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} – ${z0.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`) : '';
+            const stW = { new: 'New', working: 'In progress', quoted: 'Quoted', confirmed: 'Confirmed', declined: 'Declined', cancelled: 'Cancelled' }[it.status] || (it.status || '');
+            const recorded = Number(mil.charged_km || 0) - Number(mil.extra_km || 0), rate0 = !multi && mil.km_rate != null ? Number(mil.km_rate) : '';
+            return `<div class="mlv" data-cur="${esc(cur)}" data-recorded="${recorded}" data-unp="${unp}" data-multi="${multi ? 1 : 0}" data-saved="${mil.amount != null ? mil.amount : ''}" data-inq="${esc(it.inquiry_no || '')}">
+                <div class="mlv-h"><div><h3>Mileage by sector</h3><span>${esc(range)}</span></div><span class="tag">${esc(stW)}</span></div>
+                <div class="mlv-v"><button type="button" data-mview="rail"><i class="bi bi-train-front"></i> Railway</button><button type="button" class="on" data-mview="list"><i class="bi bi-list-ul"></i> List view</button>__MLV_MAP__</div>
+                <div class="mlv-jb"><b>Journey breakdown</b><span>Recorded sectors and mileage allowances</span></div>
+                ${cards}
+                <div class="mlv-c calc"><h3>Mileage calculation <i class="bi bi-calculator"></i></h3>
+                    <div class="two"><label>Rate per KM (${esc(cur)})<input type="number" min="0" step="0.01" id="mlc_rate" value="${rate0}" ${multi ? 'disabled placeholder="per vehicle"' : 'placeholder="rate"'}></label><label>Additional KM<input type="number" min="0" step="0.1" id="mlc_add" value="${Number(mil.extra_km || 0)}"></label></div>
+                    <div class="r"><span>Recorded mileage</span><b>${kmf(recorded)} km</b></div><div class="r"><span>Additional mileage</span><b id="mlc_addv">${kmf(mil.extra_km || 0)} km</b></div>
+                    <div class="charge"><span>Chargeable mileage</span><b id="mlc_ch">${kmf(mil.charged_km || 0)} km</b></div><hr>
+                    <div class="r"><span>Mileage × KM rate</span><b id="mlc_mx"></b></div>
+                    <details open><summary>Other transport charges <i class="bi bi-chevron-up"></i></summary><div class="two"><label>Driver allowance (${esc(cur)})<input type="number" min="0" step="0.01" id="mlc_drv" value="0"></label><label>Other charges (${esc(cur)})<input type="number" min="0" step="0.01" id="mlc_oth" value="0"></label></div></details>
+                    <div class="mlv-total"><span>Total calculated transport cost</span><b id="mlc_tot"></b>${unp > 0 ? `<em>Provisional — ${unp} sector${unp === 1 ? '' : 's'} missing distance</em>` : ''}</div>
+                    <button type="button" class="mlv-copy" id="mlc_copy"><i class="bi bi-copy"></i> Copy calculation</button></div></div>`;
+        })();
+        const mileageBlock = mlv ? `${mlv}<details class="mlv-edit" id="mil_edit"${window.__milEditOpen ? ' open' : ''}><summary>Edit distances, extra kilometres and legs — detailed table</summary>${legTable}${milTot}${addLegForm}</details>` : `${legTable}${milTot}${addLegForm}`;
 
         // tf-mileage-track-r1 (10 Oct 2026): the Railway view. The same legs and the same figures as the list above, drawn as
         // the tour's journey — a station for each place (its day and date, and its picture where the system has one), only
@@ -2967,7 +3048,7 @@
                 const kv = [];
                 kv.push(['Quoted', s.km != null
                     ? `<b class="mono">${fmtKm(s.km)} km</b> <span class="pill ${kc}">${kl}</span>${c.override || ''}`
-                    : `<span class="pill pill-red">no distance — costs nothing</span>`]);
+                    : `<span class="pill pill-red">Distance missing — cost incomplete</span>`]);
                 if (c.driven) {
                     kv.push(['Google km', c.gcell]);
                     kv.push(['Actual km', c.acell]);
@@ -3329,7 +3410,7 @@
 
             ${mealsCard(it)}
 
-            <div class="tf-card" id="mil_card"><div class="tf-card-h"><h6>Mileage by sector</h6>
+            <div class="tf-card${MILVIEW === 'list' ? ' mlv-on' : ''}" id="mil_card"><div class="tf-card-h"><h6>Mileage by sector</h6>
                 <span class="help">${MILVIEW === 'list' ? `Google's road distance and the company's own driven record, side by side — the quotation is costed on ${(it.mileage && it.mileage.source) === 'actual' ? 'the driven record' : 'Google\'s figure'}` : 'The whole tour at a glance — point at a place or a sector (tap it on a phone) to see its details'}</span>
                 <span class="mv-switch ms-auto" role="group" aria-label="How the mileage is shown">
                     <button type="button" data-mview="rail" class="${MILVIEW === 'rail' ? 'on' : ''}" title="The tour as a railway line: places and the kilometres between them"><i class="bi bi-train-front"></i> Railway view</button>
@@ -3337,7 +3418,7 @@
                     ${MAPURL ? `<a href="${esc(MAPURL)}" target="_blank" rel="noopener" title="The tour's places in order on Google Maps (opens a new tab; Google shows up to ten stops)"><i class="bi bi-map"></i> Map view</a>` : ''}</span>
                 ${it.mileage && it.mileage.google_key && (it.mileage.google_unasked > 0 || it.mileage.google_missing > 0) ? `<button class="btn btn-light btn-sm" id="d_google" title="Ask Google about every driven leg that has no figure yet; a distance typed by hand is never replaced"><i class="bi bi-geo-alt"></i> Ask Google</button>` : ''}
                 <button class="btn btn-light btn-sm" id="d_autoleg" title="Work the whole itinerary's driving out again, losing any hand-typed legs"><i class="bi bi-magic"></i> Auto</button></div>
-                <div class="tf-card-b">${MILVIEW === 'list' ? mileageBlock : railBlock}</div></div>
+                <div class="tf-card-b">${MILVIEW === 'list' ? mileageBlock.replace('__MLV_MAP__', MAPURL ? `<a href="${esc(MAPURL)}" target="_blank" rel="noopener"><i class="bi bi-map"></i> Map view</a>` : '<span class="na"><i class="bi bi-map"></i> Map view</span>') : railBlock}</div></div>
 
             <div class="tf-card"><div class="tf-card-h"><h6>Excursions</h6>
                 <span class="help">Their own rates, from Master Files → Paid Activities &amp; Services, copied onto the line when added; one that includes transport waives that day's local running</span></div>
@@ -5066,6 +5147,22 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     }
     function trackInit() {
         if (TRK.intake !== (CURRENT && CURRENT.id)) { TRK.pin = null; TRK.intake = CURRENT && CURRENT.id; }   // another inquiry: nothing kept open
+        // tf-millist-r1: the List view's pencil opens the detailed table on that sector; Copy calculation; the detailed table stays open across a save
+        const med = document.getElementById('mil_edit'); if (med) med.addEventListener('toggle', () => { window.__milEditOpen = med.open; });
+        document.querySelectorAll('#mil_card [data-mlvedit]').forEach(x => x.addEventListener('click', () => { const d = document.getElementById('mil_edit'); if (!d) return; d.open = true; window.__milEditOpen = true; const id = x.dataset.mlvedit, inp = d.querySelector(`[data-actual="${id}"], [data-legkm="${id}"], [data-extra="${id}"]`), tr = inp ? inp.closest('tr') : null; (tr || d).scrollIntoView({ block: 'center' }); if (tr) { tr.classList.add('mlv-flash'); setTimeout(() => tr.classList.remove('mlv-flash'), 1800); } if (inp) inp.focus({ preventScroll: true }); }));
+        // tf-millist-r2: the Mileage calculation of the mock-up — a calculator on the saved kilometres; it changes nothing that is saved
+        (() => { const box = document.querySelector('#mil_card .mlv'); if (!box) return; const $ = id => document.getElementById(id), num = id => { const v = parseFloat(($(id) || {}).value); return isNaN(v) || v < 0 ? 0 : v; };
+            const cur = box.dataset.cur, rec = Number(box.dataset.recorded || 0), multi = box.dataset.multi === '1', saved = box.dataset.saved === '' ? null : Number(box.dataset.saved), unp = Number(box.dataset.unp || 0);
+            const m2 = v => Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), kmf = v => Number(v).toLocaleString(undefined, { maximumFractionDigits: 1 });
+            let last = '';
+            const calc = () => { const rv = ($('mlc_rate') || {}).value, hasRate = !multi && rv !== '' && !isNaN(parseFloat(rv)), rate = hasRate ? parseFloat(rv) : null, add = num('mlc_add'), ch = rec + add;
+                $('mlc_addv').textContent = kmf(add) + ' km'; $('mlc_ch').textContent = kmf(ch) + ' km';
+                const mx = multi ? saved : (rate != null ? ch * rate : null), tot = mx != null ? mx + num('mlc_drv') + num('mlc_oth') : null;
+                $('mlc_mx').textContent = mx != null ? cur + ' ' + m2(mx) : 'Pending — rate required'; $('mlc_tot').textContent = tot != null ? cur + ' ' + m2(tot) : 'Pending';
+                if (!multi) box.querySelectorAll('[data-mlvcost]').forEach(el => { el.textContent = rate != null ? cur + ' ' + m2(Number(el.dataset.mlvcost) * rate) : 'Pending'; });
+                last = ['Mileage calculation — ' + box.dataset.inq, 'Rate per KM: ' + (multi ? 'per vehicle' : (rate != null ? cur + ' ' + m2(rate) : 'not set')), 'Recorded mileage: ' + kmf(rec) + ' km', 'Additional mileage: ' + kmf(add) + ' km', 'Chargeable mileage: ' + kmf(ch) + ' km', 'Mileage x KM rate: ' + (mx != null ? cur + ' ' + m2(mx) : 'pending'), 'Driver allowance: ' + cur + ' ' + m2(num('mlc_drv')), 'Other charges: ' + cur + ' ' + m2(num('mlc_oth')), 'Total calculated transport cost: ' + (tot != null ? cur + ' ' + m2(tot) : 'pending') + (unp > 0 ? ' (provisional — ' + unp + ' sector(s) missing distance)' : '')].join('\n'); };
+            ['mlc_rate', 'mlc_add', 'mlc_drv', 'mlc_oth'].forEach(id => { const el = $(id); if (el) el.addEventListener('input', calc); }); calc();
+            $('mlc_copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText(last); toast('success', 'Calculation copied.'); } catch (e) { const ta = document.createElement('textarea'); ta.value = last; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('success', 'Calculation copied.'); } catch (e2) { toast('error', 'The calculation could not be copied.'); } ta.remove(); } }); })();
         document.querySelectorAll('#detail_cols [data-mview]').forEach(b => b.addEventListener('click', () => {
             try { localStorage.setItem('avh_mileage_view', b.dataset.mview); } catch (e) { /* the choice is only a convenience */ }
             const y = window.scrollY;
