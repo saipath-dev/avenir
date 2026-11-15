@@ -4294,7 +4294,7 @@
                 <div class="inq-grid">
                     <div>
                         <div class="inq-two">
-                            <div class="inq-card"><div class="h"><i class="bi bi-car-front"></i>Airport Transfers<button type="button" class="inq-btn" data-inqgo="trans">Details</button></div>
+                            <div class="inq-card"><div class="h"><i class="bi bi-car-front"></i>Transport<button type="button" class="inq-btn" data-inqgo="trans">Details</button></div>
                                 <div class="b">${trLine(T.arrival, 'Arrival') + trLine(T.departure, 'Departure') || '<div class="help" style="padding:8px 0">Not set.</div>'}</div></div>
                             <div class="inq-card"><div class="h"><i class="bi bi-file-text"></i>Quotation Preview</div>
                                 <div class="b inq-q" style="padding-top:12px"><b>“Your Sri Lanka journey${shape ? ' – ' + shape : ''}”</b><div>${esc(pls.join(' – ') || '—')}</div>
