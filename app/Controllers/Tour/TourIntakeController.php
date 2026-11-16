@@ -2163,6 +2163,45 @@ class TourIntakeController extends BaseController
         return ['to' => $to, 'cc' => implode(', ', $cc), 'cc_list' => $cc, 'subject' => mb_substr($subject, 0, 255), 'message' => mb_substr($message, 0, 8000), 'pdf_name' => QuoteService::pdfName($row['cost']['inquiry_no'] ?? null, (int) $row['version'])];
     }
 
+    // tf-quotews-r1: GET intake/(:num)/quote_sheet — what the Quotation area reads besides the inquiry: the room categories each
+    // hotel of the tour has (Hotel Rates), the price by party size of the newest version (selling prices only), and that
+    // version's e-mails. Reads only.
+    public function quoteSheet($id)
+    {
+        try {
+            $db   = $this->db();
+            $cats = [];
+            $rows = $db->query('SELECT DISTINCT d.hotel_id, d.hotel_name_raw, d.room_type_name FROM tf_intake_day d WHERE d.intake_id = ? AND d.hotel_id IS NOT NULL ORDER BY d.day_no', [(int) $id])->getResultArray();
+            foreach ($rows as $r) {
+                $hid = (int) $r['hotel_id'];
+                if (isset($cats[$hid])) {
+                    continue;
+                }
+                $types = [];
+                try {
+                    foreach ($db->query("SELECT name FROM hr2_room_type WHERE hotel_id = ? AND (status IS NULL OR status = 'active') ORDER BY sort_order, id", [$hid])->getResultArray() as $t) {
+                        $types[] = (string) $t['name'];
+                    }
+                } catch (\Throwable $e) {
+                    // no Hotel Rates tables on this install
+                }
+                $cats[$hid] = ['hotel' => (string) $r['hotel_name_raw'], 'chosen' => (string) ($r['room_type_name'] ?? ''), 'types' => $types];
+            }
+            $q      = $this->quotes();
+            $latest = $q->current((int) $id);
+            $sizes  = [];
+            $emails = [];
+            if ($latest) {
+                $full   = $q->quote((int) $latest['id']);
+                $sizes  = PaxMatrix::forAgent($full['cost']['pax_matrix'] ?? null);
+                $emails = $q->emails((int) $latest['id']);
+            }
+            return $this->json(['status' => 200, 'data' => ['categories' => array_values($cats), 'sizes' => $sizes, 'emails' => $emails, 'quote_id' => $latest ? (int) $latest['id'] : null]]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // POST intake/(:num)/quote/(:num)/email/preview {to, cc, subject, message} — the email exactly as it would go, nothing sent
     public function quoteEmailPreview($id, $qid)
     {

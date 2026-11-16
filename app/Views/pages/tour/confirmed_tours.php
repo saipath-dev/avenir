@@ -214,7 +214,7 @@
                 <td><div class="acts">
                     ${finalBtn(t)}
                     ${mailBtn(t)}
-                    <a class="btn btn-light btn-sm" href="${INTAKE}?id=${t.intake_id}" title="The confirmed inquiry — the record of the sale, with its progress"><i class="bi bi-box-arrow-up-right"></i> Open</a>
+                    <a class="btn btn-light btn-sm" href="${PAGE}/${t.id}/control" title="The confirmed tour — its traffic lights, outstanding work, passengers and rooming"><i class="bi bi-box-arrow-up-right"></i> Open</a>
                     <a class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" href="${INTAKE}/comms/${t.intake_id}" title="Correspondence, attachments, agreed arrangements, follow-ups and hand-over"><i class="bi bi-chat-left-text"></i> Communications &amp; History</a>
                     ${CAN.board ? `<a class="btn btn-light btn-sm" href="${BOARD}/tour/${t.id}/record" title="The complete record of this tour, from the inquiry to today"><i class="bi bi-journal-text"></i> Complete record</a>` : ''}
                     ${programme ? `<a class="btn btn-light btn-sm" href="${programme}" title="The programme day by day, to print"><i class="bi bi-printer"></i> Programme</a>` : ''}

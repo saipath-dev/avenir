@@ -538,6 +538,59 @@
     .inq .inq-panebox { background:#fff; border:1px solid var(--line); border-radius:0 12px 12px 12px; padding:16px; margin-bottom:16px; }
     .inq .inq-pane > .inq-panebox > .tf-card:last-child { margin-bottom:0; }
     .inq .inq-pane .mailbox { position:static !important; max-height:none !important; }   /* inside a tab the email box scrolls with the page; it no longer sticks over the cards below it */
+    /* tf-quotews-r1: the Quotation area — Avenir purple #842484, green #78b848 */
+    .tf .inq .qws { --qp:#842484; --qpd:#5b175b; --qg:#78b848; --ql:#ded6e0; --qs:#f7f0f7; color:#1A1A1A; font-size:13px; margin-bottom:14px; }
+    .tf .inq .qws .qsum { display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr 1fr auto; background:linear-gradient(110deg,#842484,#5b175b); color:#fff; border-radius:12px; overflow:hidden; }
+    .tf .inq .qws .qsum > div { padding:12px 16px; border-right:1px solid rgba(255,255,255,.18); min-width:0; } .tf .inq .qws .qsum > div:last-child { border:0; display:flex; gap:8px; align-items:center; }
+    .tf .inq .qws .qsum small { display:block; font-size:10.5px; letter-spacing:.8px; text-transform:uppercase; } .tf .inq .qws .qsum b { font-size:17px; } .tf .inq .qws .qsum .big b { font-size:21px; }
+    .tf .inq .qws .qsum .qs { font-size:11.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .tf .inq .qws .qv { display:inline-block; border-radius:10px; padding:1px 8px; font-size:10.5px; font-weight:800; margin-left:6px; vertical-align:2px; background:#eee; color:#1A1A1A; }
+    .tf .inq .qws .qv.issued { background:var(--qg); color:#fff; } .tf .inq .qws .qv.draft { background:#fdeccb; color:#8a4b00; }
+    .tf .inq .qws .qbtn { display:inline-flex; align-items:center; gap:7px; border-radius:6px; padding:6px 13px; font-weight:700; font-size:12.5px; border:1px solid var(--qg); background:var(--qg); color:#fff !important; white-space:nowrap; text-decoration:none; cursor:pointer; }
+    .tf .inq .qws .qbtn.w { background:#fff; color:var(--qp) !important; border-color:#fff; } .tf .inq .qws .qbtn.line { background:#fff; color:#2f6d12 !important; } .tf .inq .qws .qbtn.p { background:var(--qp); border-color:var(--qp); }
+    .tf .inq .qws .qbtn.off, .tf .inq .qws .qbtn.blocked { opacity:.5; cursor:not-allowed; } .tf .inq .qws .qbtn.wide { box-sizing:border-box; width:100%; justify-content:center; margin-top:8px; }
+    .tf .inq .qws .qsteps { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:12px 0; }
+    .tf .inq .qws .qstep { background:#fff; border:1px solid var(--ql); border-radius:12px; padding:26px 14px 10px; display:flex; gap:12px; align-items:center; position:relative; cursor:pointer; }
+    .tf .inq .qws .qstep:hover { border-color:var(--qp); } .tf .inq .qws .qstep .n { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; background:var(--qp); color:#fff; flex:0 0 32px; }
+    .tf .inq .qws .qstep b { display:block; font-size:13.5px; } .tf .inq .qws .qstep small { font-size:11.5px; }
+    .tf .inq .qws .qstep .st { position:absolute; right:10px; top:8px; font-size:11px; font-weight:700; border-radius:10px; padding:1px 8px; }
+    .tf .inq .qws .ok { background:#e4f4d6; color:#2f6d12; } .tf .inq .qws .wait { background:#fdeccb; color:#8a4b00; } .tf .inq .qws .todo, .tf .inq .qws .grey { background:#eee; color:#1A1A1A; } .tf .inq .qws .bad { background:#fbdde3; color:#a3123a; }
+    .tf .inq .qws .qmain { display:grid; grid-template-columns:1fr 340px; gap:14px; align-items:start; }
+    .tf .inq .qws .qcard { background:#fff; border:1px solid var(--ql); border-radius:12px; overflow:hidden; margin-bottom:14px; }
+    .tf .inq .qws .qcard > .h { display:flex; align-items:center; gap:10px; padding:9px 14px; border-bottom:1px solid var(--ql); background:var(--qs); flex-wrap:wrap; }
+    .tf .inq .qws .qcard > .h b { font-size:14.5px; color:var(--qp); } .tf .inq .qws .qcard > .h .sp { flex:1; } .tf .inq .qws .qcard > .h small { font-size:11.5px; }
+    .tf .inq .qws .num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--qp); color:#fff; font-size:12px; font-weight:800; }
+    .tf .inq .qws .b { padding:10px 14px; }
+    .tf .inq .qws .qrow { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; }
+    .tf .inq .qws label { display:block; font-size:11px; font-weight:600; margin-bottom:2px; }
+    .tf .inq .qws .inp { border:1px solid var(--ql); border-radius:6px; padding:4px 10px; background:#fafafa; min-width:52px; }
+    .tf .inq .qws .qpill { display:inline-block; border-radius:12px; padding:2px 9px; font-size:11.5px; font-weight:600; white-space:nowrap; }
+    .tf .inq .qws .qchip { display:inline-flex; border:1px solid var(--ql); background:#fff; border-radius:16px; padding:2px 10px; font-size:12px; font-weight:600; margin:0 4px 4px 0; cursor:pointer; }
+    .tf .inq .qws .qchip.on { background:var(--qp); border-color:var(--qp); color:#fff; cursor:default; } .tf .inq .qws .qchip.on2 { background:#f3e3f3; border-color:var(--qp); color:var(--qp); }
+    .tf .inq .qws .qlink { color:var(--qp); font-weight:700; font-size:12px; }
+    .tf .inq .qws table.qt { width:100%; border-collapse:collapse; } .tf .inq .qws table.qt th { background:#faf6fa; text-align:left; font-size:11.5px; padding:6px 12px; border-top:1px solid var(--ql); border-bottom:1px solid var(--ql); }
+    .tf .inq .qws table.qt td { padding:7px 12px; border-bottom:1px solid var(--ql); } .tf .inq .qws table.qt .r { text-align:right; } .tf .inq .qws table.qt tr.sel td { background:#f3faec; }
+    .tf .inq .qws .blank { display:inline-block; min-width:80px; border-bottom:2px dotted #b9a6bd; color:#7c6c80; font-size:11.5px; text-align:center; }
+    .tf .inq .qws .qnote { font-size:12px; line-height:1.45; }
+    .tf .inq .qws .qdays { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+    .tf .inq .qws .qdc { border:1px solid var(--ql); border-radius:10px; overflow:hidden; }
+    .tf .inq .qws .qdc .ph { height:80px; background-size:cover; background-position:center; position:relative; }
+    .tf .inq .qws .qdc .ph.none { background:repeating-linear-gradient(135deg,#f6eff6 0 10px,#fbf7fb 10px 20px); display:flex; align-items:center; justify-content:center; color:var(--qp); font-size:11px; }
+    .tf .inq .qws .qdc .ph .d { position:absolute; left:8px; top:8px; background:#fff; color:var(--qp); border-radius:6px; padding:0 7px; font-weight:800; font-size:12px; }
+    .tf .inq .qws .qdc .t { padding:7px 9px; font-size:11.5px; } .tf .inq .qws .qdc .t b { display:block; font-size:12.5px; color:var(--qpd); } .tf .inq .qws .qdc .tx { margin:3px 0; line-height:1.35; }
+    .tf .inq .qws .qtg { display:inline-block; border-radius:10px; padding:1px 7px; font-size:10.5px; font-weight:600; margin:3px 3px 0 0; background:#eee; }
+    .tf .inq .qws .qtg.inc { background:#e4f4d6; color:#2f6d12; } .tf .inq .qws .qtg.pay { background:#fdeccb; color:#8a4b00; } .tf .inq .qws .qtg.opt { background:#e6eef8; }
+    .tf .inq .qws .qseg { display:inline-flex; border:1px solid var(--ql); border-radius:6px; overflow:hidden; } .tf .inq .qws .qseg span { padding:3px 8px; font-size:11.5px; font-weight:600; border-right:1px solid var(--ql); } .tf .inq .qws .qseg span:last-child { border:0; }
+    .tf .inq .qws .qseg .on.inc { background:#e4f4d6; color:#2f6d12; } .tf .inq .qws .qseg .on.pay { background:#fdeccb; color:#8a4b00; } .tf .inq .qws .qseg .on.free { background:#eef0f3; } .tf .inq .qws .qseg .on.opt { background:#e6eef8; }
+    .tf .inq .qws .qthumb { height:360px; overflow:hidden; border:1px solid var(--ql); border-radius:10px; position:relative; }
+    .tf .inq .qws .qthumb iframe { width:1000px; height:1140px; border:0; transform:scale(.31); transform-origin:0 0; pointer-events:none; }
+    .tf .inq .qws .qfill { display:inline-block; border:1px dashed #d08a00; background:#fff7e6; border-radius:4px; padding:0 6px; font-weight:600; font-size:11px; margin:2px 2px 0 0; }
+    .tf .inq .qws .qatt { display:flex; gap:8px; align-items:center; background:var(--qs); border-radius:8px; padding:6px 10px; font-size:12px; margin-top:8px; }
+    .tf .inq .qws .qvers { margin-top:12px; } .tf .inq .qws .qver { display:flex; gap:10px; align-items:center; padding:8px 0; border-bottom:1px dashed var(--ql); } .tf .inq .qws .qver:last-child { border:0; }
+    .tf .inq .qws .qver .v { font-weight:800; color:var(--qp); width:26px; } .tf .inq .qws .qver .grow { flex:1; } .tf .inq .qws .qver small { display:block; font-size:11.5px; } .tf .inq .qws .qver .links { font-size:11.5px; } .tf .inq .qws .qver .links a { color:var(--qp); font-weight:600; }
+    .tf .inq .qws .okt { color:#2f6d12; font-weight:700; } .tf .inq .qws .badt { color:#a3123a; font-weight:700; }
+    .tf .inq .qws-tools > summary { font-weight:700; color:#842484; }
+    @media (max-width:1100px) { .tf .inq .qws .qsum { grid-template-columns:1fr 1fr; } .tf .inq .qws .qsteps { grid-template-columns:1fr 1fr; } .tf .inq .qws .qmain { grid-template-columns:1fr; } }
     /* tf-check-r1: Before Tour Confirmation — the check panel. Same records as the itinerary, grouped by section. */
     .tf .inq .inq-tab[data-tab="check"] { margin-left:10px; border-color:#78B848; color:#3F7F1F; font-weight:600; }
     .tf .inq .inq-tab[data-tab="check"].on { background:linear-gradient(#8E2E8E,#7A1F7A); border-color:#7A1F7A; color:#fff; }
@@ -1147,7 +1200,7 @@
                                     <div class="sugg" id="n_agent_sugg" hidden></div></div></div>
                             <div class="col-md-4"><label class="form-label help">Agent email</label><input class="form-control form-control-sm" id="n_agent_email" placeholder="agent@example.com"></div>
                             <div class="col-md-4"><label class="form-label help">Country</label><input class="form-control form-control-sm" id="n_agent_country" placeholder="Japan"></div>
-                            <div class="col-md-4"><label class="form-label help">Agent reference</label><input class="form-control form-control-sm" id="n_agent_reference" placeholder="Their own booking reference"></div>
+                            <div class="col-md-4"><label class="form-label help">Agent booking reference</label><input class="form-control form-control-sm" id="n_agent_reference" placeholder="Their own booking reference"></div>
                             <div class="col-md-5"><label class="form-label help">Group / tour name</label><input class="form-control form-control-sm" id="n_tour_name" placeholder="Baiko Gakuin university group"></div>
                             <div class="col-md-3"><label class="form-label help">Hotel grade</label><select class="form-select form-select-sm" id="n_hotel_class"><option value="">— not set —</option><option>Standard</option><option>Superior</option><option>Deluxe</option><option>Luxury</option></select></div>
                         </div></div>
@@ -1733,7 +1786,7 @@
     const staffName = u => { if (!u) return ''; const h = HANDLERS.find(x => x.username === u); return h ? h.name : u; };
     const NAMES = Object.fromEntries(HANDLERS.filter(h => h.username).map(h => [h.username, h.name]));
     const LABELS = {
-        agent_name:'Agent', agent_email:'Agent email', agent_country:'Country', agent_reference:'Agent reference',
+        agent_name:'Agent', agent_email:'Agent email', agent_country:'Country', agent_reference:'Agent booking reference',
         tour_name:'Group / tour name', arrival_date:'Arrival', departure_date:'Departure', nights:'Nights',
         pax_total:'Passengers', pax_adults:'Adults', pax_children:'Children',
         rooms_note:'Rooms', hotel_class:'Hotel class', arrival_flight:'Arrival flight', departure_flight:'Departure flight',
@@ -4284,7 +4337,7 @@
                 <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Transport</button>
                 <button type="button" class="inq-tab" data-tab="pax"><i class="bi bi-people"></i> Passengers (${Number(it.pax_total || 0)})</button>
                 <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
-                <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Tour Confirmation <span id="inq_chk_n" style="display:none"></span></button>
+                <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Quotation &amp; Confirmation <span id="inq_chk_n" style="display:none"></span></button>
             </div>
             </div>
             <div class="inq-pane" data-pane="itin">
@@ -4338,6 +4391,22 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         pane('hotels').appendChild(full);
         bins.hotels.forEach(c => full.appendChild(c));
         ['acts', 'trans', 'pax', 'notes', 'quote', 'book'].forEach(k => bins[k].forEach(c => pane(k).appendChild(c)));
+        // tf-quotecheck-r1: the quotation (versions, Go for Quotation, previews, pricing) sits at the top of Before Quotation & Confirmation
+        { const qp = pane('quote'), cp = pane('check'), at = document.getElementById('inq_check');
+          if (qp && cp && at) { const qw = document.createElement('div'); qw.id = 'inq_quote_here';
+            Array.from(qp.children).forEach(ch => { if (!ch.classList.contains('inq-back')) qw.appendChild(ch); });
+            // the Quotation card (versions, Go for Quotation) first, then Pricing, then how the quotation reads
+            const cards = Array.from(qw.children), title = c => ((c.querySelector('h6') || {}).textContent || '').trim();
+            const qc = cards.find(c => /^Quotation/.test(title(c))), pc = cards.find(c => /^Pricing/.test(title(c)));
+            [pc, qc].forEach(c => { if (c) qw.insertBefore(c, qw.firstChild); });
+            // tf-quotews-r1: the new Quotation area on top; every tool that was here stays, folded under it
+            const det = document.createElement('details'); det.className = 'inq-sec qws-tools'; det.open = !!INQ_OPEN.qtools;
+            det.innerHTML = '<summary>All quotation tools — Go for Quotation, Issue, pricing and how the quotation reads</summary>';
+            det.addEventListener('toggle', () => { INQ_OPEN.qtools = det.open; });
+            det.appendChild(qw); cp.insertBefore(det, at);
+            const ws = document.createElement('div'); ws.className = 'qws'; ws.id = 'qws'; cp.insertBefore(ws, det);
+            qwsLoad(it, ws); }
+          shell.querySelectorAll('[data-inqgo="quote"]').forEach(b => { b.dataset.inqgo = 'check'; }); }
         const act = document.getElementById('act_card'); if (act) pane('notes').appendChild(act);
         [document.getElementById('masters_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')].forEach(el => { if (el) pane('notes').appendChild(el); });
         const cc = document.getElementById('comms_card'); if (cc) pane('notes').appendChild(cc);
@@ -4449,6 +4518,110 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
                 inqShow(x.panel); const p = document.querySelector('.inq .inq-pane.on'); if (p) inqSettle(p);
             })) });
     }
+    // ---------- tf-quotews-r1: the Quotation area — itinerary, calculator, client quotation, send & versions ----------
+    const QWS = { forId: null, sheet: null, extra: {} };
+    const qwsMoney = v => v == null || v === '' ? null : 'USD ' + Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const qwsDate = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ''); return m ? `${Number(m[3])} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(m[2]) - 1]} ${m[1]}` : ''; };
+    const QWS_PAY = { in_tour: 'inc', prepaid: 'inc', direct: 'pay', no_charge: 'free', in_rate: 'free', optional: 'opt', own_arrangement: 'pay', not_arranged: 'none', unknown: 'none' };
+    async function qwsLoad(it, host) {
+        if (QWS.forId !== it.id) { QWS.forId = it.id; QWS.sheet = null; QWS.extra = {}; }
+        qwsDraw(it, host);
+        try { const j = await api('/intake/' + it.id + '/quote_sheet'); if (j.status === 200 && QWS.forId === it.id) { QWS.sheet = j.data; qwsDraw(it, host); } } catch (e) { /* the area still shows what the inquiry holds */ }
+    }
+    function qwsDraw(it, host) {
+        if (!host || !host.isConnected) return;
+        const sh = QWS.sheet || { categories: [], sizes: [], emails: [] };
+        const quotes = it.quotes || [];
+        const latest = quotes.find(q => q.status === 'draft') || quotes.find(q => q.status === 'issued') || null;
+        const id = it.id, no = String(it.inquiry_no || ''), pdfName = latest ? 'Quotation-' + no.replace(/\s+/g, '') + '-v' + latest.version + '.pdf' : '';
+        const client = latest ? `${BASE}/intake/${id}/quote/${latest.id}?view=client` : null;
+        const sent = (sh.emails || []).find(e => e.status === 'sent'), failed = (sh.emails || [])[0] && sh.emails[0].status === 'failed' ? sh.emails[0] : null;
+        const L = (href, label, icon, cls, extra) => href ? `<a class="qbtn ${cls || ''}" href="${href}" target="_blank" ${extra || ''}><i class="bi ${icon}"></i> ${label}</a>` : `<span class="qbtn off ${cls || ''}" title="Go for Quotation first"><i class="bi ${icon}"></i> ${label}</span>`;
+        // itinerary days: the nights, then the departure day
+        const txt = ((it.itinerary || {}).days) || {}, ph = ((it.photos || {}).days) || {};
+        const days = (it.days || []).slice().sort((a, b) => a.day_no - b.day_no).map(d => ({ n: d.day_no, date: d.day_date, hotel: d.hotel_name_raw, meal: d.meal_plan }));
+        if (it.departure_day && it.departure_day.day_no && !days.some(d => d.n === it.departure_day.day_no)) days.push({ n: it.departure_day.day_no, date: it.departure_day.date, hotel: null, dep: true });
+        const svc = it.services || [];
+        const dayText = d => String((txt[d.n] || {}).text || (d.dep ? (it.departure_narrative || '') : '') || '').trim();
+        const noPic = days.filter(d => !(ph[d.n] && ph[d.n].url)).length, noTxt = days.filter(d => !d.dep && !dayText(d)).length;   // the departure day's words are written by the quotation itself
+        // what the client quotation still lacks
+        const aref = String(((it.fields || {}).agent_reference || {}).value || '').trim();
+        const miss = [!it.agent_email && 'agent e-mail', !it.arrival_flight && 'arrival flight · time', !it.departure_flight && 'departure flight · time', !aref && 'agent booking ref'].filter(Boolean);
+        // calculator
+        const R = it.rooms || {}, beds = Number(R.sgl || 0) + 2 * Number(R.dbl || 0) + 2 * Number(R.twn || 0) + 3 * Number(R.tpl || 0), pax = Number(it.pax_total || 0);
+        const cats = sh.categories || [];
+        const chosen = cats.map(c => c.chosen).filter(Boolean);
+        const sizes = (sh.sizes || []).slice(0, QWS.extra.allSizes ? 10 : 5);
+        const step = (n, title, sub, st, cls, go) => `<div class="qstep" data-qgo="${go}"><span class="n">${n}</span><div><b>${title}</b><small>${sub}</small></div><span class="st ${cls}">${st}</span></div>`;
+        const seg = mode => { const k = QWS_PAY[mode] || 'none'; return `<div class="qseg">${[['inc', 'Included'], ['pay', 'Paid by guests'], ['free', 'No charge'], ['opt', 'Optional']].map(x => `<span class="${x[0] === k ? 'on ' + x[0] : ''}">${x[1]}</span>`).join('')}</div>${k === 'none' ? ' <span class="qnote">not arranged</span>' : ''}`; };
+        host.innerHTML = `
+        <div class="qsum">
+            <div><small>Quotation</small><b>${latest ? esc(no) + ' / v' + latest.version : 'No version yet'}</b>${latest ? `<span class="qv ${latest.status}">${esc(String(latest.status).toUpperCase())}</span><div class="qs">${latest.status === 'issued' ? 'issued ' + esc(qwsDate(latest.issued_at)) + (latest.issued_by ? ' by ' + esc(latest.issued_by) : '') : 'draft — sending issues it'}</div>` : '<div class="qs">Go for Quotation makes the first version</div>'}</div>
+            <div class="big"><small>Total · ${esc(chosen[0] || 'rooms as asked')} · ${pax || '—'} pax</small><b>${latest && qwsMoney(latest.sell_usd) || '—'}</b></div>
+            <div class="big"><small>Per person</small><b>${latest && qwsMoney(latest.per_person_usd) || '—'}</b></div>
+            <div><small>Valid until</small><b>${latest && latest.valid_until ? esc(qwsDate(latest.valid_until)) : '—'}</b></div>
+            <div><small>Sent to agent</small><b>${sent ? esc(qwsDate(sent.sent_at)) : (failed ? 'Last try failed' : 'Not yet')}</b>${sent ? `<div class="qs">${esc(sent.to_email || '')}</div>` : (failed ? `<div class="qs">${esc(failed.error || '')}</div>` : '')}</div>
+            <div class="acts">${L(client, 'Preview', 'bi-eye', 'w')}${L(client, 'Send quotation', 'bi-send', '', 'data-sendq')}</div>
+        </div>
+        <div class="qsteps">
+            ${step(1, 'Itinerary', days.length + ' days · pictures · who pays', noTxt ? noTxt + ' day text missing' : (noPic ? noPic + ' picture' + (noPic === 1 ? '' : 's') + ' missing' : 'Ready'), noTxt || noPic ? 'wait' : 'ok', 'itin')}
+            ${step(2, 'Quotation calculator', 'party · rooms · categories', latest && latest.sell_usd != null ? 'Priced' : 'Not priced', latest && latest.sell_usd != null ? 'ok' : 'wait', 'calc')}
+            ${step(3, 'Client quotation', 'the document the agent receives', miss.length ? miss.length + ' detail' + (miss.length === 1 ? '' : 's') + ' missing' : 'Ready', miss.length ? 'wait' : 'ok', 'doc')}
+            ${step(4, 'Send &amp; versions', 'e-mail, PDF, history', sent ? 'Sent' : 'Not sent', sent ? 'ok' : 'todo', 'send')}
+        </div>
+        <div class="qmain"><div>
+            <div class="qcard" id="qws_calc"><div class="h"><span class="num">2</span><b>Quotation calculator</b><span class="sp"></span><small>Per person · USD · selling prices only</small>
+                <button type="button" class="qbtn line" data-qclick="d_checklist"><i class="bi bi-list-check"></i> Checklist</button><button type="button" class="qbtn p" data-qclick="d_go"><i class="bi bi-check2-square"></i> Go for Quotation</button></div>
+                <div class="b"><div class="qrow">
+                    ${[['Adults', it.pax_adults ?? it.pax_total], ['Children', it.pax_children || 0], ['Single', R.sgl || 0], ['Double', R.dbl || 0], ['Twin', R.twn || 0], ['Triple', R.tpl || 0]].map(x => `<div><label>${x[0]}</label><div class="inp">${esc(x[1] ?? '—')}</div></div>`).join('')}
+                    <div>${!R.rooms ? '<span class="qpill wait">No rooms on the inquiry</span>' : (beds >= pax ? `<span class="qpill ok"><i class="bi bi-check-lg"></i> ${beds} bed${beds === 1 ? '' : 's'} for ${pax} guest${pax === 1 ? '' : 's'}</span>` : `<span class="qpill bad">${beds} beds for ${pax} guests</span>`)}</div>
+                    <a href="#" class="qlink" data-inqgo="book">Change the party or rooms</a>
+                    <div style="flex:1"></div>
+                    <div><label>Room categories to quote</label>${cats.length ? cats.map(c => c.types.map(t => `<span class="qchip ${t === c.chosen ? 'on' : (QWS.extra['c:' + t] ? 'on2' : '')}" data-qcat="${esc(t)}" title="${esc(c.hotel)}">${esc(t)}</span>`).join('')).join('') : '<span class="qnote">The hotels have no room categories in Hotel Rates</span>'}</div>
+                </div></div>
+                <table class="qt"><thead><tr><th>Category</th><th class="r">Per person sharing</th><th class="r">Per person single</th><th class="r">Per person triple</th><th class="r">Total for the party</th><th>Status</th></tr></thead><tbody>
+                    ${chosen.length ? `<tr class="sel"><td><b>${esc(chosen.join(' / '))}</b> <small>as asked</small></td><td class="r"><b>${latest && qwsMoney(latest.per_person_usd) || '—'}</b></td><td class="r"><span class="blank">not priced yet</span></td><td class="r"><span class="blank">not priced yet</span></td><td class="r"><b>${latest && qwsMoney(latest.sell_usd) || '—'}</b></td><td>${latest && latest.sell_usd != null ? '<span class="qpill ok">Calculated</span>' : '<span class="qpill wait">Go for Quotation</span>'}</td></tr>` : ''}
+                    ${Object.keys(QWS.extra).filter(k => k.startsWith('c:') && QWS.extra[k]).map(k => `<tr><td><b>${esc(k.slice(2))}</b></td><td class="r"><span class="blank">not priced yet</span></td><td class="r"><span class="blank">not priced yet</span></td><td class="r"><span class="blank">not priced yet</span></td><td class="r"><span class="blank">not priced yet</span></td><td><span class="qpill grey">Needs the category calculator</span></td></tr>`).join('')}
+                </tbody></table>
+                <div class="b qnote">A party is totalled as <b>singles × single rate + sharers × sharing rate</b> (3 guests = 1 single + 2 sharing). Click a category to add it; other categories and the single and triple rates are not priced by the system yet. Costs, markup and profit stay on the internal costing.</div>
+                <table class="qt"><thead><tr><th>Price by party size</th><th>Rooms</th><th class="r">Per person</th><th class="r">Total</th><th></th></tr></thead><tbody>
+                    ${sizes.length ? sizes.map(s => `<tr class="${s.pax === pax ? 'sel' : ''}"><td><b>${s.pax} guest${s.pax === 1 ? '' : 's'}</b>${s.pax === pax ? ' <span class="qv issued">AS ASKED</span>' : ''}</td><td>${esc(s.rooms)}</td><td class="r">${s.per_person_usd != null ? '<b>' + qwsMoney(s.per_person_usd) + '</b>' : '<span class="blank">on request</span>'}</td><td class="r">${s.per_person_usd != null ? qwsMoney(s.per_person_usd * s.pax) : '—'}</td><td>${s.per_person_usd != null ? '<span class="qpill ok">Calculated</span>' : '<span class="qpill wait">A rate is missing</span>'}</td></tr>`).join('')
+                        : '<tr><td colspan="5" class="qnote">Go for Quotation works out the price for each party size.</td></tr>'}
+                </tbody></table>
+                ${(sh.sizes || []).length > 5 ? `<div class="b"><a href="#" class="qlink" data-qsizes>${QWS.extra.allSizes ? 'Show 1 to 5 guests' : 'Show up to 10 guests'}</a></div>` : ''}
+            </div>
+            <div class="qcard" id="qws_itin"><div class="h"><span class="num">1</span><b>Itinerary</b><span class="sp"></span><small>Pictures from Tour Photos · who pays decides the Included / Paid by guests lists</small><a href="#" class="qbtn line" data-inqgo="hotels"><i class="bi bi-pencil"></i> Edit day text</a></div>
+                <div class="b"><div class="qdays">${days.map(d => { const p = ph[d.n], t = dayText(d), mine = svc.filter(s => Number(s.day_no) === Number(d.n));
+                    return `<div class="qdc"><div class="ph${p && p.url ? '' : ' none'}" ${p && p.url ? `style="background-image:url('${esc(p.url)}')"` : ''}><span class="d">Day ${d.n}</span>${p && p.url ? '' : 'no picture yet'}</div>
+                        <div class="t"><b>${d.dep ? 'Departure' : esc(d.hotel || 'Day ' + d.n)}</b>${esc(qwsDate(d.date))}<div class="tx">${esc(t ? t.slice(0, 90) + (t.length > 90 ? '…' : '') : (d.dep ? 'Departure words written by the quotation' : 'No day text yet'))}</div>
+                        ${mine.map(s => { const k = QWS_PAY[s.pay_mode] || 'none'; return `<span class="qtg ${k}">${esc(String(s.title || '').slice(0, 26))}</span>`; }).join('')}</div></div>`; }).join('') || '<span class="qnote">No day on this inquiry yet.</span>'}</div></div>
+                <table class="qt"><thead><tr><th>Day</th><th>Service</th><th>On the quotation as</th></tr></thead><tbody>
+                    ${svc.length ? svc.map(s => `<tr><td>${esc(s.day_no || '—')}</td><td>${esc(s.title || '')}</td><td>${seg(s.pay_mode)}</td></tr>`).join('') : '<tr><td colspan="3" class="qnote">No lunch, entrance or activity on this inquiry.</td></tr>'}
+                </tbody></table>
+                <div class="b qnote">Who pays is set on each line in <a href="#" class="qlink" data-inqgo="acts">Activities</a>; the quotation lists what is included and what the guests pay from it.</div>
+            </div>
+        </div><div>
+            <div class="qcard" id="qws_doc"><div class="h"><span class="num">3</span><b>Client quotation</b></div>
+                <div class="b">${client ? `<div class="qthumb"><iframe src="${client}" tabindex="-1" loading="lazy"></iframe></div>` : '<div class="qnote">Go for Quotation makes the document the agent receives.</div>'}
+                ${miss.length ? `<div class="qnote" style="margin-top:8px">Still to fill: ${miss.map(m => `<span class="qfill">${m}</span>`).join(' ')}</div>` : ''}
+                ${L(client, 'Open full preview', 'bi-eye', 'p wide')}${L(client ? client + '&pdf=1' : null, 'Download PDF', 'bi-file-earmark-pdf', 'line wide')}</div></div>
+            <div class="qcard" id="qws_send"><div class="h"><span class="num">4</span><b>Send &amp; versions</b></div>
+                <div class="b"><label>To</label><div class="inp">${it.agent_email ? esc(it.agent_email) : '<span class="qnote">agent e-mail — not on the inquiry</span>'}</div>
+                ${latest ? `<div class="qatt"><i class="bi bi-paperclip"></i> ${esc(pdfName)} · quotation and itinerary</div>` : ''}
+                ${L(client, 'Preview e-mail, then send', 'bi-send', 'wide', 'data-sendq')}
+                <div class="qvers">${quotes.map(q => `<div class="qver"><span class="v">v${q.version}</span><div class="grow"><b>${qwsMoney(q.sell_usd) || 'no price'}</b><small>${q.status === 'issued' ? 'issued ' + esc(qwsDate(q.issued_at)) : (q.status === 'draft' ? 'draft · made ' + esc(qwsDate(q.created_at)) : 'made ' + esc(qwsDate(q.created_at)))}</small>
+                    <span class="links"><a href="${BASE}/intake/${id}/quote/${q.id}?view=client" target="_blank">Client</a> · <a href="${BASE}/intake/${id}/quote/${q.id}?view=client&pdf=1" target="_blank">PDF</a>${SEES_PRICING ? ` · <a href="${BASE}/intake/${id}/quote/${q.id}?view=internal" target="_blank">Costing</a>` : ''}</span></div><span class="qv ${q.status}">${esc(q.status)}</span></div>`).join('') || '<div class="qnote">No version yet.</div>'}</div>
+                ${(sh.emails || []).length ? `<div class="qnote" style="margin-top:8px"><b>E-mails</b>${sh.emails.slice(0, 5).map(e => `<div>${esc(qwsDate(e.sent_at))} · ${esc(e.to_email || '')} · <span class="${e.status === 'sent' ? 'okt' : 'badt'}">${esc(e.status)}</span></div>`).join('')}</div>` : ''}
+                </div></div>
+        </div></div>`;
+        host.querySelectorAll('[data-qgo]').forEach(b => b.addEventListener('click', () => { const t = document.getElementById('qws_' + b.dataset.qgo); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+        host.querySelectorAll('[data-qclick]').forEach(b => b.addEventListener('click', () => { const t = document.getElementById(b.dataset.qclick); if (t) t.click(); }));
+        host.querySelectorAll('[data-qcat]').forEach(b => b.addEventListener('click', () => { if (b.classList.contains('on')) return; const k = 'c:' + b.dataset.qcat; QWS.extra[k] = !QWS.extra[k]; qwsDraw(it, host); }));
+        host.querySelectorAll('[data-qsizes]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); QWS.extra.allSizes = !QWS.extra.allSizes; qwsDraw(it, host); }));
+        host.querySelectorAll('[data-inqgo]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); inqShow(b.dataset.inqgo); }));
+        host.querySelectorAll('[data-sendq]').forEach(b => { const blocked = document.querySelector('.inq .inq-head [data-sendq]'); if (blocked && blocked.classList.contains('blocked')) { b.classList.add('blocked'); b.title = 'Available when the inquiry is green'; } b.addEventListener('click', e => { if (b.classList.contains('blocked')) e.preventDefault(); }); });
+    }
+
     // ---------- Before Tour Confirmation (tf-check-r1): the check panel ----------
     // The four sections, read from the inquiry's own costing (GET /checks) — the same records the itinerary shows, grouped
     // for a last look. A person marks each one; nothing here confirms the tour. Send Email and Confirm Tour are two buttons.
@@ -7048,7 +7221,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     paint(read());                                   // collapsed unless this screen was left with it open
     // tf-inqnav-r2 (14 Nov 2026): on the tabbed inquiry page the sections live inside the tabs, so the side list is never built.
     // There the button opens a list of every tab and its sections instead; an entry opens its tab and scrolls to the section.
-    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['acts', 'Activities'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['notes', 'Notes & History'], ['check', 'Before Tour Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
+    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['acts', 'Activities'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['notes', 'Notes & History'], ['check', 'Before Quotation & Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
     function inqMode() { var d = document.getElementById('view_detail'); return !!(d && d.classList.contains('inq-on') && d.offsetParent !== null && d.querySelector('.inq-pane')); }
     function shown(el, stop) { for (var n = el; n && n !== stop; n = n.parentElement) { if (getComputedStyle(n).display === 'none') return false; } return true; }
     function label(h) { var c = h.cloneNode(true); c.querySelectorAll('button, a, .help, .pill, small, input, select').forEach(function (x) { x.remove(); }); return (c.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60); }

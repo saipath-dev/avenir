@@ -5,10 +5,11 @@
     .oc .oc-back { display:inline-block; margin-bottom:4px; color:var(--p); font-weight:600; text-decoration:none; font-size:12px; }
     .oc .oc-top { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:8px; }
     .oc h2 { font-size:21px; font-weight:800; margin:0; color:var(--p); letter-spacing:-.2px; }
+    .oc h2 .oc-who { color:#1A1A1A; font-weight:700; }
     .oc .oc-pill { display:inline-flex; align-items:center; gap:8px; background:var(--g); color:#fff; font-weight:700; font-size:13px; border-radius:5px; padding:4px 12px; }
     .oc .oc-pill.red { background:#c62828; }
     .oc .oc-facts { display:flex; flex-wrap:nowrap; overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; padding:6px 2px; margin-bottom:10px; }
-    .oc .oc-fact { display:flex; align-items:center; gap:8px; padding:1px 10px; border-right:1px solid var(--line); flex:1 1 auto; min-width:0; }
+    .oc .oc-fact { display:flex; align-items:center; gap:8px; padding:1px 10px; border-right:1px solid var(--line); flex:1 1 auto; min-width:150px; }
     .oc .oc-fact.nw { flex:0 0 auto; } .oc .oc-fact.nw b { white-space:nowrap; }
     .oc .oc-fact:last-child { border-right:0; }
     .oc .oc-fact i { font-size:19px; color:var(--p); }
@@ -76,7 +77,13 @@
     .oc .pr-det label { display:block; font-size:11.5px; margin:0 0 2px 0; } .oc .pr-det .f { flex:1 1 130px; }
     .oc .pr-det select, .oc .pr-det input { width:100%; border:1px solid var(--line); border-radius:5px; padding:4px 8px; font-size:13px; background:#fff; color:#1A1A1A; }
     .oc .pr-det select:disabled, .oc .pr-det input:disabled { background:#f7f7f7; }
+    .oc .st-pill { display:inline-block; border-radius:12px; padding:1px 10px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .oc .st-pill.red { background:#fbdde3; color:#a3123a; } .oc .st-pill.amber { background:#fdeccb; color:#8a5200; } .oc .st-pill.green { background:#e4f4d6; color:#2f6d12; } .oc .st-pill.grey { background:#eee; color:#1A1A1A; }
+    .oc .tp-empty { padding:12px 14px; }
     .oc .ver { display:inline-block; background:#f1f1f1; border-radius:10px; padding:1px 9px; font-size:11.5px; }
+    /* a narrow window: the fields go onto tidy rows of their own, in the same order — never on top of each other */
+    @media (max-width:1250px) { .oc .oc-facts { flex-wrap:wrap; overflow-x:visible; row-gap:8px; } .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 22%; min-width:170px; } .oc .oc-fact:nth-child(4n) { border-right:0; } }
+    @media (max-width:760px) { .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 45%; } .oc .oc-fact:nth-child(2n) { border-right:0; } }
     @media (max-width:1100px) { .oc .oc-cards { grid-template-columns:repeat(2, 1fr); } .oc .oc-two, .oc .pr-grid { grid-template-columns:1fr; } .oc .oc-ban { padding-left:18px; flex-wrap:wrap; } .oc table.ow .gbtn.act { min-width:0; } .oc .oc-box { overflow-x:auto; } }
 </style>
 <body>
@@ -161,7 +168,7 @@
     }
 
     let TAB = 'over', STAY = 0;
-    try { const h = (location.hash || '').replace('#', ''); if (h === 'pax' || h === 'over') TAB = h; } catch (e) {}
+    try { const h = (location.hash || '').replace('#', ''); if (['over', 'hotels', 'trans', 'meals', 'acts', 'pax', 'itin', 'docs'].includes(h)) TAB = h; } catch (e) {}
 
     function draw(c, it) {
         const t = c.tour, A = areas(c, it), id = t.id, iid = t.intake_id;
@@ -188,11 +195,17 @@
         const party = pax ? (ch ? `${ad} adults, ${ch} children` : `${ad || pax} adult${(ad || pax) === 1 ? '' : 's'}`) : 'party not given';
         const aref = String(((it.fields || {}).agent_reference || {}).value || '').trim();   // the agent's own reference, as kept on the inquiry
         const ver = t.quote_version ? 'Version ' + t.quote_version : 'No issued version';
+        // the heading names the party as the e-mail did (the group / tour name), else the first passenger
+        const lead = String(it.tour_name || '').trim() || String(((it.passengers || [])[0] || {}).full_name || '').trim() || 'Name not given';
+        const dmy = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ''); return m ? Number(m[3]) + ' ' + MON[Number(m[2]) - 1] + ' ' + m[1] : ''; };
+        // arrival and departure: the date, the flight number and the time together, in one box
+        const fly = (d, f) => (d ? dmy(d) : 'Date pending') + ' • ' + (String(f || '').trim() || 'Flight / time pending');
         const cancelled = !!t.cancelled_at || t.stage === 'cancelled';
         const pill = cancelled ? '<span class="oc-pill red"><i class="bi bi-x-lg"></i> Tour cancelled</span>'
             : `<span class="oc-pill"><i class="bi bi-check-lg"></i> Tour confirmed • ${worst === 'green' ? 'Arrangements complete' : 'Bookings in progress'}</span>`;
-        const tabs = [['over', 'Overview', null], [null, 'Hotels', toHotel], [null, 'Transport &amp; Guides', toTrans], [null, 'Meals', toHotel], [null, 'Activities &amp; Entrances', toHotel],
-            ['pax', 'Passengers &amp; Rooming', null], [null, 'Itinerary', prog], [null, 'Documents &amp; History', toDocs]];
+        const tabs = [['over', 'Overview'], ['hotels', 'Hotels'], ['trans', 'Transport &amp; Guides'], ['meals', 'Meals'], ['acts', 'Activities &amp; Entrances'], ['pax', 'Passengers &amp; Rooming'], ['itin', 'Itinerary'], ['docs', 'Documents &amp; History']];
+        const L = { toInq, toHotel, toTrans, toDocs, prog, quote, ver, btn };
+        const more = morePanes(c, it, L);
 
         const overview = `
             <div class="oc-ban${worst === 'green' ? ' ok' : ''}">${light(worst, true)}
@@ -219,23 +232,79 @@
                 <span><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
 
         document.getElementById('oc_body').innerHTML = `
-            <div class="oc-top"><h2>Confirmed Tour • ${esc(t.tour_no || '')}</h2>${pill}</div>
+            <div class="oc-top"><h2>Confirmed Tour • ${esc(t.tour_no || '')}<span class="oc-who"> • ${esc(lead)}${pax ? ' • ' + pax + ' pax' : ''}${it.arrival_date ? ' • Arrival ' + dmy(it.arrival_date) : ''}</span></h2>${pill}</div>
             <div class="oc-facts">
-                ${fact('bi-file-text', 'Inquiry', it.inquiry_no || '—')}
+                ${fact('bi-file-text', 'Inquiry', it.inquiry_no || '—').replace('<b>', `<b><a href="${toInq}" target="_blank" style="color:inherit" title="Open the confirmed inquiry">`).replace('</b>', '</a></b>')}
                 ${fact('bi-person', 'Agent', it.agent_name || 'Not given', false, true)}
                 ${fact('bi-bookmark', 'Agent booking ref', aref || 'Not recorded', !aref)}
                 ${fact('bi-people', 'Group', (it.tour_name || 'Not named') + ' • ' + party, false, true)}
                 ${fact('bi-calendar3', 'Tour dates', range(it.arrival_date, it.departure_date))}
-                ${fact('bi-airplane', 'Arrival', it.arrival_flight || 'Flight / time pending', !it.arrival_flight)}
-                ${fact('bi-airplane-fill', 'Departure', it.departure_flight || 'Flight / time pending', !it.departure_flight)}
+                ${fact('bi-airplane', 'Arrival • date, flight, time', fly(it.arrival_date, it.arrival_flight), false, true)}
+                ${fact('bi-airplane-fill', 'Departure • date, flight, time', fly(it.departure_date, it.departure_flight), false, true)}
                 ${fact('bi-person-badge', 'Operations owner', it.handler_name || 'Unassigned')}
             </div>
-            <div class="oc-tabs">${tabs.map(x => x[0] ? `<a class="oc-tab${TAB === x[0] ? ' on' : ''}" data-octab="${x[0]}">${x[1]}</a>` : `<a class="oc-tab" ${x[2] ? `href="${x[2]}" target="_blank"` : ''}>${x[1]}</a>`).join('')}</div>
+            <div class="oc-tabs">${tabs.map(x => `<a class="oc-tab${TAB === x[0] ? ' on' : ''}" data-octab="${x[0]}">${x[1]}</a>`).join('')}</div>
             <div class="oc-pane${TAB === 'over' ? ' on' : ''}" data-ocpane="over">${overview}</div>
-            <div class="oc-pane${TAB === 'pax' ? ' on' : ''}" data-ocpane="pax">${paxPane(c, it, { toInq, toHotel, prog, quote, ver, btn })}</div>`;
+            <div class="oc-pane${TAB === 'pax' ? ' on' : ''}" data-ocpane="pax">${paxPane(c, it, L)}</div>
+            ${Object.keys(more).map(k => `<div class="oc-pane${TAB === k ? ' on' : ''}" data-ocpane="${k}">${more[k]}</div>`).join('')}`;
         document.querySelectorAll('#oc_body [data-octab]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); TAB = b.dataset.octab; try { history.replaceState(null, '', '#' + TAB); } catch (x) {} draw(c, it); }));
         const sel = document.getElementById('pr_stay'); if (sel) sel.addEventListener('change', () => { STAY = Number(sel.value) || 0; draw(c, it); });
         document.querySelectorAll('#oc_body [data-prpax]').forEach(r => r.addEventListener('click', () => { PICK = r.dataset.prpax; draw(c, it); }));
+    }
+
+    // ---------- tf-control-r3: the other tabs — each reads what its desk has recorded; the work itself is done on that desk ----------
+    const HS = { to_book: ['red', 'Not requested'], requested: ['amber', 'Awaiting confirmation'], confirmed: ['amber', 'Confirmed • voucher to issue'], voucher_issued: ['green', 'Voucher issued'], problem: ['red', 'Problem'], cancelled: ['grey', 'Cancelled'] };
+    const TS = { to_allocate: ['red', 'To allocate'], allocated: ['amber', 'Allocated'], scheduled: ['amber', 'Scheduled'], pack_issued: ['green', 'Driver pack issued'], running: ['green', 'On tour'], returned: ['green', 'Returned'], settled: ['green', 'Settled'], cancelled: ['grey', 'Cancelled'] };
+    const SS = { to_book: ['red', 'Not booked'], requested: ['amber', 'Awaiting confirmation'], confirmed: ['green', 'Confirmed'], not_needed: ['grey', 'Not needed'], pay_at_gate: ['green', 'Pay at the gate'], problem: ['red', 'Problem'], cancelled: ['grey', 'Cancelled'] };
+    const sp = (map, k) => { const x = map[k] || ['grey', k || '—']; return `<span class="st-pill ${x[0]}">${esc(x[1])}</span>`; };
+    const when = d => { const m = /^(\d{4})-(\d{2})-(\d{2})(?: (\d{2}:\d{2}))?/.exec(d || ''); return m ? `${Number(m[3])} ${MON[Number(m[2]) - 1]} ${m[1]}${m[4] ? ' ' + m[4] : ''}` : ''; };
+    function morePanes(c, it, L) {
+        const H = c.hotels || [], T = c.transport || [], S = (c.services || []), s = c.strip || {};
+        const head = (icon, title, btns) => `<div class="pr-head"><h3><i class="bi ${icon}"></i> ${title}</h3>${btns || ''}</div>`;
+        const stats = a => `<div class="pr-stats">${a.map(x => `<span><b>${x[0]}</b> ${x[1]}</span>`).join('')}</div>`;
+        const table = (cols, rows, empty) => `<div class="oc-box"><table class="ow"><thead><tr>${cols.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.length ? rows.join('') : `<tr><td colspan="${cols.length}">${empty}</td></tr>`}</tbody></table></div>`;
+        const n = (rows, k) => rows.filter(r => r.status === k).length;
+        const names = x => ((x || {}).names || []).filter(Boolean).join(', ');
+        // Hotels
+        const hotels = head('bi-building', 'Hotels', L.btn(L.toHotel, 'Open Hotel Bookings', 'bi-box-arrow-up-right'))
+            + stats([[H.length, 'hotel stays'], [n(H, 'requested'), 'awaiting confirmation'], [n(H, 'confirmed') + n(H, 'voucher_issued'), 'confirmed'], [n(H, 'voucher_issued'), 'vouchers issued'], [n(H, 'problem'), 'with a problem']])
+            + table(['Hotel', 'Check-in', 'Check-out', 'Nights', 'Rooms', 'Meal plan', 'Confirmation ref', 'Voucher', 'Status'],
+                H.map(h => `<tr><td><b>${esc(h.hotel_name || '—')}</b></td><td>${dm(h.check_in)}</td><td>${dm(h.check_out)}</td><td>${esc(h.nights ?? '—')}</td><td>${esc(h.rooms_note || '—')}</td><td>${esc(h.meal_plan || '—')}</td>
+                    <td>${esc(h.confirmation_ref || 'Not recorded')}</td><td>${esc(h.voucher_no || 'Not issued')}</td><td>${sp(HS, h.status)}${h.problem_note ? `<div style="font-size:12px">${esc(h.problem_note)}</div>` : ''}</td></tr>`), 'No hotel stay on this tour.');
+        // Transport & Guides
+        const trans = head('bi-car-front-fill', 'Transport &amp; Guides', L.btn(L.toTrans, 'Open Transport', 'bi-box-arrow-up-right'))
+            + stats([[T.length, 'vehicle lines'], [names(s.driver) || 'Not assigned', 'driver'], [(s.guide || {}).state === 'not_required' ? 'Not required' : (names(s.guide) || 'Not assigned'), 'guide']])
+            + table(['Vehicle type', 'Qty', 'Seats', 'Days', 'Kilometres', 'Vehicle number', 'Status'],
+                T.map(t => `<tr><td><b>${esc(t.vehicle_type || '—')}</b></td><td>${esc(t.qty ?? '—')}</td><td>${esc(t.seats ?? '—')}</td><td>${esc(t.days ?? '—')}</td><td>${t.km_total != null ? Number(t.km_total).toLocaleString() + ' km' : '—'}</td><td>${esc(t.vehicle_reg || 'Not assigned')}</td><td>${sp(TS, t.status)}</td></tr>`),
+                'No vehicle is on this tour yet. It is added on the Transport panel.');
+        // Meals, and Activities & Entrances — the service lines of the tour
+        const live = S.filter(r => r.status !== 'cancelled');
+        const svcPane = (icon, title, rows, what, empty) => head(icon, title, L.btn(L.toHotel, 'Open Hotel Bookings', 'bi-box-arrow-up-right'))
+            + stats([[rows.length, what], [n(rows, 'to_book'), 'not booked'], [n(rows, 'requested'), 'awaiting confirmation'], [rows.filter(r => ['confirmed', 'not_needed', 'pay_at_gate'].includes(r.status)).length, 'done']])
+            + table(['Day', 'Date', 'Time', 'Service', 'Pax', 'Confirmation ref', 'Status'],
+                rows.map(r => `<tr><td>${r.day_no ? 'Day ' + esc(r.day_no) : '—'}</td><td>${dm(r.on_date) || '—'}</td><td>${esc(String(r.on_time || '').slice(0, 5) || '—')}</td><td><b>${esc(r.title || '—')}</b></td><td>${esc(r.pax ?? '—')}</td><td>${esc(r.confirmation_ref || 'Not recorded')}</td><td>${sp(SS, r.status)}</td></tr>`), empty);
+        const meals = svcPane('bi-cup-hot', 'Meals', live.filter(r => MEALS.includes(String(r.kind))), 'meals to arrange', 'No meal outside the hotels to arrange on this tour.');
+        const acts = svcPane('bi-ticket-perforated', 'Activities &amp; Entrances', live.filter(r => !MEALS.includes(String(r.kind))), 'activities and entrances', 'No activity or entrance to arrange on this tour.');
+        // Itinerary: the days as the inquiry holds them
+        const txt = ((it.itinerary || {}).days) || {};
+        const days = (it.days || []).slice().sort((a, b) => Number(a.day_no) - Number(b.day_no));
+        const dayRows = days.map(d => `<tr><td style="white-space:nowrap"><b>Day ${esc(d.day_no)}</b></td><td style="white-space:nowrap">${dm(d.day_date) || '—'}</td><td>${esc((txt[d.day_no] || {}).text || '—')}</td><td>${esc(d.hotel_name_raw || '—')}${d.meal_plan ? ' • ' + esc(d.meal_plan) : ''}</td></tr>`);
+        const last = Object.keys(txt).map(Number).filter(k => !days.some(d => Number(d.day_no) === k)).sort((a, b) => a - b);
+        last.forEach(k => dayRows.push(`<tr><td style="white-space:nowrap"><b>Day ${k}</b></td><td style="white-space:nowrap">${k === days.length + 1 ? dm(it.departure_date) : '—'}</td><td>${esc((txt[k] || {}).text || '—')}</td><td>Departure</td></tr>`));
+        const itin = head('bi-map', 'Itinerary', L.btn(L.quote, 'Client itinerary', 'bi-eye') + L.btn(L.quote ? L.quote + '&pdf=1' : null, 'PDF', 'bi-file-earmark-pdf') + L.btn(L.prog, 'Driver / guide itinerary', 'bi-eye', 'line'))
+            + stats([[days.length, 'nights'], [dayRows.length, 'days'], [esc(L.ver), 'accepted by the customer']])
+            + table(['Day', 'Date', 'Programme', 'Overnight'], dayRows, 'No day is on this tour.');
+        // Documents & History
+        const E = c.events || [];
+        const LANE = { tour: 'Tour', hotel: 'Hotels', transport: 'Transport', service: 'Activities' };
+        const docs = head('bi-folder2-open', 'Documents &amp; History', L.btn(L.toDocs, 'Communications &amp; History', 'bi-chat-left-text'))
+            + `<div class="oc-two"><div class="oc-box"><div class="h2"><i class="bi bi-file-text"></i> Documents</div>
+                <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Client itinerary • ${esc(L.ver)}</span>${L.btn(L.quote, 'Preview', 'bi-eye', 'line')}${L.btn(L.quote ? L.quote + '&pdf=1' : null, 'PDF', 'bi-file-earmark-pdf', 'line')}</div>
+                <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary</span>${L.btn(L.prog, 'Preview', 'bi-eye', 'line')}</div>
+                ${H.map(h => `<div class="oc-row"><i class="bi bi-building lead"></i><span class="grow">Hotel voucher • ${esc(h.hotel_name || '')}</span><span class="ver">${esc(h.voucher_no || 'Not issued')}</span>${L.btn(L.toHotel, 'Open', 'bi-box-arrow-up-right', 'line')}</div>`).join('')}</div>
+              <div class="oc-box"><div class="h2"><i class="bi bi-clock-history"></i> History (${E.length})</div>
+                ${E.length ? E.map(e => `<div class="oc-row"><span style="white-space:nowrap;font-size:12px;min-width:118px">${when(e.at)}</span><span class="ver">${esc(LANE[e.lane] || e.lane || '')}</span><span class="grow">${esc(e.event || '')}${e.to_status ? ' → ' + esc(String(e.to_status).replace(/_/g, ' ')) : ''}${e.note ? ' • ' + esc(e.note) : ''}</span><span style="font-size:12px">${esc(e.by || '')}</span></div>`).join('') : '<div class="tp-empty">Nothing recorded yet.</div>'}</div></div>`;
+        return { hotels, trans, meals, acts, itin, docs };
     }
 
     let PICK = null;

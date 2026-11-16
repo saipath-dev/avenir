@@ -564,7 +564,7 @@ final class TourService
                 $this->db->query("INSERT INTO tf_meta (k, v) VALUES ('tour_next', '1') ON DUPLICATE KEY UPDATE v = v");
                 continue;
             }
-            $no = ($prefix !== '' ? $prefix . '-' : '') . $year . '-' . str_pad((string) ($n - 1), $pad, '0', STR_PAD_LEFT);
+            $no = ($prefix !== '' ? $prefix . '-' : '') . substr($year, -2) . '-' . str_pad((string) ($n - 1), $pad, '0', STR_PAD_LEFT);
             if (!$this->db->query('SELECT id FROM tf_tour WHERE tour_no = ?', [$no])->getRowArray()) {
                 return $no;
             }

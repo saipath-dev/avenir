@@ -306,7 +306,7 @@ class TourManageController extends BaseController
             $out[$r['k']] = (string) $r['v'];
         }
         $n = max(1, (int) $out['tour_next']);
-        $out['example'] = ($out['tour_prefix'] !== '' ? $out['tour_prefix'] . '-' : '') . ($out['tour_year'] !== '' ? $out['tour_year'] : date('Y')) . '-' . str_pad((string) $n, max(1, min(8, (int) $out['tour_pad'])), '0', STR_PAD_LEFT);
+        $out['example'] = ($out['tour_prefix'] !== '' ? $out['tour_prefix'] . '-' : '') . substr($out['tour_year'] !== '' ? $out['tour_year'] : date('Y'), -2) . '-' . str_pad((string) $n, max(1, min(8, (int) $out['tour_pad'])), '0', STR_PAD_LEFT);
         $out['last_tour_no'] = (string) ($this->db()->query('SELECT tour_no FROM tf_tour ORDER BY id DESC LIMIT 1')->getRowArray()['tour_no'] ?? '');
         return $out;
     }

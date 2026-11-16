@@ -172,10 +172,12 @@ class ConfirmedToursController extends BaseController
             return $this->json(['status' => 200, 'data' => [
                 'tour'      => $tour,
                 'rooming'   => $rooming,
+                // tf-control-r3: what has happened on the tour, newest first (the desks' own trail)
+                'events'    => $db->query('SELECT lane, event, from_status, to_status, note, `by`, `at` FROM tf_tour_event WHERE tour_id = ? ORDER BY id DESC LIMIT 60', [(int) $tourId])->getResultArray(),
                 'strip'     => $svc->stripFor((int) $tourId),
-                'hotels'    => $pick((array) $t['hotel_jobs'], ['id', 'hotel_name', 'check_in', 'check_out', 'nights', 'status', 'requested_at', 'confirmation_ref', 'confirmed_at', 'voucher_no', 'voucher_at', 'problem_note']),
-                'transport' => $pick((array) $t['transport_jobs'], ['id', 'vehicle_type', 'qty', 'vehicle_reg', 'status', 'allocated_at', 'pack_at', 'driver_name', 'guide_name']),
-                'services'  => $pick((array) ($t['service_jobs'] ?? []), ['id', 'title', 'kind', 'day_no', 'on_date', 'status', 'confirmation_ref', 'pay_mode']),
+                'hotels'    => $pick((array) $t['hotel_jobs'], ['id', 'hotel_name', 'check_in', 'check_out', 'nights', 'status', 'requested_at', 'confirmation_ref', 'confirmed_at', 'voucher_no', 'voucher_at', 'problem_note', 'rooms_note', 'room_type_text', 'meal_plan', 'pax', 'confirmed_with']),
+                'transport' => $pick((array) $t['transport_jobs'], ['id', 'vehicle_type', 'qty', 'vehicle_reg', 'status', 'allocated_at', 'pack_at', 'seats', 'days', 'km_total', 'vehicle_note']),
+                'services'  => $pick((array) ($t['service_jobs'] ?? []), ['id', 'title', 'kind', 'day_no', 'on_date', 'on_time', 'pax', 'qty', 'status', 'confirmation_ref', 'pay_mode']),
             ]]);
         } catch (\Throwable $e) {
             return $this->json(['status' => 400, 'message' => $e->getMessage()]);

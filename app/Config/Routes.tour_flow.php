@@ -461,6 +461,8 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     // schema 34: the maximum number of travellers a version is quoted for, and the quotation emailed to the agent
     // (these sit before the (:segment) action route so they are matched first)
     $routes->post('intake/(:num)/quote/(:num)/max_pax', [TourIntakeController::class, 'quoteMaxPax']);
+    // tf-quotews-r1: the Quotation area's own read (room categories, price by party size, the newest version's e-mails)
+    $routes->get('intake/(:num)/quote_sheet', [TourIntakeController::class, 'quoteSheet']);
     $routes->get('intake/(:num)/quote/(:num)/email', [TourIntakeController::class, 'quoteEmail']);
     $routes->post('intake/(:num)/quote/(:num)/email/preview', [TourIntakeController::class, 'quoteEmailPreview']);
     $routes->post('intake/(:num)/quote/(:num)/email/send', [TourIntakeController::class, 'quoteEmailSend']);
