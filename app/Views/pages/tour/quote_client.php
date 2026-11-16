@@ -132,6 +132,50 @@ if ($logo && is_file($logo)) {
     .modal .ft { padding:12px 18px; border-top:1px solid #eef2f6; display:flex; gap:8px; justify-content:flex-end; }
     .modal .ft button { font:inherit; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid #dfe5ec; background:#fff; cursor:pointer; }
     .modal .ft button.send { background:linear-gradient(135deg, <?= $M ?> 0%, #8f2a8d 100%); color:#fff; border:0; }
+    /* tf-clientdoc-r1: the approved quotation & itinerary design (screen) */
+    .sheet.qx-on { padding:0; overflow:hidden; } .sheet.qx-on > .qx-old { padding:0 16mm 10mm; }
+    .qx { --p:#842484; --pd:#5b175b; --g:#78b848; --ln:#e6dee8; --sf:#f8f2f8; color:#1A1A1A; font-size:12.5px; line-height:1.55; }
+    .qx-cover { height:520px; background-size:cover; background-position:center; position:relative; }
+    .qx-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(40,8,40,.15) 0%,rgba(40,8,40,.05) 40%,rgba(70,14,70,.88) 100%); }
+    .qx-logo { position:absolute; left:36px; top:30px; z-index:2; background:#fff; border-radius:10px; padding:8px 14px; } .qx-logo img { height:46px !important; width:auto !important; display:block; }
+    .qx-ct { position:absolute; left:40px; right:40px; bottom:36px; z-index:2; color:#fff; }
+    .qx-ct .k { letter-spacing:4px; font-size:12px; text-transform:uppercase; } .qx-ct h1 { font-family:Georgia,"Times New Roman",serif; font-weight:400; font-size:44px; margin:6px 0 10px; line-height:1.05; }
+    .qx-ct .m { display:flex; gap:26px; flex-wrap:wrap; font-size:12.5px; } .qx-ct .m b { display:block; font-size:14.5px; }
+    .qx-stripe { height:6px; background:linear-gradient(90deg,#78b848,#a6d47f); }
+    .qx-sec { padding:22px 40px 6px; }
+    .qx h2 { font-family:Georgia,"Times New Roman",serif; font-weight:400; color:#842484; font-size:23px; margin:0 0 14px; display:flex; align-items:center; gap:14px; }
+    .qx h2::after { content:""; flex:1; height:1px; background:var(--ln); }
+    .qx-glance { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; } .qx-glance > div { background:var(--sf); border-radius:10px; padding:12px 14px; }
+    .qx-glance .qi { font-style:normal; font-size:18px; color:#842484; } .qx-glance small { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.8px; margin-top:4px; } .qx-glance b { font-size:13.5px; }
+    .qx-dear { margin:16px 0 0; }
+    .qx-day { display:grid; grid-template-columns:280px 1fr; gap:22px; padding:16px 0; border-bottom:1px solid var(--ln); } .qx-day:last-child { border:0; }
+    .qx-day .ph { height:180px; border-radius:12px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
+    .qx-day .ph.none { background:repeating-linear-gradient(135deg,#f6eff6 0 12px,#fbf7fb 12px 24px); display:flex; align-items:center; justify-content:center; }
+    .qx-day .ph .np { color:#842484; font-size:11.5px; } .qx-day .ph .cap { position:absolute; left:0; right:0; bottom:0; padding:16px 12px 8px; color:#fff; font-size:11px; background:linear-gradient(180deg,transparent,rgba(0,0,0,.6)); }
+    .qx-day .ph .n { position:absolute; left:12px; top:12px; background:#fff; color:#842484; border-radius:8px; padding:4px 10px; text-align:center; font-weight:800; line-height:1.1; }
+    .qx-day .ph .n small { display:block; font-size:9.5px; letter-spacing:1px; } .qx-day .ph .n b { font-family:Georgia,serif; font-weight:400; font-size:22px; }
+    .qx-day h3 { margin:2px 0 4px; font-size:16.5px; color:#5b175b; } .qx-day .date { font-size:11.5px; color:#842484; font-weight:700; letter-spacing:.6px; text-transform:uppercase; }
+    .qx-day .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .qx .tg { display:inline-flex; align-items:center; gap:6px; border-radius:14px; padding:2px 10px; font-size:11.5px; font-weight:600; }
+    .qx .tg.inc { background:#e8f5dc; color:#2f6d12; } .qx .tg.pay { background:#fdeccb; color:#8a4b00; } .qx .tg.free { background:#eef0f3; } .qx .tg.opt { background:#e6eef8; } .qx .tg.stay { background:var(--sf); color:#5b175b; }
+    .qx-hotel { border:1px solid var(--ln); border-radius:12px; padding:14px 18px; margin-bottom:10px; } .qx-hotel h3 { margin:0 0 4px; font-size:16px; color:#5b175b; }
+    .qx-hotel .kv { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px; } .qx-hotel small { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.8px; }
+    .qx-pt { width:100%; border-collapse:collapse; } .qx-pt th { background:#842484; color:#fff; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; padding:9px 12px; text-align:right; }
+    .qx-pt th:first-child, .qx-pt td:first-child { text-align:left; } .qx-pt td { padding:11px 12px; border-bottom:1px solid var(--ln); text-align:right; font-size:13px; }
+    .qx-pt tr.sel td { background:#f1f9ea; } .qx-pt .cat b { display:block; font-size:14px; color:#5b175b; } .qx-pt .cat small { font-size:11px; }
+    .qx .pill { display:inline-block; background:#78b848; color:#fff; font-size:9.5px; font-weight:800; border-radius:10px; padding:1px 8px; letter-spacing:.4px; margin-left:6px; vertical-align:2px; }
+    .qx .rq { font-size:12px; }
+    .qx-calc { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:12px; margin-top:16px; } .qx-calc > div { border-radius:12px; padding:14px 18px; background:var(--sf); }
+    .qx-calc > div.main { background:linear-gradient(110deg,#842484,#5b175b); color:#fff; } .qx-calc small { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:1px; }
+    .qx-calc b { font-family:Georgia,serif; font-weight:400; font-size:25px; } .qx-calc b.sm { font-family:inherit; font-weight:700; font-size:15px; } .qx-calc .eq { font-size:12px; margin-top:2px; }
+    .qx-svc { display:grid; grid-template-columns:1fr 1fr; gap:16px; } .qx-svc > div { border-radius:12px; padding:14px 18px; border:1px solid var(--ln); }
+    .qx-svc h3 { margin:0 0 10px; font-size:12px; letter-spacing:1.2px; text-transform:uppercase; } .qx-svc .in { border-top:5px solid #78b848; } .qx-svc .in h3 { color:#2f6d12; }
+    .qx-svc .out { border-top:5px solid #e0a020; } .qx-svc .out h3 { color:#8a4b00; } .qx-svc .li { padding:6px 0; border-bottom:1px dashed var(--ln); } .qx-svc .li:last-child { border:0; } .qx-svc .li small { display:block; font-size:11px; }
+    .qx-terms { display:grid; grid-template-columns:1fr 1fr; gap:10px 22px; } .qx-terms > div { border-left:3px solid #842484; padding:2px 0 2px 12px; } .qx-terms b { display:block; color:#5b175b; }
+    .qx-close { display:grid; grid-template-columns:1fr 260px; gap:22px; align-items:center; background:var(--sf); border-radius:14px; padding:18px 22px; margin:20px 0 22px; }
+    .qx-foot { background:#5b175b; color:#fff; font-size:10.5px; padding:11px 40px; display:flex; justify-content:space-between; }
+    .qx-staff { padding:0 40px 18px; }
+    @media print { .qx-cover { height:360px; -webkit-print-color-adjust:exact; print-color-adjust:exact; } .qx * { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
     @media print { body { background:#fff; } .bar, .staff, .mailbox, .overlay { display:none !important; } .sheet { margin:0; box-shadow:none; width:auto; min-height:0; padding:0; } }
 </style></head><body>
 <div class="bar">
@@ -143,8 +187,93 @@ if ($logo && is_file($logo)) {
     <?php elseif ($q): ?><span class="note">Version <?= (int) $q['version'] ?> · <?= esc($q['status']) ?><?= $q['issued_at'] ? ' · issued ' . esc(substr((string) $q['issued_at'], 0, 16)) . ' by ' . esc((string) $q['issued_by']) : '' ?></span><?php endif; ?>
 </div>
 <?php if (!empty($no_pdf_lib)): ?><div style="width:210mm;margin:14px auto -8px;font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
-<div class="sheet">
+<div class="sheet qx-on">
 <?php endif; ?>
+<?php if (!$pdf): ?>
+<?php
+// tf-clientdoc-r1 (screen): the quotation and itinerary as the approved design — cover, at a glance, day by day with pictures,
+// where you stay, the price, what the price covers. Selling prices only (QuoteService::clientView). The PDF keeps its own
+// print-safe layout below.
+$W   = \App\Libraries\TourFlow\ItineraryWriter::class;
+$J   = is_array($itin['journey'] ?? null) ? $itin['journey'] : $W::journey($c['days'], (int) $c['nights'] > 0 ? (int) $c['nights'] + 1 : null);
+$jb  = static fn (string $t): string => nl2br($W::boldHotels($t, (array) ($J['hotels'] ?? [])));
+$jh  = static fn (int $n): string => (string) (($J['headings'] ?? [])[$n] ?? (($J['headings'] ?? [])[(string) $n] ?? ('Day ' . $n)));
+$coverUrl = '';
+foreach ($coverPics as $cp) { if (!empty($cp['url'])) { $coverUrl = (string) $cp['url']; break; } }
+if ($coverUrl === '') { $coverUrl = base_url('tour/intake/list_photo/beach-hero.jpg'); }
+$xDays = (int) $c['nights'] + 1;
+$xHotels = [];
+foreach ($c['days'] as $d) { if (!empty($d['hotel'])) { $k = $d['hotel'] . '|' . ($d['room_type'] ?? '') . '|' . ($d['meal_plan'] ?? ''); $xHotels[$k] = $xHotels[$k] ?? ['hotel' => $d['hotel'], 'room' => $d['room_type'], 'meal' => $d['meal_plan'], 'nights' => 0, 'from' => $d['date'], 'to' => $d['date']]; $xHotels[$k]['nights']++; $xHotels[$k]['to'] = $d['date']; } }
+$xCat  = implode(' / ', array_unique(array_filter(array_map(static fn ($h) => (string) $h['room'], $xHotels))));
+$xShare = (int) ($mix['sgl'] ?? 0) === 0 && (int) ($mix['tpl'] ?? 0) === 0 && ((int) ($mix['dbl'] ?? 0) + (int) ($mix['twn'] ?? 0)) > 0;
+$xTag = static function (array $s): array {
+    $n = (string) ($s['note'] ?? '');
+    if (!empty($s['included'])) { return [$n === 'no charge' ? 'free' : ($n === 'included in the hotel rate' ? 'free' : 'inc'), $n !== '' ? $n : 'included']; }
+    if ($n === 'payable direct') { return ['pay', 'paid by guests']; }
+    if (strpos($n, 'optional') === 0) { return ['opt', $n]; }
+    return ['free', $n !== '' ? $n : 'not included'];
+};
+$xPaid = []; $xOpt = [];
+foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); if ($k === 'pay') { $xPaid[] = $s['title']; } elseif ($k === 'opt') { $xOpt[] = $s['title'] . ' (' . $s['note'] . ')'; } } }
+?>
+<div class="qx">
+<div class="qx-cover" style="background-image:url('<?= esc($coverUrl) ?>')">
+    <?php if ($logoTag): ?><div class="qx-logo"><?= $logoTag ?></div><?php endif; ?>
+    <div class="qx-ct"><div class="k">Sri Lanka tour quotation &amp; itinerary</div><h1>Your Sri Lanka Journey</h1>
+        <div class="m"><div><span>Prepared for</span><b><?= esc($c['agent_name'] ?: '—') ?></b></div><div><span>Travel dates</span><b><?= $fmtD($c['arrival']) ?> – <?= $fmtD($c['departure']) ?></b></div><div><span>Party</span><b><?= (int) $c['pax'] ?> guest<?= (int) $c['pax'] === 1 ? '' : 's' ?></b></div><div><span>Reference</span><b><?= esc($ref) ?></b></div></div></div>
+</div>
+<div class="qx-stripe"></div>
+<div class="qx-sec">
+    <h2>At a glance</h2>
+    <div class="qx-glance">
+        <div><i class="qi">&#128197;</i><small>Duration</small><b><?= $xDays ?> days / <?= (int) $c['nights'] ?> night<?= (int) $c['nights'] === 1 ? '' : 's' ?></b></div>
+        <div><i class="qi">&#9992;</i><small>Arrival</small><b><?= $fmtD($c['arrival']) ?></b></div>
+        <div><i class="qi">&#128664;</i><small>Transport</small><b><?= $vehicles ? esc(implode(' and ', $vehicles)) . ($c['crew'] ? ' with ' . esc(implode(' and ', array_unique($c['crew']))) : ' with driver') : 'As arranged' ?></b></div>
+        <div><i class="qi">&#8987;</i><small>Valid until</small><b><?= $q && !empty($q['valid_until']) ? $fmtD($q['valid_until']) : '—' ?></b></div>
+    </div>
+    <p class="qx-dear">Dear <?= esc($c['agent_name'] ?: 'Sir / Madam') ?>, thank you for the opportunity to arrange your clients’ Sri Lanka tour. We are pleased to present the following itinerary and quotation for your review.</p>
+</div>
+<div class="qx-sec">
+    <h2>Day by day</h2>
+    <?php $xDep = false; foreach ($c['days'] as $d): $n = (int) $d['day_no']; $dp = $dayPhotos[$n] ?? null; $isDep = empty($d['hotel']); if ($isDep) { $xDep = true; } $txt = $dayText($n); if ($txt === '' && $isDep) { $txt = $depText; } ?>
+    <div class="qx-day">
+        <div class="ph<?= $dp && !empty($dp['url']) ? '' : ' none' ?>"<?= $dp && !empty($dp['url']) ? ' style="background-image:url(\'' . esc((string) $dp['url']) . '\')"' : '' ?>><span class="n"><small>DAY</small><b><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></b></span><?php if (!($dp && !empty($dp['url']))): ?><span class="np">Picture from Tour Photos</span><?php elseif (!empty($dp['caption'])): ?><span class="cap"><?= esc($dp['caption']) ?></span><?php endif; ?></div>
+        <div><div class="date"><?= $d['date'] ? esc(date('l j M Y', strtotime((string) $d['date']))) : '' ?></div><h3><?= esc($jh($n)) ?></h3>
+            <div class="tx"><?= $txt !== '' ? $jb($txt) : '' ?></div>
+            <div class="tags"><?php foreach ($d['services'] as $s): [$k, $w] = $xTag($s); ?><span class="tg <?= $k ?>"><?= esc($s['title']) ?> — <?= esc($w) ?></span><?php endforeach; ?>
+            <?php foreach ($d['excursions'] as $x): ?><span class="tg inc"><?= esc($x['name']) ?> — included</span><?php endforeach; ?>
+            <?php if (!$isDep): ?><span class="tg stay">&#9790; <?= esc($d['hotel']) ?><?= !empty($d['meal_plan']) ? ' · ' . esc($meals[$d['meal_plan']] ?? $d['meal_plan']) : '' ?></span><?php endif; ?></div></div>
+    </div>
+    <?php endforeach; ?>
+    <?php if (!$xDep): $dn = (int) $c['nights'] + 1; ?>
+    <div class="qx-day"><div class="ph none"><span class="n"><small>DAY</small><b><?= str_pad((string) $dn, 2, '0', STR_PAD_LEFT) ?></b></span><span class="np">Picture from Tour Photos</span></div>
+        <div><div class="date"><?= $c['departure'] ? esc(date('l j M Y', strtotime((string) $c['departure']))) : '' ?></div><h3><?= esc($jh($dn) !== 'Day ' . $dn ? $jh($dn) : 'Departure') ?></h3>
+        <div class="tx"><?= $jb($depText !== '' ? $depText : 'Transfer to the airport for your departure flight.') ?></div></div></div>
+    <?php endif; ?>
+</div>
+<div class="qx-sec">
+    <h2>Where you stay</h2>
+    <?php foreach ($xHotels as $h): ?>
+    <div class="qx-hotel"><h3><?= esc($h['hotel']) ?></h3><?= (int) $h['nights'] ?> night<?= (int) $h['nights'] === 1 ? '' : 's' ?> · <?= $fmtD($h['from']) ?> – <?= $fmtD(date('Y-m-d', strtotime((string) $h['to'] . ' +1 day'))) ?>
+        <div class="kv"><div><small>Room category</small><b><?= esc($h['room'] ?: '—') ?></b></div><div><small>Meal plan</small><b><?= esc($meals[$h['meal']] ?? ($h['meal'] ?: '—')) ?></b></div><div><small>Rooms</small><b><?= esc($mixWords ? implode(', ', $mixWords) : '—') ?></b></div></div></div>
+    <?php endforeach; ?>
+</div>
+<div class="qx-sec">
+    <h2>Your tour price</h2>
+    <p style="margin:-4px 0 10px">Per person, in US dollars, for a party of <b><?= (int) $c['pax'] ?></b>, by room category and how the rooms are shared.</p>
+    <table class="qx-pt"><tr><th>Room category</th><th><?= $xShare ? 'Per person sharing<br>double / twin' : 'Per person<br>rooms as requested' ?></th><th>Per person<br>in a single room</th><th>Per person<br>sharing a triple</th></tr>
+        <tr class="sel"><td class="cat"><b><?= esc($xCat ?: 'As requested') ?> <span class="pill">AS REQUESTED</span></b><small><?= esc(implode(' · ', array_unique(array_map(static fn ($h) => $h['hotel'], $xHotels)))) ?></small></td>
+            <td><b><?= $usd($c['per_person_usd']) ?></b></td><td><span class="rq">on request</span></td><td><span class="rq">on request</span></td></tr>
+    </table>
+    <p style="font-size:11.5px;margin:6px 0 0">Other room categories at the same hotels are available on request.</p>
+    <div class="qx-calc">
+        <div class="main"><small>Total for your party<?= $xCat ? ' · ' . esc($xCat) : '' ?></small><b><?= $c['total_usd'] !== null ? $usd($c['total_usd']) : 'price to follow' ?></b><div class="eq"><?= (int) $c['pax'] ?> guest<?= (int) $c['pax'] === 1 ? '' : 's' ?><?= $mixWords ? ' in ' . esc(implode(', ', $mixWords)) : '' ?><?= $c['per_person_usd'] !== null ? ' · ' . (int) $c['pax'] . ' × ' . $usd($c['per_person_usd']) : '' ?></div></div>
+        <div><small>Per person</small><b><?= $usd($c['per_person_usd']) ?></b><div class="eq"><?= $xShare ? 'sharing double / twin' : 'rooms as requested' ?></div></div>
+        <div><small>Rooms</small><b class="sm"><?= esc($mixWords ? implode(', ', $mixWords) : '—') ?></b><div class="eq">a party is totalled as singles × single rate + sharers × sharing rate</div></div>
+    </div>
+</div>
+</div>
+<?php else: ?>
 
 <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid <?= $P ?>;">
     <tr>
@@ -271,6 +400,8 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
     <?php endif; ?>
 </table>
 
+<?php endif; /* tf-clientdoc-r1: end of the paper-only top */ ?>
+<?php if (!$pdf): ?><div class="qx qx-staff"><?php endif; ?>
 <?php
 // the price per person by the size of the party (schema 31): the size, the rooms it is based on,
 // the price — nothing else reaches this page. A version frozen before the table existed has none.
@@ -314,12 +445,43 @@ $rows    = $staffUi ? $ppAll : $pp;
 <p style="font-size:10px; color:<?= $MUTED ?>; margin:4px 0 0 0;">Each price is for that number of travellers in the rooms shown, with the same hotels, programme and services and a vehicle to suit the party. Per person, in US dollars.<span id="max_pax_line"<?= $maxPax === null ? ' style="display:none"' : '' ?>> Quoted for parties of up to <b id="max_pax_n"><?= $maxPax !== null ? $maxPax : '' ?></b> travellers.</span></p>
 <?php endif; ?>
 
+<?php if (!$pdf): ?></div><?php endif; ?>
+<?php if (!$pdf): ?>
+<div class="qx">
+<div class="qx-sec">
+    <h2>What your price covers</h2>
+    <div class="qx-svc">
+        <div class="in"><h3>&#10004; Included in the price</h3>
+            <?php foreach ($xHotels as $h): ?><div class="li"><b>Accommodation, <?= (int) $h['nights'] ?> night<?= (int) $h['nights'] === 1 ? '' : 's' ?></b><small><?= esc($h['hotel']) ?><?= $h['room'] ? ', ' . esc($h['room']) : '' ?><?= $h['meal'] ? ', ' . esc($meals[$h['meal']] ?? $h['meal']) : '' ?><?= $mixWords ? ', ' . esc(implode(', ', $mixWords)) : '' ?></small></div><?php endforeach; ?>
+            <?php if ($vehicles): ?><div class="li"><b><?= esc(implode(' and ', $vehicles)) ?><?= $c['crew'] ? ' with ' . esc(implode(' and ', array_unique($c['crew']))) : ' with driver' ?> throughout</b><small>including airport arrival and departure transfers</small></div><?php endif; ?>
+            <?php foreach (array_unique($included) as $i): ?><div class="li"><b><?= esc($i) ?></b></div><?php endforeach; ?>
+        </div>
+        <div class="out"><h3>&#128179; Paid by the guests / not included</h3>
+            <?php foreach (array_unique($xPaid) as $i): ?><div class="li"><b><?= esc($i) ?></b><small>paid by the guests on the day</small></div><?php endforeach; ?>
+            <?php foreach (array_unique($xOpt) as $i): ?><div class="li"><b><?= esc($i) ?></b><small>optional</small></div><?php endforeach; ?>
+            <div class="li"><b>Meals and entrance fees not listed as included</b><small>paid by the guests</small></div>
+            <div class="li"><b>International flights, visas and insurance</b></div>
+            <div class="li"><b>Personal expenses, drinks, tips and gratuities</b></div>
+        </div>
+    </div>
+</div>
+<div class="qx-sec">
+    <h2>Booking and payment terms</h2>
+    <div class="qx-terms"><div><b>Availability</b>This quotation does not confirm reservations. Services remain subject to availability when booking.</div>
+        <?php if (!empty($pricing['quote_terms'])): ?><div><b>Terms</b><?= nl2br(esc($pricing['quote_terms'])) ?></div><?php endif; ?></div>
+    <div class="qx-close"><div>To proceed, please confirm the quotation reference <b><?= esc($ref) ?></b>, together with the final passenger details and rooming requirements. We will then request the reservations and advise their confirmation status.<br><br>We look forward to welcoming your clients to Sri Lanka.</div>
+        <div><b><?= esc((string) ($me_name ?? '')) ?></b><br><?= esc($co['name']) ?><?= !empty($co['email']) ? '<br>' . esc($co['email']) : '' ?><?= !empty($co['phone']) ? '<br>' . esc($co['phone']) : '' ?></div></div>
+</div>
+<div class="qx-foot"><span><?= esc($co['name']) ?></span><span>Quotation <?= esc($ref) ?><?= $q && !empty($q['valid_until']) ? ' · valid until ' . $fmtD($q['valid_until']) : '' ?></span></div>
+</div>
+<?php else: ?>
 <?php if (!empty($pricing['quote_terms'])): ?>
 <h3 style="font-size:12px; color:<?= $P ?>; margin:20px 0 4px 0;">Terms</h3>
 <p style="font-size:10.5px; color:<?= $MUTED ?>; line-height:1.55; margin:0;"><?= nl2br(esc($pricing['quote_terms'])) ?></p>
 <?php endif; ?>
 
 <p style="font-size:10px; color:<?= $MUTED ?>; margin-top:26px; border-top:1px solid <?= $LINE ?>; padding-top:6px;"><?= esc($co['name']) ?> &nbsp;·&nbsp; Quotation <?= esc($ref) ?> &nbsp;·&nbsp; <?= $fmtD($date) ?></p>
+<?php endif; /* tf-clientdoc-r1: end of the paper-only bottom */ ?>
 
 <?php if (!$pdf): ?>
 </div>
