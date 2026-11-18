@@ -49,6 +49,20 @@ class HomeDeskController extends BaseController
         return view('pages/home_desks', $data);
     }
 
+    // tf-photostore-r1 — GET home/photo/(:segment): a Photo Master picture kept under writable/ (servers where the public
+    // uploads folder cannot be written). Signed-in staff only; the name is a plain file name of the photo folder.
+    public function photo($name)
+    {
+        $name = (string) $name;
+        $f = \App\Libraries\TourFlow\PhotoLibrary::privateDir() . $name;
+        if (!preg_match('/^[A-Za-z0-9_.-]+\.(jpe?g|png|webp|gif)$/i', $name) || strpos($name, '..') !== false || !is_file($f)) {
+            return $this->response->setStatusCode(404);
+        }
+        $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        $type = ['jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp', 'gif' => 'image/gif'][$ext];
+        return $this->response->setHeader('Content-Type', $type)->setHeader('Cache-Control', 'private, max-age=604800')->setBody((string) file_get_contents($f));
+    }
+
     // =====================================================================
     //  tf-tourdesk-r1 (25 Oct 2026) — the Tour Desk page: five illustrated tiles that open the existing TourFlow pages, with
     //  the next month's tours and the next seven days' arrivals read from the records as they stand. Demonstration build:

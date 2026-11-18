@@ -316,12 +316,47 @@ final class PhotoLibrary
 
     public function dir(): string
     {
-        return $this->publicRoot . $this->folder() . '/';
+        return $this->privateStore() ? self::privateDir() : $this->publicRoot . $this->folder() . '/';
     }
 
     public function url(?string $file): ?string
     {
-        return $file ? $this->publicUrl . '/' . $this->folder() . '/' . rawurlencode($file) : null;
+        if (!$file) {
+            return null;
+        }
+        return $this->privateStore() ? $this->publicUrl . '/home/photo/' . rawurlencode($file) : $this->publicUrl . '/' . $this->folder() . '/' . rawurlencode($file);
+    }
+
+    /**
+     * tf-photostore-r1 (18 Nov 2026): on a server where the web server may not write under the public folder (UAT:
+     * "uploads/tour_photos is not writable"), the photographs are kept under writable/uploads/tour_photos instead and
+     * shown through GET home/photo/(:segment) to signed-in staff. Decided once per request; the public folder is used
+     * wherever it can be written (Windows answers is_writable() wrongly, so there the public folder always stands).
+     */
+    private static ?bool $private = null;
+
+    public static function privateDir(): string
+    {
+        return rtrim(defined('WRITEPATH') ? WRITEPATH : sys_get_temp_dir(), '/\\') . '/uploads/tour_photos/';
+    }
+
+    private function privateStore(): bool
+    {
+        if (self::$private === null) {
+            $pub = $this->publicRoot . $this->folder();
+            if (DIRECTORY_SEPARATOR === '\\') {
+                self::$private = false;
+            } else {
+                if (!is_dir($pub)) {
+                    @mkdir($pub, 0775, true);
+                }
+                self::$private = !(is_dir($pub) && is_writable($pub));
+                if (self::$private && !is_dir(self::privateDir())) {
+                    @mkdir(self::privateDir(), 0775, true);
+                }
+            }
+        }
+        return self::$private;
     }
 
     public function path(?string $file): ?string

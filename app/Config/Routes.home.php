@@ -13,6 +13,7 @@ $routes->get('home', [HomeDeskController::class, 'index'], ['filter' => ['UserSe
 // so the right grants nothing else); the status is for anyone signed in
 $routes->post('home/usd_rate/save', [HomeDeskController::class, 'usdRateSave'], ['filter' => ['UserSessionFilter']]);
 $routes->get('home/usd_rate/status', [HomeDeskController::class, 'usdRateStatus'], ['filter' => ['UserSessionFilter']]);
+$routes->get('home/photo/(:segment)', [HomeDeskController::class, 'photo'], ['filter' => ['UserSessionFilter']]);   // tf-photostore-r1
 // tf-tourdesk-r1 (25 Oct 2026): the Tour Desk page and its read-only data (demonstration build)
 $routes->get('home/tour_desk', [HomeDeskController::class, 'tourDesk'], ['filter' => ['UserSessionFilter', 'UserPermissionFilter']]);
 $routes->get('home/tour_desk/data', [HomeDeskController::class, 'tourDeskData'], ['filter' => ['UserSessionFilter', 'UserPermissionFilter']]);
