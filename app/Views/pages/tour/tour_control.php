@@ -35,6 +35,12 @@
     .oc .oc-cards { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-bottom:12px; }
     .oc .oc-card { border:1px solid var(--line); border-radius:7px; background:#fff; padding:9px 12px; display:grid; grid-template-columns:auto 1fr; column-gap:14px; row-gap:4px; align-items:center; }
     .oc .oc-card > i { font-size:22px; color:var(--p); justify-self:center; }
+    /* tf-control-r4 (19 Nov 2026, Shantha): the mock-up's own symbols — bed, car, fork and knife, tilted ticket, three people */
+    .oc i.oci { display:inline-block; width:1.25em; height:1em; background:currentColor; vertical-align:-.125em; -webkit-mask:var(--m) center / contain no-repeat; mask:var(--m) center / contain no-repeat; }
+    .oc i.oci::before { content:none; }
+    .oc i.oci-bed { --m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z'/%3E%3C/svg%3E"); } .oc i.oci-car { --m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/%3E%3C/svg%3E"); } .oc i.oci-meal { --m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z'/%3E%3C/svg%3E"); } .oc i.oci-group { --m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z'/%3E%3C/svg%3E"); width:1.5em; }
+    .oc i.oc-tilt { display:inline-block; transform:rotate(-35deg); }
+    .oc .oc-card > i { font-size:30px; }
     .oc .oc-card h5 { margin:0; font-size:14.5px; font-weight:700; }
     .oc .oc-card .st b { display:block; font-size:14px; font-weight:800; line-height:1.1; } .oc .oc-card .st span { font-size:12.5px; }
     .oc .c-red { color:#e02b20; } .oc .c-amber { color:#ee8a00; } .oc .c-green { color:#3fa22a; } .oc .c-grey { color:#1A1A1A; }
@@ -212,8 +218,8 @@
                 <div class="txt"><h3>${worst === 'green' ? 'READY FOR ARRIVAL' : `NOT READY FOR ARRIVAL • ${todo.length} outstanding task${todo.length === 1 ? '' : 's'}`}</h3>
                 <p>Green only when every required arrangement and document is complete.</p></div></div>
             <div class="oc-cards">
-                ${card('bi-building', 'Hotels', 'hotels')}${card('bi-car-front-fill', 'Transport', 'transport')}${card('bi-cup-hot', 'Meals', 'meals')}
-                ${card('bi-ticket-perforated', 'Entrances &amp; Activities', 'acts')}${card('bi-people-fill', 'Passengers &amp; Rooming', 'pax')}
+                ${card('oci oci-bed', 'Hotels', 'hotels')}${card('oci oci-car', 'Transport', 'transport')}${card('oci oci-meal', 'Meals', 'meals')}
+                ${card('bi-ticket-perforated oc-tilt', 'Entrances &amp; Activities', 'acts')}${card('oci oci-group', 'Passengers &amp; Rooming', 'pax')}
             </div>
             <div class="oc-box"><div class="h">Outstanding work • Red &amp; yellow items</div>
                 <table class="ow grid"><thead><tr><th>Area</th><th>Work still required</th><th>Responsible</th><th>Due</th><th>Action</th></tr></thead><tbody>
@@ -225,8 +231,8 @@
                     <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Client itinerary • ${ver}</span>${btn(quote, 'Preview', 'bi-eye')}${btn(quote, 'Print', 'bi-printer')}${btn(quote ? quote + '&pdf=1' : null, 'PDF', 'bi-file-earmark-pdf')}</div>
                     <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary • ${ver}</span>${btn(prog, 'Preview', 'bi-eye')}${btn(prog, 'Print', 'bi-printer')}${btn(null, 'PDF', 'bi-file-earmark-pdf')}</div></div>
                 <div class="oc-box"><div class="h">Booking documents</div>
-                    <div class="oc-docs">${btn(toHotel, 'Hotel request &amp; voucher', 'bi-building')}${btn(toHotel, 'Meal / safari vouchers', 'bi-cup-hot')}${btn(toHotel, 'Entrance tickets', 'bi-ticket-perforated')}</div>
-                    <div class="oc-row"><i class="bi bi-car-front lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#8b1d40;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
+                    <div class="oc-docs">${btn(toHotel, 'Hotel request &amp; voucher', 'oci oci-bed')}${btn(toHotel, 'Meal / safari vouchers', 'oci oci-meal')}${btn(toHotel, 'Entrance tickets', 'bi-ticket-perforated oc-tilt')}</div>
+                    <div class="oc-row"><i class="bi oci oci-car lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#8b1d40;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
             </div>
             <div class="oc-foot"><span>Hotel bookings, vouchers and entrances managed on Hotel Bookings • Transport tasks linked to Transport panel • One shared status, no duplicate entry</span>
                 <span><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
@@ -266,13 +272,13 @@
         const n = (rows, k) => rows.filter(r => r.status === k).length;
         const names = x => ((x || {}).names || []).filter(Boolean).join(', ');
         // Hotels
-        const hotels = head('bi-building', 'Hotels', L.btn(L.toHotel, 'Open Hotel Bookings', 'bi-box-arrow-up-right'))
+        const hotels = head('oci oci-bed', 'Hotels', L.btn(L.toHotel, 'Open Hotel Bookings', 'bi-box-arrow-up-right'))
             + stats([[H.length, 'hotel stays'], [n(H, 'requested'), 'awaiting confirmation'], [n(H, 'confirmed') + n(H, 'voucher_issued'), 'confirmed'], [n(H, 'voucher_issued'), 'vouchers issued'], [n(H, 'problem'), 'with a problem']])
             + table(['Hotel', 'Check-in', 'Check-out', 'Nights', 'Rooms', 'Meal plan', 'Confirmation ref', 'Voucher', 'Status'],
                 H.map(h => `<tr><td><b>${esc(h.hotel_name || '—')}</b></td><td>${dm(h.check_in)}</td><td>${dm(h.check_out)}</td><td>${esc(h.nights ?? '—')}</td><td>${esc(h.rooms_note || '—')}</td><td>${esc(h.meal_plan || '—')}</td>
                     <td>${esc(h.confirmation_ref || 'Not recorded')}</td><td>${esc(h.voucher_no || 'Not issued')}</td><td>${sp(HS, h.status)}${h.problem_note ? `<div style="font-size:12px">${esc(h.problem_note)}</div>` : ''}</td></tr>`), 'No hotel stay on this tour.');
         // Transport & Guides
-        const trans = head('bi-car-front-fill', 'Transport &amp; Guides', L.btn(L.toTrans, 'Open Transport', 'bi-box-arrow-up-right'))
+        const trans = head('oci oci-car', 'Transport &amp; Guides', L.btn(L.toTrans, 'Open Transport', 'bi-box-arrow-up-right'))
             + stats([[T.length, 'vehicle lines'], [names(s.driver) || 'Not assigned', 'driver'], [(s.guide || {}).state === 'not_required' ? 'Not required' : (names(s.guide) || 'Not assigned'), 'guide']])
             + table(['Vehicle type', 'Qty', 'Seats', 'Days', 'Kilometres', 'Vehicle number', 'Status'],
                 T.map(t => `<tr><td><b>${esc(t.vehicle_type || '—')}</b></td><td>${esc(t.qty ?? '—')}</td><td>${esc(t.seats ?? '—')}</td><td>${esc(t.days ?? '—')}</td><td>${t.km_total != null ? Number(t.km_total).toLocaleString() + ' km' : '—'}</td><td>${esc(t.vehicle_reg || 'Not assigned')}</td><td>${sp(TS, t.status)}</td></tr>`),
@@ -283,8 +289,8 @@
             + stats([[rows.length, what], [n(rows, 'to_book'), 'not booked'], [n(rows, 'requested'), 'awaiting confirmation'], [rows.filter(r => ['confirmed', 'not_needed', 'pay_at_gate'].includes(r.status)).length, 'done']])
             + table(['Day', 'Date', 'Time', 'Service', 'Pax', 'Confirmation ref', 'Status'],
                 rows.map(r => `<tr><td>${r.day_no ? 'Day ' + esc(r.day_no) : '—'}</td><td>${dm(r.on_date) || '—'}</td><td>${esc(String(r.on_time || '').slice(0, 5) || '—')}</td><td><b>${esc(r.title || '—')}</b></td><td>${esc(r.pax ?? '—')}</td><td>${esc(r.confirmation_ref || 'Not recorded')}</td><td>${sp(SS, r.status)}</td></tr>`), empty);
-        const meals = svcPane('bi-cup-hot', 'Meals', live.filter(r => MEALS.includes(String(r.kind))), 'meals to arrange', 'No meal outside the hotels to arrange on this tour.');
-        const acts = svcPane('bi-ticket-perforated', 'Activities &amp; Entrances', live.filter(r => !MEALS.includes(String(r.kind))), 'activities and entrances', 'No activity or entrance to arrange on this tour.');
+        const meals = svcPane('oci oci-meal', 'Meals', live.filter(r => MEALS.includes(String(r.kind))), 'meals to arrange', 'No meal outside the hotels to arrange on this tour.');
+        const acts = svcPane('bi-ticket-perforated oc-tilt', 'Activities &amp; Entrances', live.filter(r => !MEALS.includes(String(r.kind))), 'activities and entrances', 'No activity or entrance to arrange on this tour.');
         // Itinerary: the days as the inquiry holds them
         const txt = ((it.itinerary || {}).days) || {};
         const days = (it.days || []).slice().sort((a, b) => Number(a.day_no) - Number(b.day_no));
@@ -301,7 +307,7 @@
             + `<div class="oc-two"><div class="oc-box"><div class="h2"><i class="bi bi-file-text"></i> Documents</div>
                 <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Client itinerary • ${esc(L.ver)}</span>${L.btn(L.quote, 'Preview', 'bi-eye', 'line')}${L.btn(L.quote ? L.quote + '&pdf=1' : null, 'PDF', 'bi-file-earmark-pdf', 'line')}</div>
                 <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary</span>${L.btn(L.prog, 'Preview', 'bi-eye', 'line')}</div>
-                ${H.map(h => `<div class="oc-row"><i class="bi bi-building lead"></i><span class="grow">Hotel voucher • ${esc(h.hotel_name || '')}</span><span class="ver">${esc(h.voucher_no || 'Not issued')}</span>${L.btn(L.toHotel, 'Open', 'bi-box-arrow-up-right', 'line')}</div>`).join('')}</div>
+                ${H.map(h => `<div class="oc-row"><i class="bi oci oci-bed lead"></i><span class="grow">Hotel voucher • ${esc(h.hotel_name || '')}</span><span class="ver">${esc(h.voucher_no || 'Not issued')}</span>${L.btn(L.toHotel, 'Open', 'bi-box-arrow-up-right', 'line')}</div>`).join('')}</div>
               <div class="oc-box"><div class="h2"><i class="bi bi-clock-history"></i> History (${E.length})</div>
                 ${E.length ? E.map(e => `<div class="oc-row"><span style="white-space:nowrap;font-size:12px;min-width:118px">${when(e.at)}</span><span class="ver">${esc(LANE[e.lane] || e.lane || '')}</span><span class="grow">${esc(e.event || '')}${e.to_status ? ' → ' + esc(String(e.to_status).replace(/_/g, ' ')) : ''}${e.note ? ' • ' + esc(e.note) : ''}</span><span style="font-size:12px">${esc(e.by || '')}</span></div>`).join('') : '<div class="tp-empty">Nothing recorded yet.</div>'}</div></div>`;
         return { hotels, trans, meals, acts, itin, docs };
@@ -333,7 +339,7 @@
                 ${L.btn(null, 'Import passenger list', 'bi-upload')}${L.btn(L.toInq + '&tab=pax', 'Add passenger', 'bi-plus-lg')}${L.btn(L.toHotel, 'Export rooming list', 'bi-download', 'line')}</div>
             <div class="pr-stats"><span><i class="bi bi-people" style="color:#8b1d40;margin-right:14px"></i><b>${expected || '—'}</b> expected</span><span><b>${names.length}</b> names entered</span>
                 <span class="${missing ? 'miss' : ''}"><b>${missing}</b> names missing</span><span><b>${assigned}</b> assigned • <b>${un.length + missing}</b> unassigned</span></div>
-            <div class="pr-stay"><span><i class="bi bi-building" style="color:#8b1d40;margin-right:8px"></i>Hotel stay</span>
+            <div class="pr-stay"><span><i class="bi oci oci-bed" style="color:#8b1d40;margin-right:8px"></i>Hotel stay</span>
                 <select id="pr_stay">${stays.length ? stays.map((s, i) => `<option value="${i}"${s === st ? ' selected' : ''}>${esc(s.hotel || 'Hotel')} • ${dm(s.check_in)} – ${dm(s.check_out)}</option>`).join('') : '<option>No hotel stay on this tour</option>'}</select>
                 <span style="border-left:1px solid #d9d3dd;padding-left:16px"><i class="bi bi-door-closed" style="color:#8b1d40;margin-right:8px"></i>Rooming requirement</span><span class="req">${esc(req)}</span></div>
             <div class="pr-grid">
@@ -352,7 +358,7 @@
                     <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Guide / driver itinerary</span><span class="ver">${esc(L.ver)}</span>${L.btn(L.prog, 'Preview', 'bi-eye', 'line')}${L.btn(null, 'Export', 'bi-download', 'line')}</div></div>
                 <div class="oc-box"><div class="h2"><i class="bi bi-check-circle"></i> Rooming validation</div>
                     <div style="padding:8px 14px 12px 14px"><div style="margin-bottom:8px">${ready ? 'Every name is entered and everybody has a room.' : 'Resolve missing names and unassigned guests before final rooming list.'}</div>
-                    ${L.btn(L.toHotel, 'Preview hotel rooming list', 'bi-building', 'lg')}</div></div>
+                    ${L.btn(L.toHotel, 'Preview hotel rooming list', 'oci oci-bed', 'lg')}</div></div>
             </div>
             <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
     }
