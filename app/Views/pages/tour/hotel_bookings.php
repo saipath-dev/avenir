@@ -66,13 +66,13 @@
     .tf .msg .k.failed { color:var(--tf-red); }
     .modal .modal-content { border-radius:12px; }
     /* tf-resdesk-r2: the Reservation Desk — new bookings, each hotel's stage, its documents (Avenir purple and green, dark text) */
-    .tf { --rd-purple:#7B2382; --rd-purple-d:#5A1A5D; --rd-purple-soft:#F3E8F5; --rd-green:#2F6E16; --rd-green-soft:#EAF6E2; --rd-red:#8C1D18; --rd-red-soft:#FBE9E7; }
+    .tf { --rd-purple:#891c3e; --rd-purple-d:#62152d; --rd-purple-soft:#f5e8ec; --rd-green:#2F6E16; --rd-green-soft:#EAF6E2; --rd-red:#8C1D18; --rd-red-soft:#FBE9E7; }
     .tf .tbl tr.rd-new td { background:var(--rd-green-soft); }
     .tf .tbl tr.rd-new td:first-child { box-shadow:inset 4px 0 0 #4E9A2A; }
     .tf .tbl tr.rd-new:hover td { background:#DDF0D0; }
     .tf .rd-newtag { display:inline-block; margin-top:3px; background:#2F6E16; color:#fff; border-radius:5px; padding:1px 7px; font-size:10.5px; font-weight:700; letter-spacing:.04em; }
     .tf .rd-prog { display:flex; gap:3px; margin-bottom:3px; } .tf .rd-prog i { flex:1; height:7px; border-radius:4px; background:#D5CCDA; min-width:10px; }
-    .tf .rd-prog i.c { background:#2F6E16; } .tf .rd-prog i.f { background:#B3261E; } .tf .rd-prog i.p { background:#7B2382; }
+    .tf .rd-prog i.c { background:#2F6E16; } .tf .rd-prog i.f { background:#B3261E; } .tf .rd-prog i.p { background:#891c3e; }
     .tf .rd-stays { display:flex; flex-direction:column; }
     .tf .rd-stay { padding:14px 16px; border-top:1px solid var(--tf-line); }
     .tf .rd-stay:first-child { border-top:0; }
@@ -83,10 +83,10 @@
     .tf .rd-t-teal { background:#E3F4F1; color:#0B5F56; } .tf .rd-t-green { background:var(--rd-green-soft); color:var(--rd-green); }
     .tf .rd-t-red { background:var(--rd-red-soft); color:var(--rd-red); border:1px solid #F0B8B0; } .tf .rd-t-amber { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; } .tf .rd-t-grey { background:#EEF1F5; color:#4A5562; }
     .tf .rd-facts { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:4px 18px; font-size:13px; color:#1F1A24; margin:4px 0 10px; }
-    .tf .rd-facts b { color:#4A1450; font-weight:600; }
+    .tf .rd-facts b { color:#541025; font-weight:600; }
     .tf .rd-btns { display:flex; gap:8px; flex-wrap:wrap; }
-    .tf .rd-btn { border:1px solid #CDBFD3; background:#fff; color:#3B1440; border-radius:9px; padding:7px 13px; font-size:13px; font-weight:600; text-decoration:none; cursor:pointer; }
-    .tf .rd-btn:hover { background:var(--rd-purple-soft); color:#3B1440; }
+    .tf .rd-btn { border:1px solid #CDBFD3; background:#fff; color:#431121; border-radius:9px; padding:7px 13px; font-size:13px; font-weight:600; text-decoration:none; cursor:pointer; }
+    .tf .rd-btn:hover { background:var(--rd-purple-soft); color:#431121; }
     .tf .rd-btn.primary { background:var(--rd-purple); border-color:var(--rd-purple); color:#fff; } .tf .rd-btn.primary:hover { background:var(--rd-purple-d); color:#fff; }
     .tf .rd-btn.green { background:#2F6E16; border-color:#2F6E16; color:#fff; }
     .tf .rd-btn[disabled] { opacity:.55; cursor:not-allowed; }
@@ -94,38 +94,38 @@
     .tf .rd-dept { background:#F4F1F6; border-radius:8px; padding:9px 13px; font-size:13px; color:#2B2430; margin:0 14px 10px; }
     .tf .cancel-flag { background:#fbe9e6; color:#8a2a22; border:1px solid #f0b8b0; border-radius:8px; padding:8px 12px; margin:8px 0; font-size:13px; }
 
-    /* ================= tf-resdesk-r2 DESIGN (12 Nov 2026, Shantha's mock-up): Avenir purple #842484, green #78b848, dark text ================= */
-    .tf { --av-p:#842484; --av-p-d:#5E1660; --av-p-soft:#F5EAF5; --av-g:#78b848; --av-g-d:#5E9A33; --av-g-ink:#10300A; --av-ink:#1B1620; --av-ink2:#3A3340; --av-line:#E4DAE6; color:var(--av-ink); }
-    .tf .rd2-hero { background:linear-gradient(0deg,#842484,#842484); color:#fff; border-radius:16px; padding:22px 26px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:12px; box-shadow:0 2px 6px rgba(80,20,80,.18); }
-    .tf .rd2-kicker { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#F6DCF6; }
+    /* ================= tf-resdesk-r2 DESIGN (12 Nov 2026, Shantha's mock-up): Avenir purple #8b1d40, green #78b848, dark text ================= */
+    .tf { --av-p:#8b1d40; --av-p-d:#66102b; --av-p-soft:#f5eaed; --av-g:#78b848; --av-g-d:#5E9A33; --av-g-ink:#10300A; --av-ink:#1B1620; --av-ink2:#3A3340; --av-line:#e6dade; color:var(--av-ink); }
+    .tf .rd2-hero { background:linear-gradient(0deg,#8b1d40,#8b1d40); color:#fff; border-radius:16px; padding:22px 26px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:12px; box-shadow:0 2px 6px rgba(84,16,37,.18); }
+    .tf .rd2-kicker { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#f6dce4; }
     .tf .rd2-h1 { margin:2px 0 4px; font-size:26px; font-weight:800; color:#fff; letter-spacing:-.01em; }
-    .tf .rd2-sub { font-size:14px; color:#FBEFFB; max-width:760px; }
+    .tf .rd2-sub { font-size:14px; color:#fbeff3; max-width:760px; }
     .tf .rd2-hero-r { display:flex; gap:8px; flex-wrap:wrap; }
     .tf .rd2-hbtn { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.45); color:#fff; border-radius:10px; padding:8px 14px; font-size:13.5px; font-weight:600; text-decoration:none; }
     .tf .rd2-hbtn:hover { background:rgba(255,255,255,.26); color:#fff; }
     .tf .rd2-steps { display:flex; gap:10px; flex-wrap:wrap; margin:0 0 16px; }
     .tf .rd2-step { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--av-line); color:var(--av-ink2); border-radius:12px; padding:10px 18px; font-size:14px; font-weight:600; text-decoration:none; }
-    .tf .rd2-step span { width:22px; height:22px; border-radius:50%; background:#EFE6F0; color:var(--av-p); display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+    .tf .rd2-step span { width:22px; height:22px; border-radius:50%; background:#f0e6e9; color:var(--av-p); display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
     .tf .rd2-step.on { background:var(--av-p); border-color:var(--av-p); color:#fff; } .tf .rd2-step.on span { background:#fff; color:var(--av-p); }
     .tf .rd2-step:hover:not(.on) { border-color:var(--av-p); color:var(--av-p); }
-    .tf .rd2-card { border:1px solid var(--av-line); border-radius:16px; overflow:hidden; box-shadow:0 1px 3px rgba(40,10,40,.06); }
-    .tf .rd2-card > .tf-card-h, .tf #tour_view .tf-card > .tf-card-h { background:#FBF7FB; border-bottom:1px solid var(--av-line); padding:12px 18px; }
+    .tf .rd2-card { border:1px solid var(--av-line); border-radius:16px; overflow:hidden; box-shadow:0 1px 3px rgba(42,8,19,.06); }
+    .tf .rd2-card > .tf-card-h, .tf #tour_view .tf-card > .tf-card-h { background:#fbf7f8; border-bottom:1px solid var(--av-line); padding:12px 18px; }
     .tf #tour_view .tf-card > .tf-card-h h6 { font-size:16px; font-weight:800; color:var(--av-p-d); }
     .tf .chip { border-radius:20px; padding:6px 14px; font-size:13px; border-color:var(--av-line); color:var(--av-ink2); }
-    .tf .chip.on { background:var(--av-p); color:#fff; } .tf .chip.on .n { color:#F6DCF6; }
+    .tf .chip.on { background:var(--av-p); color:#fff; } .tf .chip.on .n { color:#f6dce4; }
     .tf .rd2-card .tbl { font-size:13.5px; }
     .tf .rd2-card .tbl thead th { background:var(--av-p); color:#fff; font-size:11.5px; letter-spacing:.06em; padding:11px 12px; border:0; }
-    .tf .rd2-card .tbl td { padding:13px 12px; border-bottom:1px solid #EFE7F0; vertical-align:middle; color:var(--av-ink); }
+    .tf .rd2-card .tbl td { padding:13px 12px; border-bottom:1px solid #f0e7ea; vertical-align:middle; color:var(--av-ink); }
     .tf .rd2-card .tbl td.num, .tf .rd2-card .tbl th.num { text-align:center; }
-    .tf .rd2-card .tbl tr.rowlink:hover td { background:#FAF5FA; }
+    .tf .rd2-card .tbl tr.rowlink:hover td { background:#faf5f7; }
     .tf .rd2-card .tbl tr.rd-new td { background:#EEF7E6; } .tf .rd2-card .tbl tr.rd-new:hover td { background:#E3F1D6; }
     .tf .rd2-card .tbl tr.rd-new td:first-child { box-shadow:inset 5px 0 0 var(--av-g); }
     .tf .rd2-tno { font-weight:800; font-size:14px; color:var(--av-ink); white-space:nowrap; }
     .tf .rd2-grp { font-weight:600; } .tf .rd2-muted { color:#5B5361; font-size:12px; margin-top:2px; }
     .tf .rd2-date { white-space:nowrap; font-variant-numeric:tabular-nums; }
     .tf .rd-newtag { background:var(--av-g); color:var(--av-g-ink); border-radius:6px; padding:2px 8px; font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; margin-top:4px; display:inline-block; }
-    .tf .rd2-btn { display:inline-flex; align-items:center; gap:6px; border:1px solid #CBBBD0; background:#fff; color:#2E1532; border-radius:10px; padding:8px 15px; font-size:13.5px; font-weight:700; text-decoration:none; cursor:pointer; line-height:1.2; white-space:nowrap; }
-    .tf .rd2-btn:hover { border-color:var(--av-p); color:var(--av-p); background:#FCF8FC; }
+    .tf .rd2-btn { display:inline-flex; align-items:center; gap:6px; border:1px solid #d0bbc2; background:#fff; color:#34131d; border-radius:10px; padding:8px 15px; font-size:13.5px; font-weight:700; text-decoration:none; cursor:pointer; line-height:1.2; white-space:nowrap; }
+    .tf .rd2-btn:hover { border-color:var(--av-p); color:var(--av-p); background:#fcf8f9; }
     .tf .rd2-btn.go { background:var(--av-g); border-color:var(--av-g); color:var(--av-g-ink); }
     .tf .rd2-btn.go:hover { background:var(--av-g-d); border-color:var(--av-g-d); color:#fff; }
     .tf .rd2-btn.ghost { background:transparent; }
@@ -137,18 +137,18 @@
     .tf .rd2-h2 { margin:0; font-size:24px; font-weight:800; color:var(--av-ink); } .tf .rd2-h2 span { color:var(--av-p); font-weight:700; }
     .tf .rd2-tv-sub { color:var(--av-ink2); font-size:14px; margin-top:3px; }
     .tf .rd2-facts3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-top:14px; }
-    .tf .rd2-facts3 > div { background:#FAF6FA; border:1px solid #EFE5F0; border-radius:10px; padding:9px 12px; }
+    .tf .rd2-facts3 > div { background:#faf6f7; border:1px solid #f0e5e8; border-radius:10px; padding:9px 12px; }
     .tf .rd2-facts3 label { display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6A5F70; margin:0 0 2px; }
     .tf .rd2-facts3 b { font-size:14.5px; color:var(--av-ink); }
     .tf .rd2-tv-mark:empty { display:none; } .tf .rd2-tv-mark { margin-top:12px; }
     .tf .rd2-strip { margin-top:12px; } .tf .rd2-strip summary, .tf #tv_details_wrap summary { cursor:pointer; font-size:12px !important; font-weight:700; color:var(--av-p) !important; letter-spacing:.04em; }
-    .tf .rd-dept { margin:14px 18px 4px; background:var(--av-p-soft); border:1px solid #EAD7EB; color:#2E1532; border-radius:10px; padding:11px 14px; font-size:13.5px; }
+    .tf .rd-dept { margin:14px 18px 4px; background:var(--av-p-soft); border:1px solid #ebd7dd; color:#34131d; border-radius:10px; padding:11px 14px; font-size:13.5px; }
     .tf .rd-stays { padding:6px 0 4px; }
     .tf .rd-stay { margin:12px 18px; border:1px solid var(--av-line); border-radius:14px; padding:16px 18px; background:#fff; border-top:1px solid var(--av-line) !important; }
     .tf .rd-stay h5 { font-size:17px; font-weight:800; color:var(--av-ink); }
     .tf .rd-sub { color:var(--av-ink2); font-size:13.5px; margin-top:3px; }
     .tf .rd-stage { font-size:13px; padding:5px 13px; margin:10px 0 12px; }
-    .tf .rd-facts { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px 22px; margin:0 0 14px; padding:12px 14px; background:#FBF8FB; border-radius:10px; border:1px solid #F0E7F1; }
+    .tf .rd-facts { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px 22px; margin:0 0 14px; padding:12px 14px; background:#fbf8f9; border-radius:10px; border:1px solid #f1e7ea; }
     .tf .rd-facts .f label { display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6A5F70; margin:0 0 2px; }
     .tf .rd-facts .f span { font-size:13.5px; color:var(--av-ink); }
     .tf .rd-btns { gap:8px; }
@@ -156,19 +156,19 @@
     .tf .rd2-card .tf-card-h .chips { gap:8px; }
     .tf .form-control-sm, .tf .form-select-sm { border-radius:9px; border-color:#D9CDDD; }
     .tf .td-dots { border-radius:9px; }
-    .tf #acts_card .tbl thead th, .tf #sreq_card .tbl thead th { background:#F5EDF6; color:#4A1450; }
+    .tf #acts_card .tbl thead th, .tf #sreq_card .tbl thead th { background:#f6edf0; color:#541025; }
     .tf .rd2-card .tbl td.mono { white-space:nowrap; }
     .tf .rd2-card .pill { font-size:12px; padding:4px 11px; }
-    .tf .rd2-card .pill-blue { background:#F5EAF5; color:#5E1660; }
+    .tf .rd2-card .pill-blue { background:#f5eaed; color:#66102b; }
     .tf .rd2-card .pill-amber { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; }
 
     /* ================= tf-resdesk-r2 DESIGN v2 — the mock-up (12 Nov 2026). Everything under .rd3; nothing from .tf reaches it. ================= */
-    .rd3 { --p:#842484; --p-d:#6A1C6A; --ink:#111111; --ink2:#55505A; --line:#E3E0E6; --soft:#F2F0F5; --ok:#3B7A1F; --bad:#A3261E;
+    .rd3 { --p:#8b1d40; --p-d:#701633; --ink:#111111; --ink2:#55505A; --line:#E3E0E6; --soft:#F2F0F5; --ok:#3B7A1F; --bad:#A3261E;
            font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif; color:var(--ink); font-size:16px; line-height:1.5; }
     .rd3 *, .rd3 *::before, .rd3 *::after { box-sizing:border-box; }
     .rd3-shell { max-width:860px; margin:4px auto 32px; background:#fff; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; }
     .rd3-hero { background:var(--p); padding:22px 22px 26px; }
-    .rd3-brand { font-size:20px; font-weight:800; color:#1A0E1B; line-height:1.25; }
+    .rd3-brand { font-size:20px; font-weight:800; color:#1c0d12; line-height:1.25; }
     .rd3-desk { font-size:15px; color:#FFFFFF; margin-top:14px; }
     .rd3-nav { display:flex; flex-wrap:wrap; gap:8px; padding:14px 22px 16px; border-bottom:1px solid var(--line); }
     .rd3 .rd3-navb { display:inline-flex; align-items:center; min-height:38px; padding:8px 13px; border:1px solid #D6D2DA; border-radius:8px; background:#fff; color:var(--ink); font-size:15px; font-weight:500; text-decoration:none; }
@@ -208,15 +208,15 @@
     .rd3-chips { display:flex; gap:8px; flex-wrap:wrap; margin:4px 0 6px; }
     .rd3 .chip { border:1px solid #D6D2DA; background:#fff; border-radius:8px; padding:7px 12px; font-size:14.5px; color:var(--ink); cursor:pointer; }
     .rd3 .chip .n { font-size:13px; color:var(--ink2); margin-left:5px; }
-    .rd3 .chip.on { background:var(--p); border-color:var(--p); color:#fff; } .rd3 .chip.on .n { color:#F2DDF2; }
+    .rd3 .chip.on { background:var(--p); border-color:var(--p); color:#fff; } .rd3 .chip.on .n { color:#f2dde4; }
     .rd3-filterrow { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:flex-end; }
     .rd3-lab { display:flex; flex-direction:column; gap:4px; font-size:13.5px; color:var(--ink2); }
     .rd3-lab input, .rd3-lab select { min-height:38px; border:1px solid #D6D2DA; border-radius:8px; padding:6px 10px; font-size:15px; color:var(--ink); background:#fff; }
     .rd3-links { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
     .rd3-tours { margin-top:12px; }
     .rd3-tour { padding:16px 14px 18px; border-bottom:1px solid var(--line); cursor:pointer; border-radius:0; }
-    .rd3-tour:hover { background:#FCFAFC; }
-    .rd3-tour.is-new { background:#F6ECF6; border-left:5px solid var(--p); }
+    .rd3-tour:hover { background:#fcfafb; }
+    .rd3-tour.is-new { background:#f6ecef; border-left:5px solid var(--p); }
     .rd3-tour-top { display:flex; align-items:center; gap:10px; }
     .rd3 .rd3-tour-no { flex:1; font-size:18px; font-weight:800; margin:0; color:var(--ink); }
     .rd3-new { background:var(--p); color:#fff; font-size:13px; font-weight:700; border-radius:20px; padding:3px 11px; }
@@ -243,11 +243,11 @@
     .rdl-tabs { display:flex; gap:16px; flex-wrap:wrap; padding-bottom:14px; border-bottom:4px solid #78B848; margin-bottom:20px; }
     .rd3 .rdl-tab { width:354px; max-width:100%; height:62px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; color:#111; font-size:24px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.06); }
     .rd3 .rdl-tab[data-desk="other"] { width:334px; }
-    .rd3 .rdl-tab.on { background:#842484; border-color:#842484; color:#fff; }
+    .rd3 .rdl-tab.on { background:#8b1d40; border-color:#8b1d40; color:#fff; }
     .rdl-sub { display:flex; gap:14px; flex-wrap:wrap; margin:0 0 20px; }
     .rd3 .rdl-subb { height:44px; padding:0 34px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; color:#111; font-size:21px; font-weight:500; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.05); }
     .rd3 .rdl-subb.on { background:#78B848; border-color:#78B848; color:#fff; font-weight:600; }
-    .rd3 .rdl-subb.on[data-list="pending"] { background:#842484; border-color:#842484; }
+    .rd3 .rdl-subb.on[data-list="pending"] { background:#8b1d40; border-color:#8b1d40; }
     .rdl-search { display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin:0 0 24px; }
     .rd3 .rdl-q { flex:0 1 515px; display:flex; align-items:center; gap:14px; height:48px; border:1.5px solid #C9C4CD; border-radius:6px; padding:0 18px; background:#fff; margin:0; }
     .rd3 .rdl-q input { border:0; outline:0; flex:1; min-width:0; font-size:21px; color:#111; background:transparent; }
@@ -455,7 +455,7 @@
         <div class="help mt-2">Your name and the time are recorded with the confirmation. The stay's hotel payment request is then raised to <b>Payment Approval</b>; the payment voucher is created only after the payment is approved there.</div>
         <input type="hidden" id="cb_id">
     </div>
-    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-sm" style="background:#7B2382;color:#fff" id="cb_ok">Confirm Hotel</button></div>
+    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-sm" style="background:#891c3e;color:#fff" id="cb_ok">Confirm Hotel</button></div>
 </div></div></div>
 
 <!-- a letter as it was sent -->

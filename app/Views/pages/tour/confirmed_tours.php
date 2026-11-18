@@ -174,7 +174,7 @@
     // so the sender, the company copy rule, the record and a failure are all handled exactly as before.
     const mailBtn = (t) => {
         if (!t.final_confirmed_at || t.reopened) { return ''; }
-        return `<button class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" data-send="${t.id}">`
+        return `<button class="btn btn-sm" style="background:#8b1d40;border-color:#8b1d40;color:#fff" data-send="${t.id}">`
              + `<i class="bi bi-envelope-paper"></i> Send the confirmed itinerary</button>`;
     };
 
@@ -215,7 +215,7 @@
                     ${finalBtn(t)}
                     ${mailBtn(t)}
                     <a class="btn btn-light btn-sm" href="${PAGE}/${t.id}/control" title="The confirmed tour — its traffic lights, outstanding work, passengers and rooming"><i class="bi bi-box-arrow-up-right"></i> Open</a>
-                    <a class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" href="${INTAKE}/comms/${t.intake_id}" title="Correspondence, attachments, agreed arrangements, follow-ups and hand-over"><i class="bi bi-chat-left-text"></i> Communications &amp; History</a>
+                    <a class="btn btn-sm" style="background:#8b1d40;border-color:#8b1d40;color:#fff" href="${INTAKE}/comms/${t.intake_id}" title="Correspondence, attachments, agreed arrangements, follow-ups and hand-over"><i class="bi bi-chat-left-text"></i> Communications &amp; History</a>
                     ${CAN.board ? `<a class="btn btn-light btn-sm" href="${BOARD}/tour/${t.id}/record" title="The complete record of this tour, from the inquiry to today"><i class="bi bi-journal-text"></i> Complete record</a>` : ''}
                     ${programme ? `<a class="btn btn-light btn-sm" href="${programme}" title="The programme day by day, to print"><i class="bi bi-printer"></i> Programme</a>` : ''}
                 </div></td></tr>`;
@@ -253,7 +253,7 @@
                     </div></div>
                   </div>
                   <div class="acts" style="flex-direction:row;gap:8px;margin-top:10px;align-items:center">
-                    <button class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" id="sb_go-${t.id}">Send it</button>
+                    <button class="btn btn-sm" style="background:#8b1d40;border-color:#8b1d40;color:#fff" id="sb_go-${t.id}">Send it</button>
                     <span class="help" id="sb_why-${t.id}"></span>
                     <button class="btn btn-light btn-sm" id="sb_x-${t.id}">Close</button>
                     <span id="sb_msg-${t.id}" style="font-size:13px;font-weight:600"></span>
@@ -354,7 +354,7 @@
             }
             const intake = j.data && j.data.intake_id;
             say(tr, esc(j.message || 'Confirmed.') + (intake
-                ? ' <a class="btn btn-sm mt-1" style="background:#842484;border-color:#842484;color:#fff;text-decoration:none" href="'
+                ? ' <a class="btn btn-sm mt-1" style="background:#8b1d40;border-color:#8b1d40;color:#fff;text-decoration:none" href="'
                   + INTAKE + '/comms/' + intake + '"><i class="bi bi-chat-left-text"></i> Send the confirmed itinerary</a>' : ''));
             setTimeout(load, 2500);
         }));

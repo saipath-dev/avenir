@@ -9,7 +9,7 @@ $e = static fn ($s): string => esc((string) ($s ?? ''));
 $m = static fn ($n, $d = 2): string => number_format((float) ($n ?? 0), $d);
 $dt = static function ($s, $f = 'j M Y') { $s = trim((string) ($s ?? '')); if ($s === '' || str_starts_with($s, '0000')) return '—'; $ts = strtotime($s); return $ts ? date($f, $ts) : $s; };
 $pdf = !empty($for_pdf);
-$INK = '#2c3e50'; $MUTED = '#6c757d'; $P = '#842484'; $SOFT = '#f3e7f3'; $LINE = '#ced4da';
+$INK = '#2c3e50'; $MUTED = '#6c757d'; $P = '#8b1d40'; $SOFT = '#f3e7eb'; $LINE = '#ced4da';
 $lines = []; foreach ($D['lines'] as $l) { $lines[$l['key']] = $l; }
 $colors = ['grey' => '#6c757d', 'blue' => '#2563eb', 'indigo' => '#4f46e5', 'violet' => '#7c3aed', 'teal' => '#0f766e', 'green' => '#1f8a4c', 'olive' => '#4d7c0f', 'purple' => '#6d28d9', 'yellow' => '#1a1a1a', 'red' => '#b23a32', 'amber' => '#1a1a1a'];
 $th = 'style="text-align:left; font-size:8.5px; letter-spacing:.04em; text-transform:uppercase; color:' . $MUTED . '; padding:4px 5px; border-bottom:1px solid ' . $LINE . ';"';
@@ -65,7 +65,7 @@ $font = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';
 </table>
 <?php endforeach; ?>
 
-<table cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px; font-family:<?= $font ?>; background:<?= $SOFT ?>; border:1px solid #e2c6e2;">
+<table cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px; font-family:<?= $font ?>; background:<?= $SOFT ?>; border:1px solid #e2c6cf;">
 <tr><td style="padding:8px 10px;"><div style="font-size:12px; font-weight:bold; color:<?= $P ?>;">Total estimated cost</div><div style="font-size:9px; color:<?= $MUTED ?>;">* indicative at today's rate — the part not yet requested. 🔒 locked when the payment was requested. Paid figures are the finalised vouchers.</div></td>
 <td style="padding:8px 10px; text-align:right;"><div style="font-size:16px; font-weight:bold; color:<?= $P ?>;">LKR <?= $m($tot['estimated'], 0) ?></div><div style="font-size:10px;">paid LKR <?= $m($tot['paid'], 0) ?> · outstanding LKR <?= $m($tot['outstanding'], 0) ?></div></td></tr>
 </table>

@@ -464,7 +464,7 @@ final class RouteMap
     {
         $im = $this->im;
         $this->col = [];
-        // the system's own colours (the Tour Desk theme: brand purple #842484, its soft tint #f3e7f3, ink #2c3e50, muted #6c757d);
+        // the system's own colours (the Tour Desk theme: brand purple #8b1d40, its soft tint #f3e7eb, ink #2c3e50, muted #6c757d);
         // the route stays blue and the stops red, as a map is read — Shantha's brief
         foreach (['white' => [255, 255, 255], 'ink' => [44, 62, 80], 'muted' => [108, 117, 125], 'line' => [228, 232, 238], 'soft' => [246, 247, 250],
                   'navy' => [132, 36, 132], 'blue' => [37, 99, 235], 'blue_soft' => [243, 231, 243], 'red' => [214, 40, 40], 'red_dark' => [160, 24, 24],

@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Tour Discounts (Pilot) — tf-discount-r2, the approved mock-up ---------- */
-    .td { --td-plum:#842484; --td-plum-d:#6b1d6b; --td-plum-soft:#f7edf7; --td-green:#78b848; --td-green-d:#67a23c;
+    .td { --td-plum:#8b1d40; --td-plum-d:#711734; --td-plum-soft:#f7edf0; --td-green:#78b848; --td-green-d:#67a23c;
           --td-ink:#241f28; --td-muted:#6b6472; --td-line:#e4dfe8; --td-bg:#faf8fb; --td-card:#fff;
           --td-amber-soft:#ffffff; --td-amber:#1a1a1a; --td-red:#b23a32; --td-red-soft:#fbe9e7;
           color:var(--td-ink); font-size:14px; }
@@ -27,7 +27,7 @@
     .td .btn-quiet:hover { background:var(--td-bg); }
     .td label.lb { font-size:12.5px; font-weight:600; color:var(--td-muted); display:block; margin-bottom:5px; }
     .td .form-control, .td .form-select { border:1px solid var(--td-line); border-radius:9px; padding:10px 12px; font-size:14px; color:var(--td-ink); }
-    .td .form-control:focus, .td .form-select:focus { border-color:var(--td-plum); box-shadow:0 0 0 3px rgba(132,36,132,.14); }
+    .td .form-control:focus, .td .form-select:focus { border-color:var(--td-plum); box-shadow:0 0 0 3px rgba(139,29,64,.14); }
     .td .ask { font-size:17px; font-weight:700; color:var(--td-ink); margin:4px 0 14px; }
     .td .inv-strip { display:flex; flex-wrap:wrap; gap:0; background:var(--td-bg); border:1px solid var(--td-line); border-radius:12px; overflow:hidden; }
     .td .inv-strip > div { padding:13px 18px; flex:1 1 170px; border-right:1px solid var(--td-line); }
@@ -79,7 +79,7 @@
     .td details > summary::-webkit-details-marker { display:none; }
     .td .clk { margin-right:8px; }
     .td details[open] > summary { border-bottom:1px solid var(--td-line); }
-    .td .give { display:flex; gap:14px; align-items:flex-end; flex-wrap:wrap; background:var(--td-plum-soft); border:1px solid #ecdcec; border-radius:12px; padding:14px 16px; margin-top:14px; }
+    .td .give { display:flex; gap:14px; align-items:flex-end; flex-wrap:wrap; background:var(--td-plum-soft); border:1px solid #ecdce1; border-radius:12px; padding:14px 16px; margin-top:14px; }
     .td .give input { width:140px; }
     .td .det { border:1px solid var(--td-line); border-radius:12px; padding:16px; margin-top:18px; background:var(--td-bg); text-align:left; }
     .td .det h6 { font-size:14px; }

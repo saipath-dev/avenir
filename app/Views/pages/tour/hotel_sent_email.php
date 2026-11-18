@@ -5,14 +5,14 @@ $ok = in_array((string) $m['state'], ['sent', 'recorded'], true);
 ?><!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Sent email — <?= $e($m['hotel_name']) ?></title>
 <style>
-body{margin:0;font-family:Inter,system-ui,Segoe UI,sans-serif;background:#F6F3F7;color:#1F1A24}
-.top{background:#7B2382;color:#fff;padding:14px 24px;font-weight:700}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,sans-serif;background:#f7f3f4;color:#1F1A24}
+.top{background:#891c3e;color:#fff;padding:14px 24px;font-weight:700}
 .wrap{max-width:900px;margin:18px auto;padding:0 16px}
 .card{background:#fff;border:1px solid #E2D6E6;border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.kv{display:grid;grid-template-columns:140px 1fr;gap:6px 14px;font-size:14px}.kv dt{color:#4A1450;font-weight:600}.kv dd{margin:0}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:6px 14px;font-size:14px}.kv dt{color:#541025;font-weight:600}.kv dd{margin:0}
 .st{display:inline-block;border-radius:14px;padding:3px 10px;font-weight:700;font-size:13px}
 .ok{background:#E4F4EA;color:#1C6B3B}.bad{background:#FBE9E7;color:#8C1D18}
-a{color:#6E1F70;font-weight:600}
+a{color:#761936;font-weight:600}
 iframe{width:100%;height:900px;border:1px solid #E2D6E6;border-radius:8px;background:#fff}
 </style></head><body>
 <div class="top">Avenir Holidays · Sent email · <?= $e($m['tour_no']) ?> · <?= $e($m['hotel_name']) ?></div>

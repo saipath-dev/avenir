@@ -18,7 +18,7 @@
     .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
     .tf .tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
     .tf .tbl th { text-align:left; font-weight:600; color:var(--tf-muted); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:8px 10px; border-bottom:1px solid var(--tf-line); white-space:nowrap; }
-    .tf .tbl th.lq { color:#842484; } .tf .tbl th.lh { color:#1878c0; } .tf .tbl th.lt { color:#1a1a1a; }
+    .tf .tbl th.lq { color:#8b1d40; } .tf .tbl th.lh { color:#1878c0; } .tf .tbl th.lt { color:#1a1a1a; }
     .tf .tbl td { padding:10px 10px; border-bottom:1px solid var(--tf-line); vertical-align:top; }
     .tf .tbl tr:last-child td { border-bottom:0; }
     .tf .tbl tr.trow { cursor:pointer; }
@@ -52,7 +52,7 @@
     .tf .trail div:last-child { border-bottom:0; }
     .tf .trail .who { color:var(--tf-muted); }
     .tf .lane { font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-right:6px; }
-    .tf .lane.hotel { color:#1878c0; } .tf .lane.transport { color:#1a1a1a; } .tf .lane.quotation { color:#842484; } .tf .lane.tour { color:var(--tf-ink); } .tf .lane.service { color:#0f8b7e; }
+    .tf .lane.hotel { color:#1878c0; } .tf .lane.transport { color:#1a1a1a; } .tf .lane.quotation { color:#8b1d40; } .tf .lane.tour { color:var(--tf-ink); } .tf .lane.service { color:#0f8b7e; }
     .tf .kv { display:grid; grid-template-columns:120px 1fr; gap:5px 12px; font-size:12.5px; }
     .tf .kv dt { color:var(--tf-muted); }
     .tf .kv dd { margin:0; }
@@ -289,7 +289,7 @@
                 </div>
                 <div class="box">
                   <h6>Communications &amp; History</h6>
-                  <div class="help mb-2">Every move on the desks and every edit to the quotation — who, when, what changed. <a class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" href="${INTAKE}/comms/${t.intake_id}" target="_blank"><i class="bi bi-chat-left-text"></i> Communications &amp; History</a> <span class="help">— correspondence, attachments, agreed arrangements, follow-ups, hand-over.</span></div>
+                  <div class="help mb-2">Every move on the desks and every edit to the quotation — who, when, what changed. <a class="btn btn-sm" style="background:#8b1d40;border-color:#8b1d40;color:#fff" href="${INTAKE}/comms/${t.intake_id}" target="_blank"><i class="bi bi-chat-left-text"></i> Communications &amp; History</a> <span class="help">— correspondence, attachments, agreed arrangements, follow-ups, hand-over.</span></div>
                   <div class="trail">${window.tdHistory(t.history || [], { empty: 'Nothing yet.', names: NAMES })}</div>
                 </div>
               </div>

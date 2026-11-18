@@ -9,28 +9,28 @@
 $sapBase = base_url('master_files/staff');
 ?>
 <style>
-.sap{--p:#842484;--p2:#a64aa6;--pl:#f6eef6;--pll:#fbf7fb;--g:#78b848;--gd:#5a9a2e;--gl:#eef7e6;--r:#c0392b;--rl:#fbeceb;--a:#1a1a1a;--al:#ffffff;--ink:#1f1a24;--mut:#6b6272;--ln:#e8e1ea;--bg:#ffffff;font-size:14px;color:var(--ink)}
+.sap{--p:#8b1d40;--p2:#ad4365;--pl:#f6eef1;--pll:#fbf7f8;--g:#78b848;--gd:#5a9a2e;--gl:#eef7e6;--r:#c0392b;--rl:#fbeceb;--a:#1a1a1a;--al:#ffffff;--ink:#1f1a24;--mut:#6b6272;--ln:#eae1e4;--bg:#ffffff;font-size:14px;color:var(--ink)}
 .sap *{box-sizing:border-box}
 .sap .sap-top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:4px 0 14px}
 .sap .sap-mode{display:inline-flex;background:var(--pl);border-radius:999px;padding:4px;gap:4px}
 .sap .sap-mode button{border:0;background:transparent;padding:8px 18px;border-radius:999px;font-weight:600;color:var(--p);cursor:pointer}
-.sap .sap-mode button[aria-pressed=true]{background:var(--p);color:#fff;box-shadow:0 2px 6px rgba(132,36,132,.25)}
+.sap .sap-mode button[aria-pressed=true]{background:var(--p);color:#fff;box-shadow:0 2px 6px rgba(139,29,64,.25)}
 .sap .sap-note{color:var(--mut);font-size:12.5px}
 .sap .sap-card{background:var(--bg);border:1px solid var(--ln);border-radius:14px;box-shadow:0 1px 2px rgba(31,26,36,.04)}
 .sap .sap-find{padding:16px;margin-bottom:14px;position:relative}
 .sap .sap-find label{font-weight:600;display:block;margin-bottom:8px}
-.sap .sap-inp{width:100%;border:1px solid #d9cfdc;border-radius:10px;padding:11px 14px;font-size:15px;outline:none;background:#fff}
-.sap .sap-inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(132,36,132,.12)}
+.sap .sap-inp{width:100%;border:1px solid #dccfd3;border-radius:10px;padding:11px 14px;font-size:15px;outline:none;background:#fff}
+.sap .sap-inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(139,29,64,.12)}
 .sap .sap-res{position:absolute;left:16px;right:16px;top:calc(100% - 8px);z-index:30;background:#fff;border:1px solid var(--ln);border-radius:12px;box-shadow:0 12px 28px rgba(31,26,36,.14);max-height:320px;overflow:auto}
-.sap .sap-res button{display:flex;width:100%;text-align:left;border:0;background:#fff;padding:10px 14px;gap:10px;align-items:center;cursor:pointer;border-bottom:1px solid #f3eef4}
+.sap .sap-res button{display:flex;width:100%;text-align:left;border:0;background:#fff;padding:10px 14px;gap:10px;align-items:center;cursor:pointer;border-bottom:1px solid #f4eef0}
 .sap .sap-res button:hover,.sap .sap-res button:focus{background:var(--pll)}
 .sap .sap-av{width:38px;height:38px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;letter-spacing:.5px}
 .sap .sap-who{position:sticky;top:64px;z-index:20;display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:14px 16px;margin-bottom:14px;border-left:5px solid var(--p);background:linear-gradient(90deg,var(--pll),#fff)}
 .sap .sap-who .nm{font-size:17px;font-weight:700}
 .sap .sap-who .sub{color:var(--mut);font-size:12.5px}
 .sap .sap-who .sp{flex:1}
-.sap-mini{position:fixed;left:50%;transform:translateX(-50%);top:72px;z-index:1040;display:flex;align-items:center;gap:10px;background:#842484;color:#fff;border-radius:999px;padding:6px 16px 6px 6px;box-shadow:0 8px 20px rgba(132,36,132,.35);font-size:13px;max-width:calc(100vw - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sap-mini .sap-av{width:28px;height:28px;font-size:11px;background:#fff;color:#842484;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.sap-mini{position:fixed;left:50%;transform:translateX(-50%);top:72px;z-index:1040;display:flex;align-items:center;gap:10px;background:#8b1d40;color:#fff;border-radius:999px;padding:6px 16px 6px 6px;box-shadow:0 8px 20px rgba(139,29,64,.35);font-size:13px;max-width:calc(100vw - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sap-mini .sap-av{width:28px;height:28px;font-size:11px;background:#fff;color:#8b1d40;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
 .sap-mini code{color:#fff;background:rgba(255,255,255,.18);padding:1px 6px;border-radius:6px}
 .sap .sap-kpi{display:flex;gap:8px;flex-wrap:wrap}
 .sap .chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;white-space:nowrap;border:1px solid transparent}
@@ -38,7 +38,7 @@ $sapBase = base_url('master_files/staff');
 .sap .c-part{background:var(--al);color:var(--a);border-color:#f2dfb5}
 .sap .c-block{background:var(--rl);color:var(--r);border-color:#f2cfcb}
 .sap .c-none{background:#f2f0f3;color:var(--mut);border-color:#e6e2e8}
-.sap .c-p{background:var(--pl);color:var(--p);border-color:#ead6ea}
+.sap .c-p{background:var(--pl);color:var(--p);border-color:#ead6dc}
 .sap .c-lock{background:#2b2230;color:#fff}
 .sap .sap-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 .sap .sap-tools .sap-inp{flex:1;min-width:200px;padding:9px 12px;font-size:14px}
@@ -66,7 +66,7 @@ $sapBase = base_url('master_files/staff');
 .sap .gbtn.wh{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);color:#fff}
 .sap table.sap-t{width:100%;border-collapse:collapse}
 .sap .sap-t th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);text-align:left;padding:8px 16px;border-bottom:1px solid var(--ln);background:#fff}
-.sap .sap-t td{padding:10px 16px;border-bottom:1px solid #f3eef4;vertical-align:top}
+.sap .sap-t td{padding:10px 16px;border-bottom:1px solid #f4eef0;vertical-align:top}
 .sap .sap-t tr.chg td{background:#fffbe9}
 .sap .sap-t .wd b{display:block;font-weight:600}
 .sap .sap-t .wd span{color:var(--mut);font-size:12.5px}
@@ -89,26 +89,26 @@ $sapBase = base_url('master_files/staff');
 .sap .btnq{border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:9px 14px;font-weight:600;cursor:pointer;background:transparent;color:#fff}
 .sap .sap-ppl{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;padding:14px}
 .sap .sap-pc{border:1px solid var(--ln);border-radius:12px;padding:12px 14px;background:#fff;cursor:pointer;text-align:left}
-.sap .sap-pc:hover{border-color:var(--p);box-shadow:0 4px 12px rgba(132,36,132,.1)}
+.sap .sap-pc:hover{border-color:var(--p);box-shadow:0 4px 12px rgba(139,29,64,.1)}
 .sap .sap-pc .h{display:flex;gap:10px;align-items:center;margin-bottom:8px}
 .sap .sap-pc .tl{display:flex;flex-wrap:wrap;gap:6px}
 .sap .sap-big{font-size:34px;font-weight:800;color:var(--p);line-height:1}
-.sap .sap-sec{padding:12px 16px;border-top:1px solid var(--ln);font-weight:700;color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em;background:#fcfafc}
+.sap .sap-sec{padding:12px 16px;border-top:1px solid var(--ln);font-weight:700;color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em;background:#fcfafb}
 .sap-modal{position:fixed;inset:0;background:rgba(31,26,36,.55);z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:4vh 12px;overflow:auto}
 .sap-modal .box{background:#fff;border-radius:16px;max-width:760px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;font-size:14px;color:#1f1a24}
-.sap-modal .hd{background:linear-gradient(90deg,#842484,#a64aa6);color:#fff;padding:16px 20px}
+.sap-modal .hd{background:linear-gradient(90deg,#8b1d40,#ad4365);color:#fff;padding:16px 20px}
 .sap-modal .hd h5{margin:0;font-size:17px;font-weight:700;color:#fff}
 .sap-modal .bd{padding:16px 20px;max-height:62vh;overflow:auto}
-.sap-modal .ft{padding:14px 20px;border-top:1px solid #e8e1ea;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.sap-modal .ft{padding:14px 20px;border-top:1px solid #eae1e4;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
 .sap-modal h6{margin:14px 0 6px;font-weight:700;font-size:13px}
 .sap-modal ul{margin:0;padding-left:18px}
 .sap-modal li{margin:3px 0}
-.sap-modal textarea{width:100%;min-height:76px;border:1px solid #d9cfdc;border-radius:10px;padding:10px;font-size:14px}
+.sap-modal textarea{width:100%;min-height:76px;border:1px solid #dccfd3;border-radius:10px;padding:10px;font-size:14px}
 .sap-modal .warn{background:#ffffff;border:1px solid #f2dfb5;color:#7a5512;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px}
 .sap-modal .err{background:#fbeceb;border:1px solid #f2cfcb;color:#9b2c21;border-radius:10px;padding:10px 12px;margin-top:10px}
-.sap-modal .bq{border:1px solid #d9cfdc;background:#fff;border-radius:10px;padding:9px 16px;font-weight:600;cursor:pointer}
+.sap-modal .bq{border:1px solid #dccfd3;background:#fff;border-radius:10px;padding:9px 16px;font-weight:600;cursor:pointer}
 .sap-modal .bp{border:0;background:#78b848;color:#fff;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer}
-.sap-modal .url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#842484}
+.sap-modal .url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#8b1d40}
 @media (max-width:760px){
   .sap .sap-who{top:56px}
   .sap-mini{top:78px}
@@ -298,8 +298,8 @@ $sapBase = base_url('master_files/staff');
         const affected = list.filter(s => now(s) !== to && !(to === 'open' && s.role));
         const title = scope === 'cat' ? MAP.find(c => c.key === key).title : (() => { const [ck, tk] = key.split('.'); return MAP.find(c => c.key === ck).tasks.find(t => t.key === tk).title; })();
         if (!affected.length) { Swal.fire({ icon: 'info', text: 'Nothing to change: every switchable row in "' + title + '" is already ' + LBL[to] + (skipped.length ? ' (payment roles are never opened from a heading)' : '') + '.' }); return; }
-        const html = '<div style="text-align:left"><p>This will mark <b>' + affected.length + '</b> row(s) as <b>' + LBL[to] + '</b> (not saved until you review):</p><ul style="max-height:240px;overflow:auto">' + affected.map(s => '<li>' + esc(s.desc) + ' <span class="url" style="font-family:monospace;color:#842484">' + esc(s.url) + '</span></li>').join('') + '</ul>' + (skipped.length ? '<div style="background:#ffffff;border:1px solid #f2dfb5;border-radius:8px;padding:8px;margin-top:8px">Not included — payment roles are opened only on their own row:<br>' + skipped.map(s => esc(s.desc) + ' (role ' + s.role + ')').join('<br>') + '</div>' : '') + '</div>';
-        Swal.fire({ title: LBL[to] + ' — ' + title, html, showCancelButton: true, confirmButtonText: 'Add to my changes', confirmButtonColor: '#842484' }).then(r => { if (!r.isConfirmed) return; affected.forEach(s => stage(s.id, to, true)); renderPerson(); });
+        const html = '<div style="text-align:left"><p>This will mark <b>' + affected.length + '</b> row(s) as <b>' + LBL[to] + '</b> (not saved until you review):</p><ul style="max-height:240px;overflow:auto">' + affected.map(s => '<li>' + esc(s.desc) + ' <span class="url" style="font-family:monospace;color:#8b1d40">' + esc(s.url) + '</span></li>').join('') + '</ul>' + (skipped.length ? '<div style="background:#ffffff;border:1px solid #f2dfb5;border-radius:8px;padding:8px;margin-top:8px">Not included — payment roles are opened only on their own row:<br>' + skipped.map(s => esc(s.desc) + ' (role ' + s.role + ')').join('<br>') + '</div>' : '') + '</div>';
+        Swal.fire({ title: LBL[to] + ' — ' + title, html, showCancelButton: true, confirmButtonText: 'Add to my changes', confirmButtonColor: '#8b1d40' }).then(r => { if (!r.isConfirmed) return; affected.forEach(s => stage(s.id, to, true)); renderPerson(); });
     }
 
     // ---------------------------------------------------------------- pending changes → review → save
@@ -331,7 +331,7 @@ $sapBase = base_url('master_files/staff');
             if (j.status !== 200) { err.textContent = j.message || 'Not saved.'; err.hidden = false; ev.target.disabled = false; ev.target.textContent = 'Save'; return; }
             close();
             const ref = (j.refused || []).map(r => { const s = all.find(x => x.id === r.menu_id); return '<li>' + esc(s ? s.desc : '#' + r.menu_id) + ': ' + esc(r.message) + '</li>'; }).join('');
-            Swal.fire({ icon: ref ? 'warning' : 'success', title: j.message, html: ref ? '<div style="text-align:left">Refused by the server (nothing else was affected):<ul>' + ref + '</ul></div>' : '', confirmButtonColor: '#842484' });
+            Swal.fire({ icon: ref ? 'warning' : 'success', title: j.message, html: ref ? '<div style="text-align:left">Refused by the server (nothing else was affected):<ul>' + ref + '</ul></div>' : '', confirmButtonColor: '#8b1d40' });
             await loadAccounts(); await openPerson(STAFF.id);
         });
     }

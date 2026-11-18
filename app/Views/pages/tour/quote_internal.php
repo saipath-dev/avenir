@@ -24,11 +24,11 @@ $ref  = ($c['inquiry_no'] ?? '') . ($q ? ' / v' . (int) $q['version'] : ' / prev
 $fmtD = static fn ($d) => $d ? date('j M Y', strtotime((string) $d)) : '—';
 $n2   = static fn ($v) => $v === null ? '—' : number_format((float) $v, 2);
 $n1   = static fn ($v) => $v === null ? '—' : number_format((float) $v, 1);
-$P = '#842484'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbe6'; $RED = '#b23a32'; $AMB = '#1a1a1a'; $GRN = '#1f8a4c';
+$P = '#8b1d40'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbde'; $RED = '#b23a32'; $AMB = '#1a1a1a'; $GRN = '#1f8a4c';
 $th = 'style="font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:' . $MUTED . '; border-bottom:1px solid ' . $LINE . '; text-align:left; padding:5px 6px;"';
 $thr = 'style="font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:' . $MUTED . '; border-bottom:1px solid ' . $LINE . '; text-align:right; padding:5px 6px;"';
-$td = 'style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; vertical-align:top;"';
-$tdr = 'style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; vertical-align:top; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap;"';
+$td = 'style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; vertical-align:top;"';
+$tdr = 'style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; vertical-align:top; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap;"';
 $w   = static fn (int $pct) => ' width="' . $pct . '%"';
 $h3 = 'style="font-size:13px; color:' . $P . '; margin:18px 0 6px 0; border-bottom:1px solid ' . $LINE . '; padding-bottom:4px;"';
 $missing = static fn (array $row) => ($row['state'] ?? 'ok') === 'missing' ? '<span style="color:' . $RED . '; font-weight:bold;">' . esc($row['why'] ?? 'missing') . '</span>' : '';
@@ -51,7 +51,7 @@ $mixShort = static function (array $m): string {
     .bar { position:sticky; top:0; z-index:5; display:flex; gap:8px; align-items:center; padding:10px 18px; background:#fff; border-bottom:1px solid #dfe5ec; box-shadow:0 2px 8px rgba(0,0,0,.05); }
     .bar a, .bar button { font:inherit; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:8px; border:1px solid #dfe5ec; background:#fff; color:<?= $INK ?>; text-decoration:none; cursor:pointer; }
     .bar a:hover, .bar button:hover { background:#f4f6f9; }
-    .bar .primary { background:linear-gradient(135deg, #e90c8b 0%, #8f2a8d 100%); color:#fff; border:0; }
+    .bar .primary { background:linear-gradient(135deg, #e90c8b 0%, #972247 100%); color:#fff; border:0; }
     .bar .note { margin-left:auto; font-size:12px; color:<?= $MUTED ?>; }
     .bar .preview { background:#ffffff; color:#1a1a1a; border-color:#d9d3dd; }
     .sheet { width:210mm; margin:22px auto; background:#fff; padding:14mm 14mm; box-shadow:0 8px 30px rgba(0,0,0,.08); box-sizing:border-box; }
@@ -114,8 +114,8 @@ $paidLines = array_values(array_filter($c['services'] ?? [], static fn ($s) => (
 $freeCount = $c['free_visits'] ?? (count($c['services'] ?? []) - count($paidLines));
 $partHead = 'style="font-size:14px; color:#fff; background:' . $P . '; margin:20px 0 0 0; padding:6px 10px; border-radius:4px 4px 0 0;"';
 $subHead  = 'style="font-size:12px; color:' . $P . '; margin:10px 0 4px 0;"';
-$subRow   = 'style="font-size:11px; padding:5px 6px; text-align:right; background:#faf5fa; border-bottom:1px solid ' . $LINE . '; font-family:Consolas,Menlo,monospace; white-space:nowrap;"';
-$subLbl   = 'style="font-size:11px; padding:5px 6px; text-align:right; background:#faf5fa; border-bottom:1px solid ' . $LINE . ';"';
+$subRow   = 'style="font-size:11px; padding:5px 6px; text-align:right; background:#faf5f7; border-bottom:1px solid ' . $LINE . '; font-family:Consolas,Menlo,monospace; white-space:nowrap;"';
+$subLbl   = 'style="font-size:11px; padding:5px 6px; text-align:right; background:#faf5f7; border-bottom:1px solid ' . $LINE . ';"';
 $partRow  = 'style="font-size:12px; font-weight:bold; padding:6px 6px; text-align:right; border-top:2px solid ' . $P . '; font-family:Consolas,Menlo,monospace; white-space:nowrap;"';
 $partLbl  = 'style="font-size:12px; font-weight:bold; padding:6px 6px; text-align:right; border-top:2px solid ' . $P . ';"';
 // the pax matrix (schema 31): every party size costed on its own, above the three sections; a
@@ -127,23 +127,23 @@ $mx = $c['pax_matrix'] ?? null;
 <h3 <?= $partHead ?> data-part="matrix">Pax matrix <span style="font-weight:normal; font-size:11px;">— every party size costed on its own from the masters, never a total divided</span></h3>
 <table cellpadding="0" cellspacing="0" data-pax-matrix>
     <tr><th <?= $th . $w(7) ?>>Pax</th><th <?= $th . $w($mxProfit ? 16 : 18) ?>>Rooms</th><th <?= $th . $w($mxProfit ? 14 : 16) ?>>Vehicle</th><?php if ($costOn): ?><th <?= $thr . $w(9) ?>>Hotels</th><th <?= $thr . $w(9) ?>>Paid</th><th <?= $thr . $w(9) ?>>Transport</th><th <?= $thr . $w(10) ?>>Total cost</th><th <?= $thr . $w(8) ?>>Cost pp</th><?php endif; ?><th <?= $thr . $w(9) ?>>Price pp</th><?php if ($mxProfit): ?><th <?= $thr . $w(9) ?>>Profit</th><?php endif; ?></tr>
-    <?php foreach ($mx['levels'] as $L): $own = !empty($L['own']); $rowBg = $own ? ' background:#faf5fa;' : ''; ?>
+    <?php foreach ($mx['levels'] as $L): $own = !empty($L['own']); $rowBg = $own ? ' background:#faf5f7;' : ''; ?>
     <tr data-pax="<?= (int) $L['pax'] ?>"<?= $own ? ' data-own="1"' : '' ?><?= !$L['complete'] ? ' data-open="1"' : '' ?>>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px;<?= $rowBg ?>"><b><?= (int) $L['pax'] ?></b><?= $own ? '<br><span style="color:' . $P . '; font-size:9.5px; font-weight:bold;">this inquiry</span>' : '' ?></td>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px;<?= $rowBg ?>"><?= esc($L['rooms_text']) ?></td>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px;<?= $rowBg ?>"><?= esc($L['vehicle_text']) ?><?= !empty($L['vehicle_changed']) ? ' <span style="color:' . $AMB . '; font-size:9.5px; font-weight:bold;" data-vehicle-changed="1">new size</span>' : '' ?></td>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px;<?= $rowBg ?>"><b><?= (int) $L['pax'] ?></b><?= $own ? '<br><span style="color:' . $P . '; font-size:9.5px; font-weight:bold;">this inquiry</span>' : '' ?></td>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px;<?= $rowBg ?>"><?= esc($L['rooms_text']) ?></td>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px;<?= $rowBg ?>"><?= esc($L['vehicle_text']) ?><?= !empty($L['vehicle_changed']) ? ' <span style="color:' . $AMB . '; font-size:9.5px; font-weight:bold;" data-vehicle-changed="1">new size</span>' : '' ?></td>
         <?php if ($costOn): ?>
         <?php foreach (['hotels', 'paid', 'transport'] as $pk): ?>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap;<?= $rowBg ?>"><?= $L['parts'][$pk] !== null ? $n2($L['parts'][$pk]) : '<span style="color:' . $RED . '">—</span>' ?></td>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap;<?= $rowBg ?>"><?= $L['parts'][$pk] !== null ? $n2($L['parts'][$pk]) : '<span style="color:' . $RED . '">—</span>' ?></td>
         <?php endforeach; ?>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap; font-weight:bold;<?= $rowBg ?>" data-mx-cost><?= $L['cost_usd'] !== null ? $n2($L['cost_usd']) : '<span style="color:' . $RED . '">—</span>' ?></td>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap;<?= $rowBg ?>"><?= $n2($L['cost_pp_usd']) ?></td>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap; font-weight:bold;<?= $rowBg ?>" data-mx-cost><?= $L['cost_usd'] !== null ? $n2($L['cost_usd']) : '<span style="color:' . $RED . '">—</span>' ?></td>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap;<?= $rowBg ?>"><?= $n2($L['cost_pp_usd']) ?></td>
         <?php endif; ?>
-        <td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap; color:<?= $P ?>; font-weight:bold;<?= $rowBg ?>" data-mx-price><?= $L['sell_pp_usd'] !== null ? $n2($L['sell_pp_usd']) : '—' ?></td>
-        <?php if ($mxProfit): ?><td style="font-size:11px; border-bottom:1px solid #f0e9f0; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap; color:<?= $GRN ?>;<?= $rowBg ?>" data-mx-profit><?= $n2($L['profit_usd']) ?></td><?php endif; ?>
+        <td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap; color:<?= $P ?>; font-weight:bold;<?= $rowBg ?>" data-mx-price><?= $L['sell_pp_usd'] !== null ? $n2($L['sell_pp_usd']) : '—' ?></td>
+        <?php if ($mxProfit): ?><td style="font-size:11px; border-bottom:1px solid #f0e9eb; padding:5px 6px; text-align:right; font-family:Consolas,Menlo,monospace; white-space:nowrap; color:<?= $GRN ?>;<?= $rowBg ?>" data-mx-profit><?= $n2($L['profit_usd']) ?></td><?php endif; ?>
     </tr>
     <?php if (!$L['complete'] && !empty($L['gaps'])): ?>
-    <tr><td <?= $td ?>></td><td colspan="<?= ($costOn ? 8 : 3) + ($mxProfit ? 1 : 0) ?>" style="font-size:10.5px; color:<?= $RED ?>; border-bottom:1px solid #f0e9f0; padding:3px 6px 6px 6px;"><?= esc(implode(' ', $L['gaps'])) ?> <span style="color:<?= $MUTED ?>">The agent's table says "on request" for <?= (int) $L['pax'] ?> pax.</span></td></tr>
+    <tr><td <?= $td ?>></td><td colspan="<?= ($costOn ? 8 : 3) + ($mxProfit ? 1 : 0) ?>" style="font-size:10.5px; color:<?= $RED ?>; border-bottom:1px solid #f0e9eb; padding:3px 6px 6px 6px;"><?= esc(implode(' ', $L['gaps'])) ?> <span style="color:<?= $MUTED ?>">The agent's table says "on request" for <?= (int) $L['pax'] ?> pax.</span></td></tr>
     <?php endif; ?>
     <?php endforeach; ?>
 </table>
@@ -260,16 +260,16 @@ $mx = $c['pax_matrix'] ?? null;
 <h3 <?= $h3 ?>><?= $costOn ? 'Total tour cost' : 'The client\'s price' ?></h3>
 <table cellpadding="5" cellspacing="0" style="border:1px solid <?= $LINE ?>;" data-totals>
     <?php $i = 0; foreach ($parts as $k => $pt): $i++; ?>
-    <?php if ($costOn): ?><tr><td width="70%" style="font-size:11.5px; border-bottom:1px solid #f0e9f0;"><?= $i ?> · <?= esc($pt['label']) ?></td><td width="30%" align="right" style="font-size:11.5px; border-bottom:1px solid #f0e9f0; font-family:Consolas,Menlo,monospace;" data-total-part="<?= esc($k) ?>">USD <?= $n2($pt['usd']) ?></td></tr><?php endif; ?>
+    <?php if ($costOn): ?><tr><td width="70%" style="font-size:11.5px; border-bottom:1px solid #f0e9eb;"><?= $i ?> · <?= esc($pt['label']) ?></td><td width="30%" align="right" style="font-size:11.5px; border-bottom:1px solid #f0e9eb; font-family:Consolas,Menlo,monospace;" data-total-part="<?= esc($k) ?>">USD <?= $n2($pt['usd']) ?></td></tr><?php endif; ?>
     <?php endforeach; ?>
     <?php if ($costOn): ?>
-    <tr style="background:#faf5fa;"><td style="font-size:12.5px; font-weight:bold;">Total tour cost <span style="font-weight:normal; color:<?= $MUTED ?>; font-size:11px;">(1 + 2 + 3)</span></td><td align="right" style="font-size:13px; font-weight:bold; font-family:Consolas,Menlo,monospace;" data-cost-total>USD <?= $n2($c['cost_usd']) ?></td></tr>
+    <tr style="background:#faf5f7;"><td style="font-size:12.5px; font-weight:bold;">Total tour cost <span style="font-weight:normal; color:<?= $MUTED ?>; font-size:11px;">(1 + 2 + 3)</span></td><td align="right" style="font-size:13px; font-weight:bold; font-family:Consolas,Menlo,monospace;" data-cost-total>USD <?= $n2($c['cost_usd']) ?></td></tr>
     <?php if (abs(round(array_sum(array_column($parts, 'usd')), 2) - round((float) $c['cost_usd'], 2)) >= 0.01): ?>
     <tr><td colspan="2" style="font-size:11px; color:<?= $RED ?>;">The three parts add up to USD <?= $n2(array_sum(array_column($parts, 'usd'))) ?>, not the tour cost. Check the costing again before quoting.</td></tr>
     <?php endif; ?>
     <tr><td style="font-size:11px; color:<?= $MUTED ?>;">in rupees at <?= $n2($c['usd_rate']) ?> · cost per person</td><td align="right" style="font-size:11px; color:<?= $MUTED ?>; font-family:Consolas,Menlo,monospace;">LKR <?= $n2($c['cost_lkr']) ?> · USD <?= $n2($c['per_person_cost_usd']) ?> pp</td></tr>
     <?php else: ?>
-    <tr style="background:#faf5fa;"><td colspan="2" style="font-size:11.5px; color:<?= $AMB ?>;">The tour cost total, the markup and the profit belong to Management, under Pricing, and are not shown on this desk. The supplier figure on each line above stays, for the work itself.</td></tr>
+    <tr style="background:#faf5f7;"><td colspan="2" style="font-size:11.5px; color:<?= $AMB ?>;">The tour cost total, the markup and the profit belong to Management, under Pricing, and are not shown on this desk. The supplier figure on each line above stays, for the work itself.</td></tr>
     <?php endif; ?>
     <tr><td style="font-size:12.5px; font-weight:bold; border-top:1px solid <?= $LINE ?>;">Client's price<?= $c['markup']['sell_usd'] === null ? ' <span style="color:' . $AMB . '; font-weight:normal;">— pricing not set by Management</span>' : '' ?></td>
         <td align="right" style="font-size:13px; font-weight:bold; border-top:1px solid <?= $LINE ?>; font-family:Consolas,Menlo,monospace; color:<?= $P ?>;"><?= $c['markup']['sell_usd'] !== null ? 'USD ' . $n2($c['markup']['sell_usd']) . ' · ' . $n2($c['markup']['per_person_usd']) . ' pp' : '—' ?></td></tr>

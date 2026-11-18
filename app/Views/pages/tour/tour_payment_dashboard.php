@@ -12,7 +12,7 @@ $TPD_READY = !empty($tpd_ready);
 ?>
 <style>
     /* ---------- tf-paydesk-r1: the system's colours (Tour Desk theme) ---------- */
-    .tpd { --p:#842484; --p2:#8f2a8d; --soft:#f3e7f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; --bg:#f6f7fa; --card:#fff; --radius:14px;
+    .tpd { --p:#8b1d40; --p2:#972247; --soft:#f3e7eb; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; --bg:#f6f7fa; --card:#fff; --radius:14px;
            --green:#1f8a4c; --green-soft:#e4f4ea; --blue:#2563eb; --blue-soft:#e8effd; --indigo:#4f46e5; --indigo-soft:#eceafd; --violet:#7c3aed; --violet-soft:#f1eafe;
            --teal:#0f766e; --teal-soft:#dff4f1; --amber:#1a1a1a; --amber-soft:#ffffff; --red:#b23a32; --red-soft:#fbe9e7; --purple:#6d28d9; --purple-soft:#ede9fe;
            --grey:#6c757d; --grey-soft:#eef0f3; --yellow:#1a1a1a; --yellow-soft:#ffffff; --olive:#4d7c0f; --olive-soft:#ecfccb;
@@ -28,7 +28,7 @@ $TPD_READY = !empty($tpd_ready);
     .tpd .num { font-variant-numeric: tabular-nums; }
 
     /* header */
-    .tpd .tpd-head { background:linear-gradient(135deg, var(--p) 0%, #5b1a5b 100%); color:#fff; border-radius:var(--radius); padding:16px 18px; }
+    .tpd .tpd-head { background:linear-gradient(135deg, var(--p) 0%, #60152d 100%); color:#fff; border-radius:var(--radius); padding:16px 18px; }
     .tpd .tpd-head h4 { color:#fff; margin:0; font-weight:700; letter-spacing:.2px; }
     .tpd .tpd-head .chip { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22); border-radius:999px; padding:3px 10px; font-size:12px; margin:3px 4px 0 0; }
     .tpd .tpd-head .chip b { font-weight:600; }
@@ -88,7 +88,7 @@ $TPD_READY = !empty($tpd_ready);
     .tpd .line:hover { background:#fcfbfd; }
     .tpd .line .ico { width:40px; height:40px; border-radius:12px; background:var(--grey-soft); display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--ink); }
     .tpd .line .ico.hotel { background:#eef2ff; color:#3730a3; } .tpd .line .ico.meal { background:#ffffff; border:1px solid #d9d3dd; color:#1a1a1a; } .tpd .line .ico.entrance { background:#fee2e2; color:#991b1b; }
-    .tpd .line .ico.activity { background:#dcfce7; color:#166534; } .tpd .line .ico.transport, .tpd .line .ico.driver_advance, .tpd .line .ico.driver_settlement { background:#e0f2fe; color:#075985; } .tpd .line .ico.guide { background:#fae8ff; color:#86198f; }
+    .tpd .line .ico.activity { background:#dcfce7; color:#166534; } .tpd .line .ico.transport, .tpd .line .ico.driver_advance, .tpd .line .ico.driver_settlement { background:#e0f2fe; color:#075985; } .tpd .line .ico.guide { background:#ffe8ef; color:#98103b; }
     .tpd .line .sup { font-weight:700; font-size:14px; }
     .tpd .line .desc { color:var(--muted); font-size:12.5px; }
     .tpd .line .warn { font-size:12px; margin-top:3px; }

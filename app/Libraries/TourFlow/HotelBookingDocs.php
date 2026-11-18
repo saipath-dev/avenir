@@ -189,15 +189,15 @@ final class HotelBookingDocs
             if (trim((string) ($p['full_name'] ?? '')) !== '') { $lead = trim((string) $p['full_name']); break; }
         }
         $hotel = $h['name'] . (!empty($s['area']) ? ', ' . $s['area'] : (!empty($h['address']) ? ', ' . $h['address'] : ''));
-        $row = static fn ($k, $v, $last = false) => '<tr><td width="34%" style="background-color:#F6EEF7;color:#2A1630;font-weight:bold;font-size:11pt;border-bottom:0.4px solid #B98FC0;border-right:0.4px solid #B98FC0">' . $k . '</td>'
-            . '<td width="66%" style="font-size:11pt;color:#1B1620;border-bottom:0.4px solid #B98FC0">' . $v . '</td></tr>';
+        $row = static fn ($k, $v, $last = false) => '<tr><td width="34%" style="background-color:#f7eef1;color:#32141e;font-weight:bold;font-size:11pt;border-bottom:0.4px solid #c08f9f;border-right:0.4px solid #c08f9f">' . $k . '</td>'
+            . '<td width="66%" style="font-size:11pt;color:#1B1620;border-bottom:0.4px solid #c08f9f">' . $v . '</td></tr>';
         $html = '<p style="font-size:12pt;font-weight:bold;color:#1B1620">Dear Hotel Reservations Team,</p>'
-            . '<p style="font-size:11pt;color:#2A2430">Greetings from <span style="color:#842484;font-weight:bold">Avenir Holidays</span>.<br>We would be grateful if you could kindly book the following accommodation and confirm the reservation at your earliest convenience.</p>'
-            . '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="22%"></td><td width="56%" style="background-color:#842484;color:#FFFFFF;text-align:center;font-size:12pt;font-weight:bold;line-height:2">RESERVATION CONTROL NO.</td><td width="22%"></td></tr></table>'
-            . '<table cellpadding="7" cellspacing="0" width="100%" style="border:1.4px solid #842484"><tr><td style="text-align:center;font-size:24pt;font-weight:bold;color:#1B1620"><span style="color:#78b848">—— </span>' . $e($no) . '<span style="color:#78b848"> ——</span></td></tr></table>'
+            . '<p style="font-size:11pt;color:#2A2430">Greetings from <span style="color:#8b1d40;font-weight:bold">Avenir Holidays</span>.<br>We would be grateful if you could kindly book the following accommodation and confirm the reservation at your earliest convenience.</p>'
+            . '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="22%"></td><td width="56%" style="background-color:#8b1d40;color:#FFFFFF;text-align:center;font-size:12pt;font-weight:bold;line-height:2">RESERVATION CONTROL NO.</td><td width="22%"></td></tr></table>'
+            . '<table cellpadding="7" cellspacing="0" width="100%" style="border:1.4px solid #8b1d40"><tr><td style="text-align:center;font-size:24pt;font-weight:bold;color:#1B1620"><span style="color:#78b848">—— </span>' . $e($no) . '<span style="color:#78b848"> ——</span></td></tr></table>'
             . '<p style="font-size:9pt;color:#55505A;text-align:center">Tour ' . $e($doc['tour']['tour_no']) . (!empty($doc['tour']['inquiry_no']) ? ' · Inquiry ' . $e($doc['tour']['inquiry_no']) : '') . '</p>'
-            . '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="50%" style="font-size:13pt;font-weight:bold;color:#1B1620"><span style="color:#842484">&#9632;</span> RESERVATION DETAILS</td><td width="50%" style="border-bottom:1px solid #78b848"></td></tr></table><br>'
-            . '<table cellpadding="6" cellspacing="0" width="100%" style="border:0.6px solid #842484">'
+            . '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="50%" style="font-size:13pt;font-weight:bold;color:#1B1620"><span style="color:#8b1d40">&#9632;</span> RESERVATION DETAILS</td><td width="50%" style="border-bottom:1px solid #78b848"></td></tr></table><br>'
+            . '<table cellpadding="6" cellspacing="0" width="100%" style="border:0.6px solid #8b1d40">'
             . $row('Hotel', $e($hotel))
             . $row('Check-in', $e(self::d($s['check_in'])))
             . $row('Check-out', $e(self::d($s['check_out'])))
@@ -228,7 +228,7 @@ final class HotelBookingDocs
         $perMeal = count($rl['meals']) > 1;
         $hotel = $h['name'] . (!empty($s['area']) ? ', ' . $s['area'] : '');
         $info = static fn ($k, $v) => '<tr><td width="34%" style="font-weight:bold;font-size:11.5pt;color:#1B1620">' . $k . '</td><td width="66%" style="font-size:11.5pt;color:#1B1620;border-left:1px solid #78b848">' . $v . '</td></tr>';
-        $html = '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="18%"></td><td width="64%" style="border:1.4px solid #842484;text-align:center;font-size:15pt;font-weight:bold;line-height:2;color:#1B1620">Reservation Control No:  <span style="color:#842484">|</span>  ' . $e($no) . '</td><td width="18%"></td></tr></table><br><br>'
+        $html = '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="18%"></td><td width="64%" style="border:1.4px solid #8b1d40;text-align:center;font-size:15pt;font-weight:bold;line-height:2;color:#1B1620">Reservation Control No:  <span style="color:#8b1d40">|</span>  ' . $e($no) . '</td><td width="18%"></td></tr></table><br><br>'
             . '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="55%"><table cellpadding="3">'
             . $info('Hotel:', $e($hotel))
             . $info('Stay:', $e(date('j M Y', strtotime((string) $s['check_in'])) . ' – ' . date('j M Y', strtotime((string) $s['check_out'])) . ' (' . (int) $s['nights'] . ' night' . ((int) $s['nights'] === 1 ? '' : 's') . ')'))
@@ -241,8 +241,8 @@ final class HotelBookingDocs
         $gw = $perMeal ? 50 : 60;
         $gcol = max(1, $maxG);
         $wEach = round($gw / $gcol, 2);
-        $th = static fn ($t, $w, $sub = '') => '<th width="' . $w . '%" style="background-color:#842484;color:#FFFFFF;font-weight:bold;font-size:11.5pt;text-align:center;border:0.5px solid #842484">' . $t . ($sub !== '' ? '<br><span style="font-size:8.5pt;font-weight:normal">' . $sub . '</span>' : '') . '</th>';
-        $html .= '<table cellpadding="6" cellspacing="0" width="100%" style="border:0.6px solid #842484"><thead><tr>'
+        $th = static fn ($t, $w, $sub = '') => '<th width="' . $w . '%" style="background-color:#8b1d40;color:#FFFFFF;font-weight:bold;font-size:11.5pt;text-align:center;border:0.5px solid #8b1d40">' . $t . ($sub !== '' ? '<br><span style="font-size:8.5pt;font-weight:normal">' . $sub . '</span>' : '') . '</th>';
+        $html .= '<table cellpadding="6" cellspacing="0" width="100%" style="border:0.6px solid #8b1d40"><thead><tr>'
             . $th('Allocation', 11) . $th('Hotel room no.', 15, '(Hotel to fill)') . $th('Room type', 14);
         for ($g = 1; $g <= $gcol; $g++) {
             $html .= $th('Guest ' . $g, $wEach);
@@ -251,7 +251,7 @@ final class HotelBookingDocs
             $html .= $th('Meal plan', 10);
         }
         $html .= '</tr></thead><tbody>';
-        $td = static fn ($v, $w, $st = '') => '<td width="' . $w . '%" style="font-size:12pt;color:#1B1620;border:0.5px solid #B98FC0;' . $st . '">' . $v . '</td>';
+        $td = static fn ($v, $w, $st = '') => '<td width="' . $w . '%" style="font-size:12pt;color:#1B1620;border:0.5px solid #c08f9f;' . $st . '">' . $v . '</td>';
         foreach ($rl['rooms'] as $k => $r) {
             $html .= '<tr nobr="true">' . $td('<b>' . str_pad((string) ($k + 1), 2, '0', STR_PAD_LEFT) . '</b>', 11, 'text-align:center;font-size:13pt') . $td('&nbsp;', 15) . $td($e(RoomingList::roomLabel($r, $rl['room_type_text'])), 14, 'font-size:10.5pt');
             for ($g = 0; $g < $gcol; $g++) {

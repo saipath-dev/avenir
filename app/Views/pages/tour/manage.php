@@ -35,7 +35,7 @@
     .tf .rules { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px; }
     .tf .rule { border:1px solid var(--tf-line); border-radius:8px; padding:10px 12px; font-size:12.5px; }
     .tf .rule b { display:block; margin-bottom:2px; }
-    .tf .rule i { color:#842484; margin-right:6px; }
+    .tf .rule i { color:#8b1d40; margin-right:6px; }
 </style>
 <body>
 <div id="layout-wrapper">

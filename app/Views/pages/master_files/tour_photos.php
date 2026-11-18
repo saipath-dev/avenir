@@ -1,185 +1,84 @@
 <?= view('layouts/head') ?>
 <style>
-    /* ---------- Tour Photos (same tokens as the Tour Inquiry panel) ---------- */
-    .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
-          --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
-          --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
-    .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
-    .tf .tf-card + .tf-card { margin-top:16px; }
-    .tf .tf-card-h { padding:11px 14px; border-bottom:1px solid var(--tf-line); display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-    .tf .tf-card-h h6 { margin:0; font-weight:600; font-size:13.5px; }
-    .tf .tf-card-b { padding:14px; }
-    .tf .tf-title { display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:14px; }
-    .tf .tf-title h4 { margin:0; font-weight:600; color:var(--tf-navy); }
-    .tf .tf-title .sub { color:var(--tf-muted); font-size:12.5px; max-width:860px; }
-    .tf .help { font-size:12px; color:var(--tf-muted); }
-    .tf .btn-primary { background:var(--tf-navy); border-color:var(--tf-navy); }
-    .tf .btn-primary:hover { background:var(--tf-navy-2); border-color:var(--tf-navy-2); }
-    .tf .btn-light { background:#fff; border:1px solid var(--tf-line); color:var(--tf-ink); }
-    .tf .btn-light:hover { background:var(--tf-bg); }
-    .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
-    .tf .tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
-    .tf .tbl th { text-align:left; font-weight:600; color:var(--tf-muted); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:8px 10px; border-bottom:1px solid var(--tf-line); white-space:nowrap; }
-    .tf .tbl td { padding:8px 10px; border-bottom:1px solid var(--tf-line); vertical-align:middle; }
-    .tf .tbl tr:last-child td { border-bottom:0; }
-    .tf .tbl tr.off td { opacity:.5; }
-    .tf .tbl tbody tr:hover { background:var(--tf-bg); }
-    .tf .mono { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric:tabular-nums; }
-    .tf .pill { display:inline-block; font-size:10.5px; font-weight:600; border-radius:20px; padding:2px 8px; line-height:1.6; white-space:nowrap; }
-    .tf .pill-green { background:var(--tf-green-soft); color:var(--tf-green); }
-    .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
-    .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); }
-    .tf .pill-red { background:var(--tf-red-soft); color:var(--tf-red); }
-    .tf .pill-blue { background:var(--tf-blue-soft); color:var(--tf-navy); }
-    .tf .empty { color:var(--tf-muted); font-size:12.5px; padding:10px 0; }
-    .tf .rowdel { color:#b6bfca; padding:0 6px; line-height:1.1; font-size:15px; }
-    .tf .rowdel:hover { color:var(--tf-red); background:var(--tf-red-soft); }
-    .tf .chip { display:inline-block; font-size:11.5px; border-radius:20px; padding:3px 10px; border:1px solid var(--tf-line); background:#fff; cursor:pointer; margin:0 5px 5px 0; user-select:none; }
-    .tf .chip.on { background:var(--tf-navy); color:#fff; border-color:var(--tf-navy); }
-    .tf .chip small { opacity:.7; }
-    .tf .drop { border:2px dashed var(--tf-line); border-radius:10px; padding:16px; text-align:center; color:var(--tf-muted); font-size:12.5px; background:var(--tf-bg); cursor:pointer; }
-    .tf .drop.over { border-color:var(--tf-teal); background:var(--tf-teal-soft); }
-    .tf .picked { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-    .tf .picked img { width:64px; height:48px; object-fit:cover; border-radius:5px; border:1px solid var(--tf-line); }
-    .tf .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; }
-    .tf .ph { border:1px solid var(--tf-line); border-radius:10px; overflow:hidden; background:#fff; position:relative; display:flex; flex-direction:column; }
-    .tf .ph.off { opacity:.55; }
-    .tf .ph img { width:100%; height:128px; object-fit:cover; display:block; background:var(--tf-bg); cursor:zoom-in; }
-    .tf .ph .star { position:absolute; top:6px; left:8px; font-size:18px; color:#c9d1db; cursor:pointer; text-shadow:0 0 4px #fff; line-height:1; }
-    .tf .ph .star.on { color:#f0b429; }
-    .tf .ph .body { padding:8px 10px; font-size:12px; flex:1; }
-    .tf .ph .body .cap { font-weight:600; font-size:12.5px; margin-bottom:2px; }
-    .tf .ph .tags { margin-top:4px; }
-    .tf .ph .tags .pill { margin:0 3px 3px 0; }
-    .tf .ph .acts { display:flex; gap:4px; padding:6px 8px 8px; border-top:1px solid var(--tf-line); flex-wrap:wrap; }
-    .tf .ph .acts .btn { padding:2px 7px; font-size:11.5px; }
-    .tf .status { font-size:12px; color:var(--tf-muted); text-align:right; }
-    .tf #b_upload { font-size:15px; padding:10px 22px; white-space:nowrap; }
-    .tf #b_upload i { margin-right:4px; }
-    .tf .tf-card.lit { box-shadow:0 0 0 3px var(--tf-teal-soft), 0 0 0 5px var(--tf-teal); transition:box-shadow .3s ease; }
-    .tf .progress-note { font-size:12px; color:var(--tf-ink); }
-    .tf .status b.ok { color:var(--tf-green); }
-    .tf .status b.bad { color:var(--tf-red); }
-    #mv_img { max-width:100%; max-height:60vh; display:block; margin:0 auto; border-radius:8px; }
+    /* ---------- Photo Master (tf-photomaster-r1) — Avenir purple #8b1d40 headers, green #78b848 actions ---------- */
+    .pm { --p:#8b1d40; --pd:#60122b; --g:#78b848; --gd:#5f9a34; --ln:#e3dbe6; --sf:#f8f2f4; color:#1A1A1A; font-size:13px; }
+    .pm h4 { margin:0; font-size:22px; font-weight:800; color:#8b1d40; }
+    .pm .sub { font-size:12.5px; max-width:760px; }
+    .pm .top { display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:14px; } .pm .top .sp { flex:1; }
+    .pm .btn-g { display:inline-flex; align-items:center; gap:7px; background:#78b848; border:1px solid #78b848; color:#fff; font-weight:700; border-radius:6px; padding:7px 14px; font-size:13px; cursor:pointer; }
+    .pm .btn-g:hover { background:#5f9a34; } .pm .btn-l { display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--ln); color:#1A1A1A; font-weight:600; border-radius:6px; padding:6px 12px; font-size:12.5px; cursor:pointer; }
+    .pm .btn-l:hover { border-color:#8b1d40; color:#8b1d40; } .pm .btn-r { color:#a3123a; } .pm button[disabled] { opacity:.45; cursor:not-allowed; }
+    .pm .search { display:flex; gap:8px; align-items:center; background:#fff; border:1px solid var(--ln); border-radius:8px; padding:6px 12px; min-width:320px; }
+    .pm .search input { border:0; outline:0; flex:1; font-size:13px; background:transparent; }
+    .pm .wrap { display:grid; grid-template-columns:230px 1fr; gap:16px; align-items:start; }
+    .pm .side { background:#fff; border:1px solid var(--ln); border-radius:10px; overflow:hidden; position:sticky; top:80px; }
+    .pm .side .h { background:#8b1d40; color:#fff; font-weight:700; padding:9px 14px; }
+    .pm .cat { display:flex; align-items:center; gap:10px; padding:9px 14px; border-top:1px solid var(--ln); cursor:pointer; font-weight:600; }
+    .pm .cat i { color:#8b1d40; font-size:16px; } .pm .cat .n { margin-left:auto; background:var(--sf); border-radius:10px; padding:0 8px; font-size:11.5px; }
+    .pm .cat.on { background:var(--sf); color:#8b1d40; box-shadow:inset 3px 0 0 #8b1d40; }
+    .pm .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; }
+    .pm .col { background:#fff; border:1px solid var(--ln); border-radius:12px; overflow:hidden; cursor:pointer; transition:box-shadow .15s; }
+    .pm .col:hover { box-shadow:0 6px 18px rgba(139,29,64,.15); border-color:#8b1d40; }
+    .pm .col .ph { height:130px; background:#f3ecee center/cover; position:relative; display:flex; align-items:center; justify-content:center; color:#8b1d40; }
+    .pm .col .ph .k { position:absolute; left:8px; top:8px; background:#fff; color:#8b1d40; border-radius:10px; padding:1px 8px; font-size:11px; font-weight:700; }
+    .pm .col .ph .cnt { position:absolute; right:8px; bottom:8px; background:rgba(0,0,0,.6); color:#fff; border-radius:10px; padding:1px 8px; font-size:11px; }
+    .pm .col .b { padding:9px 12px; } .pm .col .b b { display:block; font-size:14px; color:#60122b; } .pm .col .b small { font-size:11.5px; }
+    .pm .col.off { opacity:.55; }
+    .pm .panel { background:#fff; border:1px solid var(--ln); border-radius:12px; overflow:hidden; }
+    .pm .panel > .h { background:#8b1d40; color:#fff; padding:12px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .pm .panel > .h h5 { margin:0; font-size:18px; font-weight:800; color:#fff; } .pm .panel > .h .sp { flex:1; } .pm .panel > .h .chip { background:rgba(255,255,255,.18); border-radius:12px; padding:1px 10px; font-size:12px; }
+    .pm .panel > .h .btn-l { background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.4); }
+    .pm .meta { display:flex; gap:22px; flex-wrap:wrap; padding:10px 18px; background:var(--sf); border-bottom:1px solid var(--ln); font-size:12.5px; } .pm .meta b { color:#60122b; }
+    .pm .drop { margin:14px 18px; border:2px dashed #cca8b3; border-radius:12px; padding:18px; text-align:center; background:#fdfafb; }
+    .pm .drop.on { border-color:#78b848; background:#f3faec; } .pm .drop i { font-size:28px; color:#8b1d40; }
+    .pm .drop .row2 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; text-align:left; }
+    .pm label { display:block; font-size:11.5px; font-weight:600; margin:0 0 2px; }
+    .pm input.f, .pm select.f, .pm textarea.f { width:100%; border:1px solid var(--ln); border-radius:6px; padding:5px 9px; font-size:13px; background:#fff; color:#1A1A1A; }
+    .pm .photos { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; padding:0 18px 18px; }
+    .pm .pc { border:1px solid var(--ln); border-radius:10px; overflow:hidden; background:#fff; }
+    .pm .pc .im { height:130px; background:#eee center/cover; cursor:zoom-in; position:relative; }
+    .pm .pc .im .star { position:absolute; left:8px; top:8px; background:#78b848; color:#fff; border-radius:10px; padding:1px 8px; font-size:11px; font-weight:700; }
+    .pm .pc .t { padding:7px 10px; font-size:12px; } .pm .pc .t b { display:block; font-size:12.5px; } .pm .pc .t small { display:block; font-size:11px; }
+    .pm .pc .a { display:flex; gap:4px; padding:0 8px 8px; flex-wrap:wrap; } .pm .pc .a button { font-size:11.5px; padding:3px 8px; }
+    .pm .pc.off { opacity:.5; }
+    .pm .empty { padding:30px; text-align:center; }
+    .pm .warn { background:#fdeccb; color:#6b3a00; border-radius:8px; padding:8px 12px; margin-bottom:12px; font-size:12.5px; }
+    .pm-ov { position:fixed; inset:0; background:rgba(20,10,25,.6); z-index:2000; display:none; align-items:flex-start; justify-content:center; padding:40px 16px; overflow:auto; }
+    .pm-ov.on { display:flex; } .pm-md { background:#fff; border-radius:12px; width:min(980px,100%); overflow:hidden; color:#1A1A1A; font-size:13px; }
+    .pm-md .h { background:#8b1d40; color:#fff; padding:11px 16px; display:flex; align-items:center; } .pm-md .h b { flex:1; font-size:15px; } .pm-md .h button { background:none; border:0; color:#fff; font-size:22px; cursor:pointer; }
+    .pm-md .bd { padding:14px 16px; } .pm-md .two { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; } .pm-md img { width:100%; border-radius:8px; display:block; }
+    .pm-md .fl { margin-bottom:8px; } .pm-md .ft { padding:10px 16px; border-top:1px solid #eee; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
+    .pm-md .lbl { display:block; font-size:11.5px; font-weight:600; margin-bottom:2px; } .pm-md .f { width:100%; border:1px solid #e3dbe6; border-radius:6px; padding:5px 9px; font-size:13px; }
+    .pm-md .chips span { display:inline-block; border:1px solid #e3dbe6; border-radius:14px; padding:2px 10px; margin:0 4px 4px 0; font-size:12px; cursor:pointer; } .pm-md .chips span.on { background:#8b1d40; color:#fff; border-color:#8b1d40; }
+    .pm-md .btn-g { background:#78b848; border:1px solid #78b848; color:#fff; font-weight:700; border-radius:6px; padding:7px 14px; cursor:pointer; } .pm-md .btn-l { background:#fff; border:1px solid #e3dbe6; border-radius:6px; padding:6px 12px; cursor:pointer; }
+    .pm-toast { position:fixed; right:20px; bottom:20px; z-index:2100; background:#60122b; color:#fff; padding:10px 16px; border-radius:8px; display:none; max-width:420px; } .pm-toast.bad { background:#a3123a; }
+    @media (max-width:900px) { .pm .wrap { grid-template-columns:1fr; } .pm .side { position:static; } .pm .drop .row2, .pm-md .two { grid-template-columns:1fr; } }
 </style>
 <body>
 <div id="layout-wrapper">
     <?= view('layouts/header') ?>
     <?= view('layouts/sidebar') ?>
     <div class="main-content">
-        <div class="page-content tf" id="tf">
+        <div class="page-content tf pm" id="tf">
             <div class="container-fluid">
-
                 <?= view('layouts/tourdesk_bar') ?>
-
-                <div class="tf-title">
-                    <div>
-                        <h4>Tour Photos <span class="help">· Admin</span></h4>
-                        <div class="sub">The one place the pictures for client quotations are kept: three to five good photos for each destination, attraction or activity — Sigiriya, Dambulla, Kandy, Tea Country, Safari, Galle, Colombo, the beaches — each tagged to the places it shows, the best marked preferred (★). When a quotation is prepared, every day of the itinerary gets a picture from here that fits the day's programme — preferred first, the least-used next, never the same picture twice on one itinerary — and staff can change any day's picture on the inquiry. Upload, preview, replace, take out and add at any time; a new destination is a new tag. Nothing here is a cost or a rate.</div>
-                    </div>
-                    <div class="d-flex flex-column align-items-end gap-2">
-                        <?php if (!empty($installed)): ?><button class="btn btn-primary btn-lg" id="b_upload" type="button" title="Choose photos from your computer or phone and add them to the library"><i class="bi bi-cloud-upload"></i> Upload Photos</button><?php endif; ?>
-                        <div class="status" id="st"></div>
-                    </div>
+                <div class="top">
+                    <div><h4><i class="bi bi-images"></i> Photo Master</h4>
+                        <div class="sub">Photographs for destinations, sightseeing, hotels, activities, airports and the homepage. Itineraries, quotations, quotation PDFs and the homepage take their pictures from here: the preferred photograph of a collection first, never the same picture twice in one itinerary.</div></div>
+                    <span class="sp"></span>
+                    <div class="search"><i class="bi bi-search"></i><input id="pm_q" placeholder="Search destination, hotel, activity, caption, photographer…"></div>
+                    <button class="btn-g" id="pm_new"><i class="bi bi-plus-lg"></i> New collection</button>
                 </div>
-
-                <?php if (empty($installed)): ?>
-                <div class="not-installed">The Tour Inquiry tables are not at the current version. Open <a href="<?= base_url($intake_url ?? 'tour/intake') ?>">Tour Inquiry</a> and press Install; this screen then works.</div>
-                <?php else: ?>
-
-                <div class="row g-3">
-                    <div class="col-lg-4">
-                        <div class="tf-card" id="u_card">
-                            <div class="tf-card-h"><h6>Upload photos</h6><span class="help" id="u_limit">JPEG, PNG or WebP · up to 12 MB each</span></div>
-                            <div class="tf-card-b">
-                                <label class="form-label help">Tag them to the places they show <span class="text-muted">— one or more</span></label>
-                                <div id="u_tags"></div>
-                                <div class="drop" id="u_drop">Drop photos here, or <u>choose files</u><input type="file" id="u_files" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden></div>
-                                <div class="picked" id="u_picked"></div>
-                                <div class="row g-2 mt-1">
-                                    <div class="col-12"><label class="form-label help">Caption <span class="text-muted">— shown under the picture on the quotation</span></label><input class="form-control form-control-sm" id="u_caption" placeholder="Sigiriya Rock Fortress at sunrise" maxlength="190"></div>
-                                    <div class="col-12"><label class="form-label help">Credit <span class="text-muted">— photographer or source, for the record; not printed</span></label><input class="form-control form-control-sm" id="u_credit" placeholder="optional" maxlength="120"></div>
-                                    <div class="col-12"><div class="form-check form-switch mt-1">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="u_pref">
-                                        <label class="form-check-label" for="u_pref" style="font-size:12.5px">Preferred — offered before the others for these places</label></div></div>
-                                </div>
-                                <div class="d-flex gap-2 mt-3 align-items-center">
-                                    <button class="btn btn-primary btn-sm" id="u_go"><i class="bi bi-cloud-upload"></i> Upload Photos</button>
-                                    <span class="help" id="u_note"></span>
-                                </div>
-                                <div class="help mt-2">Each picture is resized for the quotation, turned the right way up if the phone stored it on its side, and given a thumbnail; the original stays on the sender's computer. Several files chosen together go up one after another and share the tags, caption and preferred mark — the caption can be changed on each afterwards.</div>
-                            </div>
-                        </div>
-
-                        <div class="tf-card">
-                            <div class="tf-card-h"><h6 id="t_title">Places &amp; attractions</h6><button class="btn btn-light btn-sm" id="t_new" hidden>New</button></div>
-                            <div class="tf-card-b">
-                                <div class="row g-2">
-                                    <div class="col-5"><label class="form-label help">Code</label><input class="form-control form-control-sm mono" id="t_code" placeholder="YALA" maxlength="30"></div>
-                                    <div class="col-7"><label class="form-label help">Name</label><input class="form-control form-control-sm" id="t_name" placeholder="Yala" maxlength="120"></div>
-                                    <div class="col-5"><label class="form-label help">Kind</label>
-                                        <select class="form-select form-select-sm" id="t_kind"><option value="destination">Destination</option><option value="attraction">Attraction</option><option value="activity">Activity</option><option value="general">General</option></select></div>
-                                    <div class="col-7"><label class="form-label help">Order</label><input type="number" class="form-control form-control-sm" id="t_sort" placeholder="10, 20, 30…"></div>
-                                    <div class="col-12"><label class="form-label help">Words a day's programme uses for it <span class="text-muted">— comma separated</span></label>
-                                        <textarea class="form-control form-control-sm" id="t_words" rows="2" placeholder="yala, yala national park, yala safari, tissamaharama, tissa"></textarea></div>
-                                    <div class="col-12"><div class="form-check form-switch mt-1">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="t_active" checked>
-                                        <label class="form-check-label" for="t_active" style="font-size:12.5px">Active — matched and offered</label></div></div>
-                                </div>
-                                <div class="d-flex gap-2 mt-3"><button class="btn btn-primary btn-sm" id="t_save"><i class="bi bi-check2"></i> Save place</button></div>
-                                <div class="help mt-2">A day is matched on these words in its area, hotel line, visits and excursions — whole words only, so "galle" does not catch "gallery". The area of the day counts double. A new destination is a new place here; the code is the key and stays.</div>
-                            </div>
-                            <div style="overflow-x:auto;border-top:1px solid var(--tf-line)">
-                                <table class="tbl"><thead><tr><th>Place</th><th>Kind</th><th>Photos</th><th></th></tr></thead>
-                                <tbody id="t_list"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody></table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-8">
-                        <div class="tf-card">
-                            <div class="tf-card-h"><h6>Library</h6>
-                                <div class="d-flex gap-2 align-items-center flex-wrap">
-                                    <span class="help" id="l_count"></span>
-                                    <input class="form-control form-control-sm" id="l_q" placeholder="find by caption" style="width:170px">
-                                    <div class="form-check form-switch m-0" title="Pictures taken out of the library, kept for the record">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="l_removed"><label class="form-check-label help" for="l_removed">Show removed</label></div>
-                                </div></div>
-                            <div class="tf-card-b" style="padding-bottom:6px" id="l_chips"></div>
-                            <div class="tf-card-b" style="padding-top:0"><div class="grid" id="l_grid"><div class="empty">Loading…</div></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <?php endif; ?>
+                <?php if (empty($installed)): ?><div class="warn">The Tour Desk tables are not at the current version. Open Inquiries and press Install first.</div><?php endif; ?>
+                <div id="pm_warn"></div>
+                <div class="wrap"><div class="side" id="pm_side"><div class="h">Categories</div></div><div id="pm_main"><div class="empty">Loading…</div></div></div>
             </div>
+            <?= view('layouts/brand') ?>
         </div>
     </div>
 </div>
-
-<!-- one picture: preview, caption, tags, preferred, replace, remove -->
-<div class="modal fade tf" id="m_view" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content">
-    <div class="modal-header"><h6 class="modal-title" id="mv_title">Photo</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-    <div class="modal-body">
-        <img id="mv_img" src="" alt="">
-        <div class="help mt-2" id="mv_meta"></div>
-        <div class="row g-2 mt-1">
-            <div class="col-md-8"><label class="form-label help">Caption</label><input class="form-control form-control-sm" id="mv_caption" maxlength="190"></div>
-            <div class="col-md-4"><label class="form-label help">Order within its places</label><input type="number" class="form-control form-control-sm" id="mv_sort"></div>
-            <div class="col-md-8"><label class="form-label help">Credit</label><input class="form-control form-control-sm" id="mv_credit" maxlength="120"></div>
-            <div class="col-md-4"><label class="form-label help">&nbsp;</label><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="mv_pref"><label class="form-check-label" for="mv_pref" style="font-size:12.5px">Preferred ★</label></div></div>
-            <div class="col-12"><label class="form-label help">Places it shows</label><div id="mv_tags"></div></div>
-        </div>
-        <input type="hidden" id="mv_id">
-    </div>
-    <div class="modal-footer">
-        <label class="btn btn-light btn-sm me-auto" title="A better picture under this same entry: every quotation carrying it shows the new one"><i class="bi bi-arrow-repeat"></i> Replace picture<input type="file" id="mv_replace" accept="image/jpeg,image/png,image/webp,image/gif" hidden></label>
-        <button class="btn btn-light btn-sm rowdel" id="mv_remove" title="Out of the library">Remove</button>
-        <button class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary btn-sm" id="mv_save">Save</button>
-    </div>
-</div></div></div>
-
+<div class="pm-ov" id="pm_ov"><div class="pm-md" id="pm_md"></div></div>
+<div class="pm-toast" id="pm_toast"></div>
 <?= view('layouts/inpage_footer') ?>
 <?= view('layouts/theme_settings') ?>
 <?= view('layouts/scripts') ?>
@@ -187,220 +86,141 @@
 (function () {
     'use strict';
     const BASE = '<?= base_url($page_url ?? 'master_files/tour_photos') ?>';
-    const INSTALLED = <?= !empty($installed) ? 'true' : 'false' ?>;
-    if (!INSTALLED) return;
-    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const toast = (icon, text) => Swal.fire({ icon, text, timer: icon === 'success' ? 2400 : undefined, showConfirmButton: icon !== 'success' });
-    const api = async (path, opts) => { const r = await fetch(BASE + path, Object.assign({ headers: { 'X-Requested-With': 'XMLHttpRequest' } }, opts || {})); return r.json(); };
-    const post = (path, body) => api(path, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify(body || {}) });
-    const send = (path, form) => api(path, { method: 'POST', body: form });   // multipart: the browser sets the boundary
+    const ICON = { all: 'bi-grid', destination: 'bi-geo-alt', attraction: 'bi-bank', hotel: 'bi-building', activity: 'bi-bicycle', airport: 'bi-airplane', homepage: 'bi-house', general: 'bi-folder' };
+    const S = { d: null, cat: 'all', q: '', open: null, removed: false };
     const $ = id => document.getElementById(id);
-    const show = sel => { const el = document.querySelector(sel); (bootstrap.Modal.getOrCreateInstance ? bootstrap.Modal.getOrCreateInstance(el) : new bootstrap.Modal(el)).show(); };
-    const hide = sel => { const i = bootstrap.Modal.getInstance(document.querySelector(sel)); if (i) i.hide(); };
-    let D = { tags: [], photos: [], kinds: [] };
-    let FILTER = '';          // the tag the library grid is narrowed to
-    let FILES = [];           // the files picked for upload
-    const KIND_WORD = { destination: 'Destination', attraction: 'Attraction', activity: 'Activity', general: 'General' };
-
-    // ---- the chips: one per active place, clickable ----
-    function chips(container, selected, withCounts, onToggle) {
-        const el = $(container);
-        el.innerHTML = D.tags.filter(t => Number(t.active) === 1).map(t => `<span class="chip ${selected.includes(t.code) ? 'on' : ''}" data-code="${esc(t.code)}">${esc(t.name)}${withCounts ? ` <small>${t.photos}</small>` : ''}</span>`).join('')
-            || '<span class="help">No places yet — add one below.</span>';
-        el.querySelectorAll('[data-code]').forEach(c => c.addEventListener('click', () => onToggle(c.dataset.code, c)));
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const toast = (m, bad) => { const t = $('pm_toast'); t.textContent = m; t.className = 'pm-toast' + (bad ? ' bad' : ''); t.style.display = 'block'; clearTimeout(toast.h); toast.h = setTimeout(() => { t.style.display = 'none'; }, 5000); };
+    const post = async (url, body) => { const isForm = body instanceof FormData; const r = await fetch(BASE + url, { method: 'POST', headers: isForm ? { 'X-Requested-With': 'XMLHttpRequest' } : { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' }, body: isForm ? body : JSON.stringify(body || {}) }); try { return await r.json(); } catch (e) { return { status: r.status, message: 'The server did not answer (' + r.status + ').' }; } };
+    async function load() { const j = await (await fetch(BASE + '/data?all=1', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })).json(); if (j.status !== 200) { $('pm_main').innerHTML = `<div class="empty">${esc(j.message || 'Photo Master could not be read.')}</div>`; return; } S.d = j.data; draw(); }
+    const hotelName = id => { const h = (S.d.hotels || []).find(x => Number(x.id) === Number(id)); return h ? h.name : ''; };
+    const photosOf = code => S.d.photos.filter(p => p.tag_codes.includes(code) && (S.removed || p.active));
+    const coverOf = code => S.d.photos.filter(p => p.active && p.tag_codes.includes(code))[0] || null;
+    const KN = k => (S.d.kind_names || {})[k] || k;
+    function match(t) {
+        if (!S.q) return true;
+        const q = S.q.toLowerCase();
+        const hay = [t.name, t.code, t.keywords, t.location, KN(t.kind), hotelName(t.hotel_id)].join(' ').toLowerCase();
+        if (hay.includes(q)) return true;
+        return photosOf(t.code).some(p => [p.caption, p.credit, p.licence, p.original_name].join(' ').toLowerCase().includes(q));
     }
-    const chosen = container => [...document.querySelectorAll('#' + container + ' .chip.on')].map(c => c.dataset.code);
-
-    // ---- upload ----
-    function renderPicked() {
-        $('u_picked').innerHTML = FILES.map((f, i) => `<span title="${esc(f.name)} · ${Math.round(f.size / 1024)} KB"><img src="${URL.createObjectURL(f)}" alt="" data-unpick="${i}"></span>`).join('');
-        $('u_picked').querySelectorAll('[data-unpick]').forEach(img => img.addEventListener('click', () => { FILES.splice(Number(img.dataset.unpick), 1); renderPicked(); }));
-        $('u_note').textContent = FILES.length ? FILES.length + ' file' + (FILES.length === 1 ? '' : 's') + ' ready' : '';
+    function draw() {
+        const d = S.d, tags = d.tags;
+        const w = [];
+        if (!d.resize) w.push('This server has no image library, so photos are kept at the size they are uploaded.');
+        if (!d.can_edit) w.push('You can look at Photo Master; uploading, editing and deleting need the Photo Master rights.');
+        $('pm_warn').innerHTML = w.map(x => `<div class="warn">${x}</div>`).join('');
+        $('pm_new').disabled = !d.can_edit;
+        const cats = ['all'].concat(d.kinds);
+        $('pm_side').innerHTML = '<div class="h">Categories</div>' + cats.map(k => `<div class="cat${S.cat === k ? ' on' : ''}" data-cat="${k}"><i class="bi ${ICON[k] || 'bi-folder'}"></i>${k === 'all' ? 'All collections' : esc(KN(k))}<span class="n">${k === 'all' ? tags.length : tags.filter(t => t.kind === k).length}</span></div>`).join('')
+            + `<div class="cat" style="font-weight:500;font-size:12px"><label style="display:flex;gap:6px;align-items:center;margin:0;cursor:pointer"><input type="checkbox" id="pm_rm" ${S.removed ? 'checked' : ''}> Show deleted photographs</label></div>`;
+        $('pm_side').querySelectorAll('[data-cat]').forEach(c => c.addEventListener('click', () => { S.cat = c.dataset.cat; S.open = null; draw(); }));
+        $('pm_rm').addEventListener('change', e => { S.removed = e.target.checked; draw(); });
+        if (S.open) return drawPanel(tags.find(t => t.code === S.open));
+        const list = tags.filter(t => (S.cat === 'all' || t.kind === S.cat) && match(t));
+        $('pm_main').innerHTML = list.length ? `<div class="grid">${list.map(t => { const c = coverOf(t.code), n = photosOf(t.code).filter(p => p.active).length;
+            return `<div class="col${Number(t.active) ? '' : ' off'}" data-open="${esc(t.code)}"><div class="ph" ${c ? `style="background-image:url('${esc(c.thumb_url)}')"` : ''}><span class="k">${esc(KN(t.kind))}</span>${c ? '' : '<span><i class="bi bi-image" style="font-size:26px"></i><br>No photograph yet</span>'}<span class="cnt">${n} photo${n === 1 ? '' : 's'}</span></div>
+                <div class="b"><b>${esc(t.name)}</b><small>${esc(t.kind === 'hotel' ? hotelName(t.hotel_id) : (t.kind === 'homepage' ? ((d.positions || {})[t.position] || 'No position chosen') : (t.location || '')))}${Number(t.active) ? '' : ' · switched off'}</small></div></div>`; }).join('')}</div>`
+            : `<div class="empty">No collection matches. ${d.can_edit ? 'Press <b>New collection</b> to create one.' : ''}</div>`;
+        $('pm_main').querySelectorAll('[data-open]').forEach(c => c.addEventListener('click', () => { S.open = c.dataset.open; draw(); window.scrollTo(0, 0); }));
     }
-    const addFiles = list => { for (const f of list) { if (f && /^image\//.test(f.type)) FILES.push(f); } renderPicked(); goToCard(); };
-    // the card brought into view and lit for a moment, so nobody has to hunt for where the photos went
-    function goToCard() {
-        const c = $('u_card'); if (!c) return;
-        c.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        c.classList.add('lit'); setTimeout(() => c.classList.remove('lit'), 1800);
+    function drawPanel(t) {
+        if (!t) { S.open = null; return draw(); }
+        const d = S.d, ph = photosOf(t.code);
+        $('pm_main').innerHTML = `<div class="panel"><div class="h"><button class="btn-l" id="pm_back"><i class="bi bi-arrow-left"></i> All collections</button><h5>${esc(t.name)}</h5><span class="chip">${esc(KN(t.kind))}</span><span class="sp"></span>
+                <button class="btn-l" id="pm_edit" ${d.can_edit ? '' : 'disabled'}><i class="bi bi-pencil"></i> Edit collection</button><button class="btn-l" id="pm_del" ${d.can_delete ? '' : 'disabled'}><i class="bi bi-trash"></i> Delete collection</button></div>
+            <div class="meta"><span>Code <b>${esc(t.code)}</b></span>${t.location ? `<span>Location <b>${esc(t.location)}</b></span>` : ''}${t.kind === 'hotel' ? `<span>Hotel Master <b>${esc(hotelName(t.hotel_id) || 'not linked')}</b></span>` : ''}${t.kind === 'homepage' ? `<span>Homepage position <b>${esc((d.positions || {})[t.position] || 'none')}</b></span>` : ''}
+                ${['homepage', 'hotel'].includes(t.kind) ? '' : `<span>Matched in itineraries by <b>${esc((t.keyword_list || []).join(', ') || 'no words — never matched')}</b></span>`}${Number(t.active) ? '' : '<span><b>Switched off</b></span>'}</div>
+            ${d.can_edit ? `<div class="drop" id="pm_drop"><i class="bi bi-cloud-arrow-up"></i><div><b>Drop photographs here</b> or <button class="btn-g" id="pm_pick" type="button"><i class="bi bi-upload"></i> Choose from your computer</button> <input type="file" id="pm_files" accept="image/*" multiple hidden></div>
+                <div style="font-size:11.5px;margin-top:4px">JPEG or PNG, one or many at a time. Each is resized to 1600 px wide and a small preview is made. The details below are saved on every photograph of this upload.</div>
+                <div class="row2"><div><label>Caption</label><input class="f" id="up_caption" placeholder="e.g. ${esc(t.name)}"></div><div><label>Photographer / credit</label><input class="f" id="up_credit" placeholder="e.g. Photo: A. Perera"></div>
+                <div><label>Licence</label><input class="f" id="up_licence" list="pm_lic" placeholder="e.g. CC BY 4.0 / Own photo"></div><div><label>Source page</label><input class="f" id="up_source" placeholder="https://…"></div></div>
+                <div style="text-align:left;margin-top:6px"><label style="display:inline-flex;gap:6px;align-items:center;font-weight:500"><input type="checkbox" id="up_pref"> Make preferred</label></div></div>` : ''}
+            <div class="photos">${ph.length ? ph.map(p => `<div class="pc${p.active ? '' : ' off'}"><div class="im" data-view="${p.id}" style="background-image:url('${esc(p.thumb_url)}')">${p.preferred ? '<span class="star">★ Preferred</span>' : ''}</div>
+                <div class="t"><b>${esc(p.caption || p.original_name || 'No caption')}</b><small>${esc(p.credit_line || 'No credit recorded')}</small><small>${p.width}×${p.height} · ${Math.round((p.bytes || 0) / 1024)} KB${p.on_days ? ' · on ' + p.on_days + ' itinerary day' + (p.on_days === 1 ? '' : 's') : ''}</small></div>
+                <div class="a"><button class="btn-l" data-view="${p.id}"><i class="bi bi-arrows-fullscreen"></i> View / edit</button>${p.active ? `${!p.preferred && d.can_edit ? `<button class="btn-l" data-pref="${p.id}">★ Preferred</button>` : ''}${d.can_delete ? `<button class="btn-l btn-r" data-rm="${p.id}" title="Delete"><i class="bi bi-trash"></i></button>` : ''}` : (d.can_edit ? `<button class="btn-l" data-back="${p.id}">Restore</button>` : '')}</div></div>`).join('') : '<div class="empty">No photograph in this collection yet.</div>'}</div></div>
+            <datalist id="pm_lic"><option>Own photo — Avenir Holidays</option><option>Used with permission</option><option>CC0</option><option>Public domain</option><option>CC BY 4.0</option><option>CC BY-SA 4.0</option><option>CC BY 2.0</option><option>CC BY-SA 3.0</option><option>Unsplash Licence</option><option>Pexels Licence</option></datalist>`;
+        $('pm_back').addEventListener('click', () => { S.open = null; draw(); });
+        $('pm_edit').addEventListener('click', () => collectionForm(t));
+        $('pm_del').addEventListener('click', async () => { if (!confirm('Delete the collection "' + t.name + '"? If photographs are in it, it is switched off instead and the photographs keep their other collections.')) return; const j = await post('/tag/delete/' + encodeURIComponent(t.code)); toast(j.message || 'Done', j.status !== 200); if (j.status === 200) { S.open = null; load(); } });
+        const drop = $('pm_drop');
+        if (drop) {
+            $('pm_pick').addEventListener('click', () => $('pm_files').click());
+            $('pm_files').addEventListener('change', e => upload(t, e.target.files));
+            ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('on'); }));
+            ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('on'); }));
+            drop.addEventListener('drop', e => upload(t, e.dataTransfer.files));
+        }
+        $('pm_main').querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => photoForm(S.d.photos.find(p => p.id === Number(b.dataset.view)))));
+        $('pm_main').querySelectorAll('[data-pref]').forEach(b => b.addEventListener('click', async () => { const j = await post('/photo/' + b.dataset.pref + '/save', { preferred: 1 }); toast(j.status === 200 ? 'Marked preferred.' : j.message, j.status !== 200); load(); }));
+        $('pm_main').querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', async () => { if (!confirm('Delete this photograph? It leaves every itinerary it is on (those days choose another) and can be restored from "Show deleted photographs".')) return; const j = await post('/photo/' + b.dataset.rm + '/remove'); toast(j.message, j.status !== 200); load(); }));
+        $('pm_main').querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', async () => { const j = await post('/photo/' + b.dataset.back + '/restore'); toast(j.message, j.status !== 200); load(); }));
     }
-    $('b_upload')?.addEventListener('click', () => { goToCard(); $('u_files').click(); });
-    $('u_drop').addEventListener('click', () => $('u_files').click());
-    $('u_files').addEventListener('change', () => { addFiles($('u_files').files); $('u_files').value = ''; });
-    ['dragenter', 'dragover'].forEach(ev => $('u_drop').addEventListener(ev, e => { e.preventDefault(); $('u_drop').classList.add('over'); }));
-    ['dragleave', 'drop'].forEach(ev => $('u_drop').addEventListener(ev, e => { e.preventDefault(); $('u_drop').classList.remove('over'); }));
-    $('u_drop').addEventListener('drop', e => addFiles(e.dataTransfer.files));
-    // One file per request: a phone photo is a few megabytes and the server takes them one at a
-    // time, however many were chosen; each one's answer is shown, and one that fails stays in the
-    // list to try again while the others go in.
-    $('u_go').addEventListener('click', async () => {
-        const tags = chosen('u_tags');
-        if (!tags.length) { toast('error', 'Tag the photos to at least one place first.'); goToCard(); return; }
-        if (!FILES.length) { toast('error', 'Choose one or more photos.'); $('u_files').click(); return; }
-        const queue = FILES.slice(), added = [], failed = [], keep = [];
-        $('u_go').disabled = true;
-        try {
-            for (let i = 0; i < queue.length; i++) {
-                const f = queue[i];
-                $('u_note').textContent = 'Uploading ' + (i + 1) + ' of ' + queue.length + '… ' + f.name;
-                const fd = new FormData();
-                fd.append('files[]', f, f.name);
-                fd.append('tags', tags.join(',')); fd.append('caption', $('u_caption').value); fd.append('credit', $('u_credit').value); fd.append('preferred', $('u_pref').checked ? '1' : '0');
-                try {
-                    const j = await send('/upload', fd);
-                    if (j.status === 200) { added.push(f.name); } else { failed.push(f.name + ': ' + (j.message || 'refused')); keep.push(f); }
-                } catch (e) {
-                    failed.push(f.name + ': the upload did not go through (' + e.message + ')'); keep.push(f);
-                }
-            }
-            FILES = keep; renderPicked();
-            if (added.length) { $('u_caption').value = ''; $('u_credit').value = ''; $('u_pref').checked = false; FILTER = tags[0]; }
-            const msg = (added.length ? added.length + ' photo' + (added.length === 1 ? '' : 's') + ' added.' : 'Nothing was added.') + (failed.length ? ' ' + failed.join(' ') : '');
-            toast(added.length && !failed.length ? 'success' : (added.length ? 'warning' : 'error'), msg);
-            await load();
-        } finally { $('u_go').disabled = false; $('u_note').textContent = FILES.length ? FILES.length + ' file' + (FILES.length === 1 ? '' : 's') + ' still to send' : ''; }
-    });
-
-    // ---- places (tags) ----
-    function clearTagForm() {
-        ['t_code', 't_name', 't_words', 't_sort'].forEach(k => $(k).value = '');
-        $('t_kind').value = 'destination'; $('t_active').checked = true; $('t_code').readOnly = false;
-        $('t_title').textContent = 'Places & attractions'; $('t_new').hidden = true;
+    async function upload(t, files) {
+        if (!files || !files.length) return;
+        const fd = new FormData();
+        Array.from(files).forEach(f => fd.append('files[]', f, f.name));
+        fd.append('tags', t.code); fd.append('caption', $('up_caption').value); fd.append('credit', $('up_credit').value); fd.append('licence', $('up_licence').value); fd.append('source_url', $('up_source').value); fd.append('preferred', $('up_pref').checked ? '1' : '');
+        toast('Uploading ' + files.length + ' photograph' + (files.length === 1 ? '' : 's') + '…');
+        const j = await post('/upload', fd);
+        toast(j.message || 'Done', j.status !== 200);
+        load();
     }
-    function fillTagForm(code) {
-        const t = D.tags.find(x => x.code === code); if (!t) return;
-        $('t_code').value = t.code; $('t_code').readOnly = true; $('t_name').value = t.name; $('t_kind').value = t.kind; $('t_sort').value = t.sort_order ?? '';
-        $('t_words').value = t.keywords || ''; $('t_active').checked = Number(t.active) === 1;
-        $('t_title').textContent = 'Change ' + t.name; $('t_new').hidden = false;
-        $('t_code').scrollIntoView({ block: 'center', behavior: 'smooth' });
+    function modal(title, body, foot) { $('pm_md').innerHTML = `<div class="h"><b>${title}</b><button type="button" id="pm_x">×</button></div><div class="bd">${body}</div><div class="ft">${foot}</div>`; $('pm_ov').classList.add('on'); $('pm_x').addEventListener('click', close); }
+    function close() { $('pm_ov').classList.remove('on'); }
+    $('pm_ov').addEventListener('click', e => { if (e.target.id === 'pm_ov') close(); });
+    function photoForm(p) {
+        if (!p) return;
+        const d = S.d, ed = d.can_edit, dis = ed ? '' : 'disabled';
+        const f = (k, l, v, ph) => `<div class="fl"><span class="lbl">${l}</span><input class="f" id="pf_${k}" value="${esc(v || '')}" placeholder="${esc(ph || '')}" ${dis}></div>`;
+        modal(esc(p.caption || 'Photograph'), `<div class="two"><div><img src="${esc(p.url)}" alt=""><div style="font-size:11.5px;margin-top:6px">${p.width}×${p.height} px · ${Math.round((p.bytes || 0) / 1024)} KB · uploaded ${esc(String(p.uploaded_at || '').slice(0, 16))} by ${esc(p.uploaded_by || '')}${p.original_name ? ' · ' + esc(p.original_name) : ''}</div></div>
+            <div>${f('caption', 'Caption', p.caption)}${f('credit', 'Photographer / credit', p.credit, 'Photo: …')}${f('licence', 'Licence', p.licence, 'CC BY 4.0, own photo …')}${f('licence_url', 'Licence link', p.licence_url, 'https://creativecommons.org/…')}${f('source_url', 'Source page', p.source_url, 'https://…')}
+            <div class="fl"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="pf_pref" ${p.preferred ? 'checked' : ''} ${dis}> Preferred photograph</label></div>
+            <div class="fl"><span class="lbl">Collections it belongs to</span><div class="chips" id="pf_tags">${d.tags.map(t => `<span data-t="${esc(t.code)}" class="${p.tag_codes.includes(t.code) ? 'on' : ''}">${esc(t.name)}</span>`).join('')}</div></div>
+            ${p.source_url ? `<div class="fl"><a href="${esc(p.source_url)}" target="_blank" rel="noopener" style="color:#8b1d40;font-weight:600">Open the source page</a></div>` : ''}</div></div>`,
+            `${ed ? `<input type="file" id="pf_file" accept="image/*" hidden><button class="btn-l" id="pf_rep"><i class="bi bi-arrow-repeat"></i> Replace picture</button>` : ''}${d.can_delete && p.active ? `<button class="btn-l" id="pf_rm" style="color:#a3123a"><i class="bi bi-trash"></i> Delete</button>` : ''}<button class="btn-l" id="pf_close">Close</button>${ed ? '<button class="btn-g" id="pf_save">Save</button>' : ''}`);
+        $('pf_close').addEventListener('click', close);
+        if (ed) {
+            $('pf_tags').querySelectorAll('[data-t]').forEach(s => s.addEventListener('click', () => s.classList.toggle('on')));
+            $('pf_save').addEventListener('click', async () => {
+                const tags = Array.from($('pf_tags').querySelectorAll('.on')).map(s => s.dataset.t);
+                const j = await post('/photo/' + p.id + '/save', { caption: $('pf_caption').value, credit: $('pf_credit').value, licence: $('pf_licence').value, licence_url: $('pf_licence_url').value, source_url: $('pf_source_url').value, preferred: $('pf_pref').checked ? 1 : 0, tags: tags.join(',') });
+                toast(j.status === 200 ? 'Saved.' : j.message, j.status !== 200); if (j.status === 200) { close(); load(); }
+            });
+            $('pf_rep').addEventListener('click', () => $('pf_file').click());
+            $('pf_file').addEventListener('change', async e => { const fl = e.target.files[0]; if (!fl) return; const fd = new FormData(); fd.append('file', fl, fl.name); const j = await post('/photo/' + p.id + '/replace', fd); toast(j.message, j.status !== 200); if (j.status === 200) { close(); load(); } });
+        }
+        if ($('pf_rm')) $('pf_rm').addEventListener('click', async () => { if (!confirm('Delete this photograph? It can be restored from "Show deleted photographs".')) return; const j = await post('/photo/' + p.id + '/remove'); toast(j.message, j.status !== 200); if (j.status === 200) { close(); load(); } });
     }
-    function renderTags() {
-        $('t_list').innerHTML = D.tags.length ? D.tags.map(t => `<tr class="${Number(t.active) === 1 ? '' : 'off'}">
-            <td><b>${esc(t.name)}</b> <span class="mono help">${esc(t.code)}</span>${Number(t.active) === 1 ? '' : ' <span class="pill pill-grey">off</span>'}<div class="help" title="${esc(t.keywords || '')}">${esc((t.keyword_list || []).slice(0, 4).join(', '))}${(t.keyword_list || []).length > 4 ? ' …' : ''}</div></td>
-            <td>${esc(KIND_WORD[t.kind] || t.kind)}</td>
-            <td>${t.photos ? `<span class="pill ${t.photos >= 3 ? 'pill-green' : 'pill-amber'}" title="${t.photos >= 3 ? 'a good spread' : 'three to five is the aim'}">${t.photos}</span>` : '<span class="pill pill-red" title="A day here gets no picture until one is uploaded">none</span>'}</td>
-            <td style="white-space:nowrap"><button class="btn btn-light btn-sm" data-tedit="${esc(t.code)}">Edit</button> <button class="btn btn-light btn-sm rowdel" data-tdel="${esc(t.code)}" title="${t.photos ? 'Switch off' : 'Remove'}">&times;</button></td>
-        </tr>`).join('') : '<tr><td colspan="4" class="empty">No places yet.</td></tr>';
-        $('t_list').querySelectorAll('[data-tedit]').forEach(b => b.addEventListener('click', () => fillTagForm(b.dataset.tedit)));
-        $('t_list').querySelectorAll('[data-tdel]').forEach(b => b.addEventListener('click', async () => {
-            const t = D.tags.find(x => x.code === b.dataset.tdel);
-            const ok = await Swal.fire({ title: t.photos ? 'Switch off ' + t.name + '?' : 'Are you sure you want to delete this record?', text: t.photos ? t.photos + ' photo(s) carry it; they keep it and their other tags. It will no longer be matched or offered.' : t.name + ' has no photos, so it is removed from the list.', showCancelButton: true, confirmButtonText: t.photos ? 'Switch off' : 'Delete' });
-            if (!ok.isConfirmed) return;
-            const j = await post('/tag/delete/' + encodeURIComponent(b.dataset.tdel), {});
-            if (j.status !== 200) { toast('error', j.message); return; }
-            toast('success', j.message); clearTagForm(); load();
-        }));
+    function collectionForm(t) {
+        const d = S.d, isNew = !t; t = t || { code: '', name: '', kind: S.cat !== 'all' ? S.cat : 'destination', location: '', keywords: '', hotel_id: '', position: '', active: 1 };
+        modal(isNew ? 'New photo collection' : 'Edit collection — ' + esc(t.name), `<div class="two"><div>
+            <div class="fl"><span class="lbl">Name</span><input class="f" id="cf_name" value="${esc(t.name)}" placeholder="e.g. Negombo, Heritance Kandalama, Homepage banner"></div>
+            <div class="fl"><span class="lbl">Category</span><select class="f" id="cf_kind">${d.kinds.map(k => `<option value="${k}" ${t.kind === k ? 'selected' : ''}>${esc(KN(k))}</option>`).join('')}</select></div>
+            <div class="fl" id="cf_hotel_w"><span class="lbl">Hotel (from the Hotel Master)</span><select class="f" id="cf_hotel"><option value="">Choose the hotel…</option>${(d.hotels || []).map(h => `<option value="${h.id}" ${Number(t.hotel_id) === Number(h.id) ? 'selected' : ''}>${esc(h.name)}${h.address ? ' — ' + esc(h.address) : ''}</option>`).join('')}</select></div>
+            <div class="fl" id="cf_pos_w"><span class="lbl">Homepage position</span><select class="f" id="cf_pos"><option value="">Not shown on the homepage</option>${Object.entries(d.positions || {}).map(([k, v]) => `<option value="${k}" ${t.position === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></div>
+            <div class="fl"><span class="lbl">Location</span><input class="f" id="cf_loc" value="${esc(t.location || '')}" placeholder="e.g. Western Province, near Katunayake"></div></div>
+            <div><div class="fl" id="cf_kw_w"><span class="lbl">Words that find it in an itinerary (comma separated)</span><textarea class="f" id="cf_kw" rows="5" placeholder="e.g. negombo, negombo beach, negombo lagoon">${esc(t.keywords || '')}</textarea><div style="font-size:11.5px;margin-top:3px">When a day's programme mentions one of these words, the collection's preferred photograph is shown for that day.</div></div>
+            ${isNew ? '' : `<div class="fl"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="cf_act" ${Number(t.active) ? 'checked' : ''}> Collection in use</label></div>`}</div></div>`,
+            `<button class="btn-l" id="cf_cancel">Cancel</button><button class="btn-g" id="cf_save">${isNew ? 'Create collection' : 'Save'}</button>`);
+        const sync = () => { const k = $('cf_kind').value; $('cf_hotel_w').style.display = k === 'hotel' ? '' : 'none'; $('cf_pos_w').style.display = k === 'homepage' ? '' : 'none'; $('cf_kw_w').style.display = ['hotel', 'homepage'].includes(k) ? 'none' : ''; };
+        $('cf_kind').addEventListener('change', sync); sync();
+        $('cf_hotel').addEventListener('change', () => { if (!$('cf_name').value) $('cf_name').value = $('cf_hotel').selectedOptions[0].text.split(' — ')[0]; });
+        $('cf_cancel').addEventListener('click', close);
+        $('cf_save').addEventListener('click', async () => {
+            const name = $('cf_name').value.trim(); if (!name) { toast('Give the collection a name.', true); return; }
+            const kind = $('cf_kind').value;
+            const code = t.code || (kind === 'hotel' ? 'HOTEL_' + $('cf_hotel').value : (kind === 'homepage' ? 'HOME_' : '') + name.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_|_$/g, '')).slice(0, 40);
+            const body = { code, name, kind, location: $('cf_loc').value, keywords: ['hotel', 'homepage'].includes(kind) ? '' : $('cf_kw').value, hotel_id: $('cf_hotel').value, position: $('cf_pos').value };
+            if (!isNew) body.active = $('cf_act').checked ? 1 : 0;
+            if (isNew && d.tags.some(x => x.code === code)) { toast('A collection with the code ' + code + ' already exists.', true); return; }
+            const j = await post('/tag', body); toast(j.status === 200 ? (isNew ? 'Collection created.' : 'Saved.') : j.message, j.status !== 200);
+            if (j.status === 200) { close(); S.open = code; load(); }
+        });
     }
-    $('t_save').addEventListener('click', async () => {
-        const j = await post('/tag', { code: $('t_code').value, name: $('t_name').value, kind: $('t_kind').value, keywords: $('t_words').value, sort_order: $('t_sort').value, active: $('t_active').checked ? 1 : 0 });
-        if (j.status !== 200) { toast('error', j.message); return; }
-        toast('success', j.message); clearTagForm(); load();
-    });
-    $('t_new').addEventListener('click', clearTagForm);
-    // a code from the name, when none is typed
-    $('t_name').addEventListener('input', () => { if (!$('t_code').readOnly && !$('t_code').dataset.typed) $('t_code').value = $('t_name').value.trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 30); });
-    $('t_code').addEventListener('input', () => { $('t_code').dataset.typed = $('t_code').value ? '1' : ''; });
-
-    // ---- the library grid ----
-    function renderGrid() {
-        const q = $('l_q').value.trim().toLowerCase();
-        let list = D.photos.filter(p => $('l_removed').checked || Number(p.active) === 1);
-        if (FILTER) list = list.filter(p => (p.tag_codes || []).includes(FILTER));
-        if (q) list = list.filter(p => (p.caption || '').toLowerCase().includes(q) || (p.tags || []).some(t => (t.name || '').toLowerCase().includes(q)));
-        const active = D.photos.filter(p => Number(p.active) === 1).length;
-        $('l_count').textContent = active + ' photo' + (active === 1 ? '' : 's') + (D.photos.length > active ? ' · ' + (D.photos.length - active) + ' removed' : '') + (D.in_use ? ' · on ' + D.in_use + ' itinerar' + (D.in_use === 1 ? 'y' : 'ies') : '');
-        $('l_grid').innerHTML = list.length ? list.map(p => `<div class="ph ${Number(p.active) === 1 ? '' : 'off'}" data-id="${p.id}">
-            <span class="star ${Number(p.preferred) === 1 ? 'on' : ''}" data-star="${p.id}" title="${Number(p.preferred) === 1 ? 'Preferred — offered first' : 'Mark as preferred'}">&#9733;</span>
-            <img src="${esc(p.thumb_url || p.url)}" alt="" data-view="${p.id}" title="Open">
-            <div class="body">
-                <div class="cap">${esc(p.caption || '—')}</div>
-                <div class="help">${p.width && p.height ? p.width + '×' + p.height + ' · ' : ''}${p.bytes ? Math.round(p.bytes / 1024) + ' KB · ' : ''}${p.on_days ? 'on ' + p.on_days + ' day' + (p.on_days === 1 ? '' : 's') + ' · ' : ''}used ${p.uses}×${p.exists ? '' : ' · <span style="color:var(--tf-red)">file missing</span>'}</div>
-                <div class="tags">${(p.tags || []).map(t => `<span class="pill pill-blue">${esc(t.name)}</span>`).join('')}</div>
-                ${Number(p.active) === 1 ? '' : `<div class="help" style="color:var(--tf-red)">removed ${esc(String(p.removed_at || '').slice(0, 10))} by ${esc(p.removed_by || '')}</div>`}
-            </div>
-            <div class="acts">
-                <button class="btn btn-light" data-view="${p.id}">Open</button>
-                ${Number(p.active) === 1 ? `<button class="btn btn-light rowdel" data-remove="${p.id}" title="Out of the library">Remove</button>` : `<button class="btn btn-light" data-restore="${p.id}">Put back</button>`}
-            </div></div>`).join('') : `<div class="empty" style="grid-column:1/-1">${FILTER ? 'No photos carry this place yet.' : 'The library is empty.'} <button class="btn btn-primary btn-sm ms-2" type="button" data-upload-here><i class="bi bi-cloud-upload"></i> Upload Photos</button></div>`;
-        $('l_grid').querySelectorAll('[data-upload-here]').forEach(b => b.addEventListener('click', () => $('b_upload').click()));
-        $('l_grid').querySelectorAll('[data-view]').forEach(el => el.addEventListener('click', () => openView(Number(el.dataset.view))));
-        $('l_grid').querySelectorAll('[data-star]').forEach(el => el.addEventListener('click', async () => {
-            const p = D.photos.find(x => x.id === Number(el.dataset.star));
-            const j = await post('/photo/' + p.id + '/save', { preferred: Number(p.preferred) === 1 ? 0 : 1 });
-            if (j.status !== 200) { toast('error', j.message); return; }
-            load();
-        }));
-        $('l_grid').querySelectorAll('[data-remove]').forEach(el => el.addEventListener('click', () => removePhoto(Number(el.dataset.remove))));
-        $('l_grid').querySelectorAll('[data-restore]').forEach(el => el.addEventListener('click', async () => {
-            const j = await post('/photo/' + el.dataset.restore + '/restore', {});
-            if (j.status !== 200) { toast('error', j.message); return; }
-            toast('success', j.message); load();
-        }));
-    }
-    async function removePhoto(id) {
-        const p = D.photos.find(x => x.id === id);
-        const ok = await Swal.fire({ title: 'Are you sure you want to delete this record?', text: 'The picture leaves the library' + (p && p.on_days ? ' and the ' + p.on_days + ' day(s) it is on choose another picture' : '') + '. The file is kept and the picture can be put back from "Show removed".', showCancelButton: true, confirmButtonText: 'Remove' });
-        if (!ok.isConfirmed) return;
-        const j = await post('/photo/' + id + '/remove', {});
-        if (j.status !== 200) { toast('error', j.message); return; }
-        hide('#m_view'); toast('success', j.message); load();
-    }
-    $('l_q').addEventListener('input', renderGrid);
-    $('l_removed').addEventListener('change', load);
-
-    // ---- one picture ----
-    function openView(id) {
-        const p = D.photos.find(x => x.id === id); if (!p) return;
-        $('mv_id').value = p.id; $('mv_title').textContent = p.caption || ('Photo ' + p.id);
-        $('mv_img').src = p.url; $('mv_caption').value = p.caption || ''; $('mv_credit').value = p.credit || ''; $('mv_sort').value = p.sort_order ?? ''; $('mv_pref').checked = Number(p.preferred) === 1;
-        $('mv_meta').innerHTML = `${esc(p.original_name || '')} · ${p.width}×${p.height} · ${Math.round((p.bytes || 0) / 1024)} KB · uploaded ${esc(String(p.uploaded_at || '').slice(0, 16))} by ${esc(p.uploaded_by || '')}${p.replaced_at ? ' · replaced ' + esc(String(p.replaced_at).slice(0, 16)) + ' by ' + esc(p.replaced_by || '') : ''} · used ${p.uses}× on quotations${p.on_days ? ' · on ' + p.on_days + ' day(s) now' : ''}`;
-        chips('mv_tags', p.tag_codes || [], false, (code, el) => el.classList.toggle('on'));
-        $('mv_remove').hidden = Number(p.active) !== 1;
-        show('#m_view');
-        if (window.TfView) TfView.setParams({ photo: id }, { push: !TfView.param('photo') });   // tf-refresh-r1
-    }
-    $('mv_save').addEventListener('click', async () => {
-        const tags = chosen('mv_tags');
-        if (!tags.length) { toast('error', 'A photo keeps at least one place.'); return; }
-        const j = await post('/photo/' + $('mv_id').value + '/save', { caption: $('mv_caption').value, credit: $('mv_credit').value, sort_order: $('mv_sort').value, preferred: $('mv_pref').checked ? 1 : 0, tags });
-        if (j.status !== 200) { toast('error', j.message); return; }
-        hide('#m_view'); toast('success', j.message); load();
-    });
-    $('mv_remove').addEventListener('click', () => removePhoto(Number($('mv_id').value)));
-    $('mv_replace').addEventListener('change', async () => {
-        const f = $('mv_replace').files[0]; if (!f) return;
-        const fd = new FormData(); fd.append('file', f, f.name);
-        const j = await send('/photo/' + $('mv_id').value + '/replace', fd);
-        $('mv_replace').value = '';
-        if (j.status !== 200) { toast('error', j.message); return; }
-        hide('#m_view'); toast('success', j.message); load();
-    });
-
-    async function load() {
-        const j = await api('/data' + ($('l_removed').checked ? '?all=1' : ''));
-        if (j.status !== 200) { toast('error', j.message); return; }
-        D = j.data;
-        $('st').innerHTML = `Files under <span class="mono">public/${esc(D.folder)}</span> — <b class="${D.folder_ok ? 'ok' : 'bad'}">${D.folder_ok ? 'writable' : 'not writable'}</b> · resizing <b class="${D.resize ? 'ok' : 'bad'}">${D.resize ? 'on' : 'off (no image library on the server: files are kept as uploaded)'}</b>`;
-        // the server's own ceiling on one upload (php.ini) when it is under the library's 12 MB
-        const lim = D.upload_limit_mb != null ? Math.min(12, Number(D.upload_limit_mb)) : 12;
-        $('u_limit').textContent = 'JPEG, PNG or WebP · up to ' + (Math.round(lim * 10) / 10) + ' MB each' + (lim < 12 ? ' (the server\'s limit)' : '');
-        if (FILTER && !D.tags.some(t => t.code === FILTER)) FILTER = '';
-        chips('u_tags', chosen('u_tags'), false, (code, el) => el.classList.toggle('on'));
-        filterChips();
-        renderTags();
-        renderGrid();
-    }
-    function filterChips() {
-        chips('l_chips', FILTER ? [FILTER] : [], true, code => { FILTER = FILTER === code ? '' : code; filterChips(); renderGrid(); });
-    }
-    // tf-refresh-r1: the record open in the window is in the address (?photo=N) — a refresh opens it again, read fresh; Back closes it
-    document.getElementById('m_view').addEventListener('hidden.bs.modal', () => { if (window.TfView && TfView.param('photo')) TfView.setParams({ photo: null }, { push: true }); });
-    window.addEventListener('popstate', () => {
-        const v = Number(new URLSearchParams(location.search).get('photo') || 0);
-        const m = document.getElementById('m_view');
-        if (v) { openView(v); } else if (m.classList.contains('show')) { bootstrap.Modal.getInstance(m)?.hide(); }
-    });
-    Promise.resolve(load()).then(() => { const v = Number(new URLSearchParams(location.search).get('photo') || 0); if (v) openView(v); });
+    $('pm_new').addEventListener('click', () => collectionForm(null));
+    $('pm_q').addEventListener('input', e => { S.q = e.target.value.trim(); S.open = null; draw(); });
+    load();
 })();
 </script>
 </body>

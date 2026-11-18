@@ -81,7 +81,7 @@ if (!empty($v['note'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= $e($v['voucher_no']) ?> — payment voucher<?= $cancelled ? ' (cancelled)' : '' ?></title>
 <style>
-    :root { --ink:#1d2733; --muted:#5f6f80; --line:#cfd6de; --purple:#842484; --red:#b23a32; }
+    :root { --ink:#1d2733; --muted:#5f6f80; --line:#cfd6de; --purple:#8b1d40; --red:#b23a32; }
     * { box-sizing:border-box; }
     body { margin:0; background:#eef0f3; color:var(--ink); font:13px/1.45 "Segoe UI", Arial, Helvetica, sans-serif; }
     .sheet { position:relative; background:#fff; max-width:820px; margin:18px auto; padding:34px 40px 30px; box-shadow:0 2px 12px rgba(0,0,0,.08); }

@@ -1,14 +1,14 @@
 <?php /** tf-resdesk-r2: the local test mailbox — every e-mail the system would have sent, caught on this computer. */ $e = static fn ($v) => esc((string) ($v ?? '')); ?><!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Test mailbox</title>
 <style>
-body{margin:0;font-family:Inter,system-ui,Segoe UI,sans-serif;background:#F6F3F7;color:#1F1A24}
-.top{background:#7B2382;color:#fff;padding:14px 24px;font-weight:700}.top small{font-weight:400;opacity:.9;margin-left:10px}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,sans-serif;background:#f7f3f4;color:#1F1A24}
+.top{background:#891c3e;color:#fff;padding:14px 24px;font-weight:700}.top small{font-weight:400;opacity:.9;margin-left:10px}
 .wrap{max-width:1100px;margin:18px auto;padding:0 16px}
 .note{background:#EAF6E2;border:1px solid #A7D08E;color:#1E4A0E;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:14px}
 table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:13.5px}
-th{background:#F1E9F3;color:#4A1450;text-align:left;padding:9px 10px;font-size:12px;letter-spacing:.03em}
+th{background:#f3e9ec;color:#541025;text-align:left;padding:9px 10px;font-size:12px;letter-spacing:.03em}
 td{padding:9px 10px;border-top:1px solid #EEE7F1;vertical-align:top}
-a{color:#6E1F70;font-weight:600}
+a{color:#761936;font-weight:600}
 </style></head><body>
 <div class="top">Avenir Holidays · Test mailbox<small>localhost only — nothing here was sent to anyone</small></div>
 <div class="wrap">

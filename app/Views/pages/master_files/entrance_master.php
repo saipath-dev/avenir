@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
-    /* ---------- Place to Visit / Entrance Fee Master (tf-safari-r1 redesign) — Avenir orchid #842484 and green #78b848 ---------- */
-    .tf { --av-orchid:#842484; --av-orchid-2:#6d1d6d; --av-orchid-soft:#f6e9f6; --av-green:#78b848; --av-green-2:#5f9a36; --av-green-soft:#eef7e6;
+    /* ---------- Place to Visit / Entrance Fee Master (tf-safari-r1 redesign) — Avenir orchid #8b1d40 and green #78b848 ---------- */
+    .tf { --av-orchid:#8b1d40; --av-orchid-2:#731734; --av-orchid-soft:#f6e9ed; --av-green:#78b848; --av-green-2:#5f9a36; --av-green-soft:#eef7e6;
           --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff; --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-blue-soft:#eef1f8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#e2e6ec; --tf-bg:#f5f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); }
@@ -24,15 +24,15 @@
     .tf .search-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .tf .search-box { position:relative; flex:1 1 380px; }
     .tf .search-box i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--av-orchid); font-size:18px; }
-    .tf .search-box input { height:46px; padding-left:42px; font-size:15px; border-radius:23px; border:1.5px solid #d9c3d9; }
-    .tf .search-box input:focus { border-color:var(--av-orchid); box-shadow:0 0 0 3px rgba(132,36,132,.12); }
+    .tf .search-box input { height:46px; padding-left:42px; font-size:15px; border-radius:23px; border:1.5px solid #d9c3ca; }
+    .tf .search-box input:focus { border-color:var(--av-orchid); box-shadow:0 0 0 3px rgba(139,29,64,.12); }
     .tf .filters { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
     .tf .filters .form-select, .tf .filters .form-control { width:auto; }
     .tf .tbl { width:100%; border-collapse:collapse; font-size:13px; }
     .tf .tbl th { text-align:left; font-weight:600; color:var(--tf-muted); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:9px 12px; border-bottom:1px solid var(--tf-line); white-space:nowrap; background:#fafbfc; }
     .tf .tbl td { padding:10px 12px; border-bottom:1px solid var(--tf-line); vertical-align:top; }
     .tf .tbl tr.off td { opacity:.6; }
-    .tf .tbl tbody tr:hover td { background:#fcf8fc; }
+    .tf .tbl tbody tr:hover td { background:#fcf8f9; }
     .tf .num { font-variant-numeric:tabular-nums; white-space:nowrap; }
     .tf .money { font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap; }
     .tf .mono { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -53,7 +53,7 @@
     #m_place .modal-header { background:var(--av-orchid); color:#fff; }
     #m_place .modal-header .btn-close { filter:invert(1); }
     #m_place .sec { border:1px solid var(--tf-line); border-radius:10px; margin-bottom:14px; }
-    #m_place .sec-h { padding:10px 14px; background:#faf6fa; border-bottom:1px solid var(--tf-line); border-radius:10px 10px 0 0; display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+    #m_place .sec-h { padding:10px 14px; background:#faf6f7; border-bottom:1px solid var(--tf-line); border-radius:10px 10px 0 0; display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
     #m_place .sec-h b { color:var(--av-orchid); font-size:13.5px; }
     #m_place .sec-b { padding:12px 14px; }
     #m_place label.form-label { font-size:12px; color:var(--tf-muted); margin-bottom:2px; }
@@ -268,7 +268,7 @@
             html: k.archive
                 ? `<div style="text-align:left;font-size:14px">It has been used (${esc(k.why.join(', '))}), so it cannot be deleted. It will be <b>archived</b>: kept with its rates for that history, no longer offered to staff, and it can be restored.</div><input id="del_note" class="swal2-input" placeholder="Reason (optional)">`
                 : `<div style="text-align:left;font-size:14px">It has never been used. It will be <b>removed permanently</b> with its rates, other names and supplier details. This cannot be undone.</div><input id="del_note" class="swal2-input" placeholder="Reason (optional)">`,
-            icon: 'warning', showCancelButton: true, confirmButtonText: k.archive ? 'Archive' : 'Delete permanently', confirmButtonColor: k.archive ? '#842484' : '#b23a32', focusCancel: true,
+            icon: 'warning', showCancelButton: true, confirmButtonText: k.archive ? 'Archive' : 'Delete permanently', confirmButtonColor: k.archive ? '#8b1d40' : '#b23a32', focusCancel: true,
             preConfirm: () => document.getElementById('del_note').value });
         if (!r.isConfirmed) return;
         const j = await post('/place/' + id + '/delete', { note: r.value || '' });
@@ -443,7 +443,7 @@
         if (!p) return;
         $('mp_use')?.addEventListener('click', async () => {
             const on = Number(p.active) === 1;
-            if (on) { const ok = await Swal.fire({ title: 'Take ' + p.name + ' out of use?', text: 'Lines naming it are held until someone puts them right; it is not offered to staff.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Take out of use', confirmButtonColor: '#842484' }); if (!ok.isConfirmed) return; }
+            if (on) { const ok = await Swal.fire({ title: 'Take ' + p.name + ' out of use?', text: 'Lines naming it are held until someone puts them right; it is not offered to staff.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Take out of use', confirmButtonColor: '#8b1d40' }); if (!ok.isConfirmed) return; }
             const j = await post('/place', { id: p.id, active: on ? 0 : 1 });
             if (j.status !== 200) { toast('error', j.message); return; }
             toast('success', j.message); reloadKeep('sec_place');
@@ -537,7 +537,7 @@
         $('mp_merge').addEventListener('click', async () => {
             const into = Number($('mp_into').value); if (!into) { toast('error', 'Choose the place it is the same as.'); return; }
             const pi = byId(into);
-            const ok = await Swal.fire({ title: 'Merge ' + p.name + ' into ' + pi.name + '?', text: p.name + ' is kept, out of use, and read as ' + pi.name + ' from now on.', icon: 'question', showCancelButton: true, confirmButtonText: 'Merge', confirmButtonColor: '#842484' });
+            const ok = await Swal.fire({ title: 'Merge ' + p.name + ' into ' + pi.name + '?', text: p.name + ' is kept, out of use, and read as ' + pi.name + ' from now on.', icon: 'question', showCancelButton: true, confirmButtonText: 'Merge', confirmButtonColor: '#8b1d40' });
             if (!ok.isConfirmed) return;
             const j = await post('/places/merge', { from: p.id, into });
             if (j.status !== 200) { toast('error', j.message); return; }

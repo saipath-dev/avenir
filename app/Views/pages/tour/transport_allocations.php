@@ -9,14 +9,14 @@ $esc = static fn ($s) => esc((string) $s);
 ?>
 <style>
     .tf { --tf-navy:#1e3553; --tf-teal:#0f8b7e; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff; --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
-          --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --p:#842484; --g:#78b848; --gold:#e0a526; color:var(--tf-ink); }
+          --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --p:#8b1d40; --g:#78b848; --gold:#e0a526; color:var(--tf-ink); }
     .tf .tf-title { display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px; }
     .tf .tf-title h4 { margin:0; font-weight:700; color:var(--p); }
     .tf .tf-title .sub { color:var(--tf-muted); font-size:12.5px; max-width:900px; }
     .tf .lanes { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
     .tf .lane { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:10px; border:1px solid var(--tf-line); background:#fff; font-weight:600; font-size:13px; color:var(--tf-ink); cursor:pointer; }
     .tf .lane.on { background:var(--p); border-color:var(--p); color:#fff; }
-    .tf .lane .n { min-width:22px; height:22px; border-radius:11px; background:rgba(132,36,132,.12); color:var(--p); display:inline-grid; place-items:center; font-size:12px; font-weight:800; padding:0 6px; }
+    .tf .lane .n { min-width:22px; height:22px; border-radius:11px; background:rgba(139,29,64,.12); color:var(--p); display:inline-grid; place-items:center; font-size:12px; font-weight:800; padding:0 6px; }
     .tf .lane.on .n { background:#fff; }
     .tf .rcard { background:#fff; border:1px solid var(--tf-line); border-radius:12px; margin-bottom:12px; box-shadow:0 2px 8px rgba(20,20,30,.04); }
     .tf .rcard .hd { display:flex; gap:12px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--tf-line); flex-wrap:wrap; }
@@ -24,7 +24,7 @@ $esc = static fn ($s) => esc((string) $s);
     .tf .rcard .hd .meta { color:var(--tf-muted); font-size:12.5px; }
     .tf .rcard .bd { padding:14px 16px; }
     .tf .pill { display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:700; }
-    .tf .pill-p { background:rgba(132,36,132,.12); color:var(--p); } .tf .pill-g { background:var(--tf-green-soft); color:var(--tf-green); } .tf .pill-a { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); } .tf .pill-r { background:var(--tf-red-soft); color:var(--tf-red); } .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
+    .tf .pill-p { background:rgba(139,29,64,.12); color:var(--p); } .tf .pill-g { background:var(--tf-green-soft); color:var(--tf-green); } .tf .pill-a { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); } .tf .pill-r { background:var(--tf-red-soft); color:var(--tf-red); } .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
     .tf .prop { display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; padding:14px; border:1px solid rgba(120,184,72,.6); background:rgba(120,184,72,.08); border-radius:12px; }
     .tf .prop .who { flex:1; min-width:260px; }
     .tf .prop .who b { font-size:16px; }
@@ -32,7 +32,7 @@ $esc = static fn ($s) => esc((string) $s);
     .tf .prop .acts { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
     .tf .btn-p { background:var(--p); color:#fff; border:0; } .tf .btn-p:hover { filter:brightness(1.08); color:#fff; }
     .tf .btn-g { background:var(--g); color:#1f2a14; border:0; font-weight:700; } .tf .btn-g:hover { filter:brightness(1.06); color:#1f2a14; }
-    .tf .paybox { padding:10px 12px; border:1px solid rgba(132,36,132,.25); background:rgba(132,36,132,.04); border-radius:10px; font-size:13px; }
+    .tf .paybox { padding:10px 12px; border:1px solid rgba(139,29,64,.25); background:rgba(139,29,64,.04); border-radius:10px; font-size:13px; }
     .tf .paybox b.amt { color:var(--p); }
     .tf .carrate { margin-top:10px; padding:10px 12px; border:1px dashed var(--gold); background:#ffffff; border-radius:10px; font-size:13px; }
     .tf .carrate b.amt { font-size:15px; color:var(--p); }
@@ -212,7 +212,7 @@ $esc = static fn ($s) => esc((string) $s);
             <label>Reason <span style="color:#b23a32">*</span></label><input id="na_reason" class="swal2-input" style="margin:4px 0 10px;width:100%" placeholder="e.g. family matter, vehicle in repair, declined">
             <div style="display:flex;gap:8px"><div style="flex:1"><label>From</label><input id="na_from" type="date" class="swal2-input" style="margin:4px 0;width:100%" value="${a.job.arrival_date}"></div><div style="flex:1"><label>To</label><input id="na_to" type="date" class="swal2-input" style="margin:4px 0;width:100%" value="${a.job.departure_date}"></div></div>
             <div style="color:#5f6f80;font-size:12px;margin-top:6px">The period is kept on the driver's record and the next driver in turn is proposed automatically. Recorded with your name for the report.</div></div>`,
-            showCancelButton: true, confirmButtonText: 'Record Not Available', confirmButtonColor: '#842484', focusConfirm: false,
+            showCancelButton: true, confirmButtonText: 'Record Not Available', confirmButtonColor: '#8b1d40', focusConfirm: false,
             preConfirm: () => { const v = document.getElementById('na_reason').value.trim(); if (!v) { Swal.showValidationMessage('The reason is required.'); return false; } return { reason: v, date_from: document.getElementById('na_from').value, date_to: document.getElementById('na_to').value }; } });
         if (!r.isConfirmed) return;
         const j = await post('/not_available/' + jobId, Object.assign({ person_id: personId }, r.value));

@@ -40,6 +40,12 @@ class HomeDeskController extends BaseController
         $data['home_painting_tall'] = is_file(FCPATH . $tall);
         $use = $data['home_painting_tall'] ? $tall : $art;
         $data['home_painting'] = is_file(FCPATH . $use) ? base_url($use) . '?v=' . filemtime(FCPATH . $use) : null;
+        // tf-beachhome-r1: the full-screen scenery of the staff homepage, from Photo Master (Homepage → Staff homepage background)
+        try {
+            $data['home_bg'] = (new \App\Libraries\TourFlow\PhotoLibrary(\Config\Database::connect(), ''))->homepage()['staff_bg']['url'] ?? null;
+        } catch (\Throwable $e) {
+            $data['home_bg'] = null;
+        }
         return view('pages/home_desks', $data);
     }
 

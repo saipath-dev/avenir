@@ -10,7 +10,7 @@ $cards = $ad_cards ?? [];
 ?>
 <body class="adk-body">
 <style>
-    :root { --ad-p:#842484; --ad-g:#78b848; --ad-gold:#e0a526; --ad-ink:#2b2b33; --ad-mut:#6b6f7b; --ad-line:#e8e3df; --ad-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
+    :root { --ad-p:#8b1d40; --ad-g:#78b848; --ad-gold:#e0a526; --ad-ink:#2b2b33; --ad-mut:#6b6f7b; --ad-line:#e8e3df; --ad-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     body.adk-body { background:#fff !important; color:var(--ad-ink); font-family:var(--ad-font); }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
     .tdk-top .sp { flex:1; }
@@ -23,7 +23,7 @@ $cards = $ad_cards ?? [];
 
     .adk { max-width:1320px; margin:0 auto; padding:22px clamp(14px,2.4vw,30px) 36px; }
     .adk-head { display:flex; align-items:center; gap:18px; margin:4px 0 22px; }
-    .adk-head .ic { width:86px; height:86px; border-radius:18px; background:rgba(132,36,132,.1); color:var(--ad-p); display:grid; place-items:center; font-size:42px; flex:0 0 auto; }
+    .adk-head .ic { width:86px; height:86px; border-radius:18px; background:rgba(139,29,64,.1); color:var(--ad-p); display:grid; place-items:center; font-size:42px; flex:0 0 auto; }
     .adk-head h1 { margin:0; font-size:clamp(1.7rem,3vw,2.6rem); font-weight:800; letter-spacing:-.02em; color:var(--ad-p); line-height:1.05; }
     .adk-head p { margin:4px 0 0; color:var(--ad-mut); font-size:1.1rem; }
     .adk-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
@@ -33,7 +33,7 @@ $cards = $ad_cards ?? [];
     .adk-card.purple .band { background:var(--ad-p); } .adk-card.green .band { background:var(--ad-g); }
     .adk-card .body { display:flex; align-items:center; gap:22px; padding:22px 26px 10px; }
     .adk-card .big { width:120px; height:120px; border-radius:50%; display:grid; place-items:center; font-size:58px; flex:0 0 auto; }
-    .adk-card.purple .big { background:rgba(132,36,132,.1); color:var(--ad-p); } .adk-card.green .big { background:rgba(120,184,72,.18); color:#4d8a2a; }
+    .adk-card.purple .big { background:rgba(139,29,64,.1); color:var(--ad-p); } .adk-card.green .big { background:rgba(120,184,72,.18); color:#4d8a2a; }
     .adk-card .tx { min-width:0; }
     .adk-card .shield { width:40px; height:40px; border-radius:50%; background:rgba(224,165,38,.18); color:var(--ad-gold); display:grid; place-items:center; font-size:19px; margin-bottom:8px; }
     .adk-card h2 { margin:0; font-size:clamp(1.3rem,2vw,1.8rem); font-weight:800; letter-spacing:-.015em; color:var(--ad-ink); line-height:1.15; }
@@ -43,9 +43,9 @@ $cards = $ad_cards ?? [];
     .adk-card .open:hover { filter:brightness(1.07); transform:translateY(-1px); }
     .adk-card .open:focus-visible { outline:3px solid var(--ad-gold); outline-offset:3px; }
     .adk-card .open i { font-size:1.2rem; font-weight:900; }
-    .adk-note { margin-top:26px; display:flex; align-items:center; gap:22px; padding:22px 28px; border-radius:18px; background:rgba(132,36,132,.07); color:var(--ad-ink); font-size:1.1rem; }
-    .adk-note .lk { width:76px; height:76px; border-radius:50%; background:rgba(132,36,132,.12); color:var(--ad-p); display:grid; place-items:center; font-size:34px; flex:0 0 auto; }
-    .adk-note .sep { width:1px; align-self:stretch; background:rgba(132,36,132,.25); }
+    .adk-note { margin-top:26px; display:flex; align-items:center; gap:22px; padding:22px 28px; border-radius:18px; background:rgba(139,29,64,.07); color:var(--ad-ink); font-size:1.1rem; }
+    .adk-note .lk { width:76px; height:76px; border-radius:50%; background:rgba(139,29,64,.12); color:var(--ad-p); display:grid; place-items:center; font-size:34px; flex:0 0 auto; }
+    .adk-note .sep { width:1px; align-self:stretch; background:rgba(139,29,64,.25); }
     .adk-foot { color:var(--ad-mut); font-size:.84rem; padding:12px 2px 0; }
     @media (max-width:991px) { .adk-grid { grid-template-columns:1fr; } }
     @media (max-width:640px) { .adk { padding:16px 12px 28px; } .adk-head .ic { width:62px; height:62px; font-size:30px; border-radius:14px; }

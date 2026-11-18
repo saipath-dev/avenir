@@ -21,11 +21,11 @@ $item = static function (array $it) use ($esc): string {
         . $esc($it['label']) . '</b>' . (!empty($it['sub']) ? '<small>' . $esc($it['sub']) . '</small>' : '') . '</span></a>';
 };
 ?>
-<body class="hd-body">
+<body class="hd-body<?= !empty($home_bg) ? ' hd-beach' : '' ?>">
 <style>
     /* tf-home-r4 (22 Oct 2026) — the approved design proposal: a tall painting panel on the left, from just below the
        header bar to the foot of the page; logo, title, the two desk rows and the link cards centred on the right. */
-    :root { --hd-g1:#78b848; --hd-g2:#78b848; --hd-b1:#842484; --hd-b2:#842484; --hd-db1:#842484; --hd-db2:#842484; --hd-title:#842484;
+    :root { --hd-g1:#78b848; --hd-g2:#78b848; --hd-b1:#8b1d40; --hd-b2:#8b1d40; --hd-db1:#8b1d40; --hd-db2:#8b1d40; --hd-title:#8b1d40;
             --hd-gold:#c9952f; --hd-ink:#2b2b33; --hd-mut:#6b6f7b; --hd-line:#ece4da; --hd-cream:#fbf7f1; --hd-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     body.hd-body { background:var(--hd-cream) !important; color:var(--hd-ink); }
     .hd-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
@@ -52,7 +52,7 @@ $item = static function (array $it) use ($esc): string {
     .hd-title { font-family:var(--hd-font); color:var(--hd-title); text-align:center; font-size:clamp(1.8rem,3.1vw,2.75rem); font-weight:800; margin:6px 0 4px; letter-spacing:-.03em; line-height:1.08; }
     /* tf-stage2: the daily USD rate box */
     /* tf-usdpill-r1 (8 Nov 2026, Shantha — mockup option 3): the rate is a small pill in the top bar; the full box opens under it */
-    .hd-usd { font-family:var(--hd-font); background:#fff; border:1.5px solid var(--hd-line); border-radius:16px; overflow:hidden; box-shadow:0 18px 40px rgba(43,27,48,.22);
+    .hd-usd { font-family:var(--hd-font); background:#fff; border:1.5px solid var(--hd-line); border-radius:16px; overflow:hidden; box-shadow:0 18px 40px rgba(50,25,33,.22);
       position:fixed; top:64px; right:clamp(12px,14vw,330px); width:min(460px, calc(100vw - 24px)); z-index:1045; display:none; }
     .hd-usd.open { display:block; }
     .hd-usd-x { background:transparent; border:0; color:#fff; font-size:1.1rem; line-height:1; cursor:pointer; padding:0 2px; margin-left:4px; }
@@ -73,7 +73,7 @@ $item = static function (array $it) use ($esc): string {
     .hd-usd-b { padding:12px 16px 14px; }
     .hd-usd-f { display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:1.05rem; }
     .hd-usd-f input { width:140px; font-size:1.35rem; font-weight:700; padding:6px 12px; border:1.5px solid var(--hd-line); border-radius:10px; font-variant-numeric:tabular-nums; color:var(--hd-ink); }
-    .hd-usd-f input:focus { outline:none; border-color:var(--hd-b1); box-shadow:0 0 0 3px rgba(132,36,132,.14); }
+    .hd-usd-f input:focus { outline:none; border-color:var(--hd-b1); box-shadow:0 0 0 3px rgba(139,29,64,.14); }
     .hd-usd-save { background:var(--hd-g1); color:#fff; border:0; border-radius:22px; padding:9px 20px; font-weight:700; font-size:.95rem; cursor:pointer; }
     .hd-usd-save:hover { background:#5f9a36; } .hd-usd-save:disabled { opacity:.6; cursor:default; }
     .hd-usd-ro { font-size:1.35rem; font-weight:700; font-variant-numeric:tabular-nums; }
@@ -86,13 +86,13 @@ $item = static function (array $it) use ($esc): string {
     .hd-desks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
     .hd-desk { position:relative; }
     .hd-desk > .hd-btn { width:100%; min-height:96px; border:0; border-radius:14px; color:#fff; text-align:left; padding:16px 16px 16px 18px; display:flex; align-items:center; gap:16px;
-      box-shadow:0 6px 16px rgba(132,36,132,.16); transition:transform .15s, box-shadow .15s; cursor:pointer; font-family:var(--hd-font); }
-    .hd-desk > .hd-btn:hover { transform:translateY(-2px); box-shadow:0 12px 24px rgba(132,36,132,.22); }
+      box-shadow:0 6px 16px rgba(139,29,64,.16); transition:transform .15s, box-shadow .15s; cursor:pointer; font-family:var(--hd-font); }
+    .hd-desk > .hd-btn:hover { transform:translateY(-2px); box-shadow:0 12px 24px rgba(139,29,64,.22); }
     .hd-desk > .hd-btn:focus-visible { outline:3px solid var(--hd-gold); outline-offset:3px; }
     .hd-desk.green > .hd-btn { background:linear-gradient(145deg,#78b848,#78b848); color:#2b2b33; }   /* tf-palette-r1: the logo green is light; dark lettering */
     .hd-desk.green > .hd-btn .ct { color:rgba(43,43,51,.78); }
     .hd-desk.green > .hd-btn .ic, .hd-desk.green > .hd-btn .chev { background:rgba(255,255,255,.38); box-shadow:inset 0 0 0 1px rgba(43,43,51,.12); }
-    .hd-desk.green > .hd-btn:focus-visible { outline-color:#842484; }
+    .hd-desk.green > .hd-btn:focus-visible { outline-color:#8b1d40; }
     .hd-desk.burgundy > .hd-btn { background:linear-gradient(145deg,var(--hd-b1),var(--hd-b2)); }
     .hd-desk.darkburgundy > .hd-btn { background:linear-gradient(145deg,var(--hd-db1),var(--hd-db2)); }
     .hd-desk.none > .hd-btn { filter:saturate(.35) brightness(1.05); }
@@ -115,7 +115,7 @@ $item = static function (array $it) use ($esc): string {
     .hd-it i { font-size:1rem; margin-top:2px; color:var(--hd-g2); }
     .hd-desk.burgundy .hd-it i { color:var(--hd-b1); }
     .hd-desk.darkburgundy .hd-it i { color:var(--hd-db1); }
-    .hd-desk.darkburgundy .hd-it:hover, .hd-desk.darkburgundy .hd-it:focus-visible { background:rgba(132,36,132,.08); }
+    .hd-desk.darkburgundy .hd-it:hover, .hd-desk.darkburgundy .hd-it:focus-visible { background:rgba(139,29,64,.08); }
     .hd-it b { display:block; font-weight:600; font-size:.92rem; line-height:1.25; }
     .hd-it small { display:block; color:var(--hd-mut); font-size:.76rem; line-height:1.25; }
     .hd-grp { width:100%; border:0; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 12px; border-radius:9px; font-weight:700; color:#2b2b33; background:var(--hd-g1); margin:2px 0; }
@@ -123,7 +123,7 @@ $item = static function (array $it) use ($esc): string {
     .hd-desk.burgundy .hd-grp { background:var(--hd-b1); }
     .hd-grp .gl { display:inline-flex; gap:9px; align-items:center; }
     .hd-grp[aria-expanded="true"] .bi-chevron-right { transform:rotate(90deg); }
-    .hd-sublist { margin:4px 0 6px 16px; border-left:2px solid rgba(132,36,132,.22); padding-left:6px; }
+    .hd-sublist { margin:4px 0 6px 16px; border-left:2px solid rgba(139,29,64,.22); padding-left:6px; }
     .hd-none { color:var(--hd-mut); font-size:.85rem; padding:10px 12px; }
 
     /* the link cards below the desks, between two hairlines */
@@ -133,10 +133,10 @@ $item = static function (array $it) use ($esc): string {
     .hd-links .lk { display:flex; align-items:center; gap:18px; }
     .hd-links .lk > i { width:1px; height:34px; background:var(--hd-line); }
     .hd-links a { display:inline-flex; align-items:center; gap:12px; padding:12px 18px; border-radius:10px; border:1px solid #e3d6cc; background:#fff; color:var(--hd-title);
-      font-family:var(--hd-font); font-weight:600; font-size:1rem; text-decoration:none; box-shadow:0 1px 2px rgba(132,36,132,.04); transition:background .15s, box-shadow .15s; white-space:nowrap; }
+      font-family:var(--hd-font); font-weight:600; font-size:1rem; text-decoration:none; box-shadow:0 1px 2px rgba(139,29,64,.04); transition:background .15s, box-shadow .15s; white-space:nowrap; }
     .hd-links a > .bi:first-child { font-size:1.3rem; }
     .hd-links a .go { font-size:.8rem; color:#8a7f86; margin-left:6px; }
-    .hd-links a:hover { background:rgba(132,36,132,.08); box-shadow:0 6px 16px rgba(132,36,132,.08); }
+    .hd-links a:hover { background:rgba(139,29,64,.08); box-shadow:0 6px 16px rgba(139,29,64,.08); }
     .hd-foot { text-align:center; color:var(--hd-mut); font-size:.8rem; margin-top:14px; }
 
     @media (max-width:1439px) { .hd-desk > .hd-btn { gap:12px; padding:14px 12px 14px 14px; } .hd-btn .ic { width:44px; height:44px; } .hd-btn .ic svg { width:24px; height:24px; } .hd-btn .nm { font-size:1.02rem; } .hd-btn .chev { width:26px; height:26px; } .hd-desks { gap:16px; } }
@@ -156,14 +156,14 @@ $item = static function (array $it) use ($esc): string {
        subtitle, chevron in a circle — green and purple alternating like a chessboard. Every desk the person has stays. */
     .hd-desks { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:18px 22px; max-width:1040px; margin:0 auto; }
     .hd-desk { order:0 !important; }
-    .hd-desk > .hd-btn { min-height:118px; border-radius:16px; padding:18px 20px 18px 22px; gap:0; box-shadow:0 6px 16px rgba(43,27,48,.10); }
+    .hd-desk > .hd-btn { min-height:118px; border-radius:16px; padding:18px 20px 18px 22px; gap:0; box-shadow:0 6px 16px rgba(50,25,33,.10); }
     .hd-desk:nth-child(4n+1) > .hd-btn, .hd-desk:nth-child(4n+4) > .hd-btn { background:linear-gradient(145deg,#7cba4c,#69a83e) !important; color:#fff !important; }
-    .hd-desk:nth-child(4n+2) > .hd-btn, .hd-desk:nth-child(4n+3) > .hd-btn { background:linear-gradient(145deg,#8a2a8a,#7a1f7a) !important; color:#fff !important; }
+    .hd-desk:nth-child(4n+2) > .hd-btn, .hd-desk:nth-child(4n+3) > .hd-btn { background:linear-gradient(145deg,#912346,#811839) !important; color:#fff !important; }
     .hd-desk > .hd-btn .ct { color:rgba(255,255,255,.9) !important; font-size:1rem; margin-top:6px; }
     .hd-desk > .hd-btn .nm { font-size:1.42rem; font-weight:800; text-shadow:0 1px 1px rgba(0,0,0,.12); }
     .hd-desk > .hd-btn .ic { width:66px; height:66px; background:rgba(255,255,255,.88) !important; box-shadow:none !important; }
     .hd-desk:nth-child(4n+1) > .hd-btn .ic, .hd-desk:nth-child(4n+4) > .hd-btn .ic { color:#4f8a2a; }
-    .hd-desk:nth-child(4n+2) > .hd-btn .ic, .hd-desk:nth-child(4n+3) > .hd-btn .ic { color:#7a1f7a; }
+    .hd-desk:nth-child(4n+2) > .hd-btn .ic, .hd-desk:nth-child(4n+3) > .hd-btn .ic { color:#811839; }
     .hd-desk > .hd-btn .ic svg { width:32px; height:32px; }
     .hd-desk > .hd-btn .row1 { margin-left:22px; padding-left:22px; border-left:1.5px solid rgba(255,255,255,.55); align-self:stretch; }
     .hd-desk > .hd-btn .chev { width:40px; height:40px; background:rgba(255,255,255,.22) !important; box-shadow:none !important; color:#fff; font-size:1rem; }
@@ -171,8 +171,8 @@ $item = static function (array $it) use ($esc): string {
     .hd-desk.none > .hd-btn { filter:saturate(.55) brightness(1.04); }
     @media (max-width:1259px) { .hd-desk > .hd-btn { min-height:104px; padding:16px; } .hd-desk > .hd-btn .ic { width:56px; height:56px; } .hd-desk > .hd-btn .row1 { margin-left:16px; padding-left:16px; } .hd-desk > .hd-btn .nm { font-size:1.22rem; } }
     @media (max-width:599px) { .hd-desks { grid-template-columns:1fr !important; gap:12px; }
-        .hd-desk:nth-child(odd) > .hd-btn { background:linear-gradient(145deg,#7cba4c,#69a83e) !important; } .hd-desk:nth-child(even) > .hd-btn { background:linear-gradient(145deg,#8a2a8a,#7a1f7a) !important; }
-        .hd-desk:nth-child(odd) > .hd-btn .ic { color:#4f8a2a; } .hd-desk:nth-child(even) > .hd-btn .ic { color:#7a1f7a; }
+        .hd-desk:nth-child(odd) > .hd-btn { background:linear-gradient(145deg,#7cba4c,#69a83e) !important; } .hd-desk:nth-child(even) > .hd-btn { background:linear-gradient(145deg,#912346,#811839) !important; }
+        .hd-desk:nth-child(odd) > .hd-btn .ic { color:#4f8a2a; } .hd-desk:nth-child(even) > .hd-btn .ic { color:#811839; }
         .hd-desk > .hd-btn { min-height:84px; } .hd-desk > .hd-btn .ic { width:48px; height:48px; } .hd-desk > .hd-btn .nm { font-size:1.08rem; } .hd-desk > .hd-btn .ct { font-size:.88rem; } }
 </style>
 
@@ -185,13 +185,14 @@ $item = static function (array $it) use ($esc): string {
 .av-nav-btn:hover { filter:brightness(1.08); box-shadow:0 5px 14px rgba(0,0,0,.22); text-decoration:none; }
 .av-nav-btn:active { transform:translateY(1px) scale(.98); }
 .av-nav-btn:focus-visible { outline:3px solid rgba(224,165,38,.55); outline-offset:2px; }
-.av-nav-back { background:#842484; color:#fff !important; }
+.av-nav-back { background:#8b1d40; color:#fff !important; }
 .av-nav-home { background:#78b848; color:#2b2b33 !important; }
 .av-nav-dash { background:#e0a526; color:#2b2108 !important; }
 .av-nav-out  { background:#c62828; color:#fff !important; }
 @media (max-width:767px) { .av-nav-btn { height:38px; padding:0 11px; font-size:12.5px; gap:5px; } }
 @media (max-width:480px) { .av-nav-btn { width:42px; height:42px; padding:0; } .av-nav-btn i { font-size:18px; } .av-nav-btn span { display:none; } }
 </style>
+<?php if (!empty($home_bg)): ?><?= view('pages/home_beach_css', ['home_bg' => $home_bg]) ?><?php endif; ?>
 <header class="hd-top">
     <?= view('layouts/nav_bar', ['nb_back' => 'window.history.back()']) ?><?php /* tf-navbar-r1 */ ?>
     <div class="sp"></div>
@@ -213,6 +214,7 @@ $item = static function (array $it) use ($esc): string {
 </header>
 
 <main class="hd-wrap">
+    <?php if (empty($home_bg)): ?>
     <figure class="hd-frame">
         <div class="hd-art<?= empty($home_painting_tall) ? ' sq' : '' ?>">
             <?php if (!empty($home_painting)): ?>
@@ -220,11 +222,18 @@ $item = static function (array $it) use ($esc): string {
             <?php endif; ?>
         </div>
     </figure>
+    <?php endif; ?>
 
     <div class="hd-main">
     <?= view('partials/world_clock', ['layout' => 'brand', 'logo' => '<div class="hd-brand"><img src="' . base_url('assets/images/Logo-new.png') . '" alt="Avenir Holidays — Connecting Cultures"></div>']) ?><?php /* tf-clock-r3: Tokyo and Colombo either side of the logo */ ?>
+    <?php if (!empty($home_bg)): ?>
+    <div class="hb-sys"><span>Avenir Holidays Staff Handling System</span></div>
+    <h1 class="hb-cap">A new day leads to<br>new journeys</h1>
+    <svg class="hb-swoosh" viewBox="0 0 220 26" aria-hidden="true"><path d="M4 22C60 6 130 2 216 5 140 6 70 12 4 22z" fill="#78b848"/></svg>
+    <?php else: ?>
     <h1 class="hd-title">Avenir Holidays Handling System</h1>
     <p class="hd-sub">Choose your desk to get started</p>
+    <?php endif; ?>
 
         <div class="hd-desks">
             <?php foreach ($home['desks'] as $d): $id = 'hd-' . $d['key']; $has = !empty($d['items']); ?>
@@ -290,7 +299,7 @@ $item = static function (array $it) use ($esc): string {
     <?php if (!empty($home['links'])): ?>
         <nav class="hd-links" aria-label="More"><span class="lk">
             <?php foreach ($home['links'] as $li => $l): ?><?= $li ? '<i aria-hidden="true"></i>' : '' ?>
-                <a href="<?= $esc(base_url($l['url'])) ?>"><i class="bi <?= $esc($l['icon']) ?>"></i><?= $esc($l['label']) ?><i class="bi bi-chevron-right go" aria-hidden="true"></i></a>
+                <a href="<?= $esc(base_url($l['url'])) ?>"><i class="bi <?= $esc($l['icon']) ?>"></i><?= $esc(!empty($home_bg) && $l['label'] === 'Administration dashboard' ? 'Administration' : $l['label']) ?><i class="bi bi-chevron-right go" aria-hidden="true"></i></a>
             <?php endforeach; ?>
         </span></nav>
     <?php endif; ?>

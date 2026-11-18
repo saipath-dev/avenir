@@ -67,6 +67,27 @@ class TourPhotosController extends BaseController
         return $this->menuData;
     }
 
+    /** tf-photomaster-r1: an action right held (the System Administrator holds every one) */
+    private function holds(string $url): bool
+    {
+        $md = $this->menuData();
+        if ((int) ($md['user_role'] ?? 0) === 1) {
+            return true;
+        }
+        foreach ((array) ($md['allowed_menu_list'] ?? []) as $m) {
+            $u = is_array($m) ? ($m['url'] ?? '') : ($m->url ?? '');
+            if (trim((string) $u, '/') === $url) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function refuse(string $what)
+    {
+        return $this->json(['status' => 403, 'message' => 'You may look at Photo Master but not ' . $what . '. Ask the Super Admin to open "' . ($what === 'delete photographs' ? 'Photo Master - delete photographs' : 'Photo Master - upload and edit photographs') . '" for you.']);
+    }
+
     private function json(array $payload, int $code = 200)
     {
         return $this->response->setStatusCode($code)->setJSON($payload);
@@ -183,6 +204,11 @@ class TourPhotosController extends BaseController
                 'tags'   => $lib->tags(true),
                 'photos' => $lib->photos(null, $all),
                 'kinds'  => PhotoLibrary::KINDS,
+                'kind_names' => PhotoLibrary::KIND_NAMES,
+                'positions'  => PhotoLibrary::HOME_POSITIONS,
+                'hotels'     => $this->db()->query("SELECT id, name, address FROM hr2_hotel WHERE (status IS NULL OR status <> 'merged') ORDER BY name")->getResultArray(),
+                'can_edit'   => $this->holds(PhotoLibrary::EDIT_URL),
+                'can_delete' => $this->holds(PhotoLibrary::DELETE_URL),
                 'folder' => $lib->folder(),
                 'folder_ok' => $writable,
                 'resize' => function_exists('imagecreatefromstring'),
@@ -197,6 +223,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/tag {code, name, kind, keywords, active, sort_order} — add a destination or attraction, or change one
     public function tag()
     {
+        if (!$this->holds(PhotoLibrary::EDIT_URL)) {
+            return $this->refuse('upload or edit photographs');
+        }
         try {
             $row = $this->library()->saveTag($this->body());
             return $this->json(['status' => 200, 'message' => 'Saved. Every quotation built from now on reads it; a day already pictured keeps its picture unless the day changes.', 'data' => $row]);
@@ -208,6 +237,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/tag/delete/(:segment) — off the list; switched off instead when a photo carries it
     public function tagDelete($code)
     {
+        if (!$this->holds(PhotoLibrary::DELETE_URL)) {
+            return $this->refuse('delete photographs');
+        }
         try {
             $msg = $this->library()->deleteTag((string) $code);
             return $this->json(['status' => 200, 'message' => $msg]);
@@ -219,6 +251,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/upload — multipart: files[] (one or many), tags (codes, comma separated), caption, credit, preferred
     public function upload()
     {
+        if (!$this->holds(PhotoLibrary::EDIT_URL)) {
+            return $this->refuse('upload or edit photographs');
+        }
         try {
             $lib = $this->library();
             $up  = $this->uploads('files');
@@ -228,7 +263,8 @@ class TourPhotosController extends BaseController
             if ($up['files'] === []) {
                 return $this->json(['status' => 400, 'message' => $up['skipped'] ? implode(' ', $up['skipped']) : $this->nothingArrived()]);
             }
-            $meta = ['tags' => $this->request->getPost('tags'), 'caption' => $this->request->getPost('caption'), 'credit' => $this->request->getPost('credit'), 'preferred' => $this->request->getPost('preferred')];
+            $meta = ['tags' => $this->request->getPost('tags'), 'caption' => $this->request->getPost('caption'), 'credit' => $this->request->getPost('credit'), 'preferred' => $this->request->getPost('preferred'),
+                     'licence' => $this->request->getPost('licence'), 'licence_url' => $this->request->getPost('licence_url'), 'source_url' => $this->request->getPost('source_url')];
             $added = [];
             $errors = $up['skipped'];
             foreach ($up['files'] as $f) {
@@ -249,6 +285,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/photo/(:num)/save {caption, credit, preferred, sort_order, tags}
     public function save($id)
     {
+        if (!$this->holds(PhotoLibrary::EDIT_URL)) {
+            return $this->refuse('upload or edit photographs');
+        }
         try {
             $row = $this->library()->savePhoto((int) $id, $this->body());
             return $this->json(['status' => 200, 'message' => 'Saved.', 'data' => $row]);
@@ -260,6 +299,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/photo/(:num)/replace — multipart: file — a better picture under the same entry
     public function replace($id)
     {
+        if (!$this->holds(PhotoLibrary::EDIT_URL)) {
+            return $this->refuse('upload or edit photographs');
+        }
         try {
             $up = $this->uploads('file');
             if ($up['files'] === []) {
@@ -278,6 +320,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/photo/(:num)/remove — out of the library; kept on disk, off every itinerary it was on
     public function remove($id)
     {
+        if (!$this->holds(PhotoLibrary::DELETE_URL)) {
+            return $this->refuse('delete photographs');
+        }
         try {
             $row = $this->library()->removePhoto((int) $id);
             return $this->json(['status' => 200, 'message' => 'Taken out of the library. Any day it was pictured on chooses another picture; it can be put back from "Show removed".', 'data' => $row]);
@@ -289,6 +334,9 @@ class TourPhotosController extends BaseController
     // POST master_files/tour_photos/photo/(:num)/restore
     public function restore($id)
     {
+        if (!$this->holds(PhotoLibrary::EDIT_URL)) {
+            return $this->refuse('upload or edit photographs');
+        }
         try {
             $row = $this->library()->restorePhoto((int) $id);
             return $this->json(['status' => 200, 'message' => 'Back in the library.', 'data' => $row]);

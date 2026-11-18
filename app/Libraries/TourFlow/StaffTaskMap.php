@@ -143,7 +143,9 @@ final class StaffTaskMap
             'arrivals' => ['Arrival and ground arrangements', 'Coordinate arrivals, tour documents and photos', [
                 'tour/tour_arrival' => 'Arrival notification',
                 'tour/tour_dashboard/documentation/documentation_report' => 'Tour documentation',
-                'master_files/tour_photos' => 'Tour photos',
+                'master_files/tour_photos' => 'Photo Master: look at the photographs',
+                'act:photo.edit'           => 'Photo Master: upload, replace and edit photographs and collections',
+                'act:photo.delete'         => 'Photo Master: delete photographs and collections',
             ]],
             'suppliers' => ['Suppliers', 'The supplier list (bank details are in Accounts)', [
                 'master_files/supplier' => 'Suppliers: add and correct supplier details',

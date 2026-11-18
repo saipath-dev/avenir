@@ -22,7 +22,15 @@ namespace App\Libraries\TourFlow;
  */
 final class PhotoLibrary
 {
-    public const KINDS = ['destination', 'attraction', 'activity', 'general'];
+    public const KINDS = ['destination', 'attraction', 'hotel', 'activity', 'airport', 'homepage', 'general'];
+    /** tf-photomaster-r1: the categories as Photo Master names them */
+    public const KIND_NAMES = ['destination' => 'Destinations & cities', 'attraction' => 'Sightseeing & historical sites', 'hotel' => 'Hotels & resorts', 'activity' => 'Activities & excursions', 'airport' => 'Airports & transfers', 'homepage' => 'Homepage', 'general' => 'General'];
+    /** tf-photomaster-r1: the picture positions of the homepage (the Tour Inquiry front page), each fed by one Homepage collection */
+    public const HOME_POSITIONS = ['hero' => 'Homepage banner', 'card1' => 'Highlight card 1', 'card2' => 'Highlight card 2', 'card3' => 'Highlight card 3', 'card4' => 'Highlight card 4', 'staff_bg' => 'Staff homepage background'];
+    /** tf-photomaster-r1: the action rights — upload and edit, and delete — beside the screen's own privilege (viewing) */
+    public const EDIT_URL   = 'act:photo.edit';
+    public const DELETE_URL = 'act:photo.delete';
+    private static bool $ensured = false;
 
     private $db;
     private string $user;
@@ -48,6 +56,10 @@ final class PhotoLibrary
         if ($this->available === null) {
             try {
                 $this->available = (bool) $this->db->query("SHOW TABLES LIKE 'tf_photo'")->getResultArray();
+                if ($this->available && !self::$ensured) {
+                    self::$ensured = true;
+                    self::ensure($this->db);
+                }
             } catch (\Throwable $e) {
                 $this->available = false;
             }
@@ -84,6 +96,121 @@ final class PhotoLibrary
     // =====================================================================
 
     /** @return array<int, array<string, mixed>> */
+    /**
+     * tf-photomaster-r1: Photo Master on the Tour Photos tables — the new categories, a collection's location, its link to a Hotel
+     * Master record and its homepage position, each photo's licence and source; the two action rights; the menu entry renamed.
+     * Runs once per request; every step is skipped when already done.
+     */
+    public static function ensure($db): void
+    {
+        try {
+            $col = static fn (string $t, string $c): bool => (bool) $db->query("SHOW COLUMNS FROM `{$t}` LIKE '{$c}'")->getResultArray();
+            $kind = $db->query("SHOW COLUMNS FROM tf_photo_tag LIKE 'kind'")->getRowArray();
+            if ($kind && strpos((string) $kind['Type'], "'homepage'") === false) {
+                $db->query("ALTER TABLE tf_photo_tag MODIFY kind ENUM('destination','attraction','hotel','activity','airport','homepage','general') NOT NULL DEFAULT 'destination'");
+            }
+            foreach (['location' => 'VARCHAR(120) NULL AFTER kind', 'hotel_id' => 'INT UNSIGNED NULL AFTER location', 'position' => 'VARCHAR(20) NULL AFTER hotel_id'] as $c => $def) {
+                if (!$col('tf_photo_tag', $c)) {
+                    $db->query("ALTER TABLE tf_photo_tag ADD COLUMN `{$c}` {$def}");
+                }
+            }
+            foreach (['licence' => 'VARCHAR(80) NULL AFTER credit', 'licence_url' => 'VARCHAR(255) NULL AFTER licence', 'source_url' => 'VARCHAR(255) NULL AFTER licence_url'] as $c => $def) {
+                if (!$col('tf_photo', $c)) {
+                    $db->query("ALTER TABLE tf_photo ADD COLUMN `{$c}` {$def}");
+                }
+            }
+            $cr = $db->query("SHOW COLUMNS FROM tf_photo LIKE 'credit'")->getRowArray();
+            if ($cr && stripos((string) $cr['Type'], 'varchar(120)') !== false) {
+                $db->query('ALTER TABLE tf_photo MODIFY credit VARCHAR(190) NULL');
+            }
+            self::ensureRights($db);
+        } catch (\Throwable $e) {
+            log_message('error', 'Photo Master install step: ' . $e->getMessage());
+        }
+    }
+
+    /** The upload/edit and delete rights as menu entries (granted on Group Privileges and the Staff panel), and the screen named Photo Master. */
+    private static function ensureRights($db): void
+    {
+        $screen = $db->query("SELECT id, cat_id, name, show_in_menu_bar FROM menu_list WHERE url = 'master_files/tour_photos' AND del = 0 LIMIT 1")->getRowArray();
+        if (!$screen) {
+            return;
+        }
+        if ((string) $screen['name'] === 'Tour Photos' || (int) $screen['show_in_menu_bar'] === 0) {
+            $db->query("UPDATE menu_list SET name = 'Photo Master', show_in_menu_bar = 1 WHERE id = ?", [(int) $screen['id']]);
+        }
+        foreach ([self::EDIT_URL => ['Action: Photo Master - upload and edit photographs', true], self::DELETE_URL => ['Action: Photo Master - delete photographs', false]] as $url => [$name, $carry]) {
+            if ($db->query('SELECT id FROM menu_list WHERE url = ? AND del = 0 LIMIT 1', [$url])->getRowArray()) {
+                continue;
+            }
+            $order = (int) ($db->query('SELECT COALESCE(MAX(order_id), 0) + 1 AS n FROM menu_list WHERE cat_id = ?', [(int) $screen['cat_id']])->getRowArray()['n'] ?? 1);
+            $db->query('INSERT INTO menu_list (cat_id, name, user, del, url, order_id, show_in_menu_bar) VALUES (?, ?, 1, 0, ?, ?, 0)', [(int) $screen['cat_id'], $name, $url, $order]);
+            $mid = (int) $db->insertID();
+            // the System Administrator holds both; whoever could already change photos (held the screen) keeps upload and edit
+            $db->query('INSERT INTO user_privileges (group_id, user_id, menu_id) VALUES (1, 1, ?)', [$mid]);
+            if ($carry) {
+                foreach ($db->query('SELECT DISTINCT group_id, user_id FROM user_privileges WHERE menu_id = ? AND group_id <> 1', [(int) $screen['id']])->getResultArray() as $g) {
+                    $db->query('INSERT INTO user_privileges (group_id, user_id, menu_id) VALUES (?, ?, ?)', [(int) $g['group_id'], (int) $g['user_id'], $mid]);
+                }
+                try {
+                    $now = date('Y-m-d H:i:s');
+                    foreach ($db->query("SELECT DISTINCT staff_id FROM tf_staff_permission WHERE menu_id = ? AND state = 'open'", [(int) $screen['id']])->getResultArray() as $r) {
+                        $db->query("INSERT IGNORE INTO tf_staff_permission (staff_id, menu_id, state, reason, set_by, set_at) VALUES (?, ?, 'open', 'Carried over: held Tour Photos before upload and edit became a separate permission', 'system', ?)", [(int) $r['staff_id'], $mid, $now]);
+                    }
+                } catch (\Throwable $e) {
+                    // no staff panel on this install
+                }
+            }
+        }
+    }
+
+    /** tf-photomaster-r1: each homepage position's picture — the preferred photo of the Homepage collection set to that position. */
+    public function homepage(): array
+    {
+        if (!$this->available()) {
+            return [];
+        }
+        $out = [];
+        try {
+            foreach ($this->db->query("SELECT code, position FROM tf_photo_tag WHERE kind = 'homepage' AND active = 1 AND position IS NOT NULL AND position <> '' ORDER BY sort_order")->getResultArray() as $t) {
+                if (isset($out[$t['position']])) {
+                    continue;
+                }
+                $ph = $this->photos((string) $t['code']);
+                if ($ph) {
+                    $out[(string) $t['position']] = ['url' => $ph[0]['url'], 'caption' => $ph[0]['caption'], 'credit' => $ph[0]['credit_line'], 'photo_id' => (int) $ph[0]['id'], 'file' => $ph[0]['file'], 'width' => $ph[0]['width'] ?? null, 'height' => $ph[0]['height'] ?? null, 'tag' => (string) $t['code']];
+                }
+            }
+        } catch (\Throwable $e) {
+            return [];
+        }
+        return $out;
+    }
+
+    /** tf-photomaster-r1: the preferred photo of each hotel's collection (Hotels & resorts, linked to the Hotel Master), keyed by hotel id. */
+    public function hotelPhotos(array $hotelIds): array
+    {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $hotelIds))));
+        if (!$ids || !$this->available()) {
+            return [];
+        }
+        $out = [];
+        try {
+            foreach ($this->db->query("SELECT code, hotel_id FROM tf_photo_tag WHERE kind = 'hotel' AND active = 1 AND hotel_id IN (" . implode(',', $ids) . ') ORDER BY sort_order')->getResultArray() as $t) {
+                if (isset($out[(int) $t['hotel_id']])) {
+                    continue;
+                }
+                $ph = $this->photos((string) $t['code']);
+                if ($ph) {
+                    $out[(int) $t['hotel_id']] = $ph[0];
+                }
+            }
+        } catch (\Throwable $e) {
+            return [];
+        }
+        return $out;
+    }
+
     public function tags(bool $all = false): array
     {
         if (!$this->available()) {
@@ -130,6 +257,18 @@ final class PhotoLibrary
         $words = self::cut($t['keywords'] ?? null, 1000);
         $sort  = isset($t['sort_order']) && $t['sort_order'] !== '' ? (int) $t['sort_order'] : null;
         $was   = $this->db->query('SELECT * FROM tf_photo_tag WHERE code = ?', [$code])->getRowArray();
+        // tf-photomaster-r1: where it is, the Hotel Master record it pictures, the homepage position it feeds
+        $loc   = array_key_exists('location', $t) ? self::cut($t['location'], 120) : ($was['location'] ?? null);
+        $hotel = array_key_exists('hotel_id', $t) ? ((int) $t['hotel_id'] ?: null) : (isset($was['hotel_id']) ? (int) $was['hotel_id'] : null);
+        if ($kind === 'hotel') {
+            if (!$hotel || !$this->db->query('SELECT id FROM hr2_hotel WHERE id = ?', [$hotel])->getRowArray()) {
+                throw new \InvalidArgumentException('Choose the hotel from the Hotel Master.');
+            }
+        } else {
+            $hotel = null;
+        }
+        $pos = array_key_exists('position', $t) ? (string) $t['position'] : (string) ($was['position'] ?? '');
+        $pos = $kind === 'homepage' && isset(self::HOME_POSITIONS[$pos]) ? $pos : null;
         $active = array_key_exists('active', $t) ? (int) !empty($t['active']) : (int) ($was['active'] ?? 1);
         if ($was) {
             $this->db->query('UPDATE tf_photo_tag SET name = ?, kind = ?, keywords = ?, active = ?, sort_order = ?, updated_at = ?, updated_by = ? WHERE code = ?', [$name, $kind, $words, $active, $sort ?? (int) $was['sort_order'], $this->now(), $this->user, $code]);
@@ -137,6 +276,7 @@ final class PhotoLibrary
             $next = (int) ($this->db->query('SELECT COALESCE(MAX(sort_order), 0) + 10 AS n FROM tf_photo_tag')->getRowArray()['n'] ?? 10);
             $this->db->query('INSERT INTO tf_photo_tag (code, name, kind, keywords, active, sort_order, updated_at, updated_by) VALUES (?,?,?,?,?,?,?,?)', [$code, $name, $kind, $words, $active, $sort ?? $next, $this->now(), $this->user]);
         }
+        $this->db->query('UPDATE tf_photo_tag SET location = ?, hotel_id = ?, position = ? WHERE code = ?', [$loc, $hotel, $pos, $code]);
         Activity::master($this->db, $this->user, 'tour_photo_tag', 0, 'Tour photo tag ' . $code . ($was ? ' changed' : ' added'), [
             ['what' => $code . ' name', 'from' => $was['name'] ?? null, 'to' => $name],
             ['what' => $code . ' words', 'from' => $was['keywords'] ?? null, 'to' => $words],
@@ -246,6 +386,10 @@ final class PhotoLibrary
             $r['thumb_url'] = $this->url($r['thumb'] ?: $r['file']);
             $r['on_days']   = $used[$r['id']] ?? 0;
             $r['exists']    = is_file($this->path($r['file']));
+            // tf-photomaster-r1: the credit as documents print it — the photographer, then the licence
+            $lic = trim((string) ($r['licence'] ?? ''));
+            $cr  = trim((string) ($r['credit'] ?? ''));
+            $r['credit_line'] = $cr !== '' && $lic !== '' && stripos($cr, $lic) === false ? $cr . ' · ' . $lic : ($cr !== '' ? $cr : null);   // no creditor (an own or AI-generated illustration): nothing to print
         }
         unset($r);
         return $rows;
@@ -273,8 +417,12 @@ final class PhotoLibrary
             [$names['file'], $names['thumb'], self::cut($file['name'] ?? null, 190), 'image/jpeg', $names['width'], $names['height'], $names['bytes'], self::cut($meta['caption'] ?? null, 190), self::cut($meta['credit'] ?? null, 120), (int) !empty($meta['preferred']), (int) ($meta['sort_order'] ?? 0), $this->now(), $this->user]
         );
         $photoId = (int) $this->db->insertID();
+        $this->db->query('UPDATE tf_photo SET credit = ?, licence = ?, licence_url = ?, source_url = ? WHERE id = ?', [self::cut($meta['credit'] ?? null, 190), self::cut($meta['licence'] ?? null, 80), self::cut($meta['licence_url'] ?? null, 255), self::cut($meta['source_url'] ?? null, 255), $photoId]);
         foreach ($tags as $t) {
             $this->db->query('INSERT IGNORE INTO tf_photo_tag_map (photo_id, tag_code) VALUES (?, ?)', [$photoId, $t]);
+        }
+        if (!empty($meta['preferred'])) {
+            $this->repickFor($photoId);
         }
         Activity::master($this->db, $this->user, 'tour_photo', $photoId, 'Tour photo ' . $photoId . ' added: ' . implode(', ', $tags), [['what' => 'photo ' . $photoId, 'from' => null, 'to' => ($file['name'] ?? $names['file']) . ' · ' . implode(', ', $tags)]]);
         return $this->photo($photoId);
@@ -316,7 +464,7 @@ final class PhotoLibrary
         $sets = [];
         $bind = [];
         $changes = [];
-        foreach (['caption' => 190, 'credit' => 120] as $k => $len) {
+        foreach (['caption' => 190, 'credit' => 190, 'licence' => 80, 'licence_url' => 255, 'source_url' => 255] as $k => $len) {
             if (array_key_exists($k, $meta)) {
                 $sets[] = "`{$k}` = ?";
                 $bind[] = self::cut($meta[$k], $len);
@@ -347,8 +495,22 @@ final class PhotoLibrary
             }
             $changes[] = ['what' => 'photo ' . $id . ' tags', 'from' => implode(', ', $p['tag_codes']), 'to' => implode(', ', $tags)];
         }
+        // tf-photomaster-r1: a photograph made preferred takes over the days that were picked automatically for its places
+        if (!empty($meta['preferred'])) {
+            $this->repickFor($id);
+        }
         Activity::master($this->db, $this->user, 'tour_photo', $id, 'Tour photo ' . $id . ' changed', $changes);
         return $this->photo($id);
+    }
+
+    /** tf-photomaster-r1: the automatic day picks of this photograph's collections are let go, so the next read picks again — preferred first. A person's choice stays. */
+    private function repickFor(int $photoId): void
+    {
+        try {
+            $this->db->query("DELETE dp FROM tf_intake_day_photo dp JOIN tf_photo_tag_map m ON m.tag_code = dp.tag_code AND m.photo_id = ? WHERE dp.chosen_by = 'auto'", [$photoId]);
+        } catch (\Throwable $e) {
+            // the picks stay as they were
+        }
     }
 
     /** Out of the library: kept on disk and in the table, marked removed, off every open inquiry it was on (those days are picked again). */
@@ -574,6 +736,9 @@ final class PhotoLibrary
         if ($this->tagCache === null) {
             $this->tagCache = [];
             foreach ($this->tags() as $t) {
+                if (in_array((string) $t['kind'], ['homepage', 'hotel'], true)) {
+                    continue;   // tf-photomaster-r1: homepage pictures and hotel pictures are never matched from itinerary words
+                }
                 $this->tagCache[$t['code']] = ['name' => $t['name'], 'kind' => $t['kind'], 'words' => $t['keyword_list']];
             }
         }
@@ -667,9 +832,18 @@ final class PhotoLibrary
         $days   = [];
         $tagsBy = [];
         $bumped = [];
+        // tf-pictures-r3: what every day reads as, first — so the arrival day can show the airport when its place has a later day of its own
+        $foundBy = [];
         foreach ($it['days'] ?? [] as $d) {
             $dayNo = (int) $d['day_no'];
-            $found = $this->tagsFor(self::dayText($d), (string) ($d['area'] ?? ''));
+            // tf-pictures-r1: the day's written itinerary counts too, when the day has no narrative of its own
+            $said = trim((string) ($it['itinerary']['days'][$dayNo]['text'] ?? ($it['itinerary']['days'][(string) $dayNo]['text'] ?? '')));
+            $foundBy[$dayNo] = $this->tagsFor(self::dayText($d) . ($said !== '' && trim((string) ($d['narrative'] ?? '')) === '' ? ' . ' . $said : ''), (string) ($d['area'] ?? ''));
+        }
+        $firstDay = $foundBy ? min(array_keys($foundBy)) : 0;
+        foreach ($it['days'] ?? [] as $d) {
+            $dayNo = (int) $d['day_no'];
+            $found = $foundBy[$dayNo] ?? [];
             $tagsBy[$dayNo] = $found;
             $best = $found[0]['code'] ?? null;
             $row  = $kept[$dayNo] ?? null;
@@ -692,7 +866,16 @@ final class PhotoLibrary
                     }
                     // the best place first; when the library has no picture of it yet, the next place the day names
                     $chosen = null;
-                    foreach ($found as $cand) {
+                    $order = $found;
+                    if ($dayNo === $firstDay && $best !== 'ARRIVAL') {
+                        $later = false;
+                        foreach ($foundBy as $dn2 => $f2) { if ($dn2 > $dayNo && ($f2[0]['code'] ?? null) === $best) { $later = true; break; } }
+                        $air = array_values(array_filter($found, static fn ($c) => $c['code'] === 'ARRIVAL'));
+                        if ($later && $air) {
+                            $order = array_merge($air, array_values(array_filter($found, static fn ($c) => $c['code'] !== 'ARRIVAL')));
+                        }
+                    }
+                    foreach ($order as $cand) {
                         $chosen = $this->pickFor($cand['code'], $taken, $active);
                         if ($chosen) {
                             break;
@@ -729,7 +912,7 @@ final class PhotoLibrary
                     }
                 }
                 $days[$dayNo] = [
-                    'photo_id' => $chosen['id'], 'url' => $chosen['url'], 'thumb_url' => $chosen['thumb_url'], 'caption' => $chosen['caption'], 'credit' => $chosen['credit'],
+                    'photo_id' => $chosen['id'], 'url' => $chosen['url'], 'thumb_url' => $chosen['thumb_url'], 'caption' => $chosen['caption'], 'credit' => $chosen['credit_line'] ?? $chosen['credit'],
                     'width' => $chosen['width'], 'height' => $chosen['height'], 'file' => $chosen['file'],
                     'tag' => $shown, 'tag_name' => $this->tagWords()[$shown]['name'] ?? null, 'read_as' => $best,
                     'chosen_by' => $row['chosen_by'] ?? 'auto', 'by' => $row['by'] ?? null,

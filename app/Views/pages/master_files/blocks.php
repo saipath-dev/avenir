@@ -20,7 +20,7 @@
     .tf .pill { display:inline-block; font-size:10.5px; font-weight:600; border-radius:20px; padding:2px 8px; line-height:1.6; white-space:nowrap; }
     .tf .pill-green { background:var(--tf-green-soft); color:var(--tf-green); } .tf .pill-grey { background:#eef1f5; color:var(--tf-muted); }
     .tf .pill-amber { background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); } .tf .pill-red { background:var(--tf-red-soft); color:var(--tf-red); }
-    .tf .pill-purple { background:#f3e6f3; color:#842484; }
+    .tf .pill-purple { background:#f3e6ea; color:#8b1d40; }
     .tf .empty { color:var(--tf-muted); font-size:12.5px; padding:10px 0; }
     .tf .sec { font-weight:600; font-size:12px; color:var(--tf-navy); text-transform:uppercase; letter-spacing:.04em; margin:14px 0 6px; }
     .tf .sec:first-child { margin-top:0; }
@@ -28,7 +28,7 @@
     .tf .redbox { background:var(--tf-red-soft); border-radius:8px; padding:8px 12px; font-size:12.5px; color:var(--tf-red); }
     .tf .pick { border:1px solid var(--tf-line); border-radius:8px; max-height:220px; overflow:auto; }
     .tf .pick div { padding:7px 10px; border-bottom:1px solid var(--tf-line); cursor:pointer; font-size:12.5px; }
-    .tf .pick div:hover, .tf .pick div.on { background:#f3e6f3; }
+    .tf .pick div:hover, .tf .pick div.on { background:#f3e6ea; }
     .tf .mono { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; }
 </style>
 <?= view('layouts/tf_master_skin') ?>

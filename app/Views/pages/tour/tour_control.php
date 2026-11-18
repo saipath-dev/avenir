@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
-    /* ---------- Confirmed Tour (tf-control-r2) — Overview and Passengers & Rooming; reads only; Avenir purple #842484, green #78b848 ---------- */
-    .oc { --p:#842484; --g:#78b848; --ink:#1A1A1A; --line:#d9d3dd; --soft:#f6eef6; color:var(--ink); font-size:13px; }
+    /* ---------- Confirmed Tour (tf-control-r2) — Overview and Passengers & Rooming; reads only; Avenir purple #8b1d40, green #78b848 ---------- */
+    .oc { --p:#8b1d40; --g:#78b848; --ink:#1A1A1A; --line:#d9d3dd; --soft:#f6eef1; color:var(--ink); font-size:13px; }
     .oc .oc-back { display:inline-block; margin-bottom:4px; color:var(--p); font-weight:600; text-decoration:none; font-size:12px; }
     .oc .oc-top { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:8px; }
     .oc h2 { font-size:21px; font-weight:800; margin:0; color:var(--p); letter-spacing:-.2px; }
@@ -226,7 +226,7 @@
                     <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary • ${ver}</span>${btn(prog, 'Preview', 'bi-eye')}${btn(prog, 'Print', 'bi-printer')}${btn(null, 'PDF', 'bi-file-earmark-pdf')}</div></div>
                 <div class="oc-box"><div class="h">Booking documents</div>
                     <div class="oc-docs">${btn(toHotel, 'Hotel request &amp; voucher', 'bi-building')}${btn(toHotel, 'Meal / safari vouchers', 'bi-cup-hot')}${btn(toHotel, 'Entrance tickets', 'bi-ticket-perforated')}</div>
-                    <div class="oc-row"><i class="bi bi-car-front lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#842484;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
+                    <div class="oc-row"><i class="bi bi-car-front lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#8b1d40;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
             </div>
             <div class="oc-foot"><span>Hotel bookings, vouchers and entrances managed on Hotel Bookings • Transport tasks linked to Transport panel • One shared status, no duplicate entry</span>
                 <span><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
@@ -319,7 +319,7 @@
         const beds = rooms.reduce((n, r) => n + Number(r.beds || 0), 0);
         const mix = {}; rooms.forEach(r => { mix[r.code] = (mix[r.code] || 0) + 1; });
         const req = rooms.length ? Object.keys(mix).map(k => `${mix[k]} ${WORDS[k] || k} room${mix[k] === 1 ? '' : 's'}`).join(' + ') + ` • ${expected || beds} guest${(expected || beds) === 1 ? '' : 's'}` : 'No room mix recorded';
-        const g = n => n ? `<span data-prpax="${esc(n)}" style="cursor:pointer"><i class="bi bi-person" style="color:#842484;margin-right:8px"></i>${esc(n)}</span>` : '<span>—</span>';
+        const g = n => n ? `<span data-prpax="${esc(n)}" style="cursor:pointer"><i class="bi bi-person" style="color:#8b1d40;margin-right:8px"></i>${esc(n)}</span>` : '<span>—</span>';
         const rows = rooms.map((r, i) => { const free = Number(r.beds || 0) - r.guests.length;
             return `<tr><td><b>R${String(i + 1).padStart(2, '0')}</b></td><td>${WORDS[r.code] || esc(r.code)}</td><td>${g(r.guests[0])}</td><td>${g(r.guests[1])}${r.guests.length > 2 ? '<br>' + r.guests.slice(2).map(g).join('<br>') : ''}</td>
                 <td>${free <= 0 ? '<span class="ok-pill"><i class="bi bi-check-lg"></i> Assigned</span>' : `<span class="warn-pill">${free} bed${free === 1 ? '' : 's'} free</span>`}</td></tr>`; }).join('');
@@ -331,17 +331,17 @@
         return `
             <div class="pr-head"><h3><i class="bi bi-people"></i> Passengers &amp; Rooming</h3>
                 ${L.btn(null, 'Import passenger list', 'bi-upload')}${L.btn(L.toInq + '&tab=pax', 'Add passenger', 'bi-plus-lg')}${L.btn(L.toHotel, 'Export rooming list', 'bi-download', 'line')}</div>
-            <div class="pr-stats"><span><i class="bi bi-people" style="color:#842484;margin-right:14px"></i><b>${expected || '—'}</b> expected</span><span><b>${names.length}</b> names entered</span>
+            <div class="pr-stats"><span><i class="bi bi-people" style="color:#8b1d40;margin-right:14px"></i><b>${expected || '—'}</b> expected</span><span><b>${names.length}</b> names entered</span>
                 <span class="${missing ? 'miss' : ''}"><b>${missing}</b> names missing</span><span><b>${assigned}</b> assigned • <b>${un.length + missing}</b> unassigned</span></div>
-            <div class="pr-stay"><span><i class="bi bi-building" style="color:#842484;margin-right:8px"></i>Hotel stay</span>
+            <div class="pr-stay"><span><i class="bi bi-building" style="color:#8b1d40;margin-right:8px"></i>Hotel stay</span>
                 <select id="pr_stay">${stays.length ? stays.map((s, i) => `<option value="${i}"${s === st ? ' selected' : ''}>${esc(s.hotel || 'Hotel')} • ${dm(s.check_in)} – ${dm(s.check_out)}</option>`).join('') : '<option>No hotel stay on this tour</option>'}</select>
-                <span style="border-left:1px solid #d9d3dd;padding-left:16px"><i class="bi bi-door-closed" style="color:#842484;margin-right:8px"></i>Rooming requirement</span><span class="req">${esc(req)}</span></div>
+                <span style="border-left:1px solid #d9d3dd;padding-left:16px"><i class="bi bi-door-closed" style="color:#8b1d40;margin-right:8px"></i>Rooming requirement</span><span class="req">${esc(req)}</span></div>
             <div class="pr-grid">
                 <div class="oc-box"><table class="ow"><thead><tr><th>Room group <i class="bi bi-info-circle" title="Room groups are this list's own references; the hotel gives the room numbers"></i></th><th>Type</th><th>Guest 1</th><th>Guest 2</th><th>Status</th></tr></thead>
                     <tbody>${rows || '<tr><td colspan="5">No rooms to show for this stay.</td></tr>'}</tbody></table></div>
                 <div class="oc-box pr-un"><div class="h2"><i class="bi bi-people"></i> Unassigned passengers (${un.length + missing})</div>${unRows || '<div class="oc-row">Everybody has a room.</div>'}</div>
             </div>
-            <div class="pr-note"><span>Showing ${rooms.length} of ${rooms.length} room groups</span><span><i class="bi bi-info-circle"></i> <i style="color:#842484">Room groups are internal references; hotel room numbers pending</i></span></div>
+            <div class="pr-note"><span>Showing ${rooms.length} of ${rooms.length} room groups</span><span><i class="bi bi-info-circle"></i> <i style="color:#8b1d40">Room groups are internal references; hotel room numbers pending</i></span></div>
             <div class="pr-det"><div class="ttl"><i class="bi bi-person"></i> Passenger detail</div>
                 <div class="f" style="flex:2 1 220px"><label>Name as passport</label><input disabled value="${esc(pick ? pick.full_name : 'No passenger entered')}"></div>
                 <div class="f"><label>Adult / Child</label>${nr}</div><div class="f"><label>Nationality</label>${nr}</div><div class="f"><label>Dietary needs</label>${nr}</div>
@@ -354,7 +354,7 @@
                     <div style="padding:8px 14px 12px 14px"><div style="margin-bottom:8px">${ready ? 'Every name is entered and everybody has a room.' : 'Resolve missing names and unassigned guests before final rooming list.'}</div>
                     ${L.btn(L.toHotel, 'Preview hotel rooming list', 'bi-building', 'lg')}</div></div>
             </div>
-            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#842484;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
+            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
     }
 
     async function load() {

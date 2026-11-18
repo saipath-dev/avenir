@@ -22,8 +22,8 @@ $dt  = static function (?string $ymd, string $f = 'D j M Y'): string { $t = $ymd
 $town = static fn (string $p): string => \App\Libraries\TourFlow\RouteMap::locate($p)['town'] ?? (($parts = array_values(array_filter(array_map('trim', explode(',', $p))))) ? end($parts) : $p);
 $FONT = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';   // the PDF library's core fonts have no arrows or bullets; DejaVu has
 $MONO = $pdf ? 'dejavusansmono' : 'Courier, monospace';
-// tf-route-map-r1c: the system's own colours, as the map picture (brand purple #842484 and its tint #f3e7f3, ink #2c3e50, muted #6c757d)
-$INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#ced4da'; $SOFT = '#e9ecef'; $NAVY = '#842484'; $GRN = '#1f8a4c'; $AMB = '#1a1a1a'; $RED = '#b23a32'; $BAND = '#f3e7f3';
+// tf-route-map-r1c: the system's own colours, as the map picture (brand purple #8b1d40 and its tint #f3e7eb, ink #2c3e50, muted #6c757d)
+$INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#ced4da'; $SOFT = '#e9ecef'; $NAVY = '#8b1d40'; $GRN = '#1f8a4c'; $AMB = '#1a1a1a'; $RED = '#b23a32'; $BAND = '#f3e7eb';
 $th  = 'style="text-align:left; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; color:' . $MUTED . '; padding:5px 6px; border-bottom:1px solid ' . $LINE . ';"';
 $thr = 'style="text-align:right; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; color:' . $MUTED . '; padding:5px 6px; border-bottom:1px solid ' . $LINE . ';"';
 $td  = 'style="font-size:11px; padding:5px 6px; border-bottom:1px solid ' . $SOFT . '; vertical-align:top; color:' . $INK . ';"';
@@ -44,7 +44,7 @@ $vehicle = $r['vehicle'] !== '' ? $r['vehicle'] : '—';
     body { font-family: Arial, Helvetica, sans-serif; color: #2c3e50; margin: 16px; max-width: 960px; }
     .toolbar { margin-bottom: 12px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
     .toolbar a, .toolbar button { font: inherit; font-size:13px; padding: 7px 12px; border:1px solid #ced4da; border-radius:8px; background:#fff; color:#2c3e50; text-decoration:none; cursor:pointer; }
-    .toolbar a.main { background:#842484; border-color:#842484; color:#fff; font-weight:bold; }
+    .toolbar a.main { background:#8b1d40; border-color:#8b1d40; color:#fff; font-weight:bold; }
     .map img { width:100%; height:auto; display:block; border:1px solid #ced4da; border-radius:8px; }
     table { border-collapse:collapse; }
     @media print { .toolbar { display: none; } body { margin: 8mm; } }
@@ -119,7 +119,7 @@ $vehicle = $r['vehicle'] !== '' ? $r['vehicle'] : '—';
     <?php if (!$r['days']): ?><tr><td colspan="5" <?= $td ?>><span <?= $small ?>>No legs on this card yet.</span></td></tr><?php endif; ?>
 </table>
 
-<table cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px; background:#f3e7f3; border:1px solid #e2c6e2;">
+<table cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px; background:#f3e7eb; border:1px solid #e2c6cf;">
     <tr>
         <td width="60%" style="padding:8px 10px; vertical-align:top;">
             <div style="font-size:13px; font-weight:bold; color:<?= $NAVY ?>;">Total planned mileage</div>

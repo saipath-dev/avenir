@@ -34,12 +34,12 @@ $fmt  = static function (?string $ymd): string {
 };
 $money = static fn ($n): string => number_format((float) $n, 2);
 $fs    = static fn (float $px): string => $pdf ? round($px * 0.75, 1) . 'pt' : $px . 'px';   // sizes: px on screen and in mail, pt in the PDF
-$P = '#842484';   // Avenir purple
+$P = '#8b1d40';   // Avenir purple
 $M = '#e90c8b';   // Avenir magenta
 $INK = '#1f2430';
 $MUTED = '#6b6475';
-$LINE = '#e7dfe9';
-$SOFT = '#f8f1f7';
+$LINE = '#e9dfe2';
+$SOFT = '#f8f1f3';
 $cancelled = (string) ($v['state'] ?? '') === 'cancelled';
 $rest  = trim((string) $v['restaurant']);
 $a     = (int) ($v['adults'] ?? 0);
@@ -132,11 +132,11 @@ ob_start();
         <td width="3%">&nbsp;</td>
         <td width="35%" valign="top" bgcolor="<?= $P ?>" style="background:<?= $P ?>;color:#ffffff;padding:16px 16px">
           <table width="100%" cellpadding="<?= $pdf ? '6' : '0' ?>" cellspacing="0" border="0">
-            <tr><td style="color:#f3d7ee;font-size:<?= $fs(10.5) ?>;font-weight:bold;letter-spacing:1px">AMOUNT</td></tr>
+            <tr><td style="color:#f3d7e0;font-size:<?= $fs(10.5) ?>;font-weight:bold;letter-spacing:1px">AMOUNT</td></tr>
             <tr><td style="color:#ffffff;font-size:<?= $fs(24) ?>;font-weight:bold;padding:4px 0 2px 0">LKR <?= $e($money($v['amount_lkr'])) ?></td></tr>
-            <tr><td style="color:#f3d7ee;font-size:<?= $fs(11.5) ?>;line-height:1.6;padding-bottom:10px"><?= $sum ?></td></tr>
-            <tr><td style="color:#ffffff;font-size:<?= $fs(12) ?>;font-weight:bold;border-top:1px solid #a54fa5;padding-top:10px">Payment by <?= $e(($co['name'] ?? '') ?: 'Avenir Holidays') ?></td></tr>
-            <tr><td style="color:#f3d7ee;font-size:<?= $fs(11) ?>;line-height:1.5;padding-top:4px">Please bill our office quoting the voucher number. The guests are not to be charged for the meal.</td></tr>
+            <tr><td style="color:#f3d7e0;font-size:<?= $fs(11.5) ?>;line-height:1.6;padding-bottom:10px"><?= $sum ?></td></tr>
+            <tr><td style="color:#ffffff;font-size:<?= $fs(12) ?>;font-weight:bold;border-top:1px solid #ab4968;padding-top:10px">Payment by <?= $e(($co['name'] ?? '') ?: 'Avenir Holidays') ?></td></tr>
+            <tr><td style="color:#f3d7e0;font-size:<?= $fs(11) ?>;line-height:1.5;padding-top:4px">Please bill our office quoting the voucher number. The guests are not to be charged for the meal.</td></tr>
           </table>
         </td>
       </tr>
@@ -184,7 +184,7 @@ endif;
     .bar { display:flex; justify-content:space-between; gap:12px; align-items:center; margin:16px auto 8px; max-width:820px; padding:0 4px; }
     .bar .help { color:<?= $MUTED ?>; font-size:12px; }
     .bar button { font:inherit; padding:7px 16px; border-radius:999px; border:1px solid <?= $P ?>; color:<?= $P ?>; background:#fff; cursor:pointer; font-weight:600; }
-    .sheet { position:relative; background:#fff; max-width:820px; margin:0 auto 24px; padding:36px 42px 30px; border-radius:14px; box-shadow:0 2px 6px rgba(60,20,70,.06), 0 12px 32px rgba(60,20,70,.08); overflow:hidden; }
+    .sheet { position:relative; background:#fff; max-width:820px; margin:0 auto 24px; padding:36px 42px 30px; border-radius:14px; box-shadow:0 2px 6px rgba(74,16,34,.06), 0 12px 32px rgba(74,16,34,.08); overflow:hidden; }
     .sheet:before { content:""; position:absolute; left:0; top:0; right:0; height:6px; background:linear-gradient(90deg, <?= $P ?>, <?= $M ?>); }
     .stamp { position:absolute; top:42%; left:50%; transform:translate(-50%,-50%) rotate(-20deg); font-size:68px; font-weight:800; letter-spacing:.18em; color:#b23a32; opacity:.16; border:6px solid #b23a32; padding:6px 24px; border-radius:14px; pointer-events:none; }
     .meta { margin-top:14px; color:<?= $MUTED ?>; font-size:11px; text-align:right; }

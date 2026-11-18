@@ -8,7 +8,7 @@
  */
 ?>
 <style>
-    .ta { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#842484; --p-soft:rgba(132,36,132,.08);
+    .ta { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#8b1d40; --p-soft:rgba(139,29,64,.08);
           --g:#78b848; --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber-soft:#ffffff; --amber:#1a1a1a; --red:#8a1c30; color:var(--ink); font-size:14px; }
     .ta .band { background:var(--p); color:#fff; border-radius:14px; padding:18px 22px; margin-bottom:18px; }
     .ta .band .eyebrow { font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.85; font-weight:700; }

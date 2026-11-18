@@ -21,7 +21,7 @@ class HotelDocPdf extends \TCPDF
     public ?string $logo = null;
     public string $footerLine = '';
 
-    public const P = [132, 36, 132];   // #842484
+    public const P = [132, 36, 132];   // #8b1d40
     public const G = [120, 184, 72];   // #78b848
 
     public function Header()

@@ -19,8 +19,8 @@ if (!defined('AV_NAV_BAR_CSS')):
 <style id="av-nav-bar-css">
 /* the bar */
 html body #page-topbar, html body .app-topbar, html body .hd-top {
-  --vz-header-bg:#842484; --vz-header-border:#842484; --vz-header-item-color:#fff; --vz-header-item-sub-color:rgba(255,255,255,.80); --vz-header-item-bg:rgba(255,255,255,.12);
-  background:#842484 !important; border-bottom:1px solid #842484 !important; box-shadow:0 2px 14px rgba(132,36,132,.25) !important;
+  --vz-header-bg:#8b1d40; --vz-header-border:#8b1d40; --vz-header-item-color:#fff; --vz-header-item-sub-color:rgba(255,255,255,.80); --vz-header-item-bg:rgba(255,255,255,.12);
+  background:#8b1d40 !important; border-bottom:1px solid #8b1d40 !important; box-shadow:0 2px 14px rgba(139,29,64,.25) !important;
   -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
 html body #page-topbar .btn-topbar, html body #page-topbar .btn-topbar i, html body #page-topbar .user-name-text { color:#fff !important; }
 html body #page-topbar .user-name-sub-text { color:rgba(255,255,255,.80) !important; }

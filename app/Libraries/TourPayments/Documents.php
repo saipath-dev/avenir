@@ -142,7 +142,7 @@ final class Documents
             . '</table>';
         if ($multi) {
             $fig = $d['figures'] ?? null;
-            $body .= '<table cellpadding="4" style="border-collapse:collapse;font-size:12.5px;margin-top:8px;border:1px solid #ddd;"><tr style="background:#f3e7f3;"><th align="left">Tour</th><th align="left">Guest</th><th align="left">Service</th><th align="left">Invoice</th><th align="right">Amount</th><th align="right">LKR paid</th></tr>';
+            $body .= '<table cellpadding="4" style="border-collapse:collapse;font-size:12.5px;margin-top:8px;border:1px solid #ddd;"><tr style="background:#f3e7eb;"><th align="left">Tour</th><th align="left">Guest</th><th align="left">Service</th><th align="left">Invoice</th><th align="right">Amount</th><th align="right">LKR paid</th></tr>';
             foreach ($items as $k => $it) {
                 $lkr = $fig['lines'][$k]['actual_lkr'] ?? $it['approval_lkr'];
                 $body .= '<tr><td>' . esc($it['manual_id']) . '</td><td>' . esc($it['guest']) . '</td><td>' . esc($it['kind']) . ($it['service_dates'] ? ' · ' . esc($this->dateSpan($it['service_dates'])) : '') . '</td><td>' . esc($it['invoice_no'] ?: '—') . '</td><td align="right">' . ($it['currency'] === 'USD' ? 'USD ' . number_format((float) $it['usd_amount'], 2) : 'LKR ' . number_format((float) $it['lkr_amount'], 2)) . '</td><td align="right">' . number_format((float) $lkr, 2) . '</td></tr>';

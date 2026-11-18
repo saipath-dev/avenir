@@ -10,14 +10,14 @@
 $P = $tpd_perms ?? [];
 ?>
 <style>
-    .pdk { --p:#842484; --p2:#8f2a8d; --soft:#f3e7f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; --bg:#f6f7fa; --card:#fff; --radius:14px;
+    .pdk { --p:#8b1d40; --p2:#972247; --soft:#f3e7eb; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; --bg:#f6f7fa; --card:#fff; --radius:14px;
            --green:#1f8a4c; --green-soft:#e4f4ea; --blue:#2563eb; --blue-soft:#e8effd; --violet:#7c3aed; --violet-soft:#f1eafe; --teal:#0f766e; --teal-soft:#dff4f1;
            --amber:#1a1a1a; --amber-soft:#ffffff; --red:#b23a32; --red-soft:#fbe9e7; --grey:#6c757d; --grey-soft:#eef0f3; color:var(--ink); font-size:13.5px; }
     .pdk .card { border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 1px 3px rgba(16,24,40,.05); }
     .pdk .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .pdk .btn-p:hover { background:var(--p2); border-color:var(--p2); color:#fff; }
     .pdk .btn-outline-p { border:1px solid var(--p); color:var(--p); background:#fff; } .pdk .btn-outline-p:hover { background:var(--soft); color:var(--p); }
     .pdk .muted { color:var(--muted); } .pdk .num { font-variant-numeric: tabular-nums; } .pdk .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .pdk .pd-head { background:linear-gradient(135deg, var(--p) 0%, #5b1a5b 100%); color:#fff; border-radius:var(--radius); padding:16px 18px; }
+    .pdk .pd-head { background:linear-gradient(135deg, var(--p) 0%, #60152d 100%); color:#fff; border-radius:var(--radius); padding:16px 18px; }
     .pdk .pd-head h4 { color:#fff; margin:0; font-weight:700; letter-spacing:.2px; }
     .pdk .pd-head .sub { color:rgba(255,255,255,.85); font-size:12.5px; }
     .pdk .pd-head .chip { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22); border-radius:999px; padding:3px 10px; font-size:12px; margin:6px 4px 0 0; }

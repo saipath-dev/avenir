@@ -1542,7 +1542,7 @@
         const r = j.data.review;
         el.innerHTML = r
             ? `<div class="help" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill pill-blue">In Pending Allocations</span> sent on ${esc2(r.reviewed_at)} by ${esc2(r.reviewed_by)} · <a href="${ROT}">open Pending Allocations</a>${CAN_ROT ? ' · <a href="#" data-rot-back="1">take back</a>' : ''}</div>`
-            : (CAN_ROT ? `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-sm" style="background:#842484;color:#fff" data-rot-send="1"><i class="bi bi-person-check"></i> Driver Allocation</button><span class="help">After checking the itinerary below: sends this card to Pending Allocations, where the rotation proposes the driver.</span></div>`
+            : (CAN_ROT ? `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn btn-sm" style="background:#8b1d40;color:#fff" data-rot-send="1"><i class="bi bi-person-check"></i> Driver Allocation</button><span class="help">After checking the itinerary below: sends this card to Pending Allocations, where the rotation proposes the driver.</span></div>`
                        : '<div class="help">Awaiting transport review.</div>');
         const go = async on => {
             const k = await fetch(ROT + '/review/' + el.dataset.job, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify({ on }) }).then(x => x.json());

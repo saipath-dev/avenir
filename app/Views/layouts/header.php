@@ -41,7 +41,7 @@
 .av-nav-btn:hover { filter:brightness(1.08); box-shadow:0 5px 14px rgba(0,0,0,.22); text-decoration:none; }
 .av-nav-btn:active { transform:translateY(1px) scale(.98); }
 .av-nav-btn:focus-visible { outline:3px solid rgba(224,165,38,.55); outline-offset:2px; }
-.av-nav-back { background:#842484; color:#fff !important; }
+.av-nav-back { background:#8b1d40; color:#fff !important; }
 .av-nav-home { background:#78b848; color:#2b2b33 !important; }
 .av-nav-dash { background:#e0a526; color:#2b2108 !important; }
 .av-nav-out  { background:#c62828; color:#fff !important; }

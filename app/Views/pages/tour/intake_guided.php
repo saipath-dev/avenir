@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Guided Inquiry (tf-guided-r2) — the approved palette ---------- */
-    .gi { --gi-plum:#842484; --gi-plum-d:#6b1d6b; --gi-plum-soft:#f7edf7; --gi-green:#78b848; --gi-green-d:#67a23c;
+    .gi { --gi-plum:#8b1d40; --gi-plum-d:#711734; --gi-plum-soft:#f7edf0; --gi-green:#78b848; --gi-green-d:#67a23c;
           --gi-ink:#241f28; --gi-muted:#6b6472; --gi-line:#e4dfe8; --gi-bg:#faf8fb; --gi-card:#fff;
           --gi-amber-soft:#ffffff; --gi-amber:#1a1a1a; --gi-red:#b23a32; --gi-red-soft:#fbe9e7;
           color:var(--gi-ink); font-size:14px; }
@@ -36,14 +36,14 @@
                  align-items:center; justify-content:center; font-weight:700; font-size:12.5px; margin-right:8px; }
     .gi .st .t { font-weight:700; font-size:13.5px; }
     .gi .st .s { font-size:11.5px; color:var(--gi-muted); margin-top:3px; }
-    .gi .st.on { border-color:var(--gi-plum); box-shadow:0 0 0 3px rgba(132,36,132,.12); }
+    .gi .st.on { border-color:var(--gi-plum); box-shadow:0 0 0 3px rgba(139,29,64,.12); }
     .gi .st.on .n { background:var(--gi-plum); color:#fff; }
     .gi .st.done .n { background:var(--gi-green); color:#fff; }
     @media (max-width:860px) { .gi .rail { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width:520px) { .gi .rail { grid-template-columns:1fr; } }
     .gi label.lb { font-size:12.5px; font-weight:600; color:var(--gi-muted); display:block; margin-bottom:5px; }
     .gi .form-control, .gi .form-select { border:1px solid var(--gi-line); border-radius:9px; padding:9px 12px; font-size:14px; }
-    .gi .form-control:focus, .gi .form-select:focus { border-color:var(--gi-plum); box-shadow:0 0 0 3px rgba(132,36,132,.14); outline:0; }
+    .gi .form-control:focus, .gi .form-select:focus { border-color:var(--gi-plum); box-shadow:0 0 0 3px rgba(139,29,64,.14); outline:0; }
     .gi .form-control.sm, .gi .form-select.sm { padding:6px 9px; font-size:13px; border-radius:7px; }
     .gi .form-control[readonly] { background:var(--gi-bg); }
     .gi .muted { color:var(--gi-muted); font-size:12.5px; }
@@ -860,8 +860,8 @@
 
         // ---- 9. tour photos (its own page, kept separate in the function map)
         secs.push(['Tour photos', 'kept with the day programme',
-            '<div class="muted mb-2">The pictures on the client quotation are chosen on the Tour Photos page, which stays its own screen.</div>'
-            + '<button class="btn-quiet" id="ph_open" type="button">Open Tour Photos for this inquiry</button>']);
+            '<div class="muted mb-2">The pictures on the client quotation are chosen on the Photo Master page, which stays its own screen.</div>'
+            + '<button class="btn-quiet" id="ph_open" type="button">Open Photo Master for this inquiry</button>']);
 
         // ---- 10. special notes, per night
         secs.push(['Special notes', days.filter(d => d.special_note).length + ' night(s) with a note',

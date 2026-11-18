@@ -238,13 +238,13 @@
 
         /* Tile Color 4 - Hotel Management (Purple) */
         .t-card-color-4 {
-            border-color: #9C27B0;
-            background: rgba(156, 39, 176, 0.03);
+            border-color: #ba1d4f;
+            background: rgba(186, 29, 79, 0.03);
         }
 
         .t-card-color-4:hover {
-            background: rgba(156, 39, 176, 0.15);
-            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.7);
+            background: rgba(186, 29, 79, 0.15);
+            box-shadow: 0 8px 24px rgba(186, 29, 79, 0.7);
         }
 
         /* Tile Color 5 - Transport (Orange) */

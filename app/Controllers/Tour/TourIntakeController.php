@@ -350,6 +350,12 @@ class TourIntakeController extends BaseController
         $data['counts']       = ['new' => 0, 'working' => 0, 'converted' => 0, 'declined' => 0];
         $data['fields']       = EmailExtractor::FIELDS;
         $data['open_id']      = (int) $this->request->getGet('id');
+        // tf-photomaster-r1: the homepage's pictures as chosen in Photo Master (each position falls back to its built-in picture)
+        try {
+            $data['home_photos'] = (new \App\Libraries\TourFlow\PhotoLibrary($this->db(), ''))->homepage();
+        } catch (\Throwable $e) {
+            $data['home_photos'] = [];
+        }
         // what this person may see and do on top of the desk's own work: the markup
         // (Management), typing kilometres over the history (Management), the excursion master
         $data['sees_pricing']   = $this->holds(self::PRICING_URL);
@@ -2002,6 +2008,27 @@ class TourIntakeController extends BaseController
      * travellers (schema 34) and no further; a preview, and a version made before the maximum existed, show every row.
      * $toFile: the PDF written to that path (for the email) instead of answered to the browser.
      */
+    /** tf-photomaster-r1: hotel name → its preferred photograph, from the costing's hotel nights (which carry the Hotel Master id) */
+    private function hotelPhotosFor(array $hotels): array
+    {
+        try {
+            $byId = [];
+            foreach ($hotels as $h) {
+                if (!empty($h['hotel_id'])) {
+                    $byId[(int) $h['hotel_id']] = (string) ($h['hotel'] ?? '');
+                }
+            }
+            $lib = new \App\Libraries\TourFlow\PhotoLibrary($this->db(), '');
+            $out = [];
+            foreach ($lib->hotelPhotos(array_keys($byId)) as $id => $p) {
+                $out[$byId[$id]] = ['url' => $p['url'], 'file' => $p['file'], 'dir' => $lib->dir(), 'caption' => $p['caption'], 'credit' => $p['credit_line'], 'photo_id' => $p['id']];
+            }
+            return $out;
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+
     private function renderQuote(array $cost, ?array $quote, string $view, bool $pdf, ?string $toFile = null)
     {
         $view = $view === 'client' ? 'client' : 'internal';
@@ -2019,6 +2046,8 @@ class TourIntakeController extends BaseController
             'logo'         => FCPATH . 'assets/images/Logo-new.png',
             // the day pictures (schema 27) — the client page only; a presentation layer over the same days
             'photos'       => $view === 'client' ? $this->photosFor((int) $cost['intake_id']) : ['days' => [], 'cover' => []],
+            // tf-photomaster-r1: each hotel's preferred photograph (Photo Master → Hotels & resorts, linked to the Hotel Master), by hotel name
+            'hotel_photos' => $view === 'client' ? $this->hotelPhotosFor((array) ($cost['hotels'] ?? [])) : [],
             // schema 34: the staff controls on the client page — the maximum number of travellers, and the email
             'levels'       => $quote !== null && $view === 'client' ? QuoteService::paxLevels($cost) : [],
             'max_pax'      => $maxPax,

@@ -7,7 +7,7 @@ $co = $company ?? ['name' => 'Avenir Holidays'];
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Safari payment slip <?= esc($s['intake']['file_no'] ?? '') ?></title>
 <style>
-    :root { --o:#842484; --g:#78b848; --ink:#1d2733; --muted:#5f6f80; --line:#e2e6ec; }
+    :root { --o:#8b1d40; --g:#78b848; --ink:#1d2733; --muted:#5f6f80; --line:#e2e6ec; }
     body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:#f4f5f8; margin:0; padding:20px; font-size:13px; }
     .bar { max-width:800px; margin:0 auto 12px; display:flex; gap:8px; justify-content:flex-end; }
     .bar button { background:var(--o); color:#fff; border:0; border-radius:18px; padding:8px 18px; font-size:13px; cursor:pointer; }

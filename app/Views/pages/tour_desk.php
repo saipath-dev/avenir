@@ -30,7 +30,7 @@ $pos = [
 ?>
 <body class="tdk-body">
 <style>
-    :root { --tdk-p:#842484; --tdk-g:#78b848; --tdk-gold:#e0a526; --tdk-ink:#2b2b33; --tdk-mut:#6b6f7b; --tdk-line:#e8e3df; --tdk-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
+    :root { --tdk-p:#8b1d40; --tdk-g:#78b848; --tdk-gold:#e0a526; --tdk-ink:#2b2b33; --tdk-mut:#6b6f7b; --tdk-line:#e8e3df; --tdk-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     body.tdk-body { background:#fff !important; color:var(--tdk-ink); font-family:var(--tdk-font); }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
     .tdk-top .sp { flex:1; }

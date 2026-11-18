@@ -86,7 +86,7 @@ if (!empty($email)):
     $font = 'font-family:Arial,Helvetica,sans-serif;';
     $lab  = $font . 'width:34%;padding:8px 12px;border-bottom:1px solid #e3e6eb;background:#f7f5f9;font-size:13px;font-weight:bold;color:#3d2a4a;vertical-align:top';
     $val  = $font . 'padding:8px 12px;border-bottom:1px solid #e3e6eb;font-size:13px;color:#1d2733;vertical-align:top';
-    $sec  = $font . 'padding:16px 0 6px;font-size:11px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#842484';
+    $sec  = $font . 'padding:16px 0 6px;font-size:11px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#8b1d40';
     $row  = static fn (string $k, string $vHtml): string => '<tr><td style="' . $lab . '">' . esc($k) . '</td><td style="' . $val . '">' . $vHtml . '</td></tr>';
     $detail = [];
     foreach ($rows as [$k, $v]) {
@@ -100,15 +100,15 @@ if (!empty($email)):
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f2f3f6;margin:0;padding:0">
 <tr><td align="center" style="padding:18px 8px">
 <table role="presentation" width="680" cellspacing="0" cellpadding="0" border="0" style="width:680px;max-width:680px;background:#ffffff;border:1px solid #e1e4ea;<?= $font ?>color:#1d2733">
-  <tr><td style="padding:22px 28px 16px;border-bottom:3px solid #842484">
+  <tr><td style="padding:22px 28px 16px;border-bottom:3px solid #8b1d40">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-      <td valign="middle" style="width:46%"><?php if (!empty($logo)): ?><img src="<?= $e($logo) ?>" width="220" alt="<?= $e($co['name'] ?: 'Avenir Holidays') ?>" style="display:block;width:220px;max-width:220px;height:auto;border:0"><?php else: ?><span style="<?= $font ?>font-size:20px;font-weight:bold;color:#842484"><?= $e($co['name'] ?: 'Avenir Holidays') ?></span><?php endif; ?></td>
+      <td valign="middle" style="width:46%"><?php if (!empty($logo)): ?><img src="<?= $e($logo) ?>" width="220" alt="<?= $e($co['name'] ?: 'Avenir Holidays') ?>" style="display:block;width:220px;max-width:220px;height:auto;border:0"><?php else: ?><span style="<?= $font ?>font-size:20px;font-weight:bold;color:#8b1d40"><?= $e($co['name'] ?: 'Avenir Holidays') ?></span><?php endif; ?></td>
       <td valign="middle" align="right" style="<?= $font ?>font-size:11.5px;line-height:1.55;color:#5f6f80"><b style="font-size:13px;color:#1d2733"><?= $e($co['name'] ?: 'Avenir Holidays') ?></b><?php foreach ($contactBits as $b): ?><br><?= $e($b) ?><?php endforeach; ?></td>
     </tr></table>
   </td></tr>
   <tr><td style="padding:18px 28px 4px">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-      <td valign="bottom" style="<?= $font ?>font-size:19px;font-weight:bold;letter-spacing:1.5px;color:#842484"><?= $title ?></td>
+      <td valign="bottom" style="<?= $font ?>font-size:19px;font-weight:bold;letter-spacing:1.5px;color:#8b1d40"><?= $title ?></td>
       <td valign="bottom" align="right" style="<?= $font ?>font-size:12px;line-height:1.5;color:#5f6f80">Our reference <b style="color:#1d2733"><?= $e($ref) ?></b><?php if ($isV): ?><br>Avenir reference <b style="color:#1d2733"><?= $e($d['reference']) ?></b><?php endif; ?><br><?= $e(date('d F Y')) ?></td>
     </tr></table>
   </td></tr>
@@ -130,7 +130,7 @@ if (!empty($email)):
   </td></tr>
   <tr><td style="padding:18px 28px 6px">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-      <td style="background:#f8f1f8;border-left:4px solid #842484;padding:12px 16px;<?= $font ?>font-size:13px;line-height:1.55;color:#1d2733">
+      <td style="background:#f8f1f3;border-left:4px solid #8b1d40;padding:12px 16px;<?= $font ?>font-size:13px;line-height:1.55;color:#1d2733">
 <?php if (!$isV): ?>        <b>Kindly confirm this reservation by return e-mail</b> with your confirmation number. Please quote our reference <b><?= $e($d['reference']) ?></b> on all correspondence and on your invoice.
 <?php else: ?>        Please quote the voucher number <b><?= $e($s['voucher_no']) ?></b> and our reference <b><?= $e($d['reference']) ?></b> on your invoice. The guests are not to be charged for the services listed above.
 <?php endif; ?>
@@ -140,11 +140,11 @@ if (!empty($email)):
   <tr><td style="padding:14px 28px 22px;<?= $font ?>font-size:13px;line-height:1.6;color:#1d2733">
     Best regards,<br><br>
     <b><?= $e($who['name'] ?: $co['name']) ?></b><br>
-    <?= $e($co['name']) ?><?php if (!empty($who['phone'])): ?><br>Mobile <?= $e($who['phone']) ?><?php endif; ?><?php if (!empty($who['email'])): ?><br><a href="mailto:<?= $e($who['email']) ?>" style="color:#842484;text-decoration:none"><?= $e($who['email']) ?></a><?php endif; ?><?php if ($t['handler_name'] && $t['handler_name'] !== ($who['name'] ?? '')): ?><br><span style="color:#5f6f80">Tour handled by <?= $e($t['handler_name']) ?></span><?php endif; ?>
+    <?= $e($co['name']) ?><?php if (!empty($who['phone'])): ?><br>Mobile <?= $e($who['phone']) ?><?php endif; ?><?php if (!empty($who['email'])): ?><br><a href="mailto:<?= $e($who['email']) ?>" style="color:#8b1d40;text-decoration:none"><?= $e($who['email']) ?></a><?php endif; ?><?php if ($t['handler_name'] && $t['handler_name'] !== ($who['name'] ?? '')): ?><br><span style="color:#5f6f80">Tour handled by <?= $e($t['handler_name']) ?></span><?php endif; ?>
   </td></tr>
   <?php /* tf-letter-r1b (10 Oct 2026): the footer on the same white as the letter, in bold letters (was a dark band);
            the address is not repeated here — it is in the letterhead at the top */ ?>
-  <tr><td style="background:#ffffff;border-top:2px solid #842484;padding:14px 28px 18px;<?= $font ?>font-size:12px;line-height:1.6;font-weight:bold;color:#842484">
+  <tr><td style="background:#ffffff;border-top:2px solid #8b1d40;padding:14px 28px 18px;<?= $font ?>font-size:12px;line-height:1.6;font-weight:bold;color:#8b1d40">
     This <?= $isV ? 'voucher' : 'booking request' ?> and the rates it refers to are confidential between the hotel and <?= $e($co['name'] ?: 'Avenir Holidays') ?>. Please do not disclose rates to the guests.
   </td></tr>
 </table>
@@ -161,7 +161,7 @@ endif;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= $e($d['reference']) ?> — <?= $isV ? 'hotel voucher' : 'booking request' ?></title>
 <style>
-    :root { --ink:#1d2733; --muted:#5f6f80; --line:#cfd6de; --purple:#842484; }
+    :root { --ink:#1d2733; --muted:#5f6f80; --line:#cfd6de; --purple:#8b1d40; }
     * { box-sizing:border-box; }
     body { margin:0; background:#eef0f3; color:var(--ink); font:13px/1.45 "Segoe UI", Arial, Helvetica, sans-serif; }
     .sheet { background:#fff; max-width:820px; margin:18px auto; padding:34px 40px 30px; box-shadow:0 2px 12px rgba(0,0,0,.08); }

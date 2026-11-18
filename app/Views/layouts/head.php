@@ -72,4 +72,5 @@
 
 
     <?php /* tf-uniform-r1: the Avenir design uniform, loaded last; remove this one line to switch it off */ ?><link href="<?= base_url('assets/css/avenir-uniform.css') ?>?v=<?= @filemtime(FCPATH . 'assets/css/avenir-uniform.css') ?: 1 ?>" rel="stylesheet" type="text/css" />
+    <style id="av-uniform-inline"><?= view('layouts/avenir_uniform_inline') ?></style>
 </head>

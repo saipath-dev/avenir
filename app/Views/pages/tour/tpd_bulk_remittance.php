@@ -8,7 +8,7 @@ $e = static fn ($s): string => esc((string) ($s ?? ''));
 $m = static fn ($n): string => number_format((float) ($n ?? 0), 2);
 $dt = static function ($s, $f = 'j M Y') { $s = trim((string) ($s ?? '')); if ($s === '' || str_starts_with($s, '0000')) return '—'; $ts = strtotime($s); return $ts ? date($f, $ts) : $s; };
 $pdf = !empty($for_pdf);
-$INK = '#2c3e50'; $MUTED = '#6c757d'; $P = '#842484'; $SOFT = '#f3e7f3'; $LINE = '#ced4da';
+$INK = '#2c3e50'; $MUTED = '#6c757d'; $P = '#8b1d40'; $SOFT = '#f3e7eb'; $LINE = '#ced4da';
 $font = $pdf ? 'dejavusans' : 'Arial, Helvetica, sans-serif';
 $ext = $acct ? \App\Libraries\TourPayments\BankAccounts::external($acct) : null;
 $docs = new \App\Libraries\TourPayments\Documents(\Config\Database::connect());

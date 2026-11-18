@@ -557,15 +557,6 @@ final class IntakeService
                 $it['meals'] = ['available' => true, 'days' => [], 'problems' => [], 'error' => $e->getMessage()];
             }
         }
-        // the pictures the client quotation shows for each day (schema 27) — a presentation layer:
-        // absent until the library is installed, and never a figure
-        try {
-            if ($this->photos()->available()) {
-                $it['photos'] = $this->photos()->forIntake($it, self::isClosed($it));
-            }
-        } catch (\Throwable $e) {
-            $it['photos'] = ['days' => [], 'tags' => [], 'cover' => [], 'error' => $e->getMessage()];
-        }
         // tf-mileage-track-r1: a small picture for each station of the Mileage by sector railway view — read only, never a figure
         try {
             $names = [];
@@ -585,6 +576,16 @@ final class IntakeService
                 isset($it['itinerary']['departure']['day_no']) ? (int) $it['itinerary']['departure']['day_no'] : null, (array) ($it['hotel_transfers'] ?? []));
         } catch (\Throwable $e) {
             $it['itinerary'] = ['days' => [], 'departure' => null, 'error' => $e->getMessage()];
+        }
+        // tf-pictures-r1: read after the itinerary is written, so a day's own words (the airport, a hotel's place) can find its picture
+        // the pictures the client quotation shows for each day (schema 27) — a presentation layer:
+        // absent until the library is installed, and never a figure
+        try {
+            if ($this->photos()->available()) {
+                $it['photos'] = $this->photos()->forIntake($it, self::isClosed($it));
+            }
+        } catch (\Throwable $e) {
+            $it['photos'] = ['days' => [], 'tags' => [], 'cover' => [], 'error' => $e->getMessage()];
         }
         // schema 33: the Edit Requests on it, in short — waiting ones, the last applied (reading the email
         // again is off after it), and whether Confirm Tour waits for a quotation version issued after it

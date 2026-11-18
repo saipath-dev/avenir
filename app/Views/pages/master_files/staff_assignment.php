@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* tf-stage10 Staff Assignment — the approved interface: orchid header, Administration card, eyebrow + title, two buttons, stat cards, four tabs */
-    .sa { --orchid:#842484; --orchid-deep:#6d1d6d; --orchid-soft:#f3e6f3; --green:#78b848; --green-dark:#5d9634; --green-soft:#eef6e6; --amber:#9a6a14; --amber-soft:#fcf1dc; --red:#b23a32; --red-soft:#fbe9e7; --ink:#22202a; --muted:#6b6577; --line:#e6e0e8; --bg:#f6f4f7; --card:#fff; color:var(--ink); font-size:14px; }
+    .sa { --orchid:#8b1d40; --orchid-deep:#731734; --orchid-soft:#f3e6ea; --green:#78b848; --green-dark:#5d9634; --green-soft:#eef6e6; --amber:#9a6a14; --amber-soft:#fcf1dc; --red:#b23a32; --red-soft:#fbe9e7; --ink:#22202a; --muted:#6b6577; --line:#e8e0e3; --bg:#f6f4f7; --card:#fff; color:var(--ink); font-size:14px; }
     .sa .top { background:var(--orchid); color:#fff; border-radius:14px; padding:14px 18px; display:flex; align-items:center; gap:14px; margin-bottom:16px; }
     .sa .top .av { width:40px; height:40px; border-radius:50%; background:#fff; color:var(--orchid); font-weight:700; display:grid; place-items:center; font-size:18px; flex:none; }
     .sa .top .brand { font-family:Georgia, "Source Serif 4", serif; font-size:20px; font-weight:700; }
@@ -57,7 +57,7 @@
     @media (max-width:720px) { .sa .field { grid-template-columns:1fr; } .sa .actions { grid-template-columns:1fr; } }
     .sa .tplgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(270px,1fr)); gap:12px; padding:14px; }
     .sa .tpl { border:1px solid var(--line); border-radius:12px; padding:14px; } .sa .tpl h6 { color:var(--orchid); font-weight:700; font-size:16px; } .sa .tpl ul { padding-left:18px; margin:6px 0 10px; font-size:13px; }
-    .modal.sa .modal-header { background:#842484; color:#fff; } .modal.sa .btn-close { filter:invert(1); }
+    .modal.sa .modal-header { background:#8b1d40; color:#fff; } .modal.sa .btn-close { filter:invert(1); }
 </style>
 <?= view('layouts/tf_master_skin') ?>
 <body>

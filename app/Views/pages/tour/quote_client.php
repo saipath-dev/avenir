@@ -12,7 +12,7 @@
  * rooms it is based on, the price — from QuoteService::clientView, which hands this page
  * nothing else of the pax matrix.
  *
- * The pictures ($photos, schema 27) come from Master Files → Tour Photos: one for each day
+ * The pictures ($photos, schema 27) come from Master Files → Photo Master: one for each day
  * whose programme the library has a picture for, and up to three across the top. Without
  * the library, or with nothing chosen, the page is exactly as before.
  */
@@ -51,7 +51,7 @@ $vehicles = array_map(static fn ($v) => ($v['qty'] > 1 ? $v['qty'] . ' × ' : ''
 $itin     = is_array($c['itinerary'] ?? null) ? $c['itinerary'] : ['days' => [], 'departure' => null];
 $dayText  = static fn (int $n): string => trim((string) ($itin['days'][$n]['text'] ?? $itin['days'][(string) $n]['text'] ?? ''));
 $depText  = trim((string) ($itin['departure']['text'] ?? ''));
-$P = '#842484'; $M = '#e90c8b'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbe6';
+$P = '#8b1d40'; $M = '#e90c8b'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbde';
 // the day pictures from the tour photo library (schema 27): a presentation layer — absent, the page is as it always was
 $ph        = $photos ?? [];
 $dayPhotos = is_array($ph['days'] ?? null) ? $ph['days'] : [];
@@ -64,6 +64,9 @@ foreach ($dayPhotos as $dp) {
         break;
     }
 }
+// tf-pictures-r1: the licences of the pictures used ask for the photographer's credit — listed once at the end
+$photoCredits = [];
+foreach (array_merge(array_values($coverPics), array_values($dayPhotos)) as $cp) { if (!empty($cp['photo_id']) && !empty($cp['credit'])) { $pcCap = trim((string) ($cp['caption'] ?? '')); $pcLine = ($pcCap !== '' ? $pcCap . ' — ' : '') . (string) $cp['credit']; $photoCredits[$pcLine] = $pcLine; } }
 $onPaper = static fn (array $p): bool => $photoDir !== '' && !empty($p['file']) && is_file($photoDir . $p['file']);
 // one picture, on screen by its URL and on paper by its file; $w is the width in pixels on paper
 $picTag = static function (array $p, int $w, string $style) use ($pdf, $photoDir, $onPaper): string {
@@ -97,7 +100,7 @@ if ($logo && is_file($logo)) {
     .bar { position:sticky; top:0; z-index:5; display:flex; gap:8px; align-items:center; padding:10px 18px; background:#fff; border-bottom:1px solid #dfe5ec; box-shadow:0 2px 8px rgba(0,0,0,.05); }
     .bar a, .bar button { font:inherit; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:8px; border:1px solid #dfe5ec; background:#fff; color:<?= $INK ?>; text-decoration:none; cursor:pointer; }
     .bar a:hover, .bar button:hover { background:#f4f6f9; }
-    .bar .primary { background:linear-gradient(135deg, <?= $M ?> 0%, #8f2a8d 100%); color:#fff; border:0; }
+    .bar .primary { background:linear-gradient(135deg, <?= $M ?> 0%, #972247 100%); color:#fff; border:0; }
     .bar .note { margin-left:auto; font-size:12px; color:<?= $MUTED ?>; }
     .bar .preview { background:#ffffff; color:#1a1a1a; border-color:#d9d3dd; }
     .sheet { width:210mm; min-height:297mm; margin:22px auto; background:#fff; padding:18mm 16mm; box-shadow:0 8px 30px rgba(0,0,0,.08); box-sizing:border-box; }
@@ -112,7 +115,7 @@ if ($logo && is_file($logo)) {
     .mailbox .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     .mailbox .acts { display:flex; gap:8px; align-items:center; margin-top:12px; flex-wrap:wrap; }
     .mailbox .acts button { font:inherit; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid #dfe5ec; background:#fff; color:<?= $INK ?>; cursor:pointer; }
-    .mailbox .acts button.send { background:linear-gradient(135deg, <?= $M ?> 0%, #8f2a8d 100%); color:#fff; border:0; }
+    .mailbox .acts button.send { background:linear-gradient(135deg, <?= $M ?> 0%, #972247 100%); color:#fff; border:0; }
     .mailbox .acts button[disabled] { opacity:.55; cursor:not-allowed; }
     .mailbox .warn { background:#ffffff; color:#1a1a1a; border:1px solid #d9d3dd; border-radius:8px; padding:8px 12px; font-size:12.5px; margin-top:10px; }
     .mailbox .ok { background:#e6f4ea; color:#1e6b34; border:1px solid #bfe3c9; border-radius:8px; padding:8px 12px; font-size:12.5px; margin-top:10px; }
@@ -131,49 +134,53 @@ if ($logo && is_file($logo)) {
     .modal .att { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border:1px solid #dfe5ec; border-radius:8px; background:#f4f6f9; font-size:12.5px; text-decoration:none; color:<?= $INK ?>; }
     .modal .ft { padding:12px 18px; border-top:1px solid #eef2f6; display:flex; gap:8px; justify-content:flex-end; }
     .modal .ft button { font:inherit; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid #dfe5ec; background:#fff; cursor:pointer; }
-    .modal .ft button.send { background:linear-gradient(135deg, <?= $M ?> 0%, #8f2a8d 100%); color:#fff; border:0; }
+    .modal .ft button.send { background:linear-gradient(135deg, <?= $M ?> 0%, #972247 100%); color:#fff; border:0; }
     /* tf-clientdoc-r1: the approved quotation & itinerary design (screen) */
     .sheet.qx-on { padding:0; overflow:hidden; } .sheet.qx-on > .qx-old { padding:0 16mm 10mm; }
-    .qx { --p:#842484; --pd:#5b175b; --g:#78b848; --ln:#e6dee8; --sf:#f8f2f8; color:#1A1A1A; font-size:12.5px; line-height:1.55; }
+    .qx { --p:#8b1d40; --pd:#60122b; --g:#78b848; --ln:#e8dee1; --sf:#f8f2f4; color:#1A1A1A; font-size:12.5px; line-height:1.55; }
     .qx-cover { height:520px; background-size:cover; background-position:center; position:relative; }
-    .qx-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(40,8,40,.15) 0%,rgba(40,8,40,.05) 40%,rgba(70,14,70,.88) 100%); }
+    .qx-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(42,6,17,.15) 0%,rgba(42,6,17,.05) 40%,rgba(74,10,30,.88) 100%); }
     .qx-logo { position:absolute; left:36px; top:30px; z-index:2; background:#fff; border-radius:10px; padding:8px 14px; } .qx-logo img { height:46px !important; width:auto !important; display:block; }
     .qx-ct { position:absolute; left:40px; right:40px; bottom:36px; z-index:2; color:#fff; }
     .qx-ct .k { letter-spacing:4px; font-size:12px; text-transform:uppercase; } .qx-ct h1 { font-family:Georgia,"Times New Roman",serif; font-weight:400; font-size:44px; margin:6px 0 10px; line-height:1.05; }
     .qx-ct .m { display:flex; gap:26px; flex-wrap:wrap; font-size:12.5px; } .qx-ct .m b { display:block; font-size:14.5px; }
     .qx-stripe { height:6px; background:linear-gradient(90deg,#78b848,#a6d47f); }
     .qx-sec { padding:22px 40px 6px; }
-    .qx h2 { font-family:Georgia,"Times New Roman",serif; font-weight:400; color:#842484; font-size:23px; margin:0 0 14px; display:flex; align-items:center; gap:14px; }
+    .qx h2 { font-family:Georgia,"Times New Roman",serif; font-weight:400; color:#8b1d40; font-size:23px; margin:0 0 14px; display:flex; align-items:center; gap:14px; }
     .qx h2::after { content:""; flex:1; height:1px; background:var(--ln); }
     .qx-glance { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; } .qx-glance > div { background:var(--sf); border-radius:10px; padding:12px 14px; }
-    .qx-glance .qi { font-style:normal; font-size:18px; color:#842484; } .qx-glance small { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.8px; margin-top:4px; } .qx-glance b { font-size:13.5px; }
+    .qx-glance .qi { font-style:normal; font-size:18px; color:#8b1d40; } .qx-glance small { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.8px; margin-top:4px; } .qx-glance b { font-size:13.5px; }
     .qx-dear { margin:16px 0 0; }
     .qx-day { display:grid; grid-template-columns:280px 1fr; gap:22px; padding:16px 0; border-bottom:1px solid var(--ln); } .qx-day:last-child { border:0; }
     .qx-day .ph { height:180px; border-radius:12px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
-    .qx-day .ph.none { background:repeating-linear-gradient(135deg,#f6eff6 0 12px,#fbf7fb 12px 24px); display:flex; align-items:center; justify-content:center; }
-    .qx-day .ph .np { color:#842484; font-size:11.5px; } .qx-day .ph .cap { position:absolute; left:0; right:0; bottom:0; padding:16px 12px 8px; color:#fff; font-size:11px; background:linear-gradient(180deg,transparent,rgba(0,0,0,.6)); }
-    .qx-day .ph .n { position:absolute; left:12px; top:12px; background:#fff; color:#842484; border-radius:8px; padding:4px 10px; text-align:center; font-weight:800; line-height:1.1; }
+    .qx-day .ph.none { background:repeating-linear-gradient(135deg,#f6eff1 0 12px,#fbf7f8 12px 24px); display:flex; align-items:center; justify-content:center; }
+    .qx-day .ph .np { color:#8b1d40; font-size:11.5px; } .qx-day .ph .cap { position:absolute; left:0; right:0; bottom:0; padding:16px 12px 8px; color:#fff; font-size:11px; background:linear-gradient(180deg,transparent,rgba(0,0,0,.6)); }
+    .qx-day .ph .n { position:absolute; left:12px; top:12px; background:#fff; color:#8b1d40; border-radius:8px; padding:4px 10px; text-align:center; font-weight:800; line-height:1.1; }
     .qx-day .ph .n small { display:block; font-size:9.5px; letter-spacing:1px; } .qx-day .ph .n b { font-family:Georgia,serif; font-weight:400; font-size:22px; }
-    .qx-day h3 { margin:2px 0 4px; font-size:16.5px; color:#5b175b; } .qx-day .date { font-size:11.5px; color:#842484; font-weight:700; letter-spacing:.6px; text-transform:uppercase; }
+    .qx-day h3 { margin:2px 0 4px; font-size:16.5px; color:#60122b; } .qx-day .date { font-size:11.5px; color:#8b1d40; font-weight:700; letter-spacing:.6px; text-transform:uppercase; }
+    /* tf-pictures-r3: a day without a picture shows no empty picture space, only its day number */
+    .qx-day.nopic { grid-template-columns:64px 1fr; } .qx-day.nopic .ph.none { height:auto; background:none; display:block; overflow:visible; }
+    .qx-day.nopic .ph .n { position:static; display:inline-block; background:#f7f0f2; }
     .qx-day .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
     .qx .tg { display:inline-flex; align-items:center; gap:6px; border-radius:14px; padding:2px 10px; font-size:11.5px; font-weight:600; }
-    .qx .tg.inc { background:#e8f5dc; color:#2f6d12; } .qx .tg.pay { background:#fdeccb; color:#8a4b00; } .qx .tg.free { background:#eef0f3; } .qx .tg.opt { background:#e6eef8; } .qx .tg.stay { background:var(--sf); color:#5b175b; }
-    .qx-hotel { border:1px solid var(--ln); border-radius:12px; padding:14px 18px; margin-bottom:10px; } .qx-hotel h3 { margin:0 0 4px; font-size:16px; color:#5b175b; }
+    .qx .tg.inc { background:#e8f5dc; color:#2f6d12; } .qx .tg.pay { background:#fdeccb; color:#8a4b00; } .qx .tg.free { background:#eef0f3; } .qx .tg.opt { background:#e6eef8; } .qx .tg.stay { background:var(--sf); color:#60122b; }
+    .qx-hotel.has-ph { display:grid; grid-template-columns:220px 1fr; gap:18px; padding:0; overflow:hidden; } .qx-hotel.has-ph .hb { padding:14px 18px 14px 0; } .qx-hotel .hph { background-size:cover; background-position:center; min-height:150px; }
+    .qx-hotel { border:1px solid var(--ln); border-radius:12px; padding:14px 18px; margin-bottom:10px; } .qx-hotel h3 { margin:0 0 4px; font-size:16px; color:#60122b; }
     .qx-hotel .kv { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px; } .qx-hotel small { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.8px; }
-    .qx-pt { width:100%; border-collapse:collapse; } .qx-pt th { background:#842484; color:#fff; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; padding:9px 12px; text-align:right; }
+    .qx-pt { width:100%; border-collapse:collapse; } .qx-pt th { background:#8b1d40; color:#fff; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; padding:9px 12px; text-align:right; }
     .qx-pt th:first-child, .qx-pt td:first-child { text-align:left; } .qx-pt td { padding:11px 12px; border-bottom:1px solid var(--ln); text-align:right; font-size:13px; }
-    .qx-pt tr.sel td { background:#f1f9ea; } .qx-pt .cat b { display:block; font-size:14px; color:#5b175b; } .qx-pt .cat small { font-size:11px; }
+    .qx-pt tr.sel td { background:#f1f9ea; } .qx-pt .cat b { display:block; font-size:14px; color:#60122b; } .qx-pt .cat small { font-size:11px; }
     .qx .pill { display:inline-block; background:#78b848; color:#fff; font-size:9.5px; font-weight:800; border-radius:10px; padding:1px 8px; letter-spacing:.4px; margin-left:6px; vertical-align:2px; }
     .qx .rq { font-size:12px; }
     .qx-calc { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:12px; margin-top:16px; } .qx-calc > div { border-radius:12px; padding:14px 18px; background:var(--sf); }
-    .qx-calc > div.main { background:linear-gradient(110deg,#842484,#5b175b); color:#fff; } .qx-calc small { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:1px; }
+    .qx-calc > div.main { background:linear-gradient(110deg,#8b1d40,#60122b); color:#fff; } .qx-calc small { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:1px; }
     .qx-calc b { font-family:Georgia,serif; font-weight:400; font-size:25px; } .qx-calc b.sm { font-family:inherit; font-weight:700; font-size:15px; } .qx-calc .eq { font-size:12px; margin-top:2px; }
     .qx-svc { display:grid; grid-template-columns:1fr 1fr; gap:16px; } .qx-svc > div { border-radius:12px; padding:14px 18px; border:1px solid var(--ln); }
     .qx-svc h3 { margin:0 0 10px; font-size:12px; letter-spacing:1.2px; text-transform:uppercase; } .qx-svc .in { border-top:5px solid #78b848; } .qx-svc .in h3 { color:#2f6d12; }
     .qx-svc .out { border-top:5px solid #e0a020; } .qx-svc .out h3 { color:#8a4b00; } .qx-svc .li { padding:6px 0; border-bottom:1px dashed var(--ln); } .qx-svc .li:last-child { border:0; } .qx-svc .li small { display:block; font-size:11px; }
-    .qx-terms { display:grid; grid-template-columns:1fr 1fr; gap:10px 22px; } .qx-terms > div { border-left:3px solid #842484; padding:2px 0 2px 12px; } .qx-terms b { display:block; color:#5b175b; }
+    .qx-terms { display:grid; grid-template-columns:1fr 1fr; gap:10px 22px; } .qx-terms > div { border-left:3px solid #8b1d40; padding:2px 0 2px 12px; } .qx-terms b { display:block; color:#60122b; }
     .qx-close { display:grid; grid-template-columns:1fr 260px; gap:22px; align-items:center; background:var(--sf); border-radius:14px; padding:18px 22px; margin:20px 0 22px; }
-    .qx-foot { background:#5b175b; color:#fff; font-size:10.5px; padding:11px 40px; display:flex; justify-content:space-between; }
+    .qx-foot { background:#60122b; color:#fff; font-size:10.5px; padding:11px 40px; display:flex; justify-content:space-between; }
     .qx-staff { padding:0 40px 18px; }
     @media print { .qx-cover { height:360px; -webkit-print-color-adjust:exact; print-color-adjust:exact; } .qx * { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
     @media print { body { background:#fff; } .bar, .staff, .mailbox, .overlay { display:none !important; } .sheet { margin:0; box-shadow:none; width:auto; min-height:0; padding:0; } }
@@ -199,7 +206,16 @@ $J   = is_array($itin['journey'] ?? null) ? $itin['journey'] : $W::journey($c['d
 $jb  = static fn (string $t): string => nl2br($W::boldHotels($t, (array) ($J['hotels'] ?? [])));
 $jh  = static fn (int $n): string => (string) (($J['headings'] ?? [])[$n] ?? (($J['headings'] ?? [])[(string) $n] ?? ('Day ' . $n)));
 $coverUrl = '';
-foreach ($coverPics as $cp) { if (!empty($cp['url'])) { $coverUrl = (string) $cp['url']; break; } }
+// the big cover: a place the tour visits rather than the airport, when the itinerary has one
+foreach ($coverPics as $cp) { if (!empty($cp['url']) && ($cp['tag'] ?? '') !== 'ARRIVAL') { $coverUrl = (string) $cp['url']; break; } }
+// only the airport so far: use the Photo Master homepage banner instead (tf-pictures-r2)
+if ($coverUrl === '') {
+    try { $homeHero = (new \App\Libraries\TourFlow\PhotoLibrary(\Config\Database::connect(), ''))->homepage()['hero'] ?? null; } catch (\Throwable $e) { $homeHero = null; }
+    if (!empty($homeHero['url'])) {
+        $coverUrl = (string) $homeHero['url'];
+        if (!empty($homeHero['credit'])) { $pcLine = trim((string) ($homeHero['caption'] ?? '')) . ' — ' . (string) $homeHero['credit']; $photoCredits = [$pcLine => $pcLine] + $photoCredits; }
+    }
+}
 if ($coverUrl === '') { $coverUrl = base_url('tour/intake/list_photo/beach-hero.jpg'); }
 $xDays = (int) $c['nights'] + 1;
 $xHotels = [];
@@ -236,8 +252,8 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
 <div class="qx-sec">
     <h2>Day by day</h2>
     <?php $xDep = false; foreach ($c['days'] as $d): $n = (int) $d['day_no']; $dp = $dayPhotos[$n] ?? null; $isDep = empty($d['hotel']); if ($isDep) { $xDep = true; } $txt = $dayText($n); if ($txt === '' && $isDep) { $txt = $depText; } ?>
-    <div class="qx-day">
-        <div class="ph<?= $dp && !empty($dp['url']) ? '' : ' none' ?>"<?= $dp && !empty($dp['url']) ? ' style="background-image:url(\'' . esc((string) $dp['url']) . '\')"' : '' ?>><span class="n"><small>DAY</small><b><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></b></span><?php if (!($dp && !empty($dp['url']))): ?><span class="np">Picture from Tour Photos</span><?php elseif (!empty($dp['caption'])): ?><span class="cap"><?= esc($dp['caption']) ?></span><?php endif; ?></div>
+    <div class="qx-day<?= $dp && !empty($dp['url']) ? '' : ' nopic' ?>">
+        <div class="ph<?= $dp && !empty($dp['url']) ? '' : ' none' ?>"<?= $dp && !empty($dp['url']) ? ' style="background-image:url(\'' . esc((string) $dp['url']) . '\')"' : '' ?>><span class="n"><small>DAY</small><b><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></b></span><?php if ($dp && !empty($dp['url']) && !empty($dp['caption'])): ?><span class="cap"><?= esc($dp['caption']) ?></span><?php endif; ?></div>
         <div><div class="date"><?= $d['date'] ? esc(date('l j M Y', strtotime((string) $d['date']))) : '' ?></div><h3><?= esc($jh($n)) ?></h3>
             <div class="tx"><?= $txt !== '' ? $jb($txt) : '' ?></div>
             <div class="tags"><?php foreach ($d['services'] as $s): [$k, $w] = $xTag($s); ?><span class="tg <?= $k ?>"><?= esc($s['title']) ?> — <?= esc($w) ?></span><?php endforeach; ?>
@@ -246,7 +262,7 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
     </div>
     <?php endforeach; ?>
     <?php if (!$xDep): $dn = (int) $c['nights'] + 1; ?>
-    <div class="qx-day"><div class="ph none"><span class="n"><small>DAY</small><b><?= str_pad((string) $dn, 2, '0', STR_PAD_LEFT) ?></b></span><span class="np">Picture from Tour Photos</span></div>
+    <div class="qx-day nopic"><div class="ph none"><span class="n"><small>DAY</small><b><?= str_pad((string) $dn, 2, '0', STR_PAD_LEFT) ?></b></span></div>
         <div><div class="date"><?= $c['departure'] ? esc(date('l j M Y', strtotime((string) $c['departure']))) : '' ?></div><h3><?= esc($jh($dn) !== 'Day ' . $dn ? $jh($dn) : 'Departure') ?></h3>
         <div class="tx"><?= $jb($depText !== '' ? $depText : 'Transfer to the airport for your departure flight.') ?></div></div></div>
     <?php endif; ?>
@@ -254,8 +270,9 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
 <div class="qx-sec">
     <h2>Where you stay</h2>
     <?php foreach ($xHotels as $h): ?>
-    <div class="qx-hotel"><h3><?= esc($h['hotel']) ?></h3><?= (int) $h['nights'] ?> night<?= (int) $h['nights'] === 1 ? '' : 's' ?> · <?= $fmtD($h['from']) ?> – <?= $fmtD(date('Y-m-d', strtotime((string) $h['to'] . ' +1 day'))) ?>
-        <div class="kv"><div><small>Room category</small><b><?= esc($h['room'] ?: '—') ?></b></div><div><small>Meal plan</small><b><?= esc($meals[$h['meal']] ?? ($h['meal'] ?: '—')) ?></b></div><div><small>Rooms</small><b><?= esc($mixWords ? implode(', ', $mixWords) : '—') ?></b></div></div></div>
+    <?php $hp = ($hotel_photos ?? [])[$h['hotel']] ?? null; if ($hp && !empty($hp['credit'])) { $pcLine = (string) ($hp['caption'] ?: $h['hotel']) . ' — ' . (string) $hp['credit']; $photoCredits[$pcLine] = $pcLine; } ?>
+    <div class="qx-hotel<?= $hp ? ' has-ph' : '' ?>"><?php if ($hp): ?><div class="hph" style="background-image:url('<?= esc($hp['url']) ?>')"></div><?php endif; ?><div class="hb"><h3><?= esc($h['hotel']) ?></h3><?= (int) $h['nights'] ?> night<?= (int) $h['nights'] === 1 ? '' : 's' ?> · <?= $fmtD($h['from']) ?> – <?= $fmtD(date('Y-m-d', strtotime((string) $h['to'] . ' +1 day'))) ?>
+        <div class="kv"><div><small>Room category</small><b><?= esc($h['room'] ?: '—') ?></b></div><div><small>Meal plan</small><b><?= esc($meals[$h['meal']] ?? ($h['meal'] ?: '—')) ?></b></div><div><small>Rooms</small><b><?= esc($mixWords ? implode(', ', $mixWords) : '—') ?></b></div></div></div></div>
     <?php endforeach; ?>
 </div>
 <div class="qx-sec">
@@ -303,6 +320,17 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
     </tr>
 </table>
 
+<?php
+// tf-pictures-r2: on paper too, the cover is not only the airport — use the Photo Master homepage banner instead
+$coverHasPlace = false; foreach ($coverPics as $cp) { if (($cp['tag'] ?? '') !== 'ARRIVAL') { $coverHasPlace = true; break; } }
+if (!$coverHasPlace) {
+    try { $homeHero = (new \App\Libraries\TourFlow\PhotoLibrary(\Config\Database::connect(), ''))->homepage()['hero'] ?? null; } catch (\Throwable $e) { $homeHero = null; }
+    if (!empty($homeHero['file']) && $onPaper($homeHero)) {
+        $coverPics = [$homeHero];
+        if (!empty($homeHero['credit'])) { $pcLine = trim((string) ($homeHero['caption'] ?? '')) . ' — ' . (string) $homeHero['credit']; $photoCredits = [$pcLine => $pcLine] + $photoCredits; }
+    }
+}
+?>
 <?php if ($coverPics): ?>
 <table width="100%" cellpadding="3" cellspacing="0" style="margin-top:12px;" class="cover">
     <tr>
@@ -317,7 +345,7 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
 
 <?php if (count($c['groups']) > 1): ?>
 <table width="100%" cellpadding="5" cellspacing="0" style="margin-top:10px; font-size:11.5px; border:1px solid <?= $LINE ?>;">
-    <tr style="background:#faf5fa;"><td colspan="3" style="font-weight:bold; color:<?= $P ?>;">The party travels in <?= count($c['groups']) ?> groups</td></tr>
+    <tr style="background:#faf5f7;"><td colspan="3" style="font-weight:bold; color:<?= $P ?>;">The party travels in <?= count($c['groups']) ?> groups</td></tr>
     <?php foreach ($c['groups'] as $g): ?>
     <tr><td width="40%"><b><?= esc($g['name']) ?></b></td><td width="20%"><?= (int) $g['pax'] ?> passenger<?= (int) $g['pax'] === 1 ? '' : 's' ?></td>
         <td width="40%"><?= $g['day_from'] || $g['day_to'] ? 'nights ' . (int) ($g['day_from'] ?: 1) . ' to ' . (int) ($g['day_to'] ?: $c['nights']) : 'the whole tour' ?></td></tr>
@@ -345,7 +373,7 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
         $depRow = $depRow || $isDep;
         $txt = $isDep ? ($depText !== '' ? $depText : 'Transfer to the airport for departure.') : $dayText($n); ?>
     <tr>
-        <td width="12%" style="<?= $CELL ?> text-align:center;"><span <?= $DAYW ?>>DAY</span><br><span <?= $NUM ?>><?= sprintf('%02d', $n) ?></span><br><span style="color:<?= $MUTED ?>; font-size:9.5px;"><?= $fmtD($d['date']) ?></span></td>
+        <td width="12%" style="<?= $CELL ?> text-align:center;"><table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" <?= $DAYW ?>>DAY</td></tr><tr><td align="center" <?= $NUM ?>><?= sprintf('%02d', $n) ?></td></tr><tr><td align="center" style="color:<?= $MUTED ?>; font-size:9.5px;"><?= $fmtD($d['date']) ?></td></tr></table></td>
         <td width="<?= $hasPic ? '58%' : '88%' ?>" <?= $hasPic ? '' : 'colspan="2"' ?> style="<?= $CELL ?>">
             <b style="font-size:14px; color:#1f1f24;"><?= esc($isDep ? 'Departure · Airport transfer' : $jh($n)) ?></b>
             <?php if ($txt !== ''): ?>
@@ -372,7 +400,7 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
     </tr>
     <?php endforeach; ?>
     <?php if (!$depRow): $dn = (int) $c['nights'] + 1; ?>
-    <tr><td width="12%" style="<?= $CELL ?> text-align:center;"><span <?= $DAYW ?>>DAY</span><br><span <?= $NUM ?>><?= sprintf('%02d', $dn) ?></span><br><span style="color:<?= $MUTED ?>; font-size:9.5px;"><?= $fmtD($c['departure']) ?></span></td>
+    <tr><td width="12%" style="<?= $CELL ?> text-align:center;"><table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" <?= $DAYW ?>>DAY</td></tr><tr><td align="center" <?= $NUM ?>><?= sprintf('%02d', $dn) ?></td></tr><tr><td align="center" style="color:<?= $MUTED ?>; font-size:9.5px;"><?= $fmtD($c['departure']) ?></td></tr></table></td>
         <td width="88%" colspan="2" style="<?= $CELL ?>"><b style="font-size:14px; color:#1f1f24;">Departure · Airport transfer</b>
             <div class="daytext" style="margin-top:5px; line-height:1.6; color:#33333a; font-size:12.5px;"><?= $jb($depText !== '' ? $depText : 'Transfer to the airport for departure.') ?></div></td></tr>
     <?php endif; ?>
@@ -389,7 +417,7 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
 <table width="100%" cellpadding="3" cellspacing="0" style="font-size:11.5px;"><tr><td width="4%" style="vertical-align:top;">&#8226;</td><td width="96%"><?= esc(implode(', ', array_unique($direct))) ?>.</td></tr></table>
 <?php endif; ?>
 
-<table width="100%" cellpadding="8" cellspacing="0" style="margin-top:22px; border:1px solid <?= $LINE ?>; background:#faf5fa;">
+<table width="100%" cellpadding="8" cellspacing="0" style="margin-top:22px; border:1px solid <?= $LINE ?>; background:#faf5f7;">
     <tr>
         <td width="55%" style="font-size:12px; color:<?= $MUTED ?>; vertical-align:middle;">Total for <?= (int) $c['pax'] ?> passenger<?= (int) $c['pax'] === 1 ? '' : 's' ?>, in US dollars <span style="display:inline-block; margin-left:6px; padding:1px 7px; border:1px solid <?= $P ?>; border-radius:10px; color:<?= $P ?>; font-size:10px; font-weight:bold; letter-spacing:.04em;">AS REQUESTED</span></td>
         <td width="45%" align="right" style="font-size:20px; font-weight:bold; color:<?= $P ?>; vertical-align:middle;"><?= $c['total_usd'] !== null ? $usd($c['total_usd']) : '<span style="font-size:12px;color:#1a1a1a">price to follow</span>' ?></td>
@@ -436,10 +464,10 @@ $rows    = $staffUi ? $ppAll : $pp;
 <h3 style="font-size:14px; color:<?= $P ?>; margin:20px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">Price per person by number of travellers</h3>
 <p style="font-size:10.5px; color:<?= $MUTED ?>; margin:0 0 6px 0;">The party of <b style="color:<?= $INK ?>"><?= (int) $c['pax'] ?></b> you asked for is marked. The other sizes are ready-calculated options, so a different party size can be confirmed on this quotation without a fresh one.</p>
 <table width="100%" cellpadding="5" cellspacing="0" style="font-size:11.5px; border:1px solid <?= $LINE ?>;" data-pax-prices>
-    <tr style="background:#faf5fa;"><td width="16%" style="font-weight:bold; color:<?= $MUTED ?>; border-bottom:1px solid <?= $LINE ?>;">Pax</td><td width="54%" style="font-weight:bold; color:<?= $MUTED ?>; border-bottom:1px solid <?= $LINE ?>;">Rooms</td><td width="30%" align="right" style="font-weight:bold; color:<?= $MUTED ?>; border-bottom:1px solid <?= $LINE ?>;">Per person</td></tr>
+    <tr style="background:#faf5f7;"><td width="16%" style="font-weight:bold; color:<?= $MUTED ?>; border-bottom:1px solid <?= $LINE ?>;">Pax</td><td width="54%" style="font-weight:bold; color:<?= $MUTED ?>; border-bottom:1px solid <?= $LINE ?>;">Rooms</td><td width="30%" align="right" style="font-weight:bold; color:<?= $MUTED ?>; border-bottom:1px solid <?= $LINE ?>;">Per person</td></tr>
     <?php foreach ($rows as $r): $mine = (int) $r['pax'] === (int) $c['pax']; $hidden = $staffUi && $maxPax !== null && (int) $r['pax'] > $maxPax; ?>
-    <tr data-pax="<?= (int) $r['pax'] ?>"<?= $mine ? ' data-requested="1"' : '' ?><?= $hidden ? ' hidden' : '' ?> style="<?= $mine ? 'font-weight:bold; background:#f3e6f3;' : '' ?><?= $hidden ? ' display:none;' : '' ?>"><td style="border-bottom:1px solid #f3eef3;<?= $mine ? ' border-left:3px solid ' . $P . ';' : '' ?>"><?= (int) $r['pax'] ?></td><td style="border-bottom:1px solid #f3eef3;"><?= esc($r['rooms']) ?><?= $mine ? ' <span style="display:inline-block; margin-left:6px; padding:0 6px; border:1px solid ' . $P . '; border-radius:10px; color:' . $P . '; font-size:9px; letter-spacing:.04em;">AS REQUESTED</span>' : '' ?></td>
-        <td align="right" style="border-bottom:1px solid #f3eef3;<?= $mine ? ' color:' . $P . '; font-size:12.5px;' : '' ?>"><?= $r['per_person_usd'] !== null ? $usd($r['per_person_usd']) : '<span style="color:' . $MUTED . '; font-weight:normal;">on request</span>' ?></td></tr>
+    <tr data-pax="<?= (int) $r['pax'] ?>"<?= $mine ? ' data-requested="1"' : '' ?><?= $hidden ? ' hidden' : '' ?> style="<?= $mine ? 'font-weight:bold; background:#f3e6ea;' : '' ?><?= $hidden ? ' display:none;' : '' ?>"><td style="border-bottom:1px solid #f3eef0;<?= $mine ? ' border-left:3px solid ' . $P . ';' : '' ?>"><?= (int) $r['pax'] ?></td><td style="border-bottom:1px solid #f3eef0;"><?= esc($r['rooms']) ?><?= $mine ? ' <span style="display:inline-block; margin-left:6px; padding:0 6px; border:1px solid ' . $P . '; border-radius:10px; color:' . $P . '; font-size:9px; letter-spacing:.04em;">AS REQUESTED</span>' : '' ?></td>
+        <td align="right" style="border-bottom:1px solid #f3eef0;<?= $mine ? ' color:' . $P . '; font-size:12.5px;' : '' ?>"><?= $r['per_person_usd'] !== null ? $usd($r['per_person_usd']) : '<span style="color:' . $MUTED . '; font-weight:normal;">on request</span>' ?></td></tr>
     <?php endforeach; ?>
 </table>
 <p style="font-size:10px; color:<?= $MUTED ?>; margin:4px 0 0 0;">Each price is for that number of travellers in the rooms shown, with the same hotels, programme and services and a vehicle to suit the party. Per person, in US dollars.<span id="max_pax_line"<?= $maxPax === null ? ' style="display:none"' : '' ?>> Quoted for parties of up to <b id="max_pax_n"><?= $maxPax !== null ? $maxPax : '' ?></b> travellers.</span></p>
@@ -472,6 +500,7 @@ $rows    = $staffUi ? $ppAll : $pp;
     <div class="qx-close"><div>To proceed, please confirm the quotation reference <b><?= esc($ref) ?></b>, together with the final passenger details and rooming requirements. We will then request the reservations and advise their confirmation status.<br><br>We look forward to welcoming your clients to Sri Lanka.</div>
         <div><b><?= esc((string) ($me_name ?? '')) ?></b><br><?= esc($co['name']) ?><?= !empty($co['email']) ? '<br>' . esc($co['email']) : '' ?><?= !empty($co['phone']) ? '<br>' . esc($co['phone']) : '' ?></div></div>
 </div>
+<?php if ($photoCredits): ?><div class="qx-sec" style="padding-top:0"><p style="font-size:10px;line-height:1.5;margin:0 0 14px">Photographs: <?= implode(' &nbsp;·&nbsp; ', array_map('esc', array_values($photoCredits))) ?></p></div><?php endif; ?>
 <div class="qx-foot"><span><?= esc($co['name']) ?></span><span>Quotation <?= esc($ref) ?><?= $q && !empty($q['valid_until']) ? ' · valid until ' . $fmtD($q['valid_until']) : '' ?></span></div>
 </div>
 <?php else: ?>
@@ -481,6 +510,7 @@ $rows    = $staffUi ? $ppAll : $pp;
 <?php endif; ?>
 
 <p style="font-size:10px; color:<?= $MUTED ?>; margin-top:26px; border-top:1px solid <?= $LINE ?>; padding-top:6px;"><?= esc($co['name']) ?> &nbsp;·&nbsp; Quotation <?= esc($ref) ?> &nbsp;·&nbsp; <?= $fmtD($date) ?></p>
+<?php if ($photoCredits): ?><p style="font-size:8px; color:<?= $MUTED ?>; margin:4px 0 0 0;">Photographs: <?= implode(' · ', array_map('esc', array_values($photoCredits))) ?></p><?php endif; ?>
 <?php endif; /* tf-clientdoc-r1: end of the paper-only bottom */ ?>
 
 <?php if (!$pdf): ?>

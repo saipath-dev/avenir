@@ -16,7 +16,7 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            background: linear-gradient(135deg, #e90c8b 0%, #8f2a8d 100%);
+            background: linear-gradient(135deg, #e90c8b 0%, #972247 100%);
             /* Alternative solid colors you can use:
             background-color: #4e54c8;
             background-color: #6c63ff;
