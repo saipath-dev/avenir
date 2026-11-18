@@ -2297,7 +2297,7 @@ final class TourService
             'sender'    => $sender + ['name' => null, 'phone' => null, 'email' => null, 'can_send' => false],
             'hotel'     => $hotel,
             'tour'      => [
-                'id' => (int) $j['tour_id'], 'tour_no' => $j['tour_no'], 'inquiry_no' => $it['inquiry_no'] ?? null, 'tour_name' => $j['tour_name'],
+                'id' => (int) $j['tour_id'], 'intake_id' => (int) ($j['intake_id'] ?? 0), 'tour_no' => $j['tour_no'], 'inquiry_no' => $it['inquiry_no'] ?? null, 'tour_name' => $j['tour_name'],
                 'agent_name' => $j['agent_name'], 'market_code' => $it['market_code'] ?? null, 'country_iso' => $it['country_iso'] ?? null,
                 'arrival_date' => $j['arrival_date'], 'departure_date' => $j['departure_date'], 'pax_total' => $j['tour_pax'],
                 'pax_adults' => $it['pax_adults'] ?? null, 'pax_children' => $it['pax_children'] ?? null,

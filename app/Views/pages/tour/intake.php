@@ -1333,6 +1333,7 @@
     <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary btn-sm" id="mf_ok">Save</button></div>
 </div></div></div>
 
+<?= view('pages/tour/partials/pax_rooms') ?>
 <!-- the picture for one day of the quotation (Master Files → Photo Master) -->
 <div class="modal fade tf" id="m_photo" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content">
     <div class="modal-header"><h6 class="modal-title" id="mp_title">Picture for day</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
@@ -4399,6 +4400,8 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         pane('hotels').appendChild(full);
         bins.hotels.forEach(c => full.appendChild(c));
         ['acts', 'trans', 'pax', 'notes', 'quote', 'book'].forEach(k => bins[k].forEach(c => pane(k).appendChild(c)));
+        // tf-paxrooms-r1: the Passengers tab is the Passenger Management screen (partials/pax_rooms); the party and room counts the quotation is priced on fold below it
+        if (window.PaxRooms && pane('pax')) window.PaxRooms.mount(pane('pax'), it.id);
         // tf-quotecheck-r1: the quotation (versions, Go for Quotation, previews, pricing) sits at the top of Before Quotation & Confirmation
         { const qp = pane('quote'), cp = pane('check'), at = document.getElementById('inq_check');
           if (qp && cp && at) { const qw = document.createElement('div'); qw.id = 'inq_quote_here';

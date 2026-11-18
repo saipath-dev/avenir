@@ -161,7 +161,8 @@ class ConfirmedToursController extends BaseController
                 if (!empty($j['archived_at']) || (string) ($j['status'] ?? '') === 'cancelled') {
                     continue;
                 }
-                $r = \App\Libraries\TourFlow\RoomingList::build($j, $pax, $j['room_type_text'] ?? null);
+                $r = \App\Libraries\TourFlow\PaxRooms::roomingForJob($db, (int) $t['intake_id'], (int) $j['id'], (string) ($j['meal_plan'] ?? ''))   // tf-paxrooms-r1
+                    ?? \App\Libraries\TourFlow\RoomingList::build($j, $pax, $j['room_type_text'] ?? null);
                 $rooms = [];
                 foreach ($r['rooms'] as $room) {
                     $rooms[] = ['code' => $room['code'], 'beds' => $room['beds'], 'guests' => array_map(static fn ($g) => (string) $g['name'], $room['guests'])];

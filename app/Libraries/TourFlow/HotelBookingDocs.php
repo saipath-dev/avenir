@@ -301,6 +301,13 @@ final class HotelBookingDocs
     /** The rooming list of the stay, from its record (an override for a preview only). */
     public static function rooming(array $doc): array
     {
+        // tf-paxrooms-r1: the rooms and sharing staff entered on the Passengers tab for this stay, where there are any
+        if (!empty($doc['tour']['intake_id']) && !empty($doc['stay']['id'])) {
+            $mine = PaxRooms::roomingForJob(\Config\Database::connect(), (int) $doc['tour']['intake_id'], (int) $doc['stay']['id'], (string) ($doc['stay']['meal_plan'] ?? ''));
+            if ($mine !== null) {
+                return $mine;
+            }
+        }
         return RoomingList::build($doc['stay'], (array) ($doc['passengers'] ?? []), $doc['stay']['room_type_text'] ?? null);
     }
 

@@ -143,6 +143,7 @@ final class RoomingList
 
     public static function roomLabel(array $r, string $typeText): string
     {
-        return trim((self::WORD[$r['code']] ?? $r['code']) . ' ' . $typeText);
+        // tf-paxrooms-r1: a room staff entered carries its own category (mixed categories in one group)
+        return trim((self::WORD[$r['code']] ?? $r['code']) . ' ' . (array_key_exists('category', $r) ? (string) $r['category'] : $typeText));
     }
 }
