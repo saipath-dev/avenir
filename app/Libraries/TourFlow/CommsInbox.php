@@ -35,6 +35,25 @@ final class CommsInbox
     public const REF_RE = '/AVH-REF:\s*([a-z0-9]{10,40})/i';
     public const CONTROL_RE = '/\b([A-Z]{2,5}-\d{4}-\d{3,6})-H(\d{2})\b/i';
 
+    /** tf-twobox-r1 (20 Nov 2026): two incoming mailboxes, each with its own settings, progress, status and errors. */
+    public const BOXES = ['agent' => ['prefix' => 'inbox_', 'label' => 'Agent inquiries'], 'hotel' => ['prefix' => 'inboxh_', 'label' => 'Hotel reservations']];
+    private static string $box = 'agent';
+
+    public static function useBox(string $b): void
+    {
+        self::$box = isset(self::BOXES[$b]) ? $b : 'agent';
+    }
+
+    public static function box(): string
+    {
+        return self::$box;
+    }
+
+    private static function pfx(): string
+    {
+        return self::BOXES[self::$box]['prefix'];
+    }
+
     private $db;
     private string $user;
     private ?int $userId;
@@ -73,10 +92,11 @@ final class CommsInbox
     /** The incoming mailbox settings, without the password (has_password instead). */
     public static function settings($db): array
     {
-        $m = ['host' => '', 'port' => 993, 'secure' => 'ssl', 'email' => '', 'folder' => 'INBOX', 'has_password' => false, 'password_state' => 'none', 'last_uid' => 0, 'uidvalidity' => '', 'last_check' => null, 'last_result' => null, 'auto_quote' => false, 'enabled' => true, 'has_token' => false, 'web_poll' => false, 'imap_ext' => (extension_loaded('imap') || ImapLite::available())];
+        $m = ['host' => '', 'port' => 993, 'secure' => 'ssl', 'email' => '', 'folder' => 'INBOX', 'has_password' => false, 'password_state' => 'none', 'last_uid' => 0, 'uidvalidity' => '', 'last_check' => null, 'last_result' => null, 'auto_quote' => false, 'enabled' => true, 'has_token' => false, 'web_poll' => false, 'imap_ext' => (extension_loaded('imap') || ImapLite::available()), 'start_uid' => '', 'start_at' => '', 'last_ok' => '', 'last_error' => '', 'back_on' => false, 'back_uid' => 0, 'box' => self::$box, 'label' => self::BOXES[self::$box]['label']];
+        $pfx = self::pfx();
         try {
-            foreach ($db->query('SELECT k, v FROM tf_meta WHERE k LIKE ?', ['inbox\_%'])->getResultArray() as $r) {
-                $k = substr((string) $r['k'], 6);
+            foreach ($db->query('SELECT k, v FROM tf_meta WHERE k LIKE ?', [str_replace('_', '\\_', $pfx) . '%'])->getResultArray() as $r) {
+                $k = substr((string) $r['k'], strlen($pfx));
                 $v = (string) $r['v'];
                 switch ($k) {
                     case 'pass':
@@ -101,24 +121,67 @@ final class CommsInbox
                     case 'web_poll':
                         $m['web_poll'] = $v === '1';
                         break;
+                    case 'back_on':
+                        $m['back_on'] = $v === '1';
+                        break;
+                    case 'back_uid':
+                        $m['back_uid'] = (int) $v;
+                        break;
                     default:
                         $m[$k] = $v;
                 }
             }
         } catch (\Throwable $e) {
         }
+        if (self::$box !== 'agent') {
+            $m['auto_quote'] = false;   // only the agent mailbox may prepare an inquiry from a new e-mail
+            try {   // the scheduled-task token and its web entry are one setting for both mailboxes
+                $m['has_token'] = self::metaGetG($db, 'poll_token') !== '';
+                $m['web_poll'] = self::metaGetG($db, 'web_poll') === '1';
+            } catch (\Throwable $e) {
+            }
+        }
         $m['configured'] = $m['host'] !== '' && $m['email'] !== '' && $m['password_state'] === 'sealed';
+        $m['status'] = !$m['configured'] ? 'not_connected' : ($m['last_error'] !== '' ? 'failed' : 'connected');
         return $m;
     }
 
     private static function meta($db, string $k, $v): void
     {
-        $db->query('INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)', ['inbox_' . $k, (string) $v]);
+        $db->query('INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)', [self::pfx() . $k, (string) $v]);
+    }
+
+    /** A setting shared by both mailboxes (the scheduled-task token, its web entry). */
+    private static function metaGetG($db, string $k): string
+    {
+        $r = $db->query('SELECT v FROM tf_meta WHERE k = ?', ['inbox_' . $k])->getRowArray();
+        return (string) ($r['v'] ?? '');
+    }
+
+    /**
+     * The exact point collection starts from: the server's next UID at the first successful connection. Everything already in the
+     * mailbox stays there, unread by TourFlow, until "Import older mail" is chosen. Recorded once; saving settings again keeps it.
+     */
+    private static function recordStart($db, int $uidNext, string $validity, string $why = 'first connection'): void
+    {
+        $uidNext = max(1, $uidNext);
+        self::meta($db, 'start_uid', $uidNext);
+        self::meta($db, 'start_at', date('Y-m-d H:i:s') . ' (' . $why . ')');
+        self::meta($db, 'last_uid', $uidNext - 1);
+        self::meta($db, 'uidvalidity', $validity);
+        self::meta($db, 'back_on', '0');
+        self::meta($db, 'back_uid', 0);
+    }
+
+    /** Deliberate: also collect what was in the mailbox before the starting point, 50 per check, after any new mail. */
+    public static function importOlder($db, bool $on = true): void
+    {
+        self::meta($db, 'back_on', $on ? '1' : '0');
     }
 
     private static function metaGet($db, string $k): string
     {
-        $r = $db->query('SELECT v FROM tf_meta WHERE k = ?', ['inbox_' . $k])->getRowArray();
+        $r = $db->query('SELECT v FROM tf_meta WHERE k = ?', [self::pfx() . $k])->getRowArray();
         return (string) ($r['v'] ?? '');
     }
 
@@ -128,7 +191,8 @@ final class CommsInbox
         $was = self::settings($db);
         $host = trim((string) ($b['host'] ?? $was['host']));
         $port = (int) ($b['port'] ?? $was['port']) ?: 993;
-        $secure = in_array($b['secure'] ?? $was['secure'], ['ssl', 'tls', 'none'], true) ? $b['secure'] : 'ssl';
+        $secure = (string) ($b['secure'] ?? $was['secure']);
+        $secure = in_array($secure, ['ssl', 'tls', 'none'], true) ? $secure : 'ssl';
         $email = trim((string) ($b['email'] ?? $was['email']));
         $folder = trim((string) ($b['folder'] ?? $was['folder'])) ?: 'INBOX';
         $pw = (string) ($b['password'] ?? '');
@@ -148,6 +212,8 @@ final class CommsInbox
                 throw new \RuntimeException($r['message'] . ' Nothing was saved.');
             }
             self::meta($db, 'pass', Secrets::seal($pw));
+            self::meta($db, 'last_error', '');
+            $startNow = ['uidnext' => (int) ($r['uidnext'] ?? 0), 'uidvalidity' => (string) ($r['uidvalidity'] ?? '')];
             $changes[] = ['what' => 'incoming mailbox password', 'from' => $was['has_password'] ? '(set)' : '(none)', 'to' => '(set — accepted by ' . $host . ', encrypted at rest)'];
         } elseif ($was['has_password'] && (strcasecmp($email, $was['email']) !== 0 || strcasecmp($host, $was['host']) !== 0)) {
             self::meta($db, 'pass', '');
@@ -157,11 +223,36 @@ final class CommsInbox
             if ((string) $was[$k] !== (string) $v) {
                 $changes[] = ['what' => 'incoming mailbox ' . $k, 'from' => $was[$k], 'to' => $v];
                 if ($k === 'email' || $k === 'host' || $k === 'folder') {
-                    self::meta($db, 'last_uid', 0);   // a different mailbox: start its UIDs from the beginning (Message-ID keeps duplicates out)
-                    self::meta($db, 'uidvalidity', '');
+                    $newBox = true;   // a different mailbox or folder: its own starting point is recorded below; nothing else resets progress
                 }
             }
             self::meta($db, $k, $v);
+        }
+        // tf-twobox-r1: the starting point — recorded once per mailbox, kept when settings are saved again
+        $haveStart = self::metaGet($db, 'start_uid') !== '';
+        if (!empty($newBox) && $haveStart) {
+            self::meta($db, 'start_uid', '');
+            $haveStart = false;
+        }
+        if (!$haveStart && $host !== '' && $email !== '') {
+            if (empty($startNow)) {
+                $stored = Secrets::reveal(self::metaGet($db, 'pass'));
+                if ($stored !== '') {
+                    $r2 = self::checkLogin($host, $port, $secure, $folder, $email, $stored);
+                    $stored = '';
+                    if ($r2['ok']) {
+                        $startNow = ['uidnext' => (int) ($r2['uidnext'] ?? 0), 'uidvalidity' => (string) ($r2['uidvalidity'] ?? '')];
+                    }
+                }
+            }
+            if (!empty($startNow) && $startNow['uidnext'] > 0) {
+                self::recordStart($db, $startNow['uidnext'], $startNow['uidvalidity']);
+                $changes[] = ['what' => 'incoming mailbox starting point', 'from' => '(none)', 'to' => 'messages arriving from now on (next UID ' . $startNow['uidnext'] . '); older mail stays in the mailbox'];
+            }
+        }
+        if (array_key_exists('import_older', $b)) {
+            self::importOlder($db, !empty($b['import_older']));
+            $changes[] = ['what' => 'import older mail', 'from' => '', 'to' => !empty($b['import_older']) ? 'on — collected 50 per check' : 'off'];
         }
         if (array_key_exists('auto_quote', $b)) {
             self::meta($db, 'auto_quote', !empty($b['auto_quote']) ? '1' : '0');
@@ -173,7 +264,7 @@ final class CommsInbox
             self::meta($db, 'enabled', !empty($b['enabled']) ? '1' : '0');
         }
         if (array_key_exists('web_poll', $b)) {
-            self::meta($db, 'web_poll', !empty($b['web_poll']) ? '1' : '0');
+            $db->query('INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)', ['inbox_web_poll', !empty($b['web_poll']) ? '1' : '0']);
             if ($was['web_poll'] !== !empty($b['web_poll'])) {
                 $changes[] = ['what' => 'web entry for the scheduled task', 'from' => $was['web_poll'] ? 'on' : 'off', 'to' => !empty($b['web_poll']) ? 'on' : 'off'];
             }
@@ -182,7 +273,7 @@ final class CommsInbox
         if (!empty($b['new_token'])) {
             // the token is shown once and kept only as a hash: it cannot be read back from the database or a backup
             $newToken = bin2hex(random_bytes(24));
-            self::meta($db, 'poll_token', 'sha256:' . hash('sha256', $newToken));
+            $db->query('INSERT INTO tf_meta (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)', ['inbox_poll_token', 'sha256:' . hash('sha256', $newToken)]);
             $changes[] = ['what' => 'scheduled-task token', 'from' => $was['has_token'] ? '(set)' : '(none)', 'to' => '(new one made; shown once)'];
         }
         return ['settings' => self::settings($db), 'changes' => $changes, 'new_token' => $newToken];
@@ -191,12 +282,24 @@ final class CommsInbox
     /** Is this the scheduled task's token? Only its hash is kept; the web entry must also be switched on. */
     public static function pollTokenOk($db, string $token): bool
     {
-        $stored = self::metaGet($db, 'poll_token');
-        if ($stored === '' || strlen($token) < 32 || self::metaGet($db, 'web_poll') !== '1') {
+        $stored = self::metaGetG($db, 'poll_token');
+        if ($stored === '' || strlen($token) < 32 || self::metaGetG($db, 'web_poll') !== '1') {
             return false;
         }
         $hash = str_starts_with($stored, 'sha256:') ? substr($stored, 7) : hash('sha256', $stored);
         return hash_equals($hash, hash('sha256', $token));
+    }
+
+    /** A plain reason an incoming mailbox could not be read (never the password). */
+    private static function inErr(string $why, string $host, string $email): string
+    {
+        if (stripos($why, 'login was refused') !== false) {
+            return 'Connection failed: the mail server ' . $host . ' refused the login for ' . $email . '. The password is wrong, the address does not exist, or IMAP is switched off for this mailbox.';
+        }
+        if (stripos($why, 'could not connect') !== false) {
+            return 'Connection failed: this server could not reach ' . $host . '. The mail server name or port is wrong, or outgoing connections on that port are blocked by the hosting (' . $why . ').';
+        }
+        return 'Connection failed: ' . $why . '.';
     }
 
     private static function mailboxSpec(string $host, int $port, string $secure, string $folder): string
@@ -208,15 +311,18 @@ final class CommsInbox
     /** Opens the mailbox read-only and says what it found; nothing is read or changed. */
     public static function checkLogin(string $host, int $port, string $secure, string $folder, string $email, string $password): array
     {
-        if (!extension_loaded('imap')) {
+        if (ImapLite::available() || !extension_loaded('imap')) {
+            // tf-twobox-r1: one reader on every server (the built-in one), so what is tested on localhost is what runs on UAT
             // tf-imaplite-r1: no imap extension on this server — the built-in reader opens the mailbox read-only instead
             try {
                 $box = ImapLite::open($host, $port, $secure, $email, $password, $folder);
                 $n = $box->exists;
+                $next = $box->nextUid();
+                $val = $box->uidvalidity;
                 $box->close();
-                return ['ok' => true, 'message' => 'The mail server ' . $host . ' accepted the login for ' . $email . ' (' . $folder . ': ' . $n . ' message' . ($n === 1 ? '' : 's') . '). Nothing was read.', 'messages' => $n];
+                return ['ok' => true, 'message' => 'The mail server ' . $host . ' accepted the login for ' . $email . ' (' . $folder . ': ' . $n . ' message' . ($n === 1 ? '' : 's') . '). Nothing was read.', 'messages' => $n, 'uidnext' => $next, 'uidvalidity' => $val];
             } catch (\Throwable $e) {
-                return ['ok' => false, 'message' => MailServer::readable('IMAP: ' . $e->getMessage(), $host, $email)];
+                return ['ok' => false, 'message' => self::inErr($e->getMessage(), $host, $email)];
             }
         }
         $spec = self::mailboxSpec($host, $port, $secure, $folder);
@@ -240,8 +346,73 @@ final class CommsInbox
 
     // ------------------------------------------------------------------ collecting
 
+    /** Which mailbox a stored message came through (column added on first use). */
+    private static function tagBox($db, int $id): void
+    {
+        static $ok = null;
+        try {
+            if ($ok === null) {
+                $ok = (bool) $db->query("SHOW COLUMNS FROM tf_mail_in LIKE 'box'")->getRowArray();
+                if (!$ok) {
+                    $db->query("ALTER TABLE tf_mail_in ADD COLUMN box VARCHAR(12) NULL");
+                    $ok = true;
+                }
+            }
+            $db->query('UPDATE tf_mail_in SET box = ? WHERE id = ?', [self::$box, $id]);
+        } catch (\Throwable $e) {
+            $ok = false;
+        }
+    }
+
+    /** Both mailboxes, one after the other, each on its own progress. $quiet: only those whose last check is old enough. */
+    public function checkAll(string $trigger = 'manual', bool $quiet = false): array
+    {
+        $was = self::$box;
+        $all = [];
+        foreach (array_keys(self::BOXES) as $b) {
+            self::useBox($b);
+            $s = self::settings($this->db);
+            if (!$s['configured'] || !$s['enabled']) {
+                continue;
+            }
+            if ($quiet && $s['last_check'] && strtotime((string) $s['last_check']) > time() - self::AUTO_INTERVAL) {
+                continue;
+            }
+            $r = $this->check($trigger);
+            $r['box'] = $b;
+            $r['label'] = self::BOXES[$b]['label'];
+            $all[$b] = $r;
+        }
+        self::useBox($was);
+        $out = ['ok' => true, 'message' => '', 'new' => 0, 'filed' => 0, 'unmatched' => 0, 'skipped' => 0, 'duplicates' => 0, 'drafts' => 0, 'trigger' => $trigger, 'boxes' => $all, 'notes' => []];
+        if (!$all) {
+            $out['ok'] = $quiet;
+            $out['message'] = 'No incoming mailbox is connected (Admin → Settings → Incoming mailboxes).';
+            return $out;
+        }
+        $msgs = [];
+        foreach ($all as $r) {
+            foreach (['new', 'filed', 'unmatched', 'skipped', 'duplicates', 'drafts'] as $k) {
+                $out[$k] += (int) $r[$k];
+            }
+            $out['ok'] = $out['ok'] && $r['ok'];
+            $msgs[] = $r['label'] . ': ' . $r['message'];
+            foreach ((array) ($r['notes'] ?? []) as $n) {
+                $out['notes'][] = $r['label'] . ': ' . $n;
+            }
+        }
+        $out['message'] = implode(' · ', $msgs);
+        return $out;
+    }
+
     /** The quiet check a page load triggers: only when the last check is older than AUTO_INTERVAL. */
     public function autoCheck(): ?array
+    {
+        $r = $this->checkAll('page', true);
+        return $r['boxes'] ? $r : null;
+    }
+
+    private function autoCheckOne(): ?array
     {
         $s = self::settings($this->db);
         if (!$s['configured'] || !$s['enabled']) {
@@ -269,11 +440,11 @@ final class CommsInbox
             $out['message'] = 'Collecting is switched off (Tour Desk Admin → Settings → Incoming mailbox).';
             return $out;
         }
-        if (!extension_loaded('imap')) {
-            return $this->checkLite($out, $s);   // tf-imaplite-r1: the built-in reader
+        if (ImapLite::available() || !extension_loaded('imap')) {
+            return $this->checkLite($out, $s);   // tf-imaplite-r1: the built-in reader (also the one that imports older mail)
         }
         // one run at a time
-        $lock = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail_in' . DIRECTORY_SEPARATOR . '.lock';
+        $lock = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail_in' . DIRECTORY_SEPARATOR . '.lock' . (self::$box === 'agent' ? '' : '-' . self::$box);
         if (!is_dir(dirname($lock))) {
             @mkdir(dirname($lock), 0775, true);
         }
@@ -301,9 +472,15 @@ final class CommsInbox
             $st = @imap_status($m, $spec, SA_MESSAGES | SA_UIDVALIDITY | SA_UIDNEXT);
             $validity = $st ? (string) $st->uidvalidity : '';
             $lastUid = (int) $s['last_uid'];
-            if ($validity !== '' && $s['uidvalidity'] !== '' && $validity !== (string) $s['uidvalidity']) {
-                $lastUid = 0;   // the server renumbered the folder: read everything again; Message-ID keeps duplicates out
-                $out['notes'][] = 'The mailbox was renumbered by the server (UIDVALIDITY changed); every message was checked again by Message-ID.';
+            $next = $st ? (int) $st->uidnext : 0;
+            if ($s['start_uid'] === '' && $next > 0) {
+                self::recordStart($this->db, $next, $validity);   // never collected before: start from now, older mail stays in the mailbox
+                $lastUid = $next - 1;
+                $out['notes'][] = 'Starting point recorded (next UID ' . $next . '): only mail arriving from now on is collected.';
+            } elseif ($validity !== '' && $s['uidvalidity'] !== '' && $validity !== (string) $s['uidvalidity'] && $next > 0) {
+                self::recordStart($this->db, $next, $validity, 'the server renumbered the folder');
+                $lastUid = $next - 1;
+                $out['notes'][] = 'The mailbox was renumbered by the server (UIDVALIDITY changed); a new starting point was recorded. Use "Import older mail" if a message is missing.';
             }
             $total = $st ? (int) $st->messages : 0;
             $overview = $total > 0 ? (@imap_fetch_overview($m, ($lastUid + 1) . ':*', FT_UID) ?: []) : [];
@@ -361,7 +538,7 @@ final class CommsInbox
     /** check() for a server with no imap extension: ImapLite reads the mailbox read-only; everything after that is the same. */
     private function checkLite(array $out, array $s): array
     {
-        $lock = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail_in' . DIRECTORY_SEPARATOR . '.lock';
+        $lock = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail_in' . DIRECTORY_SEPARATOR . '.lock' . (self::$box === 'agent' ? '' : '-' . self::$box);
         if (!is_dir(dirname($lock))) {
             @mkdir(dirname($lock), 0775, true);
         }
@@ -377,16 +554,25 @@ final class CommsInbox
             $box = ImapLite::open($s['host'], (int) $s['port'], $s['secure'], $s['email'], $password, $s['folder']);
             $password = '';
         } catch (\Throwable $e) {
-            $out['message'] = MailServer::readable('IMAP: ' . $e->getMessage(), $s['host'], $s['email']);
+            $out['message'] = self::inErr($e->getMessage(), $s['host'], $s['email']);
             $this->finish($out, $fh, $lock);
             return $out;
         }
         try {
             $validity = $box->uidvalidity;
             $lastUid = (int) $s['last_uid'];
-            if ($validity !== '' && $s['uidvalidity'] !== '' && $validity !== (string) $s['uidvalidity']) {
-                $lastUid = 0;
-                $out['notes'][] = 'The mailbox was renumbered by the server (UIDVALIDITY changed); every message was checked again by Message-ID.';
+            $next = $box->nextUid();
+            if ($s['start_uid'] === '') {
+                self::recordStart($this->db, $next, $validity);
+                $lastUid = $next - 1;
+                $s['start_uid'] = (string) $next;
+                $out['notes'][] = 'Starting point recorded (next UID ' . $next . '): only mail arriving from now on is collected.';
+            } elseif ($validity !== '' && $s['uidvalidity'] !== '' && $validity !== (string) $s['uidvalidity']) {
+                self::recordStart($this->db, $next, $validity, 'the server renumbered the folder');
+                $lastUid = $next - 1;
+                $s['start_uid'] = (string) $next;
+                $s['back_on'] = false;
+                $out['notes'][] = 'The mailbox was renumbered by the server (UIDVALIDITY changed); a new starting point was recorded. Use "Import older mail" if a message is missing.';
             }
             $s['uidvalidity'] = $validity !== '' ? $validity : $s['uidvalidity'];
             $taken = 0;
@@ -413,6 +599,38 @@ final class CommsInbox
                 }
                 $highest = max($highest, $uid);
                 self::meta($this->db, 'last_uid', $highest);
+            }
+            // tf-twobox-r1: "Import older mail" — what was in the mailbox before the starting point, after the new mail, oldest first
+            if ($s['back_on'] && $taken < self::MAX_PER_RUN) {
+                $limit = (int) $s['start_uid'];
+                $left = false;
+                foreach ($box->uidsAfter((int) $s['back_uid']) as $uid) {
+                    if ($uid >= $limit) {
+                        break;
+                    }
+                    if ($taken >= self::MAX_PER_RUN) {
+                        $left = true;
+                        break;
+                    }
+                    $taken++;
+                    $r = $this->importRaw($box, $uid, $s);
+                    $out[$r['outcome']]++;
+                    if ($r['outcome'] === 'filed' || $r['outcome'] === 'unmatched') {
+                        $out['new']++;
+                        $out['older'] = ($out['older'] ?? 0) + 1;
+                    }
+                    if ($r['outcome'] === 'error') {
+                        $left = true;
+                        break;
+                    }
+                    self::meta($this->db, 'back_uid', $uid);
+                }
+                if (!$left) {
+                    self::meta($this->db, 'back_on', '0');
+                    $out['notes'][] = 'Older mail: all of it has now been imported.';
+                } else {
+                    $out['notes'][] = 'Older mail: more remains and is imported on the next check.';
+                }
             }
             if ($validity !== '') {
                 self::meta($this->db, 'uidvalidity', $validity);
@@ -459,6 +677,7 @@ final class CommsInbox
                  $p['html'] !== '' ? mb_substr($p['html'], 0, 1000000) : null, $this->when($p['date'] ?: null), strlen($raw), 'new', $this->now(), $this->user]
             );
             $id = (int) $this->db->insertID();
+            self::tagBox($this->db, $id);
             foreach ($p['attachments'] as $a) {
                 $this->storeAttachmentData($id, (string) $a['name'], (string) $a['mime'], (string) $a['data']);
             }
@@ -504,13 +723,19 @@ final class CommsInbox
     {
         self::meta($this->db, 'last_check', $this->now());
         self::meta($this->db, 'last_result', mb_substr(($out['ok'] ? 'OK — ' : 'FAILED — ') . $out['message'], 0, 500));
+        if ($out['ok']) {
+            self::meta($this->db, 'last_ok', $this->now());
+            self::meta($this->db, 'last_error', '');
+        } else {
+            self::meta($this->db, 'last_error', mb_substr($this->now() . ' — ' . $out['message'], 0, 500));   // stays visible until a check succeeds
+        }
         if ($fh) {
             flock($fh, LOCK_UN);
             fclose($fh);
         }
         try {
             if ($out['new'] > 0 || !$out['ok']) {
-                Activity::master($this->db, $this->user, 'inbox', 0, 'Incoming mailbox check (' . $out['trigger'] . '): ' . $out['message'], [], $this->userId, $this->name);
+                Activity::master($this->db, $this->user, 'inbox', 0, self::BOXES[self::$box]['label'] . ' mailbox check (' . $out['trigger'] . '): ' . $out['message'], [], $this->userId, $this->name);
             }
         } catch (\Throwable $e) {
         }
@@ -560,6 +785,7 @@ final class CommsInbox
                  mb_substr($subject, 0, 400), $text !== '' ? $text : null, $parts['html'] !== '' ? mb_substr($parts['html'], 0, 1000000) : null, $this->when($h->date ?? ($o->date ?? null)), $size, 'new', $this->now(), $this->user]
             );
             $id = (int) $this->db->insertID();
+            self::tagBox($this->db, $id);
             foreach ($parts['attachments'] as $a) {
                 $this->storeAttachment($id, $uid, $a);
             }

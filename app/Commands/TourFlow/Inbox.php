@@ -30,7 +30,7 @@ class Inbox extends BaseCommand
             CLI::error('Communications & History (schema 47) is not installed.');
             return;
         }
-        $r = (new CommsInbox($db, 'scheduled task'))->check('scheduled');
+        $r = (new CommsInbox($db, 'scheduled task'))->checkAll('scheduled');
         CLI::write(date('Y-m-d H:i:s') . ' ' . ($r['ok'] ? 'OK' : 'FAILED') . ' — ' . $r['message'], $r['ok'] ? 'green' : 'red');
         foreach ((array) ($r['notes'] ?? []) as $n) {
             CLI::write('  ' . $n, 'yellow');

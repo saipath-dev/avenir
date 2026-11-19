@@ -336,7 +336,14 @@ class TourManageController extends BaseController
     /** tf-comms-r3: the incoming (IMAP) mailbox, without its password. */
     private function inboxSettings(): array
     {
-        $s = CommsInbox::settings($this->db());
+        $boxes = [];
+        foreach (array_keys(CommsInbox::BOXES) as $bx) {   // tf-twobox-r1: each mailbox with its own status, progress and errors
+            CommsInbox::useBox($bx);
+            $boxes[$bx] = CommsInbox::settings($this->db());
+        }
+        CommsInbox::useBox('agent');
+        $s = $boxes['agent'];
+        $s['boxes'] = $boxes;
         $s['sysadmin'] = (int) ($this->menuData()['user_role'] ?? 0) === 1;
         $s['poll_url'] = base_url('api/tourflow/mail_poll');
         $s['spark'] = 'php spark tourflow:inbox';
@@ -360,9 +367,18 @@ class TourManageController extends BaseController
         }
         try {
             $b = $this->body();
-            $r = CommsInbox::saveSettings($this->db(), $b);
+            $bx = isset(CommsInbox::BOXES[(string) ($b['box'] ?? '')]) ? (string) $b['box'] : 'agent';
+            CommsInbox::useBox($bx);
+            if ($bx === 'hotel') {
+                $b['auto_quote'] = 0;   // a hotel reply never becomes an inquiry by itself
+            }
+            try {
+                $r = CommsInbox::saveSettings($this->db(), $b);
+            } finally {
+                CommsInbox::useBox('agent');
+            }
             if ($r['changes']) {
-                Activity::master($this->db(), $this->user(), 'company', 0, 'Incoming mailbox settings changed', $r['changes'], $this->userId(), $this->actorName());
+                Activity::master($this->db(), $this->user(), 'company', 0, CommsInbox::BOXES[$bx]['label'] . ' mailbox settings changed', $r['changes'], $this->userId(), $this->actorName());
             }
             $s = $r['settings'];
             if (!empty($r['new_token'])) {

@@ -20,6 +20,7 @@ class ImapLite
     private int $tag = 0;
     public int $exists = 0;
     public string $uidvalidity = '';
+    public int $uidnext = 0;
 
     public static function available(): bool
     {
@@ -67,6 +68,9 @@ class ImapLite
             }
             if (preg_match('/UIDVALIDITY (\d+)/i', $l, $m)) {
                 $me->uidvalidity = $m[1];
+            }
+            if (preg_match('/UIDNEXT (\d+)/i', $l, $m)) {
+                $me->uidnext = (int) $m[1];
             }
         }
         if ($me->uidvalidity === '' && preg_match('/UIDVALIDITY (\d+)/i', $r['text'], $m)) {
@@ -120,6 +124,16 @@ class ImapLite
     }
 
     /** UIDs above $after, ascending. */
+    /** The UID the next arriving message will get: the server's UIDNEXT, or one past the highest UID in the folder. */
+    public function nextUid(): int
+    {
+        if ($this->uidnext > 0) {
+            return $this->uidnext;
+        }
+        $all = $this->uidsAfter(0);
+        return $all ? max($all) + 1 : 1;
+    }
+
     public function uidsAfter(int $after): array
     {
         if ($this->exists < 1) {

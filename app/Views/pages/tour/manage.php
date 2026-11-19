@@ -234,14 +234,28 @@
             if (j2.status !== 200) { toast('error', j2.message); return; }
             toast('success', j2.message); loadBackups();
         });
-        document.getElementById('ib_save')?.addEventListener('click', async () => {
-            const btn = document.getElementById('ib_save'); if (btn.disabled) return; btn.disabled = true;
-            let j2;
-            try { j2 = await post('/inbox', { host: document.getElementById('ib_host').value, port: document.getElementById('ib_port').value, secure: document.getElementById('ib_secure').value, folder: document.getElementById('ib_folder').value, email: document.getElementById('ib_email').value, password: document.getElementById('ib_pass').value, enabled: document.getElementById('ib_enabled').checked ? 1 : 0, auto_quote: document.getElementById('ib_auto').checked ? 1 : 0, new_token: document.getElementById('ib_token')?.checked ? 1 : 0, web_poll: document.getElementById('ib_web')?.checked ? 1 : 0 }); } finally { btn.disabled = false; }
-            document.getElementById('ib_pass').value = '';
-            if (j2.status !== 200) { toast('error', j2.message); return; }
-            if (j2.data && j2.data.new_token) { await Swal.fire({ title: 'Scheduled-task token — shown once', html: '<div class="help">' + esc(j2.message) + ' Put it in the task\'s X-TourFlow-Token header. It is kept only as a hash.</div><input class="form-control form-control-sm mono mt-2" value="' + esc(j2.data.new_token) + '" readonly onclick="this.select()">', showConfirmButton: true, confirmButtonText: 'I have copied it' }); } else toast('success', j2.message);
-            load();
+        document.querySelectorAll('.ibx-box').forEach(bx => { const k = bx.dataset.box; const q = c => bx.querySelector(c);
+            q('.ibx-save')?.addEventListener('click', async () => {
+                const btn = q('.ibx-save'); if (btn.disabled) return; btn.disabled = true; btn.textContent = 'Testing…';
+                let j2; const body = { box: k, host: q('.ibx-host').value, port: q('.ibx-port').value, secure: q('.ibx-secure').value, folder: q('.ibx-folder').value, email: q('.ibx-email').value, password: q('.ibx-pass').value, enabled: q('.ibx-enabled').checked ? 1 : 0, new_token: document.getElementById('ib_token')?.checked ? 1 : 0, web_poll: document.getElementById('ib_web')?.checked ? 1 : 0 };
+                if (k === 'agent') body.auto_quote = q('.ibx-auto').checked ? 1 : 0;
+                try { j2 = await post('/inbox', body); } finally { btn.disabled = false; btn.textContent = 'Save and test connection'; }
+                q('.ibx-pass').value = '';
+                if (j2.status !== 200) { toast('error', j2.message); return; }
+                if (j2.data && j2.data.new_token) { await Swal.fire({ title: 'Scheduled-task token — shown once', html: '<div class="help">' + esc(j2.message) + ' Put it in the task\'s X-TourFlow-Token header. It is kept only as a hash.</div><input class="form-control form-control-sm mono mt-2" value="' + esc(j2.data.new_token) + '" readonly onclick="this.select()">', showConfirmButton: true, confirmButtonText: 'I have copied it' }); } else toast('success', j2.message);
+                load();
+            });
+            q('.ibx-check')?.addEventListener('click', async () => {
+                const btn = q('.ibx-check'); if (btn.disabled) return; btn.disabled = true; btn.textContent = 'Checking…';
+                let j2; try { j2 = await fetch(BASE.replace(/tour\/manage.*$/, '') + 'tour/intake/comms/inbox/check?box=' + k, { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(r => r.json()); } catch (e) { j2 = { status: 500, message: 'The check could not be run: ' + e.message }; }
+                toast(j2.status === 200 ? 'success' : 'error', j2.message || ''); load();
+            });
+            q('.ibx-older')?.addEventListener('click', async () => {
+                const on = !/Stop/.test(q('.ibx-older').textContent);
+                if (on) { const c = await Swal.fire({ title: 'Import older mail?', html: '<div style="text-align:left;font-size:13.5px">Every message that was already in this mailbox before the starting point will be collected, 50 per check, after any new mail. Messages that match no record go to the Unmatched queue. Nothing in the mailbox itself is changed.</div>', showCancelButton: true, confirmButtonText: 'Yes, import older mail' }); if (!c.isConfirmed) return; }
+                const j2 = await post('/inbox', { box: k, import_older: on ? 1 : 0 });
+                toast(j2.status === 200 ? 'success' : 'error', j2.message || ''); load();
+            });
         });
         document.getElementById('sc_key')?.addEventListener('click', async () => {
             const r = await Swal.fire({ icon: 'question', title: 'Generate this environment\'s encryption key?', text: 'It is written to .env on this server only and never shown. Do this separately on UAT and on production; never copy a key between servers.', showCancelButton: true, confirmButtonText: 'Generate' });
@@ -462,6 +476,39 @@
         }));
     }
 
+    // tf-twobox-r1 (20 Nov 2026): Incoming Mailboxes — agent inquiries and hotel reservations, each on its own status and progress
+    function ibCards(ib) {
+        const B = ib.boxes || {}; const adm = !!ib.sysadmin; const dis = adm ? '' : 'disabled';
+        const pill = s => s === 'connected' ? '<span class="ibx-pill" style="color:#4f8a22">Connected</span>' : (s === 'failed' ? '<span class="ibx-pill" style="color:#b3261e">Connection failed</span>' : '<span class="ibx-pill" style="color:#842484">Not connected</span>');
+        const purpose = { agent: 'New inquiries and agent replies → Agent Emails', hotel: 'Hotel replies → Supplier Emails panel in Confirmed Tours' };
+        const one = (k) => { const b = B[k] || {}; const saved = b.password_state === 'sealed';
+            return `<div class="ibx-box" data-box="${k}"><div class="ibx-h"><span>${esc(b.label || k)}</span>${pill(b.status)}</div><div class="ibx-b">
+                <div class="ibx-r"><label>Purpose</label><div>${esc(purpose[k] || '')}</div></div>
+                <div class="ibx-r"><label>Mailbox address</label><input class="form-control form-control-sm ibx-email" value="${esc(b.email || '')}" maxlength="120" placeholder="${k === 'hotel' ? 'htl.res@avenirholidays.com' : 'Address to be selected'}" ${dis}></div>
+                <div class="ibx-r"><label>Password</label><input type="password" class="form-control form-control-sm ibx-pass" autocomplete="new-password" placeholder="${saved ? 'Saved — type only to replace it' : 'Enter password privately'}" ${dis}><span class="ibx-tag ${saved ? 'ok' : 'bad'}">${saved ? 'Saved' : (b.password_state === 'unreadable' ? 'Enter again' : 'Not saved')}</span></div>
+                <div class="ibx-r"><label>Last successful check</label><div>${esc(b.last_ok || 'Never')}</div></div>
+                <div class="ibx-r"><label>Latest error</label><div class="${b.last_error ? 'text-danger' : ''}">${esc(b.last_error || 'None')}</div></div>
+                <div class="ibx-r"><label>Automatic checks</label><div>${b.configured && b.enabled !== false ? 'Every 5 minutes by the server\'s scheduled task' + (b.last_check ? ' — last run ' + esc(b.last_check) : ' — not run yet') : 'Not configured (target: every 5 minutes)'}</div></div>
+                <div class="ibx-r"><label>Collection start</label><div>${b.start_at ? 'From ' + esc(b.start_at) + ' · next message no. ' + esc(b.start_uid) + ' · collected up to no. ' + esc(b.last_uid || 0) : 'Recorded at the first successful connection; older mail stays in the mailbox'}${b.back_on ? ' · <b>older mail is being imported</b>' : ''}</div></div>
+                <hr style="margin:10px 0">
+                ${k === 'agent' ? `<label class="help"><input type="checkbox" class="ibx-auto" ${b.auto_quote ? 'checked' : ''} ${dis}> <b>Prepare details from new emails for staff review</b></label><div class="help" style="margin-left:20px">AI extracts the details; staff check and correct them before the INQ number is created.</div>`
+                    : `<label class="help"><input type="checkbox" disabled> <b>Create inquiries from unmatched hotel emails — off</b></label><div class="help" style="margin-left:20px">Hotel replies require staff review before Confirm Booking. Receiving an email confirms nothing.</div>`}
+                <label class="help d-block mt-1"><input type="checkbox" class="ibx-enabled" ${b.enabled !== false ? 'checked' : ''} ${dis}> collect mail from this mailbox</label>
+                ${adm ? `<div class="mt-2 d-flex gap-2 flex-wrap"><button class="btn btn-sm ibx-save" style="background:#78b848;color:#fff;font-weight:700">Save and test connection</button><button class="btn btn-sm btn-light ibx-check" ${b.configured ? '' : 'disabled'}>Check mailbox now</button><button class="btn btn-sm ibx-older" style="border:1.5px solid #842484;color:#842484;background:#fff" ${b.configured && b.start_uid ? '' : 'disabled'}>${b.back_on ? 'Stop importing older mail' : 'Import older mail…'}</button></div>` : '<div class="help mt-2"><b>Only the System Administrator changes this.</b></div>'}
+                <details class="mt-2"><summary class="help" style="color:#842484;font-weight:700;cursor:pointer">Advanced settings — IMAP server · Port · Security · Folder</summary><div class="row g-2 mt-1">
+                    <div class="col-md-5"><label class="form-label help">IMAP server</label><input class="form-control form-control-sm ibx-host" value="${esc(b.host || (k === 'hotel' ? (B.agent || {}).host || 'imap.lolipop.jp' : ''))}" maxlength="120" ${dis}></div>
+                    <div class="col-md-2"><label class="form-label help">Port</label><input class="form-control form-control-sm ibx-port" value="${esc(b.port || 993)}" ${dis}></div>
+                    <div class="col-md-2"><label class="form-label help">Security</label><select class="form-select form-select-sm ibx-secure" ${dis}><option value="ssl" ${b.secure === 'ssl' || !b.secure ? 'selected' : ''}>SSL (993)</option><option value="tls" ${b.secure === 'tls' ? 'selected' : ''}>STARTTLS (143)</option><option value="none" ${b.secure === 'none' ? 'selected' : ''}>none</option></select></div>
+                    <div class="col-md-3"><label class="form-label help">Folder</label><input class="form-control form-control-sm ibx-folder" value="${esc(b.folder || 'INBOX')}" ${dis}></div></div></details>
+            </div></div>`; };
+        return `<div class="tf-card-b" style="border-top:1px solid var(--tf-line)" id="ib_card">
+            <style>.ibx-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:1100px){.ibx-grid{grid-template-columns:1fr}}.ibx-box{border:1px solid #e3dce7;border-radius:10px;overflow:hidden;background:#fff}.ibx-h{background:#842484;color:#fff;font-weight:700;font-size:16px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}.ibx-pill{background:#fff;border-radius:14px;padding:2px 12px;font-size:12.5px;font-weight:700}.ibx-b{padding:12px 14px;font-size:13px}.ibx-r{display:flex;align-items:center;gap:8px;margin-bottom:7px}.ibx-r label{width:170px;flex:none;font-weight:700}.ibx-r>div{flex:1}.ibx-tag{border-radius:12px;padding:2px 10px;font-weight:700;font-size:12px;white-space:nowrap}.ibx-tag.ok{background:#e8f3de;color:#4f8a22}.ibx-tag.bad{background:#fde8e8;color:#b3261e}</style>
+            <h6 style="font-size:15px;margin-bottom:2px">Incoming Mailboxes</h6>
+            <div class="help mb-2">Separate agent inquiries and hotel reservations. Each mailbox keeps its own collection progress, connection status and errors. Mail is read only: nothing in the mailbox is flagged, moved or deleted. Passwords are stored encrypted and never displayed. ${ib.imap_ext ? '' : '<b class="text-danger">This server cannot read IMAP mail.</b>'}</div>
+            <div class="ibx-grid">${one('agent')}${one('hotel')}</div>
+            <details class="mt-2"><summary class="help" style="color:#842484;font-weight:700;cursor:pointer">Advanced settings — Scheduler</summary><div class="help mt-1"><b>Scheduled task (UAT / production):</b> run <span class="mono">${esc(ib.spark || 'php spark tourflow:inbox')}</span> every 5 minutes from the server's own scheduler; it checks both mailboxes. The web entry <span class="mono">POST ${esc(ib.poll_url || '')}</span> with the token in the X-TourFlow-Token header is <b>${ib.web_poll ? 'on' : 'off'}</b> · ${ib.has_token ? 'token set' : 'no token yet'}. ${adm ? `<label><input type="checkbox" id="ib_web" ${ib.web_poll ? 'checked' : ''}> web entry on</label> <label><input type="checkbox" id="ib_token"> make a new token (shown once)</label> — applied with the next "Save and test connection".` : ''}</div></details>
+        </div>`;
+    }
     function renderSettings(n, co, ss, iw, et, mb, ib, sc) {
         mb = mb || {}; ib = ib || {}; sc = sc || {};
         return `<div class="tf-card-b">
@@ -502,22 +549,7 @@
             </div>
             ${mb.sysadmin ? `<div class="mt-2 d-flex gap-2"><button class="btn btn-primary btn-sm" id="mb_save">Save system mailbox and signature</button>${mb.email ? '<button class="btn btn-light btn-sm" id="mb_clear">Remove the system mailbox</button>' : ''}</div>` : ''}
         </div>
-        <div class="tf-card-b" style="border-top:1px solid var(--tf-line)" id="ib_card">
-            <h6 style="font-size:13px">Incoming mailbox — replies collected automatically into Communications &amp; History</h6>
-            <div class="help mb-2">The TourFlow mailbox is read by IMAP (read-only: nothing is flagged, moved or deleted), every message once, seen or unseen. A reply is filed on its record only by a certain reference — the Message-ID of an e-mail sent from here, the <span class="mono">[AVH:INQ 1038]</span> tag, or the <span class="mono">AVH-REF</span> conversation key — and anything else waits in the <a href="${esc(BASE.replace(/tour\/manage.*$/, '') + 'tour/intake/comms/inbox')}">Incoming e-mails queue</a>. Checked when a Communications page opens (at most every 5 minutes) and, on UAT / production, by a scheduled task every few minutes so mail is collected when nobody is signed in. ${ib.imap_ext ? '' : '<b class="text-danger">The PHP imap extension is not loaded on this server.</b>'} ${ib.sysadmin ? '' : '<b>Only the System Administrator changes this.</b>'}</div>
-            <div class="row g-2" style="max-width:900px">
-                <div class="col-md-4"><label class="form-label help">IMAP server</label><input class="form-control form-control-sm" id="ib_host" value="${esc(ib.host || '')}" maxlength="120" placeholder="e.g. imap.lolipop.jp" ${ib.sysadmin ? '' : 'disabled'}></div>
-                <div class="col-md-2"><label class="form-label help">Port</label><input class="form-control form-control-sm" id="ib_port" value="${esc(ib.port || 993)}" ${ib.sysadmin ? '' : 'disabled'}></div>
-                <div class="col-md-2"><label class="form-label help">Security</label><select class="form-select form-select-sm" id="ib_secure" ${ib.sysadmin ? '' : 'disabled'}><option value="ssl" ${ib.secure === 'ssl' || !ib.secure ? 'selected' : ''}>SSL (993)</option><option value="tls" ${ib.secure === 'tls' ? 'selected' : ''}>STARTTLS (143)</option><option value="none" ${ib.secure === 'none' ? 'selected' : ''}>none</option></select></div>
-                <div class="col-md-4"><label class="form-label help">Folder</label><input class="form-control form-control-sm" id="ib_folder" value="${esc(ib.folder || 'INBOX')}" ${ib.sysadmin ? '' : 'disabled'}></div>
-                <div class="col-md-6"><label class="form-label help">Mailbox address</label><input class="form-control form-control-sm" id="ib_email" value="${esc(ib.email || '')}" maxlength="120" placeholder="e.g. tourflow-test@avenirholidays.com" ${ib.sysadmin ? '' : 'disabled'}></div>
-                <div class="col-md-6"><label class="form-label help">Mailbox password ${ib.password_state === 'sealed' ? '<span class="text-success">— saved, accepted by the server, encrypted at rest</span>' : ib.password_state === 'unreadable' ? '<span class="text-danger">— saved under another server\'s key; enter it again</span>' : '<span class="text-danger">— not saved yet</span>'}</label><input type="password" class="form-control form-control-sm" id="ib_pass" autocomplete="new-password" placeholder="${ib.password_state === 'sealed' ? 'leave blank to keep the saved one' : 'type it to check and save'}" ${ib.sysadmin ? '' : 'disabled'}></div>
-                <div class="col-md-6"><label class="help"><input type="checkbox" id="ib_enabled" ${ib.enabled !== false ? 'checked' : ''} ${ib.sysadmin ? '' : 'disabled'}> collect mail from this mailbox</label><br><label class="help"><input type="checkbox" id="ib_auto" ${ib.auto_quote ? 'checked' : ''} ${ib.sysadmin ? '' : 'disabled'}> read an unmatched e-mail that looks like a quotation request into a new inquiry and a <b>draft</b> quotation for staff review (never issued or sent by itself)</label></div>
-                <div class="col-md-6"><div class="help">Last check: <b>${esc(ib.last_check || 'never')}</b>${ib.last_result ? ' — ' + esc(ib.last_result) : ''}<br>Last UID read: ${esc(ib.last_uid || 0)}</div></div>
-                <div class="col-12"><div class="help"><b>Scheduled task (UAT / production):</b> run <span class="mono">${esc(ib.spark || 'php spark tourflow:inbox')}</span> every 5 minutes from the server's own scheduler (Windows Task Scheduler / cron). The web entry <span class="mono">POST ${esc(ib.poll_url || '')}</span> with the token in the <span class="mono">X-TourFlow-Token</span> header is <b>${ib.web_poll ? 'on' : 'off'}</b> (off by default; only the token's hash is kept, the token is shown once) ${ib.has_token ? '· token set' : '· no token yet'}. ${ib.sysadmin ? '<label class="help"><input type="checkbox" id="ib_web" ' + (ib.web_poll ? 'checked' : '') + '> web entry on</label> <label class="help"><input type="checkbox" id="ib_token"> make a new token (shown once)</label>' : ''}</div></div>
-            </div>
-            ${ib.sysadmin ? `<div class="mt-2 d-flex gap-2"><button class="btn btn-primary btn-sm" id="ib_save">Save incoming mailbox</button></div>` : ''}
-        </div>
+        ${ibCards(ib)}
         <div class="tf-card-b" style="border-top:1px solid var(--tf-line)" id="sc_card">
             <h6 style="font-size:13px">Passwords at rest — this install's encryption key</h6>
             <div class="help mb-2">Mailbox passwords (the system mailbox, the incoming mailbox and every staff member's own mailbox) are encrypted with a key that exists only in this install's .env file. Each environment — development, UAT, production — generates its own; a key is never copied between them, shown or logged, and the encrypted passwords are left out of the TourFlow backup copies. After a deployment the passwords are entered again once.</div>

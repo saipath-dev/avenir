@@ -140,7 +140,14 @@ class CommsInboxController extends BaseController
     {
         try {
             @set_time_limit(300);
-            $r = $this->inbox()->check('manual');
+            $bx = (string) ($this->request->getPost('box') ?? $this->request->getGet('box') ?? '');
+            if (isset(CommsInbox::BOXES[$bx])) {
+                CommsInbox::useBox($bx);
+                $r = $this->inbox()->check('manual');
+                CommsInbox::useBox('agent');
+            } else {
+                $r = $this->inbox()->checkAll('manual');
+            }
             return $this->json(['status' => $r['ok'] ? 200 : 400, 'message' => $r['message'], 'data' => $r]);
         } catch (\Throwable $e) {
             return $this->fail($e);
@@ -174,7 +181,7 @@ class CommsInboxController extends BaseController
             return $this->response->setStatusCode(403)->setHeader('Cache-Control', 'no-store')->setJSON(['status' => 403, 'message' => 'Forbidden.']);
         }
         @set_time_limit(300);
-        $r = (new CommsInbox($db, 'scheduled task'))->check('scheduled');
+        $r = (new CommsInbox($db, 'scheduled task'))->checkAll('scheduled');
         return $this->json(['status' => $r['ok'] ? 200 : 400, 'message' => $r['message'], 'data' => ['new' => $r['new'], 'filed' => $r['filed'], 'unmatched' => $r['unmatched'], 'duplicates' => $r['duplicates'], 'skipped' => $r['skipped'], 'drafts' => $r['drafts']]]);
     }
 
