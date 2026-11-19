@@ -434,6 +434,7 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->get('confirmed/(:num)/supplier_mail', [ConfirmedToursController::class, 'supplierMail']);
     $routes->get('confirmed/(:num)/supplier_mail/preview/(:segment)/(:num)', [ConfirmedToursController::class, 'supplierMailPreview']);
     $routes->get('confirmed/(:num)/supplier_mail/voucher/(:segment)/(:num)/(:segment)', [ConfirmedToursController::class, 'supplierMailVoucher']);
+    $routes->get('confirmed/(:num)/supplier_mail/replies/hotel/(:num)', [ConfirmedToursController::class, 'supplierMailReplies']);
     $routes->get('confirmed/(:num)/supplier_mail/sent/(:num)', [ConfirmedToursController::class, 'supplierMailSent']);
     $routes->get('confirmed/(:num)/supplier_mail/sent/(:num)/file/(:num)', [ConfirmedToursController::class, 'supplierMailSentFile']);
     $routes->post('confirmed/(:num)/supplier_mail/send', [ConfirmedToursController::class, 'supplierMailSend']);

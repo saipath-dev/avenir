@@ -33,6 +33,7 @@ final class CommsInbox
     public const AUTO_INTERVAL = 300;  // seconds between the quiet checks a page load triggers
     public const TAG_RE = '/\[AVH:\s*((?:INQ)\s*\d{3,6}|[A-Z]{2,5}-\d{4}-\d{3,6})\s*\]/i';
     public const REF_RE = '/AVH-REF:\s*([a-z0-9]{10,40})/i';
+    public const CONTROL_RE = '/\b([A-Z]{2,5}-\d{4}-\d{3,6})-H(\d{2})\b/i';
 
     private $db;
     private string $user;
@@ -578,7 +579,7 @@ final class CommsInbox
             $this->db->query("UPDATE tf_mail_in SET status = 'unmatched' WHERE id = ?", [$mailId]);
             return ['status' => 'unmatched', 'reason' => 'no certain reference'];
         }
-        $this->attachTo($mailId, (int) $hit['intake_id'], $hit['comm_id'], $hit['reason'], 'auto');
+        $this->attachTo($mailId, (int) $hit['intake_id'], $hit['comm_id'], $hit['reason'], 'auto', $hit['hotel_job'] ?? null);
         return ['status' => 'matched', 'reason' => $hit['reason']];
     }
 
@@ -601,8 +602,27 @@ final class CommsInbox
                 return ['intake_id' => (int) $c['intake_id'], 'comm_id' => (int) $c['id'], 'reason' => 'In-Reply-To / References names Message-ID of e-mail #' . $c['id'] . ' sent from the system'];
             }
         }
-        // 2. the system's reference tag in the subject or the body
         $hay = (string) ($r['subject'] ?? '') . "\n" . (string) ($r['body_text'] ?? '');
+        // 1b. tf-replies-r1 (19 Nov 2026): a Reservation Control No. (AVH-2026-00007-H02 = tour + the stay's first day) names ONE
+        // hotel booking. Filed on that booking only when the message names exactly one; two different numbers → a person decides.
+        if (preg_match_all(self::CONTROL_RE, $hay, $cm, PREG_SET_ORDER)) {
+            $jobs = [];
+            foreach ($cm as $x) {
+                $j = $this->db->query('SELECT j.id, t.intake_id FROM tf_hotel_job j JOIN tf_tour t ON t.id = j.tour_id
+                                        WHERE t.tour_no = ? AND j.day_from = ? AND j.archived_at IS NULL', [strtoupper($x[1]), (int) $x[2]])->getResultArray();
+                if (count($j) === 1) {
+                    $jobs[(int) $j[0]['id']] = ['intake_id' => (int) $j[0]['intake_id'], 'no' => strtoupper($x[1]) . '-H' . $x[2]];
+                }
+            }
+            if (count($jobs) === 1) {
+                $jid = (int) array_key_first($jobs);
+                return ['intake_id' => $jobs[$jid]['intake_id'], 'comm_id' => null, 'hotel_job' => $jid, 'reason' => 'Reservation Control No. ' . $jobs[$jid]['no'] . ' names this one hotel booking'];
+            }
+            if (count($jobs) > 1) {
+                return null;   // several bookings named in one message: a person splits it
+            }
+        }
+        // 2. the system's reference tag in the subject or the body
         if (preg_match_all(self::TAG_RE, $hay, $mm)) {
             $found = [];
             foreach ($mm[1] as $tag) {
@@ -645,7 +665,7 @@ final class CommsInbox
     }
 
     /** File a stored message on a record: the Communications line, its attachments, the thread. $how: auto | staff */
-    public function attachTo(int $mailId, int $intakeId, ?int $replyToComm, string $reason, string $how): array
+    public function attachTo(int $mailId, int $intakeId, ?int $replyToComm, string $reason, string $how, ?int $hotelJobId = null): array
     {
         $r = $this->db->query('SELECT * FROM tf_mail_in WHERE id = ?', [$mailId])->getRowArray();
         if (!$r) {
@@ -663,7 +683,8 @@ final class CommsInbox
         $c = $comms->add($intakeId, ['direction' => 'in', 'channel' => 'email', 'source' => 'system', 'ref_table' => 'tf_mail_in', 'ref_id' => $mailId, 'tag' => $tag,
             'occurred_at' => $r['received_at'], 'from_addr' => $r['from_addr'], 'to_addr' => $r['to_addr'], 'cc_addr' => $r['cc_addr'], 'subject' => $r['subject'] ?: '(no subject)', 'body' => $body !== '' ? $body : '(no text in the message)',
             'allow_empty' => true, 'message_id' => $r['message_id'], 'in_reply_to' => $replyToComm,
-            'links' => [['kind' => 'mail_in', 'id' => $mailId, 'label' => ($how === 'auto' ? 'filed automatically — ' : 'filed by ' . ($this->name ?: $this->user) . ' — ') . $reason]]]);
+            'links' => array_merge([['kind' => 'mail_in', 'id' => $mailId, 'label' => ($how === 'auto' ? 'filed automatically — ' : 'filed by ' . ($this->name ?: $this->user) . ' — ') . $reason]],
+                $hotelJobId ? [['kind' => 'hotel_job', 'id' => $hotelJobId, 'label' => 'reply on this hotel booking']] : [])]);
         foreach ($this->db->query('SELECT * FROM tf_mail_in_attachment WHERE mail_id = ?', [$mailId])->getResultArray() as $a) {
             $path = self::dir($mailId) . DIRECTORY_SEPARATOR . $a['file'];
             if (is_file($path)) {

@@ -232,7 +232,8 @@ class TourSupplierMail
             $doc  = $svc->hotelDocument($id, 'request', $who);
             $both = (new HotelBookingDocs($this->db, $this->actor))->bookingDocs($svc, $id, $who);
             $addr = (new TourMailer($this->db, $this->user, $this->userId, $this->actor))->hotelAddress($j['hotel_id'], $j['hotel_acc']);
-            return ['to' => $addr['email'] ?? null, 'subject' => (string) $doc['subject'], 'provider' => (string) $j['hotel_name'], 'message_id' => null,
+            // tf-replies-r1: the Reservation Control No. in the subject, so the hotel's reply names this one booking
+            return ['to' => $addr['email'] ?? null, 'subject' => (string) $doc['subject'] . ' [' . HotelBookingDocs::voucherNo($doc) . ']', 'provider' => (string) $j['hotel_name'], 'message_id' => null,
                     'html' => view('pages/tour/hotel_booking_email', ['doc' => $doc, 'control' => HotelBookingDocs::voucherNo($doc), 'message' => null]),
                     // tf-hotelreq-r10 (Shantha): the Booking Request voucher and the Rooming List always go TOGETHER, in the one e-mail
                     'attachments' => [['path' => $both['request']['path'], 'name' => $both['request']['original_name'], 'doc_id' => (int) $both['request']['id']],
@@ -326,6 +327,39 @@ class TourSupplierMail
         return [isset($a['bytes']) ? $a['bytes'] : (string) file_get_contents($a['path']), $a['name']];
     }
 
+    /**
+     * tf-replies-r1: what the supplier has answered on ONE hotel booking — every incoming message filed on it (from the
+     * mailbox, or recorded by the desk), with its attachments, and the confirmation evidence kept for the stay. Reads only.
+     */
+    public function replies(int $tourId, int $jobId): array
+    {
+        $t = $this->tour($tourId);
+        $j = $this->db->query('SELECT id, hotel_name, status, confirmation_ref, confirmed_with, confirmed_at, confirmed_by, hotel_confirmed_on, problem_code, problem_note FROM tf_hotel_job WHERE id = ? AND tour_id = ?', [$jobId, $tourId])->getRowArray();
+        if (!$j) {
+            throw new \RuntimeException('That stay is not on this tour.');
+        }
+        $out = [];
+        $rows = $this->db->query("SELECT id, direction, channel, occurred_at, from_addr, to_addr, subject, body, links_json, ref_table, recorded_name, recorded_by FROM tf_comm
+                                   WHERE intake_id = ? AND removed_at IS NULL AND direction = 'in' AND links_json LIKE '%hotel_job%' ORDER BY occurred_at DESC, id DESC", [(int) $t['intake_id']])->getResultArray();
+        foreach ($rows as $r) {
+            $mine = false; $how = '';
+            foreach ((array) json_decode((string) $r['links_json'], true) as $l) {
+                if (($l['kind'] ?? '') === 'hotel_job' && (int) ($l['id'] ?? 0) === $jobId) { $mine = true; }
+                if (($l['kind'] ?? '') === 'mail_in') { $how = (string) ($l['label'] ?? ''); }
+            }
+            if (!$mine) {
+                continue;
+            }
+            $att = array_map(static fn ($a) => ['id' => (int) $a['id'], 'name' => (string) $a['original_name'], 'bytes' => (int) $a['bytes']],
+                $this->db->query('SELECT id, original_name, bytes FROM tf_comm_attachment WHERE comm_id = ? AND removed_at IS NULL ORDER BY id', [(int) $r['id']])->getResultArray());
+            $out[] = ['id' => (int) $r['id'], 'at' => $r['occurred_at'], 'from' => $r['from_addr'], 'subject' => $r['subject'], 'text' => (string) $r['body'],
+                      'source' => $r['ref_table'] === 'tf_mail_in' ? 'mailbox' : 'desk', 'how' => $how !== '' ? $how : 'recorded by ' . ($r['recorded_name'] ?: $r['recorded_by'] ?: 'the desk'),
+                      'attachments' => $att];
+        }
+        $ev = $this->db->query("SELECT id, original_name, `by`, `at` FROM tf_hotel_doc WHERE job_id = ? AND kind = 'confirmation' ORDER BY id DESC", [$jobId])->getResultArray();
+        return ['job' => $j, 'replies' => $out, 'evidence' => $ev, 'reasons' => (new TourService($this->db, $this->user))->reasons('hotel_problem')];
+    }
+
     /** The exact e-mail of one past attempt (for "view what was sent"). */
     public function logRow(int $tourId, int $logId): ?array
     {
@@ -402,11 +436,13 @@ class TourSupplierMail
                 $r   = HotelMail::send($to, $c['subject'], $c['html'], [], $att);
                 $ok  = !empty($r['ok']);
                 $err = $ok ? null : (string) ($r['error'] ?? 'The mail server did not accept the message.');
+                // the stay's own record says where it REALLY went (a redirected test never reached the hotel)
+                $recTo = MailRedirect::active() ? MailRedirect::TO . ' (TEST — addressed to ' . $to . ')' : $to;
                 try {
                     if ($ok) {
-                        $svc->hotelRequestSent($id, 'email', $to, '', $c['subject'], $c['html'], $this->actor);
+                        $svc->hotelRequestSent($id, 'email', $recTo, '', $c['subject'], $c['html'], $this->actor);
                     } else {
-                        $svc->recordHotelMessage($id, 'request', 'email', $to, '', $c['subject'], $c['html'], 'failed', $err, $this->actor);
+                        $svc->recordHotelMessage($id, 'request', 'email', $recTo, '', $c['subject'], $c['html'], 'failed', $err, $this->actor);
                     }
                     $mm = $this->db->query('SELECT MAX(id) AS id FROM tf_hotel_message WHERE job_id = ?', [$id])->getRowArray();
                     $messageId = !empty($mm['id']) ? (int) $mm['id'] : null;
@@ -453,7 +489,7 @@ class TourSupplierMail
             try {
                 $t = $this->tour($tourId);
                 $svc->event((int) $t['intake_id'], $tourId, 'tour', $tourId, $ok ? 'supplier_mail_sent' : 'supplier_mail_failed', null, null,
-                    ($action === 'resend' ? 'Deliberate resend' : ($action === 'retry' ? 'Retry after a failed send' : 'E-mail')) . ' to ' . $c['provider'] . ' (' . $to . ') by ' . $this->actor
+                    ($action === 'resend' ? 'Deliberate resend' : ($action === 'retry' ? 'Retry after a failed send' : 'E-mail')) . ' to ' . $c['provider'] . ' (' . (MailRedirect::active() ? 'TEST — sent to ' . MailRedirect::TO . ' only, addressed to ' . $to : $to) . ') by ' . $this->actor
                     . ($ok ? ' — sent.' : ' — NOT sent: ' . $err) . (trim($reason) !== '' ? ' Reason: ' . trim($reason) : ''));
             } catch (\Throwable $e) {
                 // the attempt is on its own log either way

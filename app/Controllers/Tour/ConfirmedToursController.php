@@ -361,6 +361,19 @@ class ConfirmedToursController extends BaseController
         }
     }
 
+    // tf-replies-r1: GET .../supplier_mail/replies/hotel/(:num) — the supplier's replies on one hotel booking, for the review area
+    public function supplierMailReplies($tourId, $jobId)
+    {
+        try {
+            if (!$this->mayMail('hotel')) {
+                return $this->json(['status' => 403, 'message' => 'Your sign-in does not hold the Hotel Bookings desk.']);
+            }
+            return $this->json(['status' => 200, 'data' => $this->supDesk()->replies((int) $tourId, (int) $jobId)]);
+        } catch (\Throwable $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()]);
+        }
+    }
+
     // GET .../supplier_mail/sent/(:num) — one past attempt exactly as it went (or failed)
     public function supplierMailSent($tourId, $logId)
     {
