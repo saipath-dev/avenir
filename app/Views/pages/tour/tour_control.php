@@ -45,6 +45,38 @@
     .oc .oc-card .st b { display:block; font-size:14px; font-weight:800; line-height:1.1; } .oc .oc-card .st span { font-size:12.5px; }
     .oc .c-red { color:#e02b20; } .oc .c-amber { color:#ee8a00; } .oc .c-green { color:#3fa22a; } .oc .c-grey { color:#1A1A1A; }
     .oc .oc-box { border:1px solid var(--line); border-radius:7px; background:#fff; overflow:hidden; margin-bottom:12px; }
+    /* tf-control-r5 (19 Nov 2026, Shantha): the whole Overview to the proportions of the approved mock-up — title, the fact strip
+       starting with the tour number, a status dot on every tab, the large signal light, the five area cards, the work table */
+    .oc { font-size:14px; }
+    .oc .oc-top { margin-bottom:10px; } .oc h2.oc-title { font-size:28px; font-weight:800; color:#1A1A1A; letter-spacing:-.3px; }
+    .oc .oc-top .oc-own { margin-left:auto; font-size:12.5px; } .oc .oc-top .oc-pill { font-size:13.5px; padding:6px 16px; border-radius:16px; }
+    .oc .oc-facts { padding:8px 4px; margin-bottom:12px; border-radius:9px; }
+    .oc .oc-facts { overflow:hidden; display:grid; grid-template-columns:max-content max-content minmax(0,1.15fr) max-content minmax(0,1.35fr) max-content minmax(0,1fr) minmax(0,1fr); }
+    .oc .oc-fact, .oc .oc-fact.nw { gap:9px; padding:2px 10px; min-width:0; } .oc .oc-fact i { font-size:22px; flex:none; } .oc .oc-fact > div { min-width:0; } .oc .oc-fact:not(.nw) small { white-space:normal; }
+    @media (max-width:1250px) { .oc .oc-facts { grid-template-columns:repeat(4, minmax(0,1fr)); row-gap:8px; } }
+    @media (max-width:760px) { .oc .oc-facts { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+    .oc .oc-fact small { font-size:11.5px; } .oc .oc-fact b { font-size:13.5px; } .oc .oc-fact b.pend { font-weight:800; color:var(--p); }
+    .oc .oc-tabs { margin-bottom:14px; border-radius:8px; }
+    .oc .oc-tab { padding:10px 10px; font-size:14px; display:inline-flex; align-items:center; justify-content:center; gap:9px; }
+    .oc .oc-tab .dot { width:12px; height:12px; flex:none; } .oc .oc-tab.on .dot { background:#fff; }
+    .oc .oc-ban { gap:34px; padding:14px 28px 14px 92px; margin-bottom:14px; border-radius:9px; }
+    .oc .oc-ban .txt { padding-left:34px; } .oc .oc-ban h3 { font-size:29px; letter-spacing:-.2px; } .oc .oc-ban p { font-size:15.5px; margin-top:2px; }
+    .oc .tl.big { gap:16px; padding:10px 17px; border-radius:14px; } .oc .tl.big span { width:44px; height:44px; }
+    .oc .tl { gap:8px; padding:6px 9px; border-radius:10px; } .oc .tl span { width:19px; height:19px; }
+    .oc .oc-cards { gap:12px; margin-bottom:14px; }
+    .oc .oc-card { padding:10px 12px 11px; border-radius:9px; column-gap:12px; row-gap:6px; }
+    .oc .oc-card > i { font-size:32px; } .oc .oc-card h5 { font-size:15.5px; line-height:1.2; }
+    .oc .oc-card .st b { font-size:15px; white-space:nowrap; } .oc .oc-card .st span { font-size:12px; display:block; margin-top:2px; line-height:1.25; }
+    .oc .oc-box { border-radius:9px; margin-bottom:14px; } .oc .oc-box > .h { font-size:19px; padding:5px 18px; }
+    .oc table.ow th { font-size:14.5px; padding:7px 14px; } .oc table.ow td { font-size:15px; padding:6px 14px; }
+    .oc table.ow td.area .dot { width:15px; height:15px; margin-right:14px; }
+    .oc .gbtn { font-size:14px; padding:5px 16px; border-radius:6px; } .oc table.ow .gbtn.act { min-width:200px; }
+    .oc .oc-row { padding:9px 16px; font-size:15px; gap:10px; } .oc .oc-row i.lead { font-size:22px; } .oc .oc-docs { padding:12px 16px; gap:14px; }
+    .oc .oc-foot { font-size:11.5px; padding:9px 14px; gap:8px; }
+    .oc .oc-ban { padding-top:9px; padding-bottom:9px; } .oc .tl.big { padding:9px 15px; gap:14px; } .oc .tl.big span { width:40px; height:40px; }
+    .oc .oc-card { padding:8px 12px 9px; row-gap:4px; } .oc .oc-card > i { font-size:28px; }
+    .oc table.ow th { padding:5px 14px; } .oc table.ow td { padding:4px 14px; } .oc .oc-row { padding:7px 16px; } .oc .oc-docs { padding:10px 16px; }
+    .oc .oc-facts { padding:6px 4px; } .oc .oc-back { margin-bottom:2px; } .oc .oc-foot .dot { width:13px; height:13px; }
     .oc .oc-box > .h { background:var(--p); color:#fff; font-size:15.5px; font-weight:700; padding:5px 16px; }
     .oc .oc-box > .h2 { background:var(--soft); color:var(--p); font-size:15px; font-weight:700; padding:6px 14px; display:flex; align-items:center; gap:10px; }
     .oc table.ow { width:100%; border-collapse:collapse; }
@@ -205,11 +237,13 @@
         const lead = String(it.tour_name || '').trim() || String(((it.passengers || [])[0] || {}).full_name || '').trim() || 'Name not given';
         const dmy = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ''); return m ? Number(m[3]) + ' ' + MON[Number(m[2]) - 1] + ' ' + m[1] : ''; };
         // arrival and departure: the date, the flight number and the time together, in one box
-        const fly = (d, f) => (d ? dmy(d) : 'Date pending') + ' • ' + (String(f || '').trim() || 'Flight / time pending');
+        const fly = (d, f) => (d ? dmy(d).replace(/ \d{4}$/, '') : 'Date pending') + ' • ' + (String(f || '').trim() || 'Pending');
         const cancelled = !!t.cancelled_at || t.stage === 'cancelled';
         const pill = cancelled ? '<span class="oc-pill red"><i class="bi bi-x-lg"></i> Tour cancelled</span>'
             : `<span class="oc-pill"><i class="bi bi-check-lg"></i> Tour confirmed • ${worst === 'green' ? 'Arrangements complete' : 'Bookings in progress'}</span>`;
-        const tabs = [['over', 'Overview'], ['hotels', 'Hotels'], ['trans', 'Transport &amp; Guides'], ['meals', 'Meals'], ['acts', 'Activities &amp; Entrances'], ['pax', 'Passengers &amp; Rooming'], ['itin', 'Itinerary'], ['docs', 'Documents &amp; History']];
+        // tf-control-r5: the tabs as the mock-up names them, each with the light of its own area
+        const tabs = [['over', 'Overview', 'grey'], ['hotels', 'Hotels', A.hotels[0]], ['trans', 'Transport', A.transport[0]], ['meals', 'Meals', A.meals[0]], ['acts', 'Entrances &amp; Activities', A.acts[0]],
+            ['pax', 'Passengers &amp; Rooming', A.pax[0]], ['itin', 'Itinerary', t.quote_version ? 'green' : 'grey'], ['docs', 'Documents &amp; History', 'grey']];
         const L = { toInq, toHotel, toTrans, toDocs, prog, quote, ver, btn };
         const more = morePanes(c, it, L);
 
@@ -238,18 +272,18 @@
                 <span><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
 
         document.getElementById('oc_body').innerHTML = `
-            <div class="oc-top"><h2>Confirmed Tour • ${esc(t.tour_no || '')}<span class="oc-who"> • ${esc(lead)}${pax ? ' • ' + pax + ' pax' : ''}${it.arrival_date ? ' • Arrival ' + dmy(it.arrival_date) : ''}</span></h2>${pill}</div>
+            <div class="oc-top"><h2 class="oc-title">Confirmed Tour • Operations Control</h2><span class="oc-own">Operations owner: <b>${esc(it.handler_name || 'Unassigned')}</b></span>${pill}</div>
             <div class="oc-facts">
+                ${fact('bi-briefcase', 'Tour', t.tour_no || '—')}
                 ${fact('bi-file-text', 'Inquiry', it.inquiry_no || '—').replace('<b>', `<b><a href="${toInq}" target="_blank" style="color:inherit" title="Open the confirmed inquiry">`).replace('</b>', '</a></b>')}
-                ${fact('bi-person', 'Agent', it.agent_name || 'Not given', false, true)}
-                ${fact('bi-bookmark', 'Agent booking ref', aref || 'Not recorded', !aref)}
-                ${fact('bi-people', 'Group', (it.tour_name || 'Not named') + ' • ' + party, false, true)}
-                ${fact('bi-calendar3', 'Tour dates', range(it.arrival_date, it.departure_date))}
-                ${fact('bi-airplane', 'Arrival • date, flight, time', fly(it.arrival_date, it.arrival_flight), false, true)}
-                ${fact('bi-airplane-fill', 'Departure • date, flight, time', fly(it.departure_date, it.departure_flight), false, true)}
-                ${fact('bi-person-badge', 'Operations owner', it.handler_name || 'Unassigned')}
+                ${fact('bi-person', 'Agent:', it.agent_name || 'Not given', false, true)}
+                ${fact('bi-bookmark', 'Agent booking ref:', aref || 'Not recorded', !aref)}
+                ${fact('bi-people', 'Group:', (it.tour_name || lead || 'Not named') + ' • ' + party, false, true)}
+                ${fact('bi-calendar3', '', range(it.arrival_date, it.departure_date)).replace('<small></small>', '')}
+                ${fact('bi-airplane', 'Arrival flight / time:', fly(it.arrival_date, it.arrival_flight), !String(it.arrival_flight || '').trim(), true)}
+                ${fact('bi-airplane-fill', 'Departure flight / time:', fly(it.departure_date, it.departure_flight), !String(it.departure_flight || '').trim(), true)}
             </div>
-            <div class="oc-tabs">${tabs.map(x => `<a class="oc-tab${TAB === x[0] ? ' on' : ''}" data-octab="${x[0]}">${x[1]}</a>`).join('')}</div>
+            <div class="oc-tabs">${tabs.map(x => `<a class="oc-tab${TAB === x[0] ? ' on' : ''}" data-octab="${x[0]}"><span class="dot ${x[2] || 'grey'}"></span>${x[1]}</a>`).join('')}</div>
             <div class="oc-pane${TAB === 'over' ? ' on' : ''}" data-ocpane="over">${overview}</div>
             <div class="oc-pane${TAB === 'pax' ? ' on' : ''}" data-ocpane="pax">${paxPane(c, it, L)}</div>
             ${Object.keys(more).map(k => `<div class="oc-pane${TAB === k ? ' on' : ''}" data-ocpane="${k}">${more[k]}</div>`).join('')}`;
