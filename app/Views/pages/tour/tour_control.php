@@ -147,6 +147,22 @@
     .oc .sm-r .at { display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; } .oc .sm-r .at a { color:#8b1d40; font-weight:700; }
     .oc .sm-f { border-top:1px solid #e7dfe3; padding-top:9px; display:grid; gap:7px; } .oc .sm-f .rw { display:flex; gap:8px; flex-wrap:wrap; } .oc .sm-f input[type=text], .oc .sm-f input[type=date], .oc .sm-f select, .oc .sm-f textarea { border:1.5px solid #d9d3dd; border-radius:7px; padding:6px 10px; font-size:13.5px; flex:1 1 200px; min-width:0; }
     .oc .sm-f textarea { width:100%; } .oc .sm-f .ck { display:flex; gap:8px; align-items:center; font-weight:600; margin:0; cursor:pointer; } .oc .sm-f .ck input { width:17px; height:17px; accent-color:#8b1d40; }
+    /* tf-supdesk-r2: Supplier Emails — three panes (bookings · thread · review) */
+    .oc .se { display:grid; grid-template-columns:minmax(230px,0.9fr) minmax(380px,1.9fr) minmax(300px,1.2fr); gap:14px; align-items:start; }
+    .oc .se-col { background:#fff; border:1px solid #e7dfe3; border-radius:10px; overflow:hidden; min-width:0; } .oc .se-h { background:#8b1d40; color:#fff; font-weight:800; font-size:15.5px; padding:11px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; } .oc .se-h small { font-weight:500; opacity:.9; }
+    .oc .se-h .chip { background:#fff; color:#8b1d40; font-size:12.5px; font-weight:800; padding:4px 11px; border-radius:6px; white-space:nowrap; } .oc .se-h .chip.green { color:#3f7a17; } .oc .se-h .chip.red { color:#a3261d; } .oc .se-h .chip.grey { color:#5f6470; }
+    .oc .se-b { padding:10px 12px 12px; display:grid; gap:8px; font-size:13.5px; } .oc .se-sub { padding:9px 14px; border-bottom:1px solid #e7dfe3; font-weight:700; font-size:13.5px; } .oc .se-sub small { display:block; font-weight:400; color:#5f6470; margin-top:2px; }
+    .oc .se-g { background:#f1ecee; font-weight:800; padding:7px 10px; border-radius:7px; font-size:14px; } .oc .se-g i { color:#8b1d40; margin-right:6px; }
+    .oc .se-i { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid #e7dfe3; border-radius:8px; cursor:pointer; color:#1a1a1a; text-decoration:none; } .oc .se-i:hover { border-color:#8b1d40; } .oc .se-i.on { background:#f8eef2; border-color:#8b1d40; border-left:4px solid #8b1d40; }
+    .oc .se-i .nm { flex:1 1 auto; min-width:0; } .oc .se-i .nm b { display:block; } .oc .se-i small { color:#5f6470; font-size:12px; } .oc .se-i .dot { width:10px; height:10px; border-radius:50%; flex:none; background:#b9bcc4; } .oc .se-i .dot.green { background:#4caf2f; } .oc .se-i .dot.amber { background:#f0a800; } .oc .se-i .dot.red { background:#d93025; }
+    .oc .se-m { border:1px solid #e7dfe3; border-radius:8px; background:#fbf7f9; } .oc .se-m.in { background:#f6fbf2; border-color:#d5e9c2; } .oc .se-m .hd { display:flex; align-items:center; gap:9px; padding:8px 10px; } .oc .se-m .hd > i { color:#8b1d40; } .oc .se-m .tl { flex:1 1 auto; min-width:0; } .oc .se-m .tl small { display:block; color:#5f6470; font-size:12px; }
+    .oc .se-m .bd { border-top:1px solid #e1edd6; padding:9px 12px 11px; background:#fff; border-radius:0 0 8px 8px; display:grid; gap:5px; } .oc .se-m .tx { white-space:pre-wrap; line-height:1.5; max-height:300px; overflow:auto; padding-top:6px; border-top:1px solid #eee; margin-top:3px; }
+    .oc .att { display:flex; align-items:center; gap:9px; border:1px solid #e7dfe3; border-radius:8px; padding:6px 10px; background:#fbf7f9; } .oc .att b { flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; } .oc .att .sm-b { margin:0; }
+    .oc .se-acts { display:flex; flex-wrap:wrap; gap:0; padding-top:4px; } .oc .se-b .bad { color:#a3261d; font-weight:700; } .oc .se-b .warn { color:#8a5a00; font-weight:600; } .oc .se-b .ok { color:#3f7a17; font-weight:800; }
+    .oc .se-t { width:100%; border-collapse:collapse; font-size:13px; } .oc .se-t th { background:#f1ecee; text-align:left; padding:6px 8px; font-size:12px; } .oc .se-t td { padding:6px 8px; border-bottom:1px solid #eee6ea; } .oc .se-t input { width:16px; height:16px; accent-color:#78b848; }
+    .oc .se-b .ref { color:#8b1d40; font-size:16px; } .oc .se-b .lb { font-weight:700; margin:4px 0 -4px; } .oc .se-b > input[type=text], .oc .se-b > select, .oc .se-b .rw input { border:1.5px solid #d9d3dd; border-radius:7px; padding:7px 10px; font-size:13.5px; width:100%; min-width:0; } .oc .se-b .rw { display:flex; gap:8px; }
+    .oc .se-go { height:44px; border:0; border-radius:8px; background:#78b848; color:#fff; font-size:16px; font-weight:800; cursor:pointer; } .oc .se-go:disabled { background:#c9c9c9; cursor:not-allowed; } .oc .se-n { background:#f4f1f2; border-radius:8px; padding:9px 11px; font-size:12.5px; color:#444; }
+    @media (max-width:640px) { .oc .se { grid-template-columns:1fr; } }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -266,7 +282,7 @@
             : `<span class="oc-pill" title="Operations owner: ${esc(it.handler_name || 'Unassigned')}">Tour confirmed • ${worst === 'green' ? 'Arrangements complete' : 'Bookings in progress'}</span>`;
         // tf-control-r5: the tabs as the mock-up names them, each with the light of its own area
         const tabs = [['over', 'Overview', 'grey'], ['hotels', 'Hotels', A.hotels[0]], ['trans', 'Transport', A.transport[0]], ['meals', 'Meals', A.meals[0]], ['acts', 'Entrances &amp; Activities', A.acts[0]],
-            ['pax', 'Passengers &amp; Rooming', A.pax[0]], ['itin', 'Itinerary', t.quote_version ? 'green' : 'grey'], ['mail', 'Supplier Emails &amp; Vouchers', 'grey'], ['docs', 'Documents &amp; History', 'grey']];
+            ['pax', 'Passengers &amp; Rooming', A.pax[0]], ['itin', 'Itinerary', t.quote_version ? 'green' : 'grey'], ['mail', 'Supplier Emails', 'grey'], ['docs', 'Documents &amp; History', 'grey']];
         const L = { toInq, toHotel, toTrans, toDocs, prog, quote, ver, btn };
         const more = morePanes(c, it, L);
 
@@ -433,126 +449,124 @@
             <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
     }
 
-    // ---------- tf-supdesk-r1 (19 Nov 2026, Shantha): Supplier Emails & Vouchers — one entry per hotel reservation and per booked
-    // service provider. Confirming the tour prepares the messages; nothing goes until a person has read the address, the e-mail and
-    // the voucher and presses Send Email on that entry. "E-mail sent" and "booking confirmed by the supplier" are shown separately.
-    let SM = null, SM_OPEN = null, SM_MSG = {};
+    // ---------- tf-supdesk-r2 (19 Nov 2026, Shantha's mock-up): Supplier Emails — three panes. LEFT the supplier bookings of this tour,
+    // MIDDLE the e-mail thread of the one selected (what was sent, what the supplier replied, the attachments), RIGHT the booking's
+    // details and the outcome staff record. Nothing is sent, confirmed or changed by the system on its own: every step is a press.
+    let SM = null, SM_SEL = null, SM_SEND = false, SM_MSG = {}, SM_REP = {}, SM_OPENMSG = {}, SM_INTAKE = 0, SM_PB = false;
     const SM_URL = `${PAGE}/${TOUR_ID}/supplier_mail`;
-    async function loadMail() { try { const j = await get(SM_URL); SM = j.status === 200 ? j.data : { error: j.message || 'Could not be read.' }; } catch (e) { SM = { error: e.message }; } drawMail(); }
+    const smKey = e => e.type + ':' + e.id;
+    async function loadMail() { try { const j = await get(SM_URL); SM = j.status === 200 ? j.data : { error: j.message || 'Could not be read.' }; } catch (e) { SM = { error: e.message }; }
+        const E = (SM && SM.entries) || []; if (E.length && !E.some(e => smKey(e) === SM_SEL)) SM_SEL = smKey(E[0]); drawMail(); if (SM_SEL) loadReplies(SM_SEL); }
+    async function loadReplies(key) { if (key.split(':')[0] !== 'hotel') return; try { const j = await get(`${SM_URL}/replies/hotel/${key.split(':')[1]}`); SM_REP[key] = j.status === 200 ? j.data : { error: j.message || 'Could not be read.' }; } catch (e) { SM_REP[key] = { error: e.message }; } drawMail(); }
+    const smDone = e => /^(confirmed|voucher_issued|done)$/.test(e.booking_state || '');
+    const smChip = e => smDone(e) ? ['green', 'Confirmed by supplier'] : (e.booking_state === 'problem' ? ['red', 'Problem'] : (e.replies > 0 ? ['amber', 'Awaiting staff review']
+        : (e.state === 'sent' && !e.last_failed ? ['amber', 'Awaiting supplier reply'] : (e.state === 'failed' || e.last_failed ? ['red', 'Send failed'] : ['grey', 'Not sent']))));
     function drawMail() {
         const box = document.getElementById('sm_box'); if (!box) return;
         if (!SM) { box.innerHTML = '<div class="oc-msg">Reading the supplier e-mails…</div>'; return; }
         if (SM.error) { box.innerHTML = `<div class="oc-msg">${esc(SM.error)}</div>`; return; }
-        const E = SM.entries || [], k = e => e.type + ':' + e.id;
-        const n = s => E.filter(e => e.state === s).length, held = E.filter(e => (e.flags || []).some(f => f.stop)).length;
-        const pillOf = e => e.state === 'sent' ? (e.last_failed ? '<span class="st-pill red">Last attempt failed</span>' : `<span class="st-pill green">E-mail sent${e.times_sent > 1 ? ' ×' + e.times_sent : ''}</span>`)
-            : (e.state === 'failed' ? '<span class="st-pill red">Send failed</span>' : '<span class="st-pill amber">Not sent</span>');
-        const bk = e => !e.booking ? '<span class="sm-mut">Recorded on the Transport desk</span>'
-            : `<span class="st-pill ${/^confirmed|voucher_issued|done$/.test(e.booking_state) ? 'green' : (e.booking_state === 'problem' || e.booking_state === 'to_book' ? 'red' : 'amber')}">${esc(e.booking)}</span>`;
-        const rows = E.map(e => {
-            const stop = (e.flags || []).filter(f => f.stop), key = k(e), open = SM_OPEN === key, sentOk = e.state === 'sent' && !e.last_failed;
-            const pv = `${SM_URL}/preview/${e.type}/${e.id}`;
-            const acts = !e.can ? '<span class="sm-mut">Your sign-in does not hold this desk</span>' :
-                `<a class="sm-b" href="${pv}" target="_blank"><i class="bi bi-envelope-open"></i> Preview Email</a>`
-                + (e.vouchers || []).map(v => `<a class="sm-b" href="${SM_URL}/voucher/${e.type}/${e.id}/${v.key}" target="_blank" title="${esc(v.label)}"><i class="bi bi-file-earmark-pdf"></i> ${(e.vouchers || []).length > 1 ? esc(v.label) : 'View Voucher'}</a>`).join('')
-                + (e.type === 'hotel' ? `<button class="sm-b${SM_REPOPEN === key ? ' on' : ''}" data-smrep="${key}"><i class="bi bi-inbox"></i> Replies &amp; outcome</button>` : '')
-                + (stop.length || !e.mailbox ? `<button class="sm-b go" disabled title="${esc(stop.length ? stop[0].text : 'No mailbox is set up to send from')}"><i class="bi bi-send"></i> Send Email</button>`
-                    : `<button class="sm-b go${sentOk ? ' again' : ''}" data-smopen="${key}"><i class="bi bi-send"></i> ${sentOk ? 'Send again' : (e.state === 'failed' || e.last_failed ? 'Retry Send' : 'Send Email')}</button>`);
-            const hist = (e.history || []).map(h => `<div class="sm-h"><span>${when(h.at)}</span><span class="${h.result === 'sent' ? 'ok' : 'bad'}">${h.result === 'sent' ? 'Sent' : 'Failed'}${h.action === 'resend' ? ' • deliberate resend' : (h.action === 'retry' ? ' • retry' : '')}</span>
-                <span>to ${esc(h.to_addr || '—')} • ${esc(h.by_name || '')}${h.reason ? ' • reason: ' + esc(h.reason) : ''}${h.error ? ' • ' + esc(h.error) : ''}</span>
-                <a href="${SM_URL}/sent/${h.id}" target="_blank">View sent e-mail${(h.attachments || []).length ? ' + ' + h.attachments.length + ' attachment' + (h.attachments.length === 1 ? '' : 's') : ''}</a></div>`).join('')
-                + (e.earlier ? `<div class="sm-h"><span>${when(e.earlier.at)}</span><span>${esc(e.earlier.state)} earlier from the desk (${esc(e.earlier.channel || '')})</span><span>${e.earlier.to ? 'to ' + esc(e.earlier.to) + ' • ' : ''}${esc(e.earlier.by || '')}</span><span></span></div>` : '');
-            const confirm = !open ? '' : `<div class="sm-c"><b>${sentOk ? 'Send this e-mail AGAIN' : 'Send this e-mail'} to ${esc(e.provider)}</b>
-                <div>Recipient: <b>${esc(e.recipient)}</b> <span class="sm-mut">(${esc(e.recipient_source || 'master')})</span></div>
-                ${SM.redirect ? `<div class="bad" style="color:#8a5a00">TEST MODE: this system is still being developed. The e-mail will go to <b>${esc(SM.redirect)}</b> only \u2014 not to the supplier.</div>` : ''}
+        const E = SM.entries || [], e = E.find(x => smKey(x) === SM_SEL) || null, key = e ? smKey(e) : null;
+        const GR = [['Hotels', 'bi oci oci-bed', x => x.type === 'hotel'], ['Transport', 'bi oci oci-car', x => x.type === 'transport'], ['Activities', 'bi bi-ticket-perforated oc-tilt', x => x.group === 'Activity / supplier'], ['Restaurants', 'bi oci oci-meal', x => x.group === 'Restaurant']];
+        const left = GR.map(([name, icon, f]) => { const L = E.filter(f); if (!L.length) return '';
+            return `<div class="se-g"><i class="${icon}"></i> ${name} (${L.length})</div>` + L.map(x => { const c = smChip(x);
+                return `<a class="se-i${smKey(x) === SM_SEL ? ' on' : ''}" data-smsel="${smKey(x)}"><span class="dot ${c[0]}"></span><span class="nm"><b>${esc(x.provider)}</b><small>${esc(x.code || '')} • ${x.replies > 0 ? x.replies + ' repl' + (x.replies === 1 ? 'y' : 'ies') : (x.state === 'not_sent' ? 'not sent yet' : 'no reply yet')}${x.type !== 'hotel' ? ' • ' + esc(x.group) : ''}</small></span><i class="bi bi-chevron-right"></i></a>`; }).join(''); }).join('')
+            || '<div class="sm-mut" style="padding:12px">No hotel reservation or booked service provider is on this tour yet.</div>';
+        box.innerHTML = `<div class="pr-head"><h3><i class="bi bi-envelope-paper"></i> Supplier Emails</h3>
+                <a class="sm-b go" style="height:36px" href="${INTAKE}/comms/${SM_INTAKE}" target="_blank" title="Write an e-mail from this tour's Communications &amp; History"><i class="bi bi-envelope"></i> Compose email</a></div>
+            <div class="se"><div class="se-col"><div class="se-h">Supplier Bookings <small>(This Tour)</small></div><div class="se-b">${left}</div></div>
+                <div class="se-col">${e ? midPane(e, key) : '<div class="se-h">Select a supplier booking</div>'}</div>
+                <div class="se-col">${e ? rightPane(e, key) : '<div class="se-h">Review &amp; record outcome</div>'}</div></div>
+            <div class="oc-foot"><span><a href="${INTAKE}/comms/inbox" target="_blank" style="color:#8b1d40;font-weight:700">Unmatched emails (${SM.unmatched || 0})</a>
+                <i style="margin-left:14px">Nothing is sent or confirmed automatically. An e-mail sent is not a booking confirmed.</i>${SM.redirect ? ` <b style="color:#8a5a00">• TEST MODE: every e-mail from this system goes to ${esc(SM.redirect)} only, never to a supplier.</b>` : ''}</span></div>`;
+        wireMail(box, e, key);
+    }
+    function midPane(e, key) {
+        const c = smChip(e), d = SM_REP[key], stop = (e.flags || []).filter(f => f.stop), sentOk = e.state === 'sent' && !e.last_failed;
+        const sent = (e.history || []).slice().reverse().map(h => `<div class="se-m"><div class="hd"><i class="bi bi-send"></i><span class="tl"><b>Sent:</b> ${esc(h.subject || 'Booking request')}<small>${when(h.at)} (${esc(h.by_name || '')}) • to ${esc(h.to_addr || '—')}${h.action === 'resend' ? ' • deliberate resend' + (h.reason ? ': ' + esc(h.reason) : '') : (h.action === 'retry' ? ' • retry' : '')}${h.error ? ' • ' + esc(h.error) : ''}</small></span>
+                <a class="sm-b" href="${SM_URL}/sent/${h.id}" target="_blank">View${(h.attachments || []).length ? ' + ' + h.attachments.length + ' PDF' + (h.attachments.length === 1 ? '' : 's') : ''}</a><span class="st-pill ${h.result === 'sent' ? 'green' : 'red'}">${h.result === 'sent' ? 'Sent' : 'Failed'}</span></div></div>`).join('')
+            + (e.earlier ? `<div class="se-m"><div class="hd"><i class="bi bi-send"></i><span class="tl"><b>Earlier, from the desk:</b> ${esc(e.earlier.state)}<small>${when(e.earlier.at)} (${esc(e.earlier.by || '')})${e.earlier.to ? ' • to ' + esc(e.earlier.to) : ''}</small></span></div></div>` : '');
+        const R = (d && d.replies) || [];
+        const recv = e.type !== 'hotel' ? '' : (!d ? '<div class="sm-mut" style="padding:8px 2px">Reading the replies…</div>' : (d.error ? `<div class="bad">${esc(d.error)}</div>` : R.slice().reverse().map((r, i) => { const open = SM_OPENMSG[r.id] !== false;
+            return `<div class="se-m in"><div class="hd" data-smmsg="${r.id}" style="cursor:pointer"><i class="bi bi-chevron-${open ? 'down' : 'right'}"></i><i class="bi bi-envelope"></i><span class="tl"><b>Received:</b> ${esc(r.subject || 'Reply')}<small>${when(r.at)} (${esc(r.from || 'not recorded')}) • ${r.source === 'mailbox' ? 'from the mailbox' : 'recorded on the desk'}</small></span><span class="st-pill green">Reply</span></div>
+                ${open ? `<div class="bd"><div class="kv"><b>From:</b> ${esc(r.from || 'not recorded')}</div><div class="kv"><b>Filed:</b> ${esc(r.how || '')}</div><div class="tx">${esc(r.text)}</div>
+                    ${(r.attachments || []).map(a => `<div class="att"><i class="bi bi-paperclip"></i><b>${esc(a.name)}</b><a class="sm-b" href="${INTAKE}/comms/attachment/${a.id}" target="_blank">View</a></div>`).join('')}</div>` : ''}</div>`; }).join('')
+            || '<div class="sm-mut" style="padding:8px 2px">No reply is on this booking yet. A reply that quotes the Reservation Control No. is filed here from the mailbox; one received another way can be recorded below.</div>'));
+        const sendBox = !SM_SEND ? '' : `<div class="sm-c"><b>${sentOk ? 'Send this e-mail AGAIN' : 'Send this e-mail'} to ${esc(e.provider)}</b><div>Recipient: <b>${esc(e.recipient)}</b> <span class="sm-mut">(${esc(e.recipient_source || 'master')})</span></div>
+                ${SM.redirect ? `<div style="color:#8a5a00;font-weight:700">TEST MODE: it will go to ${esc(SM.redirect)} only — not to the supplier.</div>` : ''}
                 <label><input type="checkbox" id="sm_ck"> I have checked the recipient address, the e-mail content and the voucher.</label>
                 ${sentOk ? '<input type="text" id="sm_why" maxlength="300" placeholder="Why is it sent again? (kept with the resend)">' : ''}
                 <div><button class="sm-b go" id="sm_go" disabled data-type="${e.type}" data-id="${e.id}" data-resend="${sentOk ? 1 : 0}"><i class="bi bi-send"></i> Send now</button> <button class="sm-b" id="sm_x">Cancel</button></div></div>`;
-            return `<tr><td><b>${esc(e.provider)}</b><small>${esc(e.group)}</small></td><td>${esc(e.service)}</td>
-                <td>${e.recipient ? `${esc(e.recipient)}<small>${esc(e.recipient_source || '')}</small>` : '<span class="bad">No address</span>'}</td>
-                <td>${pillOf(e)}${e.sent ? `<small>${when(e.sent.at)} • ${esc(e.sent.by_name || '')}</small>` : ''}</td><td>${bk(e)}</td><td class="sm-a">${acts}</td></tr>`
-                + ((e.flags || []).length || hist || confirm || SM_MSG[key] || SM_REPOPEN === key ? `<tr class="sm-sub"><td colspan="6">${(e.flags || []).map(f => `<div class="${f.stop ? 'bad' : 'warn'}"><i class="bi bi-exclamation-triangle-fill"></i> ${esc(f.text)}</div>`).join('')}
-                    ${SM_MSG[key] ? `<div class="${SM_MSG[key].ok ? 'ok' : 'bad'}">${esc(SM_MSG[key].text)}</div>` : ''}${confirm}${hist}${SM_REPOPEN === key ? repBlock(e, key) : ''}</td></tr>` : '');
-        }).join('');
-        box.innerHTML = `<div class="pr-head"><h3><i class="bi bi-envelope-paper"></i> Supplier Emails &amp; Vouchers</h3></div>
-            <div class="pr-stats"><span><b>${E.length}</b> reservations</span><span><b>${n('sent')}</b> e-mail sent</span><span><b>${n('not_sent')}</b> not sent</span><span class="${n('failed') ? 'miss' : ''}"><b>${n('failed')}</b> failed</span><span class="${held ? 'miss' : ''}"><b>${held}</b> held — details missing</span></div>
-            <div class="oc-box"><table class="ow sm-t"><thead><tr><th>Provider</th><th>Booked service</th><th>Recipient e-mail</th><th>E-mail status</th><th>Supplier booking</th><th>Check, then send</th></tr></thead>
-                <tbody>${rows || '<tr><td colspan="6">No hotel reservation or booked service provider is on this tour yet.</td></tr>'}</tbody></table></div>
-            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Nothing is sent automatically. Read the address, the e-mail and the voucher, then press Send Email for that reservation. An e-mail sent is not a booking confirmed.</i>${SM.redirect ? ` <b style="color:#8a5a00">\u2022 TEST MODE: every e-mail from this system goes to ${esc(SM.redirect)} only, never to a supplier.</b>` : ''}${SM.sender_note ? ' • ' + esc(SM.sender_note) : ''}</span></div>`;
-        wireReplies(box);
-        box.querySelectorAll('[data-smopen]').forEach(b => b.addEventListener('click', () => { SM_OPEN = SM_OPEN === b.dataset.smopen ? null : b.dataset.smopen; drawMail(); }));
-        const go = document.getElementById('sm_go'), ck = document.getElementById('sm_ck'), why = document.getElementById('sm_why'), x = document.getElementById('sm_x');
-        if (x) x.addEventListener('click', () => { SM_OPEN = null; drawMail(); });
-        if (go && ck) {
-            const gate = () => { go.disabled = !(ck.checked && (!why || why.value.trim() !== '')); };
-            ck.addEventListener('change', gate); if (why) why.addEventListener('input', gate);
-            go.addEventListener('click', async () => {
-                if (go.disabled || go.dataset.busy) return; go.dataset.busy = '1'; go.disabled = true; go.innerHTML = 'Sending…';
-                const key = go.dataset.type + ':' + go.dataset.id; let j = null;
-                try { j = await (await fetch(SM_URL + '/send', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-                    body: JSON.stringify({ type: go.dataset.type, id: Number(go.dataset.id), resend: go.dataset.resend === '1', reason: why ? why.value.trim() : '' }) })).json(); } catch (e) { j = null; }
-                SM_MSG[key] = { ok: !!(j && j.status === 200), text: (j && j.message) || 'It was not sent. Nothing was changed.' }; SM_OPEN = null; await loadMail();
-            });
-        }
+        const acts = !e.can ? '<span class="sm-mut">Your sign-in does not hold the desk this booking belongs to.</span>' :
+            `<a class="sm-b" href="${SM_URL}/preview/${e.type}/${e.id}" target="_blank"><i class="bi bi-envelope-open"></i> Preview Email</a>`
+            + (e.vouchers || []).map(v => `<a class="sm-b" href="${SM_URL}/voucher/${e.type}/${e.id}/${v.key}" target="_blank"><i class="bi bi-file-earmark-pdf"></i> ${esc(v.label)}</a>`).join('')
+            + (stop.length || !e.mailbox ? `<button class="sm-b go" disabled title="${esc(stop.length ? stop[0].text : 'No mailbox is set up to send from')}"><i class="bi bi-send"></i> Send Email</button>`
+                : `<button class="sm-b go${sentOk ? ' again' : ''}" id="sm_send"><i class="bi bi-send"></i> ${sentOk ? 'Send again' : (e.state === 'failed' || e.last_failed ? 'Retry Send' : 'Send Email')}</button>`)
+            + `<a class="sm-b" href="${INTAKE}/comms/${SM_INTAKE}" target="_blank"><i class="bi bi-reply"></i> Reply / Forward</a>`;
+        return `<div class="se-h">${esc(e.provider)} • ${esc(e.code || '')}<span class="chip ${c[0]}">${c[1]}</span></div>
+            <div class="se-sub">${esc(e.service)}<small>To: ${e.recipient ? esc(e.recipient) + ' (' + esc(e.recipient_source || '') + ')' : '<span class="bad">no address on the master</span>'}${e.control ? ' • Reservation Control No. ' + esc(e.control) : ''}</small></div>
+            <div class="se-b">${(e.flags || []).map(f => `<div class="${f.stop ? 'bad' : 'warn'}"><i class="bi bi-exclamation-triangle-fill"></i> ${esc(f.text)}</div>`).join('')}
+                ${SM_MSG[key] ? `<div class="${SM_MSG[key].ok ? 'ok' : 'bad'}">${esc(SM_MSG[key].text)}</div>` : ''}
+                ${sent || '<div class="sm-mut" style="padding:8px 2px">Nothing has been sent for this booking yet.</div>'}${recv}${sendBox}
+                <div class="se-acts">${acts}</div>
+                ${e.type === 'hotel' && e.can && !smDone(e) ? `<div class="sm-f"><b>Record a reply received another way</b><textarea id="rp_text" rows="3" maxlength="4000" placeholder="Paste what the hotel wrote (phone, WhatsApp, an e-mail to your own mailbox)"></textarea><div><button class="sm-b" id="rp_save"><i class="bi bi-plus-lg"></i> Save reply</button></div></div>` : ''}</div>`;
     }
-
-    // ---------- tf-replies-r1 (19 Nov 2026, Shantha): the e-mail review area of ONE supplier booking. Staff read the supplier's reply
-    // and its attachments here and record the outcome themselves — Confirm Booking (with the hotel's reference), or a problem / decline.
-    // Nothing is decided by the system: a reply that nobody has acted on leaves the booking exactly where it was.
-    let SM_REP = {}, SM_REPOPEN = null, SM_REPMSG = {};
-    async function loadReplies(key) { const id = key.split(':')[1]; try { const j = await get(`${SM_URL}/replies/hotel/${id}`); SM_REP[key] = j.status === 200 ? j.data : { error: j.message || 'Could not be read.' }; } catch (e) { SM_REP[key] = { error: e.message }; } drawMail(); }
-    function repBlock(e, key) {
-        const d = SM_REP[key];
-        if (!d) return '<div class="sm-r">Reading the replies…</div>';
-        if (d.error) return `<div class="sm-r bad">${esc(d.error)}</div>`;
-        const j = d.job || {}, R = d.replies || [], done = j.status === 'confirmed' || j.status === 'voucher_issued', today = new Date().toLocaleDateString('en-CA');
-        const state = done ? `<span class="ok">Confirmed by the supplier</span> — reference <b>${esc(j.confirmation_ref || '—')}</b>${j.confirmed_with ? ' • ' + esc(j.confirmed_with) : ''}${j.hotel_confirmed_on ? ' • ' + when(j.hotel_confirmed_on) : ''} • recorded by ${esc(j.confirmed_by || '')} ${when(j.confirmed_at)}`
-            : (j.status === 'problem' ? `<span class="bad">Problem recorded</span>${j.problem_note ? ' — ' + esc(j.problem_note) : ''}` : '<span class="warn">Pending — no outcome recorded yet</span>');
-        const list = R.map((r, i) => `<div class="sm-rp"><label class="hd">${done ? '' : `<input type="radio" name="sm_pick" value="${r.id}" ${i === 0 ? 'checked' : ''}>`}<b>${when(r.at)}</b><span>from ${esc(r.from || 'not recorded')}</span>
-                <span class="sm-mut">${r.source === 'mailbox' ? 'from the mailbox' : 'recorded on the desk'} • ${esc(r.how || '')}</span></label>
-            ${r.subject ? `<div class="sj">${esc(r.subject)}</div>` : ''}<div class="tx">${esc(r.text)}</div>
-            ${(r.attachments || []).length ? `<div class="at">${r.attachments.map(a => `<a href="${INTAKE}/comms/attachment/${a.id}" target="_blank"><i class="bi bi-paperclip"></i> ${esc(a.name)}</a>`).join('')}</div>` : ''}</div>`).join('')
-            || '<div class="sm-mut" style="padding:6px 0">No reply is on this booking yet. A reply that quotes the Reservation Control No. is filed here from the mailbox; a reply received another way can be recorded below.</div>';
-        const ev = (d.evidence || []).length ? `<div class="at">Confirmation evidence kept: ${d.evidence.map(x => `<a href="${HOTELS}/doc/${x.id}" target="_blank"><i class="bi bi-file-earmark-check"></i> ${esc(x.original_name)}</a>`).join('')}</div>` : '';
-        const forms = done ? '' : `
-            <div class="sm-f"><b>Record a reply received another way</b><textarea id="rp_text" rows="3" maxlength="4000" placeholder="Paste what the hotel wrote (phone, WhatsApp, an e-mail to your own mailbox)"></textarea>
-                <div><button class="sm-b" id="rp_save" data-id="${e.id}"><i class="bi bi-plus-lg"></i> Save reply</button></div></div>
-            <div class="sm-f"><b>Outcome — Confirm Booking</b>
-                <div class="rw"><input type="text" id="cf_ref" maxlength="100" placeholder="Hotel confirmation reference *"><input type="text" id="cf_with" maxlength="160" placeholder="Confirmed by (name at the hotel)"><input type="date" id="cf_on" value="${today}" max="${today}"></div>
-                <div class="rw"><label class="sm-mut" style="margin:0">Evidence file (optional if a reply above is selected): <input type="file" id="cf_file"></label></div>
-                <label class="ck"><input type="checkbox" id="cf_ck"> I have read the reply and it confirms this booking as requested.</label>
-                <div><button class="sm-b go" id="cf_go" data-id="${e.id}" disabled><i class="bi bi-patch-check"></i> Confirm Booking</button></div></div>
-            <div class="sm-f"><b>Outcome — the supplier declined, or there is a problem</b>
-                <div class="rw"><select id="pb_code"><option value="">Choose the reason…</option>${(d.reasons || []).map(x => `<option value="${esc(x.code)}">${esc(x.name)}</option>`).join('')}</select><input type="text" id="pb_note" maxlength="400" placeholder="Note (what the hotel said)"></div>
-                <div><button class="sm-b" id="pb_go" data-id="${e.id}"><i class="bi bi-exclamation-triangle"></i> Record as problem</button></div></div>
-            <div class="sm-mut">A reply that asks for information, or says "please wait", needs no outcome: the booking stays pending until staff record one.</div>`;
-        return `<div class="sm-r"><div class="tt"><i class="bi bi-inbox"></i> Supplier replies — ${esc(e.provider)}</div><div>${state}</div>
-            ${SM_REPMSG[key] ? `<div class="${SM_REPMSG[key].ok ? 'ok' : 'bad'}">${esc(SM_REPMSG[key].text)}</div>` : ''}${list}${ev}${forms}</div>`;
+    function rightPane(e, key) {
+        const head = '<div class="se-h">Review &amp; record outcome</div>';
+        if (e.type !== 'hotel') return head + `<div class="se-b"><div>Matching reference: <b class="ref">${esc(e.code || '')}</b></div><div class="sm-mut">The outcome of this booking is recorded on ${e.type === 'transport' ? 'the Transport desk' : 'the Hotel Bookings &amp; Activities desk'}; the e-mails sent for it are kept here.</div>
+            ${e.type === 'transport' && CAN.transport ? `<a class="sm-b" href="${TRANSPORT}?tour=${TOUR_ID}" target="_blank">Open Transport</a>` : (e.type === 'service' && CAN.hotel ? `<a class="sm-b" href="${HOTELS}?tour=${TOUR_ID}" target="_blank">Open the desk</a>` : '')}</div>`;
+        const d = SM_REP[key] || {}, j = d.job || {}, R = d.replies || [], done = smDone(e), today = new Date().toLocaleDateString('en-CA');
+        const tbl = `<table class="se-t"><thead><tr><th>Detail</th><th>Requested</th><th>${done ? '' : 'Reply matches?'}</th></tr></thead><tbody>${(e.details || []).map((x, i) => `<tr><td><b>${esc(x[0])}</b></td><td>${esc(x[1])}</td><td>${done ? '' : `<input type="checkbox" class="cf_m" title="Tick when the supplier's reply states the same">`}</td></tr>`).join('')}</tbody></table>`;
+        if (done) return head + `<div class="se-b"><div>Matching reference: <b class="ref">${esc(e.code)}</b></div>${tbl}
+            <div class="ok">Confirmed by the supplier</div><div>Confirmation reference: <b>${esc(j.confirmation_ref || '—')}</b></div>${j.confirmed_with ? `<div>Confirmed by: ${esc(j.confirmed_with)}</div>` : ''}
+            <div class="sm-mut">Recorded by ${esc(j.confirmed_by || '')} • ${when(j.confirmed_at)}${j.hotel_confirmed_on ? ' • hotel’s date ' + when(j.hotel_confirmed_on) : ''}</div>
+            ${(d.evidence || []).map(x => `<div class="att"><i class="bi bi-file-earmark-check"></i><b>${esc(x.original_name)}</b><a class="sm-b" href="${HOTELS}/doc/${x.id}" target="_blank">View</a></div>`).join('')}
+            <div class="se-n"><i class="bi bi-info-circle"></i> The staff decision and the supplier’s reply are kept on this booking.</div></div>`;
+        if (!e.can) return head + '<div class="se-b"><div class="sm-mut">Your sign-in does not hold the Hotel Bookings desk, so it cannot record an outcome.</div></div>';
+        return head + `<div class="se-b"><div>Matching reference: <b class="ref">${esc(e.code)}</b></div>${tbl}
+            ${j.status === 'problem' ? `<div class="bad">Problem recorded${j.problem_note ? ': ' + esc(j.problem_note) : ''}</div>` : ''}
+            <label class="lb">Reply this outcome is based on</label><select id="cf_reply">${R.map(r => `<option value="${r.id}">${when(r.at)} — ${esc(r.from || 'reply')}</option>`).join('') || '<option value="">No reply on file — attach the evidence below</option>'}</select>
+            <label class="lb">Confirmation reference</label><input type="text" id="cf_ref" maxlength="100" placeholder="The hotel's confirmation number">
+            <label class="lb">Confirmed by (at the hotel) and date</label><div class="rw"><input type="text" id="cf_with" maxlength="160" placeholder="Name"><input type="date" id="cf_on" value="${today}" max="${today}"></div>
+            <label class="lb">Outcome</label><select id="cf_out"><option value="same">Confirm as requested</option><option value="changed">Confirm with changes</option></select>
+            <input type="text" id="cf_note" maxlength="400" placeholder="What is different (required for “with changes”)" style="display:none">
+            <label class="sm-mut" style="margin:0">Evidence file (needed only when no reply is on file): <input type="file" id="cf_file"></label>
+            <button class="se-go" id="cf_go" disabled><i class="bi bi-check-lg"></i> Confirm Booking</button>
+            <div class="rw"><a class="sm-b" style="flex:1;justify-content:center" href="${INTAKE}/comms/${SM_INTAKE}" target="_blank"><i class="bi bi-info-circle"></i> Ask for information</a>
+                <button class="sm-b" style="flex:1;justify-content:center" id="pb_open"><i class="bi bi-exclamation-triangle"></i> Mark as problem</button></div>
+            ${SM_PB ? `<div class="sm-f"><select id="pb_code"><option value="">Choose the reason…</option>${(d.reasons || []).map(x => `<option value="${esc(x.code)}">${esc(x.name)}</option>`).join('')}</select><input type="text" id="pb_note" maxlength="400" placeholder="Note (what the hotel said)"><div><button class="sm-b" id="pb_go">Record as problem</button></div></div>` : ''}
+            <div class="se-n"><i class="bi bi-info-circle"></i> Only this hotel stay will be confirmed. The staff decision and the supplier’s reply are recorded. A reply that asks for information or says “please wait” needs no outcome: the booking stays pending.</div></div>`;
     }
-    function wireReplies(box) {
-        box.querySelectorAll('[data-smrep]').forEach(b => b.addEventListener('click', () => { const k = b.dataset.smrep; SM_REPOPEN = SM_REPOPEN === k ? null : k; if (SM_REPOPEN) { delete SM_REP[k]; drawMail(); loadReplies(k); } else drawMail(); }));
-        const key = SM_REPOPEN; if (!key) return;
-        const say = (ok, text) => { SM_REPMSG[key] = { ok, text }; };
-        const post = async (url, body, form) => { try { const r = await fetch(url, form ? { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body } : { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify(body) }); return await r.json(); } catch (e) { return null; } };
-        const after = async (j, okText) => { say(!!(j && j.status === 200), (j && j.status === 200 ? okText : (j && j.message) || 'It was not saved. Nothing was changed.')); await loadMail(); await loadReplies(key); };
+    function wireMail(box, e, key) {
+        box.querySelectorAll('[data-smsel]').forEach(a => a.addEventListener('click', () => { SM_SEL = a.dataset.smsel; SM_SEND = false; SM_PB = false; drawMail(); loadReplies(SM_SEL); }));
+        box.querySelectorAll('[data-smmsg]').forEach(h => h.addEventListener('click', () => { const id = h.dataset.smmsg; SM_OPENMSG[id] = SM_OPENMSG[id] === false; drawMail(); }));
+        if (!e) return;
+        const say = (ok, text) => { SM_MSG[key] = { ok, text }; };
+        const post = async (url, body, form) => { try { const r = await fetch(url, form ? { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body } : { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify(body) }); return await r.json(); } catch (x) { return null; } };
+        const after = async (j, okText) => { say(!!(j && j.status === 200), (j && j.status === 200 ? okText || j.message : (j && j.message) || 'It was not saved. Nothing was changed.')); SM_SEND = false; SM_PB = false; await loadMail(); };
+        const sb = document.getElementById('sm_send'); if (sb) sb.addEventListener('click', () => { SM_SEND = !SM_SEND; drawMail(); });
+        const x = document.getElementById('sm_x'); if (x) x.addEventListener('click', () => { SM_SEND = false; drawMail(); });
+        const go = document.getElementById('sm_go'), ck = document.getElementById('sm_ck'), why = document.getElementById('sm_why');
+        if (go && ck) { const gate = () => { go.disabled = !(ck.checked && (!why || why.value.trim() !== '')); }; ck.addEventListener('change', gate); if (why) why.addEventListener('input', gate);
+            go.addEventListener('click', async () => { if (go.disabled || go.dataset.busy) return; go.dataset.busy = '1'; go.disabled = true; go.innerHTML = 'Sending…';
+                await after(await post(SM_URL + '/send', { type: go.dataset.type, id: Number(go.dataset.id), resend: go.dataset.resend === '1', reason: why ? why.value.trim() : '' })); }); }
         const sv = document.getElementById('rp_save');
-        if (sv) sv.addEventListener('click', async () => { const t = document.getElementById('rp_text').value.trim(); if (!t) { say(false, 'Type or paste what the hotel said.'); drawMail(); return; } sv.disabled = true; await after(await post(`${HOTELS}/card/${sv.dataset.id}/reply`, { text: t }), 'The reply is kept on this booking. No outcome was recorded.'); });
-        const go = document.getElementById('cf_go'), ck = document.getElementById('cf_ck'), ref = document.getElementById('cf_ref'), file = document.getElementById('cf_file');
-        if (go) {
-            const picked = () => (document.querySelector('input[name="sm_pick"]:checked') || {}).value;
-            const gate = () => { go.disabled = !(ck.checked && ref.value.trim() !== '' && (picked() || (file.files && file.files.length))); };
-            [ck, ref, file].forEach(x => x.addEventListener(x === ref ? 'input' : 'change', gate)); document.querySelectorAll('input[name="sm_pick"]').forEach(x => x.addEventListener('change', gate));
-            go.addEventListener('click', async () => {
-                if (go.disabled || go.dataset.busy) return; go.dataset.busy = '1'; go.disabled = true;
+        if (sv) sv.addEventListener('click', async () => { const t = document.getElementById('rp_text').value.trim(); if (!t) { say(false, 'Type or paste what the hotel said.'); drawMail(); return; } sv.disabled = true; await after(await post(`${HOTELS}/card/${e.id}/reply`, { text: t }), 'The reply is kept on this booking. No outcome was recorded.'); });
+        const cf = document.getElementById('cf_go');
+        if (cf) { const ref = document.getElementById('cf_ref'), out = document.getElementById('cf_out'), note = document.getElementById('cf_note'), file = document.getElementById('cf_file'), rp = document.getElementById('cf_reply'), ms = [...box.querySelectorAll('.cf_m')];
+            const gate = () => { const all = ms.every(m => m.checked); note.style.display = out.value === 'changed' ? '' : 'none';
+                cf.disabled = !(ref.value.trim() !== '' && (rp.value || (file.files && file.files.length)) && (out.value === 'same' ? all : note.value.trim() !== ''));
+                cf.title = cf.disabled ? (out.value === 'same' && !all ? 'Tick every detail the reply matches, or choose "Confirm with changes"' : 'A confirmation reference and a reply or evidence file are needed') : ''; };
+            [ref, note].forEach(i => i.addEventListener('input', gate)); [out, file, rp, ...ms].forEach(i => i.addEventListener('change', gate)); gate();
+            cf.addEventListener('click', async () => { if (cf.disabled || cf.dataset.busy) return; cf.dataset.busy = '1'; cf.disabled = true;
                 const fd = new FormData(); fd.append('ref', ref.value.trim()); fd.append('with', document.getElementById('cf_with').value.trim()); fd.append('confirmed_on', document.getElementById('cf_on').value);
-                const rp = ((SM_REP[key] || {}).replies || []).find(r => String(r.id) === String(picked()));
+                fd.append('note', out.value === 'changed' ? 'Confirmed WITH CHANGES: ' + note.value.trim() : 'Confirmed as requested: every detail checked against the reply.');
+                const r = ((SM_REP[key] || {}).replies || []).find(q => String(q.id) === String(rp.value));
                 if (file.files && file.files.length) fd.append('evidence', file.files[0]);
-                else if (rp) fd.append('reply', `Confirmed against the supplier's reply of ${String(rp.at).slice(0, 16)} from ${rp.from || 'the hotel'} (message #${rp.id} on this booking).`);
-                await after(await post(`${HOTELS}/card/${go.dataset.id}/confirm_booking`, fd, true), 'Booking confirmed. The reference, the evidence, your name and the time are kept on this booking.');
-            });
-        }
+                if (r) fd.append('reply', `${out.value === 'changed' ? 'Confirmed with changes' : 'Confirmed as requested'} against the supplier's reply of ${String(r.at).slice(0, 16)} from ${r.from || 'the hotel'} (message #${r.id} on this booking).`);
+                await after(await post(`${HOTELS}/card/${e.id}/confirm_booking`, fd, true), 'Booking confirmed. The reference, the reply, your name and the time are kept on this booking.'); }); }
+        const po = document.getElementById('pb_open'); if (po) po.addEventListener('click', () => { SM_PB = !SM_PB; drawMail(); });
         const pb = document.getElementById('pb_go');
-        if (pb) pb.addEventListener('click', async () => { const code = document.getElementById('pb_code').value; if (!code) { say(false, 'Choose the reason.'); drawMail(); return; } pb.disabled = true; await after(await post(`${HOTELS}/card/${pb.dataset.id}/problem`, { code, note: document.getElementById('pb_note').value.trim() }), 'Recorded as a problem on this booking.'); });
+        if (pb) pb.addEventListener('click', async () => { const code = document.getElementById('pb_code').value; if (!code) { say(false, 'Choose the reason.'); drawMail(); return; } pb.disabled = true; await after(await post(`${HOTELS}/card/${e.id}/problem`, { code, note: document.getElementById('pb_note').value.trim() }), 'Recorded as a problem on this booking.'); });
     }
 
     async function load() {
@@ -562,7 +576,7 @@
             if (c.status !== 200) { box.innerHTML = `<div class="oc-msg">${esc(c.message || 'This tour could not be read.')}</div>`; return; }
             const i = await get(`${INTAKE}/intake/${c.data.tour.intake_id}`);
             draw(c.data, (i && i.data) || {});
-            if (!SM_OPEN && !SM_REPOPEN) loadMail();
+            SM_INTAKE = c.data.tour.intake_id; if (!SM_SEND && !SM_PB && !document.querySelector('#sm_box input:focus, #sm_box textarea:focus, #sm_box select:focus')) loadMail();
         } catch (e) { box.innerHTML = `<div class="oc-msg">This tour could not be read: ${esc(e.message)}</div>`; }
     }
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') load(); });

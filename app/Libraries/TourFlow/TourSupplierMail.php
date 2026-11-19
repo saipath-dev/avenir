@@ -108,6 +108,13 @@ class TourSupplierMail
         $mailbox = (string) ($sender['kind'] ?? 'none') !== 'none' && trim((string) ($sender['email'] ?? '')) !== '';
         $tm = new TourMailer($this->db, $this->user, $this->userId, $this->actor);
 
+        // tf-replies-r2: how many supplier replies are filed on each hotel booking (for the list on the left)
+        $rep = [];
+        foreach ($this->db->query("SELECT links_json FROM tf_comm WHERE intake_id = ? AND removed_at IS NULL AND direction = 'in' AND links_json LIKE '%hotel_job%'", [(int) $t['intake_id']])->getResultArray() as $r) {
+            foreach ((array) json_decode((string) $r['links_json'], true) as $l) {
+                if (($l['kind'] ?? '') === 'hotel_job') { $rep[(int) ($l['id'] ?? 0)] = ($rep[(int) ($l['id'] ?? 0)] ?? 0) + 1; }
+            }
+        }
         // ---- hotels: one entry per stay ----
         $jobs = $this->db->query("SELECT * FROM tf_hotel_job WHERE tour_id = ? AND archived_at IS NULL AND status <> 'cancelled' ORDER BY check_in, seq, id", [$tourId])->getResultArray();
         foreach ($jobs as $j) {
@@ -130,6 +137,12 @@ class TourSupplierMail
             $st  = self::status($logs[$key] ?? []);
             $out[] = [
                 'type' => 'hotel', 'id' => (int) $j['id'], 'group' => 'Hotel', 'provider' => (string) ($j['hotel_name'] ?: 'Hotel not named'),
+                'code' => 'H' . str_pad((string) (int) $j['day_from'], 2, '0', STR_PAD_LEFT), 'control' => $t['tour_no'] . '-H' . str_pad((string) (int) $j['day_from'], 2, '0', STR_PAD_LEFT),
+                'replies' => (int) ($rep[(int) $j['id']] ?? 0),
+                'details' => [['Dates', date('j M', strtotime((string) $j['check_in'])) . ' – ' . date('j M Y', strtotime((string) $j['check_out']))],
+                              ['Rooms', trim((string) explode('—', (string) ($j['rooms_note'] ?? ''))[0]) ?: ((int) $j['rooms'] ? (int) $j['rooms'] . ' room(s)' : '—')],
+                              ['Category', trim((string) (explode('—', (string) ($j['rooms_note'] ?? ''))[1] ?? '')) ?: (trim((string) ($j['room_type_text'] ?? '')) ?: '—')],
+                              ['Meal plan', HotelBookingDocs::mealWord($j['meal_plan'])], ['Guests', $j['pax'] ? (int) $j['pax'] . ' pax' : '—']],
                 'service' => trim(self::d($j['check_in']) . ' – ' . self::d($j['check_out']) . ' · ' . (int) $j['nights'] . ' night' . ((int) $j['nights'] === 1 ? '' : 's')
                     . ($j['rooms_note'] ? ' · ' . $j['rooms_note'] : '') . ($j['meal_plan'] ? ' · ' . $j['meal_plan'] : '')),
                 'date' => $j['check_in'], 'recipient' => $addr['email'] ?? null,
@@ -168,6 +181,7 @@ class TourSupplierMail
                 $st   = self::status($logs[$key] ?? []);
                 $out[] = [
                     'type' => 'service', 'id' => (int) $p['job_id'], 'group' => $p['party'] === 'restaurant' ? 'Restaurant' : 'Activity / supplier', 'provider' => (string) $p['name'],
+                    'code' => ($p['party'] === 'restaurant' ? 'R' : 'A') . str_pad((string) (int) $p['job_id'], 2, '0', STR_PAD_LEFT), 'replies' => 0, 'details' => [],
                     'service' => trim((string) $p['title'] . ' · ' . self::d($p['on_date']) . (!empty($line['on_time']) ? ' · ' . substr((string) $line['on_time'], 0, 5) : '') . ($p['pax'] ? ' · ' . (int) $p['pax'] . ' pax' : '')),
                     'date' => $p['on_date'], 'recipient' => $p['email'] ?: null, 'recipient_source' => $p['email'] ? (string) $p['source'] : null,
                     'flags' => $flags, 'booking' => self::bookingWord((string) $p['status']), 'booking_state' => (string) $p['status'],
@@ -199,6 +213,7 @@ class TourSupplierMail
                 $st  = self::status($logs[$key] ?? []);
                 $out[] = [
                     'type' => 'transport', 'id' => (int) $m['id'], 'group' => $names[(string) $m['party']] ?? 'Transport', 'provider' => (string) $m['party_name'],
+                    'code' => 'T' . str_pad((string) (int) $m['id'], 2, '0', STR_PAD_LEFT), 'replies' => 0, 'details' => [],
                     'service' => trim((string) preg_replace('/^Booking request\s*[—-]\s*' . preg_quote((string) $t['tour_no'], '/') . '\s*[—-]\s*/u', '', (string) $m['subject'])),
                     'date' => $t['arrival_date'], 'recipient' => trim((string) ($m['to_addr'] ?? '')) ?: null, 'recipient_source' => trim((string) ($m['to_addr'] ?? '')) !== '' ? 'master' : null,
                     'flags' => $flags, 'booking' => null, 'booking_state' => null,
