@@ -73,7 +73,7 @@ final class CommsInbox
     /** The incoming mailbox settings, without the password (has_password instead). */
     public static function settings($db): array
     {
-        $m = ['host' => '', 'port' => 993, 'secure' => 'ssl', 'email' => '', 'folder' => 'INBOX', 'has_password' => false, 'password_state' => 'none', 'last_uid' => 0, 'uidvalidity' => '', 'last_check' => null, 'last_result' => null, 'auto_quote' => false, 'enabled' => true, 'has_token' => false, 'web_poll' => false, 'imap_ext' => extension_loaded('imap')];
+        $m = ['host' => '', 'port' => 993, 'secure' => 'ssl', 'email' => '', 'folder' => 'INBOX', 'has_password' => false, 'password_state' => 'none', 'last_uid' => 0, 'uidvalidity' => '', 'last_check' => null, 'last_result' => null, 'auto_quote' => false, 'enabled' => true, 'has_token' => false, 'web_poll' => false, 'imap_ext' => (extension_loaded('imap') || ImapLite::available())];
         try {
             foreach ($db->query('SELECT k, v FROM tf_meta WHERE k LIKE ?', ['inbox\_%'])->getResultArray() as $r) {
                 $k = substr((string) $r['k'], 6);
@@ -209,7 +209,15 @@ final class CommsInbox
     public static function checkLogin(string $host, int $port, string $secure, string $folder, string $email, string $password): array
     {
         if (!extension_loaded('imap')) {
-            return ['ok' => false, 'message' => 'The PHP imap extension is not loaded on this server, so the mailbox cannot be read.'];
+            // tf-imaplite-r1: no imap extension on this server — the built-in reader opens the mailbox read-only instead
+            try {
+                $box = ImapLite::open($host, $port, $secure, $email, $password, $folder);
+                $n = $box->exists;
+                $box->close();
+                return ['ok' => true, 'message' => 'The mail server ' . $host . ' accepted the login for ' . $email . ' (' . $folder . ': ' . $n . ' message' . ($n === 1 ? '' : 's') . '). Nothing was read.', 'messages' => $n];
+            } catch (\Throwable $e) {
+                return ['ok' => false, 'message' => MailServer::readable('IMAP: ' . $e->getMessage(), $host, $email)];
+            }
         }
         $spec = self::mailboxSpec($host, $port, $secure, $folder);
         $old = ini_get('default_socket_timeout');
@@ -260,6 +268,9 @@ final class CommsInbox
         if (!$s['enabled']) {
             $out['message'] = 'Collecting is switched off (Tour Desk Admin → Settings → Incoming mailbox).';
             return $out;
+        }
+        if (!extension_loaded('imap')) {
+            return $this->checkLite($out, $s);   // tf-imaplite-r1: the built-in reader
         }
         // one run at a time
         $lock = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail_in' . DIRECTORY_SEPARATOR . '.lock';
@@ -343,6 +354,150 @@ final class CommsInbox
         }
         $this->finish($out, $fh, $lock);
         return $out;
+    }
+
+    // ------------------------------------------------------------------ tf-imaplite-r1: the same collection without the PHP imap extension
+
+    /** check() for a server with no imap extension: ImapLite reads the mailbox read-only; everything after that is the same. */
+    private function checkLite(array $out, array $s): array
+    {
+        $lock = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail_in' . DIRECTORY_SEPARATOR . '.lock';
+        if (!is_dir(dirname($lock))) {
+            @mkdir(dirname($lock), 0775, true);
+        }
+        $fh = @fopen($lock, 'c');
+        if ($fh && !flock($fh, LOCK_EX | LOCK_NB)) {
+            fclose($fh);
+            $out['message'] = 'Another check is running; try again in a moment.';
+            return $out;
+        }
+        $box = null;
+        try {
+            $password = Secrets::reveal(self::metaGet($this->db, 'pass'));
+            $box = ImapLite::open($s['host'], (int) $s['port'], $s['secure'], $s['email'], $password, $s['folder']);
+            $password = '';
+        } catch (\Throwable $e) {
+            $out['message'] = MailServer::readable('IMAP: ' . $e->getMessage(), $s['host'], $s['email']);
+            $this->finish($out, $fh, $lock);
+            return $out;
+        }
+        try {
+            $validity = $box->uidvalidity;
+            $lastUid = (int) $s['last_uid'];
+            if ($validity !== '' && $s['uidvalidity'] !== '' && $validity !== (string) $s['uidvalidity']) {
+                $lastUid = 0;
+                $out['notes'][] = 'The mailbox was renumbered by the server (UIDVALIDITY changed); every message was checked again by Message-ID.';
+            }
+            $s['uidvalidity'] = $validity !== '' ? $validity : $s['uidvalidity'];
+            $taken = 0;
+            $highest = $lastUid;
+            foreach ($box->uidsAfter($lastUid) as $uid) {
+                if ($taken >= self::MAX_PER_RUN) {
+                    $out['notes'][] = 'More than ' . self::MAX_PER_RUN . ' new messages: the rest are collected on the next check.';
+                    break;
+                }
+                $taken++;
+                $r = $this->importRaw($box, $uid, $s);
+                $out[$r['outcome']]++;
+                if (!empty($r['draft'])) {
+                    $out['drafts']++;
+                }
+                if ($r['outcome'] === 'filed' || $r['outcome'] === 'unmatched') {
+                    $out['new']++;
+                }
+                if (!empty($r['note'])) {
+                    $out['notes'][] = $r['note'];
+                }
+                if ($r['outcome'] === 'error') {
+                    break;
+                }
+                $highest = max($highest, $uid);
+                self::meta($this->db, 'last_uid', $highest);
+            }
+            if ($validity !== '') {
+                self::meta($this->db, 'uidvalidity', $validity);
+            }
+            $out['ok'] = true;
+            $out['message'] = $out['new'] ? $out['new'] . ' new message' . ($out['new'] === 1 ? '' : 's') . ': ' . $out['filed'] . ' filed on a record, ' . $out['unmatched'] . ' waiting in the queue'
+                . ($out['duplicates'] ? ', ' . $out['duplicates'] . ' already on file' : '') . '.' : 'No new messages (' . $box->exists . ' in the folder).';
+        } catch (\Throwable $e) {
+            $out['message'] = 'The check stopped: ' . $e->getMessage();
+        } finally {
+            $box->close();
+        }
+        $this->finish($out, $fh, $lock);
+        return $out;
+    }
+
+    /** import() for ImapLite: one whole message → tf_mail_in (+ attachments) → filed or queued. */
+    private function importRaw(ImapLite $box, int $uid, array $s): array
+    {
+        if ($this->db->query('SELECT id FROM tf_mail_in WHERE mailbox = ? AND uid = ? AND uidvalidity = ?', [$s['email'], $uid, (string) ($s['uidvalidity'] ?: '')])->getRowArray()) {
+            return ['outcome' => 'duplicates'];
+        }
+        try {
+            $size = $box->size($uid);
+            if ($size > self::MAX_RAW) {
+                $this->db->query('INSERT INTO tf_mail_in (mailbox, uid, uidvalidity, subject, received_at, status, note, imported_at) VALUES (?,?,?,?,?,?,?,?)',
+                    [$s['email'], $uid, (string) $s['uidvalidity'], '(a message over 25 MB)', $this->now(), 'skipped', 'over 25 MB: not collected', $this->now()]);
+                return ['outcome' => 'skipped', 'note' => 'One message of ' . Comms::human($size) . ' was skipped (over 25 MB).'];
+            }
+            $raw = $box->raw($uid);
+            if ($raw === null || $raw === '') {
+                return ['outcome' => 'error', 'note' => 'A message could not be read from the server; it is tried again on the next check.'];
+            }
+            $p = ImapLite::parse($raw);
+            $messageId = $p['message_id'];
+            if ($messageId !== '' && $this->db->query('SELECT id FROM tf_mail_in WHERE message_id = ?', [$messageId])->getRowArray()) {
+                return ['outcome' => 'duplicates'];
+            }
+            $text = trim($p['text']) !== '' ? $p['text'] : self::htmlToText($p['html']);
+            $this->db->query(
+                'INSERT INTO tf_mail_in (mailbox, uid, uidvalidity, message_id, in_reply_to, references_hdr, from_addr, to_addr, cc_addr, reply_to, subject, body_text, body_html, received_at, size_bytes, status, imported_at, imported_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                [$s['email'], $uid, (string) $s['uidvalidity'], $messageId ?: null, mb_substr($p['in_reply_to'], 0, 998) ?: null, mb_substr($p['references'], 0, 4000) ?: null, mb_substr($p['from'], 0, 400),
+                 mb_substr($p['to'], 0, 400) ?: null, mb_substr($p['cc'], 0, 400) ?: null, mb_substr($p['reply_to'], 0, 400) ?: null, mb_substr($p['subject'], 0, 400), $text !== '' ? $text : null,
+                 $p['html'] !== '' ? mb_substr($p['html'], 0, 1000000) : null, $this->when($p['date'] ?: null), strlen($raw), 'new', $this->now(), $this->user]
+            );
+            $id = (int) $this->db->insertID();
+            foreach ($p['attachments'] as $a) {
+                $this->storeAttachmentData($id, (string) $a['name'], (string) $a['mime'], (string) $a['data']);
+            }
+            $r = $this->file($id);
+            $draft = false;
+            if ($r['status'] === 'unmatched' && $s['auto_quote']) {
+                try {
+                    $d = (new CommsQuoteDraft($this->db, $this->user, $this->userId, $this->name))->fromMail($id, true);
+                    $draft = !empty($d['intake_id']);
+                } catch (\Throwable $e) {
+                    log_message('error', 'Quotation draft from mail ' . $id . ': ' . $e->getMessage());
+                }
+            }
+            return ['outcome' => $r['status'] === 'matched' ? 'filed' : 'unmatched', 'draft' => $draft];
+        } catch (\Throwable $e) {
+            log_message('error', 'Incoming mail UID ' . $uid . ' not stored: ' . $e->getMessage());
+            return ['outcome' => 'error', 'note' => 'A message could not be stored (' . $e->getMessage() . '); it is tried again on the next check.'];
+        }
+    }
+
+    private function storeAttachmentData(int $mailId, string $name, string $mime, string $data): void
+    {
+        if ($data === '') {
+            return;
+        }
+        $ext = strtolower((string) pathinfo($name, PATHINFO_EXTENSION));
+        $dir = self::dir($mailId);
+        if (!is_dir($dir) && !@mkdir($dir, 0775, true) && !is_dir($dir)) {
+            return;
+        }
+        $base = self::dir();
+        if (!is_file($base . DIRECTORY_SEPARATOR . '.htaccess')) {
+            @file_put_contents($base . DIRECTORY_SEPARATOR . '.htaccess', "<IfModule authz_core_module>\n    Require all denied\n</IfModule>\n<IfModule !authz_core_module>\n    Deny from all\n</IfModule>\n");
+        }
+        $stored = date('Ymd-His') . '-' . bin2hex(random_bytes(4)) . ($ext !== '' && preg_match('/^[a-z0-9]{1,8}$/', $ext) ? '.' . $ext : '.bin');
+        if (@file_put_contents($dir . DIRECTORY_SEPARATOR . $stored, $data) === false) {
+            return;
+        }
+        $this->db->query('INSERT INTO tf_mail_in_attachment (mail_id, file, original_name, mime, bytes) VALUES (?,?,?,?,?)', [$mailId, $stored, mb_substr($name, 0, 255), mb_substr($mime, 0, 120), strlen($data)]);
     }
 
     private function finish(array $out, $fh, string $lock): void
