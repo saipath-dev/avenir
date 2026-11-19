@@ -35,6 +35,10 @@ foreach ((array) $rl['rooms'] as $r) {
 $mix = static fn (array $m) => !$m ? '—' : (count($m) === 1 ? (string) array_key_first($m) . (reset($m) > 1 ? ' (' . reset($m) . ' rooms)' : '')
     : implode(' • ', array_map(static fn ($k, $v) => $v . ' ' . $k, array_keys($m), $m)));
 $nr = (int) $rl['total_rooms'];
+// tf-hotelreq-r9: the same e-mail carries the Hotel Voucher once the hotel has confirmed ($mode = 'voucher')
+$isV = ($mode ?? 'request') === 'voucher';
+if ($isV && trim((string) ($s['voucher_no'] ?? '')) !== '') { $control = trim((string) $s['voucher_no']); }
+$note = trim((string) ($message ?? ''));
 $row = static function (string $k, string $v) use ($font, $ink, $bd) {
     return '<tr><td style="' . $font . 'padding:8px 14px;width:32%;background:#EDF5F4;border:1px solid ' . $bd . ';font-size:14px;font-weight:700;color:' . $ink . ';vertical-align:top">' . $k . '</td>'
         . '<td style="' . $font . 'padding:8px 14px;border:1px solid ' . $bd . ';font-size:14px;color:' . $ink . ';vertical-align:top">' . $v . '</td></tr>';
@@ -49,12 +53,12 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
   <tr><td style="padding:18px 26px 12px;border-bottom:4px solid <?= $G ?>">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
       <td style="width:270px;vertical-align:middle"><?php if ($logo): ?><img src="<?= $e($logo) ?>" alt="Avenir Holidays" width="250" style="display:block;width:250px;height:auto"><?php else: ?><span style="<?= $font ?>font-size:24px;font-weight:800;color:<?= $D ?>">Avenir Holidays</span><?php endif; ?></td>
-      <td style="<?= $font ?>border-left:2px solid <?= $T ?>;padding-left:20px;vertical-align:middle"><div style="font-size:25px;font-weight:800;line-height:1.1;color:<?= $D ?>">HOTEL BOOKING<br>REQUEST</div>
-        <div style="display:inline-block;background:#E8F3DE;color:<?= $D ?>;font-size:13.5px;font-weight:700;padding:6px 14px;border-radius:6px;margin-top:8px">Awaiting hotel confirmation</div></td>
+      <td style="<?= $font ?>border-left:2px solid <?= $T ?>;padding-left:20px;vertical-align:middle"><div style="font-size:25px;font-weight:800;line-height:1.1;color:<?= $D ?>"><?= $isV ? 'HOTEL<br>VOUCHER' : 'HOTEL BOOKING<br>REQUEST' ?></div>
+        <div style="display:inline-block;background:#E8F3DE;color:<?= $D ?>;font-size:13.5px;font-weight:700;padding:6px 14px;border-radius:6px;margin-top:8px"><?= $isV ? 'Confirmed by the hotel' : 'Awaiting hotel confirmation' ?></div></td>
     </tr></table>
   </td></tr>
   <tr><td style="padding:18px 26px 0">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><div style="<?= $font ?>display:inline-block;background:<?= $T ?>;color:#ffffff;font-size:15px;font-weight:700;letter-spacing:1px;padding:8px 40px">VOUCHER / RESERVATION CONTROL NO.</div></td></tr>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><div style="<?= $font ?>display:inline-block;background:<?= $T ?>;color:#ffffff;font-size:15px;font-weight:700;letter-spacing:1px;padding:8px 40px"><?= $isV ? 'HOTEL VOUCHER NO.' : 'VOUCHER / RESERVATION CONTROL NO.' ?></div></td></tr>
       <tr><td style="<?= $font ?>border:2px solid <?= $T ?>;padding:8px 10px 10px;text-align:center"><span style="color:<?= $G ?>;font-size:24px;font-weight:700">&mdash;&mdash;&nbsp;&nbsp;</span><span style="font-size:32px;font-weight:800;color:<?= $D ?>;letter-spacing:.5px"><?= $e($control) ?></span><span style="color:<?= $G ?>;font-size:24px;font-weight:700">&nbsp;&nbsp;&mdash;&mdash;</span></td></tr></table>
   </td></tr>
   <tr><td style="padding:12px 26px 0">
@@ -66,7 +70,10 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
   </td></tr>
   <tr><td style="<?= $font ?>padding:14px 26px 4px;color:<?= $ink ?>">
     <div style="font-size:16px;font-weight:700">Dear Reservations Manager,</div>
-    <div style="font-size:14.5px;margin-top:8px;line-height:1.55">Greetings from <b style="color:<?= $D ?>">Avenir Holidays.</b> Kindly reserve the accommodation detailed below. Please reply with your hotel confirmation reference, quoting our voucher number.</div>
+    <div style="font-size:14.5px;margin-top:8px;line-height:1.55">Greetings from <b style="color:<?= $D ?>">Avenir Holidays.</b> <?= $isV
+        ? 'Please accept this voucher for the accommodation detailed below, confirmed by your reservations department under the reference shown. Kindly settle the account with our office as agreed; the guests are not to be charged for the services listed.'
+        : 'Kindly reserve the accommodation detailed below. Please reply with your hotel confirmation reference, quoting our voucher number.' ?></div>
+    <?php if ($note !== ''): ?><div style="font-size:14.5px;margin-top:8px;line-height:1.55"><?= nl2br($e($note)) ?></div><?php endif; ?>
   </td></tr>
   <tr><td style="padding:12px 26px 0">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1.5px solid <?= $T ?>"><tr>
@@ -88,9 +95,10 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
       <?= $row('Meal plan', $e(count($rl['meals']) > 1 ? 'Differs by room — see the Rooming List' : HotelBookingDocs::mealWord($s['meal_plan']))) ?>
       <?= $row('Special requests', !empty($s['special_note']) ? nl2br($e($s['special_note'])) : 'None specified') ?>
       <?php if (!empty($s['crew_rooms'])): ?><?= $row('Crew rooms', $e($s['crew_rooms'])) ?><?php endif; ?>
+      <?php if (trim((string) ($doc['rate_basis'] ?? '')) !== ''): ?><?= $row('Rate', $e($doc['rate_basis'])) ?><?php endif; ?>
     </table>
   </td></tr>
-  <?php if ($nr > 0): ?>
+  <?php if ($nr > 0 && !$isV): ?>
   <tr><td style="padding:12px 26px 0">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#D9EEEE;border-radius:8px"><tr><td style="<?= $font ?>padding:10px 16px;border-left:4px solid <?= $G ?>;border-radius:8px;color:<?= $ink ?>">
       <div style="font-size:17px;font-weight:800"><span style="color:<?= $D ?>">Separate attachment:</span> Rooming List PDF</div>
@@ -101,12 +109,16 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
   <tr><td style="padding:12px 26px 0">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#E8F3DE;border-radius:8px"><tr><td style="<?= $font ?>padding:12px 16px;color:<?= $ink ?>">
       <div style="font-size:18px;font-weight:800;color:<?= $D ?>;border-bottom:1.5px solid <?= $G ?>;padding-bottom:6px">HOTEL CONFIRMATION</div>
+      <?php if ($isV): ?>
+      <div style="font-size:14.5px;margin-top:8px">Hotel confirmation reference: <b><?= $e(trim((string) ($s['confirmation_ref'] ?? '')) ?: '—') ?></b><?= trim((string) ($s['confirmed_with'] ?? '')) !== '' ? ' &nbsp;&bull;&nbsp; Confirmed by: <b>' . $e($s['confirmed_with']) . '</b>' : '' ?><?= !empty($s['confirmed_at']) ? ' &nbsp;&bull;&nbsp; ' . $e(date('j M Y', strtotime((string) $s['confirmed_at']))) : '' ?></div>
+      <?php else: ?>
       <div style="font-size:14.5px;margin-top:8px">Please reply with your <b>hotel confirmation reference</b>, the name of the person confirming and the date, quoting <b><?= $e($control) ?></b>.</div>
+      <?php endif; ?>
     </td></tr></table>
   </td></tr>
   <tr><td style="<?= $font ?>padding:16px 26px 18px;font-size:15px;color:<?= $ink ?>;line-height:1.55">
     Kind regards,<br><b>Reservations Team,</b><br>Avenir Holidays (Pvt) Ltd.
-    <div style="font-size:12.5px;margin-top:10px">Attached: Hotel Booking Request<?= $nr > 0 ? ' and Hotel Rooming List' : '' ?> (PDF) &mdash; <?= $e($control) ?>.</div>
+    <div style="font-size:12.5px;margin-top:10px">Attached: <?= $isV ? 'Hotel Voucher' : 'Hotel Booking Request' . ($nr > 0 ? ' and Hotel Rooming List' : '') ?> (PDF) &mdash; <?= $e($control) ?>.</div>
   </td></tr>
   <tr><td style="<?= $font ?>border-top:2px solid <?= $G ?>;padding:10px 26px;font-size:12px;color:<?= $ink ?>"><?= $e($c['address'] ?? '') ?><?= !empty($c['phone']) ? ' &nbsp;&middot;&nbsp; ' . $e($c['phone']) : '' ?></td></tr>
 </table>

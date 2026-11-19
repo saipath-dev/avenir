@@ -225,6 +225,9 @@ final class HotelBookingDocs
     {
         $T = [0, 77, 80]; $BAR = [0, 102, 102]; $G = [120, 184, 72]; $ink = [32, 43, 48]; $line = [184, 200, 200];
         $h = $doc['hotel']; $s = $doc['stay']; $t = $doc['tour']; $no = self::voucherNo($doc);
+        // tf-hotelreq-r9: the Hotel Voucher (after the hotel has confirmed) is the same page with its own number, words and the hotel's confirmation filled in
+        $isV = ($doc['_mode'] ?? 'request') === 'voucher';
+        if ($isV && trim((string) ($s['voucher_no'] ?? '')) !== '') { $no = trim((string) $s['voucher_no']); }
         $L = 9; $W = $pdf->getPageWidth() - 18; $f = 'dejavusans'; $bottom = $pdf->getPageHeight() - 12;
         $pdf->SetAutoPageBreak(false);
         $dm = static fn ($v) => $v ? date('j M Y', strtotime((string) $v)) : '—';
@@ -243,7 +246,7 @@ final class HotelBookingDocs
         // the number: a teal tab, then the number in its own box
         $y = 42;
         $pdf->SetFillColor(...$BAR); $pdf->Rect($L + 19, $y, $W - 38, 9.2, 'F');
-        $pdf->SetTextColor(255, 255, 255); $pdf->SetFont($f, 'B', 12); $pdf->SetFontSpacing(0.4); $pdf->SetXY($L + 19, $y); $pdf->Cell($W - 38, 9.2, 'VOUCHER / RESERVATION CONTROL NO.', 0, 0, 'C'); $pdf->SetFontSpacing(0);
+        $pdf->SetTextColor(255, 255, 255); $pdf->SetFont($f, 'B', 12); $pdf->SetFontSpacing(0.4); $pdf->SetXY($L + 19, $y); $pdf->Cell($W - 38, 9.2, $isV ? 'HOTEL VOUCHER NO.' : 'VOUCHER / RESERVATION CONTROL NO.', 0, 0, 'C'); $pdf->SetFontSpacing(0);
         $y += 9.2;
         $pdf->SetDrawColor(...$BAR); $pdf->SetLineWidth(0.6); $pdf->Rect($L, $y, $W, 16.6, 'D');
         $pdf->SetTextColor(...$T); $pdf->SetFont($f, 'B', 27); $nw = $pdf->GetStringWidth($no); $pdf->SetXY($L, $y + 1.8); $pdf->Cell($W, 13, $no, 0, 0, 'C');
@@ -265,7 +268,9 @@ final class HotelBookingDocs
         // the letter
         $y += 8.5; $pdf->SetFont($f, 'B', 11.5); $pdf->SetXY($L + 0.5, $y); $pdf->Cell($W, 6, 'Dear Reservations Manager,', 0, 0, 'L');
         $pdf->SetFont($f, '', 9.6);
-        $pdf->writeHTMLCell($W, 0, $L + 0.5, $y + 6.8, 'Greetings from <b style="color:#004D50">Avenir Holidays.</b> Kindly reserve the accommodation detailed below. Please reply with your hotel confirmation reference, quoting our voucher number.', 0, 1);
+        $pdf->writeHTMLCell($W, 0, $L + 0.5, $y + 6.8, 'Greetings from <b style="color:#004D50">Avenir Holidays.</b> ' . ($isV
+            ? 'Please accept this voucher for the accommodation detailed below, confirmed by your reservations department under the reference shown. Kindly settle the account with our office as agreed; the guests are not to be charged for the services listed.'
+            : 'Kindly reserve the accommodation detailed below. Please reply with your hotel confirmation reference, quoting our voucher number.'), 0, 1);
         // the hotel
         $y = $pdf->GetY() + 3.5; $hh = 13.2;
         $pdf->SetDrawColor(...$BAR); $pdf->SetLineWidth(0.35); $pdf->Rect($L, $y, $W, $hh, 'D');
@@ -312,6 +317,9 @@ final class HotelBookingDocs
         if (!empty($s['crew_rooms'])) {
             $rows[] = ['Crew rooms', (string) $s['crew_rooms']];
         }
+        if (trim((string) ($doc['rate_basis'] ?? '')) !== '') {   // the basis only, never a figure
+            $rows[] = ['Rate', (string) $doc['rate_basis']];
+        }
         $pdf->SetFillColor(...$BAR); $pdf->Rect($L - 0.5, $y, $W + 1, 7.4, 'F');
         $pdf->SetTextColor(255, 255, 255); $pdf->SetFont($f, 'B', 11.5); $pdf->SetFontSpacing(0.25); $pdf->SetXY($L + 3.5, $y); $pdf->Cell($W - 4, 7.4, 'RESERVATION SUMMARY', 0, 0, 'L'); $pdf->SetFontSpacing(0);
         $y += 7.4; $kw = 62; $pdf->SetLineWidth(0.25);
@@ -325,7 +333,7 @@ final class HotelBookingDocs
             $y += $rh;
         }
         // the rooming list — named only when it is attached
-        if ($nr > 0) {
+        if ($nr > 0 && !$isV) {   // the voucher goes alone; the rooming list went with the request
             $y += 3.2; $need(14.2);
             $pdf->SetFillColor(217, 238, 238); $pdf->RoundedRect($L - 0.5, $y, $W + 1, 14.2, 2, '1111', 'F');
             $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(0.7); $pdf->RoundedRect($L + 5.2, $y + 3.2, 3.6, 8, 1.8, '1111', 'D'); $pdf->RoundedRect($L + 6.4, $y + 5, 1.3, 4.6, 0.65, '1111', 'D');
@@ -341,10 +349,15 @@ final class HotelBookingDocs
         $pdf->SetTextColor(...$T); $pdf->SetFont($f, 'B', 14); $ttl = 'HOTEL CONFIRMATION'; $tw = $pdf->GetStringWidth($ttl); $pdf->SetXY($L + 3, $y + 1.3); $pdf->Cell($tw + 2, 7, $ttl, 0, 0, 'L');
         $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(0.45); $pdf->Line($L + $tw + 9, $y + 5, $L + $W - 3, $y + 5);
         $pdf->SetDrawColor(...$line); $pdf->SetLineWidth(0.25); $pdf->SetFillColor(255, 255, 255); $pdf->SetTextColor(...$ink); $pdf->SetFont($f, 'B', 10.5);
+        $cf = [trim((string) ($s['confirmation_ref'] ?? '')), trim((string) ($s['confirmed_with'] ?? '')), !empty($s['confirmed_at']) ? date('j M Y', strtotime((string) $s['confirmed_at'])) : ''];
         foreach (['Hotel confirmation reference', 'Confirmed by', 'Date'] as $i => $k) {
             $ly = $y + 9.6 + $i * 6.7; $pdf->Rect($L + 3, $ly, 68, 6.7, 'DF'); $pdf->Rect($L + 71, $ly, $W - 74, 6.7, 'DF');
-            $pdf->SetXY($L + 6, $ly); $pdf->Cell(64, 6.7, $k, 0, 0, 'L');
-            $pdf->SetDrawColor(...$ink); $pdf->Line($L + 77, $ly + 5.2, $L + $W - 8, $ly + 5.2); $pdf->SetDrawColor(...$line);
+            $pdf->SetFont($f, 'B', 10.5); $pdf->SetXY($L + 6, $ly); $pdf->Cell(64, 6.7, $k, 0, 0, 'L');
+            if ($isV && $cf[$i] !== '') {   // on the voucher the hotel's own confirmation is printed, not left to fill
+                $pdf->SetFont($f, '', 10.5); $pdf->SetXY($L + 77, $ly); $pdf->Cell($W - 86, 6.7, $cf[$i], 0, 0, 'L');
+            } else {
+                $pdf->SetDrawColor(...$ink); $pdf->Line($L + 77, $ly + 5.2, $L + $W - 8, $ly + 5.2); $pdf->SetDrawColor(...$line);
+            }
         }
         $y += 37.5;
         $pdf->SetFont($f, '', 10.5); $pdf->SetXY($L + 1, $y); $pdf->Cell($W, 5.2, 'Kind regards,', 0, 0, 'L');
@@ -413,8 +426,11 @@ final class HotelBookingDocs
         $pdf = new HotelDocPdf($kind === 'rooming' ? 'L' : 'P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->kind = $kind;
         $pdf->control = self::voucherNo($doc);
-        $pdf->docTitle = $kind === 'rooming' ? 'HOTEL ROOMING LIST' : 'HOTEL BOOKING REQUEST';
-        $pdf->chip = $kind === 'rooming' ? '' : 'Awaiting hotel confirmation';
+        if ($kind === 'voucher') {
+            $doc['_mode'] = 'voucher';
+        }
+        $pdf->docTitle = $kind === 'rooming' ? 'HOTEL ROOMING LIST' : ($kind === 'voucher' ? "HOTEL\nVOUCHER" : 'HOTEL BOOKING REQUEST');
+        $pdf->chip = $kind === 'rooming' ? '' : ($kind === 'voucher' ? 'Confirmed by the hotel' : 'Awaiting hotel confirmation');
         $pdf->logo = self::logoPath();
         $c = $doc['company'];
         $sd = $doc['sender'] ?? [];
@@ -475,6 +491,25 @@ final class HotelBookingDocs
         }
         $out['rooming_list'] = $rl;
         return $out;
+    }
+
+    /**
+     * tf-hotelreq-r9: one of the hotel documents as a PDF file to open or attach, made now from the record and not kept as a version:
+     * 'request' | 'voucher' | 'rooming'. Returns ['path','name'] under writable/tf_mail (the temporary letters).
+     */
+    public static function letterFile(string $kind, array $doc): array
+    {
+        $rl  = self::rooming($doc);
+        $no  = $kind === 'voucher' && trim((string) ($doc['stay']['voucher_no'] ?? '')) !== '' ? trim((string) $doc['stay']['voucher_no']) : self::voucherNo($doc);
+        $nm  = ['request' => 'Hotel-Booking-Request-', 'voucher' => 'Hotel-Voucher-', 'rooming' => 'Hotel-Rooming-List-'][$kind] ?? 'Hotel-Document-';
+        $name = $nm . preg_replace('/[^A-Za-z0-9\-]+/', '-', $no . '-' . ($doc['hotel']['name'] ?? 'hotel')) . '.pdf';
+        $dir = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail';
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        $path = $dir . DIRECTORY_SEPARATOR . 'h' . bin2hex(random_bytes(5)) . '-' . $name;
+        file_put_contents($path, self::documentPdf($kind, $doc, $rl));
+        return ['path' => $path, 'name' => $name, 'rooms' => (int) $rl['total_rooms']];
     }
 
     /** Kept for older callers: the Hotel Booking Request alone. */

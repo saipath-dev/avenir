@@ -481,9 +481,9 @@ class CommsController extends BaseController
             if ((string) $j['status'] !== 'voucher_issued') {
                 throw new \RuntimeException('No voucher has been issued for ' . $j['hotel_name'] . ' yet; the Hotel desk issues it once the hotel has confirmed.');
             }
-            $html = (new TourDeskController())->voucherHtml((int) $ref);
-            $pdf  = CommsMail::htmlToPdf($html, 'Voucher ' . $j['voucher_no'],
-                'Voucher-' . preg_replace('/[^A-Za-z0-9._-]/', '-', (string) ($j['voucher_no'] ?: $ref)));
+            // tf-hotelreq-r9: the Hotel Voucher in the new design (the same PDF the Hotel desk opens and sends)
+            $pdf  = (new TourDeskController())->voucherFile((int) $ref);
+            $pdf  = !empty($pdf['path']) && is_file($pdf['path']) ? ['path' => $pdf['path'], 'name' => $pdf['name']] : null;
             if (!$pdf) {
                 throw new \RuntimeException('The voucher could not be turned into a PDF (is the PDF library installed?).');
             }

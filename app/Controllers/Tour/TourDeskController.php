@@ -776,9 +776,22 @@ class TourDeskController extends BaseController
     {
         try {
             $g = fn (string $k) => (string) ($this->request->getGet($k) ?? '');
-            $d = $this->documentData((int) $jobId, (string) $kind, $g('rate') === '1', $g('remarks'));
-            $html = view('pages/tour/hotel_document', $d + ['email' => $g('format') === 'email', 'message' => $g('message') !== '' ? mb_substr($g('message'), 0, 4000) : null]);
-            return $this->response->setStatusCode(200)->setBody($html);
+            // tf-hotelreq-r9 (19 Nov 2026, Shantha): the old plain letters are gone — the print page is the new Booking Request /
+            // Hotel Voucher PDF (?doc=rooming: the Rooming List), and the e-mail body is the new e-mail. Nothing is recorded by opening one.
+            $kind = (string) $kind === 'voucher' ? 'voucher' : 'request';
+            $d    = $this->documentData((int) $jobId, $kind, $g('rate') === '1', $g('remarks'));
+            $doc  = $this->letterDoc($d);
+            $msg  = $g('message') !== '' ? mb_substr($g('message'), 0, 4000) : null;
+            if ($g('format') === 'email') {
+                return $this->response->setStatusCode(200)->setBody(view('pages/tour/hotel_booking_email', ['doc' => $doc, 'mode' => $kind, 'message' => $msg,
+                    'control' => \App\Libraries\TourFlow\HotelBookingDocs::voucherNo($doc)]));
+            }
+            \App\Libraries\TourFlow\HotelBookingDocs::ensure($this->db());
+            $which = $g('doc') === 'rooming' ? 'rooming' : $kind;
+            $rl    = \App\Libraries\TourFlow\HotelBookingDocs::rooming($doc);
+            return $this->response->setHeader('Content-Type', 'application/pdf')->setHeader('X-Content-Type-Options', 'nosniff')
+                ->setHeader('Content-Disposition', 'inline; filename="' . ($which === 'rooming' ? 'Hotel-Rooming-List' : ($kind === 'voucher' ? 'Hotel-Voucher' : 'Hotel-Booking-Request')) . '.pdf"')
+                ->setBody(\App\Libraries\TourFlow\HotelBookingDocs::documentPdf($which, $doc, $rl));
         } catch (\Throwable $e) {
             return $this->response->setStatusCode(400)->setBody(esc($e->getMessage()));
         }
@@ -842,10 +855,21 @@ class TourDeskController extends BaseController
      * tf-confirmed-r3: the issued voucher as HTML, for Communications to attach to the confirmed itinerary.
      * The same letter the desk prints — read only, nothing is recorded by asking for it.
      */
-    public function voucherHtml(int $jobId): string
+    public function voucherFile(int $jobId): array
     {
         $d = $this->documentData($jobId, 'voucher', false, null);
-        return (string) view('pages/tour/hotel_document', $d + ['email' => false, 'message' => null]);
+        return \App\Libraries\TourFlow\HotelBookingDocs::letterFile('voucher', $this->letterDoc($d));
+    }
+
+    /** The record a hotel letter is drawn from: the stay, with the rate BASIS (never a figure) and the desk's own remarks added. */
+    private function letterDoc(array $d): array
+    {
+        $doc = $d['doc'];
+        $doc['rate_basis'] = (string) ($d['rate_basis'] ?? '');
+        if (!empty($d['remarks'])) {
+            $doc['stay']['special_note'] = trim(trim((string) ($doc['stay']['special_note'] ?? '')) . "\n" . $d['remarks']);
+        }
+        return $doc;
     }
 
     /** Everything the letter needs, from the record: the document, the sender, the logo, the rate if asked for. */
@@ -1057,7 +1081,8 @@ class TourDeskController extends BaseController
                     $body = $kind === 'request'
                         // tf-resdesk-r2: the Hotel Booking Request e-mail (reservation control number, no price; the PDF voucher attached)
                         ? view('pages/tour/hotel_booking_email', ['doc' => $d['doc'], 'control' => \App\Libraries\TourFlow\HotelBookingDocs::voucherNo($d['doc']), 'message' => $msg0 !== '' ? mb_substr($msg0, 0, 4000) : null])
-                        : view('pages/tour/hotel_document', $d + ['email' => true, 'message' => $msg0 !== '' ? mb_substr($msg0, 0, 4000) : null]);
+                        // tf-hotelreq-r9: the voucher goes in the new design too, with the Hotel Voucher PDF attached
+                        : view('pages/tour/hotel_booking_email', ['doc' => $this->letterDoc($d), 'mode' => 'voucher', 'control' => \App\Libraries\TourFlow\HotelBookingDocs::voucherNo($d['doc']), 'message' => $msg0 !== '' ? mb_substr($msg0, 0, 4000) : null]);
                     $to   = trim((string) ($b['to'] ?? ''));
                     $cc   = array_values(array_filter(array_map('trim', preg_split('/[;,\s]+/', (string) ($b['cc'] ?? '')) ?: [])));
                     $subject = trim((string) ($b['subject'] ?? '')) ?: $d['doc']['subject'];
@@ -1078,6 +1103,10 @@ class TourDeskController extends BaseController
                         } else {
                             $rlDoc = null;
                         }
+                    }
+                    if ($kind === 'voucher') {
+                        $vf = \App\Libraries\TourFlow\HotelBookingDocs::letterFile('voucher', $this->letterDoc($d));
+                        $att = [['path' => $vf['path'], 'name' => $vf['name']]];
                     }
                     $r = HotelMail::send($to, $subject, $body, $cc, $att);
                     $rlDoc = $rlDoc ?? null;

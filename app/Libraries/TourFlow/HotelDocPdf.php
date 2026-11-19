@@ -57,6 +57,7 @@ class HotelDocPdf extends \TCPDF
                 $this->SetFont('dejavusans', 'B', 21.5);
                 $this->SetXY(122, 2.6);
                 $this->MultiCell($w - 124, 8.7, $this->docTitle, 0, 'L', false, 1);
+                $this->docTitle = str_replace("\n", ' ', $this->docTitle);
                 if ($this->chip !== '') {
                     $this->SetFillColor(232, 243, 222);
                     $this->RoundedRect(121.3, 22.8, $w - 121.3 - 10.5, 8.5, 1.6, '1111', 'F');
