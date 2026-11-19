@@ -1072,7 +1072,12 @@ class TourDeskController extends BaseController
                         $both = (new \App\Libraries\TourFlow\HotelBookingDocs($this->db(), $this->actorName()))->bookingDocs($svc, $id, $d['sender']);
                         $bv = $both['request'];
                         $rlDoc = $both['rooming'];
-                        $att = [['path' => $bv['path'], 'name' => $bv['original_name']], ['path' => $rlDoc['path'], 'name' => $rlDoc['original_name']]];
+                        $att = [['path' => $bv['path'], 'name' => $bv['original_name']]];
+                        if ((int) ($both['rooming_list']['total_rooms'] ?? 0) > 0) {   // tf-hotelreq-r5: the Rooming List goes only when there is one
+                            $att[] = ['path' => $rlDoc['path'], 'name' => $rlDoc['original_name']];
+                        } else {
+                            $rlDoc = null;
+                        }
                     }
                     $r = HotelMail::send($to, $subject, $body, $cc, $att);
                     $rlDoc = $rlDoc ?? null;

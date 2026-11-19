@@ -8,7 +8,9 @@ use App\Libraries\TourFlow\EmailTemplates;
 use App\Libraries\TourFlow\Installer;
 use App\Libraries\TourFlow\MailWords;
 use App\Libraries\TourFlow\Staff;
+use App\Libraries\TourFlow\TourFinal;
 use App\Libraries\TourFlow\TourService;
+use App\Libraries\TourFlow\TourSupplierMail;
 
 /**
  * Tour Desk → Confirmed Tours — tour/intake/confirmed (tf-confirmed-r1)
@@ -197,14 +199,30 @@ class ConfirmedToursController extends BaseController
                 }
             }
             $db   = $this->db();
-            $rows = (new TourService($db, $this->user()))->deskTours('hotel', $f);
+            $svc  = new TourService($db, $this->user());
+            $rows = $svc->deskTours('hotel', $f);
+            // tf-confirmed-r4: one tour is in exactly one place — Confirmed until its arrival date, Arrived – Finalization
+            // from that day, Completed once its finalization is recorded, Cancelled when cancelled. The counts are of every
+            // tour (not of the search), and a completed tour is counted here but never listed: it is found on Previous Tours.
+            $final = TourFinal::map($db);
+            $today = $this->today();
+            $prev  = $this->request->getGet('previous') !== null;
+            $counts = ['live' => 0, 'arrived' => 0, 'completed' => 0, 'cancelled' => 0, 'all' => 0, 'changed' => 0];
+            $filtered = $f['q'] !== '' || $f['handler'] !== '' || $f['from'] !== '' || $f['to'] !== '';
+            foreach (($filtered ? $svc->deskTours('hotel', ['which' => 'all']) : $rows) as $t) {
+                $g = TourFinal::group($t, $final, $today);
+                $counts[$g]++;
+                if ($g !== 'completed') {
+                    $counts['all']++;
+                }
+            }
             $out = [];
-            $counts = ['live' => 0, 'completed' => 0, 'cancelled' => 0, 'all' => 0, 'changed' => 0];
             foreach ($rows as $t) {
                 $stage = (string) $t['stage'];
-                $group = $stage === 'cancelled' ? 'cancelled' : (in_array($stage, ['completed', 'closed'], true) ? 'completed' : 'live');
-                $counts[$group]++;
-                $counts['all']++;
+                $group = TourFinal::group($t, $final, $today);
+                if (($group === 'completed') !== $prev) {
+                    continue;
+                }
                 $s = (array) $t['strip'];
                 $reopened = $this->reopenedSince($db, (int) $t['id'], $t['final_confirmed_at'] ?? null);
                 if ($reopened !== null) {
@@ -214,6 +232,8 @@ class ConfirmedToursController extends BaseController
                 $out[] = [
                     'id' => $t['id'], 'tour_no' => $t['tour_no'], 'inquiry_no' => $t['inquiry_no'], 'intake_id' => $t['intake_id'],
                     'stage' => $stage, 'group' => $group, 'amending' => $t['amending'],
+                    'finalized' => $final[(int) $t['id']] ?? null,
+                    'can_finalize' => $group === 'arrived' && $t['departure_date'] && substr((string) $t['departure_date'], 0, 10) <= $today,
                     'agent_name' => $t['agent_name'], 'tour_name' => $t['tour_name'], 'pax_total' => $t['pax_total'],
                     'arrival_date' => $t['arrival_date'], 'departure_date' => $t['departure_date'], 'nights' => $t['nights'], 'dates_line' => $t['dates_line'],
                     'handler_name' => $t['handler_name'], 'confirmed_at' => $t['confirmed_at'], 'quote_version' => $t['quote_version'],
@@ -235,7 +255,189 @@ class ConfirmedToursController extends BaseController
                         self::readiness($s, $stage, $t['final_confirmed_at'] ?? null, $reopened), $t['final_confirmed_at'] ?? null, $reopened),
                 ];
             }
-            return $this->json(['status' => 200, 'data' => ['tours' => $out, 'counts' => $counts]]);
+            return $this->json(['status' => 200, 'data' => ['tours' => $out, 'counts' => $counts, 'today' => $today]]);
+        } catch (\Throwable $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()]);
+        }
+    }
+
+    /** Today in Sri Lanka. On the developer's own machine only, ?as_of=YYYY-MM-DD stands in for it, to test the day a tour arrives. */
+    private function today(): string
+    {
+        $as = (string) ($this->request->getGet('as_of') ?? '');
+        $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $as) && in_array($host, ['localhost', '127.0.0.1'], true)) {
+            return $as;
+        }
+        return date('Y-m-d');
+    }
+
+    // tf-confirmed-r4: GET tour/intake/previous — Previous Tours: the completed tours, searched and opened here and nowhere else
+    public function previous()
+    {
+        $data = $this->menuData();
+        $data['user']       = $this->user();
+        $data['page_url']   = self::URL;
+        $data['intake_url'] = self::GATE;
+        $data['installed']  = false;
+        $data['can_board']  = $this->holds(TourDeskController::BOARD);
+        try {
+            $v = Installer::installedVersion($this->db());
+            $data['installed'] = $v !== null && $v >= Installer::SCHEMA_VERSION;
+        } catch (\Throwable $e) {
+            $data['error'] = $e->getMessage();
+        }
+        return view('pages/tour/previous_tours', $data);
+    }
+
+    // ---- tf-supdesk-r1: Supplier Emails & Vouchers of one tour ---------------------------------------------------
+
+    private function actorName(): string
+    {
+        try {
+            return (string) (Staff::contact($this->db(), $this->userId(), $this->user())['name'] ?? $this->user());
+        } catch (\Throwable $e) {
+            return $this->user();
+        }
+    }
+
+    private function supDesk(): TourSupplierMail
+    {
+        return new TourSupplierMail($this->db(), $this->user(), $this->actorName(), $this->userId());
+    }
+
+    private function who(): array
+    {
+        return Staff::contact($this->db(), $this->userId(), $this->user());
+    }
+
+    /** may this sign-in act on that kind of entry? hotels, restaurants and activities: Hotel Bookings; transport: Transport */
+    private function mayMail(string $type): bool
+    {
+        return $type === 'transport' ? $this->holds(TourDeskController::TRANSPORT) : $this->holds(TourDeskController::HOTEL);
+    }
+
+    // GET tour/intake/confirmed/(:num)/supplier_mail — every hotel reservation and booked service provider of the tour
+    public function supplierMail($tourId)
+    {
+        try {
+            $db = $this->db();
+            $sender = \App\Libraries\TourFlow\CommsMail::senderFor($db, $this->userId(), $this->user());
+            $rows = $this->supDesk()->entries(new TourService($db, $this->user()), (int) $tourId, $sender, $this->holds(TourDeskController::HOTEL), $this->holds(TourDeskController::TRANSPORT));
+            return $this->json(['status' => 200, 'data' => ['entries' => $rows, 'sender_note' => $sender['note'] ?? null]]);
+        } catch (\Throwable $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()]);
+        }
+    }
+
+    // GET .../supplier_mail/preview/(hotel|service|transport)/(:num) — the e-mail exactly as it would go, with its recipient and attachments
+    public function supplierMailPreview($tourId, $type, $id)
+    {
+        try {
+            if (!$this->mayMail((string) $type)) {
+                return $this->response->setStatusCode(403)->setBody('Your sign-in does not hold the desk this e-mail belongs to.');
+            }
+            $c = $this->supDesk()->compose(new TourService($this->db(), $this->user()), (int) $tourId, (string) $type, (int) $id, $this->who());
+            return $this->response->setBody(view('pages/tour/supplier_mail_preview', ['c' => $c, 'sent' => null,
+                'vbase' => base_url(self::URL . '/' . (int) $tourId . '/supplier_mail/voucher/' . $type . '/' . (int) $id)]));
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(400)->setBody(esc($e->getMessage()));
+        }
+    }
+
+    // GET .../supplier_mail/voucher/(type)/(:num)/(request|rooming|service|transport) — the voucher PDF, to read before sending
+    public function supplierMailVoucher($tourId, $type, $id, $which)
+    {
+        try {
+            if (!$this->mayMail((string) $type)) {
+                return $this->response->setStatusCode(403)->setBody('Your sign-in does not hold the desk this voucher belongs to.');
+            }
+            [$bytes, $name] = $this->supDesk()->voucher(new TourService($this->db(), $this->user()), (int) $tourId, (string) $type, (int) $id, (string) $which, $this->who());
+            return $this->response->setHeader('Content-Type', 'application/pdf')->setHeader('X-Content-Type-Options', 'nosniff')
+                ->setHeader('Content-Disposition', 'inline; filename="' . str_replace(['"', "\r", "\n"], '', $name) . '"')->setBody($bytes);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(400)->setBody(esc($e->getMessage()));
+        }
+    }
+
+    // GET .../supplier_mail/sent/(:num) — one past attempt exactly as it went (or failed)
+    public function supplierMailSent($tourId, $logId)
+    {
+        $row = $this->supDesk()->logRow((int) $tourId, (int) $logId);
+        if (!$row || !$this->mayMail((string) $row['type'])) {
+            return $this->response->setStatusCode(404)->setBody('That e-mail is not on this tour.');
+        }
+        return $this->response->setBody(view('pages/tour/supplier_mail_preview', ['c' => null, 'sent' => $row,
+            'vbase' => base_url(self::URL . '/' . (int) $tourId . '/supplier_mail/sent/' . (int) $logId . '/file')]));
+    }
+
+    public function supplierMailSentFile($tourId, $logId, $i)
+    {
+        $d = $this->supDesk();
+        $row = $d->logRow((int) $tourId, (int) $logId);
+        $f = $row && $this->mayMail((string) $row['type']) ? $d->logFile($row, (int) $i) : null;
+        if (!$f) {
+            return $this->response->setStatusCode(404)->setBody('That attachment is not on this tour.');
+        }
+        return $this->response->setHeader('Content-Type', 'application/pdf')->setHeader('X-Content-Type-Options', 'nosniff')
+            ->setHeader('Content-Disposition', 'inline; filename="' . str_replace(['"', "\r", "\n"], '', $f['name']) . '"')->setBody(file_get_contents($f['path']));
+    }
+
+    // POST .../supplier_mail/send {type, id, resend, reason} — ONE e-mail, because a person pressed Send Email on that entry
+    public function supplierMailSend($tourId)
+    {
+        try {
+            $b = (array) ($this->request->getJSON(true) ?? []);
+            $type = (string) ($b['type'] ?? '');
+            if (!in_array($type, ['hotel', 'service', 'transport'], true)) {
+                return $this->json(['status' => 400, 'message' => 'Unknown entry. Nothing was sent.']);
+            }
+            if (!$this->mayMail($type)) {
+                return $this->json(['status' => 403, 'message' => 'Your sign-in does not hold the desk this e-mail belongs to. Nothing was sent.']);
+            }
+            $r = $this->supDesk()->send(new TourService($this->db(), $this->user()), (int) $tourId, $type, (int) ($b['id'] ?? 0), $this->who(), !empty($b['resend']), (string) ($b['reason'] ?? ''));
+            return $this->json(['status' => !empty($r['ok']) ? 200 : (!empty($r['already']) || !empty($r['busy']) ? 409 : 400)] + $r);
+        } catch (\Throwable $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * tf-final-r1: POST tour/intake/confirmed/(:num)/finalize {finished, settled, note} — records that an arrived tour has
+     * finished and that every payment and outstanding balance is settled. Only then is the tour Completed. The tour, its
+     * cards and its history stay exactly as they are; the record is one more line, with who and when.
+     */
+    public function finalize($tourId)
+    {
+        try {
+            $db = $this->db();
+            $b  = (array) ($this->request->getJSON(true) ?? []);
+            $t  = $db->query('SELECT id, tour_no, intake_id, stage, arrival_date, departure_date FROM tf_tour WHERE id = ?', [(int) $tourId])->getRowArray();
+            if (!$t) {
+                return $this->json(['status' => 404, 'message' => 'That tour was not found.']);
+            }
+            $today = $this->today();
+            $group = TourFinal::group($t, TourFinal::map($db), $today);
+            if ($group === 'completed') {
+                return $this->json(['status' => 409, 'message' => 'Tour ' . $t['tour_no'] . ' is already completed. Nothing was changed.']);
+            }
+            if ($group !== 'arrived') {
+                return $this->json(['status' => 409, 'message' => 'Only a tour that has arrived can be finalized. Nothing was changed.']);
+            }
+            if (!$t['departure_date'] || substr((string) $t['departure_date'], 0, 10) > $today) {
+                return $this->json(['status' => 409, 'message' => 'Tour ' . $t['tour_no'] . ' has not finished yet (departure ' . ($t['departure_date'] ?: 'not set') . '). Nothing was changed.']);
+            }
+            if (empty($b['finished']) || empty($b['settled'])) {
+                return $this->json(['status' => 400, 'message' => 'Tick both: the tour has finished, and every payment and outstanding balance is settled. Nothing was changed.']);
+            }
+            TourFinal::finalize($db, (int) $tourId, $this->user(), trim((string) ($b['note'] ?? '')));
+            try {
+                (new TourService($db, $this->user()))->event((int) $t['intake_id'], (int) $tourId, 'tour', (int) $tourId, 'finalized', null, null,
+                    'Finalization complete: ' . $this->user() . ' recorded that the tour has finished and that every payment and outstanding balance is settled.');
+            } catch (\Throwable $e) {
+                // the finalization stands; its trail line is best effort
+            }
+            return $this->json(['status' => 200, 'message' => 'Tour ' . $t['tour_no'] . ' is completed. It is now found on Previous Tours.']);
         } catch (\Throwable $e) {
             return $this->json(['status' => 400, 'message' => $e->getMessage()]);
         }

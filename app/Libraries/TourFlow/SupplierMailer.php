@@ -572,7 +572,7 @@ final class SupplierMailer
      * The communication as Communications & History keeps it: the same thread as the hotels' letters, the
      * transport requests and the agent's mail, with a guard so one message is never written twice.
      */
-    private function toComms(int $messageId): void
+    public function toComms(int $messageId): void
     {
         try {
             $m = $this->db->query('SELECT m.*, t.intake_id FROM tf_service_message m JOIN tf_tour t ON t.id = m.tour_id WHERE m.id = ?', [$messageId])->getRowArray();

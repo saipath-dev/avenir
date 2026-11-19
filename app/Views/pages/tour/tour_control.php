@@ -131,6 +131,14 @@
     @media (max-width:640px) { .oc .oc-facts { flex-wrap:wrap; overflow-x:visible; row-gap:8px; } .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 22%; min-width:170px; } .oc .oc-fact:nth-child(4n) { border-right:0; } }
     @media (max-width:640px) { .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 45%; } .oc .oc-fact:nth-child(2n) { border-right:0; } }
     @media (max-width:640px) { .oc .oc-cards { grid-template-columns:repeat(2, 1fr); } .oc .oc-two, .oc .pr-grid { grid-template-columns:1fr; } .oc .oc-ban { padding-left:18px; flex-wrap:wrap; } .oc table.ow .gbtn.act { min-width:0; } .oc .oc-box { overflow-x:auto; } }
+    /* tf-supdesk-r1: Supplier Emails & Vouchers */
+    .oc .sm-t td { vertical-align:top; } .oc .sm-t td small { display:block; font-size:12px; color:#5f6470; margin-top:2px; } .oc .sm-mut { color:#5f6470; font-size:12.5px; }
+    .oc .sm-a { white-space:nowrap; } .oc .sm-b { display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 11px; margin:0 4px 4px 0; border:1.5px solid #8b1d40; border-radius:7px; background:#fff; color:#8b1d40; font-size:12.5px; font-weight:700; text-decoration:none; cursor:pointer; }
+    .oc .sm-b:hover { background:#f8f1f3; } .oc .sm-b.go { background:#78b848; border-color:#78b848; color:#fff; } .oc .sm-b.go.again { background:#8b1d40; border-color:#8b1d40; } .oc .sm-b:disabled { background:#c9c9c9; border-color:#c9c9c9; color:#fff; cursor:not-allowed; }
+    .oc .sm-sub td { background:#fbf7f9; padding-top:6px; padding-bottom:8px; font-size:12.5px; } .oc .sm-sub .bad, .oc .sm-t .bad { color:#a3261d; font-weight:700; } .oc .sm-sub .warn { color:#8a5a00; font-weight:600; } .oc .sm-sub .ok { color:#3f7a17; font-weight:700; }
+    .oc .sm-h { display:flex; gap:14px; flex-wrap:wrap; padding:3px 0; } .oc .sm-h a { color:#8b1d40; font-weight:700; } .oc .sm-h span:first-child { min-width:118px; }
+    .oc .sm-c { border:1.5px solid #8b1d40; border-radius:9px; background:#fff; padding:10px 14px; margin:6px 0; display:grid; gap:7px; font-size:13.5px; max-width:720px; } .oc .sm-c label { display:flex; gap:8px; align-items:center; font-weight:600; cursor:pointer; margin:0; }
+    .oc .sm-c input[type=checkbox] { width:17px; height:17px; accent-color:#8b1d40; } .oc .sm-c input[type=text] { height:34px; border:1.5px solid #d9d3dd; border-radius:7px; padding:0 10px; font-size:13.5px; }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -213,7 +221,7 @@
     }
 
     let TAB = 'over', STAY = 0;
-    try { const h = (location.hash || '').replace('#', ''); if (['over', 'hotels', 'trans', 'meals', 'acts', 'pax', 'itin', 'docs'].includes(h)) TAB = h; } catch (e) {}
+    try { const h = (location.hash || '').replace('#', ''); if (['over', 'hotels', 'trans', 'meals', 'acts', 'pax', 'itin', 'mail', 'docs'].includes(h)) TAB = h; } catch (e) {}
 
     function draw(c, it) {
         const t = c.tour, A = areas(c, it), id = t.id, iid = t.intake_id;
@@ -250,7 +258,7 @@
             : `<span class="oc-pill" title="Operations owner: ${esc(it.handler_name || 'Unassigned')}">Tour confirmed • ${worst === 'green' ? 'Arrangements complete' : 'Bookings in progress'}</span>`;
         // tf-control-r5: the tabs as the mock-up names them, each with the light of its own area
         const tabs = [['over', 'Overview', 'grey'], ['hotels', 'Hotels', A.hotels[0]], ['trans', 'Transport', A.transport[0]], ['meals', 'Meals', A.meals[0]], ['acts', 'Entrances &amp; Activities', A.acts[0]],
-            ['pax', 'Passengers &amp; Rooming', A.pax[0]], ['itin', 'Itinerary', t.quote_version ? 'green' : 'grey'], ['docs', 'Documents &amp; History', 'grey']];
+            ['pax', 'Passengers &amp; Rooming', A.pax[0]], ['itin', 'Itinerary', t.quote_version ? 'green' : 'grey'], ['mail', 'Supplier Emails &amp; Vouchers', 'grey'], ['docs', 'Documents &amp; History', 'grey']];
         const L = { toInq, toHotel, toTrans, toDocs, prog, quote, ver, btn };
         const more = morePanes(c, it, L);
 
@@ -293,7 +301,9 @@
             <div class="oc-tabs">${tabs.map(x => `<a class="oc-tab${TAB === x[0] ? ' on' : ''}" data-octab="${x[0]}"><span class="dot ${x[2] || 'grey'}"></span>${x[1]}</a>`).join('')}</div>
             <div class="oc-pane${TAB === 'over' ? ' on' : ''}" data-ocpane="over">${overview}</div>
             <div class="oc-pane${TAB === 'pax' ? ' on' : ''}" data-ocpane="pax">${paxPane(c, it, L)}</div>
+            <div class="oc-pane${TAB === 'mail' ? ' on' : ''}" data-ocpane="mail"><div id="sm_box"></div></div>
             ${Object.keys(more).map(k => `<div class="oc-pane${TAB === k ? ' on' : ''}" data-ocpane="${k}">${more[k]}</div>`).join('')}`;
+        drawMail();
         document.querySelectorAll('#oc_body [data-octab]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); TAB = b.dataset.octab; try { history.replaceState(null, '', '#' + TAB); } catch (x) {} draw(c, it); }));
         fit();
         const sel = document.getElementById('pr_stay'); if (sel) sel.addEventListener('change', () => { STAY = Number(sel.value) || 0; draw(c, it); });
@@ -415,6 +425,66 @@
             <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
     }
 
+    // ---------- tf-supdesk-r1 (19 Nov 2026, Shantha): Supplier Emails & Vouchers — one entry per hotel reservation and per booked
+    // service provider. Confirming the tour prepares the messages; nothing goes until a person has read the address, the e-mail and
+    // the voucher and presses Send Email on that entry. "E-mail sent" and "booking confirmed by the supplier" are shown separately.
+    let SM = null, SM_OPEN = null, SM_MSG = {};
+    const SM_URL = `${PAGE}/${TOUR_ID}/supplier_mail`;
+    async function loadMail() { try { const j = await get(SM_URL); SM = j.status === 200 ? j.data : { error: j.message || 'Could not be read.' }; } catch (e) { SM = { error: e.message }; } drawMail(); }
+    function drawMail() {
+        const box = document.getElementById('sm_box'); if (!box) return;
+        if (!SM) { box.innerHTML = '<div class="oc-msg">Reading the supplier e-mails…</div>'; return; }
+        if (SM.error) { box.innerHTML = `<div class="oc-msg">${esc(SM.error)}</div>`; return; }
+        const E = SM.entries || [], k = e => e.type + ':' + e.id;
+        const n = s => E.filter(e => e.state === s).length, held = E.filter(e => (e.flags || []).some(f => f.stop)).length;
+        const pillOf = e => e.state === 'sent' ? (e.last_failed ? '<span class="st-pill red">Last attempt failed</span>' : `<span class="st-pill green">E-mail sent${e.times_sent > 1 ? ' ×' + e.times_sent : ''}</span>`)
+            : (e.state === 'failed' ? '<span class="st-pill red">Send failed</span>' : '<span class="st-pill amber">Not sent</span>');
+        const bk = e => !e.booking ? '<span class="sm-mut">Recorded on the Transport desk</span>'
+            : `<span class="st-pill ${/^confirmed|voucher_issued|done$/.test(e.booking_state) ? 'green' : (e.booking_state === 'problem' || e.booking_state === 'to_book' ? 'red' : 'amber')}">${esc(e.booking)}</span>`;
+        const rows = E.map(e => {
+            const stop = (e.flags || []).filter(f => f.stop), key = k(e), open = SM_OPEN === key, sentOk = e.state === 'sent' && !e.last_failed;
+            const pv = `${SM_URL}/preview/${e.type}/${e.id}`;
+            const acts = !e.can ? '<span class="sm-mut">Your sign-in does not hold this desk</span>' :
+                `<a class="sm-b" href="${pv}" target="_blank"><i class="bi bi-envelope-open"></i> Preview Email</a>`
+                + (e.vouchers || []).map(v => `<a class="sm-b" href="${SM_URL}/voucher/${e.type}/${e.id}/${v.key}" target="_blank" title="${esc(v.label)}"><i class="bi bi-file-earmark-pdf"></i> ${(e.vouchers || []).length > 1 ? esc(v.label) : 'View Voucher'}</a>`).join('')
+                + (stop.length || !e.mailbox ? `<button class="sm-b go" disabled title="${esc(stop.length ? stop[0].text : 'No mailbox is set up to send from')}"><i class="bi bi-send"></i> Send Email</button>`
+                    : `<button class="sm-b go${sentOk ? ' again' : ''}" data-smopen="${key}"><i class="bi bi-send"></i> ${sentOk ? 'Send again' : (e.state === 'failed' || e.last_failed ? 'Retry Send' : 'Send Email')}</button>`);
+            const hist = (e.history || []).map(h => `<div class="sm-h"><span>${when(h.at)}</span><span class="${h.result === 'sent' ? 'ok' : 'bad'}">${h.result === 'sent' ? 'Sent' : 'Failed'}${h.action === 'resend' ? ' • deliberate resend' : (h.action === 'retry' ? ' • retry' : '')}</span>
+                <span>to ${esc(h.to_addr || '—')} • ${esc(h.by_name || '')}${h.reason ? ' • reason: ' + esc(h.reason) : ''}${h.error ? ' • ' + esc(h.error) : ''}</span>
+                <a href="${SM_URL}/sent/${h.id}" target="_blank">View sent e-mail${(h.attachments || []).length ? ' + ' + h.attachments.length + ' attachment' + (h.attachments.length === 1 ? '' : 's') : ''}</a></div>`).join('')
+                + (e.earlier ? `<div class="sm-h"><span>${when(e.earlier.at)}</span><span>${esc(e.earlier.state)} earlier from the desk (${esc(e.earlier.channel || '')})</span><span>${e.earlier.to ? 'to ' + esc(e.earlier.to) + ' • ' : ''}${esc(e.earlier.by || '')}</span><span></span></div>` : '');
+            const confirm = !open ? '' : `<div class="sm-c"><b>${sentOk ? 'Send this e-mail AGAIN' : 'Send this e-mail'} to ${esc(e.provider)}</b>
+                <div>Recipient: <b>${esc(e.recipient)}</b> <span class="sm-mut">(${esc(e.recipient_source || 'master')})</span></div>
+                <label><input type="checkbox" id="sm_ck"> I have checked the recipient address, the e-mail content and the voucher.</label>
+                ${sentOk ? '<input type="text" id="sm_why" maxlength="300" placeholder="Why is it sent again? (kept with the resend)">' : ''}
+                <div><button class="sm-b go" id="sm_go" disabled data-type="${e.type}" data-id="${e.id}" data-resend="${sentOk ? 1 : 0}"><i class="bi bi-send"></i> Send now</button> <button class="sm-b" id="sm_x">Cancel</button></div></div>`;
+            return `<tr><td><b>${esc(e.provider)}</b><small>${esc(e.group)}</small></td><td>${esc(e.service)}</td>
+                <td>${e.recipient ? `${esc(e.recipient)}<small>${esc(e.recipient_source || '')}</small>` : '<span class="bad">No address</span>'}</td>
+                <td>${pillOf(e)}${e.sent ? `<small>${when(e.sent.at)} • ${esc(e.sent.by_name || '')}</small>` : ''}</td><td>${bk(e)}</td><td class="sm-a">${acts}</td></tr>`
+                + ((e.flags || []).length || hist || confirm || SM_MSG[key] ? `<tr class="sm-sub"><td colspan="6">${(e.flags || []).map(f => `<div class="${f.stop ? 'bad' : 'warn'}"><i class="bi bi-exclamation-triangle-fill"></i> ${esc(f.text)}</div>`).join('')}
+                    ${SM_MSG[key] ? `<div class="${SM_MSG[key].ok ? 'ok' : 'bad'}">${esc(SM_MSG[key].text)}</div>` : ''}${confirm}${hist}</td></tr>` : '');
+        }).join('');
+        box.innerHTML = `<div class="pr-head"><h3><i class="bi bi-envelope-paper"></i> Supplier Emails &amp; Vouchers</h3></div>
+            <div class="pr-stats"><span><b>${E.length}</b> reservations</span><span><b>${n('sent')}</b> e-mail sent</span><span><b>${n('not_sent')}</b> not sent</span><span class="${n('failed') ? 'miss' : ''}"><b>${n('failed')}</b> failed</span><span class="${held ? 'miss' : ''}"><b>${held}</b> held — details missing</span></div>
+            <div class="oc-box"><table class="ow sm-t"><thead><tr><th>Provider</th><th>Booked service</th><th>Recipient e-mail</th><th>E-mail status</th><th>Supplier booking</th><th>Check, then send</th></tr></thead>
+                <tbody>${rows || '<tr><td colspan="6">No hotel reservation or booked service provider is on this tour yet.</td></tr>'}</tbody></table></div>
+            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Nothing is sent automatically. Read the address, the e-mail and the voucher, then press Send Email for that reservation. An e-mail sent is not a booking confirmed.</i>${SM.sender_note ? ' • ' + esc(SM.sender_note) : ''}</span></div>`;
+        box.querySelectorAll('[data-smopen]').forEach(b => b.addEventListener('click', () => { SM_OPEN = SM_OPEN === b.dataset.smopen ? null : b.dataset.smopen; drawMail(); }));
+        const go = document.getElementById('sm_go'), ck = document.getElementById('sm_ck'), why = document.getElementById('sm_why'), x = document.getElementById('sm_x');
+        if (x) x.addEventListener('click', () => { SM_OPEN = null; drawMail(); });
+        if (go && ck) {
+            const gate = () => { go.disabled = !(ck.checked && (!why || why.value.trim() !== '')); };
+            ck.addEventListener('change', gate); if (why) why.addEventListener('input', gate);
+            go.addEventListener('click', async () => {
+                if (go.disabled || go.dataset.busy) return; go.dataset.busy = '1'; go.disabled = true; go.innerHTML = 'Sending…';
+                const key = go.dataset.type + ':' + go.dataset.id; let j = null;
+                try { j = await (await fetch(SM_URL + '/send', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                    body: JSON.stringify({ type: go.dataset.type, id: Number(go.dataset.id), resend: go.dataset.resend === '1', reason: why ? why.value.trim() : '' }) })).json(); } catch (e) { j = null; }
+                SM_MSG[key] = { ok: !!(j && j.status === 200), text: (j && j.message) || 'It was not sent. Nothing was changed.' }; SM_OPEN = null; await loadMail();
+            });
+        }
+    }
+
     async function load() {
         const box = document.getElementById('oc_body');
         try {
@@ -422,6 +492,7 @@
             if (c.status !== 200) { box.innerHTML = `<div class="oc-msg">${esc(c.message || 'This tour could not be read.')}</div>`; return; }
             const i = await get(`${INTAKE}/intake/${c.data.tour.intake_id}`);
             draw(c.data, (i && i.data) || {});
+            if (!SM_OPEN) loadMail();
         } catch (e) { box.innerHTML = `<div class="oc-msg">This tour could not be read: ${esc(e.message)}</div>`; }
     }
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') load(); });

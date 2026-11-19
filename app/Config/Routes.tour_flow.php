@@ -427,6 +427,16 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     // tf-confirmed-r1: Confirmed Tours — one line per confirmed tour, read-only, under the Inquiries privilege (no menu entry of its own)
     $routes->get('confirmed', [ConfirmedToursController::class, 'index']);
     $routes->get('confirmed/data', [ConfirmedToursController::class, 'data']);
+    // tf-confirmed-r4: Previous Tours (the completed tours) and the finalization of an arrived tour
+    $routes->get('previous', [ConfirmedToursController::class, 'previous']);
+    $routes->post('confirmed/(:num)/finalize', [ConfirmedToursController::class, 'finalize']);
+    // tf-supdesk-r1: Supplier Emails & Vouchers of one tour (Operations Control) — read, preview, voucher, and one send per press
+    $routes->get('confirmed/(:num)/supplier_mail', [ConfirmedToursController::class, 'supplierMail']);
+    $routes->get('confirmed/(:num)/supplier_mail/preview/(:segment)/(:num)', [ConfirmedToursController::class, 'supplierMailPreview']);
+    $routes->get('confirmed/(:num)/supplier_mail/voucher/(:segment)/(:num)/(:segment)', [ConfirmedToursController::class, 'supplierMailVoucher']);
+    $routes->get('confirmed/(:num)/supplier_mail/sent/(:num)', [ConfirmedToursController::class, 'supplierMailSent']);
+    $routes->get('confirmed/(:num)/supplier_mail/sent/(:num)/file/(:num)', [ConfirmedToursController::class, 'supplierMailSentFile']);
+    $routes->post('confirmed/(:num)/supplier_mail/send', [ConfirmedToursController::class, 'supplierMailSend']);
     // tf-control-r1: Confirmed Tour · Operations Control — one tour, its traffic lights and outstanding work (reads only)
     $routes->get('confirmed/(:num)/control', [ConfirmedToursController::class, 'control']);
     $routes->get('confirmed/(:num)/control/data', [ConfirmedToursController::class, 'controlData']);

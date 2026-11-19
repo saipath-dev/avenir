@@ -216,6 +216,142 @@ final class HotelBookingDocs
         return $html;
     }
 
+    /**
+     * tf-hotelreq-r5 (19 Nov 2026, Shantha's second mock-up): the Hotel Booking Request — the Voucher / Reservation Control No.,
+     * the booking name and PAX directly under it, the hotel, the stay, a reservation SUMMARY (no guest list: the full names and
+     * the room allocations are only in the Rooming List PDF), and the hotel's confirmation. Fixed palette; everything from the booking.
+     */
+    private static function drawRequest(HotelDocPdf $pdf, array $doc, array $rl): void
+    {
+        $T = [0, 77, 80]; $BAR = [0, 102, 102]; $G = [120, 184, 72]; $ink = [32, 43, 48]; $line = [184, 200, 200];
+        $h = $doc['hotel']; $s = $doc['stay']; $t = $doc['tour']; $no = self::voucherNo($doc);
+        $L = 9; $W = $pdf->getPageWidth() - 18; $f = 'dejavusans'; $bottom = $pdf->getPageHeight() - 12;
+        $pdf->SetAutoPageBreak(false);
+        $dm = static fn ($v) => $v ? date('j M Y', strtotime((string) $v)) : '—';
+        $need = static function (float $hh) use ($pdf, &$y, $bottom) { if ($y + $hh > $bottom) { $pdf->AddPage(); $y = 22; } };
+        $bed = static function (float $x, float $yy, float $k = 1) use ($pdf) {   // a small bed, in the current fill colour
+            $pdf->Rect($x, $yy, 1.1 * $k, 6.4 * $k, 'F'); $pdf->Rect($x, $yy + 3.8 * $k, 8.6 * $k, 1.3 * $k, 'F'); $pdf->Rect($x + 7.5 * $k, $yy + 2.6 * $k, 1.1 * $k, 3.8 * $k, 'F');
+            $pdf->Rect($x + 1.7 * $k, $yy + 1.9 * $k, 2.1 * $k, 1.5 * $k, 'F'); $pdf->Rect($x + 4.3 * $k, $yy + 2.3 * $k, 3.2 * $k, 1.2 * $k, 'F');
+        };
+        $lead = '';
+        foreach ((array) ($doc['passengers'] ?? []) as $p) {
+            if (trim((string) ($p['full_name'] ?? '')) !== '') { $lead = trim((string) $p['full_name']); break; }
+        }
+        $ad = (int) ($t['pax_adults'] ?? 0); $ch = (int) ($t['pax_children'] ?? 0);
+        $pax = ($ad + $ch) ?: (int) ($s['pax'] ?? $t['pax_total'] ?? $rl['total_guests']);
+        $name = $lead !== '' ? $lead : (trim((string) ($t['tour_name'] ?? '')) ?: 'Name to follow');
+        // the number: a teal tab, then the number in its own box
+        $y = 42;
+        $pdf->SetFillColor(...$BAR); $pdf->Rect($L + 19, $y, $W - 38, 9.2, 'F');
+        $pdf->SetTextColor(255, 255, 255); $pdf->SetFont($f, 'B', 12); $pdf->SetFontSpacing(0.4); $pdf->SetXY($L + 19, $y); $pdf->Cell($W - 38, 9.2, 'VOUCHER / RESERVATION CONTROL NO.', 0, 0, 'C'); $pdf->SetFontSpacing(0);
+        $y += 9.2;
+        $pdf->SetDrawColor(...$BAR); $pdf->SetLineWidth(0.6); $pdf->Rect($L, $y, $W, 16.6, 'D');
+        $pdf->SetTextColor(...$T); $pdf->SetFont($f, 'B', 27); $nw = $pdf->GetStringWidth($no); $pdf->SetXY($L, $y + 1.8); $pdf->Cell($W, 13, $no, 0, 0, 'C');
+        $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(1); $mid = $L + $W / 2;
+        $pdf->Line($mid - $nw / 2 - 23, $y + 8.4, $mid - $nw / 2 - 7, $y + 8.4); $pdf->Line($mid + $nw / 2 + 7, $y + 8.4, $mid + $nw / 2 + 23, $y + 8.4);
+        // the booking name and PAX, directly under the number
+        $y += 21;
+        $pdf->SetFillColor(232, 243, 222); $pdf->RoundedRect($L - 0.5, $y, $W + 1, 20.4, 2.5, '1111', 'F');
+        $big = mb_strtoupper($name) . ' — ' . $pax . ' PAX'; $fs = 27;
+        $pdf->SetFont($f, 'B', $fs);
+        while ($fs > 13 && $pdf->GetStringWidth($big) > $W - 10) { $fs -= 1; $pdf->SetFont($f, 'B', $fs); }
+        $pdf->SetTextColor(...$T); $pdf->SetXY($L, $y + 1.2); $pdf->Cell($W, 12, $big, 0, 0, 'C');
+        $pdf->SetTextColor(...$ink); $pdf->SetFont($f, '', 12.5); $pdf->SetXY($L, $y + 12.8);
+        $pdf->Cell($W, 6, ($ad + $ch) ? $ad . ' adult' . ($ad === 1 ? '' : 's') . ' • ' . $ch . ' child' . ($ch === 1 ? '' : 'ren') : $pax . ' guest' . ($pax === 1 ? '' : 's'), 0, 0, 'C');
+        $y += 23.2;
+        $ref = 'Tour ' . $t['tour_no'] . (!empty($t['inquiry_no']) ? '  |  Inquiry ' . $t['inquiry_no'] : '');
+        $pdf->SetFont($f, '', 10); $rw = $pdf->GetStringWidth($ref) + 16; $pdf->SetXY($L, $y); $pdf->Cell($W, 5.4, $ref, 0, 0, 'C');
+        $pdf->SetDrawColor(...$line); $pdf->SetLineWidth(0.3); $pdf->Line($L, $y + 2.9, $mid - $rw / 2, $y + 2.9); $pdf->Line($mid + $rw / 2, $y + 2.9, $L + $W, $y + 2.9);
+        // the letter
+        $y += 8.5; $pdf->SetFont($f, 'B', 11.5); $pdf->SetXY($L + 0.5, $y); $pdf->Cell($W, 6, 'Dear Reservations Manager,', 0, 0, 'L');
+        $pdf->SetFont($f, '', 9.6);
+        $pdf->writeHTMLCell($W, 0, $L + 0.5, $y + 6.8, 'Greetings from <b style="color:#004D50">Avenir Holidays.</b> Kindly reserve the accommodation detailed below. Please reply with your hotel confirmation reference, quoting our voucher number.', 0, 1);
+        // the hotel
+        $y = $pdf->GetY() + 3.5; $hh = 13.2;
+        $pdf->SetDrawColor(...$BAR); $pdf->SetLineWidth(0.35); $pdf->Rect($L, $y, $W, $hh, 'D');
+        $pdf->SetFillColor(...$BAR); $pdf->Polygon([$L, $y, $L + 28, $y, $L + 21, $y + $hh, $L, $y + $hh], 'F');
+        $pdf->SetFillColor(255, 255, 255); $pdf->Rect($L + 7.2, $y + 3.4, 4.4, 7, 'F'); $pdf->Rect($L + 11.6, $y + 5.6, 3.6, 4.8, 'F'); $pdf->Rect($L + 6.2, $y + 10.2, 10, 0.7, 'F');
+        $pdf->SetFillColor(...$BAR);
+        foreach ([[8, 4.4], [9.9, 4.4], [8, 6.2], [9.9, 6.2], [8, 8], [9.9, 8], [12.4, 6.6], [13.7, 6.6], [12.4, 8.3], [13.7, 8.3]] as [$dx, $dy]) { $pdf->Rect($L + $dx, $y + $dy, 0.9, 0.9, 'F'); }
+        $where = trim((string) ($s['area'] ?? '')) ?: trim((string) ($h['address'] ?? ''));
+        $pdf->SetTextColor(...$ink); $fs = 15.5; $pdf->SetFont($f, 'B', $fs); $nm = (string) $h['name']; $rest = $where !== '' ? ' / ' . $where : '';
+        while ($fs > 9 && $pdf->GetStringWidth($nm . $rest) > $W - 36) { $fs -= 0.5; $pdf->SetFont($f, 'B', $fs); }
+        $pdf->SetXY($L + 32, $y); $pdf->Cell($pdf->GetStringWidth($nm) + 0.5, $hh, $nm, 0, 0, 'L'); $pdf->SetFont($f, '', $fs); $pdf->Cell(60, $hh, $rest, 0, 0, 'L');
+        // the stay in three boxes
+        $y += $hh + 4.4; $bw = ($W - 9) / 3; $n = (int) $s['nights'];
+        foreach ([['Check-in', $dm($s['check_in'])], ['Check-out', $dm($s['check_out'])], ['Duration', $n . ' night' . ($n === 1 ? '' : 's')]] as $i => [$k, $v]) {
+            $x = $L - 0.5 + $i * ($bw + 5);
+            $pdf->SetDrawColor(...$line); $pdf->SetLineWidth(0.4); $pdf->RoundedRect($x, $y, $bw, 16.2, 2, '1111', 'D');
+            $pdf->SetFillColor(...$G);
+            if ($i < 2) {
+                $pdf->RoundedRect($x + 6.5, $y + 4.6, 8, 7.6, 1, '1111', 'F'); $pdf->Rect($x + 8.2, $y + 3.6, 1, 2, 'F'); $pdf->Rect($x + 11.8, $y + 3.6, 1, 2, 'F');
+                $pdf->SetFillColor(255, 255, 255); $pdf->Rect($x + 7.4, $y + 7, 6.2, 4.3, 'F');
+                $pdf->SetFillColor(...$G);
+                foreach ([[8.2, 7.8], [10, 7.8], [11.8, 7.8], [8.2, 9.5], [10, 9.5], [11.8, 9.5]] as [$dx, $dy]) { $pdf->Rect($x + $dx, $y + $dy, 1, 1, 'F'); }
+            } else {
+                $bed($x + 6.2, $y + 4.6, 1.05);
+            }
+            $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(0.4); $pdf->Line($x + 18.6, $y + 3.2, $x + 18.6, $y + 13);
+            $pdf->SetTextColor(...$ink); $pdf->SetFont($f, 'B', 9.8); $pdf->SetXY($x + 21.5, $y + 1.9); $pdf->Cell($bw - 22, 5, $k, 0, 0, 'L');
+            $pdf->SetFont($f, 'B', 14.5); $pdf->SetXY($x + 21.5, $y + 7); $pdf->Cell($bw - 22, 7.4, $v, 0, 0, 'L');
+        }
+        // reservation summary — numbers and kinds only; the names are in the Rooming List
+        $y += 20;
+        $cats = []; $beds = [];
+        foreach ((array) $rl['rooms'] as $r) {
+            $c = trim((string) (array_key_exists('category', $r) ? $r['category'] : ($rl['room_type_text'] ?? '')));
+            if ($c !== '') { $cats[$c] = ($cats[$c] ?? 0) + 1; }
+            $w = RoomingList::WORD[$r['code']] ?? (string) $r['code']; $beds[$w] = ($beds[$w] ?? 0) + 1;
+        }
+        $mix = static fn (array $m) => !$m ? '—' : (count($m) === 1 ? (string) array_key_first($m) . (reset($m) > 1 ? ' (' . reset($m) . ' rooms)' : '')
+            : implode(' • ', array_map(static fn ($k, $v) => $v . ' ' . $k, array_keys($m), $m)));
+        $nr = (int) $rl['total_rooms'];
+        $rows = [['Rooms', $nr > 0 ? $nr . ' room' . ($nr === 1 ? '' : 's') : '—'], ['Room category', $mix($cats)], ['Bed arrangement', $mix($beds)],
+                 ['Meal plan', count($rl['meals']) > 1 ? 'Differs by room — see the Rooming List' : self::mealWord($s['meal_plan'])],
+                 ['Special requests', trim((string) ($s['special_note'] ?? '')) !== '' ? (string) $s['special_note'] : 'None specified']];
+        if (!empty($s['crew_rooms'])) {
+            $rows[] = ['Crew rooms', (string) $s['crew_rooms']];
+        }
+        $pdf->SetFillColor(...$BAR); $pdf->Rect($L - 0.5, $y, $W + 1, 7.4, 'F');
+        $pdf->SetTextColor(255, 255, 255); $pdf->SetFont($f, 'B', 11.5); $pdf->SetFontSpacing(0.25); $pdf->SetXY($L + 3.5, $y); $pdf->Cell($W - 4, 7.4, 'RESERVATION SUMMARY', 0, 0, 'L'); $pdf->SetFontSpacing(0);
+        $y += 7.4; $kw = 62; $pdf->SetLineWidth(0.25);
+        foreach ($rows as [$k, $v]) {
+            $pdf->SetFont($f, '', 10.5);
+            $rh = max(7.1, $pdf->getStringHeight($W - $kw - 10, $v) + 2);
+            $need($rh);
+            $pdf->SetDrawColor(...$line); $pdf->SetFillColor(237, 245, 244); $pdf->Rect($L - 0.5, $y, $kw, $rh, 'DF'); $pdf->Rect($L - 0.5 + $kw, $y, $W + 1 - $kw, $rh, 'D');
+            $pdf->SetTextColor(...$ink); $pdf->SetFont($f, 'B', 10.5); $pdf->SetXY($L + 3.8, $y + 1); $pdf->Cell($kw - 5, 5.1, $k, 0, 0, 'L');
+            $pdf->SetFont($f, '', 10.5); $pdf->SetXY($L + $kw + 5, $y + 1); $pdf->MultiCell($W - $kw - 10, 5.1, $v, 0, 'L');
+            $y += $rh;
+        }
+        // the rooming list — named only when it is attached
+        if ($nr > 0) {
+            $y += 3.2; $need(14.2);
+            $pdf->SetFillColor(217, 238, 238); $pdf->RoundedRect($L - 0.5, $y, $W + 1, 14.2, 2, '1111', 'F');
+            $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(0.7); $pdf->RoundedRect($L + 5.2, $y + 3.2, 3.6, 8, 1.8, '1111', 'D'); $pdf->RoundedRect($L + 6.4, $y + 5, 1.3, 4.6, 0.65, '1111', 'D');
+            $pdf->SetLineWidth(0.4); $pdf->Line($L + 14, $y + 2.4, $L + 14, $y + 11.8);
+            $pdf->SetTextColor(...$T); $pdf->SetFont($f, 'B', 12.5); $pdf->SetXY($L + 18.5, $y + 1.6); $a = 'Separate attachment: '; $pdf->Cell($pdf->GetStringWidth($a), 6, $a, 0, 0, 'L');
+            $pdf->SetTextColor(...$ink); $pdf->Cell(60, 6, 'Rooming List PDF', 0, 0, 'L');
+            $pdf->SetFont($f, '', 9.6); $pdf->SetXY($L + 18.5, $y + 7.6); $pdf->Cell($W - 20, 5, 'Full guest names and room allocations are provided in the rooming list.', 0, 0, 'L');
+            $y += 14.2;
+        }
+        // the hotel's confirmation — its own block
+        $y += 3.5; $need(33 + 20.5);
+        $pdf->SetFillColor(232, 243, 222); $pdf->RoundedRect($L - 0.5, $y, $W + 1, 33, 2, '1111', 'F');
+        $pdf->SetTextColor(...$T); $pdf->SetFont($f, 'B', 14); $ttl = 'HOTEL CONFIRMATION'; $tw = $pdf->GetStringWidth($ttl); $pdf->SetXY($L + 3, $y + 1.3); $pdf->Cell($tw + 2, 7, $ttl, 0, 0, 'L');
+        $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(0.45); $pdf->Line($L + $tw + 9, $y + 5, $L + $W - 3, $y + 5);
+        $pdf->SetDrawColor(...$line); $pdf->SetLineWidth(0.25); $pdf->SetFillColor(255, 255, 255); $pdf->SetTextColor(...$ink); $pdf->SetFont($f, 'B', 10.5);
+        foreach (['Hotel confirmation reference', 'Confirmed by', 'Date'] as $i => $k) {
+            $ly = $y + 9.6 + $i * 6.7; $pdf->Rect($L + 3, $ly, 68, 6.7, 'DF'); $pdf->Rect($L + 71, $ly, $W - 74, 6.7, 'DF');
+            $pdf->SetXY($L + 6, $ly); $pdf->Cell(64, 6.7, $k, 0, 0, 'L');
+            $pdf->SetDrawColor(...$ink); $pdf->Line($L + 77, $ly + 5.2, $L + $W - 8, $ly + 5.2); $pdf->SetDrawColor(...$line);
+        }
+        $y += 37.5;
+        $pdf->SetFont($f, '', 10.5); $pdf->SetXY($L + 1, $y); $pdf->Cell($W, 5.2, 'Kind regards,', 0, 0, 'L');
+        $pdf->SetFont($f, 'B', 10.5); $pdf->SetXY($L + 1, $y + 5.3); $pdf->Cell($W, 5.2, 'Reservations Team,', 0, 0, 'L');
+        $pdf->SetFont($f, '', 10.5); $pdf->SetXY($L + 1, $y + 10.6); $pdf->Cell($W, 5.2, 'Avenir Holidays (Pvt) Ltd.', 0, 0, 'L');
+    }
+
     /** The guests room by room (TCPDF HTML; the heading row repeats on every page). */
     public static function roomingHtml(array $doc, array $rl): string
     {
@@ -227,13 +363,13 @@ final class HotelBookingDocs
         }
         $perMeal = count($rl['meals']) > 1;
         $hotel = $h['name'] . (!empty($s['area']) ? ', ' . $s['area'] : '');
-        $info = static fn ($k, $v) => '<tr><td width="34%" style="font-weight:bold;font-size:11.5pt;color:#1B1620">' . $k . '</td><td width="66%" style="font-size:11.5pt;color:#1B1620;border-left:1px solid #78b848">' . $v . '</td></tr>';
-        $html = '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="18%"></td><td width="64%" style="border:1.4px solid #8b1d40;text-align:center;font-size:15pt;font-weight:bold;line-height:2;color:#1B1620">Reservation Control No:  <span style="color:#8b1d40">|</span>  ' . $e($no) . '</td><td width="18%"></td></tr></table><br><br>'
+        $info = static fn ($k, $v) => '<tr><td width="34%" style="font-weight:bold;font-size:11.5pt;color:#202B30">' . $k . '</td><td width="66%" style="font-size:11.5pt;color:#202B30;border-left:1px solid #B8C8C8">' . $v . '</td></tr>';
+        $html = '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="18%"></td><td width="64%" style="border:1.4px solid #6B7278;text-align:center;font-size:15pt;font-weight:bold;line-height:2;color:#202B30">Reservation Control No:  <span style="color:#6B7278">|</span>  ' . $e($no) . '</td><td width="18%"></td></tr></table><br><br>'
             . '<table cellpadding="0" cellspacing="0" width="100%"><tr><td width="55%"><table cellpadding="3">'
             . $info('Hotel:', $e($hotel))
             . $info('Stay:', $e(date('j M Y', strtotime((string) $s['check_in'])) . ' – ' . date('j M Y', strtotime((string) $s['check_out'])) . ' (' . (int) $s['nights'] . ' night' . ((int) $s['nights'] === 1 ? '' : 's') . ')'))
             . $info('Total guests:', $e(self::guestWords($doc, $rl)))
-            . '</table></td><td width="45%" style="border-left:1px solid #78b848"><table cellpadding="3">'
+            . '</table></td><td width="45%" style="border-left:1px solid #B8C8C8"><table cellpadding="3">'
             . $info('Total rooms:', $e($rl['summary'] . ' (' . $rl['total_rooms'] . ')'))
             . $info('Meal plan:', $e($perMeal ? 'Per room — see the list' : self::mealWord($s['meal_plan'])))
             . $info('Tour:', $e($doc['tour']['tour_no']))
@@ -241,8 +377,8 @@ final class HotelBookingDocs
         $gw = $perMeal ? 50 : 60;
         $gcol = max(1, $maxG);
         $wEach = round($gw / $gcol, 2);
-        $th = static fn ($t, $w, $sub = '') => '<th width="' . $w . '%" style="background-color:#8b1d40;color:#FFFFFF;font-weight:bold;font-size:11.5pt;text-align:center;border:0.5px solid #8b1d40">' . $t . ($sub !== '' ? '<br><span style="font-size:8.5pt;font-weight:normal">' . $sub . '</span>' : '') . '</th>';
-        $html .= '<table cellpadding="6" cellspacing="0" width="100%" style="border:0.6px solid #8b1d40"><thead><tr>'
+        $th = static fn ($t, $w, $sub = '') => '<th width="' . $w . '%" style="background-color:#6B7278;color:#FFFFFF;font-weight:bold;font-size:11.5pt;text-align:center;border:0.5px solid #6B7278">' . $t . ($sub !== '' ? '<br><span style="font-size:8.5pt;font-weight:normal">' . $sub . '</span>' : '') . '</th>';
+        $html .= '<table cellpadding="6" cellspacing="0" width="100%" style="border:0.5px solid #B8C8C8"><thead><tr>'
             . $th('Allocation', 11) . $th('Hotel room no.', 15, '(Hotel to fill)') . $th('Room type', 14);
         for ($g = 1; $g <= $gcol; $g++) {
             $html .= $th('Guest ' . $g, $wEach);
@@ -251,7 +387,7 @@ final class HotelBookingDocs
             $html .= $th('Meal plan', 10);
         }
         $html .= '</tr></thead><tbody>';
-        $td = static fn ($v, $w, $st = '') => '<td width="' . $w . '%" style="font-size:12pt;color:#1B1620;border:0.5px solid #c08f9f;' . $st . '">' . $v . '</td>';
+        $td = static fn ($v, $w, $st = '') => '<td width="' . $w . '%" style="font-size:12pt;color:#202B30;border:0.5px solid #B8C8C8;' . $st . '">' . $v . '</td>';
         foreach ($rl['rooms'] as $k => $r) {
             $html .= '<tr nobr="true">' . $td('<b>' . str_pad((string) ($k + 1), 2, '0', STR_PAD_LEFT) . '</b>', 11, 'text-align:center;font-size:13pt') . $td('&nbsp;', 15) . $td($e(RoomingList::roomLabel($r, $rl['room_type_text'])), 14, 'font-size:10.5pt');
             for ($g = 0; $g < $gcol; $g++) {
@@ -267,7 +403,7 @@ final class HotelBookingDocs
         if ($rl['unallocated']) {
             $html .= '<p style="color:#A3261E;font-size:11pt;font-weight:bold">Still to allocate: ' . $e(implode(', ', $rl['unallocated'])) . '</p>';
         }
-        $html .= '<br><br><table cellpadding="8" cellspacing="0" width="100%" style="background-color:#E7F3DA"><tr><td style="text-align:center;font-size:13pt;font-weight:bold;font-style:italic;color:#10300A">Hotel room numbers to be completed by the hotel.</td></tr></table>';
+        $html .= '<br><br><table cellpadding="8" cellspacing="0" width="100%"><tr><td style="text-align:center;font-size:12pt;font-weight:bold;font-style:italic;color:#202B30">Hotel room numbers to be completed by the hotel.</td></tr></table>';
         return $html;
     }
 
@@ -278,6 +414,7 @@ final class HotelBookingDocs
         $pdf->kind = $kind;
         $pdf->control = self::voucherNo($doc);
         $pdf->docTitle = $kind === 'rooming' ? 'HOTEL ROOMING LIST' : 'HOTEL BOOKING REQUEST';
+        $pdf->chip = $kind === 'rooming' ? '' : 'Awaiting hotel confirmation';
         $pdf->logo = self::logoPath();
         $c = $doc['company'];
         $sd = $doc['sender'] ?? [];
@@ -293,8 +430,12 @@ final class HotelBookingDocs
         $pdf->SetAutoPageBreak(true, 18);
         $pdf->SetFont('dejavusans', '', 11);
         $pdf->AddPage();
-        $pdf->SetY($kind === 'rooming' ? 50 : 50);
-        $pdf->writeHTML($kind === 'rooming' ? self::roomingHtml($doc, $rl) : self::requestHtml($doc, $rl), true, false, true, false, '');
+        if ($kind !== 'rooming') {
+            self::drawRequest($pdf, $doc, $rl);   // tf-hotelreq-r3: white, teal and green — the approved mock-up
+            return $pdf->Output('doc.pdf', 'S');
+        }
+        $pdf->SetY(51);
+        $pdf->writeHTML(self::roomingHtml($doc, $rl), true, false, true, false, '');
         return $pdf->Output('doc.pdf', 'S');
     }
 
@@ -323,7 +464,7 @@ final class HotelBookingDocs
         $slug = preg_replace('/[^A-Za-z0-9\-]+/', '-', $no . '-' . ($doc['hotel']['name'] ?? 'hotel'));
         $out = [];
         foreach (['request' => ['booking_voucher', 'Hotel-Booking-Request-' . $slug . '.pdf', self::requestHtml($doc, $rl)], 'rooming' => ['rooming_list', 'Hotel-Rooming-List-' . $slug . '.pdf', self::roomingHtml($doc, $rl)]] as $k => [$kind, $name, $html]) {
-            $sha = hash('sha256', 'r2b|' . $html);
+            $sha = hash('sha256', ($k === 'request' ? 'r8|' : 'r6g|') . $html);   // r4: the teal request; the rooming list is unchanged
             $last = $this->db->query('SELECT * FROM tf_hotel_doc WHERE job_id = ? AND kind = ? ORDER BY version DESC LIMIT 1', [$jobId, $kind])->getRowArray();
             if ($last && (string) ($last['note'] ?? '') === 'content ' . $sha && ($p = $this->path($last))) {
                 $out[$k] = $last + ['path' => $p];
