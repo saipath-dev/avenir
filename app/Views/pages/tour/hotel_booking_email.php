@@ -98,7 +98,7 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
       <?php if (trim((string) ($doc['rate_basis'] ?? '')) !== ''): ?><?= $row('Rate', $e($doc['rate_basis'])) ?><?php endif; ?>
     </table>
   </td></tr>
-  <?php if ($nr > 0 && !$isV): ?>
+  <?php if (!$isV): ?>
   <tr><td style="padding:12px 26px 0">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#D9EEEE;border-radius:8px"><tr><td style="<?= $font ?>padding:10px 16px;border-left:4px solid <?= $G ?>;border-radius:8px;color:<?= $ink ?>">
       <div style="font-size:17px;font-weight:800"><span style="color:<?= $D ?>">Separate attachment:</span> Rooming List PDF</div>
@@ -118,7 +118,7 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
   </td></tr>
   <tr><td style="<?= $font ?>padding:16px 26px 18px;font-size:15px;color:<?= $ink ?>;line-height:1.55">
     Kind regards,<br><b>Reservations Team,</b><br>Avenir Holidays (Pvt) Ltd.
-    <div style="font-size:12.5px;margin-top:10px">Attached: <?= $isV ? 'Hotel Voucher' : 'Hotel Booking Request' . ($nr > 0 ? ' and Hotel Rooming List' : '') ?> (PDF) &mdash; <?= $e($control) ?>.</div>
+    <div style="font-size:12.5px;margin-top:10px">Attached: <?= $isV ? 'Hotel Voucher' : 'Hotel Booking Request and Hotel Rooming List' ?> (PDF) &mdash; <?= $e($control) ?>.</div>
   </td></tr>
   <tr><td style="<?= $font ?>border-top:2px solid <?= $G ?>;padding:10px 26px;font-size:12px;color:<?= $ink ?>"><?= $e($c['address'] ?? '') ?><?= !empty($c['phone']) ? ' &nbsp;&middot;&nbsp; ' . $e($c['phone']) : '' ?></td></tr>
 </table>

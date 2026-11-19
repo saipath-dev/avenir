@@ -18,6 +18,14 @@ class SendController extends BaseController
         // tf-resdesk-r2: on a development copy with the test mailbox switched on (.env tourflow.testMailbox = on, and only
         // when the page is opened on this computer) nothing goes to a mail server — the message and its attachments are
         // kept in writable/test_mailbox, readable on Hotel Bookings → Test mailbox
+        // tf-mailredirect-r1: on UAT and on a developer's machine nothing reaches a hotel, supplier or customer —
+        // the message goes to the one test address instead, marked, and says who it was really addressed to
+        if (\App\Libraries\TourFlow\MailRedirect::active()) {
+            $body    = \App\Libraries\TourFlow\MailRedirect::banner($to, $cc) . $body;
+            $subject = \App\Libraries\TourFlow\MailRedirect::subject((string) $subject);
+            $to      = \App\Libraries\TourFlow\MailRedirect::TO;
+            $cc      = null;
+        }
         if (\App\Libraries\TourFlow\TestMailbox::active()) {
             return \App\Libraries\TourFlow\TestMailbox::deliver($to, $subject, $body, $cc, $attachments);
         }

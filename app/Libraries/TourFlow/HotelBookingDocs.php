@@ -333,7 +333,7 @@ final class HotelBookingDocs
             $y += $rh;
         }
         // the rooming list — named only when it is attached
-        if ($nr > 0 && !$isV) {   // the voucher goes alone; the rooming list went with the request
+        if (!$isV) {   // tf-hotelreq-r10: the Rooming List always goes with the Booking Request; the later Hotel Voucher goes alone
             $y += 3.2; $need(14.2);
             $pdf->SetFillColor(217, 238, 238); $pdf->RoundedRect($L - 0.5, $y, $W + 1, 14.2, 2, '1111', 'F');
             $pdf->SetDrawColor(...$G); $pdf->SetLineWidth(0.7); $pdf->RoundedRect($L + 5.2, $y + 3.2, 3.6, 8, 1.8, '1111', 'D'); $pdf->RoundedRect($L + 6.4, $y + 5, 1.3, 4.6, 0.65, '1111', 'D');

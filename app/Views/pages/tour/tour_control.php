@@ -455,6 +455,7 @@
                 + (e.earlier ? `<div class="sm-h"><span>${when(e.earlier.at)}</span><span>${esc(e.earlier.state)} earlier from the desk (${esc(e.earlier.channel || '')})</span><span>${e.earlier.to ? 'to ' + esc(e.earlier.to) + ' • ' : ''}${esc(e.earlier.by || '')}</span><span></span></div>` : '');
             const confirm = !open ? '' : `<div class="sm-c"><b>${sentOk ? 'Send this e-mail AGAIN' : 'Send this e-mail'} to ${esc(e.provider)}</b>
                 <div>Recipient: <b>${esc(e.recipient)}</b> <span class="sm-mut">(${esc(e.recipient_source || 'master')})</span></div>
+                ${SM.redirect ? `<div class="bad" style="color:#8a5a00">TEST MODE: this system is still being developed. The e-mail will go to <b>${esc(SM.redirect)}</b> only \u2014 not to the supplier.</div>` : ''}
                 <label><input type="checkbox" id="sm_ck"> I have checked the recipient address, the e-mail content and the voucher.</label>
                 ${sentOk ? '<input type="text" id="sm_why" maxlength="300" placeholder="Why is it sent again? (kept with the resend)">' : ''}
                 <div><button class="sm-b go" id="sm_go" disabled data-type="${e.type}" data-id="${e.id}" data-resend="${sentOk ? 1 : 0}"><i class="bi bi-send"></i> Send now</button> <button class="sm-b" id="sm_x">Cancel</button></div></div>`;
@@ -468,7 +469,7 @@
             <div class="pr-stats"><span><b>${E.length}</b> reservations</span><span><b>${n('sent')}</b> e-mail sent</span><span><b>${n('not_sent')}</b> not sent</span><span class="${n('failed') ? 'miss' : ''}"><b>${n('failed')}</b> failed</span><span class="${held ? 'miss' : ''}"><b>${held}</b> held — details missing</span></div>
             <div class="oc-box"><table class="ow sm-t"><thead><tr><th>Provider</th><th>Booked service</th><th>Recipient e-mail</th><th>E-mail status</th><th>Supplier booking</th><th>Check, then send</th></tr></thead>
                 <tbody>${rows || '<tr><td colspan="6">No hotel reservation or booked service provider is on this tour yet.</td></tr>'}</tbody></table></div>
-            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Nothing is sent automatically. Read the address, the e-mail and the voucher, then press Send Email for that reservation. An e-mail sent is not a booking confirmed.</i>${SM.sender_note ? ' • ' + esc(SM.sender_note) : ''}</span></div>`;
+            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Nothing is sent automatically. Read the address, the e-mail and the voucher, then press Send Email for that reservation. An e-mail sent is not a booking confirmed.</i>${SM.redirect ? ` <b style="color:#8a5a00">\u2022 TEST MODE: every e-mail from this system goes to ${esc(SM.redirect)} only, never to a supplier.</b>` : ''}${SM.sender_note ? ' • ' + esc(SM.sender_note) : ''}</span></div>`;
         box.querySelectorAll('[data-smopen]').forEach(b => b.addEventListener('click', () => { SM_OPEN = SM_OPEN === b.dataset.smopen ? null : b.dataset.smopen; drawMail(); }));
         const go = document.getElementById('sm_go'), ck = document.getElementById('sm_ck'), why = document.getElementById('sm_why'), x = document.getElementById('sm_x');
         if (x) x.addEventListener('click', () => { SM_OPEN = null; drawMail(); });

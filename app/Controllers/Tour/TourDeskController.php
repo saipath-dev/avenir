@@ -1097,12 +1097,8 @@ class TourDeskController extends BaseController
                         $both = (new \App\Libraries\TourFlow\HotelBookingDocs($this->db(), $this->actorName()))->bookingDocs($svc, $id, $d['sender']);
                         $bv = $both['request'];
                         $rlDoc = $both['rooming'];
-                        $att = [['path' => $bv['path'], 'name' => $bv['original_name']]];
-                        if ((int) ($both['rooming_list']['total_rooms'] ?? 0) > 0) {   // tf-hotelreq-r5: the Rooming List goes only when there is one
-                            $att[] = ['path' => $rlDoc['path'], 'name' => $rlDoc['original_name']];
-                        } else {
-                            $rlDoc = null;
-                        }
+                        // tf-hotelreq-r10 (Shantha): the voucher and the Rooming List always go together, in the one e-mail
+                        $att = [['path' => $bv['path'], 'name' => $bv['original_name']], ['path' => $rlDoc['path'], 'name' => $rlDoc['original_name']]];
                     }
                     if ($kind === 'voucher') {
                         $vf = \App\Libraries\TourFlow\HotelBookingDocs::letterFile('voucher', $this->letterDoc($d));

@@ -324,7 +324,8 @@ class ConfirmedToursController extends BaseController
             $db = $this->db();
             $sender = \App\Libraries\TourFlow\CommsMail::senderFor($db, $this->userId(), $this->user());
             $rows = $this->supDesk()->entries(new TourService($db, $this->user()), (int) $tourId, $sender, $this->holds(TourDeskController::HOTEL), $this->holds(TourDeskController::TRANSPORT));
-            return $this->json(['status' => 200, 'data' => ['entries' => $rows, 'sender_note' => $sender['note'] ?? null]]);
+            return $this->json(['status' => 200, 'data' => ['entries' => $rows, 'sender_note' => $sender['note'] ?? null,
+                'redirect' => \App\Libraries\TourFlow\MailRedirect::active() ? \App\Libraries\TourFlow\MailRedirect::TO : null]]);
         } catch (\Throwable $e) {
             return $this->json(['status' => 400, 'message' => $e->getMessage()]);
         }

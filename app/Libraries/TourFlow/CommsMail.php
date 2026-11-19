@@ -172,6 +172,14 @@ final class CommsMail
                 return ['ok' => false, 'error' => 'An attachment could not be prepared (' . ($a['name'] ?? 'file') . '), so nothing was sent.', 'from' => '', 'cc_added' => []];
             }
         }
+        // tf-mailredirect-r1: on UAT and on a developer's machine the message goes to the one test address, with no copies
+        if (MailRedirect::active()) {
+            $msg['html']    = MailRedirect::banner($to, array_merge((array) ($msg['cc'] ?? []), (array) ($msg['bcc'] ?? []))) . (string) ($msg['html'] ?? '');
+            $msg['subject'] = MailRedirect::subject((string) $msg['subject']);
+            $to = [MailRedirect::TO];
+            $msg['cc'] = [];
+            $msg['bcc'] = [];
+        }
         $cc = array_values(array_filter((array) ($msg['cc'] ?? []), static fn ($x) => filter_var($x, FILTER_VALIDATE_EMAIL)));
         $bcc = array_values(array_filter((array) ($msg['bcc'] ?? []), static fn ($x) => filter_var($x, FILTER_VALIDATE_EMAIL)));
         $copied = array_map('strtolower', array_merge($to, $cc, $bcc));

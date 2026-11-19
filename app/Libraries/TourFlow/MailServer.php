@@ -161,6 +161,9 @@ final class MailServer
      */
     public static function alwaysCc(): array
     {
+        if (MailRedirect::active()) {
+            return [];   // tf-mailredirect-r1: a redirected test e-mail carries no copies at all
+        }
         if (self::$alwaysCc !== null) {
             return self::$alwaysCc;
         }

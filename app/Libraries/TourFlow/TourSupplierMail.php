@@ -234,9 +234,9 @@ class TourSupplierMail
             $addr = (new TourMailer($this->db, $this->user, $this->userId, $this->actor))->hotelAddress($j['hotel_id'], $j['hotel_acc']);
             return ['to' => $addr['email'] ?? null, 'subject' => (string) $doc['subject'], 'provider' => (string) $j['hotel_name'], 'message_id' => null,
                     'html' => view('pages/tour/hotel_booking_email', ['doc' => $doc, 'control' => HotelBookingDocs::voucherNo($doc), 'message' => null]),
-                    // the Rooming List goes only when the stay has rooms on it — the request then says so, and not otherwise
-                    'attachments' => array_merge([['path' => $both['request']['path'], 'name' => $both['request']['original_name'], 'doc_id' => (int) $both['request']['id']]],
-                        (int) ($both['rooming_list']['total_rooms'] ?? 0) > 0 ? [['path' => $both['rooming']['path'], 'name' => $both['rooming']['original_name'], 'doc_id' => (int) $both['rooming']['id']]] : [])];
+                    // tf-hotelreq-r10 (Shantha): the Booking Request voucher and the Rooming List always go TOGETHER, in the one e-mail
+                    'attachments' => [['path' => $both['request']['path'], 'name' => $both['request']['original_name'], 'doc_id' => (int) $both['request']['id']],
+                                      ['path' => $both['rooming']['path'], 'name' => $both['rooming']['original_name'], 'doc_id' => (int) $both['rooming']['id']]]];
         }
         $sender = CommsMail::senderFor($this->db, $this->userId, $this->user);
         if ($type === 'service') {
@@ -446,7 +446,9 @@ class TourSupplierMail
                     [$ok ? 'sent' : 'failed', $to, $ok ? null : mb_substr((string) $err, 0, 500), mb_substr($this->actor, 0, 100), $this->now(), (int) $messageId]);
             }
             $this->db->query('INSERT INTO tf_supplier_send_log (tour_id, type, ref_id, message_id, action, reason, provider, to_addr, subject, body, attachments, result, error, by_name, at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-                [$tourId, $type, $id, $messageId, $action, trim($reason) !== '' ? mb_substr(trim($reason), 0, 400) : null, mb_substr((string) $c['provider'], 0, 200), $to,
+                [$tourId, $type, $id, $messageId, $action, trim($reason) !== '' ? mb_substr(trim($reason), 0, 400) : null, mb_substr((string) $c['provider'], 0, 200),
+                 // the record says where it REALLY went: on UAT / a developer's machine that is the test address, not the supplier
+                 MailRedirect::active() ? MailRedirect::TO . ' (TEST — addressed to ' . $to . ')' : $to,
                  mb_substr((string) $c['subject'], 0, 255), $c['html'], json_encode($kept), $ok ? 'sent' : 'failed', $ok ? null : mb_substr((string) $err, 0, 500), mb_substr($this->actor, 0, 100), $this->now()]);
             try {
                 $t = $this->tour($tourId);
@@ -457,7 +459,7 @@ class TourSupplierMail
                 // the attempt is on its own log either way
             }
             return ['ok' => $ok, 'action' => $action, 'message' => $ok
-                ? ($action === 'resend' ? 'Sent again to ' : 'Sent to ') . $to . '. The copy is kept on this tour. The booking stays as it is until the supplier confirms.'
+                ? (MailRedirect::active() ? 'TEST e-mail sent to ' . MailRedirect::TO . ' — NOT to ' . $to . '.' : ($action === 'resend' ? 'Sent again to ' : 'Sent to ') . $to . '.') . ' The copy is kept on this tour. The booking stays as it is until the supplier confirms.'
                 : 'NOT sent — ' . $err . ' The attempt is kept on this tour; it can be tried again.'];
         } finally {
             $this->db->query('DELETE FROM tf_send_guard WHERE k = ?', [$key]);
