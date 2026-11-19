@@ -53,8 +53,8 @@
     .oc .oc-facts { padding:8px 4px; margin-bottom:12px; border-radius:9px; }
     .oc .oc-facts { overflow:hidden; display:grid; grid-template-columns:max-content max-content minmax(0,1.2fr) max-content minmax(0,1.3fr) max-content minmax(0,1.25fr) minmax(0,1.25fr); }
     .oc .oc-fact, .oc .oc-fact.nw { gap:9px; padding:2px 10px; min-width:0; } .oc .oc-fact i { font-size:22px; flex:none; } .oc .oc-fact > div { min-width:0; } .oc .oc-fact:not(.nw) small { white-space:normal; }
-    @media (max-width:1250px) { .oc .oc-facts { grid-template-columns:repeat(4, minmax(0,1fr)); row-gap:8px; } }
-    @media (max-width:760px) { .oc .oc-facts { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+    @media (max-width:640px) { .oc .oc-facts { grid-template-columns:repeat(4, minmax(0,1fr)); row-gap:8px; } }
+    @media (max-width:640px) { .oc .oc-facts { grid-template-columns:repeat(2, minmax(0,1fr)); } }
     .oc .oc-fact small { font-size:11.5px; } .oc .oc-fact b { font-size:13.5px; } .oc .oc-fact b.pend { font-weight:800; color:var(--p); }
     .oc .oc-tabs { margin-bottom:14px; border-radius:8px; }
     .oc .oc-tab { padding:10px 10px; font-size:14px; display:inline-flex; align-items:center; justify-content:center; gap:9px; }
@@ -83,8 +83,8 @@
     .oc .oc-top .oc-pill.red { background:#fbdde3; color:#a3123a; }
     .oc .oc-fact i.mdi { font-size:26px; line-height:1; color:var(--p); }
     #oc .oc-foot { flex-wrap:nowrap; font-size:11.5px; } #oc .oc-foot > span:first-child { min-width:0; } #oc .oc-foot .lg { border-left:1px solid #b9a9af; padding-left:4px; white-space:nowrap; flex:none; } #oc .oc-foot .dot { margin:0 4px 0 10px; }
-    #oc .oc-fact:not(.nw) small { white-space:nowrap; }
-    @media (max-width:1250px) { #oc .oc-foot { flex-wrap:wrap; } #oc .oc-foot .lg { border-left:0; padding-left:0; } .oc .oc-top { flex-wrap:wrap; } } .oc .oc-foot .dot { width:13px; height:13px; }
+    #oc .oc-fact:not(.nw) small { white-space:nowrap; } #oc .oc-fact:not(.nw) b { overflow-wrap:anywhere; }
+    @media (max-width:640px) { #oc .oc-foot { flex-wrap:wrap; } #oc .oc-foot .lg { border-left:0; padding-left:0; } .oc .oc-top { flex-wrap:wrap; } } .oc .oc-foot .dot { width:13px; height:13px; }
     .oc .oc-box > .h { background:var(--p); color:#fff; font-size:15.5px; font-weight:700; padding:5px 16px; }
     .oc .oc-box > .h2 { background:var(--soft); color:var(--p); font-size:15px; font-weight:700; padding:6px 14px; display:flex; align-items:center; gap:10px; }
     .oc table.ow { width:100%; border-collapse:collapse; }
@@ -128,9 +128,9 @@
     .oc .tp-empty { padding:12px 14px; }
     .oc .ver { display:inline-block; background:#f1f1f1; border-radius:10px; padding:1px 9px; font-size:11.5px; }
     /* a narrow window: the fields go onto tidy rows of their own, in the same order — never on top of each other */
-    @media (max-width:1250px) { .oc .oc-facts { flex-wrap:wrap; overflow-x:visible; row-gap:8px; } .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 22%; min-width:170px; } .oc .oc-fact:nth-child(4n) { border-right:0; } }
-    @media (max-width:760px) { .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 45%; } .oc .oc-fact:nth-child(2n) { border-right:0; } }
-    @media (max-width:1100px) { .oc .oc-cards { grid-template-columns:repeat(2, 1fr); } .oc .oc-two, .oc .pr-grid { grid-template-columns:1fr; } .oc .oc-ban { padding-left:18px; flex-wrap:wrap; } .oc table.ow .gbtn.act { min-width:0; } .oc .oc-box { overflow-x:auto; } }
+    @media (max-width:640px) { .oc .oc-facts { flex-wrap:wrap; overflow-x:visible; row-gap:8px; } .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 22%; min-width:170px; } .oc .oc-fact:nth-child(4n) { border-right:0; } }
+    @media (max-width:640px) { .oc .oc-fact, .oc .oc-fact.nw { flex:1 1 45%; } .oc .oc-fact:nth-child(2n) { border-right:0; } }
+    @media (max-width:640px) { .oc .oc-cards { grid-template-columns:repeat(2, 1fr); } .oc .oc-two, .oc .pr-grid { grid-template-columns:1fr; } .oc .oc-ban { padding-left:18px; flex-wrap:wrap; } .oc table.ow .gbtn.act { min-width:0; } .oc .oc-box { overflow-x:auto; } }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -295,9 +295,20 @@
             <div class="oc-pane${TAB === 'pax' ? ' on' : ''}" data-ocpane="pax">${paxPane(c, it, L)}</div>
             ${Object.keys(more).map(k => `<div class="oc-pane${TAB === k ? ' on' : ''}" data-ocpane="${k}">${more[k]}</div>`).join('')}`;
         document.querySelectorAll('#oc_body [data-octab]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); TAB = b.dataset.octab; try { history.replaceState(null, '', '#' + TAB); } catch (x) {} draw(c, it); }));
+        fit();
         const sel = document.getElementById('pr_stay'); if (sel) sel.addEventListener('change', () => { STAY = Number(sel.value) || 0; draw(c, it); });
         document.querySelectorAll('#oc_body [data-prpax]').forEach(r => r.addEventListener('click', () => { PICK = r.dataset.prpax; draw(c, it); }));
     }
+
+    // tf-control-r7 (19 Nov 2026, Shantha): the approved layout at every window width — on a window narrower than the design
+    // (a side pane, a small laptop) the whole panel is scaled down to fit instead of being re-stacked; phones keep the stacked layout
+    function fit() {
+        const box = document.querySelector('#oc .container-fluid'); if (!box) return;
+        box.style.zoom = '';
+        const w = box.clientWidth, REF = 1240;
+        if (window.innerWidth > 640 && w < REF) box.style.zoom = (w / REF).toFixed(4);
+    }
+    window.addEventListener('resize', fit);
 
     // ---------- tf-control-r3: the other tabs — each reads what its desk has recorded; the work itself is done on that desk ----------
     const HS = { to_book: ['red', 'Not requested'], requested: ['amber', 'Awaiting confirmation'], confirmed: ['amber', 'Confirmed • voucher to issue'], voucher_issued: ['green', 'Voucher issued'], problem: ['red', 'Problem'], cancelled: ['grey', 'Cancelled'] };
