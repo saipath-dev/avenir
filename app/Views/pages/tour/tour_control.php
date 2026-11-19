@@ -51,7 +51,7 @@
     .oc .oc-top { margin-bottom:10px; } .oc h2.oc-title { font-size:28px; font-weight:800; color:#1A1A1A; letter-spacing:-.3px; }
     .oc .oc-top .oc-own { margin-left:auto; font-size:12.5px; } .oc .oc-top .oc-pill { font-size:13.5px; padding:6px 16px; border-radius:16px; }
     .oc .oc-facts { padding:8px 4px; margin-bottom:12px; border-radius:9px; }
-    .oc .oc-facts { overflow:hidden; display:grid; grid-template-columns:max-content max-content minmax(0,1.15fr) max-content minmax(0,1.35fr) max-content minmax(0,1fr) minmax(0,1fr); }
+    .oc .oc-facts { overflow:hidden; display:grid; grid-template-columns:max-content max-content minmax(0,1.2fr) max-content minmax(0,1.3fr) max-content minmax(0,1.25fr) minmax(0,1.25fr); }
     .oc .oc-fact, .oc .oc-fact.nw { gap:9px; padding:2px 10px; min-width:0; } .oc .oc-fact i { font-size:22px; flex:none; } .oc .oc-fact > div { min-width:0; } .oc .oc-fact:not(.nw) small { white-space:normal; }
     @media (max-width:1250px) { .oc .oc-facts { grid-template-columns:repeat(4, minmax(0,1fr)); row-gap:8px; } }
     @media (max-width:760px) { .oc .oc-facts { grid-template-columns:repeat(2, minmax(0,1fr)); } }
@@ -82,8 +82,9 @@
     .oc .oc-top { justify-content:space-between; flex-wrap:nowrap; } .oc .oc-top .oc-pill { margin-left:auto; background:#f3dbe3; color:var(--p); font-weight:800; text-transform:uppercase; letter-spacing:.03em; font-size:13.5px; padding:6px 20px; border-radius:18px; white-space:nowrap; }
     .oc .oc-top .oc-pill.red { background:#fbdde3; color:#a3123a; }
     .oc .oc-fact i.mdi { font-size:26px; line-height:1; color:var(--p); }
-    .oc .oc-foot { flex-wrap:nowrap; } .oc .oc-foot > span:first-child { min-width:0; } .oc .oc-foot .lg { border-left:1px solid #b9a9af; padding-left:6px; white-space:nowrap; flex:none; }
-    @media (max-width:1250px) { .oc .oc-foot { flex-wrap:wrap; } .oc .oc-foot .lg { border-left:0; padding-left:0; } .oc .oc-top { flex-wrap:wrap; } } .oc .oc-foot .dot { width:13px; height:13px; }
+    #oc .oc-foot { flex-wrap:nowrap; font-size:11.5px; } #oc .oc-foot > span:first-child { min-width:0; } #oc .oc-foot .lg { border-left:1px solid #b9a9af; padding-left:4px; white-space:nowrap; flex:none; } #oc .oc-foot .dot { margin:0 4px 0 10px; }
+    #oc .oc-fact:not(.nw) small { white-space:nowrap; }
+    @media (max-width:1250px) { #oc .oc-foot { flex-wrap:wrap; } #oc .oc-foot .lg { border-left:0; padding-left:0; } .oc .oc-top { flex-wrap:wrap; } } .oc .oc-foot .dot { width:13px; height:13px; }
     .oc .oc-box > .h { background:var(--p); color:#fff; font-size:15.5px; font-weight:700; padding:5px 16px; }
     .oc .oc-box > .h2 { background:var(--soft); color:var(--p); font-size:15px; font-weight:700; padding:6px 14px; display:flex; align-items:center; gap:10px; }
     .oc table.ow { width:100%; border-collapse:collapse; }
