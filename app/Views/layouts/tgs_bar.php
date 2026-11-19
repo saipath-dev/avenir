@@ -62,7 +62,7 @@ $tgsShown = array_values(array_filter($tgsItems, static fn ($it) => $tgsAllowed 
 </style>
 <nav class="tgsbar" aria-label="Transport &amp; Guide Services">
     <div class="tg-brand">
-        <span class="mark"><i class="bi bi-truck-front"></i></span>
+        <span class="mark"><i class="bi oci oci-car"></i></span>
         <div><b>Transport &amp; Guide Services</b><small>four connected masters · one place</small></div>
     </div>
     <div class="tg-nav">

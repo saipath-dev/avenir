@@ -30,13 +30,13 @@ $tdItems = [
     // exactly the groups that hold Inquiries; 'gate' names the privilege it rides on, it has no menu entry of its own
     ['url' => 'tour/intake/confirmed',           'label' => 'Confirmed Tours',    'icon' => 'bi-calendar2-check', 'zone' => 'work', 'gate' => 'tour/intake'],
     ['url' => 'tour/hotel_bookings',             'label' => 'Hotel Bookings',     'icon' => 'bi-door-open',   'zone' => 'work'],
-    ['url' => 'tour/transport_ops',              'label' => 'Transport Operations', 'icon' => 'bi-truck',     'zone' => 'work'],   // 1c: the same name as the screen and the sidebar entry
+    ['url' => 'tour/transport_ops',              'label' => 'Transport Operations', 'icon' => 'oci oci-car',     'zone' => 'work'],   // 1c: the same name as the screen and the sidebar entry
     ['url' => 'tour/board',                      'label' => 'Tour Board',         'icon' => 'bi-kanban',      'zone' => 'work'],
     // the entrance ticket stock (schema 37): a work tab with a count — the attractions low on or out of tickets
-    ['url' => 'tour/ticket_stock',               'label' => 'Ticket Stock',       'icon' => 'bi-ticket-detailed', 'zone' => 'work'],
+    ['url' => 'tour/ticket_stock',               'label' => 'Ticket Stock',       'icon' => 'bi-ticket-perforated oc-tilt', 'zone' => 'work'],
     // 1c (6 Oct 2026): the folded Masters menu reads in four groups — hotels; places, activities & meals; Transport & Guide
     // Services; pricing — each master keeps its own URL, privilege and label; 'group' only decides where it sits in the menu
-    ['url' => 'master_files/hotel_rate_v2',      'label' => 'Hotel Rates',        'icon' => 'bi-building',    'zone' => 'master', 'group' => 'hotels', 'sub' => 'contracts, seasons, what a night costs'],
+    ['url' => 'master_files/hotel_rate_v2',      'label' => 'Hotel Rates',        'icon' => 'oci oci-bed',    'zone' => 'master', 'group' => 'hotels', 'sub' => 'contracts, seasons, what a night costs'],
     ['url' => 'master_files/hotel_work',         'label' => 'Incomplete Work',    'icon' => 'bi-list-check',  'zone' => 'master', 'group' => 'hotels', 'sub' => 'what the system found missing, nothing guessed'],
     // Transport & Guide Services (Shantha, 5 Oct 2026): the four connected masters as one group in the Masters menu —
     // the rates, the mileage, the people (what is paid) and the quotation's crew roles (what is costed); each keeps its own
@@ -48,10 +48,10 @@ $tdItems = [
     // schema 39 (tf-entrance-r1): the one master of places and their entrance fees
     ['url' => 'master_files/entrance_master',    'label' => 'Places & Entrance Fees', 'icon' => 'bi-bank',    'zone' => 'master', 'group' => 'places', 'sub' => 'the one master of places and their fees'],
     // schema 40 (tf-meals-r1): lunches and dinners outside the hotel for Half Board tours
-    ['url' => 'master_files/meal_master',        'label' => 'Meal Master',        'icon' => 'bi-cup-hot',     'zone' => 'master', 'group' => 'places', 'sub' => 'lunches and dinners outside the hotel'],
+    ['url' => 'master_files/meal_master',        'label' => 'Meal Master',        'icon' => 'oci oci-meal',     'zone' => 'master', 'group' => 'places', 'sub' => 'lunches and dinners outside the hotel'],
     // the two programme masters (schema 29): free visits (never costed) and paid activities & services (costed)
     ['url' => 'master_files/free_visits',        'label' => 'Free Visits',        'icon' => 'bi-geo-alt',     'zone' => 'master', 'group' => 'places', 'sub' => 'never costed'],
-    ['url' => 'master_files/paid_services',      'label' => 'Paid Activities & Services', 'icon' => 'bi-ticket-perforated', 'zone' => 'master', 'group' => 'places', 'sub' => 'costed on the quotation'],
+    ['url' => 'master_files/paid_services',      'label' => 'Paid Activities & Services', 'icon' => 'bi-ticket-perforated oc-tilt', 'zone' => 'master', 'group' => 'places', 'sub' => 'costed on the quotation'],
     // stays in use until UAT of Paid Activities & Services is signed off; nothing retires it automatically
     // tf-stage1 (29 Oct 2026): off the menu; the page still opens by address
     // ['url' => 'master_files/excursion_rates',    'label' => 'Excursion Rates',    'icon' => 'bi-compass',     'zone' => 'master', 'group' => 'places', 'sub' => 'until Paid Activities & Services is signed off'],
@@ -74,11 +74,11 @@ $tdBrand = ['url' => 'tour/intake', 'title' => 'Tour Desk', 'sub' => 'one tour, 
 // from the Reservation Desk: the heading reads Hotel Reservation Desk and the strip carries that desk's six functions only;
 // the New quote button (a Tour Inquiry function) is not drawn there. Nothing behind the other shortcuts changes.
 if (($tourdesk_desk_only ?? null) === 'reservation') {
-    $tdBrand = ['url' => 'home/reservation_desk', 'title' => 'Hotel Reservation Desk', 'sub' => 'hotels, tickets, arrivals', 'icon' => 'bi-building'];
+    $tdBrand = ['url' => 'home/reservation_desk', 'title' => 'Hotel Reservation Desk', 'sub' => 'hotels, tickets, arrivals', 'icon' => 'oci oci-bed'];
     $rdAny = ['tour/hotel_bookings', 'tour/ticket_stock', 'tour/intake'];   // the calendars and the glance show to whoever holds one of these
     $tdItems = [
         ['url' => 'tour/hotel_bookings',                      'label' => 'Hotel Reservations & Bookings', 'icon' => 'bi-door-open',       'zone' => 'work'],
-        ['url' => 'tour/ticket_stock',                        'label' => 'Ticket Stock',    'icon' => 'bi-ticket-detailed', 'zone' => 'work'],
+        ['url' => 'tour/ticket_stock',                        'label' => 'Ticket Stock',    'icon' => 'bi-ticket-perforated oc-tilt', 'zone' => 'work'],
         ['url' => 'tour/intake/confirmed',                    'label' => 'Confirmed Tours', 'icon' => 'bi-calendar2-check', 'zone' => 'work', 'gate' => 'tour/intake'],
         ['url' => 'home/tour_desk/upcoming?desk=reservation', 'label' => 'Upcoming Tours',  'icon' => 'bi-calendar3',       'zone' => 'work', 'gate' => $rdAny],
         ['url' => 'home/tour_desk/arrivals?desk=reservation', 'label' => 'Next Arrivals',   'icon' => 'bi-airplane-fill',   'zone' => 'work', 'gate' => $rdAny],
@@ -89,7 +89,7 @@ if (($tourdesk_desk_only ?? null) === 'reservation') {
     $tdBrand = ['url' => 'home/transport_desk', 'title' => 'Transport Operations Desk', 'sub' => 'vehicles, drivers, guides', 'icon' => 'bi-bus-front'];
     $xdAny = ['tour/transport_ops', 'dashboard2/transport/driver_allow/pending_tours', 'dashboard2/transport/driver_allow/tour_transport', 'tour/intake'];
     $tdItems = [
-        ['url' => 'tour/transport_ops',                              'label' => 'Transport Operations',    'icon' => 'bi-truck',           'zone' => 'work'],
+        ['url' => 'tour/transport_ops',                              'label' => 'Transport Operations',    'icon' => 'oci oci-car',           'zone' => 'work'],
         ['url' => 'tour/transport_ops/allocations',                 'label' => 'Pending Allocations',     'icon' => 'bi-person-badge',    'zone' => 'work', 'gate' => $xdAny],   // tf-rotation-r1: the rotation's page
         ['url' => 'master_files/crew_people?desk=transport',         'label' => 'Driver & Guide Handling', 'icon' => 'bi-people',          'zone' => 'work'],
         // no railway booking page exists yet: the function is shown in its place, not linked (tf-transdesk-r1 design stage)
@@ -172,7 +172,7 @@ foreach ($tdMaster as $it) {
     $tdMasterOn = $tdMasterOn || $tdIsActive($it['url']);
 }
 // 1c: the folded Masters menu in groups, in this order; a group is shown only when the signed-in group may open something in it
-$tdGroupNames = ['hotels' => ['Hotels', 'bi-building'], 'places' => ['Places, activities & meals', 'bi-geo-alt'], 'tgs' => ['Transport & Guide Services', 'bi-truck-front'], 'pricing' => ['Pricing', 'bi-percent'], 'letters' => ['Letters & emails', 'bi-envelope-paper']];
+$tdGroupNames = ['hotels' => ['Hotels', 'oci oci-bed'], 'places' => ['Places, activities & meals', 'bi-geo-alt'], 'tgs' => ['Transport & Guide Services', 'oci oci-car'], 'pricing' => ['Pricing', 'bi-percent'], 'letters' => ['Letters & emails', 'bi-envelope-paper']];
 $tdGroups = [];
 foreach ($tdGroupNames as $g => $gn) {
     $in = array_values(array_filter($tdMaster, static fn ($it) => ($it['group'] ?? '') === $g));

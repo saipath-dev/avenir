@@ -186,10 +186,10 @@
         const h = s.hotels || {};
         // done is a stay with its voucher issued; a stay confirmed but not yet vouchered is on the way
         const hExtra = h.confirmed ? ` · ${h.confirmed} confirmed` : '';
-        out.push(pill(h.state === 'done' ? 'done' : (h.state === 'problem' ? 'problem' : (h.state === 'none' ? 'none' : 'open')), 'bi-building',
+        out.push(pill(h.state === 'done' ? 'done' : (h.state === 'problem' ? 'problem' : (h.state === 'none' ? 'none' : 'open')), 'oci oci-bed',
             h.of ? `Hotels ${nOf(h)}${h.problem ? ` · ${h.problem} problem` : hExtra}` : 'Hotels —', h.of ? `${h.done} of ${h.of} stays with the voucher issued${h.confirmed ? `; ${h.confirmed} confirmed, voucher to issue` : ''}` : 'No hotel stays', h.of ? 'hotels' : null));
         const a = s.activities || {};
-        out.push(pill(a.state === 'done' ? 'done' : (a.state === 'problem' ? 'problem' : (a.state === 'none' ? 'none' : 'open')), 'bi-ticket-perforated',
+        out.push(pill(a.state === 'done' ? 'done' : (a.state === 'problem' ? 'problem' : (a.state === 'none' ? 'none' : 'open')), 'bi-ticket-perforated oc-tilt',
             a.of ? `Activities ${nOf(a)}${a.problem ? ` · ${a.problem} problem` : ''}` : 'Activities —', a.of ? `${a.done} of ${a.of} activity and ticket lines confirmed, or with nothing to arrange` : 'No activities or tickets on the quotation', a.of ? 'activities' : null));
         if (s.reservations_confirmed) out.push(pill('mark', 'bi-patch-check-fill', 'Hotel work complete', `Hotels & activities confirmed — marked by ${s.reservations_confirmed_by || ''} ${String(s.reservations_confirmed_at || '').slice(0, 16)}`));
         const st = (x, noun, key) => {
@@ -198,7 +198,7 @@
             // once allocated, the name itself: the registration, the driver, the guide
             const names = (x.names || []).map(esc).join(', ');
             const text = x.state === 'allocated' && names ? `${noun} <b>${names}</b>${x.of > 1 ? ` (${x.done}/${x.of})` : ''}` : `${noun} ${word}${x.of > 1 ? ` (${x.done}/${x.of})` : ''}`;
-            return pill(cls, noun === 'Vehicle' ? 'bi-truck-front' : 'bi-person', text, `${noun}: ${word}${names ? ' — ' + (x.names || []).join(', ') : ''}`, x.state === 'not_required' || x.state === 'no_vehicle_line' ? null : key);
+            return pill(cls, noun === 'Vehicle' ? 'oci oci-car' : 'bi-person', text, `${noun}: ${word}${names ? ' — ' + (x.names || []).join(', ') : ''}`, x.state === 'not_required' || x.state === 'no_vehicle_line' ? null : key);
         };
         out.push(st(s.vehicle || {}, 'Vehicle', 'vehicle'));
         out.push(st(s.driver || {}, 'Driver', 'driver'));

@@ -76,7 +76,14 @@
     .oc .oc-ban { padding-top:9px; padding-bottom:9px; } .oc .tl.big { padding:9px 15px; gap:14px; } .oc .tl.big span { width:40px; height:40px; }
     .oc .oc-card { padding:8px 12px 9px; row-gap:4px; } .oc .oc-card > i { font-size:28px; }
     .oc table.ow th { padding:5px 14px; } .oc table.ow td { padding:4px 14px; } .oc .oc-row { padding:7px 16px; } .oc .oc-docs { padding:10px 16px; }
-    .oc .oc-facts { padding:6px 4px; } .oc .oc-back { margin-bottom:2px; } .oc .oc-foot .dot { width:13px; height:13px; }
+    .oc .oc-facts { padding:6px 4px; } .oc .oc-back { margin-bottom:2px; }
+    /* tf-control-r6 (19 Nov 2026): the last differences from the mock-up — the title row carries only the title and one soft pill,
+       the fact strip uses the handshake and the landing / take-off aircraft, the legend is one line with its divider */
+    .oc .oc-top { justify-content:space-between; flex-wrap:nowrap; } .oc .oc-top .oc-pill { margin-left:auto; background:#f3dbe3; color:var(--p); font-weight:800; text-transform:uppercase; letter-spacing:.03em; font-size:13.5px; padding:6px 20px; border-radius:18px; white-space:nowrap; }
+    .oc .oc-top .oc-pill.red { background:#fbdde3; color:#a3123a; }
+    .oc .oc-fact i.mdi { font-size:26px; line-height:1; color:var(--p); }
+    .oc .oc-foot { flex-wrap:nowrap; } .oc .oc-foot > span:first-child { min-width:0; } .oc .oc-foot .lg { border-left:1px solid #b9a9af; padding-left:6px; white-space:nowrap; flex:none; }
+    @media (max-width:1250px) { .oc .oc-foot { flex-wrap:wrap; } .oc .oc-foot .lg { border-left:0; padding-left:0; } .oc .oc-top { flex-wrap:wrap; } } .oc .oc-foot .dot { width:13px; height:13px; }
     .oc .oc-box > .h { background:var(--p); color:#fff; font-size:15.5px; font-weight:700; padding:5px 16px; }
     .oc .oc-box > .h2 { background:var(--soft); color:var(--p); font-size:15px; font-weight:700; padding:6px 14px; display:flex; align-items:center; gap:10px; }
     .oc table.ow { width:100%; border-collapse:collapse; }
@@ -131,7 +138,6 @@
     <div class="main-content">
         <div class="page-content oc" id="oc">
             <div class="container-fluid">
-                <a class="oc-back" href="<?= base_url($page_url ?? 'tour/intake/confirmed') ?>">&larr; Back to Confirmed Tours</a>
                 <div id="oc_body"><div class="oc-msg">Loading&hellip;</div></div>
             </div>
             <?= view('layouts/brand') ?>
@@ -227,7 +233,7 @@
         };
         const todo = Object.keys(W).filter(k => A[k][0] === 'red' || A[k][0] === 'amber').map(k => [A[k][0]].concat(W[k](A[k][0])));
         const worst = todo.some(r => r[0] === 'red') ? 'red' : (todo.length ? 'amber' : 'green');
-        const fact = (icon, label, val, pend, wrap) => `<div class="oc-fact${wrap ? '' : ' nw'}"><i class="bi ${icon}"></i><div><small>${label}</small><b${pend ? ' class="pend"' : ''}>${esc(val)}</b></div></div>`;
+        const fact = (icon, label, val, pend, wrap) => `<div class="oc-fact${wrap ? '' : ' nw'}"><i class="${/^mdi/.test(icon) ? icon : 'bi ' + icon}"></i><div><small>${label}</small><b${pend ? ' class="pend"' : ''}>${esc(val)}</b></div></div>`;
         const card = (icon, label, k) => `<div class="oc-card"><i class="bi ${icon}"></i><h5>${label}</h5>${light(A[k][0])}<div class="st"><b class="c-${A[k][0]}">${WORD[A[k][0]]}</b><span>${esc(A[k][1])}</span></div></div>`;
         const pax = Number(it.pax_total || 0), ad = Number(it.pax_adults || 0), ch = Number(it.pax_children || 0);
         const party = pax ? (ch ? `${ad} adults, ${ch} children` : `${ad || pax} adult${(ad || pax) === 1 ? '' : 's'}`) : 'party not given';
@@ -237,10 +243,10 @@
         const lead = String(it.tour_name || '').trim() || String(((it.passengers || [])[0] || {}).full_name || '').trim() || 'Name not given';
         const dmy = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ''); return m ? Number(m[3]) + ' ' + MON[Number(m[2]) - 1] + ' ' + m[1] : ''; };
         // arrival and departure: the date, the flight number and the time together, in one box
-        const fly = (d, f) => (d ? dmy(d).replace(/ \d{4}$/, '') : 'Date pending') + ' • ' + (String(f || '').trim() || 'Pending');
+        const fly = (d, f) => String(f || '').trim() || 'Pending';   // tf-control-r6: as the mock-up — the flight and time, or Pending (the date is in the tour dates beside it)
         const cancelled = !!t.cancelled_at || t.stage === 'cancelled';
         const pill = cancelled ? '<span class="oc-pill red"><i class="bi bi-x-lg"></i> Tour cancelled</span>'
-            : `<span class="oc-pill"><i class="bi bi-check-lg"></i> Tour confirmed • ${worst === 'green' ? 'Arrangements complete' : 'Bookings in progress'}</span>`;
+            : `<span class="oc-pill" title="Operations owner: ${esc(it.handler_name || 'Unassigned')}">Tour confirmed • ${worst === 'green' ? 'Arrangements complete' : 'Bookings in progress'}</span>`;
         // tf-control-r5: the tabs as the mock-up names them, each with the light of its own area
         const tabs = [['over', 'Overview', 'grey'], ['hotels', 'Hotels', A.hotels[0]], ['trans', 'Transport', A.transport[0]], ['meals', 'Meals', A.meals[0]], ['acts', 'Entrances &amp; Activities', A.acts[0]],
             ['pax', 'Passengers &amp; Rooming', A.pax[0]], ['itin', 'Itinerary', t.quote_version ? 'green' : 'grey'], ['docs', 'Documents &amp; History', 'grey']];
@@ -262,26 +268,26 @@
                 </tbody></table></div>
             <div class="oc-two">
                 <div class="oc-box"><div class="h">Itinerary • Preview &amp; Print</div>
-                    <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Client itinerary • ${ver}</span>${btn(quote, 'Preview', 'bi-eye')}${btn(quote, 'Print', 'bi-printer')}${btn(quote ? quote + '&pdf=1' : null, 'PDF', 'bi-file-earmark-pdf')}</div>
-                    <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary • ${ver}</span>${btn(prog, 'Preview', 'bi-eye')}${btn(prog, 'Print', 'bi-printer')}${btn(null, 'PDF', 'bi-file-earmark-pdf')}</div></div>
+                    <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Client itinerary • ${ver}${t.quote_version ? ' • Final' : ''}</span>${btn(quote, 'Preview', 'bi-eye')}${btn(quote, 'Print', 'bi-printer')}${btn(quote ? quote + '&pdf=1' : null, 'PDF', 'bi-file-earmark-pdf')}</div>
+                    <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary • ${ver}${t.quote_version ? ' • Final' : ''}</span>${btn(prog, 'Preview', 'bi-eye')}${btn(prog, 'Print', 'bi-printer')}${btn(null, 'PDF', 'bi-file-earmark-pdf')}</div></div>
                 <div class="oc-box"><div class="h">Booking documents</div>
                     <div class="oc-docs">${btn(toHotel, 'Hotel request &amp; voucher', 'oci oci-bed')}${btn(toHotel, 'Meal / safari vouchers', 'oci oci-meal')}${btn(toHotel, 'Entrance tickets', 'bi-ticket-perforated oc-tilt')}</div>
                     <div class="oc-row"><i class="bi oci oci-car lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#8b1d40;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
             </div>
-            <div class="oc-foot"><span>Hotel bookings, vouchers and entrances managed on Hotel Bookings • Transport tasks linked to Transport panel • One shared status, no duplicate entry</span>
-                <span><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
+            <div class="oc-foot"><span>Hotel bookings, vouchers and entrances managed here • Transport tasks linked to Transport panel • One shared status, no duplicate entry</span>
+                <span class="lg"><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
 
         document.getElementById('oc_body').innerHTML = `
-            <div class="oc-top"><h2 class="oc-title">Confirmed Tour • Operations Control</h2><span class="oc-own">Operations owner: <b>${esc(it.handler_name || 'Unassigned')}</b></span>${pill}</div>
+            <div class="oc-top"><h2 class="oc-title">Confirmed Tour • Operations Control</h2>${pill}</div>
             <div class="oc-facts">
                 ${fact('bi-briefcase', 'Tour', t.tour_no || '—')}
                 ${fact('bi-file-text', 'Inquiry', it.inquiry_no || '—').replace('<b>', `<b><a href="${toInq}" target="_blank" style="color:inherit" title="Open the confirmed inquiry">`).replace('</b>', '</a></b>')}
-                ${fact('bi-person', 'Agent:', it.agent_name || 'Not given', false, true)}
+                ${fact('mdi mdi-handshake-outline', 'Agent:', it.agent_name || 'Not given', false, true)}
                 ${fact('bi-bookmark', 'Agent booking ref:', aref || 'Not recorded', !aref)}
                 ${fact('bi-people', 'Group:', (it.tour_name || lead || 'Not named') + ' • ' + party, false, true)}
                 ${fact('bi-calendar3', '', range(it.arrival_date, it.departure_date)).replace('<small></small>', '')}
-                ${fact('bi-airplane', 'Arrival flight / time:', fly(it.arrival_date, it.arrival_flight), !String(it.arrival_flight || '').trim(), true)}
-                ${fact('bi-airplane-fill', 'Departure flight / time:', fly(it.departure_date, it.departure_flight), !String(it.departure_flight || '').trim(), true)}
+                ${fact('mdi mdi-airplane-landing', 'Arrival flight / time:', fly(it.arrival_date, it.arrival_flight), !String(it.arrival_flight || '').trim(), true)}
+                ${fact('mdi mdi-airplane-takeoff', 'Departure flight / time:', fly(it.departure_date, it.departure_flight), !String(it.departure_flight || '').trim(), true)}
             </div>
             <div class="oc-tabs">${tabs.map(x => `<a class="oc-tab${TAB === x[0] ? ' on' : ''}" data-octab="${x[0]}"><span class="dot ${x[2] || 'grey'}"></span>${x[1]}</a>`).join('')}</div>
             <div class="oc-pane${TAB === 'over' ? ' on' : ''}" data-ocpane="over">${overview}</div>

@@ -140,7 +140,7 @@ $pos = [
         <div class="tdk-glance" id="tdk-glance" aria-live="polite">
             <span class="d"><i class="bi bi-eye-fill"></i><span>Today at a Glance<small id="tdk-g-date">today</small></span></span>
             <a href="<?= base_url('home/tour_desk/arrivals?desk=transport') ?>" style="--k:#274c9f"><i class="bi bi-bus-front-fill"></i><b id="tdk-g-today">–</b><span>departures<br>today</span></a>
-            <a href="<?= base_url('home/tour_desk/arrivals?desk=transport') ?>" style="--k:#566936"><i class="bi bi-truck-front-fill"></i><b id="tdk-g-veh">–</b><span>vehicles<br>assigned</span></a>
+            <a href="<?= base_url('home/tour_desk/arrivals?desk=transport') ?>" style="--k:#566936"><i class="bi oci oci-car"></i><b id="tdk-g-veh">–</b><span>vehicles<br>assigned</span></a>
             <a href="<?= base_url('home/tour_desk/arrivals?desk=transport') ?>" style="--k:#a53a2c"><i class="bi bi-people-fill"></i><b id="tdk-g-drv">–</b><span>drivers<br>pending</span></a>
             <a href="<?= base_url('home/tour_desk/arrivals?desk=transport') ?>" style="--k:#ad803e"><i class="bi bi-calendar2-week-fill"></i><b id="tdk-g-week">–</b><span>tours<br>next 7 days</span></a>
         </div>

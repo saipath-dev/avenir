@@ -146,7 +146,7 @@
         const word = x.state === 'allocated' ? 'allocated' : (x.state === 'not_required' ? 'not required' : (x.state === 'no_vehicle_line' ? 'no vehicle line' : 'to allocate'));
         const names = (x.names || []).map(esc).join(', ');
         const text = x.state === 'allocated' && names ? `${noun} <b>${names}</b>${x.of > 1 ? ` (${x.done}/${x.of})` : ''}` : `${noun} ${word}${x.of > 1 ? ` (${x.done}/${x.of})` : ''}`;
-        return pill(cls, noun === 'Vehicle' ? 'bi-truck-front' : 'bi-person', text, `${noun}: ${word}`, x.state === 'not_required' || x.state === 'no_vehicle_line' ? null : href);
+        return pill(cls, noun === 'Vehicle' ? 'oci oci-car' : 'bi-person', text, `${noun}: ${word}`, x.state === 'not_required' || x.state === 'no_vehicle_line' ? null : href);
     };
     // tf-workflow-r1: the final confirmation. Green and pressable only when every required section is
     // green; until then it says what is still being arranged, and cannot be pressed at all.
@@ -206,8 +206,8 @@
                 <td>${stagePill(t)}${Number(t.amending) ? ' <span class="pill pill-amber">being amended</span>' : ''}${t.problems ? ` <span class="pill pill-red">${t.problems} problem${t.problems === 1 ? '' : 's'}</span>` : ''}
                     ${t.quote_version ? `<div class="help">sold as v${t.quote_version} · ${esc(when(t.confirmed_at))}</div>` : ''}
                     ${t.stage === 'cancelled' && t.cancel_why ? `<div class="help" style="color:var(--tf-red)">${esc(t.cancel_why)}</div>` : ''}</td>
-                <td><div class="td-strip">${pill(lane(h), 'bi-building', h.of ? `Hotels <b>${h.done}</b> of ${h.of}${h.problem ? ` · ${h.problem} problem` : (h.confirmed ? ` · ${h.confirmed} confirmed` : '')}` : 'Hotels —', h.of ? `${h.done} of ${h.of} stays with the voucher issued` : 'No hotel stays', h.of ? toHotel : null)}
-                    ${pill(lane(a), 'bi-ticket-perforated', a.of ? `Activities <b>${a.done}</b> of ${a.of}${a.problem ? ` · ${a.problem} problem` : ''}` : 'Activities —', a.of ? `${a.done} of ${a.of} activity and ticket lines done` : 'No activities or tickets', a.of ? toHotel : null)}</div>
+                <td><div class="td-strip">${pill(lane(h), 'oci oci-bed', h.of ? `Hotels <b>${h.done}</b> of ${h.of}${h.problem ? ` · ${h.problem} problem` : (h.confirmed ? ` · ${h.confirmed} confirmed` : '')}` : 'Hotels —', h.of ? `${h.done} of ${h.of} stays with the voucher issued` : 'No hotel stays', h.of ? toHotel : null)}
+                    ${pill(lane(a), 'bi-ticket-perforated oc-tilt', a.of ? `Activities <b>${a.done}</b> of ${a.of}${a.problem ? ` · ${a.problem} problem` : ''}` : 'Activities —', a.of ? `${a.done} of ${a.of} activity and ticket lines done` : 'No activities or tickets', a.of ? toHotel : null)}</div>
                     ${work(p.hotel_work, p.reservations_confirmed_at, p.reservations_confirmed_by, 'hotel work complete')}</td>
                 <td><div class="td-strip">${crew(p.vehicle, 'Vehicle', toTransport)}${crew(p.driver, 'Driver', toTransport)}${crew(p.guide, 'Guide', toTransport)}</div>
                     ${work(p.transport_work, p.transport_complete_at, p.transport_complete_by, 'transport work complete')}</td>

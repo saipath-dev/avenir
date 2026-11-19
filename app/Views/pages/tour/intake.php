@@ -2160,7 +2160,7 @@
             const no = p && p.tour_no ? p.tour_no : '';
             s3sub = `Confirmed ${esc((it.confirmed_at || '').slice(0, 10))} by ${esc(staffName(it.confirmed_by) || '')}${no ? ' · tour <b>' + esc(no) + '</b>' : ''}${p && p.quote_version ? ' · sold as v' + p.quote_version : ''}${it.confirmed_at && !it.locked ? ' · <span class="pill pill-amber">open for amendment</span>' : ''}`;
             const tid = p && p.tour_id ? p.tour_id : null;
-            s3acts = tid ? `${CAN.hotel ? `<a class="btn btn-light btn-sm" href="${HOTELS_URL}?tour=${tid}"><i class="bi bi-door-open"></i> Hotel Bookings</a>` : ''}${CAN.transport ? `<a class="btn btn-light btn-sm" href="${TRANSPORT_URL}?tour=${tid}"><i class="bi bi-truck"></i> Transport</a>` : ''}` : '';
+            s3acts = tid ? `${CAN.hotel ? `<a class="btn btn-light btn-sm" href="${HOTELS_URL}?tour=${tid}"><i class="bi bi-door-open"></i> Hotel Bookings</a>` : ''}${CAN.transport ? `<a class="btn btn-light btn-sm" href="${TRANSPORT_URL}?tour=${tid}"><i class="bi oci oci-car"></i> Transport</a>` : ''}` : '';
             if (it.confirmed_at && !it.locked && canConfirm) s3acts += stale
                 ? `<button class="btn btn-light btn-sm" id="d_confirm_top" disabled title="Edit Request #${stale.seq} was applied after v${stale.version} was made: Issue a new version first"><i class="bi bi-check2-circle"></i> Confirm Tour again</button>`
                 : `<button class="btn btn-success btn-sm" id="d_confirm_top"><i class="bi bi-check2-circle"></i> Confirm Tour again</button>`;
@@ -2518,7 +2518,7 @@
                 <td><span class="dayedit" data-day="${d.id}" title="Click to set the area">${esc(d.area || 'Area?')}</span></td>
                 <td>${d.hotel_name_raw
                     ? `<b class="dayedit" data-day="${d.id}" title="Click to change the hotel">${esc(d.hotel_name_raw)} <i class="bi bi-pencil help"></i></b>`
-                    : `<button class="btn btn-primary btn-sm" data-day="${d.id}"><i class="bi bi-building"></i> Choose hotel</button>`}${d.match_note ? `<div class="help">${esc(d.match_note)}</div>` : ''}</td>
+                    : `<button class="btn btn-primary btn-sm" data-day="${d.id}"><i class="bi oci oci-bed"></i> Choose hotel</button>`}${d.match_note ? `<div class="help">${esc(d.match_note)}</div>` : ''}</td>
                 <td>${d.meal_plan ? esc(d.meal_plan) + (d.meal_source === 'tour' ? `<div class="help" title="${esc(d.meal_quote || '')}">from the terms${d.meal_quote ? ': “' + esc(d.meal_quote) + '”' : ''}</div>` : (d.meal_source === 'human' ? '<div class="help">set here</div>' : '')) : '<span class="pill pill-amber">Not stated</span>'}</td>
                 <td>${roomsShort(d.room_mix) || (d.rooms ?? '—')}${d.rooms != null && d.room_mix && d.room_mix.rooms ? `<div class="help">agent: ${d.rooms}</div>` : ''}</td>
                 <td>${nightRate(d)}</td>
@@ -2847,7 +2847,7 @@
             let head = '';
             if (multi && row.seq !== lastSeq) {
                 lastSeq = row.seq;
-                head = `<tr class="vhead"><td colspan="8"><i class="bi bi-truck"></i> ${esc(vehLabel(row.seq))}</td></tr>`;
+                head = `<tr class="vhead"><td colspan="8"><i class="bi oci oci-car"></i> ${esc(vehLabel(row.seq))}</td></tr>`;
             }
             if (row.kind === 'released') {
                 return head + `<tr class="released">
@@ -3024,7 +3024,7 @@
             const cur = mil.currency || ((mil.by_vehicle || [])[0] || {}).currency || 'LKR', unp = Number(mil.unpriced || 0);
             let cards = '', lastSeq = null;
             rows.forEach(row => {
-                if (multi && row.seq !== lastSeq) { lastSeq = row.seq; cards += `<div class="mlv-veh"><i class="bi bi-truck"></i> ${esc(vehLabel(row.seq))}</div>`; }
+                if (multi && row.seq !== lastSeq) { lastSeq = row.seq; cards += `<div class="mlv-veh"><i class="bi oci oci-car"></i> ${esc(vehLabel(row.seq))}</div>`; }
                 const dd = `Day ${row.day}${dayDate(row.day) ? ' · ' + dayDate(row.day) : ''}`;
                 if (row.kind === 'released') { cards += `<div class="mlv-c"><div class="top"><span>${dd}</span><span class="tag">Released</span></div><h4>Vehicle not kept on this day</h4><div class="warn" style="color:#5E5964">Nothing is charged for it.</div></div>`; return; }
                 const sc = row.s, driven = isDriven(sc), r = rateOf(row.seq), g = garages[row.seq] || [];
@@ -3243,7 +3243,7 @@
                     } else if (item.t === 'seg') { g.html += segHtml(item.row); g.tail = true; g.grow = growOf(item.row.s); }
                     else { g.html += `<span class="trk-seg gap" aria-hidden="true"><span class="trk-rail"></span></span>`; g.tail = true; }
                 });
-                return `${multi ? `<div class="trk-veh"><i class="bi bi-truck"></i> ${esc(vehLabel(tr.seq))}</div>` : ''}
+                return `${multi ? `<div class="trk-veh"><i class="bi oci oci-car"></i> ${esc(vehLabel(tr.seq))}</div>` : ''}
                     <div class="trk-line">${groups.map(x => `<div class="trk-grp${x.tail ? '' : ' end'}"${x.grow ? ` style="flex-grow:${x.grow}"` : ''}>${x.html}</div>`).join('')}</div>`;
             }).join('');
 
@@ -3272,10 +3272,10 @@
                         <span class="trk-route">${route.length ? route.map(p => esc(label(p).main)).join(' – ') : (rel.length ? '<span class="help">vehicle released</span>' : '—')}</span>
                         ${unpriced ? `<span class="pill pill-red">${unpriced} without a distance</span>` : ''}
                         <span class="trk-dkm">${fmtKm(km)} km</span>
-                        <span class="trk-cnt"><i class="bi bi-car-front"></i> ${live.length} sector${live.length === 1 ? '' : 's'}</span></summary>
+                        <span class="trk-cnt"><i class="bi oci oci-car"></i> ${live.length} sector${live.length === 1 ? '' : 's'}</span></summary>
                         <div class="trk-dbody">${body}</div></details>`;
                 }).join('');
-                return `${multi ? `<div class="trk-veh mt-2"><i class="bi bi-truck"></i> ${esc(vehLabel(seq))}</div>` : ''}${lines}`;
+                return `${multi ? `<div class="trk-veh mt-2"><i class="bi oci oci-car"></i> ${esc(vehLabel(seq))}</div>` : ''}${lines}`;
             }).join('');
 
             const sectors = legRows.filter(r => !r.s.removed_at).length;
@@ -3288,7 +3288,7 @@
             const total = `<div class="trk-total"><i class="bi bi-signpost-split-fill"></i>
                 <div><b>Total tour mileage</b><div class="help">Charged ${fmtKm(mil.charged_km || 0)} km — journey ${fmtKm(mil.km || 0)} km, extra for site visits &amp; city tours ${fmtKm(mil.extra_km || 0)} km${Number(mil.waived_km) > 0 ? `, waived ${fmtKm(mil.waived_km)} km` : ''}${!multi && mil.amount != null ? ` · <b style="font-size:12px">LKR ${Number(mil.amount).toLocaleString()}</b>` : ''}${diff}</div></div>
                 <div class="trk-tot-r"><span class="trk-tkm">${fmtKm(mil.km || 0)} km</span>
-                <span class="trk-cnt"><i class="bi bi-car-front"></i> ${sectors} sector${sectors === 1 ? '' : 's'}</span></div></div>`;
+                <span class="trk-cnt"><i class="bi oci oci-car"></i> ${sectors} sector${sectors === 1 ? '' : 's'}</span></div></div>`;
 
             return `<div class="trk-wrap">
                 ${trackHtml}
@@ -3331,7 +3331,7 @@
                 mine.forEach(r => { const sc = r.s, k = part(sc);
                     if (k === 'route') { if (!stops.length) stops.push({ name: sc.from_place || '?', cards: [] }); stops[stops.length - 1].next = sc.km != null ? kmf(sc.km) + ' km' : '<span class="bad">Missing</span>'; stops.push({ name: sc.to_place || 'Destination required', cards: [] }); }
                     else { if (!stops.length) stops.push({ name: sc.from_place || '?', cards: [] }); stops[stops.length - 1].cards.push({ day: r.day, k, km: sc.km, waived: sc.waived_by }); } });
-                return `${multi ? `<div class="rw-veh"><i class="bi bi-truck"></i> ${esc(vehLabel(seq))}</div>` : ''}<div class="rw-scroll"><div class="rw-line${stops.some(x => x.cards.length) ? ' has-cards' : ''}">${stops.map((st, n) => `<div class="rw-stop"><span class="rw-ico"><i class="bi ${icon(st.name)}"></i></span><span class="rw-dot"></span><b>${esc(st.name)}</b>
+                return `${multi ? `<div class="rw-veh"><i class="bi oci oci-car"></i> ${esc(vehLabel(seq))}</div>` : ''}<div class="rw-scroll"><div class="rw-line${stops.some(x => x.cards.length) ? ' has-cards' : ''}">${stops.map((st, n) => `<div class="rw-stop"><span class="rw-ico"><i class="bi ${icon(st.name)}"></i></span><span class="rw-dot"></span><b>${esc(st.name)}</b>
                     ${st.cards.length ? `<div class="rw-cards">${st.cards.map(c => `<div class="rw-card"><b><i class="bi bi-calendar3"></i> ${dayLbl(c.day)}</b><span>${c.k === 'allow' ? 'Non-operating day allowance' : 'City tour • Additional mileage'}</span><em class="${c.km == null ? 'bad' : ''}">${c.km != null ? kmf(c.km) + ' km' : 'Missing'}</em>${c.waived ? '<small>waived — not charged</small>' : ''}</div>`).join('')}</div>` : ''}</div>${n < stops.length - 1 ? `<div class="rw-seg"><span>${st.next || ''}</span></div>` : ''}`).join('')}</div></div>`; }).join('');
             const cell = v => v ? kmf(v) : '0';
             return `<div class="rw"><div class="rw-h"><h3><i class="bi bi-train-front-fill"></i> Railway view</h3><span class="rw-sw"><button type="button" class="on" data-mview="rail"><i class="bi bi-train-front"></i> Railway view</button><button type="button" data-mview="list"><i class="bi bi-list-ul"></i> List view</button>__MLV_MAP__</span></div>
@@ -4071,7 +4071,7 @@
         if (!LCH.loaded) api('/intake/' + it.id + '/lunch').then(j => { if (j && j.status === 200 && CURRENT && Number(CURRENT.id) === Number(it.id)) { LCH.loaded = true; LCH.rows = j.data.rows || {}; LCH.defaults = j.data.defaults || []; LCH.can_master = !!j.data.can_master; mlDraw(); } }).catch(() => {});
     }
     // tf-lunch-r2: drawn to the approved mock-up — the coloured arrangement menu, a pencil on every row, the figures in rupees
-    const ML_SUB = { route: ['bi-shop', 'Lunch on Route', '(Select restaurant from route master)'], driver: ['bi-car-front-fill', 'Driver-Arranged Lunch on Route', '(Give allowance to driver)'], hotel: ['bi-building', 'Hotel Lunch', '(Lunch provided by hotel)'], none: ['bi-slash-circle', 'No Lunch', '(Client\'s own arrangement)'] };
+    const ML_SUB = { route: ['bi-shop', 'Lunch on Route', '(Select restaurant from route master)'], driver: ['oci oci-car', 'Driver-Arranged Lunch on Route', '(Give allowance to driver)'], hotel: ['oci oci-bed', 'Hotel Lunch', '(Lunch provided by hotel)'], none: ['bi-slash-circle', 'No Lunch', '(Client\'s own arrangement)'] };
     function mlDraw() {
         const box = document.getElementById('lunch_card'), it = CURRENT; if (!box || !it || !it.meals) return;
         const mm = document.getElementById('ma_master'); if (mm) mm.style.display = LCH.can_master ? '' : 'none';
@@ -4279,7 +4279,7 @@
                     <span>Activities</span><span>${things.length ? esc(things.join(', ')) : '—'}</span>
                     ${note ? `<span>Special note</span><span>${note}</span>` : ''}
                     ${w && w.text ? `<span>Itinerary text</span><span>${esc(w.text)}</span>` : ''}
-                </div>${it.locked ? '' : `<div class="acts"><button type="button" class="inq-btn" data-inqedit="${d.id}"><i class="bi bi-building"></i> ${d.hotel_name_raw ? 'Change hotel or meal plan' : 'Choose hotel'}</button>
+                </div>${it.locked ? '' : `<div class="acts"><button type="button" class="inq-btn" data-inqedit="${d.id}"><i class="bi oci oci-bed"></i> ${d.hotel_name_raw ? 'Change hotel or meal plan' : 'Choose hotel'}</button>
                     <button type="button" class="inq-btn" data-inqsvc="${d.day_no}"><i class="bi bi-plus-lg"></i> Activities and services</button></div>`}</div></div>`;
         };
         // tf-signal-r1: the Requested Itinerary row of the mock-up — hotel in bold with room type and rate beneath, meal plan, rooms, the day's activities, the note
@@ -4309,7 +4309,7 @@
         const trLine = (t, word) => t ? `<div class="inq-tr"><b>${word}</b> (${esc(dm(t.date, { day:'numeric', month:'short' }))}): ${t.by === 'car' ? 'Airport ' + (word === 'Arrival' ? 'pick-up' : 'drop-off') : 'Hotel ' + (word === 'Arrival' ? 'pick-up' : 'drop-off')}<span class="pl">${t.by === 'car' ? 'Our Car' : esc(t.hotel || 'Hotel')}</span></div>` : '';
         const pls = days.map(d => place(d).replace(/^Arrival \/ /, '')).filter((v, i, x) => v && x.indexOf(v) === i);
         const crewCol = kind => { const n = (it.crew || []).filter(c => c.kind === kind).length;
-            return `<div class="inq-crewcol"><i class="bi ${kind === 'driver' ? 'bi-car-front' : 'bi-person'}"></i><label for="inq_${kind}">Select ${kind === 'driver' ? 'Driver' : 'Guide'}</label>
+            return `<div class="inq-crewcol"><i class="bi ${kind === 'driver' ? 'oci oci-car' : 'bi-person'}"></i><label for="inq_${kind}">Select ${kind === 'driver' ? 'Driver' : 'Guide'}</label>
                 <select id="inq_${kind}" data-inqcrew="${kind}" ${it.locked ? 'disabled' : ''}><option>Not selected</option></select>
                 ${n > 1 ? `<a href="#" class="more" data-inqgo="trans">+${n - 1} more</a>` : ''}</div>`; };
 
@@ -4332,7 +4332,7 @@
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-person"></i></span><div><div class="inq-k">Agent</div><div class="inq-v">${esc(it.agent_name || 'Not set')}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-upc-scan"></i></span><div><div class="inq-k">Tour Code</div><div class="inq-v">${esc((p && p.tour_no) || '—')}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-calendar3"></i></span><div><div class="inq-k">Travel Dates</div><div class="inq-v">${esc(range)}${shape ? `<small>(${shape})</small>` : ''}</div></div></div>
-                <div class="inq-cell"><span class="inq-ico"><i class="bi bi-people"></i></span><div><div class="inq-k">Travellers</div><div class="inq-v">${Number(it.pax_adults || 0)} Adult${Number(it.pax_adults || 0) === 1 ? '' : 's'}${Number(it.pax_children || 0) ? ', ' + Number(it.pax_children) + ' Child' + (Number(it.pax_children) === 1 ? '' : 'ren') : ''}</div></div></div>
+                <div class="inq-cell"><span class="inq-ico"><i class="bi oci oci-group"></i></span><div><div class="inq-k">Travellers</div><div class="inq-v">${Number(it.pax_adults || 0)} Adult${Number(it.pax_adults || 0) === 1 ? '' : 's'}${Number(it.pax_children || 0) ? ', ' + Number(it.pax_children) + ' Child' + (Number(it.pax_children) === 1 ? '' : 'ren') : ''}</div></div></div>
                 <div class="inq-cell"><span class="inq-ico"><i class="bi bi-door-closed"></i></span><div><div class="inq-k">Rooms</div><div class="inq-v">${esc(roomsTxt)}</div></div></div>
                 <div class="inq-cell inq-ad"><span class="inq-ico"><i class="bi bi-airplane"></i></span><div>
                     <div class="inq-adl"><span>Arrival</span><b>${esc(dm(a, { day:'numeric', month:'short', year:'numeric' }) || '—')}</b><small>${it.arrival_flight ? esc(it.arrival_flight) : 'Flight &amp; time not given'}</small></div>
@@ -4341,10 +4341,10 @@
             </div>
             <div class="inq-tabs" role="tablist">
                 <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
-                <button type="button" class="inq-tab" data-tab="itin"><i class="bi bi-building"></i> Hotels (${hotelsN})</button>
+                <button type="button" class="inq-tab" data-tab="itin"><i class="bi oci oci-bed"></i> Hotels (${hotelsN})</button>
                 <button type="button" class="inq-tab" data-tab="acts" title="Each day's activities and whether they have been checked">Activities <i class="inq-dot" id="inq_act_dot"></i></button>
-                <button type="button" class="inq-tab" data-tab="trans"><i class="bi bi-car-front"></i> Transport</button>
-                <button type="button" class="inq-tab" data-tab="pax"><i class="bi bi-people"></i> Passengers (${Number(it.pax_total || 0)})</button>
+                <button type="button" class="inq-tab" data-tab="trans"><i class="bi oci oci-car"></i> Transport</button>
+                <button type="button" class="inq-tab" data-tab="pax"><i class="bi oci oci-group"></i> Passengers (${Number(it.pax_total || 0)})</button>
                 <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
                 <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Quotation &amp; Confirmation <span id="inq_chk_n" style="display:none"></span></button>
             </div>
@@ -4356,7 +4356,7 @@
                 <div class="inq-grid">
                     <div>
                         <div class="inq-two">
-                            <div class="inq-card"><div class="h"><i class="bi bi-car-front"></i>Transport<button type="button" class="inq-btn" data-inqgo="trans">Details</button></div>
+                            <div class="inq-card"><div class="h"><i class="bi oci oci-car"></i>Transport<button type="button" class="inq-btn" data-inqgo="trans">Details</button></div>
                                 <div class="b">${trLine(T.arrival, 'Arrival') + trLine(T.departure, 'Departure') || '<div class="help" style="padding:8px 0">Not set.</div>'}</div></div>
                             <div class="inq-card"><div class="h"><i class="bi bi-file-text"></i>Quotation Preview</div>
                                 <div class="b inq-q" style="padding-top:12px"><b>“Your Sri Lanka journey${shape ? ' – ' + shape : ''}”</b><div>${esc(pls.join(' – ') || '—')}</div>
@@ -4365,10 +4365,10 @@
                     </div>
                     <div>
                         <div class="inq-card"><div class="h g"><i class="bi bi-compass"></i>Tour Summary</div><div class="b"><div class="inq-sum">
-                            <i class="bi bi-building"></i><b>Hotels</b><span>${nights} night${nights === 1 ? '' : 's'} / ${hotelsN} hotel${hotelsN === 1 ? '' : 's'}</span>
-                            <i class="bi bi-cup-hot"></i><b>Meals</b><span>${Object.keys(mealsBy).map(k => esc(k) + ' × ' + mealsBy[k]).join(' &nbsp;|&nbsp; ') || '—'}</span>
-                            <i class="bi bi-car-front"></i><b>Transfers</b><span>${trSum}</span>
-                            <i class="bi bi-ticket-perforated ${SEES_PRICING ? '' : 'last'}"></i><b class="${SEES_PRICING ? '' : 'last'}">Activities</b><span class="${SEES_PRICING ? '' : 'last'}">${acts.length ? esc(acts.slice(0, 4).join(', ')) + (acts.length > 4 ? ` +${acts.length - 4} more` : '') : '—'}</span>
+                            <i class="bi oci oci-bed"></i><b>Hotels</b><span>${nights} night${nights === 1 ? '' : 's'} / ${hotelsN} hotel${hotelsN === 1 ? '' : 's'}</span>
+                            <i class="bi oci oci-meal"></i><b>Meals</b><span>${Object.keys(mealsBy).map(k => esc(k) + ' × ' + mealsBy[k]).join(' &nbsp;|&nbsp; ') || '—'}</span>
+                            <i class="bi oci oci-car"></i><b>Transfers</b><span>${trSum}</span>
+                            <i class="bi bi-ticket-perforated oc-tilt ${SEES_PRICING ? '' : 'last'}"></i><b class="${SEES_PRICING ? '' : 'last'}">Activities</b><span class="${SEES_PRICING ? '' : 'last'}">${acts.length ? esc(acts.slice(0, 4).join(', ')) + (acts.length > 4 ? ` +${acts.length - 4} more` : '') : '—'}</span>
 ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></i><b class="last">Costs (Internal)</b><span class="last" style="text-align:right"><button type="button" class="inq-btn" data-inqgo="quote" style="height:30px;border-color:var(--p);color:var(--p)"><i class="bi bi-eye"></i> Show Cost</button></span>` : ''}
                         </div></div></div>
                         <div class="inq-card"><div class="h"><i class="bi bi-chat-left-text"></i>Communications &amp; History</div><div class="b" style="padding-top:14px">
@@ -4640,7 +4640,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     // The four sections, read from the inquiry's own costing (GET /checks) — the same records the itinerary shows, grouped
     // for a last look. A person marks each one; nothing here confirms the tour. Send Email and Confirm Tour are two buttons.
     const CHK_ST = { needs_attention: ['Needs attention', 'na'], checked: ['Checked', 'ok'], not_required: ['Not required', 'nr'] };
-    const CHK_ICON = { hotels: 'bi-building', transfers: 'bi-car-front', entrances: 'bi-ticket-perforated', activities: 'bi-binoculars' };
+    const CHK_ICON = { hotels: 'oci oci-bed', transfers: 'oci oci-car', entrances: 'bi-ticket-perforated oc-tilt', activities: 'bi-binoculars' };
     const CHK_OPEN = { hotels: ['itin', null], transfers: ['trans', null], entrances: ['acts', '#ea_card'], activities: ['acts', '#ea_card'] };
     let CHK_SEQ = 0;
     async function inqCheck(it, ctx) {
@@ -6523,7 +6523,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             const seg = (v, label, icon) => `<button type="button" class="tr-seg ${t.by === v ? 'on' : ''}" data-trby="${key}" data-v="${v}" aria-pressed="${t.by === v}" ${it.locked ? 'disabled' : ''}><i class="bi ${icon}"></i><span>${label}</span></button>`;
             return `<div class="tr-row">
                 <div class="tr-head"><span class="tr-t">${title} · ${hotelWord}${hotel ? `<input type="date" class="form-control tr-date" data-trdate="${t.side}_transfer_date" value="${esc(t.date || '')}" ${it.locked ? 'disabled' : ''} title="${t.date_typed ? 'Date typed for this transfer' : 'The tour\'s ' + t.side + ' date — change it if the transfer is on another day'}">` : (t.date ? `<span class="tr-dtxt">${fmtDate(t.date)}</span>` : '')}</span>
-                    <span class="tr-segs" role="group">${seg('car', 'Our car', 'bi-car-front-fill')}${seg('hotel', hotelWord, 'bi-building')}</span></div>
+                    <span class="tr-segs" role="group">${seg('car', 'Our car', 'oci oci-car')}${seg('hotel', hotelWord, 'oci oci-bed')}</span></div>
                 ${hotel ? `<div class="tr-pick">
                     <input class="form-control tr-hotel ${t.hotel_id ? '' : 'is-invalid'}" data-trhotel="${hotelKey}" value="${esc(t.hotel || '')}" placeholder="Select hotel ▾" autocomplete="off" ${it.locked ? 'disabled' : ''}>
                     <div class="tr-list" data-trlist="${hotelKey}"></div></div>

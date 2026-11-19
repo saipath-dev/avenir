@@ -172,7 +172,7 @@
 
     function draw(S) {
         const d = S.data, stay = curStay(S), ro = !!d.locked, dis = ro ? ' disabled' : '';
-        const tab = document.querySelector('.inq-tab[data-tab="pax"]'); if (tab) tab.innerHTML = '<i class="bi bi-people"></i> Passengers (' + d.passengers.length + ')';
+        const tab = document.querySelector('.inq-tab[data-tab="pax"]'); if (tab) tab.innerHTML = '<i class="bi oci oci-group"></i> Passengers (' + d.passengers.length + ')';
         const list = filtered(S, stay), pages = Math.max(1, Math.ceil(list.length / S.per)); if (S.page > pages) S.page = pages;
         const view = list.slice((S.page - 1) * S.per, S.page * S.per);
         const nats = [...new Set(d.passengers.map(p => p.nationality).filter(Boolean))].sort();
