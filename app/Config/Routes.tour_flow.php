@@ -519,6 +519,7 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     // tf-comms-r3: incoming e-mail — the review queue, the mailbox checks (before comms/(:num))
     $routes->get('comms/inbox', [CommsInboxController::class, 'index']);
     $routes->get('comms/inbox/data', [CommsInboxController::class, 'data']);
+    $routes->get('comms/inbox/new_count', [CommsInboxController::class, 'newCount']);   // tf-newmail-r1
     $routes->get('comms/inbox/find', [CommsInboxController::class, 'find']);
     $routes->get('comms/inbox/message/(:num)', [CommsInboxController::class, 'message']);
     $routes->get('comms/inbox/attachment/(:num)', [CommsInboxController::class, 'attachment']);

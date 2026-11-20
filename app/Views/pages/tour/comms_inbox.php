@@ -106,7 +106,7 @@
         const s = S.settings, c = S.counts;
         let h = '';
         if (!s.imap_ext) h += `<b style="color:var(--tf-red)">The PHP imap extension is not loaded on this server</b> — the mailbox cannot be read. `;
-        else if (!s.configured) h += `<b>Incoming mailbox not set up.</b> ${SYSADMIN ? 'Set it under Tour Desk Admin → Settings → Incoming mailbox.' : 'Ask the System Administrator to set it under Tour Desk Admin → Settings.'} `;
+        else if (!s.configured) h += `<b>No incoming mailbox is connected.</b> ${SYSADMIN ? 'Connect one under Admin → Settings → Incoming Mailboxes.' : 'Ask the System Administrator to set it under Tour Desk Admin → Settings.'} `;
         else h += `<b>Mailbox:</b> ${esc(s.email)} on ${esc(s.host)} (${esc(s.folder)}) · last checked ${s.last_check ? dt(s.last_check) : 'never'}${s.last_result ? ' — ' + esc(s.last_result) : ''} · ${s.enabled ? 'collecting is on' : '<b style="color:var(--tf-red)">collecting is switched off</b>'} · automatic quotation drafts ${s.auto_quote ? 'on' : 'off'}. `;
         h += `<br><b>${c.unmatched || 0}</b> waiting for a decision · ${c.matched || 0} filed · ${c.discarded || 0} discarded · ${c.skipped || 0} skipped.`;
         document.getElementById("ib_status").innerHTML = h;
@@ -121,12 +121,12 @@
                 <div class="subj">${esc(r.subject || '(no subject)')}</div><div class="addr">from <b>${esc(r.from_addr || '?')}</b>${r.to_addr ? ' to ' + esc(r.to_addr) : ''}</div>
                 ${r.preview ? `<div class="prev">${esc(r.preview)}</div>` : ''}
                 ${r.match_reason ? `<div class="meta"><i class="bi bi-check2-circle"></i> ${esc(r.match_reason)}${r.matched_by ? ' · ' + esc(r.matched_by) + ' ' + dt(r.matched_at) : ''}</div>` : ''}${r.note ? `<div class="meta">${esc(r.note)}</div>` : ''}
-                ${['unmatched', 'new'].includes(r.status) ? `<div class="acts"><button class="btn btn-primary btn-sm" data-attach="${r.id}"><i class="bi bi-link-45deg"></i> Attach to a record…</button><button class="btn btn-avgreen btn-sm" data-draft="${r.id}"><i class="bi bi-file-earmark-plus"></i> Read as new inquiry &amp; draft quotation</button><button class="btn btn-light btn-sm" data-discard="${r.id}"><i class="bi bi-x-circle"></i> Discard…</button><button class="btn btn-light btn-sm" data-open="${r.id}"><i class="bi bi-eye"></i> Full message</button></div>` : `<div class="acts"><button class="btn btn-light btn-sm" data-open="${r.id}"><i class="bi bi-eye"></i> Full message</button></div>`}
+                ${['unmatched', 'new'].includes(r.status) ? `<div class="acts"><button class="btn btn-primary btn-sm" data-attach="${r.id}"><i class="bi bi-link-45deg"></i> Attach to a record…</button><button class="btn btn-avgreen btn-sm" data-newbk="${r.id}"><i class="bi bi-plus-circle"></i> New booking…</button><button class="btn btn-light btn-sm" data-discard="${r.id}"><i class="bi bi-x-circle"></i> Discard…</button><button class="btn btn-light btn-sm" data-open="${r.id}"><i class="bi bi-eye"></i> Full message</button></div>` : `<div class="acts"><button class="btn btn-light btn-sm" data-open="${r.id}"><i class="bi bi-eye"></i> Full message</button></div>`}
             </div>`;
         }).join('') : '<div class="empty">Nothing here.</div>';
-        box.querySelectorAll('[data-attach]').forEach(b => b.addEventListener('click', () => openAttach(Number(b.dataset.attach))));
-        box.querySelectorAll('[data-discard]').forEach(b => b.addEventListener('click', () => discard(Number(b.dataset.discard))));
-        box.querySelectorAll('[data-draft]').forEach(b => b.addEventListener('click', () => draft(Number(b.dataset.draft))));
+        box.querySelectorAll('[data-attach]').forEach(b => b.addEventListener('click', () => openFull(Number(b.dataset.attach), 'attach')));
+        box.querySelectorAll('[data-discard]').forEach(b => b.addEventListener('click', () => openFull(Number(b.dataset.discard), 'discard')));
+        box.querySelectorAll('[data-newbk]').forEach(b => b.addEventListener('click', () => openFull(Number(b.dataset.newbk), 'new')));
         box.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openFull(Number(b.dataset.open))));
     }
     async function load() {
@@ -140,10 +140,88 @@
         Swal.fire({ icon: j.status === 200 ? 'success' : 'error', title: j.status === 200 ? 'Mailbox checked' : 'Could not check the mailbox', html: esc(j.message) + ((j.data && j.data.notes) ? '<br><span class="help">' + j.data.notes.map(esc).join('<br>') + '</span>' : '') });
         load();
     });
-    async function openFull(id) {
+    // tf-fullmsg-r1 (20 Nov 2026): Full message — read the e-mail and act on it in the same window (attach, new booking, discard)
+    let FM = null;   // { id, m, mode, busy, done, pick }
+    function fmClose() { document.getElementById('fm_ov')?.remove(); FM = null; }
+    async function openFull(id, mode) {
         const j = await api('/message/' + id); if (j.status !== 200) { toast('error', j.message); return; }
-        const m = j.data;
-        Swal.fire({ title: esc(m.subject || '(no subject)'), width: 820, html: `<div style="text-align:left;font-size:12.5px"><div class="help">from ${esc(m.from_addr)}${m.to_addr ? ' · to ' + esc(m.to_addr) : ''}${m.cc_addr ? ' · cc ' + esc(m.cc_addr) : ''} · ${dt(m.received_at)}</div><div class="help mono">Message-ID ${esc(m.message_id || '—')}${m.in_reply_to ? ' · In-Reply-To ' + esc(m.in_reply_to) : ''}</div>${(m.attachments || []).length ? '<div style="margin:6px 0">' + m.attachments.map(a => `<a href="${BASE}/attachment/${a.id}" target="_blank" class="btn btn-light btn-sm"><i class="bi bi-paperclip"></i> ${esc(a.original_name)}</a> `).join('') + '</div>' : ''}<pre style="white-space:pre-wrap;font-family:inherit;max-height:420px;overflow:auto;background:#f7f5fa;padding:10px;border-radius:8px">${esc(m.body_text || '(no text)')}</pre></div>`, showConfirmButton: true, confirmButtonText: 'Close' });
+        const row = S.rows.find(x => Number(x.id) === id) || {};
+        FM = { id, m: j.data, mode: mode || '', busy: false, done: null, pick: null, row };
+        document.getElementById('fm_ov')?.remove();
+        const ov = document.createElement('div'); ov.id = 'fm_ov'; ov.innerHTML = `<style>
+            #fm_ov{position:fixed;inset:0;background:rgba(30,10,30,.55);z-index:1055;display:flex;align-items:center;justify-content:center;padding:14px}
+            #fm_ov .fm{background:#fff;border-radius:12px;width:min(980px,100%);max-height:94vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.35);font-size:13.5px;text-align:left}
+            #fm_ov .fm-h{background:#842484;color:#fff;padding:11px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:16px}
+            #fm_ov .fm-b{overflow:auto;padding:14px 16px;flex:1;min-height:120px}
+            #fm_ov .fm-meta{background:#f7f3f8;border-radius:8px;padding:8px 12px;margin-bottom:10px;display:grid;grid-template-columns:70px 1fr;gap:2px 8px}
+            #fm_ov .fm-meta b{color:#5a5160} #fm_ov pre{white-space:pre-wrap;font:inherit;margin:0 0 12px}
+            #fm_ov .fm-att{display:flex;align-items:center;gap:10px;border:1px solid #e3dce7;border-radius:8px;padding:7px 10px;margin-top:6px}
+            #fm_ov .fm-f{border-top:2px solid #842484;background:#fbf8fc;padding:10px 16px;max-height:48vh;overflow:auto}
+            #fm_ov .fm-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+            #fm_ov .fm-tab{border:1.5px solid #cfc6d3;background:#fff;border-radius:8px;padding:8px 10px;font-weight:700;cursor:pointer}
+            #fm_ov .fm-tab.on{background:#842484;color:#fff;border-color:#842484} #fm_ov .fm-tab.g.on{background:#78b848;border-color:#78b848}
+            #fm_ov .fm-tab:disabled{opacity:.5;cursor:not-allowed}
+            #fm_ov .fm-p{border:1.5px solid #842484;border-radius:8px;background:#fff;padding:10px 12px;margin-top:10px}
+            #fm_ov .fm-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px} @media(max-width:800px){#fm_ov .fm-cards,#fm_ov .fm-tabs{grid-template-columns:1fr 1fr}}
+            #fm_ov .fm-card{border:1px solid #cfc6d3;border-radius:8px;padding:9px 10px;background:#fff;cursor:pointer;text-align:left} #fm_ov .fm-card:hover{border-color:#78b848} #fm_ov .fm-card b{display:block;margin-bottom:3px} #fm_ov .fm-card span{font-size:12px;color:#5a5160}
+            #fm_ov .fm-card:disabled{opacity:.5;cursor:not-allowed}
+            #fm_ov .fm-row{padding:6px 8px;border-bottom:1px solid #eee;cursor:pointer} #fm_ov .fm-row.on{background:#f3e3f3}
+            #fm_ov .fm-go{background:#78b848;color:#fff;font-weight:700;border:0;border-radius:8px;padding:8px 16px} #fm_ov .fm-go:disabled{opacity:.5}
+            #fm_ov .fm-ok{background:#e8f3de;border:1px solid #78b848;border-radius:8px;padding:10px 12px} #fm_ov .fm-err{color:#b3261e;font-weight:700;margin-top:6px}
+        </style><div class="fm"><div class="fm-h"><span><i class="bi bi-envelope"></i> <span id="fm_t"></span></span><button class="btn btn-sm btn-light" id="fm_x">Close</button></div><div class="fm-b" id="fm_body"></div><div class="fm-f" id="fm_foot"></div></div>`;
+        document.body.appendChild(ov);
+        const m = FM.m, kb = n => n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
+        document.getElementById('fm_t').textContent = m.subject || '(no subject)';
+        document.getElementById('fm_x').addEventListener('click', fmClose);
+        document.getElementById('fm_body').innerHTML = `<div class="fm-meta"><b>From:</b><span>${esc(m.from_addr || '')}</span><b>To:</b><span>${esc(m.to_addr || '')}${m.cc_addr ? ' · cc ' + esc(m.cc_addr) : ''}</span><b>Date:</b><span>${dt(m.received_at)}</span><b>Mailbox:</b><span>${m.box === 'hotel' ? 'Hotel reservations' : (m.box === 'agent' ? 'Agent inquiries' : '—')}</span></div>
+            <pre>${esc(m.body_text || '(no text in the message)')}</pre>
+            <div><b><i class="bi bi-paperclip"></i> Attachments (${(m.attachments || []).length})</b>${(m.attachments || []).map(a => `<div class="fm-att"><i class="bi bi-file-earmark"></i><span style="flex:1"><b>${esc(a.original_name)}</b> <span class="help">${esc(a.mime || '')} · ${kb(Number(a.bytes || 0))}</span></span>${/\.(pdf|png|jpe?g|gif|webp|txt)$/i.test(a.original_name || '') ? `<a class="btn btn-sm btn-light" style="border:1px solid #78b848;color:#3f7a1c" target="_blank" href="${BASE}/attachment/${a.id}"><i class="bi bi-box-arrow-up-right"></i> Open</a>` : ''}<a class="btn btn-sm" style="background:#78b848;color:#fff" href="${BASE}/attachment/${a.id}?dl=1"><i class="bi bi-download"></i> Download</a></div>`).join('') || '<div class="help">None.</div>'}</div>`;
+        fmFoot();
+    }
+    function fmFoot() {
+        const f = document.getElementById('fm_foot'); if (!f || !FM) return; const m = FM.m, hotel = m.box === 'hotel';
+        if (FM.done) { f.innerHTML = `<div class="fm-ok">${FM.done}</div>`; return; }
+        if (!['unmatched', 'new'].includes(m.status)) {
+            f.innerHTML = `<div class="help">${m.status === 'matched' ? 'This e-mail is filed on ' + (FM.row.inquiry_no ? `<a href="${COMMS}/${FM.row.intake_id}"><b>${esc(FM.row.inquiry_no)}${FM.row.tour_no ? ' · ' + esc(FM.row.tour_no) : ''}</b></a>` : 'a record') + '.' : 'This e-mail was ' + esc(m.status) + (m.note ? ': ' + esc(m.note) : '') + '.'}</div>`; return; }
+        const tab = (k, label, icon, cls) => `<button class="fm-tab ${cls || ''} ${FM.mode === k ? 'on' : ''}" data-fm="${k}" ${FM.busy ? 'disabled' : ''}><i class="bi ${icon}"></i> ${label}</button>`;
+        let p = '';
+        if (FM.mode === 'attach' || FM.mode === 'ongoing') p = `<div class="fm-p"><b style="color:#842484"><i class="bi bi-link-45deg"></i> ${FM.mode === 'ongoing' ? 'Ongoing communication — find the inquiry or confirmed tour' : 'Find inquiry or confirmed tour'}</b>
+            <input class="form-control form-control-sm mt-2" id="fm_q" placeholder="Inquiry or tour number, client, tour name or agent" autocomplete="off"><div id="fm_rows" style="max-height:150px;overflow:auto;margin-top:6px"></div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:8px"><b style="white-space:nowrap">Reason for linking</b><input class="form-control form-control-sm" id="fm_reason" maxlength="200" value="${FM.mode === 'ongoing' ? 'Ongoing communication on this record' : ''}" placeholder="e.g. agent follow-up for this inquiry"></div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:8px"><button class="fm-go" id="fm_attach" disabled><i class="bi bi-paperclip"></i> Attach email and files</button><span class="help"><i>Keeps the existing record number. Creates no new inquiry.</i></span></div><div class="fm-err" id="fm_err"></div></div>`;
+        if (FM.mode === 'new') p = `<div class="fm-p" style="border-color:#78b848"><b style="color:#3f7a1c">New booking options — these create a NEW inquiry</b>${hotel ? '<div class="fm-err">This e-mail came through the Hotel reservations mailbox: a hotel e-mail cannot create an inquiry. Use Attach to a record.</div>' : ''}
+            <div class="fm-cards mt-2"><button class="fm-card" data-nb="auto" ${hotel ? 'disabled' : ''}><b><i class="bi bi-file-earmark-plus"></i> Auto-create new inquiry</b><span>Read email, create INQ number, link original email and files. Staff check details.</span></button>
+            <button class="fm-card" data-nb="paste" ${hotel ? 'disabled' : ''}><b><i class="bi bi-envelope"></i> Paste the mail</b><span>Open Paste Email Inquiry with this email filled in.</span></button>
+            <button class="fm-card" data-nb="manual" ${hotel ? 'disabled' : ''}><b><i class="bi bi-pencil"></i> Do it by hand</b><span>Open manual form; link this email and files when saved.</span></button>
+            <button class="fm-card" data-nb="ongoing"><b><i class="bi bi-chat-dots"></i> Ongoing communication</b><span>Link to an existing inquiry or confirmed tour.</span></button></div>
+            <div class="help mt-2"><i class="bi bi-info-circle"></i> Creating an inquiry does not confirm a booking.</div><div class="fm-err" id="fm_err"></div></div>`;
+        if (FM.mode === 'discard') p = `<div class="fm-p" style="border-color:#b3261e"><b style="color:#b3261e">Discard this e-mail from the queue</b><div class="help">It is never deleted: it stays on file and in the mailbox, and the Activity log records who discarded it and why.</div>
+            <div style="display:flex;gap:8px;margin-top:8px"><input class="form-control form-control-sm" id="fm_why" maxlength="200" placeholder="Reason (required, at least five characters)"><button class="btn btn-sm btn-danger" id="fm_disc" style="white-space:nowrap">Discard</button></div><div class="fm-err" id="fm_err"></div></div>`;
+        f.innerHTML = `<div class="fm-tabs">${tab('attach', 'Attach to a record', 'bi-link-45deg')}${tab('new', 'New booking', 'bi-plus-lg', 'g')}${tab('discard', 'Discard', 'bi-trash')}<button class="fm-tab" data-fm="close">✕ Close</button></div>${FM.mode ? p : '<div class="help mt-2">Read first, then choose an action here.</div>'}`;
+        f.querySelectorAll('[data-fm]').forEach(b => b.addEventListener('click', () => { if (b.dataset.fm === 'close') { fmClose(); return; } if (FM.busy) return; FM.mode = b.dataset.fm; FM.pick = null; fmFoot(); }));
+        const err = t => { const e = document.getElementById('fm_err'); if (e) e.textContent = t || ''; };
+        const busy = (on) => { FM.busy = on; f.querySelectorAll('button').forEach(b => { if (b.dataset.fm !== 'close') b.disabled = on; }); };
+        const ok = (html) => { FM.done = html + ' <button class="btn btn-sm btn-light ms-2" onclick="document.getElementById(\'fm_x\').click()">Close</button>'; FM.busy = false; fmFoot(); load(); };
+        const q = document.getElementById('fm_q');
+        if (q) { let t = null; const find = async () => { const box = document.getElementById('fm_rows'), v = q.value.trim(); FM.pick = null; document.getElementById('fm_attach').disabled = true; if (!v) { box.innerHTML = ''; return; }
+                const r = await api('/find?q=' + encodeURIComponent(v)); const rows = (r && r.data) || [];
+                box.innerHTML = rows.length ? rows.map(x => `<div class="fm-row" data-pick="${x.id}"><b>${esc(x.tour_no || x.inquiry_no)}</b>${x.tour_no ? ' (' + esc(x.inquiry_no) + ')' : ''} | ${esc(x.tour_name || '')} | ${esc(x.agent_name || '')} | ${x.arrival_date ? String(x.arrival_date).slice(0, 10) : 'no dates'} | <b>${x.tour_no ? 'Confirmed tour' : 'Inquiry'}</b></div>`).join('') : '<div class="help">No inquiry or tour matches.</div>';
+                box.querySelectorAll('[data-pick]').forEach(el => el.addEventListener('click', () => { box.querySelectorAll('.fm-row').forEach(y => y.classList.remove('on')); el.classList.add('on'); FM.pick = rows.find(y => String(y.id) === el.dataset.pick); document.getElementById('fm_attach').disabled = false; })); };
+            q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(find, 300); });
+            const tag = (FM.row.tags || [])[0]; if (tag) { q.value = (String(tag).match(/\d{3,}/g) || [tag]).pop(); find(); } q.focus();
+            document.getElementById('fm_attach').addEventListener('click', async () => { if (FM.busy || !FM.pick) return; const reason = document.getElementById('fm_reason').value.trim(); if (reason.length < 5) { err('Enter the reason for linking (at least five characters).'); return; }
+                const h = FM.pick; busy(true); let j; try { j = await post(`/${FM.id}/attach`, { intake_id: h.id, reason }); } catch (e) { j = { status: 0, message: 'The server did not answer. Nothing was attached; the e-mail is still in the queue.' }; }
+                if (j.status !== 200) { busy(false); err(j.message || 'Not attached. The e-mail is still in the queue.'); return; }
+                ok(`<b>Attached to the existing record ${esc(h.inquiry_no)}${h.tour_no ? ' · ' + esc(h.tour_no) : ''}</b> — the e-mail and its ${(FM.m.attachments || []).length} file(s) are on its Communications &amp; History. No new inquiry was created. <a href="${COMMS}/${h.id}"><b>Open the record</b></a>`); }); }
+        f.querySelectorAll('[data-nb]').forEach(b => b.addEventListener('click', async () => { if (FM.busy) return; const k = b.dataset.nb;
+            if (k === 'ongoing') { FM.mode = 'ongoing'; fmFoot(); return; }
+            if (k !== 'auto') { busy(true); location.href = INTAKE + '?start=' + k + '&mail=' + FM.id; return; }
+            busy(true); b.querySelector('span').textContent = 'Reading the e-mail and creating the inquiry…'; let j; try { j = await post(`/${FM.id}/draft`, {}); } catch (e) { j = { status: 0, message: 'The server did not answer. Check the Inquiries list before trying again; the e-mail is still in the queue.' }; }
+            if (j.status !== 200) { busy(false); fmFoot(); err(j.message || 'No inquiry was created. The e-mail is still in the queue.'); return; }
+            const d = j.data || {}; ok(`<b>New inquiry ${esc(d.inquiry_no || '')} created</b> — the original e-mail and its files are on it. Nothing was confirmed or sent; staff must check the details.${(d.blockers || []).length ? '<br>To settle first: ' + d.blockers.map(esc).join('; ') : ''} <a href="${INTAKE}?id=${d.intake_id}"><b>Open ${esc(d.inquiry_no || 'the inquiry')}</b></a>`); }));
+        document.getElementById('fm_disc')?.addEventListener('click', async () => { if (FM.busy) return; const why = document.getElementById('fm_why').value.trim(); if (why.length < 5) { err('Give the reason (at least five characters).'); return; }
+            busy(true); let j; try { j = await post(`/${FM.id}/discard`, { why }); } catch (e) { j = { status: 0, message: 'The server did not answer. Nothing was discarded.' }; }
+            if (j.status !== 200) { busy(false); err(j.message || 'Not discarded.'); return; } ok('<b>Discarded from the queue.</b> The message stays on file and in the mailbox.'); });
     }
     function openAttach(id) {
         const r = S.rows.find(x => Number(x.id) === id); if (!r) return;
@@ -170,6 +248,27 @@
         const r = await Swal.fire({ icon: 'warning', title: 'Discard this e-mail from the queue?', text: 'It is never deleted: it stays on file here and in the mailbox, and the Activity log says who discarded it and why.', input: 'text', inputPlaceholder: 'reason (required)', inputValidator: v => (String(v || '').trim().length < 5 ? 'Give the reason (at least five characters).' : undefined), showCancelButton: true, confirmButtonText: 'Discard', confirmButtonColor: '#b23a32' });
         if (!r.isConfirmed) return;
         const j = await post(`/${id}/discard`, { why: r.value }); toast(j.status === 200 ? 'success' : 'error', j.message); load();
+    }
+    // tf-newbk-r1 (20 Nov 2026): a new booking from this e-mail — by hand, by pasting it, or created automatically
+    async function newBooking(id) {
+        const pick = await Swal.fire({ title: 'New booking from this e-mail', width: 620, showConfirmButton: false, showCloseButton: true,
+            html: `<div style="display:grid;gap:10px;text-align:left;font-size:13px">
+                <button class="btn btn-avgreen" data-nb="auto" style="text-align:left;padding:10px 14px"><b><i class="bi bi-magic"></i> Auto generate</b><br><span style="font-weight:400">The system reads the e-mail, creates the inquiry number and files this e-mail on it. Staff then check the details.</span></button>
+                <button class="btn btn-light" data-nb="paste" style="text-align:left;padding:10px 14px;border:1px solid #cfc6d3"><b><i class="bi bi-envelope"></i> Paste the mail</b><br><span style="font-weight:400">Opens the Paste Email Inquiry screen with this e-mail already filled in, so you can check the text before it is read.</span></button>
+                <button class="btn btn-light" data-nb="manual" style="text-align:left;padding:10px 14px;border:1px solid #cfc6d3"><b><i class="bi bi-pencil"></i> Do it by hand</b><br><span style="font-weight:400">Opens the manual inquiry form. When you save it, this e-mail is filed on the new inquiry.</span></button>
+                <div style="border:1.5px solid #842484;border-radius:8px;padding:10px 14px"><b style="color:#842484"><i class="bi bi-chat-dots"></i> Ongoing communication</b><br><span>This e-mail belongs to an inquiry or tour that already exists. Type its number and it is filed there.</span>
+                    <div style="display:flex;gap:8px;margin-top:8px"><input class="form-control form-control-sm" id="nb_no" placeholder="e.g. INQ 1049 or AVH-2026-00007" autocomplete="off"><button class="btn btn-sm" id="nb_go" style="background:#842484;color:#fff;font-weight:700;white-space:nowrap">File on this number</button></div><div id="nb_msg" class="help" style="margin-top:6px"></div></div></div>`,
+            didOpen: el => { el.querySelectorAll('[data-nb]').forEach(b => b.addEventListener('click', () => { Swal.close(); if (b.dataset.nb === 'auto') draft(id); else location.href = INTAKE + '?start=' + b.dataset.nb + '&mail=' + id; }));
+                const go = async () => { const msg = el.querySelector('#nb_msg'), raw = el.querySelector('#nb_no').value.trim(); if (!raw) { msg.textContent = 'Type the inquiry or tour number.'; return; }
+                    const norm = v => String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+                    const f = await api('/find?q=' + encodeURIComponent((raw.match(/\d{3,}/g) || [raw]).pop())); const hits = ((f && f.data) || []).filter(r => norm(r.inquiry_no) === norm(raw) || norm(r.tour_no) === norm(raw));
+                    if (hits.length !== 1) { msg.innerHTML = '<b style="color:#b3261e">' + (hits.length ? 'More than one record has that number.' : 'No inquiry or tour has exactly that number.') + '</b> Check it, or use "Attach to a record…" to search.'; return; }
+                    const h = hits[0]; el.querySelector('#nb_go').disabled = true;
+                    const j = await post(`/${id}/attach`, { intake_id: h.id, reason: 'Ongoing communication — number ' + raw + ' entered by staff' });
+                    if (j.status !== 200) { el.querySelector('#nb_go').disabled = false; msg.innerHTML = '<b style="color:#b3261e">' + esc(j.message || 'Not filed.') + '</b>'; return; }
+                    Swal.fire({ icon: 'success', title: 'Filed on ' + esc(h.inquiry_no) + (h.tour_no ? ' · ' + esc(h.tour_no) : ''), text: 'The e-mail is now on that record and its row shows a new e-mail waiting for a reply.', showCancelButton: true, confirmButtonText: 'Open the record', cancelButtonText: 'Stay here' }).then(r => { if (r.isConfirmed) location.href = COMMS + '/' + h.id; });
+                    load(); };
+                el.querySelector('#nb_go').addEventListener('click', go); el.querySelector('#nb_no').addEventListener('keydown', e => { if (e.key === 'Enter') go(); }); } });
     }
     async function draft(id) {
         const ok = await Swal.fire({ icon: 'question', title: 'Read this e-mail as a new inquiry?', html: 'The system reads the dates, passengers, rooms, meals, itinerary and requests, creates the inquiry, files this e-mail on it and — where every rate is on file — costs a <b>draft</b> quotation marked <b>Draft – Staff Review Required</b>.<br><span class="help">Nothing is issued or sent. A person must review and press Issue before it can be e-mailed.</span>', showCancelButton: true, confirmButtonText: 'Read and draft', confirmButtonColor: '#78b848' });

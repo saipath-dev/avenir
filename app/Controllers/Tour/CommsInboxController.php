@@ -97,9 +97,33 @@ class CommsInboxController extends BaseController
         $data['comms_url'] = CommsController::URL;
         $data['intake_url'] = 'tour/intake';
         $data['installed'] = CommsInbox::ready($this->db());
-        $data['settings'] = CommsInbox::settings($this->db());
+        $data['settings'] = $this->shownSettings();
         $data['sysadmin'] = (int) ($data['user_role'] ?? 0) === 1;
         return view('pages/tour/comms_inbox', $data);
+    }
+
+    /** The settings line on the queue page: the first connected mailbox (agent, else hotel), with every mailbox's state beside it. */
+    private function shownSettings(): array
+    {
+        $all = [];
+        foreach (array_keys(CommsInbox::BOXES) as $bx) {
+            CommsInbox::useBox($bx);
+            $all[$bx] = CommsInbox::settings($this->db());
+        }
+        CommsInbox::useBox('agent');
+        $s = $all['agent']['configured'] ? $all['agent'] : ($all['hotel']['configured'] ? $all['hotel'] : $all['agent']);
+        $s['boxes'] = $all;
+        return $s;
+    }
+
+    // GET inbox/new_count — tf-newmail-r1: e-mails received and still waiting for staff (the Inquiries page tile)
+    public function newCount()
+    {
+        try {
+            return $this->json(['status' => 200, 'data' => CommsInbox::ready($this->db()) ? $this->inbox()->newEmails() : ['unmatched' => 0, 'awaiting' => 0, 'total' => 0]]);
+        } catch (\Throwable $e) {
+            return $this->json(['status' => 200, 'data' => ['unmatched' => 0, 'awaiting' => 0, 'total' => 0]]);
+        }
     }
 
     // GET inbox/data?status=unmatched|matched|discarded|skipped|all
@@ -108,7 +132,7 @@ class CommsInboxController extends BaseController
         try {
             $status = (string) ($this->request->getGet('status') ?: 'unmatched');
             $ib = $this->inbox();
-            return $this->json(['status' => 200, 'data' => ['rows' => $ib->queue($status), 'counts' => $ib->counts(), 'settings' => CommsInbox::settings($this->db())]]);
+            return $this->json(['status' => 200, 'data' => ['rows' => $ib->queue($status), 'counts' => $ib->counts(), 'settings' => $this->shownSettings()]]);
         } catch (\Throwable $e) {
             return $this->fail($e);
         }
@@ -130,7 +154,7 @@ class CommsInboxController extends BaseController
         }
         $inline = in_array(strtolower((string) pathinfo($a['original_name'], PATHINFO_EXTENSION)), ['pdf', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'txt'], true);
         return $this->response->setHeader('Content-Type', $a['mime'] ?: 'application/octet-stream')
-            ->setHeader('Content-Disposition', ($inline ? 'inline' : 'attachment') . '; filename="' . str_replace('"', '', $a['original_name']) . '"')
+            ->setHeader('Content-Disposition', ($inline && !$this->request->getGet('dl') ? 'inline' : 'attachment') . '; filename="' . str_replace('"', '', $a['original_name']) . '"')
             ->setHeader('X-Content-Type-Options', 'nosniff')
             ->setBody((string) file_get_contents($a['path']));
     }
@@ -218,6 +242,11 @@ class CommsInboxController extends BaseController
     {
         try {
             @set_time_limit(300);
+            // tf-fullmsg-r1: a hotel-mailbox e-mail never becomes an inquiry
+            $mm = $this->db()->query('SELECT box FROM tf_mail_in WHERE id = ?', [(int) $id])->getRowArray();
+            if ($mm && ($mm['box'] ?? '') === 'hotel') {
+                return $this->json(['status' => 400, 'message' => 'This e-mail came through the Hotel reservations mailbox; a hotel e-mail cannot create an inquiry. Attach it to its record instead.']);
+            }
             $r = (new CommsQuoteDraft($this->db(), $this->user(), $this->userId(), $this->actorName()))->fromMail((int) $id, false);
             return $this->json(['status' => 200, 'message' => $r['message'], 'data' => $r]);
         } catch (\Throwable $e) {

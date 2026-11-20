@@ -1131,6 +1131,32 @@ final class CommsInbox
         return $a;
     }
 
+    /**
+     * tf-newmail-r1 (20 Nov 2026): e-mails received and still waiting for staff — the number on the Inquiries page.
+     * unmatched: in the queue, not yet linked or discarded. awaiting: inquiries whose latest e-mail came in through the mailbox and has
+     * no sent reply after it (hotel-booking replies are not counted here; they belong to Supplier Emails).
+     */
+    public function newEmails(): array
+    {
+        $out = ['unmatched' => 0, 'awaiting' => 0, 'total' => 0, 'inquiries' => []];
+        try {
+            $out['unmatched'] = (int) ($this->db->query("SELECT COUNT(*) n FROM tf_mail_in WHERE status IN ('unmatched','new')")->getRowArray()['n'] ?? 0);
+            // per inquiry: e-mails that came in through the mailbox after the last reply that was actually sent
+            $hot = "(%s.links_json IS NULL OR %s.links_json NOT LIKE '%%hotel_job%%')";
+            foreach ($this->db->query(
+                "SELECT c.intake_id, COUNT(*) n FROM tf_comm c WHERE c.channel = 'email' AND c.direction = 'in' AND c.ref_table = 'tf_mail_in' AND c.removed_at IS NULL AND " . sprintf($hot, 'c', 'c') . "
+                    AND c.id > COALESCE((SELECT MAX(o.id) FROM tf_comm o WHERE o.intake_id = c.intake_id AND o.channel = 'email' AND o.direction = 'out' AND o.removed_at IS NULL
+                        AND o.send_state IN ('sent', '') AND " . sprintf($hot, 'o', 'o') . "), 0)
+                  GROUP BY c.intake_id")->getResultArray() as $r) {
+                $out['inquiries'][(int) $r['intake_id']] = (int) $r['n'];
+            }
+            $out['awaiting'] = count($out['inquiries']);
+        } catch (\Throwable $e) {
+        }
+        $out['total'] = $out['unmatched'] + $out['awaiting'];
+        return $out;
+    }
+
     public function counts(): array
     {
         $out = ['unmatched' => 0, 'new' => 0, 'matched' => 0, 'discarded' => 0, 'skipped' => 0];

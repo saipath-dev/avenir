@@ -903,15 +903,19 @@
     .tf .tq-btn.l { background:#B6E388; color:#1A1A1A; height:40px; padding:0 18px; font-size:14px; } .tf .tq-btn.l:hover { background:#A5D874; color:#1A1A1A; }
     .tf .tq-how { display:inline-flex; align-items:center; gap:8px; height:48px; padding:0 8px; border:0; background:none; color:#D9F2B8; font-size:14.5px; font-weight:700; cursor:pointer; } .tf .tq-how span { text-decoration:underline; text-underline-offset:3px; } .tf .tq-how:hover { color:#fff; }
     .tf .tq-hero-a { flex:0 1 380px; min-width:0; align-self:flex-end; margin-bottom:-30px; } .tf .tq-hero-a svg { width:100%; height:auto; display:block; }
-    .tf .tq-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin:-66px 18px 18px; position:relative; z-index:2; }
-    .tf .tq-stat { background:#fff; border-radius:14px; padding:18px 18px 16px; box-shadow:0 4px 14px rgba(53,7,22,.12); }
-    .tf .tq-stat .h { display:flex; justify-content:space-between; align-items:center; gap:8px; } .tf .tq-stat .h b { font-size:13.5px; font-weight:700; }
-    .tf .tq-stat .h span { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; flex:none; }
-    .tf .tq-stat em { display:block; font-style:normal; font-size:36px; font-weight:800; line-height:1.15; margin:8px 0 6px; color:var(--ink); } .tf .tq-stat small { display:block; font-size:12.5px; color:var(--mut); }
+    .tf .tq-stats { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin:-46px 18px 16px; position:relative; z-index:2; }
+    .tf .tq-stat { background:#fff; border-radius:12px; padding:11px 14px 10px; box-shadow:0 2px 10px rgba(53,7,22,.10); border:1px solid #efe9ee; display:block; text-decoration:none; }
+    .tf a.tq-stat:hover { box-shadow:0 4px 14px rgba(132,36,132,.22); }
+    .tf .tq-stat .h { display:flex; justify-content:space-between; align-items:center; gap:8px; } .tf .tq-stat .h b { font-size:12.5px; font-weight:700; letter-spacing:.1px; }
+    .tf .tq-stat .h span { width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; flex:none; }
+    .tf .tq-stat em { display:block; font-style:normal; font-size:26px; font-weight:800; line-height:1.1; margin:3px 0 2px; color:var(--ink); } .tf .tq-stat small { display:block; font-size:11.5px; color:var(--mut); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .tf .tq-stat.a .h b { color:#741432; } .tf .tq-stat.a .h span { background:#f2dfe5; color:#741432; }
     .tf .tq-stat.b .h b { color:#17509A; } .tf .tq-stat.b .h span { background:#E1EEFB; color:#17509A; }
     .tf .tq-stat.c .h b { color:#1A1A1A; } .tf .tq-stat.c .h span { background:#fff; border:1.5px solid #E7E1EA; color:#D98E00; }
     .tf .tq-stat.d .h b { color:#1E6A14; } .tf .tq-stat.d .h span { background:#E3F3DA; color:#1E6A14; }
+    .tf tr.mailnew > td { background:#f6e9f6 !important; } .tf tr.mailnew > td.c1 { box-shadow:inset 4px 0 0 #842484; } .tf tr.mailnew > td.c1 > b { color:#842484; }
+    .tf .tq-mailb { display:inline-block !important; white-space:nowrap; margin:3px 0 2px; background:#842484; color:#fff !important; border-radius:10px; padding:1px 9px; font-size:11.5px; font-weight:700; }
+    .tf .tq-stat.e .h b { color:#842484; } .tf .tq-stat.e .h span { background:#f3e3f3; color:#842484; } .tf .tq-stat.e.has { border-color:#842484; } .tf .tq-stat.e.has em { color:#842484; }
     .tf .tq-journey { display:flex; align-items:center; gap:16px; background:#fff; border-radius:14px; padding:14px 18px; margin-bottom:26px; box-shadow:0 1px 4px rgba(53,7,22,.06); } .tf .tq-journey > b { font-size:14px; white-space:nowrap; }
     .tf .tq-jr { display:flex; align-items:center; gap:12px; overflow-x:auto; padding-bottom:2px; } .tf .tq-jr > i { color:#9A93A1; flex:none; }
     .tf .tq-jr .j { flex:none; border-radius:16px; padding:5px 14px; font-size:13px; font-weight:700; white-space:nowrap; text-decoration:none; }
@@ -970,12 +974,12 @@
     .tf .tiq-admin { margin-top:10px; font-size:12.5px; color:#5E5964; } .tf .tiq-admin summary { cursor:pointer; font-weight:700; color:#5E5964; } .tf .tiq-admin > div { margin-top:6px; }
     /* tablet */
     @media (max-width:1100px) { .tf .tq-main { grid-template-columns:minmax(0,1fr); } .tf .tq-side { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); } .tf .tq-side .tq-dark { grid-column:1 / -1; }
-        .tf .tq-stats { grid-template-columns:repeat(2,minmax(0,1fr)); } .tf .tq-hero h1 { font-size:34px; } .tf .tq-hero-a { flex-basis:260px; } }
+        .tf .tq-stats { grid-template-columns:repeat(3,minmax(0,1fr)); } .tf .tq-hero h1 { font-size:34px; } .tf .tq-hero-a { flex-basis:260px; } }
     /* phone */
     @media (max-width:700px) {
         .tf .tq-hero { flex-direction:column; align-items:stretch; padding:22px 18px 80px; border-radius:14px; } .tf .tq-hero h1 { font-size:28px; } .tf .tq-hero h1 br { display:none; } .tf .tq-hero p { font-size:14.5px; }
         .tf .tq-hero-a { display:none; } .tf .tq-cta { flex-direction:column; align-items:stretch; } .tf .tq-btn { height:52px; font-size:16px; } .tf .tq-how { justify-content:center; }
-        .tf .tq-stats { margin:-60px 10px 14px; gap:10px; } .tf .tq-stat { padding:13px 13px 12px; } .tf .tq-stat em { font-size:28px; margin:4px 0 2px; } .tf .tq-stat small { font-size:11.5px; }
+        .tf .tq-stats { grid-template-columns:repeat(2,minmax(0,1fr)); margin:-60px 10px 14px; gap:10px; } .tf .tq-stat { padding:10px 12px; } .tf .tq-stat em { font-size:24px; margin:3px 0 2px; } .tf .tq-stat small { font-size:11.5px; }
         .tf .tq-journey { flex-direction:column; align-items:flex-start; gap:10px; } .tf .tq-jr { width:100%; }
         .tf .tq-high { grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:78%; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:6px; } .tf .tq-hc { scroll-snap-align:start; } .tf .tq-sec span { display:none; }
         .tf .tq-side { display:flex; } .tf .tq-lh { padding:14px 14px 10px; } .tf .tq-search { flex-basis:100%; max-width:none; height:48px; } .tf .tq-search input { font-size:16px; }
@@ -1057,6 +1061,7 @@
                         <div class="tq-stat b"><div class="h"><b>In progress</b><span><i class="bi bi-hourglass-split"></i></span></div><em id="tiq_n_progress">–</em><small>Itinerary being built</small></div>
                         <div class="tq-stat c"><div class="h"><b>Quotation sent</b><span><i class="bi bi-send"></i></span></div><em id="tiq_n_sent">–</em><small>Marked as quoted</small></div>
                         <div class="tq-stat d"><div class="h"><b>Ready to confirm</b><span><i class="bi bi-check-circle"></i></span></div><em id="tiq_n_ready">–</em><small>Quotation issued, awaiting the customer</small></div>
+                        <a class="tq-stat e" id="tiq_mail_tile" href="<?= base_url('tour/intake/comms/inbox') ?>" title="E-mails received and waiting for staff. Open them."><div class="h"><b>New emails</b><span><i class="bi bi-envelope"></i></span></div><em id="tiq_n_mail">–</em><small id="tiq_n_mail_s">Received, waiting for staff</small></a>
                     </div>
                     <div class="tq-journey"><b>The journey</b><div class="tq-jr"><span class="j a">1 · Inquiry received</span><i class="bi bi-arrow-right"></i><span class="j b">2 · Itinerary &amp; quotation</span><i class="bi bi-arrow-right"></i><span class="j c">3 · Quotation sent</span><i class="bi bi-arrow-right"></i><span class="j d">4 · Ready to confirm</span><i class="bi bi-arrow-right"></i><a class="j e" href="<?= base_url('tour/intake/confirmed') ?>">Confirmed Tours <i class="bi bi-arrow-right"></i></a></div></div>
                     <div class="tq-sec"><h2>Sri Lanka highlights</h2><span>Favourite stops our guests ask for</span></div>
@@ -1827,6 +1832,20 @@
         const r = await Swal.fire({ text, showCancelButton: true, confirmButtonText: okWord || 'Yes', cancelButtonText: 'Cancel', icon: 'question' });
         return !!r.isConfirmed;
     };
+    // tf-newmail-r1: the New emails tile — received and still waiting for staff; 0 once every one is linked or answered
+    let MAILNEW = {};   // inquiry id → e-mails received and not yet answered; the row is coloured until a reply is sent
+    const tiqMailBadge = n => `<small class="tq-mailb"><i class="bi bi-envelope-fill"></i> ${n} new email${n === 1 ? '' : 's'}</small>`;
+    function tiqMailPaint() {
+        document.querySelectorAll('tr[data-row]').forEach(tr => { const n = MAILNEW[tr.dataset.row]; tr.classList.toggle('mailnew', !!n); const c = tr.querySelector('td.c1'); if (!c) return;
+            c.querySelector('.tq-mailb')?.remove(); if (n) c.querySelector('b')?.insertAdjacentHTML('afterend', tiqMailBadge(n)); });
+    }
+    async function tiqMail() {
+        try { const r = await fetch(BASE + '/comms/inbox/new_count', { headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(x => x.json()); const d = (r && r.data) || {}; const e = document.getElementById('tiq_n_mail'); if (!e) return;
+            MAILNEW = d.inquiries || {}; tiqMailPaint();
+            e.textContent = d.total || 0; document.getElementById('tiq_mail_tile').classList.toggle('has', (d.total || 0) > 0);
+            document.getElementById('tiq_n_mail_s').textContent = (d.total || 0) > 0 ? (d.awaiting || 0) + ' to answer · ' + (d.unmatched || 0) + ' to link' : 'Received, waiting for staff';
+        } catch (e) {}
+    }
     const api = async (path, opts) => { const r = await fetch(BASE + path, Object.assign({ headers: { 'X-Requested-With':'XMLHttpRequest' } }, opts || {})); return r.json(); };
     // One request per click: an identical POST pressed again while the first is still on its
     // way (a double click on Save or Add, a slow reply) rides on the first instead of going
@@ -1912,6 +1931,7 @@
         if (f.status !== 'open' || f.q || f.handler || f.from || f.to) { const j = await api('/list?status=open'); if (j.status !== 200) return; items = j.data.items || []; }
         const n = { active: items.length, b: 0, c: 0, d: 0 }; items.forEach(it => { n[tiqProg(it)[0]] = (n[tiqProg(it)[0]] || 0) + 1; });
         const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        tiqMail();
         set('tiq_n_active', n.active); set('tiq_n_progress', n.b); set('tiq_n_sent', n.c); set('tiq_n_ready', n.d); set('tiq_c_all', n.active);
         const sel = document.getElementById('f_customer');
         if (sel) { const names = [...new Set(items.map(it => (it.agent_name || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -1965,8 +1985,8 @@
         tb.innerHTML = items.map(it => {
             const lacks = ['new', 'working', 'quoted'].includes(it.status) ? tiqLacks(it) : [], due = lacks.includes('follow-up due');
             const mine = MY_ID && Number(it.handler_id) === MY_ID, pg = tiqProg(it);
-            return `<tr class="${it.archived_at ? 'released' : ''} ${lacks.length ? 'att' : ''}" data-row="${it.id}">
-                <td class="c1"><b>${esc(it.inquiry_no)}</b>${it.handler_name ? `<small>Agent: ${esc(it.handler_name)}${mine ? ' · You' : ''}</small>` : '<small class="bad">No handling agent</small>'}${it.archived_at ? '<small>archived</small>' : ''}</td>
+            return `<tr class="${it.archived_at ? 'released' : ''} ${lacks.length ? 'att' : ''} ${MAILNEW[it.id] ? 'mailnew' : ''}" data-row="${it.id}">
+                <td class="c1"><b>${esc(it.inquiry_no)}</b>${MAILNEW[it.id] ? tiqMailBadge(MAILNEW[it.id]) : ''}${it.handler_name ? `<small>Agent: ${esc(it.handler_name)}${mine ? ' · You' : ''}</small>` : '<small class="bad">No handling agent</small>'}${it.archived_at ? '<small>archived</small>' : ''}</td>
                 <td class="c2">${it.agent_name ? `<b>${esc(it.agent_name)}</b>` : '<small class="bad">Agent not identified</small>'}<small>${it.tour_name ? esc(it.tour_name) : 'No tour name'}</small></td>
                 <td class="dt">${it.arrival_date ? `${fmtDate(it.arrival_date)}${it.departure_date ? ' – ' + fmtDate(it.departure_date) : ''}${it.nights ? `<small>${it.nights} night${Number(it.nights) === 1 ? '' : 's'}</small>` : ''}` : '<small class="bad">No dates yet</small>'}</td>
                 <td class="px">${it.pax_total ?? '—'}</td>
@@ -6822,6 +6842,29 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     // The Tour Desk bar's New quote on THIS page opens the view in place; on any other
     // panel the same items are plain links here with ?start=, picked up at boot below.
     // tf-tiq-r1: the two buttons of the heading open the same paste and manual-entry views the menu used to — nothing is rebuilt
+    // tf-newbk-r1 (20 Nov 2026): a new booking started from an incoming e-mail (?mail=N) — the paste box is filled with that e-mail,
+    // and when the inquiry is saved (pasted or by hand) the e-mail is filed on it, so the queue shows its inquiry number.
+    const MAIL_FROM = Number(new URLSearchParams(location.search).get('mail') || 0);
+    let MAIL_LINKED = false;
+    async function tiqMailFill() {
+        if (!MAIL_FROM) return;
+        try {
+            const r = await fetch(BASE + '/comms/inbox/message/' + MAIL_FROM, { headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(x => x.json()); const m = r && r.data; if (!m) return;
+            if (new URLSearchParams(location.search).get('start') === 'paste') {
+                const set = (i, v) => { const e = document.getElementById(i); if (e) e.value = v || ''; };
+                set('p_subject', m.subject); set('p_from', m.from_addr); set('p_text', m.body_text); if (m.received_at) set('p_received', String(m.received_at).slice(0, 10));
+            }
+            toast('success', 'From the incoming e-mail "' + (m.subject || '(no subject)') + '". It will be filed on the inquiry when you save.');
+        } catch (e) {}
+    }
+    async function tiqMailLink(d) {
+        if (!MAIL_FROM || MAIL_LINKED || !d || !d.id) return; MAIL_LINKED = true;
+        try {
+            const r = await fetch(BASE + '/comms/inbox/' + MAIL_FROM + '/attach', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: JSON.stringify({ intake_id: d.id, reason: 'New booking ' + (d.inquiry_no || '') + ' created from this e-mail' }) }).then(x => x.json());
+            if (r.status !== 200) toast('error', 'The inquiry was saved, but the e-mail was not filed on it: ' + (r.message || '') + ' Attach it from the Incoming e-mails queue.');
+        } catch (e) {}
+    }
+    if (MAIL_FROM) setTimeout(tiqMailFill, 1500);
     document.querySelectorAll('[data-tiqstart]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); if (a.dataset.tiqstart === 'manual') openManual(); else openPaste(); }));
     document.getElementById('tiq_how')?.addEventListener('click', tiqHow);
     document.querySelectorAll('.tq-pf').forEach(b => b.addEventListener('click', () => { TIQ_PROG = b.dataset.prog || ''; document.querySelectorAll('.tq-pf').forEach(x => x.classList.toggle('on', x === b)); loadList(); }));
@@ -6865,6 +6908,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             toast('error', j.message); return;
         }
         SAVED_NOTICE = { inquiry_no: j.saved?.inquiry_no || j.data?.inquiry_no, id: j.data?.id, read: j.saved ? j.saved.read : null, message: j.message, duplicate: !!j.duplicate };
+        tiqMailLink(j.data);
         CURRENT = j.data; renderDetail(); setView('view_detail'); toast('success', j.message);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -7144,6 +7188,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         this.disabled = false; this.innerHTML = was;
         if (j.status !== 200) { toast('error', j.message); return; }
         clearDraft();
+        tiqMailLink(j.data);
         CURRENT = j.data; renderDetail(); setView('view_detail'); toast('success', j.message);
     });
 
