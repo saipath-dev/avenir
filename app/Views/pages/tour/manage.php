@@ -23,9 +23,10 @@
     .tf .tfadm pre, .tf .tfadm #mb_preview { max-width:100%; overflow-wrap:anywhere; word-break:break-word; white-space:pre-wrap; }
     .tf .tfadm textarea, .tf .tfadm input.form-control, .tf .tfadm select.form-select { max-width:100%; }
     .tf .tfadm table { min-width:560px; } .tf .tfadm .row { max-width:100% !important; }
+    .tf .tfadm .adm-main { min-width:0; } .tf .tfadm .mono, .tf .tfadm .help { overflow-wrap:anywhere; }
     .tf .tfadm .adm-rel { background:#fff; border:1px dashed #cdbfd3; border-radius:10px; padding:10px 14px; font-size:12.5px; display:flex; flex-direction:column; gap:4px; }
     .tf .tfadm .adm-rel b { color:#5a5160; } .tf .tfadm .adm-rel a { color:#842484; font-weight:600; text-decoration:none; } .tf .tfadm .adm-rel a:hover { text-decoration:underline; }
-    @media (max-width:900px) { .tf .tfadm { grid-template-columns:1fr; padding:10px 8px 110px; } .tf .tfadm .adm-nav { position:static; display:grid; grid-template-columns:1fr 1fr; }
+    @media (max-width:900px) { .tf .tfadm { grid-template-columns:minmax(0,1fr); padding:10px 8px 110px; } .tf .tfadm .adm-main, .tf .tfadm .adm-nav { min-width:0; } .tf .tfadm .adm-n span { overflow-wrap:anywhere; } .tf .tfadm .adm-nav { position:static; display:grid; grid-template-columns:1fr 1fr; }
         .tf .tfadm .adm-n { background:#fff; border:1px solid #e3dce7; padding:9px 10px; font-size:12.5px; } .tf .tfadm .adm-card { padding:12px 10px; } .tf .tfadm .ibx-r { flex-wrap:wrap; } .tf .tfadm .ibx-r label { width:100% !important; } }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); margin-bottom:14px; }
     .tf .tf-card-h { padding:11px 14px; border-bottom:1px solid var(--tf-line); display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
@@ -78,6 +79,10 @@
         .tf .tdbar .td-badge { background:#842484 !important; color:#fff !important; width:auto !important; min-width:22px; padding:0 6px; flex:none; } .tf .tdbar .td-item.on .td-badge { background:#fff !important; color:#842484 !important; }
         .tf .tdbar .td-cta { margin-left:0; display:flex; } .tf .tdbar .td-quote { height:56px; padding:0 20px; font-size:15px; font-weight:800; border-radius:12px; background:#78b848 !important; }
         @media (max-width:1280px) { .tf .tdbar .td-item { font-size:12px; padding:0 8px; gap:7px; } .tf .tdbar .td-item i { font-size:17px; } .tf .tdbar .td-nav { gap:7px; } .tf .tdbar .td-quote { padding:0 14px; font-size:13.5px; } }
+        /* tf-deskui-r2: a small laptop (900–1100px) — the eight functions in two rows of four, and the row actions wrap instead of scrolling */
+        @media (max-width:1100px) { .tf .tdbar .td-nav { grid-auto-flow:row; grid-template-columns:repeat(4,minmax(0,1fr)); } .tf .tdbar .td-item { height:48px; font-size:12.5px; padding:0 10px; justify-content:flex-start; }
+            .tf .tdbar .td-quote { height:100%; min-height:48px; }
+            .tf #body .tbl td:last-child { white-space:normal !important; min-width:118px; } .tf #body .tbl td:last-child .btn-sm { margin:2px 1px; } .tf #body .tbl td, .tf #body .tbl thead th { padding-left:8px; padding-right:8px; } .tf #body .tbl { font-size:12.5px; } }
         /* the Admin heading and its four notes: one compact panel */
         .tf .tf-title { background:#fff; border:1px solid #e3dce7; border-bottom:0; border-radius:12px 12px 0 0; padding:12px 16px 4px; margin-bottom:0; align-items:center; }
         .tf .tf-title > div { display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; width:100%; }
