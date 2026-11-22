@@ -103,7 +103,7 @@
         .tf #body .tbl thead th { background:#842484; color:#fff; font-size:12px; padding:11px 12px; border-bottom:0; } .tf #body .tbl thead th:first-child { border-radius:9px 0 0 0; } .tf #body .tbl thead th:last-child { border-radius:0 9px 0 0; }
         .tf #body .tbl td:nth-child(3), .tf #body .tbl td:nth-child(3) .help { white-space:nowrap; }
         .tf #body .tbl td { padding:10px 12px; vertical-align:middle; border-color:#ece6ef; } .tf #body .tbl tbody tr:hover td { background:#fbf6fc; }
-        .tf #body .tbl td .btn-sm { border:1px solid #e3dce7; border-radius:8px; } .tf #body .tbl td a.btn-sm i { color:#842484; }
+        .tf #body .tbl td .btn-sm { border:1px solid #e3dce7; border-radius:8px; white-space:nowrap; } .tf #body .tbl td a.btn-sm i { color:#842484; }
         .tf #body .tfadm { margin:0 -16px -14px; }
     }
 </style>
