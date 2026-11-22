@@ -62,7 +62,9 @@ $tdItems = [
     ['url' => 'master_files/email_templates',    'label' => 'Email Templates',    'icon' => 'bi-envelope-paper', 'zone' => 'master', 'group' => 'letters', 'sub' => 'the saved wording of every email'],
     // the Admin tab: the privilege behind every ⋯ menu, and the one place for cancel, delete, restore, removal and the settings.
     // A work tab, never folded, shown only to a group that holds it (Management / the System Administrator).
-    ['url' => 'tour/manage',                     'label' => 'Admin',              'icon' => 'bi-shield-lock', 'zone' => 'work'],
+    // tf-adminmove-r1 (22 Nov 2026, Shantha): Admin is no longer a Tour Desk tab; it is opened from the Super Admin's Pilot Report
+    // (dashboard2/tiles → Pilot Report → Admin). The page, its route and its privilege are unchanged.
+    // ['url' => 'tour/manage',                     'label' => 'Admin',              'icon' => 'bi-shield-lock', 'zone' => 'work'],
 ];
 
 // tf-tdbar-r1 (25 Oct 2026, Shantha): a panel may ask for the Tour Desk's own five functions only — the same five as the Tour Desk

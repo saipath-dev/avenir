@@ -4,6 +4,29 @@
     .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
           --tf-red:#b23a32; --tf-red-soft:#fbe9e7; --tf-green:#1f8a4c; --tf-green-soft:#e4f4ea; --tf-blue-soft:#e6eef8;
           --tf-ink:#1d2733; --tf-muted:#5f6f80; --tf-line:#dfe5ec; --tf-bg:#f4f6f9; --tf-card:#fff; --tf-radius:10px; color:var(--tf-ink); }
+    /* tf-adm4-r1: the Settings tab in four sections */
+    .tf .tfadm { display:grid; grid-template-columns:230px minmax(0,1fr); gap:16px; align-items:start; padding:14px 14px 96px; background:#f6f3f7; }
+    .tf .tfadm .adm-nav { display:flex; flex-direction:column; gap:6px; position:sticky; top:8px; }
+    .tf .tfadm .adm-n { display:flex; align-items:center; gap:10px; text-align:left; border:0; background:transparent; border-radius:8px; padding:10px 12px; font-weight:700; font-size:13.5px; color:#3a2f40; cursor:pointer; }
+    .tf .tfadm .adm-n i { font-size:17px; color:#842484; } .tf .tfadm .adm-n:hover { background:#ece2ee; }
+    .tf .tfadm .adm-n.on { background:#842484; color:#fff; } .tf .tfadm .adm-n.on i { color:#fff; }
+    .tf .tfadm .adm-sec { display:none; min-width:0; } .tf .tfadm .adm-sec.on { display:block; }
+    .tf .tfadm .adm-title { background:#842484; color:#fff; border-radius:10px; padding:12px 16px; margin-bottom:12px; }
+    .tf .tfadm .adm-title h3 { margin:0; font-size:19px; font-weight:800; color:#fff; } .tf .tfadm .adm-title p { margin:2px 0 0; font-size:12.5px; opacity:.92; }
+    .tf .tfadm .adm-tabs { display:flex; gap:6px; margin-bottom:12px; border-bottom:2px solid #842484; flex-wrap:wrap; }
+    .tf .tfadm .adm-tabs button { border:1px solid #d8cfe0; border-bottom:0; background:#fff; border-radius:8px 8px 0 0; padding:8px 16px; font-weight:700; font-size:13px; cursor:pointer; color:#3a2f40; }
+    .tf .tfadm .adm-tabs button.on { background:#842484; color:#fff; border-color:#842484; }
+    .tf .tfadm .adm-card { background:#fff; border:1px solid #e3dce7; border-radius:10px; padding:14px 16px; margin-bottom:12px; overflow-x:auto; box-shadow:0 1px 2px rgba(60,20,60,.05); }
+    .tf .tfadm .adm-card > h6:first-child { font-size:16px !important; font-weight:800; color:#842484; margin-bottom:6px; }
+    .tf .tfadm .adm-card h6 { color:#842484; }
+    .tf .tfadm .btn-primary { background:#78b848; border-color:#78b848; color:#fff; font-weight:700; } .tf .tfadm .btn-primary:hover { background:#68a53c; border-color:#68a53c; }
+    .tf .tfadm pre, .tf .tfadm #mb_preview { max-width:100%; overflow-wrap:anywhere; word-break:break-word; white-space:pre-wrap; }
+    .tf .tfadm textarea, .tf .tfadm input.form-control, .tf .tfadm select.form-select { max-width:100%; }
+    .tf .tfadm table { min-width:560px; } .tf .tfadm .row { max-width:100% !important; }
+    .tf .tfadm .adm-rel { background:#fff; border:1px dashed #cdbfd3; border-radius:10px; padding:10px 14px; font-size:12.5px; display:flex; flex-direction:column; gap:4px; }
+    .tf .tfadm .adm-rel b { color:#5a5160; } .tf .tfadm .adm-rel a { color:#842484; font-weight:600; text-decoration:none; } .tf .tfadm .adm-rel a:hover { text-decoration:underline; }
+    @media (max-width:900px) { .tf .tfadm { grid-template-columns:1fr; padding:10px 8px 110px; } .tf .tfadm .adm-nav { position:static; display:grid; grid-template-columns:1fr 1fr; }
+        .tf .tfadm .adm-n { background:#fff; border:1px solid #e3dce7; padding:9px 10px; font-size:12.5px; } .tf .tfadm .adm-card { padding:12px 10px; } .tf .tfadm .ibx-r { flex-wrap:wrap; } .tf .tfadm .ibx-r label { width:100% !important; } }
     .tf .tf-card { background:var(--tf-card); border:1px solid var(--tf-line); border-radius:var(--tf-radius); box-shadow:0 1px 2px rgba(16,24,40,.04); margin-bottom:14px; }
     .tf .tf-card-h { padding:11px 14px; border-bottom:1px solid var(--tf-line); display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
     .tf .tf-card-h h6 { margin:0; font-weight:600; font-size:13.5px; }
@@ -36,6 +59,48 @@
     .tf .rule { border:1px solid var(--tf-line); border-radius:8px; padding:10px 12px; font-size:12.5px; }
     .tf .rule b { display:block; margin-bottom:2px; }
     .tf .rule i { color:#8b1d40; margin-right:6px; }
+    /* tf-deskui-r1 (22 Nov 2026, Shantha): the Tour Desk Admin page in the approved cleaner layout — desktop and laptop only.
+       Looks only: no markup, handler, permission or data is changed; phones and tablets keep the layout they had. */
+    @media (min-width:900px) {
+        .tf > .container-fluid { max-width:1700px; }
+        .tf .tdbar { display:flex !important; flex-wrap:wrap; align-items:stretch; gap:10px 12px; background:transparent !important; box-shadow:none !important; border:0 !important; padding:4px 0 2px !important; margin-bottom:12px !important; }
+        .tf .tdbar .td-brand { flex:0 0 100%; border-right:0; padding:0; margin:0 0 2px; gap:14px; }
+        .tf .tdbar .td-brand .mark { width:46px; height:46px; font-size:20px; background:#842484 !important; }
+        .tf .tdbar .td-brand b { font-size:24px; font-weight:800; letter-spacing:-.01em; } .tf .tdbar .td-brand small { font-size:12.5px; }
+        .tf .tdbar .td-nav { flex:1 1 0; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:10px; flex-wrap:nowrap; }
+        .tf .tdbar .td-sep { display:none; }
+        .tf .tdbar .td-nav > .dropdown { display:flex; } .tf .tdbar .td-nav > .dropdown > .td-item { width:100%; }
+        .tf .tdbar .td-item { height:56px; padding:0 12px; justify-content:center; gap:10px; background:#fff; border:1px solid #e3dce7; border-radius:12px; font-size:13.5px; font-weight:700; color:#2a2230;
+            box-shadow:0 1px 3px rgba(60,20,60,.07); white-space:normal; line-height:1.2; text-align:left; }
+        .tf .tdbar .td-item i { font-size:20px; color:#842484; }
+        .tf .tdbar .td-item:hover { background:#f6e9f6; border-color:#842484; color:#2a2230; }
+        .tf .tdbar .td-item.on { background:#842484 !important; border-color:#842484; color:#fff; box-shadow:0 3px 10px rgba(132,36,132,.35); } .tf .tdbar .td-item.on i { color:#fff; }
+        .tf .tdbar .td-badge { background:#842484 !important; color:#fff !important; width:auto !important; min-width:22px; padding:0 6px; flex:none; } .tf .tdbar .td-item.on .td-badge { background:#fff !important; color:#842484 !important; }
+        .tf .tdbar .td-cta { margin-left:0; display:flex; } .tf .tdbar .td-quote { height:56px; padding:0 20px; font-size:15px; font-weight:800; border-radius:12px; background:#78b848 !important; }
+        @media (max-width:1280px) { .tf .tdbar .td-item { font-size:12px; padding:0 8px; gap:7px; } .tf .tdbar .td-item i { font-size:17px; } .tf .tdbar .td-nav { gap:7px; } .tf .tdbar .td-quote { padding:0 14px; font-size:13.5px; } }
+        /* the Admin heading and its four notes: one compact panel */
+        .tf .tf-title { background:#fff; border:1px solid #e3dce7; border-bottom:0; border-radius:12px 12px 0 0; padding:12px 16px 4px; margin-bottom:0; align-items:center; }
+        .tf .tf-title > div { display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; width:100%; }
+        .tf .tf-title h4 { font-size:21px; font-weight:800; color:#2a2230; order:1; } .tf .tf-title .sub { order:2; flex:1 1 380px; max-width:none; font-size:12.5px; } .tf .tf-title > div > a { order:3; margin-bottom:0 !important; }
+        .tf .tf-title + .tf-card { border-radius:0 0 12px 12px; border-top:0; margin-bottom:12px; box-shadow:0 1px 3px rgba(60,20,60,.06); }
+        .tf .tf-title + .tf-card .tf-card-b { padding:8px 16px 12px; }
+        .tf .rules { grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+        .tf .rule { padding:8px 12px 0; font-size:12px; line-height:1.4; color:#4a4150; border:0; border-bottom:8px solid #fff; box-shadow:0 0 0 1px #e3dce7; background:#fff; border-radius:10px; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; cursor:default; }
+        .tf .rule:hover { -webkit-line-clamp:unset; } .tf .rule b { font-size:13px; color:#2a2230; display:inline; margin-right:6px; } .tf .rule i { color:#842484; }
+        /* tabs, filters and the table */
+        .tf .tf-title + .tf-card + .tf-card { border-radius:12px; border-color:#e3dce7; overflow:hidden; }
+        .tf .tf-title + .tf-card + .tf-card > .tf-card-h { padding:12px 16px; gap:10px 16px; border-bottom:0; }
+        .tf #tabs.chips { gap:6px; } .tf #tabs .chip { padding:8px 18px; font-size:13.5px; font-weight:700; border-radius:9px; border-color:#d8cfe0; color:#3a2f40; }
+        .tf #tabs .chip:hover { border-color:#842484; } .tf #tabs .chip.on { background:#842484; color:#fff; border-color:#842484; }
+        .tf .tf-card-h .form-select-sm, .tf .tf-card-h .form-control-sm { height:36px; font-size:13px; border-radius:9px; border-color:#cfc6d3; } .tf .tf-card-h #f_q { min-width:260px; } .tf .tf-card-h .btn-sm { height:36px; border-radius:9px; }
+        .tf #body > .tf-card-b.help { padding:2px 16px 10px; }
+        .tf #body .tbl { font-size:13.5px; } .tf #body > div { padding:0 16px 14px; }
+        .tf #body .tbl thead th { background:#842484; color:#fff; font-size:12px; padding:11px 12px; border-bottom:0; } .tf #body .tbl thead th:first-child { border-radius:9px 0 0 0; } .tf #body .tbl thead th:last-child { border-radius:0 9px 0 0; }
+        .tf #body .tbl td:nth-child(3), .tf #body .tbl td:nth-child(3) .help { white-space:nowrap; }
+        .tf #body .tbl td { padding:10px 12px; vertical-align:middle; border-color:#ece6ef; } .tf #body .tbl tbody tr:hover td { background:#fbf6fc; }
+        .tf #body .tbl td .btn-sm { border:1px solid #e3dce7; border-radius:8px; } .tf #body .tbl td a.btn-sm i { color:#842484; }
+        .tf #body .tfadm { margin:0 -16px -14px; }
+    }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -50,6 +115,7 @@
 
                 <div class="tf-title">
                     <div>
+                        <a href="<?= base_url('dashboard2/tiles?panel=report') ?>" style="display:inline-flex;align-items:center;gap:6px;border:1.5px solid #842484;color:#842484;background:#fff;border-radius:10px;padding:6px 12px;font-weight:700;font-size:13px;text-decoration:none;margin-bottom:8px"><i class="bi bi-arrow-left"></i> Back to Pilot Report</a>
                         <h4>Admin <span class="pill pill-amber align-middle">Admin only</span></h4>
                         <div class="sub">The one place for the controls only an admin holds: every tour with cancel, delete and reopen; what has been deleted or archived, with its way back or its removal for good; everything anyone changed, across every tour; and the settings. The same privilege is behind every ⋯ menu on the desks.</div>
                     </div>
@@ -154,6 +220,7 @@
         if (TAB === 'edit_requests') { renderEditRequests(box, j.data); return; }
         window.__et = j.data.email_templates || {};
         box.innerHTML = TAB === 'activity' ? renderActivity(j.data.rows || []) : (TAB === 'settings' ? renderSettings(j.data.numbering || {}, j.data.company || {}, j.data.sightseeing || {}, j.data.itinerary || {}, j.data.email_templates || {}, j.data.mailbox || {}, j.data.inbox || {}, j.data.secrets || {}) : (TAB === 'tours' ? renderTours(j.data.tours || []) : renderArchived(j.data)));
+        if (TAB === 'settings') admLayout(box);
         wireTourActions(box);
         box.querySelectorAll('[data-restore]').forEach(b => b.addEventListener('click', async () => {
             let body = {};
@@ -508,6 +575,43 @@
             <div class="ibx-grid">${one('agent')}${one('hotel')}</div>
             <details class="mt-2"><summary class="help" style="color:#842484;font-weight:700;cursor:pointer">Advanced settings — Scheduler</summary><div class="help mt-1"><b>Scheduled task (UAT / production):</b> run <span class="mono">${esc(ib.spark || 'php spark tourflow:inbox')}</span> every 5 minutes from the server's own scheduler; it checks both mailboxes. The web entry <span class="mono">POST ${esc(ib.poll_url || '')}</span> with the token in the X-TourFlow-Token header is <b>${ib.web_poll ? 'on' : 'off'}</b> · ${ib.has_token ? 'token set' : 'no token yet'}. ${adm ? `<label><input type="checkbox" id="ib_web" ${ib.web_poll ? 'checked' : ''}> web entry on</label> <label><input type="checkbox" id="ib_token"> make a new token (shown once)</label> — applied with the next "Save and test connection".` : ''}</div></details>
         </div>`;
+    }
+    // tf-adm4-r1 (21 Nov 2026): the Settings tab in four sections — Inquiry & Itinerary, Confirmed Tours & Suppliers, Mail Administration,
+    // System Administration. The settings themselves, their fields, ids and Save buttons are the same ones as before: each existing card
+    // is only moved under its section, so every saved value, credential, template and permission stays exactly as it was.
+    let ADM_SEC = new URLSearchParams(location.search).get('sec') || 'inq', ADM_MAIL = new URLSearchParams(location.search).get('mail') || 'in';
+    const ADM = [
+        ['inq', 'bi-calendar3', 'Inquiry & Itinerary', 'Shared wording and recognition rules used in inquiries, itineraries and quotations.'],
+        ['tours', 'bi-building', 'Confirmed Tours & Suppliers', 'Letters and templates sent to hotels, other suppliers and agents for confirmed tours.'],
+        ['mail', 'bi-envelope', 'Mail Administration', 'The mailbox e-mails are sent from, the signature, and the mailboxes replies are collected from.'],
+        ['sys', 'bi-gear', 'System Administration', 'Tour numbering, password protection and copies of the TourFlow tables.']];
+    function admLayout(box) {
+        const cards = [...box.children].filter(c => c.classList && c.classList.contains('tf-card-b')); if (!cards.length) return;
+        const where = c => { const t = (c.querySelector('h6')?.textContent || '').toLowerCase();
+            if (c.id === 'mb_card') return ['mail', 'out']; if (c.id === 'ib_card') return ['mail', 'in'];
+            if (c.id === 'sc_card' || c.id === 'bk_card' || /tour numbers/.test(t)) return ['sys'];
+            if (/sightseeing|itinerary is written/.test(t)) return ['inq'];
+            return ['tours']; };   // company lines, e-mail templates, driver and guide bata — and anything added later
+        const wrap = document.createElement('div'); wrap.className = 'tfadm';
+        wrap.innerHTML = `<div class="adm-nav">${ADM.map(a => `<button type="button" class="adm-n" data-sec="${a[0]}"><i class="bi ${a[1]}"></i><span>${a[2]}</span></button>`).join('')}</div>
+            <div class="adm-main">${ADM.map(a => `<section class="adm-sec" data-sec="${a[0]}"><div class="adm-title"><h3>${a[2]}</h3><p>${a[3]}</p></div>
+                ${a[0] === 'mail' ? '<div class="adm-tabs"><button type="button" data-mail="out">Outgoing mail &amp; signature</button><button type="button" data-mail="in">Incoming mailboxes</button></div>' : ''}
+                <div class="adm-cards"></div><div class="adm-rel"></div></section>`).join('')}</div>`;
+        cards.forEach(c => { const w = where(c); c.style.borderTop = ''; c.classList.add('adm-card'); if (w[1]) c.dataset.mail = w[1]; wrap.querySelector(`.adm-sec[data-sec="${w[0]}"] .adm-cards`).appendChild(c); });
+        const rel = { inq: [['tours', 'Quotation and other e-mail templates are kept once, in Confirmed Tours & Suppliers → Email templates'], ['mail', 'The signature on e-mails is in Mail Administration']],
+            tours: [['mail', 'Hotel replies are collected by the Hotel reservations mailbox in Mail Administration'], ['inq', 'Itinerary wording is in Inquiry & Itinerary']],
+            mail: [['tours', 'The company lines and the "Copy every e-mail to (CC)" addresses are in Confirmed Tours & Suppliers'], ['sys', 'Password protection (encryption) is in System Administration']],
+            sys: [['mail', 'Mailbox passwords are entered in Mail Administration']] };
+        Object.keys(rel).forEach(k => { wrap.querySelector(`.adm-sec[data-sec="${k}"] .adm-rel`).innerHTML = '<b>Related settings</b>' + rel[k].map(r => `<a href="#" data-go="${r[0]}"><i class="bi bi-box-arrow-up-right"></i> ${r[1]}</a>`).join(''); });
+        box.innerHTML = ''; box.appendChild(wrap);
+        const show = () => { if (!ADM.some(a => a[0] === ADM_SEC)) ADM_SEC = 'inq';
+            wrap.querySelectorAll('.adm-n').forEach(b => b.classList.toggle('on', b.dataset.sec === ADM_SEC)); wrap.querySelectorAll('.adm-sec').forEach(s => s.classList.toggle('on', s.dataset.sec === ADM_SEC));
+            wrap.querySelectorAll('.adm-tabs button').forEach(b => b.classList.toggle('on', b.dataset.mail === ADM_MAIL)); wrap.querySelectorAll('.adm-card[data-mail]').forEach(c => { c.style.display = c.dataset.mail === ADM_MAIL ? '' : 'none'; });
+            try { const u = new URL(location.href); u.searchParams.set('sec', ADM_SEC); if (ADM_SEC === 'mail') u.searchParams.set('mail', ADM_MAIL); else u.searchParams.delete('mail'); history.replaceState(null, '', u); } catch (e) {} };
+        wrap.querySelectorAll('.adm-n').forEach(b => b.addEventListener('click', () => { ADM_SEC = b.dataset.sec; show(); }));
+        wrap.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); ADM_SEC = a.dataset.go; show(); wrap.scrollIntoView({ block: 'start' }); }));
+        wrap.querySelectorAll('.adm-tabs button').forEach(b => b.addEventListener('click', () => { ADM_MAIL = b.dataset.mail; show(); }));
+        show();
     }
     function renderSettings(n, co, ss, iw, et, mb, ib, sc) {
         mb = mb || {}; ib = ib || {}; sc = sc || {};

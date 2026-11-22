@@ -303,7 +303,7 @@ $u = $usd ?? null;
     <button type="button" class="hb solid" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
 </header>
 
-<div class="ck-clock" style="max-width:1340px;margin:12px auto 0;padding:0 4px"><?= view('partials/world_clock') ?></div><?php /* tf-clock-r1 */ ?>
+<div class="ck-clock" style="max-width:1340px;margin:12px auto 0;padding:0 4px;position:relative"><?php /* tf-pilotback-r1 (22 Nov 2026, Shantha): back to the page the Pilot Panel was opened from */ ?><button type="button" id="ck_goback" title="Back to where you were working" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);z-index:2;display:inline-flex;align-items:center;gap:7px;background:#1f8fd1;color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 2px 6px rgba(31,143,209,.35)"><i class="bi bi-arrow-left"></i> Back</button><?= view('partials/world_clock') ?></div><?php /* tf-clock-r1 */ ?>
 <div class="ck-frame"><div class="ck-in">
     <span class="ck-rv" style="left:14px;top:14px"></span><span class="ck-rv" style="right:14px;top:14px"></span><span class="ck-rv" style="left:14px;bottom:14px"></span><span class="ck-rv" style="right:14px;bottom:14px"></span>
     <div class="ck-top">
@@ -367,8 +367,10 @@ $u = $usd ?? null;
             </section>
 
             <section class="ck-disp" id="ck-report" hidden>
-                <div class="ck-dh"><svg class="ic"><use href="#ck-gauge"/></svg><h2>Pilot Report</h2><span class="ck-lock">🔒 Super Admin only</span></div>
+                <div class="ck-dh"><svg class="ic"><use href="#ck-gauge"/></svg><h2>Pilot Report</h2><span class="ck-lock">🔒 Super Admin only</span><button type="button" class="ck-back" data-p="nav" style="margin-left:10px">‹ Back</button></div>
                 <div class="ck-pr">
+                    <?php /* tf-adminmove-r1 (22 Nov 2026): the Tour Desk Admin page, moved here from the Tour Desk tab bar */ ?>
+                    <a href="<?= $e(base_url('tour/manage')) ?>"><span class="i"><i class="bi bi-shield-lock"></i></span><span>Admin<small>Tours (cancel, delete, reopen) · deleted / archived · activity log · edit requests · settings</small></span></a>
                     <?php foreach ($pr as $it): $d = !empty($it['nr']) ? 'New screen in progress' : ($prDesc[trim((string) $it['url'], '/')] ?? ''); ?>
                         <a <?= !empty($it['nr']) ? 'class="nr" aria-disabled="true"' : 'href="' . $e(base_url($it['url'])) . '"' ?>><span class="i"><i class="bi <?= str_contains((string) $it['url'], 'staff') ? 'bi-people' : 'bi-file-earmark-text' ?>"></i></span><span><?= $e(trim((string) $it['url'], '/') === 'master_files/staff' ? 'Staff Access Control Panel' : $it['name']) ?><?php if ($d): ?><small><?= $e($d) ?></small><?php endif; ?></span></a>
                     <?php endforeach; ?>
@@ -419,6 +421,16 @@ $u = $usd ?? null;
     document.querySelectorAll('#ck .ck-ctl, #ck .ck-back').forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.p); }); });
     document.querySelectorAll('#ck [data-dept]').forEach(function (b) { b.addEventListener('click', function () { show('dept-' + b.dataset.dept); }); });
     try { var last = sessionStorage.getItem('ck-panel'); if (last) { show(last); } } catch (e) {}
+    // tf-pilotback-r1: remember the page the panel was opened from (this tab only) and go back to it
+    (function () {
+        var here = location.pathname, from = '';
+        try { var r = document.referrer ? new URL(document.referrer) : null;
+            if (r && r.origin === location.origin && r.pathname !== here && !/\/(login|logout)?$/i.test(r.pathname.replace(/\/+$/, '/')) ) { sessionStorage.setItem('ck-from', r.href); }
+            from = sessionStorage.getItem('ck-from') || ''; } catch (e) {}
+        var b = document.getElementById('ck_goback');
+        if (b) { b.addEventListener('click', function () { if (from) { location.href = from; } else if (history.length > 1) { history.back(); } else { location.href = '<?= base_url('tour/intake') ?>'; } }); }
+    })();
+    try { var qp = new URLSearchParams(location.search).get('panel'); if (qp) { show(qp); } } catch (e) {}   // tf-adminmove-r1: ?panel=report opens Pilot Report
     var rq = document.getElementById('ck_rq');
     if (rq) { rq.addEventListener('input', function () { var q = rq.value.trim().toLowerCase(); document.querySelectorAll('#ck_rl a').forEach(function (a) { a.hidden = q && a.dataset.n.indexOf(q) < 0; }); }); }
     var ud = document.getElementById('ck_ud'), udd = document.getElementById('ck_udd');
