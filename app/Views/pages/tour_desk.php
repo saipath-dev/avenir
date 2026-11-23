@@ -16,7 +16,7 @@ foreach (($td['tiles'] ?? []) as $t) {
 }
 // caption text, badge colour and icon per tile — as on the design picture
 $cap = [
-    'inquiries' => ['Manage all tour inquiries, quotations and customer communications.', '#861b62', 'bi-people-fill',   'tile_inquiries.jpg'],
+    'inquiries' => ['Manage all tour inquiries, quotations and customer communications.', '#7f237f', 'bi-people-fill',   'tile_inquiries.jpg'],
     'confirmed' => ['View and manage all confirmed tours and upcoming departures.',      '#6e9e3e', 'bi-calendar2-check', 'tile_confirmed.jpg'],
     'board'     => ['Check tour schedules, vehicle allocation and tour progress.',       '#d59b35', 'bi-map-fill',       'tile_board.jpg'],
     'upcoming'  => ['View all scheduled tours for the next 1 month.',                    '#2559a7', 'bi-calendar2-check', 'tile_upcoming.jpg'],
@@ -30,7 +30,7 @@ $pos = [
 ?>
 <body class="tdk-body">
 <style>
-    :root { --tdk-p:#8b1d40; --tdk-g:#78b848; --tdk-gold:#e0a526; --tdk-ink:#2b2b33; --tdk-mut:#6b6f7b; --tdk-line:#e8e3df; --tdk-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
+    :root { --tdk-p:#842484; --tdk-g:#78b848; --tdk-gold:#e0a526; --tdk-ink:#2b2b33; --tdk-mut:#6b6f7b; --tdk-line:#e8e3df; --tdk-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     body.tdk-body { background:#fff !important; color:var(--tdk-ink); font-family:var(--tdk-font); }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
     .tdk-top .sp { flex:1; }

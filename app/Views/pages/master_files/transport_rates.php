@@ -33,7 +33,7 @@
     .tf .empty { color:var(--tf-muted); font-size:12.5px; padding:10px 0; }
     .tf .stale { border-left:3px solid var(--tf-amber); background:var(--tf-amber-soft); border-radius:8px; padding:10px 12px; font-size:12.5px; }
     /* ================= tf-kmrate-r2 (14 Nov 2026): Transport Rate Management to Shantha's mock-up ================= */
-    .trm { --p:#8b1d40; --g:#78B848; --ink:#1A1A1A; --mut:#5E5964; --line:#E3DCE7; color:var(--ink); }
+    .trm { --p:#842484; --g:#78B848; --ink:#1A1A1A; --mut:#5E5964; --line:#E3DCE7; color:var(--ink); }
     .trm-bar { display:flex; align-items:center; background:var(--p); border-radius:8px; height:44px; padding:0 14px; margin-bottom:14px; }
     .tf .trm-back { display:inline-flex; align-items:center; gap:10px; background:none; border:0; color:#fff; font-size:16px; font-weight:700; cursor:pointer; padding:4px 8px; }
     .trm h1 { font-size:38px; font-weight:800; color:var(--p); margin:0; line-height:1.15; letter-spacing:-.01em; }
@@ -112,7 +112,7 @@
 
 <!-- set / change one rate (tf-kmrate-r2): opens from the row's button only -->
 <div class="modal fade tf" id="m_rate" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h6 class="modal-title" id="r_title" style="color:#8b1d40;font-weight:800;font-size:18px">Set Transport Rate</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-header"><h6 class="modal-title" id="r_title" style="color:#842484;font-weight:800;font-size:18px">Set Transport Rate</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
     <div class="modal-body">
         <div style="font-size:15px;margin-bottom:10px"><b id="r_vehicle"></b><br><span id="r_lane" style="color:#3B3341"></span></div>
         <div class="help" id="r_now" style="margin-bottom:10px"></div>
@@ -172,7 +172,7 @@
     function histHtml(b) {
         const rows = HIST[b.code];
         const cap = `<div class="trm-cap"><span>Seats <b>${b.seats ?? '—'}</b></span><span>Carries up to <b data-maxpax-of="${esc(b.code)}">${b.max_pax}</b> passengers <button type="button" class="lk" data-maxpax="${esc(b.code)}">change</button></span>
-            ${b.crew ? `<span>${CREW_MASTER ? `<a href="${CREW_URL}?class=${encodeURIComponent(b.code)}" style="color:#8b1d40;font-weight:700">${b.crew} on the Driver &amp; Guide Master</a>` : b.crew + ' on the Driver &amp; Guide Master'}</span>` : ''}
+            ${b.crew ? `<span>${CREW_MASTER ? `<a href="${CREW_URL}?class=${encodeURIComponent(b.code)}" style="color:#842484;font-weight:700">${b.crew} on the Driver &amp; Guide Master</a>` : b.crew + ' on the Driver &amp; Guide Master'}</span>` : ''}
             <button type="button" class="lk" data-act="${esc(b.code)}" data-on="${b.active ? 0 : 1}">${b.active ? 'Retire this category' : 'Reinstate this category'}</button></div>`;
         if (!rows) return '<div class="help">Loading the history…</div>' + cap;
         return `<table class="trm-h"><thead><tr><th>Rate for</th><th>Amount per km</th><th>Effective from</th><th>Until</th><th>Changed by</th><th>Reason</th><th>Status</th><th></th></tr></thead><tbody>

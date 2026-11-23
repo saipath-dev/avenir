@@ -14,7 +14,7 @@ $st = $schema;
 $e = static fn ($s): string => esc((string) ($s ?? ''));
 ?>
 <style>
-    .tps { --p:#8b1d40; --p2:#972247; --soft:#f3e7eb; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
+    .tps { --p:#842484; --p2:#6f1e6f; --soft:#f3e3f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
     .tps .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tps .btn-p:hover { background:var(--p2); color:#fff; }
     .tps .card { border:1px solid var(--line); border-radius:14px; } .tps .card h6 { font-weight:700; color:var(--p); }
     .tps .muted { color:var(--muted); } .tps .mono { font-family: ui-monospace, Menlo, Consolas, monospace; }

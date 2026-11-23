@@ -5,8 +5,8 @@ $e = static fn ($s): string => esc((string) ($s ?? ''));
 $mask = static fn ($no) => \App\Libraries\TourPayments\BankAccounts::mask($no, 4);
 ?>
 <style>
-    .tpdm { --p:#8b1d40; --soft:#f3e7eb; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
-    .tpdm .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tpdm .btn-p:hover { background:#972247; color:#fff; }
+    .tpdm { --p:#842484; --soft:#f3e3f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
+    .tpdm .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tpdm .btn-p:hover { background:#6f1e6f; color:#fff; }
     .tpdm .card { border:1px solid var(--line); border-radius:14px; }
     .tpdm .pill { display:inline-block; border-radius:999px; padding:2px 9px; font-size:11.5px; font-weight:700; }
     .tpdm .pill.on { background:#e4f4ea; color:#1f8a4c; } .tpdm .pill.off { background:#eef0f3; color:#6c757d; } .tpdm .pill.def { background:var(--soft); color:var(--p); }

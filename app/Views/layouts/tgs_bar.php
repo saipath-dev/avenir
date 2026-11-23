@@ -36,13 +36,13 @@ $tgsHere = trim((string) (function_exists('uri_string') ? uri_string() : ''), '/
 $tgsShown = array_values(array_filter($tgsItems, static fn ($it) => $tgsAllowed === null || isset($tgsAllowed[$it['url']])));
 ?>
 <style>
-    .tgsbar { --tg-purple:#8b1d40; --tg-magenta:#e90c8b; --tg-ink:#2c3e50; --tg-muted:#6c757d; --tg-line:rgba(139,29,64,.18); --tg-tint:rgba(139,29,64,.07);
+    .tgsbar { --tg-purple:#842484; --tg-magenta:#e90c8b; --tg-ink:#2c3e50; --tg-muted:#6c757d; --tg-line:rgba(132,36,132,.18); --tg-tint:rgba(132,36,132,.07);
               --tg-amber:#1a1a1a; --tg-amber-soft:#ffffff; --tg-teal:#0f8b7e; --tg-teal-soft:#e3f4f1;
               display:flex; align-items:stretch; gap:8px; flex-wrap:wrap; margin:-8px 0 16px; padding:8px 10px; background:#fff; border:1px solid var(--tg-line);
               border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.05); font-family:inherit; color:var(--tg-ink); }
     .tgsbar .tg-brand { display:flex; align-items:center; gap:10px; padding:4px 14px 4px 4px; border-right:1px solid var(--tg-line); min-width:0; }
     .tgsbar .tg-brand .mark { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; color:#fff; font-size:16px; flex:none;
-              background:linear-gradient(135deg, var(--tg-magenta) 0%, var(--tg-purple) 100%); box-shadow:0 3px 8px rgba(151,34,71,.3); }
+              background:linear-gradient(135deg, var(--tg-magenta) 0%, var(--tg-purple) 100%); box-shadow:0 3px 8px rgba(111,30,111,.3); }
     .tgsbar .tg-brand b { display:block; font-size:13.5px; font-weight:700; line-height:1.15; white-space:nowrap; }
     .tgsbar .tg-brand small { display:block; font-size:11px; color:var(--tg-muted); line-height:1.2; margin-top:2px; white-space:nowrap; }
     .tgsbar .tg-nav { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }

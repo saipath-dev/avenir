@@ -1,36 +1,36 @@
 <?= view('layouts/head') ?>
 <style>
-    /* ---------- Photo Master (tf-photomaster-r1) — Avenir purple #8b1d40 headers, green #78b848 actions ---------- */
-    .pm { --p:#8b1d40; --pd:#60122b; --g:#78b848; --gd:#5f9a34; --ln:#e3dbe6; --sf:#f8f2f4; color:#1A1A1A; font-size:13px; }
-    .pm h4 { margin:0; font-size:22px; font-weight:800; color:#8b1d40; }
+    /* ---------- Photo Master (tf-photomaster-r1) — Avenir purple #842484 headers, green #78b848 actions ---------- */
+    .pm { --p:#842484; --pd:#5b195b; --g:#78b848; --gd:#5f9a34; --ln:#e3dbe6; --sf:#f8f2f4; color:#1A1A1A; font-size:13px; }
+    .pm h4 { margin:0; font-size:22px; font-weight:800; color:#842484; }
     .pm .sub { font-size:12.5px; max-width:760px; }
     .pm .top { display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:14px; } .pm .top .sp { flex:1; }
     .pm .btn-g { display:inline-flex; align-items:center; gap:7px; background:#78b848; border:1px solid #78b848; color:#fff; font-weight:700; border-radius:6px; padding:7px 14px; font-size:13px; cursor:pointer; }
     .pm .btn-g:hover { background:#5f9a34; } .pm .btn-l { display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--ln); color:#1A1A1A; font-weight:600; border-radius:6px; padding:6px 12px; font-size:12.5px; cursor:pointer; }
-    .pm .btn-l:hover { border-color:#8b1d40; color:#8b1d40; } .pm .btn-r { color:#a3123a; } .pm button[disabled] { opacity:.45; cursor:not-allowed; }
+    .pm .btn-l:hover { border-color:#842484; color:#842484; } .pm .btn-r { color:#9b2a9b; } .pm button[disabled] { opacity:.45; cursor:not-allowed; }
     .pm .search { display:flex; gap:8px; align-items:center; background:#fff; border:1px solid var(--ln); border-radius:8px; padding:6px 12px; min-width:320px; }
     .pm .search input { border:0; outline:0; flex:1; font-size:13px; background:transparent; }
     .pm .wrap { display:grid; grid-template-columns:230px 1fr; gap:16px; align-items:start; }
     .pm .side { background:#fff; border:1px solid var(--ln); border-radius:10px; overflow:hidden; position:sticky; top:80px; }
-    .pm .side .h { background:#8b1d40; color:#fff; font-weight:700; padding:9px 14px; }
+    .pm .side .h { background:#842484; color:#fff; font-weight:700; padding:9px 14px; }
     .pm .cat { display:flex; align-items:center; gap:10px; padding:9px 14px; border-top:1px solid var(--ln); cursor:pointer; font-weight:600; }
-    .pm .cat i { color:#8b1d40; font-size:16px; } .pm .cat .n { margin-left:auto; background:var(--sf); border-radius:10px; padding:0 8px; font-size:11.5px; }
-    .pm .cat.on { background:var(--sf); color:#8b1d40; box-shadow:inset 3px 0 0 #8b1d40; }
+    .pm .cat i { color:#842484; font-size:16px; } .pm .cat .n { margin-left:auto; background:var(--sf); border-radius:10px; padding:0 8px; font-size:11.5px; }
+    .pm .cat.on { background:var(--sf); color:#842484; box-shadow:inset 3px 0 0 #842484; }
     .pm .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; }
     .pm .col { background:#fff; border:1px solid var(--ln); border-radius:12px; overflow:hidden; cursor:pointer; transition:box-shadow .15s; }
-    .pm .col:hover { box-shadow:0 6px 18px rgba(139,29,64,.15); border-color:#8b1d40; }
-    .pm .col .ph { height:130px; background:#f3ecee center/cover; position:relative; display:flex; align-items:center; justify-content:center; color:#8b1d40; }
-    .pm .col .ph .k { position:absolute; left:8px; top:8px; background:#fff; color:#8b1d40; border-radius:10px; padding:1px 8px; font-size:11px; font-weight:700; }
+    .pm .col:hover { box-shadow:0 6px 18px rgba(132,36,132,.15); border-color:#842484; }
+    .pm .col .ph { height:130px; background:#f3ecee center/cover; position:relative; display:flex; align-items:center; justify-content:center; color:#842484; }
+    .pm .col .ph .k { position:absolute; left:8px; top:8px; background:#fff; color:#842484; border-radius:10px; padding:1px 8px; font-size:11px; font-weight:700; }
     .pm .col .ph .cnt { position:absolute; right:8px; bottom:8px; background:rgba(0,0,0,.6); color:#fff; border-radius:10px; padding:1px 8px; font-size:11px; }
-    .pm .col .b { padding:9px 12px; } .pm .col .b b { display:block; font-size:14px; color:#60122b; } .pm .col .b small { font-size:11.5px; }
+    .pm .col .b { padding:9px 12px; } .pm .col .b b { display:block; font-size:14px; color:#5b195b; } .pm .col .b small { font-size:11.5px; }
     .pm .col.off { opacity:.55; }
     .pm .panel { background:#fff; border:1px solid var(--ln); border-radius:12px; overflow:hidden; }
-    .pm .panel > .h { background:#8b1d40; color:#fff; padding:12px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .pm .panel > .h { background:#842484; color:#fff; padding:12px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
     .pm .panel > .h h5 { margin:0; font-size:18px; font-weight:800; color:#fff; } .pm .panel > .h .sp { flex:1; } .pm .panel > .h .chip { background:rgba(255,255,255,.18); border-radius:12px; padding:1px 10px; font-size:12px; }
     .pm .panel > .h .btn-l { background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.4); }
-    .pm .meta { display:flex; gap:22px; flex-wrap:wrap; padding:10px 18px; background:var(--sf); border-bottom:1px solid var(--ln); font-size:12.5px; } .pm .meta b { color:#60122b; }
+    .pm .meta { display:flex; gap:22px; flex-wrap:wrap; padding:10px 18px; background:var(--sf); border-bottom:1px solid var(--ln); font-size:12.5px; } .pm .meta b { color:#5b195b; }
     .pm .drop { margin:14px 18px; border:2px dashed #cca8b3; border-radius:12px; padding:18px; text-align:center; background:#fdfafb; }
-    .pm .drop.on { border-color:#78b848; background:#f3faec; } .pm .drop i { font-size:28px; color:#8b1d40; }
+    .pm .drop.on { border-color:#78b848; background:#f3faec; } .pm .drop i { font-size:28px; color:#842484; }
     .pm .drop .row2 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; text-align:left; }
     .pm label { display:block; font-size:11.5px; font-weight:600; margin:0 0 2px; }
     .pm input.f, .pm select.f, .pm textarea.f { width:100%; border:1px solid var(--ln); border-radius:6px; padding:5px 9px; font-size:13px; background:#fff; color:#1A1A1A; }
@@ -45,13 +45,13 @@
     .pm .warn { background:#fdeccb; color:#6b3a00; border-radius:8px; padding:8px 12px; margin-bottom:12px; font-size:12.5px; }
     .pm-ov { position:fixed; inset:0; background:rgba(20,10,25,.6); z-index:2000; display:none; align-items:flex-start; justify-content:center; padding:40px 16px; overflow:auto; }
     .pm-ov.on { display:flex; } .pm-md { background:#fff; border-radius:12px; width:min(980px,100%); overflow:hidden; color:#1A1A1A; font-size:13px; }
-    .pm-md .h { background:#8b1d40; color:#fff; padding:11px 16px; display:flex; align-items:center; } .pm-md .h b { flex:1; font-size:15px; } .pm-md .h button { background:none; border:0; color:#fff; font-size:22px; cursor:pointer; }
+    .pm-md .h { background:#842484; color:#fff; padding:11px 16px; display:flex; align-items:center; } .pm-md .h b { flex:1; font-size:15px; } .pm-md .h button { background:none; border:0; color:#fff; font-size:22px; cursor:pointer; }
     .pm-md .bd { padding:14px 16px; } .pm-md .two { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; } .pm-md img { width:100%; border-radius:8px; display:block; }
     .pm-md .fl { margin-bottom:8px; } .pm-md .ft { padding:10px 16px; border-top:1px solid #eee; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
     .pm-md .lbl { display:block; font-size:11.5px; font-weight:600; margin-bottom:2px; } .pm-md .f { width:100%; border:1px solid #e3dbe6; border-radius:6px; padding:5px 9px; font-size:13px; }
-    .pm-md .chips span { display:inline-block; border:1px solid #e3dbe6; border-radius:14px; padding:2px 10px; margin:0 4px 4px 0; font-size:12px; cursor:pointer; } .pm-md .chips span.on { background:#8b1d40; color:#fff; border-color:#8b1d40; }
+    .pm-md .chips span { display:inline-block; border:1px solid #e3dbe6; border-radius:14px; padding:2px 10px; margin:0 4px 4px 0; font-size:12px; cursor:pointer; } .pm-md .chips span.on { background:#842484; color:#fff; border-color:#842484; }
     .pm-md .btn-g { background:#78b848; border:1px solid #78b848; color:#fff; font-weight:700; border-radius:6px; padding:7px 14px; cursor:pointer; } .pm-md .btn-l { background:#fff; border:1px solid #e3dbe6; border-radius:6px; padding:6px 12px; cursor:pointer; }
-    .pm-toast { position:fixed; right:20px; bottom:20px; z-index:2100; background:#60122b; color:#fff; padding:10px 16px; border-radius:8px; display:none; max-width:420px; } .pm-toast.bad { background:#a3123a; }
+    .pm-toast { position:fixed; right:20px; bottom:20px; z-index:2100; background:#5b195b; color:#fff; padding:10px 16px; border-radius:8px; display:none; max-width:420px; } .pm-toast.bad { background:#9b2a9b; }
     @media (max-width:900px) { .pm .wrap { grid-template-columns:1fr; } .pm .side { position:static; } .pm .drop .row2, .pm-md .two { grid-template-columns:1fr; } }
 </style>
 <body>
@@ -177,8 +177,8 @@
             <div>${f('caption', 'Caption', p.caption)}${f('credit', 'Photographer / credit', p.credit, 'Photo: …')}${f('licence', 'Licence', p.licence, 'CC BY 4.0, own photo …')}${f('licence_url', 'Licence link', p.licence_url, 'https://creativecommons.org/…')}${f('source_url', 'Source page', p.source_url, 'https://…')}
             <div class="fl"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="pf_pref" ${p.preferred ? 'checked' : ''} ${dis}> Preferred photograph</label></div>
             <div class="fl"><span class="lbl">Collections it belongs to</span><div class="chips" id="pf_tags">${d.tags.map(t => `<span data-t="${esc(t.code)}" class="${p.tag_codes.includes(t.code) ? 'on' : ''}">${esc(t.name)}</span>`).join('')}</div></div>
-            ${p.source_url ? `<div class="fl"><a href="${esc(p.source_url)}" target="_blank" rel="noopener" style="color:#8b1d40;font-weight:600">Open the source page</a></div>` : ''}</div></div>`,
-            `${ed ? `<input type="file" id="pf_file" accept="image/*" hidden><button class="btn-l" id="pf_rep"><i class="bi bi-arrow-repeat"></i> Replace picture</button>` : ''}${d.can_delete && p.active ? `<button class="btn-l" id="pf_rm" style="color:#a3123a"><i class="bi bi-trash"></i> Delete</button>` : ''}<button class="btn-l" id="pf_close">Close</button>${ed ? '<button class="btn-g" id="pf_save">Save</button>' : ''}`);
+            ${p.source_url ? `<div class="fl"><a href="${esc(p.source_url)}" target="_blank" rel="noopener" style="color:#842484;font-weight:600">Open the source page</a></div>` : ''}</div></div>`,
+            `${ed ? `<input type="file" id="pf_file" accept="image/*" hidden><button class="btn-l" id="pf_rep"><i class="bi bi-arrow-repeat"></i> Replace picture</button>` : ''}${d.can_delete && p.active ? `<button class="btn-l" id="pf_rm" style="color:#9b2a9b"><i class="bi bi-trash"></i> Delete</button>` : ''}<button class="btn-l" id="pf_close">Close</button>${ed ? '<button class="btn-g" id="pf_save">Save</button>' : ''}`);
         $('pf_close').addEventListener('click', close);
         if (ed) {
             $('pf_tags').querySelectorAll('[data-t]').forEach(s => s.addEventListener('click', () => s.classList.toggle('on')));

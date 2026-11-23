@@ -11,7 +11,7 @@ $sections = $fd_sections ?? [];
 ?>
 <body class="fdk-body">
 <style>
-    :root { --fd-p:#8b1d40; --fd-g:#78b848; --fd-gold:#e0a526; --fd-ink:#2b2b33; --fd-mut:#6b6f7b; --fd-line:#e8e3df; --fd-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
+    :root { --fd-p:#842484; --fd-g:#78b848; --fd-gold:#e0a526; --fd-ink:#2b2b33; --fd-mut:#6b6f7b; --fd-line:#e8e3df; --fd-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     body.fdk-body { background:#fff !important; color:var(--fd-ink); font-family:var(--fd-font); }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
     .tdk-top .sp { flex:1; }
@@ -25,8 +25,8 @@ $sections = $fd_sections ?? [];
     .fdk { position:relative; max-width:1320px; margin:0 auto; padding:22px clamp(14px,2.4vw,30px) 36px; overflow:hidden; }
     .fdk .deco { position:absolute; right:-40px; top:-10px; width:360px; height:200px; pointer-events:none; }
     .fdk .deco .ball { position:absolute; left:0; top:36px; width:52px; height:52px; border-radius:50%; background:rgba(224,165,38,.3); }
-    .fdk .deco .dots { position:absolute; left:120px; top:34px; width:110px; height:50px; background-image:radial-gradient(rgba(139,29,64,.35) 2px, transparent 2.5px); background-size:18px 18px; }
-    .fdk .deco .arc { position:absolute; right:-60px; top:70px; width:300px; height:300px; border-radius:50%; background:rgba(139,29,64,.07); }
+    .fdk .deco .dots { position:absolute; left:120px; top:34px; width:110px; height:50px; background-image:radial-gradient(rgba(132,36,132,.35) 2px, transparent 2.5px); background-size:18px 18px; }
+    .fdk .deco .arc { position:absolute; right:-60px; top:70px; width:300px; height:300px; border-radius:50%; background:rgba(132,36,132,.07); }
     .fdk-head { position:relative; margin:0 0 20px; }
     .fdk-head h1 { margin:0; font-size:clamp(1.7rem,3vw,2.6rem); font-weight:800; letter-spacing:-.02em; color:var(--fd-p); line-height:1.05; }
     .fdk-head p { margin:4px 0 0; color:var(--fd-mut); font-size:1.05rem; }
@@ -34,7 +34,7 @@ $sections = $fd_sections ?? [];
     .fdk-head .n { position:absolute; right:0; bottom:0; color:var(--fd-mut); font-size:.82rem; font-weight:600; }
     .fdk-grid { position:relative; display:grid; grid-template-columns:minmax(0,1.13fr) minmax(0,1fr); gap:18px; }
     .fdk-sec { border-radius:18px; padding:16px 18px 18px; border:1px solid transparent; box-shadow:0 2px 10px rgba(20,20,30,.04); }
-    .fdk-sec.purple { background:rgba(139,29,64,.08); } .fdk-sec.gold { background:rgba(224,165,38,.13); } .fdk-sec.green { background:rgba(120,184,72,.15); } .fdk-sec.slate { background:#f1eef3; }
+    .fdk-sec.purple { background:rgba(132,36,132,.08); } .fdk-sec.gold { background:rgba(224,165,38,.13); } .fdk-sec.green { background:rgba(120,184,72,.15); } .fdk-sec.slate { background:#f1eef3; }
     .fdk-sec > h2 { margin:0 0 12px; display:flex; align-items:center; gap:14px; font-size:1.25rem; font-weight:800; color:var(--fd-p); letter-spacing:-.01em; }
     .fdk-sec > h2 .ic { width:50px; height:50px; border-radius:50%; display:grid; place-items:center; font-size:22px; color:#fff; flex:0 0 auto; box-shadow:0 3px 10px rgba(0,0,0,.12); }
     .fdk-sec.purple > h2 .ic { background:var(--fd-p); } .fdk-sec.gold > h2 .ic { background:var(--fd-gold); color:#2b2108; } .fdk-sec.green > h2 .ic { background:var(--fd-g); color:#1f2a14; } .fdk-sec.slate > h2 .ic { background:#5b3f6b; }
@@ -43,7 +43,7 @@ $sections = $fd_sections ?? [];
     .fdk-sec.one .fdk-btns { grid-template-columns:1fr; }
     .fdk-btn { display:flex; align-items:center; gap:12px; min-height:62px; padding:10px 12px 10px 14px; border-radius:14px; background:#fff; border:1px solid rgba(20,20,30,.06); color:var(--fd-ink); text-decoration:none !important; font-weight:700; font-size:.98rem; line-height:1.2; cursor:pointer; text-align:left; width:100%;
       box-shadow:0 2px 6px rgba(20,20,30,.05); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
-    .fdk-btn:hover { transform:translateY(-2px); box-shadow:0 10px 22px rgba(139,29,64,.14); border-color:rgba(139,29,64,.3); color:var(--fd-ink); }
+    .fdk-btn:hover { transform:translateY(-2px); box-shadow:0 10px 22px rgba(132,36,132,.14); border-color:rgba(132,36,132,.3); color:var(--fd-ink); }
     .fdk-btn:focus-visible { outline:3px solid var(--fd-gold); outline-offset:2px; }
     .fdk-btn .ic { width:36px; height:36px; display:grid; place-items:center; font-size:24px; color:var(--fd-p); flex:0 0 auto; position:relative; }
     .fdk-btn .ic .dot { position:absolute; right:-2px; bottom:-2px; width:15px; height:15px; border-radius:50%; background:var(--fd-gold); border:2px solid #fff; }
@@ -52,7 +52,7 @@ $sections = $fd_sections ?? [];
     .fdk-btn[aria-expanded="true"] .ch { transform:rotate(90deg); color:var(--fd-p); }
     .fdk-btn[aria-expanded="true"] { border-color:var(--fd-p); box-shadow:inset 0 0 0 1px var(--fd-p); }
     .fdk-btn small { display:block; font-weight:500; color:var(--fd-mut); font-size:.75rem; margin-top:1px; }
-    .fdk-sub { grid-column:1 / -1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; padding:10px 12px 12px; border:1px dashed rgba(139,29,64,.4); border-radius:14px; background:rgba(255,255,255,.6); }
+    .fdk-sub { grid-column:1 / -1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; padding:10px 12px 12px; border:1px dashed rgba(132,36,132,.4); border-radius:14px; background:rgba(255,255,255,.6); }
     .fdk-sub[hidden] { display:none; }
     .fdk-sub .t { grid-column:1 / -1; font-size:.74rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--fd-p); }
     .fdk-sub .fdk-btn { min-height:48px; font-size:.9rem; }

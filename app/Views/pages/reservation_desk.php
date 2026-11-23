@@ -16,7 +16,7 @@ foreach (($rd['tiles'] ?? []) as $t) {
 }
 // caption text, badge colour and icon per tile — as on the design picture
 $cap = [
-    'hotel'     => ['Request, confirm and voucher every night of a tour.', '#83183a', 'bi-calendar2-event', 'tile_hotel.jpg'],
+    'hotel'     => ['Request, confirm and voucher every night of a tour.', '#7c227c', 'bi-calendar2-event', 'tile_hotel.jpg'],
     'tickets'   => ['Manage entrance tickets on hand.',                    '#5f793f', 'bi-ticket-perforated-fill', 'tile_tickets.jpg'],
     'confirmed' => ['View confirmed tours requiring hotel reservations.',  '#c28d3f', 'bi-people-fill',     'tile_confirmed.jpg'],
     'upcoming'  => ['View all scheduled tours for the next 1 month.',      '#2956a3', 'bi-calendar2-check', 'tile_upcoming.jpg'],
@@ -30,7 +30,7 @@ $pos = [
 ?>
 <body class="tdk-body">
 <style>
-    :root { --tdk-p:#8b1d40; --tdk-g:#78b848; --tdk-gold:#e0a526; --tdk-ink:#2b2b33; --tdk-mut:#6b6f7b; --tdk-line:#e8e3df; --tdk-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
+    :root { --tdk-p:#842484; --tdk-g:#78b848; --tdk-gold:#e0a526; --tdk-ink:#2b2b33; --tdk-mut:#6b6f7b; --tdk-line:#e8e3df; --tdk-font:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     body.tdk-body { background:#fff !important; color:var(--tdk-ink); font-family:var(--tdk-font); }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
     .tdk-top .sp { flex:1; }
@@ -81,7 +81,7 @@ $pos = [
     .tdk-more { max-width:1320px; margin:14px auto 0; padding:0 clamp(16px,2.6vw,40px); display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; font-size:.84rem; }
     .tdk-more .lk { color:var(--tdk-mut); font-weight:700; margin-right:4px; }
     .tdk-more a { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid var(--tdk-line); border-radius:999px; color:var(--tdk-p); background:#fff; text-decoration:none; font-weight:600; }
-    .tdk-more a:hover { background:rgba(139,29,64,.08); }
+    .tdk-more a:hover { background:rgba(132,36,132,.08); }
     .tdk-below { max-width:1320px; margin:0 auto; padding:14px clamp(16px,2.6vw,40px) 30px; color:var(--tdk-mut); font-size:.84rem; }
     @media (max-width:767px) {
         .tdk-stage { aspect-ratio:auto; background:none; display:grid; gap:14px; padding:0 14px 14px; }

@@ -66,13 +66,13 @@
     .tf .msg .k.failed { color:var(--tf-red); }
     .modal .modal-content { border-radius:12px; }
     /* tf-resdesk-r2: the Reservation Desk — new bookings, each hotel's stage, its documents (Avenir purple and green, dark text) */
-    .tf { --rd-purple:#891c3e; --rd-purple-d:#62152d; --rd-purple-soft:#f5e8ec; --rd-green:#2F6E16; --rd-green-soft:#EAF6E2; --rd-red:#8C1D18; --rd-red-soft:#FBE9E7; }
+    .tf { --rd-purple:#822382; --rd-purple-d:#5d195d; --rd-purple-soft:#f5e8ec; --rd-green:#2F6E16; --rd-green-soft:#EAF6E2; --rd-red:#8C1D18; --rd-red-soft:#FBE9E7; }
     .tf .tbl tr.rd-new td { background:var(--rd-green-soft); }
     .tf .tbl tr.rd-new td:first-child { box-shadow:inset 4px 0 0 #4E9A2A; }
     .tf .tbl tr.rd-new:hover td { background:#DDF0D0; }
     .tf .rd-newtag { display:inline-block; margin-top:3px; background:#2F6E16; color:#fff; border-radius:5px; padding:1px 7px; font-size:10.5px; font-weight:700; letter-spacing:.04em; }
     .tf .rd-prog { display:flex; gap:3px; margin-bottom:3px; } .tf .rd-prog i { flex:1; height:7px; border-radius:4px; background:#D5CCDA; min-width:10px; }
-    .tf .rd-prog i.c { background:#2F6E16; } .tf .rd-prog i.f { background:#B3261E; } .tf .rd-prog i.p { background:#891c3e; }
+    .tf .rd-prog i.c { background:#2F6E16; } .tf .rd-prog i.f { background:#B3261E; } .tf .rd-prog i.p { background:#822382; }
     .tf .rd-stays { display:flex; flex-direction:column; }
     .tf .rd-stay { padding:14px 16px; border-top:1px solid var(--tf-line); }
     .tf .rd-stay:first-child { border-top:0; }
@@ -83,10 +83,10 @@
     .tf .rd-t-teal { background:#E3F4F1; color:#0B5F56; } .tf .rd-t-green { background:var(--rd-green-soft); color:var(--rd-green); }
     .tf .rd-t-red { background:var(--rd-red-soft); color:var(--rd-red); border:1px solid #F0B8B0; } .tf .rd-t-amber { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; } .tf .rd-t-grey { background:#EEF1F5; color:#4A5562; }
     .tf .rd-facts { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:4px 18px; font-size:13px; color:#1F1A24; margin:4px 0 10px; }
-    .tf .rd-facts b { color:#541025; font-weight:600; }
+    .tf .rd-facts b { color:#501650; font-weight:600; }
     .tf .rd-btns { display:flex; gap:8px; flex-wrap:wrap; }
-    .tf .rd-btn { border:1px solid #CDBFD3; background:#fff; color:#431121; border-radius:9px; padding:7px 13px; font-size:13px; font-weight:600; text-decoration:none; cursor:pointer; }
-    .tf .rd-btn:hover { background:var(--rd-purple-soft); color:#431121; }
+    .tf .rd-btn { border:1px solid #CDBFD3; background:#fff; color:#401140; border-radius:9px; padding:7px 13px; font-size:13px; font-weight:600; text-decoration:none; cursor:pointer; }
+    .tf .rd-btn:hover { background:var(--rd-purple-soft); color:#401140; }
     .tf .rd-btn.primary { background:var(--rd-purple); border-color:var(--rd-purple); color:#fff; } .tf .rd-btn.primary:hover { background:var(--rd-purple-d); color:#fff; }
     .tf .rd-btn.green { background:#2F6E16; border-color:#2F6E16; color:#fff; }
     .tf .rd-btn[disabled] { opacity:.55; cursor:not-allowed; }
@@ -94,9 +94,9 @@
     .tf .rd-dept { background:#F4F1F6; border-radius:8px; padding:9px 13px; font-size:13px; color:#2B2430; margin:0 14px 10px; }
     .tf .cancel-flag { background:#fbe9e6; color:#8a2a22; border:1px solid #f0b8b0; border-radius:8px; padding:8px 12px; margin:8px 0; font-size:13px; }
 
-    /* ================= tf-resdesk-r2 DESIGN (12 Nov 2026, Shantha's mock-up): Avenir purple #8b1d40, green #78b848, dark text ================= */
-    .tf { --av-p:#8b1d40; --av-p-d:#66102b; --av-p-soft:#f5eaed; --av-g:#78b848; --av-g-d:#5E9A33; --av-g-ink:#10300A; --av-ink:#1B1620; --av-ink2:#3A3340; --av-line:#e6dade; color:var(--av-ink); }
-    .tf .rd2-hero { background:linear-gradient(0deg,#8b1d40,#8b1d40); color:#fff; border-radius:16px; padding:22px 26px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:12px; box-shadow:0 2px 6px rgba(84,16,37,.18); }
+    /* ================= tf-resdesk-r2 DESIGN (12 Nov 2026, Shantha's mock-up): Avenir purple #842484, green #78b848, dark text ================= */
+    .tf { --av-p:#842484; --av-p-d:#611a61; --av-p-soft:#f5eaed; --av-g:#78b848; --av-g-d:#5E9A33; --av-g-ink:#10300A; --av-ink:#1B1620; --av-ink2:#3A3340; --av-line:#e6dade; color:var(--av-ink); }
+    .tf .rd2-hero { background:linear-gradient(0deg,#842484,#842484); color:#fff; border-radius:16px; padding:22px 26px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:12px; box-shadow:0 2px 6px rgba(80,22,80,.18); }
     .tf .rd2-kicker { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#f6dce4; }
     .tf .rd2-h1 { margin:2px 0 4px; font-size:26px; font-weight:800; color:#fff; letter-spacing:-.01em; }
     .tf .rd2-sub { font-size:14px; color:#fbeff3; max-width:760px; }
@@ -156,14 +156,14 @@
     .tf .rd2-card .tf-card-h .chips { gap:8px; }
     .tf .form-control-sm, .tf .form-select-sm { border-radius:9px; border-color:#D9CDDD; }
     .tf .td-dots { border-radius:9px; }
-    .tf #acts_card .tbl thead th, .tf #sreq_card .tbl thead th { background:#f6edf0; color:#541025; }
+    .tf #acts_card .tbl thead th, .tf #sreq_card .tbl thead th { background:#f6edf0; color:#501650; }
     .tf .rd2-card .tbl td.mono { white-space:nowrap; }
     .tf .rd2-card .pill { font-size:12px; padding:4px 11px; }
-    .tf .rd2-card .pill-blue { background:#f5eaed; color:#66102b; }
+    .tf .rd2-card .pill-blue { background:#f5eaed; color:#611a61; }
     .tf .rd2-card .pill-amber { background:#FFFFFF; color:#1A1A1A; border:1px solid #D9D3DD; }
 
     /* ================= tf-resdesk-r2 DESIGN v2 — the mock-up (12 Nov 2026). Everything under .rd3; nothing from .tf reaches it. ================= */
-    .rd3 { --p:#8b1d40; --p-d:#701633; --ink:#111111; --ink2:#55505A; --line:#E3E0E6; --soft:#F2F0F5; --ok:#3B7A1F; --bad:#A3261E;
+    .rd3 { --p:#842484; --p-d:#6a1d6a; --ink:#111111; --ink2:#55505A; --line:#E3E0E6; --soft:#F2F0F5; --ok:#3B7A1F; --bad:#A3261E;
            font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif; color:var(--ink); font-size:16px; line-height:1.5; }
     .rd3 *, .rd3 *::before, .rd3 *::after { box-sizing:border-box; }
     .rd3-shell { max-width:860px; margin:4px auto 32px; background:#fff; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; }
@@ -243,11 +243,11 @@
     .rdl-tabs { display:flex; gap:16px; flex-wrap:wrap; padding-bottom:14px; border-bottom:4px solid #78B848; margin-bottom:20px; }
     .rd3 .rdl-tab { width:354px; max-width:100%; height:62px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; color:#111; font-size:24px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.06); }
     .rd3 .rdl-tab[data-desk="other"] { width:334px; }
-    .rd3 .rdl-tab.on { background:#8b1d40; border-color:#8b1d40; color:#fff; }
+    .rd3 .rdl-tab.on { background:#842484; border-color:#842484; color:#fff; }
     .rdl-sub { display:flex; gap:14px; flex-wrap:wrap; margin:0 0 20px; }
     .rd3 .rdl-subb { height:44px; padding:0 34px; border:1.5px solid #C9C4CD; border-radius:6px; background:#fff; color:#111; font-size:21px; font-weight:500; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.05); }
     .rd3 .rdl-subb.on { background:#78B848; border-color:#78B848; color:#fff; font-weight:600; }
-    .rd3 .rdl-subb.on[data-list="pending"] { background:#8b1d40; border-color:#8b1d40; }
+    .rd3 .rdl-subb.on[data-list="pending"] { background:#842484; border-color:#842484; }
     .rdl-search { display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin:0 0 24px; }
     .rd3 .rdl-q { flex:0 1 515px; display:flex; align-items:center; gap:14px; height:48px; border:1.5px solid #C9C4CD; border-radius:6px; padding:0 18px; background:#fff; margin:0; }
     .rd3 .rdl-q input { border:0; outline:0; flex:1; min-width:0; font-size:21px; color:#111; background:transparent; }
@@ -455,7 +455,7 @@
         <div class="help mt-2">Your name and the time are recorded with the confirmation. The stay's hotel payment request is then raised to <b>Payment Approval</b>; the payment voucher is created only after the payment is approved there.</div>
         <input type="hidden" id="cb_id">
     </div>
-    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-sm" style="background:#891c3e;color:#fff" id="cb_ok">Confirm Hotel</button></div>
+    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-sm" style="background:#822382;color:#fff" id="cb_ok">Confirm Hotel</button></div>
 </div></div></div>
 
 <!-- a letter as it was sent -->

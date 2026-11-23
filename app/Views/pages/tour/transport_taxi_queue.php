@@ -11,10 +11,10 @@
  */
 ?>
 <style>
-    /* tf-taxiq-r2: the supplied mockups — orchid purple headings (#8b1d40), Avenir green actions (#78b848),
+    /* tf-taxiq-r2: the supplied mockups — orchid purple headings (#842484), Avenir green actions (#78b848),
        the mockup's card sizes, spacing and status colours, with the status spelled out in words on every card. */
-    .tq { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#8b1d40; --p-soft:rgba(139,29,64,.08); --g:#78b848;
-          --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber:#1a1a1a; --amber-soft:#ffffff; --red:#8a1c30; --red-soft:#fbe9e7;
+    .tq { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#842484; --p-soft:rgba(132,36,132,.08); --g:#78b848;
+          --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber:#1a1a1a; --amber-soft:#ffffff; --red:#832483; --red-soft:#fbe9e7;
           --grey-soft:#eef1f5; color:var(--ink); font-size:14px; }
     .tq .band { background:var(--p); color:#fff; border-radius:14px; padding:18px 22px; margin-bottom:18px; }
     .tq .band .eyebrow { font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.85; font-weight:700; }
@@ -65,9 +65,9 @@
     .tq .btn-g { background:var(--g); border:0; color:#fff; font-weight:700; border-radius:10px; padding:10px 20px; font-size:14px; }
     .tq .btn-g:hover:not(:disabled) { background:#6aa63f; color:#fff; }
     .tq .btn-p { background:var(--p); border:0; color:#fff; font-weight:700; border-radius:10px; padding:10px 20px; font-size:14px; }
-    .tq .btn-p:hover:not(:disabled) { background:#731734; color:#fff; }
+    .tq .btn-p:hover:not(:disabled) { background:#6d1e6d; color:#fff; }
     .tq .btn-q { background:#fff; border:1px solid var(--line); color:var(--ink); font-weight:600; border-radius:10px; padding:10px 18px; font-size:14px; }
-    .tq .note { background:var(--p-soft); border:1px solid rgba(139,29,64,.18); color:var(--ink);
+    .tq .note { background:var(--p-soft); border:1px solid rgba(132,36,132,.18); color:var(--ink);
                 border-radius:12px; padding:14px 16px; font-size:13.5px; line-height:1.55; }
     .tq .warn { background:var(--amber-soft); border:1px solid rgba(183,121,31,.25); color:#7a5210;
                 border-radius:12px; padding:14px 16px; font-size:13.5px; line-height:1.55; }
@@ -263,7 +263,7 @@
     }
 
     function wireCarRate(cr, t) {
-        const say = (x, bad) => { const el = document.getElementById('cr_msg'); if (el) { el.textContent = x || ''; el.style.color = bad ? '#8a1c30' : '#3f6b1f'; } };
+        const say = (x, bad) => { const el = document.getElementById('cr_msg'); if (el) { el.textContent = x || ''; el.style.color = bad ? '#832483' : '#3f6b1f'; } };
         const go = document.getElementById('cr_go');
         if (!go) { return; }
         go.addEventListener('click', () => {
@@ -291,7 +291,7 @@
 
     function wireApprovals() {
         const decide = (id, yes, btn) => {
-            const say = (x, bad) => { const el = document.getElementById('ap_msg_' + id); if (el) { el.textContent = x || ''; el.style.color = bad ? '#8a1c30' : '#3f6b1f'; } };
+            const say = (x, bad) => { const el = document.getElementById('ap_msg_' + id); if (el) { el.textContent = x || ''; el.style.color = bad ? '#832483' : '#3f6b1f'; } };
             arm(btn, yes ? 'Yes — approve it' : 'Yes — refuse it',
                 async () => {
                     btn.disabled = true;

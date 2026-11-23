@@ -15,14 +15,14 @@
     .hr2 .hr-toolbar { margin-left: auto; display: flex; flex-wrap: wrap; gap: 6px; }
     /* Hotel rate management buttons — the same button language as the Tour Desk bar: 38px, 10px corners, HK Grotesk,
        the logo's purple on icons and its green for the one action that adds rates. Every id is unchanged. */
-    .hr2 .hr-actions { --hr-purple:#8b1d40; --hr-tint:rgba(139,29,64,.09); --hr-pl:rgba(139,29,64,.18); margin-left:auto; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .hr2 .hr-actions { --hr-purple:#842484; --hr-tint:rgba(132,36,132,.09); --hr-pl:rgba(132,36,132,.18); margin-left:auto; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
     .hr2 .hr-actions .grp { display:flex; align-items:center; gap:4px; flex-wrap:wrap; padding:4px; background:#fff; border:1px solid var(--hr-pl); border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.06); }
     .hr2 .hr-actions .act { display:inline-flex; align-items:center; gap:8px; height:36px; padding:0 14px; border-radius:9px; border:1px solid transparent; background:transparent;
         color:#2c3e50; font-size:13px; font-weight:500; letter-spacing:.2px; line-height:1; white-space:nowrap; cursor:pointer; transition:background-color .2s ease, transform .2s ease, box-shadow .2s ease; }
     .hr2 .hr-actions .act i { font-size:15px; color:var(--hr-purple); }
     .hr2 .hr-actions .act:hover { background:var(--hr-tint); }
     .hr2 .hr-actions .act:active { transform:translateY(1px) scale(.98); transition-duration:.1s; }
-    .hr2 .hr-actions .act:focus-visible { outline:none; box-shadow:0 0 0 .2rem rgba(139,29,64,.22); }
+    .hr2 .hr-actions .act:focus-visible { outline:none; box-shadow:0 0 0 .2rem rgba(132,36,132,.22); }
     .hr2 .hr-actions .act .pill { margin-left:2px; }
     .hr2 .hr-actions .act-primary { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 14px 0 16px; border-radius:10px; border:0; color:#fff; font-size:13.5px; font-weight:600; letter-spacing:.2px; line-height:1; white-space:nowrap; cursor:pointer;
         background:linear-gradient(135deg, #84C155 0%, #78b448 100%); box-shadow:0 3px 10px rgba(120,180,72,.35); transition:box-shadow .3s ease, transform .3s ease; }
@@ -38,8 +38,8 @@
     @media (max-width: 1100px) { .hr2 .hr-actions .act > span:not(.pill) { display:none; } .hr2 .hr-actions .act { padding:0 11px; } }
     /* the row of buttons on the chosen hotel: same language, one size down */
     .hr2 .hotel-actions .btn { border-radius:9px; height:34px; display:inline-flex; align-items:center; gap:7px; font-size:12.75px; letter-spacing:.2px; }
-    .hr2 .hotel-actions .btn-light { border-color:rgba(139,29,64,.18); } .hr2 .hotel-actions .btn-light i { color:#8b1d40; }
-    .hr2 .hotel-actions .btn-light:hover { background:rgba(139,29,64,.09); }
+    .hr2 .hotel-actions .btn-light { border-color:rgba(132,36,132,.18); } .hr2 .hotel-actions .btn-light i { color:#842484; }
+    .hr2 .hotel-actions .btn-light:hover { background:rgba(132,36,132,.09); }
     .hr2 .hotel-actions .btn-primary { background:linear-gradient(135deg, #84C155 0%, #78b448 100%); border-color:transparent; box-shadow:0 3px 10px rgba(120,180,72,.35); font-weight:600; }
     .hr2 .hotel-actions .btn-primary:hover { background:linear-gradient(135deg, #8fca60 0%, #78b448 100%); border-color:transparent; }
     .hr2 .hotel-actions .btn-group > .btn-primary:first-child { border-top-right-radius:0; border-bottom-right-radius:0; } .hr2 .hotel-actions .btn-group > .dropdown-toggle-split { border-top-left-radius:0; border-bottom-left-radius:0; padding-left:8px; padding-right:8px; }
@@ -151,9 +151,9 @@
     /* tf-ratejump-r1: arriving from an inquiry night */
     #jump_bar { position:sticky; top:72px; z-index:60; display:flex; gap:16px; align-items:center; background:#ffffff; border:1px solid #d9d3dd; border-left:5px solid #78b848; border-radius:10px; padding:10px 14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(16,24,40,.08); font-size:13.5px; color:#1a1a1a; }
     #jump_bar.miss { border-left-color:#E0661F; } #jump_bar .t { flex:1 1 auto; min-width:0; } #jump_bar .s { margin-top:3px; font-size:13px; } #jump_bar.miss .s b { color:#E0661F; } #jump_bar .why { color:#1a1a1a; }
-    #jump_bar #jump_back { background:#8b1d40; border-color:#8b1d40; color:#fff; white-space:nowrap; font-weight:600; }
-    .hr2 .season.jump-season { outline:2px solid #8b1d40; outline-offset:3px; border-radius:8px; }
-    .hr2 tr.jump-hit > td { background:#f3e6ea !important; box-shadow:inset 0 2px 0 #8b1d40, inset 0 -2px 0 #8b1d40; }
+    #jump_bar #jump_back { background:#842484; border-color:#842484; color:#fff; white-space:nowrap; font-weight:600; }
+    .hr2 .season.jump-season { outline:2px solid #842484; outline-offset:3px; border-radius:8px; }
+    .hr2 tr.jump-hit > td { background:#f3e6ea !important; box-shadow:inset 0 2px 0 #842484, inset 0 -2px 0 #842484; }
     .hr2 tr.jump-hit input.jump-cell { outline:3px solid #78b848; background:#ffffff; font-weight:700; }
     .hr2 .editor { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0; }
     @media (max-width: 900px) { .hr2 .editor { grid-template-columns: 1fr; } }
@@ -1179,7 +1179,7 @@ php spark hotelrates:migrate</pre>
     }));
 
     // ---------------- coverage ----------------
-    const PLAN_COLORS = ['#0f8b7e', '#1e3553', '#b7791f', '#7c3aed', '#c2410c', '#0369a1', '#4d7c0f', '#9f1239'];
+    const PLAN_COLORS = ['#0f8b7e', '#1e3553', '#b7791f', '#7c3aed', '#c2410c', '#0369a1', '#4d7c0f', '#972997'];
     function renderCoverage(cov) {
         const box = document.getElementById('coverage_box');
         const mk = document.getElementById('cov_market');

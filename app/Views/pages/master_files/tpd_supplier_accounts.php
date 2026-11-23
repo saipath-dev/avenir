@@ -12,7 +12,7 @@ $showNo = static fn ($no) => $no ? ($full_numbers ? $e($no) : $e($mask($no))) : 
 $counts = ['all' => count($rows), 'missing' => 0, 'incomplete' => 0, 'unverified' => 0];
 ?>
 <style>
-    .sar { --p:#8b1d40; --pd:#8b1d40; --soft:rgba(139,29,64,.08); --line:rgba(139,29,64,.22); --ink:#26262c; --mut:#6b6f7b; color:var(--ink); font-family:"Inter","Segoe UI",system-ui,sans-serif; }
+    .sar { --p:#842484; --pd:#842484; --soft:rgba(132,36,132,.08); --line:rgba(132,36,132,.22); --ink:#26262c; --mut:#6b6f7b; color:var(--ink); font-family:"Inter","Segoe UI",system-ui,sans-serif; }
     .sar h4 { color:var(--p); font-weight:700; }
     .sar .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .sar .btn-p:hover { background:var(--pd); border-color:var(--pd); color:#fff; }
     .sar .btn-o { border:1px solid var(--line); color:var(--pd); background:#fff; } .sar .btn-o:hover { background:var(--soft); }
@@ -113,7 +113,7 @@ $counts = ['all' => count($rows), 'missing' => 0, 'incomplete' => 0, 'unverified
 </div>
 
 <div class="modal fade" id="sarModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header" style="background:#8b1d40;color:#fff;"><h5 class="modal-title" id="sarTitle">Bank account</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+    <div class="modal-header" style="background:#842484;color:#fff;"><h5 class="modal-title" id="sarTitle">Bank account</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
     <form id="sarForm" onsubmit="return sarSave(event)">
     <div class="modal-body">
         <input type="hidden" name="id" id="sar_id">

@@ -8,8 +8,8 @@
  */
 ?>
 <style>
-    .ta { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#8b1d40; --p-soft:rgba(139,29,64,.08);
-          --g:#78b848; --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber-soft:#ffffff; --amber:#1a1a1a; --red:#8a1c30; color:var(--ink); font-size:14px; }
+    .ta { --ink:#1d2733; --muted:#5f6f80; --line:#e3e7ee; --p:#842484; --p-soft:rgba(132,36,132,.08);
+          --g:#78b848; --g-soft:#eef7e4; --g-ink:#3f6b1f; --amber-soft:#ffffff; --amber:#1a1a1a; --red:#832483; color:var(--ink); font-size:14px; }
     .ta .band { background:var(--p); color:#fff; border-radius:14px; padding:18px 22px; margin-bottom:18px; }
     .ta .band .eyebrow { font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; opacity:.85; font-weight:700; }
     .ta .band h4 { margin:6px 0 4px; font-weight:800; font-size:24px; color:#fff; }
@@ -90,7 +90,7 @@
 
     function wire() {
         const go = (id, yes, btn) => {
-            const say = (t, bad) => { const el = document.getElementById('m_' + id); if (el) { el.textContent = t || ''; el.style.color = bad ? '#8a1c30' : '#3f6b1f'; } };
+            const say = (t, bad) => { const el = document.getElementById('m_' + id); if (el) { el.textContent = t || ''; el.style.color = bad ? '#832483' : '#3f6b1f'; } };
             // confirmed in place — no browser dialog, and a double-click cannot decide
             if (btn.dataset.armed === '1' && Date.now() - Number(btn.dataset.at || 0) < 500) { return; }
             if (btn.dataset.armed !== '1') {

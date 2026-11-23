@@ -11,14 +11,14 @@ $pauBase = rtrim(base_url(), '/') . '/';
 <style id="pau-css">
 /* ---- the uniform: white page, dark burgundy and green, clean type ---- */
 body.bg-light, body { background:#fff !important; }
-:root { --pau-p:#8b1d40; --pau-pd:#8b1d40; --pau-psoft:rgba(139,29,64,.08); --pau-pline:rgba(139,29,64,.22);   /* tf-pa-tabs-r1: the User Manual button's purple (assets/help/help-widget.css --avh-p2 / --avh-p) */
-        --pau-b:#8b1d40; --pau-bd:#8b1d40;   /* tf-pa-tabs-r1b: one colour on this page — the burgundy accents follow the purple */ --pau-g:#78b848; --pau-gl:rgba(120,184,72,.18); --pau-ink:#26262c; --pau-mut:#6b6f7b; --pau-line:#e9e4e6; --pau-soft:rgba(139,29,64,.05); --pau-amber:#9a6200; --pau-amberbg:#fdf2dc; }
+:root { --pau-p:#842484; --pau-pd:#842484; --pau-psoft:rgba(132,36,132,.08); --pau-pline:rgba(132,36,132,.22);   /* tf-pa-tabs-r1: the User Manual button's purple (assets/help/help-widget.css --avh-p2 / --avh-p) */
+        --pau-b:#842484; --pau-bd:#842484;   /* tf-pa-tabs-r1b: one colour on this page — the burgundy accents follow the purple */ --pau-g:#78b848; --pau-gl:rgba(120,184,72,.18); --pau-ink:#26262c; --pau-mut:#6b6f7b; --pau-line:#e9e4e6; --pau-soft:rgba(132,36,132,.05); --pau-amber:#9a6200; --pau-amberbg:#fdf2dc; }
 /* tf-pa-tabs-r1b: on this page the header bar is the same purple as the section bars (the shared bar stays burgundy elsewhere) */
-html body #page-topbar { background:var(--pau-p) !important; border-bottom-color:#731734 !important; box-shadow:0 2px 14px rgba(75,42,92,.28) !important; }
+html body #page-topbar { background:var(--pau-p) !important; border-bottom-color:#6d1e6d !important; box-shadow:0 2px 14px rgba(75,42,92,.28) !important; }
 html body #page-topbar .avbar-brand { border-right-color:rgba(255,255,255,.3); }
 html body #page-topbar .avbar-link:hover, html body #page-topbar .btn-ghost-secondary:hover { background:rgba(255,255,255,.14) !important; }
 html body #page-topbar .avps-box:focus-within { border-color:#f5c542; box-shadow:0 0 0 .2rem rgba(245,197,66,.35); }
-.page-content .pd-page-header { background:#fff !important; border:1px solid var(--pau-line); border-left:5px solid var(--pau-p); box-shadow:0 2px 10px rgba(139,29,64,.05) !important; padding:1rem 1.25rem; margin-bottom:1rem; }
+.page-content .pd-page-header { background:#fff !important; border:1px solid var(--pau-line); border-left:5px solid var(--pau-p); box-shadow:0 2px 10px rgba(132,36,132,.05) !important; padding:1rem 1.25rem; margin-bottom:1rem; }
 .page-content .pd-page-header .pd-title-block h4 { color:var(--pau-pd) !important; font-family:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; font-size:1.45rem; }
 .page-content .pd-page-header .pd-title-block h4 i { color:var(--pau-p); opacity:1 !important; }
 .page-content .pd-page-header .pd-title-block small { color:var(--pau-mut) !important; font-size:.85rem; }
@@ -26,8 +26,8 @@ html body #page-topbar .avps-box:focus-within { border-color:#f5c542; box-shadow
 .page-content .pd-date-pill i { color:var(--pau-b); }
 .page-content #usdRateEditBtn { color:var(--pau-b) !important; }
 .page-content .pd-bank-chip { border:1px solid var(--pau-line) !important; box-shadow:none !important; border-radius:12px; }
-.page-content .pd-bank-icon { background:rgba(139,29,64,.08) !important; color:var(--pau-b) !important; }
-.page-content .pd-section { box-shadow:0 1px 3px rgba(139,29,64,.06),0 6px 18px rgba(139,29,64,.05) !important; border:1px solid var(--pau-line) !important; border-radius:14px !important; }
+.page-content .pd-bank-icon { background:rgba(132,36,132,.08) !important; color:var(--pau-b) !important; }
+.page-content .pd-section { box-shadow:0 1px 3px rgba(132,36,132,.06),0 6px 18px rgba(132,36,132,.05) !important; border:1px solid var(--pau-line) !important; border-radius:14px !important; }
 .page-content .pd-header-requests, .page-content .pd-header-utility, .page-content .pd-header-expenses, .page-content .pd-header-allocation { background:var(--pau-p) !important; color:#fff; }
 .page-content .pd-section-header h5, .page-content .pd-section-header .label-sub { color:#fff !important; }
 .page-content #payeeTable > thead > tr > th, .page-content #approvedExpensesTable > thead > tr > th, .page-content #utilityBillTable > thead > tr > th, .page-content #driverAllocationRequestsTable > thead > tr > th,
@@ -46,7 +46,7 @@ html body #page-topbar .avps-box:focus-within { border-color:#f5c542; box-shadow
 .page-content .pd-header-requests .label-sub::after { content:' · click a payee to open its requests'; font-weight:400; opacity:.8; }
 /* the status pills on the group rows */
 .pau-st { display:inline-block; margin-left:8px; padding:2px 9px; border-radius:20px; font-size:.72rem; font-weight:600; vertical-align:middle; white-space:nowrap; }
-.pau-st.aw { background:rgba(139,29,64,.12); color:var(--pau-b); }
+.pau-st.aw { background:rgba(132,36,132,.12); color:var(--pau-b); }
 .pau-st.ok { background:var(--pau-gl); color:var(--pau-g); }
 /* the category tabs */
 .pau-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; }
@@ -72,12 +72,12 @@ html body #page-topbar .avps-box:focus-within { border-color:#f5c542; box-shadow
 .pau-card .nn { font-size:1.7rem; font-weight:800; line-height:1.05; margin-top:4px; letter-spacing:-.02em; }
 .pau-card .nn small { font-size:.85rem; font-weight:500; color:var(--pau-mut); margin-left:5px; letter-spacing:0; }
 .pau-card.ok .ic { background:var(--pau-gl); color:var(--pau-g); } .pau-card.ok .nn { color:var(--pau-g); }
-.pau-card.pend .ic { background:rgba(139,29,64,.08); color:var(--pau-b); } .pau-card.pend .nn { color:var(--pau-b); }
+.pau-card.pend .ic { background:rgba(132,36,132,.08); color:var(--pau-b); } .pau-card.pend .nn { color:var(--pau-b); }
 .pau-card.adv .ic { background:var(--pau-amberbg); color:var(--pau-amber); } .pau-card.adv .nn { color:var(--pau-amber); }
 button.pau-card.next { width:100%; cursor:pointer; border:1.5px solid var(--pau-b); background:var(--pau-soft); position:relative; transition:box-shadow .15s, background .15s; }
-button.pau-card.next:hover { box-shadow:0 6px 16px rgba(139,29,64,.16); background:#fff; }
+button.pau-card.next:hover { box-shadow:0 6px 16px rgba(132,36,132,.16); background:#fff; }
 button.pau-card.next:focus-visible { outline:3px solid #e9c46a; outline-offset:2px; }
-button.pau-card.next .ic { background:rgba(139,29,64,.16); color:var(--pau-b); }
+button.pau-card.next .ic { background:rgba(132,36,132,.16); color:var(--pau-b); }
 button.pau-card.next .tt, button.pau-card.next .nn { color:var(--pau-b); }
 button.pau-card.next .chev { position:absolute; right:12px; top:12px; color:var(--pau-b); transition:transform .15s; }
 button.pau-card.next[aria-expanded="true"] .chev { transform:rotate(180deg); }
@@ -89,14 +89,14 @@ button.pau-card.next[aria-expanded="true"] .chev { transform:rotate(180deg); }
 .pau-head { display:flex; align-items:center; gap:10px; }
 .pau-head h5 { margin:0; color:var(--pau-p); font-weight:700; font-size:1.12rem; font-family:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
 .pau-close { margin-left:auto; border:0; background:none; color:var(--pau-b); font-weight:600; display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; }
-.pau-close:hover { background:rgba(139,29,64,.08); }
+.pau-close:hover { background:rgba(132,36,132,.08); }
 .pau-ctl { display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin:12px 0 6px; font-size:.88rem; }
 .pau-ctl label { font-weight:600; color:var(--pau-ink); margin:0; }
 .pau-ctl select, .pau-ctl input[type=month] { border:1px solid #d9d2d5; border-radius:8px; padding:6px 10px; font-size:.88rem; background:#fff; min-width:150px; }
 .pau-range { font-weight:600; color:var(--pau-ink); padding-left:12px; border-left:1px solid var(--pau-line); }
 .pau-note { color:var(--pau-mut); font-size:.8rem; margin:0 0 10px; }
 .pau-prog { font-size:.82rem; color:var(--pau-mut); display:flex; align-items:center; gap:8px; margin:6px 0 10px; }
-.pau-prog .sp { width:14px; height:14px; border:2px solid rgba(139,29,64,.30); border-top-color:var(--pau-b); border-radius:50%; animation:pau-rot .7s linear infinite; }
+.pau-prog .sp { width:14px; height:14px; border:2px solid rgba(132,36,132,.30); border-top-color:var(--pau-b); border-radius:50%; animation:pau-rot .7s linear infinite; }
 @keyframes pau-rot { to { transform:rotate(360deg); } }
 .pau-table { width:100%; border-collapse:separate; border-spacing:0; font-size:.86rem; }
 .pau-table th { background:#f6f4f5; color:#4a4d57; font-weight:600; padding:8px 10px; border-bottom:1px solid var(--pau-line); white-space:nowrap; position:sticky; top:0; }
@@ -108,7 +108,7 @@ button.pau-card.next[aria-expanded="true"] .chev { transform:rotate(180deg); }
 .pau-table tr.tg .rv { display:inline-flex; align-items:center; gap:6px; font-weight:500; font-size:.8rem; color:var(--pau-g); cursor:pointer; white-space:nowrap; }
 .pau-table td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .pau-pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.76rem; font-weight:600; white-space:nowrap; }
-.pau-pill.awaiting { background:rgba(139,29,64,.12); color:var(--pau-b); }
+.pau-pill.awaiting { background:rgba(132,36,132,.12); color:var(--pau-b); }
 .pau-pill.rate { background:#e9eefb; color:#2c4a9a; }
 .pau-pill.not_submitted { background:var(--pau-amberbg); color:var(--pau-amber); }
 .pau-act { display:inline-flex; align-items:center; gap:5px; border-radius:8px; padding:5px 12px; font-size:.8rem; font-weight:600; text-decoration:none !important; white-space:nowrap; border:1px solid transparent; }
@@ -125,7 +125,7 @@ button.pau-card.next[aria-expanded="true"] .chev { transform:rotate(180deg); }
 .pau-search .box { flex:1; min-width:240px; position:relative; }
 .pau-search .box i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--pau-mut); }
 .pau-search .box input { width:100%; height:42px; border:1px solid #d9d2d5; border-radius:9px; padding:0 12px 0 36px; font-size:.92rem; }
-.pau-search .box input:focus { outline:none; border-color:var(--pau-b); box-shadow:0 0 0 .2rem rgba(139,29,64,.14); }
+.pau-search .box input:focus { outline:none; border-color:var(--pau-b); box-shadow:0 0 0 .2rem rgba(132,36,132,.14); }
 .pau-search .go { height:42px; padding:0 22px; border:0; border-radius:9px; background:var(--pau-b); color:#fff; font-weight:600; }
 .pau-search .go:hover { background:var(--pau-bd); }
 .pau-search .rs { height:42px; padding:0 18px; border:1px solid #d9d2d5; border-radius:9px; background:#fff; color:var(--pau-ink); font-weight:600; }

@@ -16,7 +16,7 @@ $adds     = $mf_add ?? [];
 <body class="mfl-body">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap">
 <style>
-    :root { --mf-bg:#f6f4f7; --mf-card:#fff; --mf-fg:#22202a; --mf-mut:#6b6577; --mf-line:#e3dde6; --mf-p:#8b1d40; --mf-p-soft:#f3e6ea; --mf-g:#78b848; --mf-g-dark:#5d9634; --mf-g-soft:#eef6e6; --mf-amber:#1a1a1a; --mf-amber-soft:#fcf1dc; --mf-red:#b23a32; --mf-red-soft:#fbe9e7; --mf-gold:#e0a526;
+    :root { --mf-bg:#f6f4f7; --mf-card:#fff; --mf-fg:#22202a; --mf-mut:#6b6577; --mf-line:#e3dde6; --mf-p:#842484; --mf-p-soft:#f3e6ea; --mf-g:#78b848; --mf-g-dark:#5d9634; --mf-g-soft:#eef6e6; --mf-amber:#1a1a1a; --mf-amber-soft:#fcf1dc; --mf-red:#b23a32; --mf-red-soft:#fbe9e7; --mf-gold:#e0a526;
             --mf-display:"Source Serif 4", Georgia, serif; --mf-body:"Source Sans 3", "Segoe UI", Arial, sans-serif; }
     body.mfl-body { background:var(--mf-bg) !important; color:var(--mf-fg); font-family:var(--mf-body); font-size:15px; line-height:1.45; }
     .tdk-top { position:sticky; top:0; z-index:1030; display:flex; align-items:center; gap:14px; padding:10px 28px; }
@@ -35,7 +35,7 @@ $adds     = $mf_add ?? [];
     .mfl-search { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; position:relative; }
     .mfl-search .box { position:relative; flex:1 1 320px; }
     .mfl-search input { width:100%; height:46px; border-radius:23px; border:1.5px solid var(--mf-line); background:var(--mf-card); color:var(--mf-fg); padding:0 18px; font:inherit; font-size:15px; }
-    .mfl-search input:focus { outline:none; border-color:var(--mf-p); box-shadow:0 0 0 3px rgba(139,29,64,.18); }
+    .mfl-search input:focus { outline:none; border-color:var(--mf-p); box-shadow:0 0 0 3px rgba(132,36,132,.18); }
     .mfl-btn { font:inherit; font-weight:600; border-radius:22px; padding:9px 18px; border:1px solid var(--mf-line); background:var(--mf-card); color:var(--mf-fg); cursor:pointer; text-decoration:none !important; display:inline-block; line-height:1.3; }
     .mfl-btn:focus-visible { outline:2px solid var(--mf-p); outline-offset:2px; }
     .mfl-btn-green { background:var(--mf-g); border-color:var(--mf-g); color:#fff !important; }

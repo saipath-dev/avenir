@@ -1,5 +1,5 @@
 /* tf-help-r2 — the User Manual button and panel (one manual per section). Everything is scoped under #avh-root. */
-#avh-root { --avh-p: #602638; --avh-p2: #8b1d40; --avh-ink: #2c1c21; --avh-muted: #6b6372; --avh-line: #efdce2; --avh-soft: #f9f1f4;
+#avh-root { --avh-p: #5b195b; --avh-p2: #842484; --avh-ink: #2c1c21; --avh-muted: #6b6372; --avh-line: #efdce2; --avh-soft: #f9f1f4;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 14px; line-height: 1.45; color: var(--avh-ink); }
 #avh-root *, #avh-root *::before, #avh-root *::after { box-sizing: border-box; }
 

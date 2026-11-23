@@ -322,7 +322,7 @@ async function viewStatement(id) {
     $('stmtView').scrollIntoView({ behavior: 'smooth' });
 }
 async function acceptStatement(id) {
-    const r = await Swal.fire({ title: 'Accept statement ' + id + '?', text: 'Its lines are locked and can then be matched. Nothing is posted to the ledger.', showCancelButton: true, confirmButtonText: 'Accept', confirmButtonColor: '#8b1d40' });
+    const r = await Swal.fire({ title: 'Accept statement ' + id + '?', text: 'Its lines are locked and can then be matched. Nothing is posted to the ledger.', showCancelButton: true, confirmButtonText: 'Accept', confirmButtonColor: '#842484' });
     if (!r.isConfirmed) return;
     const j = await B.post('statement/accept', { id }); B.done(j, () => { loadStatements(); viewStatement(id); loadDay(); });
 }
@@ -391,7 +391,7 @@ async function matchSelected() {
         extra = v.diff_reason === 'partial' ? { partial: 1, expected_date: v.expected_date, note: v.note } : { diff_reason: v.diff_reason, note: v.note };
     }
     const timing = selTiming();
-    if (timing.length) { const r = await Swal.fire({ title: 'Clear the timing classification?', text: timing.length + ' selected item(s) are timing items. Matching clears their timing classification (kept in the record; an undo restores it).', showCancelButton: true, confirmButtonText: 'Match', confirmButtonColor: '#8b1d40' }); if (!r.isConfirmed) return; }
+    if (timing.length) { const r = await Swal.fire({ title: 'Clear the timing classification?', text: timing.length + ' selected item(s) are timing items. Matching clears their timing classification (kept in the record; an undo restores it).', showCancelButton: true, confirmButtonText: 'Match', confirmButtonColor: '#842484' }); if (!r.isConfirmed) return; }
     B.done(await B.post('match/create', Object.assign({ account: ACCT.id, line_ids, book_keys, method: 'manual', expect_timing: timing }, extra)), () => { loadOpen(); loadDay(); });
 }
 async function extendMatch(id) {
@@ -542,7 +542,7 @@ async function viewRecord(id) {
         + '<table class="t mb-2"><tbody>' + lines.map(x => '<tr><th style="width:34%;text-transform:none;letter-spacing:0;font-size:12.5px;position:static">' + x[0] + '</th><td>' + x[1] + '</td></tr>').join('') + '</tbody></table>'
         + '<div class="small fw-semibold">Unmatched items as recorded (' + (s.unmatched || []).length + ')</div><div class="scroll" style="max-height:260px"><table class="t"><tbody>' + (items || '<tr><td class="muted">None.</td></tr>') + '</tbody></table></div>'
         + '<div class="small2 muted mt-2">Now: ' + B.esc(j.now.status_label || '') + ' · bank − book ' + B.money(j.now.difference_lkr) + ' · not posted now: ' + B.esc(j.now.pending ? j.now.pending.summary : 'none') + '</div></div>';
-    Swal.fire({ title: 'Daily record #' + r.id + ' · ' + r.rec_date, html, width: 900, confirmButtonColor: '#8b1d40' });
+    Swal.fire({ title: 'Daily record #' + r.id + ' · ' + r.rec_date, html, width: 900, confirmButtonColor: '#842484' });
 }
 async function reviewDay(id, decision) { const v = await B.ask(decision === 'reviewed' ? 'Mark daily record ' + id + ' as reviewed' : 'Return daily record ' + id, [{ name: 'note', label: decision === 'reviewed' ? 'Note (optional)' : 'Reason', min: decision === 'reviewed' ? 0 : 5 }], 'OK'); if (!v) return; B.done(await B.post('day/review', { id, decision, note: v.note }), () => { loadDays(); loadDay(); }); }
 const short = s => { if (!s) return ''; const t = String(s); return t.length > 160 ? '<details><summary class="small2">' + B.esc(t.slice(0, 120)) + '…</summary><pre class="small2 mb-0" style="white-space:pre-wrap">' + B.esc(t) + '</pre></details>' : '<span class="small2">' + B.esc(t) + '</span>'; };

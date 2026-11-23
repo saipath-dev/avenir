@@ -231,13 +231,13 @@
 
         /* Tile Color 4 - Hotel Management (Purple) */
         .t-card-color-4 {
-            border-color: #ba1d4f;
-            background: rgba(186, 29, 79, 0.03);
+            border-color: #b130b1;
+            background: rgba(177,48,177, 0.03);
         }
 
         .t-card-color-4:hover {
-            background: rgba(186, 29, 79, 0.15);
-            box-shadow: 0 8px 24px rgba(186, 29, 79, 0.7);
+            background: rgba(177,48,177, 0.15);
+            box-shadow: 0 8px 24px rgba(177,48,177, 0.7);
         }
 
         /* Tile Color 5 - Transport (Orange) */
@@ -497,9 +497,9 @@
                 </a>
                 <style>
                     .tourdesk-btn { display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 16px; border-radius:10px; color:#fff; font-weight:600; font-size:0.9rem; letter-spacing:.2px; white-space:nowrap; text-decoration:none;
-                                    background:linear-gradient(135deg, #e90c8b 0%, #972247 100%); box-shadow:0 3px 10px rgba(151,34,71,.35); transition:transform .3s ease, box-shadow .3s ease; }
+                                    background:linear-gradient(135deg, #e90c8b 0%, #6f1e6f 100%); box-shadow:0 3px 10px rgba(111,30,111,.35); transition:transform .3s ease, box-shadow .3s ease; }
                     .tourdesk-btn i { font-size:1rem; }
-                    .tourdesk-btn:hover, .tourdesk-btn:focus { color:#fff; text-decoration:none; transform:translateY(-2px); box-shadow:0 8px 24px rgba(151,34,71,.4); }
+                    .tourdesk-btn:hover, .tourdesk-btn:focus { color:#fff; text-decoration:none; transform:translateY(-2px); box-shadow:0 8px 24px rgba(111,30,111,.4); }
                     .tourdesk-btn:active { transform:translateY(-1px) scale(.97); transition-duration:.1s; }
                     @media (max-width: 767px) { .tourdesk-btn { height:32px; padding:0 12px; font-size:0.8rem; } }
                 </style>
@@ -510,7 +510,7 @@
             </div>
             <div id="menu_search_results" class="col-12 d-none mt-2"></div>
             <?php
-            $catColorMap = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#ba1d4f','#FF5722','#795548','#F44336'];
+            $catColorMap = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#b130b1','#FF5722','#795548','#F44336'];
             foreach ($allowed_categories as $catIndex => $cat):
                 $catColor = $catColorMap[$catIndex % count($catColorMap)];
                 $catAlpha = str_replace('#', '', $catColor);
@@ -544,7 +544,7 @@
 
         <!-- Per-category menu modals -->
         <?php
-        $catColorMap2 = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#ba1d4f','#FF5722','#795548','#F44336'];
+        $catColorMap2 = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#b130b1','#FF5722','#795548','#F44336'];
         if (!empty($allowed_categories)):
         foreach ($allowed_categories as $catIndex2 => $cat2):
             $catColor2 = $catColorMap2[$catIndex2 % count($catColorMap2)];

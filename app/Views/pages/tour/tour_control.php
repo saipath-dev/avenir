@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
-    /* ---------- Confirmed Tour (tf-control-r2) — Overview and Passengers & Rooming; reads only; Avenir purple #8b1d40, green #78b848 ---------- */
-    .oc { --p:#8b1d40; --g:#78b848; --ink:#1A1A1A; --line:#d9d3dd; --soft:#f6eef1; color:var(--ink); font-size:13px; }
+    /* ---------- Confirmed Tour (tf-control-r2) — Overview and Passengers & Rooming; reads only; Avenir purple #842484, green #78b848 ---------- */
+    .oc { --p:#842484; --g:#78b848; --ink:#1A1A1A; --line:#d9d3dd; --soft:#f6eef1; color:var(--ink); font-size:13px; }
     .oc .oc-back { display:inline-block; margin-bottom:4px; color:var(--p); font-weight:600; text-decoration:none; font-size:12px; }
     .oc .oc-top { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:8px; }
     .oc h2 { font-size:21px; font-weight:800; margin:0; color:var(--p); letter-spacing:-.2px; }
@@ -80,7 +80,7 @@
     /* tf-control-r6 (19 Nov 2026): the last differences from the mock-up — the title row carries only the title and one soft pill,
        the fact strip uses the handshake and the landing / take-off aircraft, the legend is one line with its divider */
     .oc .oc-top { justify-content:space-between; flex-wrap:nowrap; } .oc .oc-top .oc-pill { margin-left:auto; background:#f3dbe3; color:var(--p); font-weight:800; text-transform:uppercase; letter-spacing:.03em; font-size:13.5px; padding:6px 20px; border-radius:18px; white-space:nowrap; }
-    .oc .oc-top .oc-pill.red { background:#fbdde3; color:#a3123a; }
+    .oc .oc-top .oc-pill.red { background:#fbdde3; color:#9b2a9b; }
     .oc .oc-fact i.mdi { font-size:26px; line-height:1; color:var(--p); }
     #oc .oc-foot { flex-wrap:nowrap; font-size:11.5px; } #oc .oc-foot > span:first-child { min-width:0; } #oc .oc-foot .lg { border-left:1px solid #b9a9af; padding-left:4px; white-space:nowrap; flex:none; } #oc .oc-foot .dot { margin:0 4px 0 10px; }
     #oc .oc-fact:not(.nw) small { white-space:nowrap; } #oc .oc-fact:not(.nw) b { overflow-wrap:anywhere; }
@@ -115,7 +115,7 @@
     .oc .pr-stay .req { color:var(--p); font-weight:700; font-size:14px; background:var(--soft); border-radius:5px; padding:3px 10px; }
     .oc .pr-grid { display:grid; grid-template-columns:2.4fr 1fr; gap:14px; align-items:start; }
     .oc .ok-pill { display:inline-flex; align-items:center; gap:6px; background:#e4f4d6; color:#2f6d12; border-radius:12px; padding:1px 10px; font-size:12px; font-weight:600; }
-    .oc .warn-pill { display:inline-block; background:#fbdde3; color:#a3123a; border-radius:12px; padding:1px 10px; font-size:12px; font-weight:600; }
+    .oc .warn-pill { display:inline-block; background:#fbdde3; color:#9b2a9b; border-radius:12px; padding:1px 10px; font-size:12px; font-weight:600; }
     .oc .pr-note { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12px; margin:-6px 2px 10px 2px; } .oc .pr-note i { color:var(--p); }
     .oc .pr-un .oc-row i { color:var(--p); }
     .oc .pr-det { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; border:1px solid var(--line); border-radius:7px; background:#fff; padding:8px 14px; margin-bottom:12px; }
@@ -124,7 +124,7 @@
     .oc .pr-det select, .oc .pr-det input { width:100%; border:1px solid var(--line); border-radius:5px; padding:4px 8px; font-size:13px; background:#fff; color:#1A1A1A; }
     .oc .pr-det select:disabled, .oc .pr-det input:disabled { background:#f7f7f7; }
     .oc .st-pill { display:inline-block; border-radius:12px; padding:1px 10px; font-size:12px; font-weight:600; white-space:nowrap; }
-    .oc .st-pill.red { background:#fbdde3; color:#a3123a; } .oc .st-pill.amber { background:#fdeccb; color:#8a5200; } .oc .st-pill.green { background:#e4f4d6; color:#2f6d12; } .oc .st-pill.grey { background:#eee; color:#1A1A1A; }
+    .oc .st-pill.red { background:#fbdde3; color:#9b2a9b; } .oc .st-pill.amber { background:#fdeccb; color:#8a5200; } .oc .st-pill.green { background:#e4f4d6; color:#2f6d12; } .oc .st-pill.grey { background:#eee; color:#1A1A1A; }
     .oc .tp-empty { padding:12px 14px; }
     .oc .ver { display:inline-block; background:#f1f1f1; border-radius:10px; padding:1px 9px; font-size:11.5px; }
     /* a narrow window: the fields go onto tidy rows of their own, in the same order — never on top of each other */
@@ -133,34 +133,34 @@
     @media (max-width:640px) { .oc .oc-cards { grid-template-columns:repeat(2, 1fr); } .oc .oc-two, .oc .pr-grid { grid-template-columns:1fr; } .oc .oc-ban { padding-left:18px; flex-wrap:wrap; } .oc table.ow .gbtn.act { min-width:0; } .oc .oc-box { overflow-x:auto; } }
     /* tf-supdesk-r1: Supplier Emails & Vouchers */
     .oc .sm-t td { vertical-align:top; } .oc .sm-t td small { display:block; font-size:12px; color:#5f6470; margin-top:2px; } .oc .sm-mut { color:#5f6470; font-size:12.5px; }
-    .oc .sm-a { white-space:nowrap; } .oc .sm-b { display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 11px; margin:0 4px 4px 0; border:1.5px solid #8b1d40; border-radius:7px; background:#fff; color:#8b1d40; font-size:12.5px; font-weight:700; text-decoration:none; cursor:pointer; }
-    .oc .sm-b:hover { background:#f8f1f3; } .oc .sm-b.go { background:#78b848; border-color:#78b848; color:#fff; } .oc .sm-b.go.again { background:#8b1d40; border-color:#8b1d40; } .oc .sm-b:disabled { background:#c9c9c9; border-color:#c9c9c9; color:#fff; cursor:not-allowed; }
+    .oc .sm-a { white-space:nowrap; } .oc .sm-b { display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 11px; margin:0 4px 4px 0; border:1.5px solid #842484; border-radius:7px; background:#fff; color:#842484; font-size:12.5px; font-weight:700; text-decoration:none; cursor:pointer; }
+    .oc .sm-b:hover { background:#f8f1f3; } .oc .sm-b.go { background:#78b848; border-color:#78b848; color:#fff; } .oc .sm-b.go.again { background:#842484; border-color:#842484; } .oc .sm-b:disabled { background:#c9c9c9; border-color:#c9c9c9; color:#fff; cursor:not-allowed; }
     .oc .sm-sub td { background:#fbf7f9; padding-top:6px; padding-bottom:8px; font-size:12.5px; } .oc .sm-sub .bad, .oc .sm-t .bad { color:#a3261d; font-weight:700; } .oc .sm-sub .warn { color:#8a5a00; font-weight:600; } .oc .sm-sub .ok { color:#3f7a17; font-weight:700; }
-    .oc .sm-h { display:flex; gap:14px; flex-wrap:wrap; padding:3px 0; } .oc .sm-h a { color:#8b1d40; font-weight:700; } .oc .sm-h span:first-child { min-width:118px; }
-    .oc .sm-c { border:1.5px solid #8b1d40; border-radius:9px; background:#fff; padding:10px 14px; margin:6px 0; display:grid; gap:7px; font-size:13.5px; max-width:720px; } .oc .sm-c label { display:flex; gap:8px; align-items:center; font-weight:600; cursor:pointer; margin:0; }
-    .oc .sm-c input[type=checkbox] { width:17px; height:17px; accent-color:#8b1d40; } .oc .sm-c input[type=text] { height:34px; border:1.5px solid #d9d3dd; border-radius:7px; padding:0 10px; font-size:13.5px; }
+    .oc .sm-h { display:flex; gap:14px; flex-wrap:wrap; padding:3px 0; } .oc .sm-h a { color:#842484; font-weight:700; } .oc .sm-h span:first-child { min-width:118px; }
+    .oc .sm-c { border:1.5px solid #842484; border-radius:9px; background:#fff; padding:10px 14px; margin:6px 0; display:grid; gap:7px; font-size:13.5px; max-width:720px; } .oc .sm-c label { display:flex; gap:8px; align-items:center; font-weight:600; cursor:pointer; margin:0; }
+    .oc .sm-c input[type=checkbox] { width:17px; height:17px; accent-color:#842484; } .oc .sm-c input[type=text] { height:34px; border:1.5px solid #d9d3dd; border-radius:7px; padding:0 10px; font-size:13.5px; }
     /* tf-replies-r1: the e-mail review area of one supplier booking */
-    .oc .sm-b.on { background:#8b1d40; color:#fff; } .oc .sm-a { white-space:normal; min-width:330px; }
-    .oc .sm-r { border:1.5px solid #d9d3dd; border-radius:10px; background:#fff; padding:12px 16px; margin:8px 0 4px; display:grid; gap:8px; font-size:13.5px; } .oc .sm-r .tt { font-size:15px; font-weight:800; color:#8b1d40; }
+    .oc .sm-b.on { background:#842484; color:#fff; } .oc .sm-a { white-space:normal; min-width:330px; }
+    .oc .sm-r { border:1.5px solid #d9d3dd; border-radius:10px; background:#fff; padding:12px 16px; margin:8px 0 4px; display:grid; gap:8px; font-size:13.5px; } .oc .sm-r .tt { font-size:15px; font-weight:800; color:#842484; }
     .oc .sm-rp { border:1px solid #e7dfe3; border-radius:8px; padding:9px 12px; background:#fbf7f9; } .oc .sm-rp .hd { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:0; font-weight:400; cursor:pointer; } .oc .sm-rp .sj { font-weight:700; margin-top:4px; }
     .oc .sm-rp .tx { white-space:pre-wrap; margin-top:5px; font-size:13.5px; line-height:1.5; max-height:260px; overflow:auto; background:#fff; border:1px solid #eee6ea; border-radius:6px; padding:8px 10px; }
-    .oc .sm-r .at { display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; } .oc .sm-r .at a { color:#8b1d40; font-weight:700; }
+    .oc .sm-r .at { display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; } .oc .sm-r .at a { color:#842484; font-weight:700; }
     .oc .sm-f { border-top:1px solid #e7dfe3; padding-top:9px; display:grid; gap:7px; } .oc .sm-f .rw { display:flex; gap:8px; flex-wrap:wrap; } .oc .sm-f input[type=text], .oc .sm-f input[type=date], .oc .sm-f select, .oc .sm-f textarea { border:1.5px solid #d9d3dd; border-radius:7px; padding:6px 10px; font-size:13.5px; flex:1 1 200px; min-width:0; }
-    .oc .sm-f textarea { width:100%; } .oc .sm-f .ck { display:flex; gap:8px; align-items:center; font-weight:600; margin:0; cursor:pointer; } .oc .sm-f .ck input { width:17px; height:17px; accent-color:#8b1d40; }
+    .oc .sm-f textarea { width:100%; } .oc .sm-f .ck { display:flex; gap:8px; align-items:center; font-weight:600; margin:0; cursor:pointer; } .oc .sm-f .ck input { width:17px; height:17px; accent-color:#842484; }
     /* tf-supdesk-r2: Supplier Emails — three panes (bookings · thread · review) */
     .oc .se { display:grid; grid-template-columns:minmax(230px,0.9fr) minmax(380px,1.9fr) minmax(300px,1.2fr); gap:14px; align-items:start; }
-    .oc .se-col { background:#fff; border:1px solid #e7dfe3; border-radius:10px; overflow:hidden; min-width:0; } .oc .se-h { background:#8b1d40; color:#fff; font-weight:800; font-size:15.5px; padding:11px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; } .oc .se-h small { font-weight:500; opacity:.9; }
-    .oc .se-h .chip { background:#fff; color:#8b1d40; font-size:12.5px; font-weight:800; padding:4px 11px; border-radius:6px; white-space:nowrap; } .oc .se-h .chip.green { color:#3f7a17; } .oc .se-h .chip.red { color:#a3261d; } .oc .se-h .chip.grey { color:#5f6470; }
+    .oc .se-col { background:#fff; border:1px solid #e7dfe3; border-radius:10px; overflow:hidden; min-width:0; } .oc .se-h { background:#842484; color:#fff; font-weight:800; font-size:15.5px; padding:11px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; } .oc .se-h small { font-weight:500; opacity:.9; }
+    .oc .se-h .chip { background:#fff; color:#842484; font-size:12.5px; font-weight:800; padding:4px 11px; border-radius:6px; white-space:nowrap; } .oc .se-h .chip.green { color:#3f7a17; } .oc .se-h .chip.red { color:#a3261d; } .oc .se-h .chip.grey { color:#5f6470; }
     .oc .se-b { padding:10px 12px 12px; display:grid; gap:8px; font-size:13.5px; } .oc .se-sub { padding:9px 14px; border-bottom:1px solid #e7dfe3; font-weight:700; font-size:13.5px; } .oc .se-sub small { display:block; font-weight:400; color:#5f6470; margin-top:2px; }
-    .oc .se-g { background:#f1ecee; font-weight:800; padding:7px 10px; border-radius:7px; font-size:14px; } .oc .se-g i { color:#8b1d40; margin-right:6px; }
-    .oc .se-i { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid #e7dfe3; border-radius:8px; cursor:pointer; color:#1a1a1a; text-decoration:none; } .oc .se-i:hover { border-color:#8b1d40; } .oc .se-i.on { background:#f8eef2; border-color:#8b1d40; border-left:4px solid #8b1d40; }
+    .oc .se-g { background:#f1ecee; font-weight:800; padding:7px 10px; border-radius:7px; font-size:14px; } .oc .se-g i { color:#842484; margin-right:6px; }
+    .oc .se-i { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid #e7dfe3; border-radius:8px; cursor:pointer; color:#1a1a1a; text-decoration:none; } .oc .se-i:hover { border-color:#842484; } .oc .se-i.on { background:#f8eef2; border-color:#842484; border-left:4px solid #842484; }
     .oc .se-i .nm { flex:1 1 auto; min-width:0; } .oc .se-i .nm b { display:block; } .oc .se-i small { color:#5f6470; font-size:12px; } .oc .se-i .dot { width:10px; height:10px; border-radius:50%; flex:none; background:#b9bcc4; } .oc .se-i .dot.green { background:#4caf2f; } .oc .se-i .dot.amber { background:#f0a800; } .oc .se-i .dot.red { background:#d93025; }
-    .oc .se-m { border:1px solid #e7dfe3; border-radius:8px; background:#fbf7f9; } .oc .se-m.in { background:#f6fbf2; border-color:#d5e9c2; } .oc .se-m .hd { display:flex; align-items:center; gap:9px; padding:8px 10px; } .oc .se-m .hd > i { color:#8b1d40; } .oc .se-m .se-tl { flex:1 1 auto; min-width:0; display:block; } .oc .se-m .se-tl small { display:block; color:#5f6470; font-size:12px; margin-top:2px; } .oc .se-m .hd .sm-b { margin:0; white-space:nowrap; flex:none; } .oc .se-m .hd .st-pill { flex:none; }
+    .oc .se-m { border:1px solid #e7dfe3; border-radius:8px; background:#fbf7f9; } .oc .se-m.in { background:#f6fbf2; border-color:#d5e9c2; } .oc .se-m .hd { display:flex; align-items:center; gap:9px; padding:8px 10px; } .oc .se-m .hd > i { color:#842484; } .oc .se-m .se-tl { flex:1 1 auto; min-width:0; display:block; } .oc .se-m .se-tl small { display:block; color:#5f6470; font-size:12px; margin-top:2px; } .oc .se-m .hd .sm-b { margin:0; white-space:nowrap; flex:none; } .oc .se-m .hd .st-pill { flex:none; }
     .oc .se-m .bd { border-top:1px solid #e1edd6; padding:9px 12px 11px; background:#fff; border-radius:0 0 8px 8px; display:grid; gap:5px; } .oc .se-m .tx { white-space:pre-wrap; line-height:1.5; max-height:300px; overflow:auto; padding-top:6px; border-top:1px solid #eee; margin-top:3px; }
     .oc .att { display:flex; align-items:center; gap:9px; border:1px solid #e7dfe3; border-radius:8px; padding:6px 10px; background:#fbf7f9; } .oc .att b { flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; } .oc .att .sm-b { margin:0; }
     .oc .se-acts { display:flex; flex-wrap:wrap; gap:0; padding-top:4px; } .oc .se-b .bad { color:#a3261d; font-weight:700; } .oc .se-b .warn { color:#8a5a00; font-weight:600; } .oc .se-b .ok { color:#3f7a17; font-weight:800; }
     .oc .se-t { width:100%; border-collapse:collapse; font-size:13px; } .oc .se-t th { background:#f1ecee; text-align:left; padding:6px 8px; font-size:12px; } .oc .se-t td { padding:6px 8px; border-bottom:1px solid #eee6ea; } .oc .se-t input { width:16px; height:16px; accent-color:#78b848; }
-    .oc .se-b .ref { color:#8b1d40; font-size:16px; } .oc .se-b .lb { font-weight:700; margin:4px 0 -4px; } .oc .se-b > input[type=text], .oc .se-b > select, .oc .se-b .rw input { border:1.5px solid #d9d3dd; border-radius:7px; padding:7px 10px; font-size:13.5px; width:100%; min-width:0; } .oc .se-b .rw { display:flex; gap:8px; }
+    .oc .se-b .ref { color:#842484; font-size:16px; } .oc .se-b .lb { font-weight:700; margin:4px 0 -4px; } .oc .se-b > input[type=text], .oc .se-b > select, .oc .se-b .rw input { border:1.5px solid #d9d3dd; border-radius:7px; padding:7px 10px; font-size:13.5px; width:100%; min-width:0; } .oc .se-b .rw { display:flex; gap:8px; }
     .oc .se-go { height:44px; border:0; border-radius:8px; background:#78b848; color:#fff; font-size:16px; font-weight:800; cursor:pointer; } .oc .se-go:disabled { background:#c9c9c9; cursor:not-allowed; } .oc .se-n { background:#f4f1f2; border-radius:8px; padding:9px 11px; font-size:12.5px; color:#444; }
     @media (max-width:640px) { .oc .se { grid-template-columns:1fr; } }
 </style>
@@ -305,7 +305,7 @@
                     <div class="oc-row"><i class="bi bi-file-text lead"></i><span class="grow">Driver / guide itinerary • ${ver}${t.quote_version ? ' • Final' : ''}</span>${btn(prog, 'Preview', 'bi-eye')}${btn(prog, 'Print', 'bi-printer')}${btn(null, 'PDF', 'bi-file-earmark-pdf')}</div></div>
                 <div class="oc-box"><div class="h">Booking documents</div>
                     <div class="oc-docs">${btn(toHotel, 'Hotel request &amp; voucher', 'oci oci-bed')}${btn(toHotel, 'Meal / safari vouchers', 'oci oci-meal')}${btn(toHotel, 'Entrance tickets', 'bi-ticket-perforated oc-tilt')}</div>
-                    <div class="oc-row"><i class="bi oci oci-car lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#8b1d40;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
+                    <div class="oc-row"><i class="bi oci oci-car lead"></i><span>Driver agreement &amp; invoice &rarr; ${toTrans ? `<a href="${toTrans}" target="_blank" style="color:#842484;font-weight:600">Open Transport</a>` : 'Open Transport'}</span></div></div>
             </div>
             <div class="oc-foot"><span>Hotel bookings, vouchers and entrances managed here • Transport tasks linked to Transport panel • One shared status, no duplicate entry</span>
                 <span class="lg"><span class="dot red"></span><b>RED:</b> Action needed <span class="dot amber"></span><b>AMBER:</b> Awaiting completion <span class="dot green"></span><b>GREEN:</b> Complete</span></div>`;
@@ -411,7 +411,7 @@
         const beds = rooms.reduce((n, r) => n + Number(r.beds || 0), 0);
         const mix = {}; rooms.forEach(r => { mix[r.code] = (mix[r.code] || 0) + 1; });
         const req = rooms.length ? Object.keys(mix).map(k => `${mix[k]} ${WORDS[k] || k} room${mix[k] === 1 ? '' : 's'}`).join(' + ') + ` • ${expected || beds} guest${(expected || beds) === 1 ? '' : 's'}` : 'No room mix recorded';
-        const g = n => n ? `<span data-prpax="${esc(n)}" style="cursor:pointer"><i class="bi bi-person" style="color:#8b1d40;margin-right:8px"></i>${esc(n)}</span>` : '<span>—</span>';
+        const g = n => n ? `<span data-prpax="${esc(n)}" style="cursor:pointer"><i class="bi bi-person" style="color:#842484;margin-right:8px"></i>${esc(n)}</span>` : '<span>—</span>';
         const rows = rooms.map((r, i) => { const free = Number(r.beds || 0) - r.guests.length;
             return `<tr><td><b>R${String(i + 1).padStart(2, '0')}</b></td><td>${WORDS[r.code] || esc(r.code)}</td><td>${g(r.guests[0])}</td><td>${g(r.guests[1])}${r.guests.length > 2 ? '<br>' + r.guests.slice(2).map(g).join('<br>') : ''}</td>
                 <td>${free <= 0 ? '<span class="ok-pill"><i class="bi bi-check-lg"></i> Assigned</span>' : `<span class="warn-pill">${free} bed${free === 1 ? '' : 's'} free</span>`}</td></tr>`; }).join('');
@@ -423,17 +423,17 @@
         return `
             <div class="pr-head"><h3><i class="bi bi-people"></i> Passengers &amp; Rooming</h3>
                 ${L.btn(null, 'Import passenger list', 'bi-upload')}${L.btn(L.toInq + '&tab=pax', 'Add passenger', 'bi-plus-lg')}${L.btn(L.toHotel, 'Export rooming list', 'bi-download', 'line')}</div>
-            <div class="pr-stats"><span><i class="bi bi-people" style="color:#8b1d40;margin-right:14px"></i><b>${expected || '—'}</b> expected</span><span><b>${names.length}</b> names entered</span>
+            <div class="pr-stats"><span><i class="bi bi-people" style="color:#842484;margin-right:14px"></i><b>${expected || '—'}</b> expected</span><span><b>${names.length}</b> names entered</span>
                 <span class="${missing ? 'miss' : ''}"><b>${missing}</b> names missing</span><span><b>${assigned}</b> assigned • <b>${un.length + missing}</b> unassigned</span></div>
-            <div class="pr-stay"><span><i class="bi oci oci-bed" style="color:#8b1d40;margin-right:8px"></i>Hotel stay</span>
+            <div class="pr-stay"><span><i class="bi oci oci-bed" style="color:#842484;margin-right:8px"></i>Hotel stay</span>
                 <select id="pr_stay">${stays.length ? stays.map((s, i) => `<option value="${i}"${s === st ? ' selected' : ''}>${esc(s.hotel || 'Hotel')} • ${dm(s.check_in)} – ${dm(s.check_out)}</option>`).join('') : '<option>No hotel stay on this tour</option>'}</select>
-                <span style="border-left:1px solid #d9d3dd;padding-left:16px"><i class="bi bi-door-closed" style="color:#8b1d40;margin-right:8px"></i>Rooming requirement</span><span class="req">${esc(req)}</span></div>
+                <span style="border-left:1px solid #d9d3dd;padding-left:16px"><i class="bi bi-door-closed" style="color:#842484;margin-right:8px"></i>Rooming requirement</span><span class="req">${esc(req)}</span></div>
             <div class="pr-grid">
                 <div class="oc-box"><table class="ow"><thead><tr><th>Room group <i class="bi bi-info-circle" title="Room groups are this list's own references; the hotel gives the room numbers"></i></th><th>Type</th><th>Guest 1</th><th>Guest 2</th><th>Status</th></tr></thead>
                     <tbody>${rows || '<tr><td colspan="5">No rooms to show for this stay.</td></tr>'}</tbody></table></div>
                 <div class="oc-box pr-un"><div class="h2"><i class="bi bi-people"></i> Unassigned passengers (${un.length + missing})</div>${unRows || '<div class="oc-row">Everybody has a room.</div>'}</div>
             </div>
-            <div class="pr-note"><span>Showing ${rooms.length} of ${rooms.length} room groups</span><span><i class="bi bi-info-circle"></i> <i style="color:#8b1d40">Room groups are internal references; hotel room numbers pending</i></span></div>
+            <div class="pr-note"><span>Showing ${rooms.length} of ${rooms.length} room groups</span><span><i class="bi bi-info-circle"></i> <i style="color:#842484">Room groups are internal references; hotel room numbers pending</i></span></div>
             <div class="pr-det"><div class="ttl"><i class="bi bi-person"></i> Passenger detail</div>
                 <div class="f" style="flex:2 1 220px"><label>Name as passport</label><input disabled value="${esc(pick ? pick.full_name : 'No passenger entered')}"></div>
                 <div class="f"><label>Adult / Child</label>${nr}</div><div class="f"><label>Nationality</label>${nr}</div><div class="f"><label>Dietary needs</label>${nr}</div>
@@ -446,7 +446,7 @@
                     <div style="padding:8px 14px 12px 14px"><div style="margin-bottom:8px">${ready ? 'Every name is entered and everybody has a room.' : 'Resolve missing names and unassigned guests before final rooming list.'}</div>
                     ${L.btn(L.toHotel, 'Preview hotel rooming list', 'oci oci-bed', 'lg')}</div></div>
             </div>
-            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#8b1d40;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
+            <div class="oc-foot"><span><i class="bi bi-info-circle" style="color:#842484;margin-right:8px"></i><i>Assign rooms per hotel stay • Keep amendment history</i></span></div>`;
     }
 
     // ---------- tf-supdesk-r2 (19 Nov 2026, Shantha's mock-up): Supplier Emails — three panes. LEFT the supplier bookings of this tour,
@@ -476,7 +476,7 @@
             <div class="se"><div class="se-col"><div class="se-h">Supplier Bookings <small>(This Tour)</small></div><div class="se-b">${left}</div></div>
                 <div class="se-col">${e ? midPane(e, key) : '<div class="se-h">Select a supplier booking</div>'}</div>
                 <div class="se-col">${e ? rightPane(e, key) : '<div class="se-h">Review &amp; record outcome</div>'}</div></div>
-            <div class="oc-foot"><span><a href="${INTAKE}/comms/inbox" target="_blank" style="color:#8b1d40;font-weight:700">Unmatched emails (${SM.unmatched || 0})</a>
+            <div class="oc-foot"><span><a href="${INTAKE}/comms/inbox" target="_blank" style="color:#842484;font-weight:700">Unmatched emails (${SM.unmatched || 0})</a>
                 <i style="margin-left:14px">Nothing is sent or confirmed automatically. An e-mail sent is not a booking confirmed.</i>${SM.redirect ? ` <b style="color:#8a5a00">• TEST MODE: every e-mail from this system goes to ${esc(SM.redirect)} only, never to a supplier.</b>` : ''}</span></div>`;
         wireMail(box, e, key);
     }

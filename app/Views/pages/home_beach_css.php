@@ -8,7 +8,7 @@
 ?>
 <style id="hd-beach-css">
     html body.hd-beach { background:#f3cf9a url('<?= esc((string) $home_bg) ?>') center center / cover no-repeat fixed !important; min-height:100vh;
-        --hd-b1:#8b1d40; --hd-b2:#8b1d40; --hd-db1:#8b1d40; --hd-db2:#8b1d40; --hd-title:#8b1d40; }
+        --hd-b1:#842484; --hd-b2:#842484; --hd-db1:#842484; --hd-db2:#842484; --hd-title:#842484; }
     html body.hd-beach .hd-top { position:absolute; left:0; right:0; top:0; background:transparent !important; box-shadow:none !important; border:0 !important; }
     html body.hd-beach .hd-top .hd-user, html body.hd-beach .hd-top .hd-user small { text-shadow:0 1px 3px rgba(0,0,0,.55); }
     .hd-beach .hd-wrap { display:block; max-width:none; margin:0; padding:0; background:none; min-height:100vh; }
@@ -17,15 +17,15 @@
     .hd-beach .wc.brand { gap:clamp(18px,4vw,70px); margin:0; width:auto; }
     .hd-beach .hd-brand img { height:clamp(84px,14vh,146px); filter:drop-shadow(0 1px 1px rgba(255,255,255,.5)); }
     .hd-beach .wc .wc-c, .hd-beach .wc.brand .wc-c[data-k=jp] { text-align:center; }
-    .hd-beach .wc .wc-l, .hd-beach .wc.brand .wc-c[data-k=jp] .wc-l { color:#8b1d40; justify-content:center; font-size:clamp(.78rem,1.05vw,1.05rem); letter-spacing:.06em; }
+    .hd-beach .wc .wc-l, .hd-beach .wc.brand .wc-c[data-k=jp] .wc-l { color:#842484; justify-content:center; font-size:clamp(.78rem,1.05vw,1.05rem); letter-spacing:.06em; }
     .hd-beach .wc .wc-l svg { display:none; }
     .hd-beach .wc .wc-r, .hd-beach .wc.brand .wc-c[data-k=jp] .wc-r { justify-content:center; }
-    .hd-beach .wc .wc-t { color:#8b1d40; font-family:Georgia,"Times New Roman",serif; font-weight:700; font-size:clamp(1.6rem,2.7vw,2.6rem); flex-basis:auto; letter-spacing:.02em; }
+    .hd-beach .wc .wc-t { color:#842484; font-family:Georgia,"Times New Roman",serif; font-weight:700; font-size:clamp(1.6rem,2.7vw,2.6rem); flex-basis:auto; letter-spacing:.02em; }
     .hd-beach .wc .wc-d, .hd-beach .wc .wc-w { display:none !important; }
-    .hb-sys { display:flex; align-items:center; gap:clamp(12px,1.6vw,24px); color:#8b1d40; font-size:clamp(.72rem,1.12vw,1.1rem); letter-spacing:.32em; text-transform:uppercase;
+    .hb-sys { display:flex; align-items:center; gap:clamp(12px,1.6vw,24px); color:#842484; font-size:clamp(.72rem,1.12vw,1.1rem); letter-spacing:.32em; text-transform:uppercase;
         font-weight:500; margin-top:clamp(6px,1.8vh,20px); text-align:center; }
-    .hb-sys::before, .hb-sys::after { content:""; flex:none; width:clamp(24px,4.2vw,70px); height:1.5px; background:#8b1d40; opacity:.8; }
-    .hb-cap { font-family:Georgia,"Times New Roman",serif; font-style:italic; font-weight:700; color:#8b1d40; text-align:center; letter-spacing:-.01em;
+    .hb-sys::before, .hb-sys::after { content:""; flex:none; width:clamp(24px,4.2vw,70px); height:1.5px; background:#842484; opacity:.8; }
+    .hb-cap { font-family:Georgia,"Times New Roman",serif; font-style:italic; font-weight:700; color:#842484; text-align:center; letter-spacing:-.01em;
         font-size:clamp(2.2rem,5.3vw,5.5rem); line-height:1.04; margin:clamp(8px,2.6vh,30px) 0 0; text-shadow:0 1px 0 rgba(255,255,255,.35); }
     .hb-swoosh { width:clamp(130px,13vw,220px); height:auto; margin-top:8px; flex:none; }
     .hd-beach .hd-desks { margin:auto 0 0 !important; width:min(1090px,66vw); max-width:none; grid-template-columns:repeat(3,minmax(0,1fr)) !important;
@@ -35,7 +35,7 @@
     .hd-beach .hd-desk > .hd-btn { min-height:clamp(60px,8.7vh,84px) !important; border-radius:16px; padding:10px 18px !important; justify-content:center; gap:clamp(10px,1.1vw,18px) !important;
         color:#fff !important; box-shadow:0 6px 18px rgba(60,20,30,.30), inset 0 1px 0 rgba(255,255,255,.30) !important; }
     .hd-beach .hd-desk[data-desk=tour] > .hd-btn, .hd-beach .hd-desk[data-desk=transport] > .hd-btn, .hd-beach .hd-desk[data-desk=finance] > .hd-btn { background:linear-gradient(180deg,#86c153,#69a63b) !important; }
-    .hd-beach .hd-desk[data-desk=reservation] > .hd-btn, .hd-beach .hd-desk[data-desk=masters] > .hd-btn, .hd-beach .hd-desk[data-desk=approver] > .hd-btn { background:linear-gradient(180deg,#a3344f,#861c3c) !important; }
+    .hd-beach .hd-desk[data-desk=reservation] > .hd-btn, .hd-beach .hd-desk[data-desk=masters] > .hd-btn, .hd-beach .hd-desk[data-desk=approver] > .hd-btn { background:linear-gradient(180deg,#9b2a9b,#7f237f) !important; }
     .hd-beach .hd-desk > .hd-btn .ic { width:auto !important; height:auto !important; background:none !important; color:#fff !important; border-radius:0; }
     .hd-beach .hd-desk > .hd-btn .ic svg { width:clamp(28px,2.5vw,40px); height:clamp(28px,2.5vw,40px); }
     .hd-beach .hd-desk > .hd-btn .row1 { flex:0 1 auto; margin:0 !important; padding:0 !important; border:0 !important; align-self:center; }
@@ -43,11 +43,11 @@
     .hd-beach .hd-desk > .hd-btn .nm { font-size:clamp(1rem,1.55vw,1.5rem) !important; font-weight:600 !important; text-shadow:0 1px 2px rgba(0,0,0,.22); }
     .hd-beach .hd-links { margin-top:clamp(14px,4.6vh,50px); gap:0; }
     .hd-beach .hd-links::before, .hd-beach .hd-links::after { display:none; }
-    .hd-beach .hd-links a { background:none !important; border:0; box-shadow:none !important; color:#8b1d40; font-weight:600; font-size:clamp(.95rem,1.3vw,1.25rem); padding:6px 14px;
+    .hd-beach .hd-links a { background:none !important; border:0; box-shadow:none !important; color:#842484; font-weight:600; font-size:clamp(.95rem,1.3vw,1.25rem); padding:6px 14px;
         text-shadow:0 1px 0 rgba(255,255,255,.45); }
     .hd-beach .hd-links a:hover { text-decoration:underline; }
     .hd-beach .hd-links a .go { display:none; }
-    .hd-beach .hd-links .lk > i { background:#8b1d40; opacity:.5; height:26px; }
+    .hd-beach .hd-links .lk > i { background:#842484; opacity:.5; height:26px; }
     .hd-beach .hd-foot { display:none; }
     @media (max-width:1100px) { .hd-beach .hd-desks { width:min(1090px,92vw); } }
     @media (max-width:760px) { .hd-beach .hd-desks { grid-template-columns:repeat(2,minmax(0,1fr)) !important; } .hd-beach .hd-links { flex-direction:row; } .hd-beach .hd-links .lk { flex-direction:row; width:auto; } .hd-beach .hd-links a { width:auto; }

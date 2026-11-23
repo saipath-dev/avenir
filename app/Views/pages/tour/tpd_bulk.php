@@ -9,7 +9,7 @@
 $P = $tpd_perms ?? [];
 ?>
 <style>
-    .tpb { --p:#8b1d40; --p2:#972247; --soft:#f3e7eb; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
+    .tpb { --p:#842484; --p2:#6f1e6f; --soft:#f3e3f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
     .tpb .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tpb .btn-p:hover { background:var(--p2); color:#fff; }
     .tpb .btn-outline-p { color:var(--p); border-color:var(--p); } .tpb .btn-outline-p:hover { background:var(--soft); color:var(--p); }
     .tpb .card { border:1px solid var(--line); border-radius:14px; } .tpb .card h6 { font-weight:700; color:var(--p); }

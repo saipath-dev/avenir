@@ -171,7 +171,7 @@ $u = $usd ?? null;
 <style>
     .app-topbar, #avh-root .avh-fab { display:none !important; }   /* the cockpit has its own header with User Manual and Logout */
     body { background:#eee6e9 !important; }
-    .ck { --p:#8b1d40; --pd:#68152f; --pdd:#440b1d; --g:#78b848; --gd:#5a9a2e; --gl:#9ad86a; --cream:#fdf9f2; --cream2:#f3eadc; --ink:#2b2230; --mut:#6f6574; --ln:#e6dacd;
+    .ck { --p:#842484; --pd:#631b63; --pdd:#411241; --g:#78b848; --gd:#5a9a2e; --gl:#9ad86a; --cream:#fdf9f2; --cream2:#f3eadc; --ink:#2b2230; --mut:#6f6574; --ln:#e6dacd;
           font-family:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; color:var(--ink); }
     .ck a { text-decoration:none; color:inherit; }
     .ck svg { display:block; }
@@ -183,8 +183,8 @@ $u = $usd ?? null;
     .ck-hdr .sp { flex:1; }
     .ck-hdr .hb { display:inline-flex; align-items:center; gap:7px; border-radius:10px; padding:8px 14px; font-weight:700; font-size:.86rem; border:1.5px solid var(--p); color:var(--p); background:#fff; white-space:nowrap; cursor:pointer; }
     .ck-hdr .hb.solid { background:var(--pd); border-color:var(--pd); color:#fff; }
-    .ck-frame { max-width:1340px; margin:12px auto 0; border-radius:30px; padding:3px; background:linear-gradient(180deg,#cfa3b1,#7a243f 30%,#360817); box-shadow:0 18px 40px rgba(54,8,23,.3); }
-    .ck-in { border-radius:27px; background:radial-gradient(ellipse 70% 120px at 50% 0,rgba(255,255,255,.16),transparent 70%),linear-gradient(180deg,#892444,#5b0f27 60%,#470b1e); padding:12px 18px 0; position:relative; }
+    .ck-frame { max-width:1340px; margin:12px auto 0; border-radius:30px; padding:3px; background:linear-gradient(180deg,#cfa3b1,#742074 30%,#360817); box-shadow:0 18px 40px rgba(54,8,23,.3); }
+    .ck-in { border-radius:27px; background:radial-gradient(ellipse 70% 120px at 50% 0,rgba(255,255,255,.16),transparent 70%),linear-gradient(180deg,#822382,#561856 60%,#431243); padding:12px 18px 0; position:relative; }
     .ck-rv { position:absolute; width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#f5e6eb,#a47785 60%,#532231); }
     .ck-top { position:relative; text-align:center; margin:0 0 10px; }
     .ck-top .wel { color:#fff; font-size:1.5rem; font-weight:800; }
@@ -236,7 +236,7 @@ $u = $usd ?? null;
     .ck-lock { margin-left:auto; background:var(--pdd); color:#fff; border-radius:999px; padding:4px 11px; font-size:.72rem; font-weight:700; }
     .ck-con { display:flex; justify-content:center; align-items:center; gap:14px; padding:10px 0 14px; position:relative; }
     .ck-con .lt { display:flex; gap:10px; } .ck-con .lt i { width:6px; height:6px; border-radius:50%; background:var(--gl); box-shadow:0 0 6px var(--gl); opacity:.85; }
-    .ck-usd { display:flex; align-items:center; gap:12px; background:linear-gradient(180deg,#691d35,#470b1e); border:1.5px solid rgba(255,255,255,.35); color:#fff; border-radius:999px; padding:6px 7px 6px 16px; font-size:.84rem; font-weight:600; flex-wrap:wrap; justify-content:center; }
+    .ck-usd { display:flex; align-items:center; gap:12px; background:linear-gradient(180deg,#641b64,#431243); border:1.5px solid rgba(255,255,255,.35); color:#fff; border-radius:999px; padding:6px 7px 6px 16px; font-size:.84rem; font-weight:600; flex-wrap:wrap; justify-content:center; }
     .ck-usd .r { font-weight:800; font-size:.95rem; font-variant-numeric:tabular-nums; }
     .ck-usd .dot { width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px; background:#f0b429; box-shadow:0 0 6px #f0b429; }
     .ck-usd .dot.ok { background:var(--gl); box-shadow:0 0 6px var(--gl); }
@@ -252,9 +252,9 @@ $u = $usd ?? null;
     .ck-card { display:flex; align-items:center; gap:0; min-height:84px; border-radius:16px; padding:12px 14px; color:#fff; box-shadow:0 5px 12px rgba(50,25,33,.14); transition:transform .12s, box-shadow .12s; cursor:pointer; border:0; text-align:left; font:inherit; width:100%; }
     .ck-card:hover { transform:translateY(-2px); box-shadow:0 10px 20px rgba(50,25,33,.2); color:#fff; }
     .ck-card:focus-visible { outline:3px solid #f4c56a; outline-offset:2px; }
-    .ck-card.g { background:linear-gradient(145deg,#7cba4c,#69a83e); } .ck-card.p { background:linear-gradient(145deg,#912346,#811839); }
+    .ck-card.g { background:linear-gradient(145deg,#7cba4c,#69a83e); } .ck-card.p { background:linear-gradient(145deg,#8a268a,#7b217b); }
     .ck-card .ci { width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,.9); display:grid; place-items:center; flex:none; font-size:1.35rem; }
-    .ck-card.g .ci { color:#4f8a2a; } .ck-card.p .ci { color:#811839; }
+    .ck-card.g .ci { color:#4f8a2a; } .ck-card.p .ci { color:#7b217b; }
     .ck-card .ct { flex:1; min-width:0; margin-left:14px; padding-left:14px; border-left:1.5px solid rgba(255,255,255,.55); }
     .ck-card .ct b { display:block; font-size:1.06rem; font-weight:800; line-height:1.2; text-shadow:0 1px 1px rgba(0,0,0,.12); }
     a.ck-card, a.ck-card:hover, a.ck-card:focus, .ck-card .ct, .ck-card .ct b, .ck-card .ct small, .ck-card .ca { color:#fff !important; text-decoration:none !important; }

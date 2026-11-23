@@ -186,12 +186,12 @@ $tdUngrouped = array_values(array_filter($tdMaster, static fn ($it) => !isset($t
 ?>
 <style>
     /* Tour Desk bar — the Avenir colours, taken from the logo itself and the sign-in page:
-       purple #8b1d40 and magenta #e40c84 (the script and the leaf; the sign-in gradient is
-       #e90c8b→#972247), green #78b448 (the palm — the same family as the dashboard's Home
+       purple #842484 and magenta #e40c84 (the script and the leaf; the sign-in gradient is
+       #e90c8b→#6f1e6f), green #78b448 (the palm — the same family as the dashboard's Home
        button), with the dashboard's 12px cards, 0 4px 12px shadow, 10px buttons, #2c3e50 ink
        and #6c757d muted, and HK Grotesk inherited from the theme. */
-    .tdbar { --td-purple:#8b1d40; --td-magenta:#e90c8b; --td-purple-2:#972247; --td-green:#84C155; --td-green-2:#78b448;
-             --td-ink:#2c3e50; --td-muted:#6c757d; --td-line:rgba(139,29,64,.18); --td-tint:rgba(139,29,64,.09); --td-card:#fff;
+    .tdbar { --td-purple:#842484; --td-magenta:#e90c8b; --td-purple-2:#6f1e6f; --td-green:#84C155; --td-green-2:#78b448;
+             --td-ink:#2c3e50; --td-muted:#6c757d; --td-line:rgba(132,36,132,.18); --td-tint:rgba(132,36,132,.09); --td-card:#fff;
              --td-brand:linear-gradient(135deg, var(--td-magenta) 0%, var(--td-purple-2) 100%);
              display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-height:58px; padding:9px 10px 9px 12px; margin:2px 0 18px;
              background:var(--td-card); border:1px solid var(--td-line); border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08);
@@ -199,7 +199,7 @@ $tdUngrouped = array_values(array_filter($tdMaster, static fn ($it) => !isset($t
     .tdbar a, .tdbar button { font-family:inherit; }
     .tdbar .td-brand { display:flex; align-items:center; gap:11px; padding-right:14px; margin-right:2px; border-right:1px solid var(--td-line); text-decoration:none; color:var(--td-ink); }
     .tdbar .td-brand .mark { width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:#fff; font-size:17px; flex:none;
-             background:var(--td-brand); box-shadow:0 3px 10px rgba(151,34,71,.35);
+             background:var(--td-brand); box-shadow:0 3px 10px rgba(111,30,111,.35);
              transition:transform .3s ease; }
     .tdbar .td-brand:hover .mark { transform:scale(1.08); }
     .tdbar .td-brand b { display:block; font-size:15px; font-weight:700; line-height:1.15; color:var(--td-ink); }
@@ -215,11 +215,11 @@ $tdUngrouped = array_values(array_filter($tdMaster, static fn ($it) => !isset($t
     .tdbar .td-item i { font-size:15px; color:var(--td-purple); transition:color .2s ease; }
     .tdbar .td-item:hover { background:var(--td-tint); color:var(--td-ink); }
     .tdbar .td-item:active { transform:translateY(1px) scale(.98); transition-duration:.1s; }
-    .tdbar .td-item:focus-visible { outline:none; box-shadow:0 0 0 .2rem rgba(139,29,64,.22); }
+    .tdbar .td-item:focus-visible { outline:none; box-shadow:0 0 0 .2rem rgba(132,36,132,.22); }
     .tdbar .td-item.on { background:var(--td-brand); color:#fff; font-weight:600;
-             box-shadow:0 3px 10px rgba(151,34,71,.35); }
+             box-shadow:0 3px 10px rgba(111,30,111,.35); }
     .tdbar .td-item.on i { color:#fff; }
-    .tdbar .td-item.on:hover { color:#fff; box-shadow:0 5px 14px rgba(151,34,71,.45); }
+    .tdbar .td-item.on:hover { color:#fff; box-shadow:0 5px 14px rgba(111,30,111,.45); }
     .tdbar .td-cta { margin-left:auto; position:relative; }
     .tdbar .td-quote { display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 14px 0 16px; border-radius:10px; border:0;
              color:#fff; font-size:13.5px; font-weight:600; letter-spacing:.2px; line-height:1; white-space:nowrap; cursor:pointer;
@@ -261,26 +261,26 @@ $tdUngrouped = array_values(array_filter($tdMaster, static fn ($it) => !isset($t
        those here, after the page's own stylesheet, recolours every button, pill, heading and card
        in one place — no markup and no behaviour changes. Purple/magenta is the brand accent and
        the selected state; green is "make something"; amber and red keep their meanings. */
-    .tf, .hr2 { --td-p:#8b1d40; --td-p2:#972247; --td-m:#e90c8b; --td-g:#84C155; --td-g2:#78b448; }
-    .tf { --tf-navy:#8b1d40; --tf-navy-2:#972247; --tf-teal:#8b1d40; --tf-teal-soft:#f3e7eb; --tf-blue-soft:#f3e7eb;
+    .tf, .hr2 { --td-p:#842484; --td-p2:#6f1e6f; --td-m:#e90c8b; --td-g:#84C155; --td-g2:#78b448; }
+    .tf { --tf-navy:#842484; --tf-navy-2:#6f1e6f; --tf-teal:#842484; --tf-teal-soft:#f3e3f3; --tf-blue-soft:#f3e3f3;
           --tf-ink:#2c3e50; --tf-muted:#6c757d; --tf-line:#e4e8ee; --tf-bg:#f6f7fa; --tf-radius:12px; }
-    .hr2 { --hr-navy:#8b1d40; --hr-navy-2:#972247; --hr-teal:#8b1d40; --hr-teal-soft:#f3e7eb; --hr-blue-soft:#f3e7eb;
+    .hr2 { --hr-navy:#842484; --hr-navy-2:#6f1e6f; --hr-teal:#842484; --hr-teal-soft:#f3e3f3; --hr-blue-soft:#f3e3f3;
            --hr-ink:#2c3e50; --hr-muted:#6c757d; --hr-line:#e4e8ee; --hr-bg:#f6f7fa; --hr-radius:12px; }
     .tf .tf-card, .hr2 .hr-card { box-shadow:0 4px 12px rgba(0,0,0,.06); }
     .tf .tf-title h4, .hr2 .hr-title h4 { color:#2c3e50; letter-spacing:-.005em; }
     .tf .btn, .hr2 .btn { border-radius:10px; letter-spacing:.2px; }
-    .tf .btn-primary, .hr2 .btn-primary { background:linear-gradient(135deg, #e90c8b 0%, #972247 100%); border-color:transparent; color:#fff; font-weight:600;
-        box-shadow:0 3px 10px rgba(151,34,71,.3); transition:box-shadow .2s ease, transform .2s ease; }
-    .tf .btn-primary:hover, .hr2 .btn-primary:hover { background:linear-gradient(135deg, #ec2a99 0%, #a22b51 100%); border-color:transparent; color:#fff; transform:translateY(-1px); box-shadow:0 6px 16px rgba(151,34,71,.38); }
-    .tf .btn-primary:focus-visible, .hr2 .btn-primary:focus-visible { box-shadow:0 0 0 .2rem rgba(139,29,64,.25), 0 3px 10px rgba(151,34,71,.3); }
+    .tf .btn-primary, .hr2 .btn-primary { background:linear-gradient(135deg, #e90c8b 0%, #6f1e6f 100%); border-color:transparent; color:#fff; font-weight:600;
+        box-shadow:0 3px 10px rgba(111,30,111,.3); transition:box-shadow .2s ease, transform .2s ease; }
+    .tf .btn-primary:hover, .hr2 .btn-primary:hover { background:linear-gradient(135deg, #ec2a99 0%, #9a2a9a 100%); border-color:transparent; color:#fff; transform:translateY(-1px); box-shadow:0 6px 16px rgba(111,30,111,.38); }
+    .tf .btn-primary:focus-visible, .hr2 .btn-primary:focus-visible { box-shadow:0 0 0 .2rem rgba(132,36,132,.25), 0 3px 10px rgba(111,30,111,.3); }
     .hr2 .btn-success { background:linear-gradient(135deg, #84C155 0%, #78b448 100%); border-color:transparent; color:#fff; font-weight:600; box-shadow:0 3px 10px rgba(120,180,72,.3); }
     .hr2 .btn-success:hover { background:linear-gradient(135deg, #8fca60 0%, #78b448 100%); border-color:transparent; color:#fff; }
     .tf .btn-light, .hr2 .btn-light { border-color:#e4e8ee; color:#2c3e50; }
-    .tf .btn-light:hover, .hr2 .btn-light:hover { background:rgba(139,29,64,.08); border-color:rgba(139,29,64,.22); color:#2c3e50; }
-    .tf .btn-light i, .hr2 .btn-light i { color:#8b1d40; }
-    .tf .pill-blue, .hr2 .pill-blue { background:#f3e7eb; color:#8b1d40; }
-    .tf .form-control:focus, .tf .form-select:focus, .hr2 .form-control:focus, .hr2 .form-select:focus { border-color:rgba(139,29,64,.45); box-shadow:0 0 0 .2rem rgba(139,29,64,.15); }
-    .tf .form-check-input:checked, .hr2 .form-check-input:checked { background-color:#8b1d40; border-color:#8b1d40; }
+    .tf .btn-light:hover, .hr2 .btn-light:hover { background:rgba(132,36,132,.08); border-color:rgba(132,36,132,.22); color:#2c3e50; }
+    .tf .btn-light i, .hr2 .btn-light i { color:#842484; }
+    .tf .pill-blue, .hr2 .pill-blue { background:#f3e3f3; color:#842484; }
+    .tf .form-control:focus, .tf .form-select:focus, .hr2 .form-control:focus, .hr2 .form-select:focus { border-color:rgba(132,36,132,.45); box-shadow:0 0 0 .2rem rgba(132,36,132,.15); }
+    .tf .form-check-input:checked, .hr2 .form-check-input:checked { background-color:#842484; border-color:#842484; }
 
     /* 1c: the two longer tab names (Tour Inquiry, Transport Operations) still fit one row on an office screen — tighter tabs under 1600px */
     @media (max-width: 1600px) { .tdbar .td-item { padding:0 11px; gap:6px; } .tdbar .td-nav { gap:3px; } .tdbar .td-brand { padding-right:10px; } }

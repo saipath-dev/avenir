@@ -1,13 +1,13 @@
 <?= view('layouts/head') ?>
 <style>
     /* tf-confirmed-r4 (19 Nov 2026, Shantha): Previous Tours — the completed tours, searched and viewed here. Read only. */
-    .tf { --line:#e7dfe3; --mut:#5f6470; --ink:#1A1A1A; --p:#8b1d40; --g:#78b848; color:var(--ink); }
+    .tf { --line:#e7dfe3; --mut:#5f6470; --ink:#1A1A1A; --p:#842484; --g:#78b848; color:var(--ink); }
     .tf .ct-top { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:2px 2px 14px; } .tf .ct-top h2 { margin:0; font-size:23px; font-weight:800; }
     .tf .ct-prev { display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 15px; border:1.5px solid var(--p); border-radius:9px; color:var(--p); font-size:13.5px; font-weight:700; text-decoration:none; background:#fff; } .tf .ct-prev:hover { background:var(--p); color:#fff; }
     .tf .tq-card { background:#fff; border-radius:14px; box-shadow:0 1px 5px rgba(53,7,22,.08); overflow:hidden; }
     .tf .tq-fl { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:16px 20px; }
     .tf .tq-search { display:flex; align-items:center; gap:10px; flex:1 1 300px; max-width:460px; height:44px; padding:0 14px; margin:0; border:1.5px solid var(--line); border-radius:10px; background:#fff; } .tf .tq-search i { color:var(--mut); }
-    .tf .tq-search input { border:0; outline:0; flex:1 1 auto; min-width:0; font-size:14.5px; background:transparent; } .tf .tq-search:focus-within, .tf .tq-sel:focus-within { border-color:var(--p); box-shadow:0 0 0 3px rgba(139,29,64,.14); }
+    .tf .tq-search input { border:0; outline:0; flex:1 1 auto; min-width:0; font-size:14.5px; background:transparent; } .tf .tq-search:focus-within, .tf .tq-sel:focus-within { border-color:var(--p); box-shadow:0 0 0 3px rgba(132,36,132,.14); }
     .tf .tq-sel { display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 12px; margin:0; border:1.5px solid var(--line); border-radius:18px; background:#fff; font-size:13.5px; font-weight:700; white-space:nowrap; }
     .tf .tq-sel input { border:0; outline:0; background:transparent; font:inherit; font-weight:600; font-size:12.5px; height:30px; max-width:124px; } .tf .tq-sel i { font-style:normal; color:var(--mut); }
     .tf .tq-clear { height:36px; padding:0 12px; border:0; background:none; color:var(--mut); font-size:13px; font-weight:700; cursor:pointer; } .tf .tq-clear:hover { color:var(--p); }

@@ -1,7 +1,7 @@
 <?= view('layouts/head') ?>
 <style>
     /* ---------- Communications & History (tf-comms-r1, 27 Oct 2026) — same tokens as the Tour Inquiry page ---------- */
-    .tfc { --tf-navy: #1e3553; --tf-navy-2: #2c4a73; --tf-purple: #8b1d40; --tf-purple-soft: #f3e7eb; --tf-green: #1f8a4c; --tf-green-soft: #e4f4ea; --tf-avgreen: #78b848; --tf-amber: #1a1a1a; --tf-amber-soft: #ffffff; --tf-red: #b23a32; --tf-red-soft: #fbe9e7; --tf-blue-soft: #e6eef8; --tf-ink: #1d2733; --tf-muted: #5f6f80; --tf-line: #dfe5ec; --tf-bg: #f4f6f9; --tf-card: #fff; --tf-radius: 10px; color: var(--tf-ink); }
+    .tfc { --tf-navy: #1e3553; --tf-navy-2: #2c4a73; --tf-purple: #842484; --tf-purple-soft: #f3e3f3; --tf-green: #1f8a4c; --tf-green-soft: #e4f4ea; --tf-avgreen: #78b848; --tf-amber: #1a1a1a; --tf-amber-soft: #ffffff; --tf-red: #b23a32; --tf-red-soft: #fbe9e7; --tf-blue-soft: #e6eef8; --tf-ink: #1d2733; --tf-muted: #5f6f80; --tf-line: #dfe5ec; --tf-bg: #f4f6f9; --tf-card: #fff; --tf-radius: 10px; color: var(--tf-ink); }
     .tfc .tf-card { background: var(--tf-card); border: 1px solid var(--tf-line); border-radius: var(--tf-radius); box-shadow: 0 1px 2px rgba(16,24,40,.04); margin-bottom: 14px; }
     .tfc .tf-card-h { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--tf-line); }
     .tfc .tf-card-h h6 { margin: 0; font-weight: 600; color: var(--tf-navy); font-size: 14px; }
@@ -13,7 +13,7 @@
     .tfc .btn { border-radius: 8px; font-size: 12.5px; padding: 6px 12px; font-weight: 500; white-space: nowrap; }
     .tfc .btn-sm { padding: 4px 9px; font-size: 12px; }
     .tfc .btn-primary { background: var(--tf-purple); border-color: var(--tf-purple); color: #fff; }
-    .tfc .btn-primary:hover { background: #701733; border-color: #701733; }
+    .tfc .btn-primary:hover { background: #6a1d6a; border-color: #6a1d6a; }
     .tfc .btn-avgreen { background: var(--tf-avgreen); border-color: var(--tf-avgreen); color: #fff; }
     .tfc .btn-light { background: #fff; border: 1px solid var(--tf-line); color: var(--tf-ink); }
     .tfc .help { font-size: 12px; color: var(--tf-muted); }

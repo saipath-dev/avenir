@@ -4,17 +4,17 @@
     <style>
         /* tf-pda-r1 (22 Oct 2026): the Avenir Holidays uniform - deep burgundy, deep green, warm gold on neutrals. Presentation only. */
         .pda-body { background:#f7f5f3; }
-        .pda { --pda-burgundy:#8b1d40; --pda-burgundy-2:#8b1d40; --pda-green:#78b848; --pda-green-2:#78b848; --pda-gold:#e0a526; --pda-gold-ink:#2b2108;
+        .pda { --pda-burgundy:#842484; --pda-burgundy-2:#842484; --pda-green:#78b848; --pda-green-2:#78b848; --pda-gold:#e0a526; --pda-gold-ink:#2b2108;
                --pda-ink:#2b2b33; --pda-muted:#6b6f7b; --pda-line:#e8e3df; --pda-card:#fff; --pda-tint:#faf6f2;
                font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif; color:var(--pda-ink); max-width:1400px; margin:0 auto; }
         .pda .pda-head { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin:6px 0 18px; }
         .pda .pda-title { font-size:1.1rem; font-weight:700; letter-spacing:-0.02em; line-height:1.15; color:var(--pda-burgundy); margin:0; }
         .pda .pda-sub { margin:4px 0 0; font-size:.92rem; color:var(--pda-muted); letter-spacing:-0.005em; }
         .pda .pda-sub b { color:var(--pda-ink); font-weight:600; }
-        .pda .pda-card { background:var(--pda-card); border:1px solid var(--pda-line); border-radius:14px; box-shadow:0 4px 14px rgba(139,29,64,.06); padding:18px 20px; margin-bottom:16px; }
+        .pda .pda-card { background:var(--pda-card); border:1px solid var(--pda-line); border-radius:14px; box-shadow:0 4px 14px rgba(132,36,132,.06); padding:18px 20px; margin-bottom:16px; }
         .pda .form-label { font-size:.78rem; font-weight:600; letter-spacing:.02em; text-transform:uppercase; color:var(--pda-muted); margin-bottom:6px; }
         .pda .form-control { border-radius:10px; border-color:var(--pda-line); height:40px; font-size:.92rem; }
-        .pda .form-control:focus { border-color:rgba(139,29,64,.45); box-shadow:0 0 0 .2rem rgba(139,29,64,.12); }
+        .pda .form-control:focus { border-color:rgba(132,36,132,.45); box-shadow:0 0 0 .2rem rgba(132,36,132,.12); }
         .pda .pda-btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; height:40px; padding:0 16px; border-radius:10px; border:1px solid transparent;
                font-size:.88rem; font-weight:600; letter-spacing:.01em; line-height:1; white-space:nowrap; text-decoration:none; cursor:pointer;
                box-shadow:0 3px 10px rgba(0,0,0,.10); transition:filter .2s ease, box-shadow .2s ease, transform .2s ease; }

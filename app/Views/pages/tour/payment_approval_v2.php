@@ -169,7 +169,7 @@
     .pd-header-requests { background: linear-gradient(120deg, #1d4ed8 0%, #4338ca 100%); }
     .pd-header-expenses  { background: linear-gradient(120deg, #047857 0%, #059669 100%); }
     .pd-header-utility   { background: linear-gradient(120deg, #1a1a1a 0%, #d97706 100%); }
-    .pd-header-allocation { background: linear-gradient(120deg, #be185d 0%, #9d174d 100%); }
+    .pd-header-allocation { background: linear-gradient(120deg, #b431b4 0%, #952995 100%); }
 
     .pd-section .card-body {
         background: #fff;
@@ -391,9 +391,9 @@
                     </div>
                     <?php /* tf-paydesk-r2: with Supplier Payables in place an approval raises no voucher — the approved payment waits under its supplier */ try { $tpdAcc = \App\Libraries\TourPayments\Batches::accumulates(); } catch (\Throwable $tpdE) { $tpdAcc = false; } ?>
                     <?php if ($tpdAcc): ?>
-                    <div class="alert alert-light border d-flex flex-wrap align-items-center gap-2 py-2 mb-3" style="border-left:4px solid #8b1d40 !important;">
-                        <i class="bi bi-collection" style="color:#8b1d40;"></i><span class="small">Approved payments wait under their supplier in <b>Supplier Payables</b>; management then creates the supplier's batch, which issues the voucher for the accountant.</span>
-                        <a class="btn btn-sm ms-auto" style="background:#8b1d40;color:#fff;" href="<?= base_url('tour/tour_payment_dashboard/payables') ?>"><i class="bi bi-arrow-right-circle me-1"></i>Open Supplier Payables</a>
+                    <div class="alert alert-light border d-flex flex-wrap align-items-center gap-2 py-2 mb-3" style="border-left:4px solid #842484 !important;">
+                        <i class="bi bi-collection" style="color:#842484;"></i><span class="small">Approved payments wait under their supplier in <b>Supplier Payables</b>; management then creates the supplier's batch, which issues the voucher for the accountant.</span>
+                        <a class="btn btn-sm ms-auto" style="background:#842484;color:#fff;" href="<?= base_url('tour/tour_payment_dashboard/payables') ?>"><i class="bi bi-arrow-right-circle me-1"></i>Open Supplier Payables</a>
                     </div>
                     <?php endif; ?>
 
@@ -1665,7 +1665,7 @@
                 html: `Allocate <strong>${driver}</strong> to tour <strong>${manualId}</strong> despite unpaid settlements?`,
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#be185d',
+                confirmButtonColor: '#b431b4',
                 cancelButtonColor: '#6c757d',
                 confirmButtonText: 'Yes, Approve'
             }).then((result) => {

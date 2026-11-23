@@ -231,13 +231,13 @@
 
         /* Tile Color 4 - Hotel Management (Purple) */
         .t-card-color-4 {
-            border-color: #ba1d4f;
-            background: rgba(186, 29, 79, 0.03);
+            border-color: #b130b1;
+            background: rgba(177,48,177, 0.03);
         }
 
         .t-card-color-4:hover {
-            background: rgba(186, 29, 79, 0.15);
-            box-shadow: 0 8px 24px rgba(186, 29, 79, 0.7);
+            background: rgba(177,48,177, 0.15);
+            box-shadow: 0 8px 24px rgba(177,48,177, 0.7);
         }
 
         /* Tile Color 5 - Transport (Orange) */
@@ -483,7 +483,7 @@
             </div>
             <div id="menu_search_results" class="col-12 d-none mt-2"></div>
             <?php
-            $catColorMap = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#ba1d4f','#FF5722','#795548','#F44336'];
+            $catColorMap = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#b130b1','#FF5722','#795548','#F44336'];
             foreach ($allowed_categories as $catIndex => $cat):
                 $catColor = $catColorMap[$catIndex % count($catColorMap)];
                 $catAlpha = str_replace('#', '', $catColor);
@@ -515,7 +515,7 @@
 
         <!-- Per-category menu modals -->
         <?php
-        $catColorMap2 = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#ba1d4f','#FF5722','#795548','#F44336'];
+        $catColorMap2 = ['#3F51B5','#7ABC49','#E7B34E','#00BCD4','#FF9800','#E91E63','#b130b1','#FF5722','#795548','#F44336'];
         if (!empty($allowed_categories)):
         foreach ($allowed_categories as $catIndex2 => $cat2):
             $catColor2 = $catColorMap2[$catIndex2 % count($catColorMap2)];

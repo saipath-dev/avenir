@@ -12,7 +12,7 @@ $wcBrand = ($layout ?? '') === 'brand';
 <style>
     .wc { display:grid; grid-template-columns:1fr 1fr; gap:28px; background:none; border:0; max-width:880px; margin:0 auto 12px; font-family:"Inter Tight","Inter","Segoe UI",system-ui,sans-serif; }
     .wc-c { padding:2px 4px; min-width:0; }   /* tf-clock-r2: no frame, no divider */
-    .wc-l { display:flex; align-items:center; gap:6px; color:#8b1d40; font-weight:800; font-size:.8rem; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; }
+    .wc-l { display:flex; align-items:center; gap:6px; color:#842484; font-weight:800; font-size:.8rem; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; }
     .wc-l svg { width:14px; height:14px; flex:none; }
     .wc-r { display:flex; align-items:center; gap:14px; margin-top:2px; }
     .wc-t { font-size:2.1rem; font-weight:800; color:#1999d6; line-height:1.05; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
@@ -39,7 +39,7 @@ $wcBrand = ($layout ?? '') === 'brand';
     <?php foreach ([['jp', 'Japan · Tokyo', 'Asia/Tokyo'], ['lk', 'Sri Lanka · Colombo', 'Asia/Colombo']] as $wcI => [$k, $label, $tz]): ?>
     <?php if ($wcBrand && $wcI === 1): ?><div class="wc-mid"><?= $logo ?? '' ?></div><?php endif; ?>
     <div class="wc-c" data-k="<?= $k ?>" data-tz="<?= $tz ?>">
-        <div class="wc-l"><svg viewBox="0 0 24 24" fill="#8b1d40" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><?= esc($label) ?></div>
+        <div class="wc-l"><svg viewBox="0 0 24 24" fill="#842484" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><?= esc($label) ?></div>
         <div class="wc-r">
             <span class="wc-t">--:--</span><span class="wc-s"></span><span class="wc-d">&nbsp;</span>
             <span class="wc-s" hidden></span><span class="wc-w" hidden></span>

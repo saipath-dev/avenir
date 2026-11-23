@@ -34,15 +34,15 @@
     .tf .acts .btn { white-space:nowrap; }
     /* tf-confirmed-r3 (19 Nov 2026, Shantha): the Confirmed Tours list in the form of the Tour Inquiry list — the same card,
        search, filter chips and drop-downs, one line per tour — and a Confirm button on every line: burgundy while work is
-       outstanding (it opens Operations Control), green when everything is checked. Avenir burgundy #8b1d40, green #78b848. */
-    .tf { --line:#e7dfe3; --mut:#5f6470; --ink:#1A1A1A; --p:#8b1d40; --g:#78b848; }
+       outstanding (it opens Operations Control), green when everything is checked. Avenir burgundy #842484, green #78b848. */
+    .tf { --line:#e7dfe3; --mut:#5f6470; --ink:#1A1A1A; --p:#842484; --g:#78b848; }
     .tf .tq-card { background:#fff; border-radius:14px; box-shadow:0 1px 5px rgba(53,7,22,.08); overflow:hidden; }
     .tf .tq-lh { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:18px 20px 14px; } .tf .tq-lh h2 { font-size:21px; font-weight:800; margin:0; color:var(--ink); }
     .tf .tq-search { display:flex; align-items:center; gap:10px; flex:1 1 300px; max-width:520px; height:44px; padding:0 14px; margin:0; border:1.5px solid var(--line); border-radius:10px; background:#fff; } .tf .tq-search i { color:var(--mut); }
-    .tf .tq-search input { border:0; outline:0; flex:1 1 auto; min-width:0; font-size:14.5px; background:transparent; color:var(--ink); } .tf .tq-search:focus-within, .tf .tq-sel:focus-within { border-color:var(--p); box-shadow:0 0 0 3px rgba(139,29,64,.14); }
+    .tf .tq-search input { border:0; outline:0; flex:1 1 auto; min-width:0; font-size:14.5px; background:transparent; color:var(--ink); } .tf .tq-search:focus-within, .tf .tq-sel:focus-within { border-color:var(--p); box-shadow:0 0 0 3px rgba(132,36,132,.14); }
     .tf .tq-fl { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:0 20px 14px; border-bottom:1px solid var(--line); } .tf .tq-fl #chips { display:contents; }
     .tf .tq-pf { height:36px; padding:0 16px; border-radius:18px; border:1.5px solid var(--line); background:#fff; color:var(--ink); font-size:13.5px; font-weight:700; cursor:pointer; white-space:nowrap; }
-    .tf .tq-pf.on { background:#660f2b; border-color:#660f2b; color:#fff; } .tf .tq-pf:hover:not(.on) { border-color:var(--p); color:var(--p); }
+    .tf .tq-pf.on { background:#611a61; border-color:#611a61; color:#fff; } .tf .tq-pf:hover:not(.on) { border-color:var(--p); color:var(--p); }
     .tf .tq-sel { display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 12px; margin:0; border:1.5px solid var(--line); border-radius:18px; background:#fff; font-size:13.5px; font-weight:700; white-space:nowrap; }
     .tf .tq-sel > span::after { content:':'; } .tf .tq-sel select, .tf .tq-sel input { border:0; outline:0; background:transparent; font:inherit; font-weight:600; color:var(--ink); height:30px; max-width:150px; } .tf .tq-sel.dt input { font-size:12.5px; max-width:124px; } .tf .tq-sel i { font-style:normal; color:var(--mut); }
     .tf .tq-clear { height:36px; padding:0 12px; border:0; background:none; color:var(--mut); font-size:13px; font-weight:700; cursor:pointer; } .tf .tq-clear:hover { color:var(--p); }
@@ -70,7 +70,7 @@
     .tf .tq-lh { padding:16px 20px 12px; } .tf .tq-lh #chips { display:flex; gap:8px; flex-wrap:wrap; align-items:center; flex:1 1 auto; } .tf .tq-search { flex:0 1 380px; }
     .tf .tq-fl { padding-bottom:16px; border-bottom:0; }
     .tf .tq-pf { display:inline-flex; align-items:center; gap:8px; } .tf .tq-pf .n { min-width:22px; height:22px; padding:0 6px; border-radius:11px; display:inline-grid; place-items:center; font-size:12px; font-weight:800; background:#f1e7eb; color:var(--p); }
-    .tf .tq-pf.on .n { background:#fff; color:#660f2b; } .tf .tq-pf.count { cursor:default; background:#f7f7f8; color:var(--mut); } .tf .tq-pf.count:hover { border-color:var(--line); color:var(--mut); } .tf .tq-pf.count .n { background:#e3f1d6; color:#3f7a17; }
+    .tf .tq-pf.on .n { background:#fff; color:#611a61; } .tf .tq-pf.count { cursor:default; background:#f7f7f8; color:var(--mut); } .tf .tq-pf.count:hover { border-color:var(--line); color:var(--mut); } .tf .tq-pf.count .n { background:#e3f1d6; color:#3f7a17; }
     .tf table.tq-tbl thead th { background:var(--p); color:#fff; padding:12px 16px; font-size:11.5px; } .tf table.tq-tbl td { vertical-align:top; }
     .tf .ct-st { display:inline-block; padding:7px 11px; border-radius:8px; font-size:13px; font-weight:700; line-height:1.3; background:#eef7e6; color:#3f7a17; border:1px solid #d5e9c2; }
     .tf .ct-st.amber { background:#fff6e0; color:#8a5a00; border-color:#f1dfae; } .tf .ct-st.red { background:#fbe9e7; color:#a3261d; border-color:#f1c8c3; } .tf .ct-st.grey { background:#f1f2f4; color:#555b66; border-color:#e0e2e6; }
@@ -211,7 +211,7 @@
         const r = t.ready || {};
         const label = r.again ? 'Send updated confirmation' : 'Final confirm';
         if (r.ok) {
-            return `<button class="btn btn-sm" style="background:${r.again ? '#8a1c30' : '#78b848'};border-color:transparent;color:#fff;font-weight:600" data-final="${t.id}">`
+            return `<button class="btn btn-sm" style="background:${r.again ? '#832483' : '#78b848'};border-color:transparent;color:#fff;font-weight:600" data-final="${t.id}">`
                  + `<i class="bi bi-patch-check"></i> ${esc(label)}</button>`;
         }
         if (t.final_confirmed_at && !t.reopened) { return ''; }
@@ -230,7 +230,7 @@
     // so the sender, the company copy rule, the record and a failure are all handled exactly as before.
     const mailBtn = (t) => {
         if (!t.final_confirmed_at || t.reopened) { return ''; }
-        return `<button class="btn btn-sm" style="background:#8b1d40;border-color:#8b1d40;color:#fff" data-send="${t.id}">`
+        return `<button class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" data-send="${t.id}">`
              + `<i class="bi bi-envelope-paper"></i> Send the confirmed itinerary</button>`;
     };
 
@@ -368,7 +368,7 @@
                     </div></div>
                   </div>
                   <div class="acts" style="flex-direction:row;gap:8px;margin-top:10px;align-items:center">
-                    <button class="btn btn-sm" style="background:#8b1d40;border-color:#8b1d40;color:#fff" id="sb_go-${t.id}">Send it</button>
+                    <button class="btn btn-sm" style="background:#842484;border-color:#842484;color:#fff" id="sb_go-${t.id}">Send it</button>
                     <span class="help" id="sb_why-${t.id}"></span>
                     <button class="btn btn-light btn-sm" id="sb_x-${t.id}">Close</button>
                     <span id="sb_msg-${t.id}" style="font-size:13px;font-weight:600"></span>
@@ -377,7 +377,7 @@
                 </div></td>`;
             row.id = 'sendbox-' + t.id;
             tr.parentNode.insertBefore(row, tr.nextSibling);
-            const msg = (text, bad) => { const el = document.getElementById('sb_msg-' + t.id); el.textContent = text; el.style.color = bad ? '#8a1c30' : '#1f8a4c'; };
+            const msg = (text, bad) => { const el = document.getElementById('sb_msg-' + t.id); el.textContent = text; el.style.color = bad ? '#832483' : '#1f8a4c'; };
             document.getElementById('sb_x-' + t.id).addEventListener('click', () => row.remove());
             const go = document.getElementById('sb_go-' + t.id);
             // tf-supmail-r2 (Shantha, 4 Nov 2026): a warning beside a live button reads as "send it anyway".
@@ -394,9 +394,9 @@
                 go.style.cursor = ok ? '' : 'not-allowed';
                 go.textContent = ok ? (go.dataset.armed === '1' ? go.textContent : 'Send it') : 'Send it';
                 why.textContent = ok ? '' : (v === '' ? 'No address to send to — nothing can go.' : 'That does not look like an e-mail address.');
-                why.style.color = '#8a1c30';
+                why.style.color = '#832483';
                 if (!ok) { go.dataset.armed = ''; }
-                addrBox.style.borderColor = ok ? '' : '#8a1c30';
+                addrBox.style.borderColor = ok ? '' : '#832483';
             };
             addrBox.addEventListener('input', gate);
             gate();
@@ -439,7 +439,7 @@
             let box = tr.querySelector('.final-say');
             if (!box) { box = document.createElement('div'); box.className = 'final-say mt-2'; box.style.fontSize = '13px'; box.style.fontWeight = '600';
                         (tr.querySelector('.acts') || tr.lastElementChild).appendChild(box); }
-            box.style.color = bad ? '#8a1c30' : '#2f7d32';
+            box.style.color = bad ? '#832483' : '#2f7d32';
             box.innerHTML = text;
             return box;
         };
@@ -469,7 +469,7 @@
             }
             const intake = j.data && j.data.intake_id;
             say(tr, esc(j.message || 'Confirmed.') + (intake
-                ? ' <a class="btn btn-sm mt-1" style="background:#8b1d40;border-color:#8b1d40;color:#fff;text-decoration:none" href="'
+                ? ' <a class="btn btn-sm mt-1" style="background:#842484;border-color:#842484;color:#fff;text-decoration:none" href="'
                   + INTAKE + '/comms/' + intake + '"><i class="bi bi-chat-left-text"></i> Send the confirmed itinerary</a>' : ''));
             setTimeout(load, 2500);
         }));

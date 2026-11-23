@@ -9,7 +9,7 @@ if (!$p) {
     return;
 }
 $e = static fn ($s): string => esc((string) ($s ?? ''));
-$tone = ['action' => ['#8b1d40', '#f3e7eb'], 'pending' => ['#b25e00', '#fff3d6'], 'blocked' => ['#c5281c', '#fde8e8'], 'info' => ['#172443', '#e9ecf5'], 'done' => ['#0d8a6e', '#e4f4ea']];
+$tone = ['action' => ['#842484', '#f3e3f3'], 'pending' => ['#b25e00', '#fff3d6'], 'blocked' => ['#c5281c', '#fde8e8'], 'info' => ['#172443', '#e9ecf5'], 'done' => ['#0d8a6e', '#e4f4ea']];
 $open = array_filter($p['tasks'], static fn ($t) => $t['count'] > 0);
 ?>
 <style>
@@ -23,17 +23,17 @@ $open = array_filter($p['tasks'], static fn ($t) => $t['count'] > 0);
     .pilot .pl-task .n { min-width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
     .pilot .pl-task .l { font-size: .84rem; line-height: 1.25; }
     .pilot .sc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .pilot .sc a { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d9d2e3; border-radius: 999px; padding: 6px 12px; font-size: .82rem; font-weight: 600; color: #8b1d40; text-decoration: none; background: #fff; }
-    .pilot .sc a:hover { background: #f3e7eb; }
+    .pilot .sc a { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d9d2e3; border-radius: 999px; padding: 6px 12px; font-size: .82rem; font-weight: 600; color: #842484; text-decoration: none; background: #fff; }
+    .pilot .sc a:hover { background: #f3e3f3; }
     .pilot .rep { margin-top: 12px; font-size: .82rem; }
     .pilot .rep a { color: #172443; text-decoration: none; border-bottom: 1px dotted #9aa3b5; margin-right: 12px; white-space: nowrap; line-height: 1.9; }
-    .pilot .rep a:hover { color: #8b1d40; border-bottom-color: #8b1d40; }
+    .pilot .rep a:hover { color: #842484; border-bottom-color: #842484; }
     .pilot .hdr { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
     @media (max-width: 640px) { .pilot { padding: 12px; } .pilot .pl-tasks { grid-template-columns: 1fr; } }
 </style>
 <div class="pilot animate-fade-in" id="pilot_panel">
     <div class="hdr">
-        <div><h5><i class="bi bi-compass me-1" style="color:#8b1d40;"></i>Pilot <span class="dept"><?= $e($p['department']) ?></span></h5>
+        <div><h5><i class="bi bi-compass me-1" style="color:#842484;"></i>Pilot <span class="dept"><?= $e($p['department']) ?></span></h5>
             <div class="muted mt-1">Signed in as <b><?= $e($p['user']) ?></b> · <?= (int) $p['menus'] ?> permitted pages in <?= (int) $p['categories'] ?> areas (the tiles below). Only what your profile allows is shown here; every action is recorded under your name.</div></div>
         <div class="muted"><?= date('l, j F Y') ?></div>
     </div>

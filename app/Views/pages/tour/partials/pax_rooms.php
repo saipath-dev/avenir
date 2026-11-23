@@ -7,7 +7,7 @@
  */
 ?>
 <style id="pr-css">
-.pr, .pr-mod { --p:#8b1d40; --pd:#60122b; --g:#78b848; --gd:#4e8a26; --ln:#e6dade; --soft:#f8f1f3; --ink:#2b2b33; --mut:#6b6f7b; }
+.pr, .pr-mod { --p:#842484; --pd:#5b195b; --g:#78b848; --gd:#4e8a26; --ln:#e6dade; --soft:#f8f1f3; --ink:#2b2b33; --mut:#6b6f7b; }
 .pr { font-size:13px; color:var(--ink); }
 .pr *, .pr-mod * { box-sizing:border-box; }
 .pr-stays { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:2px 0 10px; }
@@ -16,10 +16,10 @@
 .pr-stay b { display:block; font-size:12.5px; } .pr-stay small { color:var(--mut); font-size:11px; }
 .pr-stay.on { background:var(--p); border-color:var(--p); color:#fff; } .pr-stay.on small { color:rgba(255,255,255,.85); }
 .pr-st { display:inline-block; border-radius:10px; padding:1px 8px; font-size:10.5px; font-weight:700; margin-left:6px; vertical-align:middle; }
-.pr-st.requested { background:#eef0f3; color:#4a4d57; } .pr-st.sent { background:#fdf0d5; color:#8a5a00; } .pr-st.confirmed { background:#e4f4d6; color:#2f6d12; } .pr-st.amend { background:#fbdde3; color:#a3123a; }
+.pr-st.requested { background:#eef0f3; color:#4a4d57; } .pr-st.sent { background:#fdf0d5; color:#8a5a00; } .pr-st.confirmed { background:#e4f4d6; color:#2f6d12; } .pr-st.amend { background:#fbdde3; color:#9b2a9b; }
 .pr-flags { margin:0 0 10px; display:grid; gap:5px; }
 .pr-flag { border-radius:7px; padding:6px 10px; font-size:12px; display:flex; gap:8px; align-items:flex-start; }
-.pr-flag.warn { background:#fff6e0; border:1px solid #f0d48a; color:#6b4a00; } .pr-flag.bad { background:#fdecef; border:1px solid #f3b7c3; color:#8f1232; }
+.pr-flag.warn { background:#fff6e0; border:1px solid #f0d48a; color:#6b4a00; } .pr-flag.bad { background:#fdecef; border:1px solid #f3b7c3; color:#882588; }
 .pr-grid { display:grid; grid-template-columns:300px minmax(0,1fr); gap:14px; align-items:start; }
 .pr-card { background:#fff; border:1px solid var(--ln); border-radius:10px; overflow:hidden; margin-bottom:12px; }
 .pr-card > .h { background:var(--soft); padding:8px 12px; font-weight:800; color:var(--p); font-size:14px; display:flex; align-items:center; gap:8px; }
@@ -49,7 +49,7 @@
 .pr-sec { display:flex; align-items:center; gap:8px; font-weight:800; color:var(--p); font-size:14px; margin:12px 0 6px; } .pr-sec .sp { flex:1; }
 .pr-alloc { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:12px; align-items:start; }
 .pr-rt td.no { background:#fdf3c9; font-weight:800; text-align:center; } .pr-rt td.cat { background:#f3e6ea; text-align:center; } .pr-rt td.occ { font-weight:800; text-align:center; background:#e4f4d6; }
-.pr-rt td.occ.under { background:#fff0c9; } .pr-rt td.occ.over { background:#fbdde3; color:#a3123a; } .pr-rt td.occ.zero { background:#f2f2f4; color:var(--mut); } .pr-rt td.px { white-space:normal; }
+.pr-rt td.occ.under { background:#fff0c9; } .pr-rt td.occ.over { background:#fbdde3; color:#9b2a9b; } .pr-rt td.occ.zero { background:#f2f2f4; color:var(--mut); } .pr-rt td.px { white-space:normal; }
 .pr-ok { border:1px solid #cfe6bb; background:#f1f8ea; border-radius:10px; padding:10px 12px; } .pr-ok.todo { border-color:#f0d48a; background:#fff8e6; }
 .pr-ok h4 { margin:0 0 6px; font-size:13.5px; font-weight:800; color:var(--gd); display:flex; gap:7px; align-items:center; } .pr-ok.todo h4 { color:#8a5a00; }
 .pr-ok div { display:flex; justify-content:space-between; padding:2px 0; font-size:12.5px; } .pr-ok div b { font-weight:800; }
@@ -60,11 +60,11 @@
 .pr-old { margin-top:12px; border:1px solid var(--ln); border-radius:10px; background:#fff; padding:6px 12px; } .pr-old > summary { cursor:pointer; font-weight:700; color:var(--p); font-size:12.5px; padding:4px 0; }
 .pr-mod { position:fixed; inset:0; background:rgba(30,15,20,.45); z-index:2000; display:flex; align-items:flex-start; justify-content:center; padding:5vh 12px; overflow:auto; }
 .pr-mod .box { background:#fff; border-radius:12px; width:min(680px,100%); box-shadow:0 20px 60px rgba(0,0,0,.3); overflow:hidden; font-size:13px; color:#2b2b33; } .pr-mod .box.wide { width:min(900px,100%); }
-.pr-mod .mh { background:#8b1d40; color:#fff; font-weight:800; padding:10px 14px; display:flex; align-items:center; } .pr-mod .mh span { flex:1; } .pr-mod .mh button { border:0; background:none; color:#fff; font-size:18px; cursor:pointer; }
-.pr-mod .mb { padding:12px 14px; max-height:68vh; overflow:auto; } .pr-mod .mf { padding:10px 14px; background:#f8f1f3; display:flex; gap:8px; justify-content:flex-end; align-items:center; } .pr-mod .mf .msg { flex:1; font-size:12px; color:#a3123a; font-weight:600; }
+.pr-mod .mh { background:#842484; color:#fff; font-weight:800; padding:10px 14px; display:flex; align-items:center; } .pr-mod .mh span { flex:1; } .pr-mod .mh button { border:0; background:none; color:#fff; font-size:18px; cursor:pointer; }
+.pr-mod .mb { padding:12px 14px; max-height:68vh; overflow:auto; } .pr-mod .mf { padding:10px 14px; background:#f8f1f3; display:flex; gap:8px; justify-content:flex-end; align-items:center; } .pr-mod .mf .msg { flex:1; font-size:12px; color:#9b2a9b; font-weight:600; }
 .pr-form { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 10px; } .pr-form label { display:block; font-size:11.5px; font-weight:700; margin-bottom:2px; } .pr-form .w2 { grid-column:span 2; } .pr-form .w3 { grid-column:1 / -1; }
 .pr-form input, .pr-form select { width:100%; border:1px solid #e6dade; border-radius:7px; padding:5px 9px; font-size:13px; height:32px; background:#fff; }
-.pr-form .sub { grid-column:1 / -1; font-weight:800; color:#8b1d40; border-top:1px solid #e6dade; padding-top:8px; margin-top:4px; font-size:12.5px; } .pr-note { font-size:11.5px; color:#6b6f7b; }
+.pr-form .sub { grid-column:1 / -1; font-weight:800; color:#842484; border-top:1px solid #e6dade; padding-top:8px; margin-top:4px; font-size:12.5px; } .pr-note { font-size:11.5px; color:#6b6f7b; }
 .pr-mt { width:100%; border-collapse:collapse; } .pr-mt th { text-align:left; font-size:11.5px; padding:5px 6px; background:#f8f1f3; } .pr-mt td { padding:4px 6px; border-bottom:1px solid #f1eaec; font-size:12.5px; } .pr-mt input, .pr-mt select { border:1px solid #e6dade; border-radius:6px; height:30px; padding:3px 7px; font-size:12.5px; width:100%; background:#fff; }
 /* tf-paxrooms-r2 (19 Nov 2026): the sizes and spacing of the approved mock-up */
 .pr { font-size:14px; }
@@ -327,7 +327,7 @@
             $('pp_rt').disabled = $('pp_rc').disabled = v === '0';
             if (r) { $('pp_rt').value = r.room_type; $('pp_rc').value = r.category || ''; }
             const others = r ? r.pax.filter(i => !p || i !== Number(p.id)).map(i => nm((d.passengers.find(x => Number(x.id) === i) || {}).full_name)) : [];
-            $('pp_share').innerHTML = v === '0' ? 'Not placed in a room at this hotel yet.' : v === 'new' ? 'A new room is created with the type and category chosen here.' : (others.length ? 'Shares with: <b>' + esc(others.join(', ')) + '</b>' : 'Nobody else is in this room yet.') + (r && occ(S, r) + (cur && cur.id === r.id ? 0 : 1) > beds(S, r) ? ' <b style="color:#a3123a">This room would be over capacity.</b>' : '');
+            $('pp_share').innerHTML = v === '0' ? 'Not placed in a room at this hotel yet.' : v === 'new' ? 'A new room is created with the type and category chosen here.' : (others.length ? 'Shares with: <b>' + esc(others.join(', ')) + '</b>' : 'Nobody else is in this room yet.') + (r && occ(S, r) + (cur && cur.id === r.id ? 0 : 1) > beds(S, r) ? ' <b style="color:#9b2a9b">This room would be over capacity.</b>' : '');
         };
         if (stay) { $('pp_room').addEventListener('change', sync); sync(); }
         setTimeout(() => $('pp_name').focus(), 30);
@@ -399,7 +399,7 @@
           + stay.rooms.map(r => '<option value="' + r.id + '">' + esc(roomLabel(S, r)) + ' — ' + occ(S, r) + ' / ' + beds(S, r) + '</option>').join('') + '<option value="0">— take them out of their rooms at this hotel —</option></select></div><div class="w3 pr-note" id="as_n"></div></div>',
           '<button type="button" class="pr-btn solid" data-save>Assign</button>');
         const sel = m.querySelector('#as_r'), note = m.querySelector('#as_n');
-        const chk = () => { const r = stay.rooms.find(x => String(x.id) === sel.value); if (!r) { note.textContent = ''; return true; } const stayIn = r.pax.filter(i => !ids.includes(i) && ptype(S.data.passengers.find(p => Number(p.id) === i) || {}) !== 'infant').length; const over = stayIn + n > beds(S, r); note.innerHTML = over ? '<b style="color:#a3123a">' + (stayIn + n) + ' people for ' + beds(S, r) + ' bed' + (beds(S, r) === 1 ? '' : 's') + ' — over capacity. You may still assign; the room is flagged.</b>' : 'Fits: ' + (stayIn + n) + ' / ' + beds(S, r) + '.'; return !over; };
+        const chk = () => { const r = stay.rooms.find(x => String(x.id) === sel.value); if (!r) { note.textContent = ''; return true; } const stayIn = r.pax.filter(i => !ids.includes(i) && ptype(S.data.passengers.find(p => Number(p.id) === i) || {}) !== 'infant').length; const over = stayIn + n > beds(S, r); note.innerHTML = over ? '<b style="color:#9b2a9b">' + (stayIn + n) + ' people for ' + beds(S, r) + ' bed' + (beds(S, r) === 1 ? '' : 's') + ' — over capacity. You may still assign; the room is flagged.</b>' : 'Fits: ' + (stayIn + n) + ' / ' + beds(S, r) + '.'; return !over; };
         sel.addEventListener('change', chk); chk();
         m.querySelector('[data-save]').addEventListener('click', async () => { const j = await post(S, 'assign', { stay:stay.key, room_id:Number(sel.value), pax_ids:ids }); if (j.status !== 200) m.say(j.message); else { S.sel.clear(); draw(S); m.close(); } });
     }

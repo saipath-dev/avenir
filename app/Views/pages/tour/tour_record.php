@@ -25,12 +25,12 @@ $fmt = static function ($x, bool $long = false): string {
 };
 $when = static fn ($x): string => $x ? substr((string) $x, 0, 16) : '—';
 $usd  = static fn ($v): string => $v === null || $v === '' ? '—' : 'USD ' . number_format((float) $v, 2);
-$P = '#8b1d40'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbde';
+$P = '#842484'; $INK = '#2c3e50'; $MUTED = '#6c757d'; $LINE = '#e6dbde';
 $HL = ['to_book' => 'To book', 'requested' => 'Requested', 'confirmed' => 'Confirmed', 'voucher_issued' => 'Voucher issued', 'problem' => 'Problem', 'cancelled' => 'Cancelled'];
 $AL = ['to_book' => 'To book', 'requested' => 'Requested', 'confirmed' => 'Confirmed', 'not_needed' => 'Nothing to arrange', 'problem' => 'Problem', 'cancelled' => 'Cancelled', 'pay_at_gate' => 'Pay at gate'];
 $TL = ['to_allocate' => 'To allocate', 'allocated' => 'Allocated', 'scheduled' => 'Scheduled', 'pack_issued' => 'Pack issued', 'running' => 'Running', 'returned' => 'Returned', 'settled' => 'Settled', 'cancelled' => 'Cancelled'];
 $pill = static function (string $text, string $kind = 'grey') use ($e): string {
-    $c = ['green' => '#e4f4ea;color:#1f8a4c', 'red' => '#fbe9e7;color:#b23a32', 'amber' => '#ffffff;color:#1a1a1a;border:1px solid #d9d3dd', 'blue' => '#e8f1fb;color:#1a5fa8', 'grey' => '#eef1f5;color:#5f6f80', 'purple' => '#f3e6ea;color:#8b1d40'][$kind] ?? '#eef1f5;color:#5f6f80';
+    $c = ['green' => '#e4f4ea;color:#1f8a4c', 'red' => '#fbe9e7;color:#b23a32', 'amber' => '#ffffff;color:#1a1a1a;border:1px solid #d9d3dd', 'blue' => '#e8f1fb;color:#1a5fa8', 'grey' => '#eef1f5;color:#5f6f80', 'purple' => '#f3e6ea;color:#842484'][$kind] ?? '#eef1f5;color:#5f6f80';
     return '<span style="display:inline-block;padding:1px 9px;border-radius:12px;font-size:11.5px;font-weight:600;background:' . $c . '">' . $e($text) . '</span>';
 };
 $stageKind = ['confirmed' => 'green', 'operating' => 'blue', 'completed' => 'grey', 'closed' => 'grey', 'cancelled' => 'red'];
@@ -77,7 +77,7 @@ foreach ($r['confirmations'] as $c) {
     .hist .w { color:<?= $MUTED ?>; font-size:11.5px; }
     .hist table.ch { margin:4px 0 0 0; font-size:11.5px; }
     .lane { font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; margin-right:6px; }
-    .lane.hotel { color:#1878c0; } .lane.transport { color:#1a1a1a; } .lane.quotation { color:#8b1d40; } .lane.tour { color:<?= $INK ?>; } .lane.service { color:#0f8b7e; }
+    .lane.hotel { color:#1878c0; } .lane.transport { color:#1a1a1a; } .lane.quotation { color:#842484; } .lane.tour { color:<?= $INK ?>; } .lane.service { color:#0f8b7e; }
     .counts { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 4px; }
     .counts span { background:#faf5f7; border:1px solid <?= $LINE ?>; border-radius:8px; padding:5px 10px; font-size:12px; }
     .counts b { font-size:14px; }

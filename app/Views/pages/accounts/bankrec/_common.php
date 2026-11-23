@@ -2,8 +2,8 @@
 /** tf-bankrec-r1/r2 — shared styles and helpers of the Daily Bank Reconciliation pages. */
 ?>
 <style>
-    .brc { --p:#8b1d40; --p-soft:#f3e7eb; --ink:#24303d; --muted:#667085; --line:#e4e8ee; --bg:#f7f8fb; color:var(--ink); }
-    .brc .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .brc .btn-p:hover { background:#751735; color:#fff; }
+    .brc { --p:#842484; --p-soft:#f3e3f3; --ink:#24303d; --muted:#667085; --line:#e4e8ee; --bg:#f7f8fb; color:var(--ink); }
+    .brc .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .brc .btn-p:hover { background:#6f1e6f; color:#fff; }
     .brc .btn-op { border-color:var(--p); color:var(--p); } .brc .btn-op:hover { background:var(--p-soft); color:var(--p); }
     .brc .card { border:1px solid var(--line); border-radius:12px; box-shadow:none; }
     .brc .card-h { font-weight:700; font-size:14px; padding:12px 16px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
@@ -89,7 +89,7 @@ window.BRC = (function () {
             else input = '<input class="form-control" id="' + id + '" type="' + (f.type || 'text') + '" value="' + esc(f.value ?? '') + '">';
             return '<div class="text-start mb-2"><label class="form-label small fw-semibold mb-1" for="' + id + '">' + esc(f.label) + '</label>' + input + (f.help ? '<div class="small text-muted">' + esc(f.help) + '</div>' : '') + '</div>';
         }).join('');
-        const r = await Swal.fire({ title, html: (pre || '') + html, showCancelButton: true, confirmButtonText: confirm || 'Save', confirmButtonColor: '#8b1d40', focusConfirm: false,
+        const r = await Swal.fire({ title, html: (pre || '') + html, showCancelButton: true, confirmButtonText: confirm || 'Save', confirmButtonColor: '#842484', focusConfirm: false,
             preConfirm: () => {
                 const out = {};
                 for (const f of fields) {
