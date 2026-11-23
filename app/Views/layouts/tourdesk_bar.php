@@ -24,6 +24,8 @@
 // The work tabs first — one per desk, then the Board — and the master files after a thin
 // divider. A person holding more than six tabs (Management) gets the masters folded into
 // one "Masters" menu so the bar keeps to a single row; every desk keeps the flat layout.
+// tf-finance-r1: the payment roles (the same list as TourPayments\Perms 'viewer') — any one of them shows the Finance tab
+$tdFinGate = ['tour/tour_payment_dashboard', 'tour/tour_payment_dashboard/request', 'tour/tour_payment_dashboard/approve', 'tour/tour_accounts/payment_approval_v2', 'tour/tour_payment_dashboard/payables', 'tour/tour_payment_dashboard/batch', 'report/bank_payment_check', 'report/bank_payment_check/initiate', 'report/bank_payment_check/approve'];
 $tdItems = [
     ['url' => 'tour/intake',                     'label' => 'Tour Inquiry',       'icon' => 'bi-inbox',       'zone' => 'work'],   // 1c: the tab carries the screen's own name (the sidebar entry is 'Tour Inquiry' too)
     // tf-confirmed-r1: every confirmed tour on one list — a page under Inquiries, so it is shown to (and opens for)
@@ -34,6 +36,8 @@ $tdItems = [
     ['url' => 'tour/board',                      'label' => 'Tour Board',         'icon' => 'bi-kanban',      'zone' => 'work'],
     // the entrance ticket stock (schema 37): a work tab with a count — the attractions low on or out of tickets
     ['url' => 'tour/ticket_stock',               'label' => 'Ticket Stock',       'icon' => 'bi-ticket-perforated oc-tilt', 'zone' => 'work'],
+    // tf-finance-r1 (23 Nov 2026, Shantha): the Finance page — shown to whoever holds a payment role ('gate'); it has no menu entry of its own
+    ['url' => 'tour/finance',                    'label' => 'Finance',            'icon' => 'bi-bank2',       'zone' => 'work', 'gate' => $tdFinGate],
     // 1c (6 Oct 2026): the folded Masters menu reads in four groups — hotels; places, activities & meals; Transport & Guide
     // Services; pricing — each master keeps its own URL, privilege and label; 'group' only decides where it sits in the menu
     ['url' => 'master_files/hotel_rate_v2',      'label' => 'Hotel Rates',        'icon' => 'oci oci-bed',    'zone' => 'master', 'group' => 'hotels', 'sub' => 'contracts, seasons, what a night costs'],
@@ -108,6 +112,7 @@ if (($tourdesk_desk_only ?? null) === 'reservation') {
         // the two Tour Desk views (tf-tourdesk-r2): open to every signed-in user, so they ride on the Inquiries privilege here
         ['url' => 'home/tour_desk/upcoming',   'label' => 'Upcoming Tours',  'icon' => 'bi-calendar3',       'zone' => 'work', 'gate' => 'tour/intake'],
         ['url' => 'home/tour_desk/arrivals',   'label' => 'Next Arrivals',   'icon' => 'bi-airplane-fill',   'zone' => 'work', 'gate' => 'tour/intake'],
+        ['url' => 'tour/finance',              'label' => 'Finance',         'icon' => 'bi-bank2',           'zone' => 'work', 'gate' => $tdFinGate],   // tf-finance-r1
     ];
 }
 

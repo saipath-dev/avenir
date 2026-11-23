@@ -1308,6 +1308,14 @@ $routes->group('tour', static function ($routes) {
         $routes->post('setup', '\App\Controllers\Tour\PaymentDeskController::setup');
     });
 
+    // tf-finance-r1 (23 Nov 2026): the Finance page — Payment Approval, Ready for Bank Payment, Finalized Payments and Bank Reconciliation, one
+    // list at a time. Read-only; every action goes to the tour_payment_dashboard endpoint that already performs it. Any payment role
+    // (UserPermissionFilter, with tour/payment_desk); FinanceController checks again.
+    $routes->group('finance', static function ($routes) {
+        $routes->get('/', '\App\Controllers\Tour\FinanceController::index', ['filter' => ['UserSessionFilter']]);
+        $routes->get('data', '\App\Controllers\Tour\FinanceController::data', ['filter' => ['UserSessionFilter']]);
+    });
+
     $routes->group('tour_payment_forcast', static function ($routes) {
         $routes->get('/view_all/(:any)', [TourPaymentForcastController::class, 'index'], ['filter' => ['UserSessionFilter', 'UserPermissionFilter']]); // route : base_url/tour/tour_payment
         $routes->get('get_tour_payment', [TourPaymentForcastController::class, 'get_tour_payment']); // route : base_url/tour/tour_payment/get_tour_payment

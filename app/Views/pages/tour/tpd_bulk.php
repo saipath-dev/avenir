@@ -9,6 +9,11 @@
 $P = $tpd_perms ?? [];
 ?>
 <style>
+    /* tf-purple-r1 (Shantha, 23 Nov 2026): the payment screens in the Avenir colours — orchid purple #842484 for every bar, frame, heading and tab, green #78B848 for the primary action buttons. These pages only. */
+    :root { --vz-primary:#842484; --vz-primary-rgb:132,36,132; --vz-primary-text-emphasis:#6f1e6f; --vz-primary-bg-subtle:rgba(132,36,132,.08); --vz-header-bg:#842484; --vz-vertical-menu-bg:#842484; }
+    html body #page-topbar#page-topbar, html body .app-topbar.app-topbar, html body #avnl-note, html body .app-menu.navbar-menu, html body .navbar-menu .navbar-brand-box, html body .bg-primary, html body .bg-vertical-gradient { --vz-header-bg:#842484; --vz-header-border:#842484; background:#842484 !important; background-image:none !important; border-color:#842484; }
+    html body #avh-root { --avh-p:#6f1e6f; --avh-p2:#842484; } html body #avh-root .avh-fab { background:#842484; } html body #avh-root .avh-fab:hover { background:#6f1e6f; }
+
     .tpb { --p:#842484; --p2:#6f1e6f; --soft:#f3e3f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
     .tpb .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tpb .btn-p:hover { background:var(--p2); color:#fff; }
     .tpb .btn-outline-p { color:var(--p); border-color:var(--p); } .tpb .btn-outline-p:hover { background:var(--soft); color:var(--p); }
@@ -84,7 +89,7 @@ function render() {
     const stageCls = STAGE_COLOR[d.stage] || 'grey';
     const steps = `<div class="steps"><span class="done">Approved</span><span class="done">${n} vouchers issued</span><span class="${c.initiated + c.paid === n ? 'done' : (c.initiated ? 'now' : (canInit ? 'now' : ''))}">Bank transfer initiated ${c.initiated + c.paid}/${n}</span><span class="${c.paid === n ? 'done' : (c.paid ? 'now' : (canPay ? 'now' : ''))}">Paid ${c.paid}/${n}</span><span class="${d.reconciled ? 'done' : ''}">Ledger balanced</span><span class="${d.remittance && d.remittance.status === 'sent' ? 'done' : ''}">Supplier notified</span></div>`;
     const rows = d.children.map((k, i) => `<tr><td class="muted">${i + 1}</td><td><a href="${TPD_URL}voucher/${k.vnum}" target="_blank"><b>${k.vnum}</b></a><br><a class="small" href="${TPD_URL}batch/${k.batch_id}">${esc(k.batch_no)}</a></td>
-        <td><a href="${TPD_URL}?manual_id=${encodeURIComponent(k.manual_id || '')}" target="_blank"><b>${esc(k.manual_id)}</b></a><br><span class="muted">${esc(k.guest)}</span></td><td>${esc(k.kind)}${k.service_dates && k.service_dates.length ? '<br><span class="muted">' + k.service_dates.map(dmy).join(', ') + '</span>' : ''}</td><td>${esc(k.invoice_no || '—')}</td>
+        <td><a href="${TPD_URL}?manual_id=${encodeURIComponent(k.manual_id || '')}" target="_blank"><b>${esc(k.manual_id)}</b></a>${k.inquiry_no ? ' <span class="muted">· ' + esc(k.inquiry_no) + '</span>' : ''}<br><span class="muted">${esc(k.guest)}</span></td><td>${esc(k.kind)}${k.service_dates && k.service_dates.length ? '<br><span class="muted">' + k.service_dates.map(dmy).join(', ') + '</span>' : ''}</td><td>${esc(k.invoice_no || '—')}</td>
         <td class="text-end num">${k.currency === 'USD' ? 'USD ' + money2(k.usd_amount) : 'LKR ' + money2(k.lkr_amount)}</td>
         <td class="text-end num">${k.paid_lkr !== null ? money2(k.paid_lkr) : (k.voucher_amount !== null ? '<span class="muted">' + money2(k.voucher_amount) + '</span>' : '—')}</td>
         <td class="text-end num">${k.charge_share !== null ? money2(k.charge_share) : '—'}</td>

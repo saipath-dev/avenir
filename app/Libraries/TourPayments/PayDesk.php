@@ -1664,6 +1664,49 @@ final class PayDesk
     }
 
     /** Records what the chain does not: the rate and amounts of a request as it was made. Idempotent. */
+    /**
+     * tf-pay1-r1 (23 Nov 2026): the inquiry number behind a tour's payment record — the tour number (AVH-2026-00007) is the Tour Desk's
+     * own, so its inquiry (INQ 1056) is read from there. Empty for a tour that did not come from the Tour Desk.
+     */
+    public static function inquiryNo($db, string $manualId): string
+    {
+        static $memo = [];
+        $manualId = trim($manualId);
+        if ($manualId === '') {
+            return '';
+        }
+        if (!array_key_exists($manualId, $memo)) {
+            $memo[$manualId] = '';
+            try {
+                $r = $db->query('SELECT i.inquiry_no FROM tf_tour t JOIN tf_intake i ON i.id = t.intake_id WHERE t.tour_no = ? LIMIT 1', [$manualId])->getRowArray();
+                $memo[$manualId] = (string) ($r['inquiry_no'] ?? '');
+            } catch (\Throwable $e) {
+            }
+        }
+        return $memo[$manualId];
+    }
+
+    /** The inquiry number kept on the request itself (column added on first use), so it stays with the obligation whatever happens to the tour. */
+    private static function keepInquiry($db, int $prId, string $manualId): void
+    {
+        static $col = null;
+        try {
+            if ($col === null) {
+                $col = (bool) $db->query("SHOW COLUMNS FROM tpd_request_ext LIKE 'inquiry_no'")->getRowArray();
+                if (!$col) {
+                    $db->query("ALTER TABLE tpd_request_ext ADD COLUMN inquiry_no VARCHAR(40) NULL");
+                    $col = true;
+                }
+            }
+            $inq = self::inquiryNo($db, $manualId);
+            if ($inq !== '') {
+                $db->query('UPDATE tpd_request_ext SET inquiry_no = ? WHERE pr_id = ? AND (inquiry_no IS NULL OR inquiry_no = \'\')', [$inq, $prId]);
+            }
+        } catch (\Throwable $e) {
+            $col = false;
+        }
+    }
+
     public static function recordRequest($db, int $prId, array $f): void
     {
         try {
@@ -1689,6 +1732,7 @@ final class PayDesk
             ];
             $db->query("INSERT IGNORE INTO tpd_request_ext (pr_id, tour_id, hotel_acc, type, source_type, source_id, currency, amount, usd_rate, lkr_amount, rate_date, rate_user, invoice_no, booking_ref, due_date, note, parent_pr_id, created_at)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array_values($row));
+            self::keepInquiry($db, $prId, (string) $r['manual_id']);   // tf-pay1-r1
         } catch (\Throwable $e) {
             log_message('error', 'tpd recordRequest: ' . $e->getMessage());
         }

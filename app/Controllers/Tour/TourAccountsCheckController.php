@@ -446,6 +446,41 @@ class TourAccountsCheckController extends BaseController
         // tf-paydesk-r7h build 5 (V-1): the decision is taken once. Only a request still awaiting approval (status 1) is accepted or
         // rejected, by one conditional update; a repeated click, or a second session at the same moment, changes no row and is refused
         // here before any accrual entry or voucher is written (two simultaneous approvals had posted the accrual journal twice).
+        // tf-finance-r2 (23 Nov 2026, Shantha): a hotel rejection that cannot post its reversal is refused BEFORE anything is written.
+        // The checks below (no journal link, journal not in the ledger, an authorised or paid voucher) used to run only after the
+        // status had become 5 and the quotation line had been reset, so the answer "nothing was changed" was untrue. They still
+        // run again further down; here they stop the action while the request is still awaiting approval and untouched.
+        if ($type == 'Hotel' && (string) $status === '5') {
+            $tfPreDb = \Config\Database::connect();
+            $tfPre = $tfPreDb->query("SELECT * FROM payment_request WHERE id = ?", [(int) $id])->getRowArray();
+            if ($tfPre && (int) $tfPre['payment_request'] === 1) {
+                $tfPreWhy = null; $tfPreMsg = null;
+                $tfPreJ = (int) ($tfPre['ledger_journal_id'] ?? 0);
+                if ($tfPreJ <= 0) {
+                    $tfPreWhy = 'no ledger_journal_id on the request';
+                    $tfPreMsg = 'Request #' . (int) $id . ' carries no direct link to a ledger journal, so the entry it posted cannot be identified with certainty. '
+                        . 'Nothing was changed and the request was NOT rejected. Accounts must review this request and reverse the '
+                        . 'journal by hand. The link is deliberately not guessed from the tour, the hotel or the amount.';
+                } elseif (!(int) ($tfPreDb->query('SELECT COUNT(*) AS n FROM account_runing WHERE ID = ?', [$tfPreJ])->getRowArray()['n'] ?? 0)) {
+                    $tfPreWhy = 'linked journal ' . $tfPreJ . ' not in the ledger';
+                    $tfPreMsg = 'Request #' . (int) $id . ' points at ledger journal ' . $tfPreJ . ', which is not in the ledger. Nothing was changed and the request was NOT rejected. Accounts must review it.';
+                } elseif (!(int) ($tfPreDb->query("SELECT COUNT(*) AS n FROM account_runing WHERE Linkacc = ? AND advances_pay = 23", ['REV-' . $tfPreJ])->getRowArray()['n'] ?? 0)
+                    && (int) ($tfPreDb->query("SELECT COUNT(*) AS n FROM voucher WHERE ref_po = ? AND Acc_No = ? AND (finalized = 1 OR Aflag = 1)", [$tfPre['tour_id'], $tfPre['hotel_acc']])->getRowArray()['n'] ?? 0) > 0) {
+                    $tfPreWhy = 'an authorised or finalised voucher exists for this tour and supplier';
+                    $tfPreMsg = 'Request #' . (int) $id . ' cannot be rejected: an authorised or paid voucher already exists for this tour and this supplier. '
+                        . 'Nothing was changed. Accounts must cancel the voucher first.';
+                }
+                if ($tfPreWhy !== null) {
+                    try {
+                        \App\Libraries\TourPayments\Audit::log($tfPreDb, ['action' => 'reversal_refused', 'ref_type' => 'request', 'ref_id' => (int) $id, 'tour_id' => $tfPre['tour_id'] ?? null,
+                            'manual_id' => $tfPre['manual_id'] ?? null, 'reason' => $tfPreWhy . ' (checked before any change; the request stays awaiting approval)']);
+                    } catch (\Throwable $e) {
+                    }
+                    return $this->response->setJSON(['status' => 409, 'message' => $tfPreMsg]);
+                }
+            }
+        }
+
         $tfDb = \Config\Database::connect();
         $tfDb->query("UPDATE payment_request SET payment_request = ?, accept_user = ?, accept_date = ? WHERE id = ? AND payment_request = 1",
             [$updateData['payment_request'], $updateData['accept_user'], $updateData['accept_date'], (int) $id]);

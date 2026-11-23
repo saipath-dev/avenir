@@ -204,8 +204,13 @@ class TourPaymentDeskController extends BaseController
     // POST dispute {pr_id, disputed (1|0), reason}
     public function dispute()
     {
-        if (!Perms::can('approver') && !Perms::can('accountant')) {
-            return $this->deny('Marking a payment as disputed needs the approval or the bank-initiation privilege.');
+        // tf-finance-r4: 'accountant' also covers anyone who can open the Bank Payment Check page (the bank authoriser among them); a Hold is for the
+        // management approver and the accountant who records bank payments (the explicit initiation privilege) only
+        if (!Perms::can('approver') && !Perms::can('initiator')) {
+            return $this->deny('Putting a payment on hold needs the approval or the bank-initiation privilege.');
+        }
+        if ((int) $this->in('disputed', 1) !== 1 && !Perms::can('approver')) {   // tf-finance-r3: Hold by an approver or an accountant; Release by a management approver only
+            return $this->deny('Releasing a hold needs the management approval privilege.');
         }
         $r = Bulk::dispute($this->db(), (int) $this->in('pr_id', 0), (int) $this->in('disputed', 1) === 1, (string) $this->in('reason', ''), Perms::user());
         return $this->json($r['ok'] ? ['status' => 200, 'message' => 'Saved.'] : ['status' => 400, 'message' => $r['message']]);
@@ -346,6 +351,9 @@ class TourPaymentDeskController extends BaseController
         if ($hasBankBlocked) {
             Audit::log($db, ['action' => 'bulk_created_bank_unverified', 'ref_type' => 'supplier', 'ref_id' => $sup, 'reason' => 'Bank account ' . (($bank['status'] ?? '') === 'changed' ? 'changed since verification' : 'not verified') . ' at bulk creation; release waits for verification']);
         }
+        if ($tfHeld = Bulk::heldRefusal($db, array_map('intval', $ids), 'a bulk payment')) {   // tf-finance-r2: Hold (the eligibility list already leaves held items out; this is the second line)
+            return $this->json(['status' => 409, 'message' => $tfHeld, 'held' => true]);
+        }
         if ($sep = Separation::check($db, 'bulk', array_map('intval', $ids))) {   // tf-paydesk-r5
             return $this->json(['status' => 403, 'message' => $sep, 'separation' => true], 403);
         }
@@ -413,6 +421,9 @@ class TourPaymentDeskController extends BaseController
             return $this->json(['status' => 409, 'message' => 'This bulk batch is being processed by someone else at this moment. Try again in a few seconds.']);
         }
         try {
+            if ($tfHeld = Bulk::heldRefusal($db, array_map(static fn ($c) => (int) ($c['pr_id'] ?? 0), $d['children']), 'the bank payment (recording) of the bulk payment')) {   // tf-finance-r3: Hold
+                return $this->json(['status' => 409, 'message' => $tfHeld, 'held' => true]);
+            }
             $pending = array_values(array_filter($d['children'], static fn ($c) => $c['stage'] === 'issued'));
             foreach ($pending as $tfC) {   // tf-bankreg-r1: the whole transfer waits while any payee account is incomplete or flagged
                 if ($tfChk = SupplierAccounts::initiationCheck($db, (int) $tfC['vnum'])) {
@@ -470,7 +481,8 @@ class TourPaymentDeskController extends BaseController
             }
             $d2 = Bulk::detail($db, $id);
             $complete = $d2['counts']['initiated'] + $d2['counts']['paid'] === $d2['count'];
-            $transferLkr = round(array_sum(array_map(static fn ($c) => (float) $db->query("SELECT amount FROM tpd_bank_initiation WHERE vnum = ?", [$c['vnum']])->getRowArray()['amount'] ?? 0, $d2['children'])), 2);
+            // tf-pay1-r1 (23 Nov 2026): a voucher that was not initiated has no row here — it counts as 0 instead of stopping the page with a blank error
+            $transferLkr = round(array_sum(array_map(static fn ($c) => (float) (($db->query("SELECT amount FROM tpd_bank_initiation WHERE vnum = ?", [$c['vnum']])->getRowArray() ?: [])['amount'] ?? 0), $d2['children'])), 2);
             $acct = $this->payingAccount();
             $db->query("UPDATE tpd_batch SET status = ?, payment_date = ?, usd_rate = ?, bank_ref = ?, charges_total = ?, charges_allocated = ?, transfer_lkr = ?, total_debit = ?, bank_account_id = ?, ledger_code = ?, initiated_by = COALESCE(initiated_by, ?), initiated_at = COALESCE(initiated_at, ?), updated_at = ? WHERE id = ?",
                 [$complete ? 'initiated' : 'issued', $paymentDate, $rate, trim((string) $bankRef) ?: null, $charges, round(array_sum($shares), 2), $transferLkr, round($transferLkr + $charges, 2), $acct['id'] ?? null, $acct['ledger_code'] ?? null, Perms::user(), date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), $id]);
@@ -507,6 +519,9 @@ class TourPaymentDeskController extends BaseController
         // tf-paydesk-r5 separation of duties, checked for the WHOLE batch before anything is marked: not the requester of any
         // item, and not the user who initiated the transfer (the per-voucher check inside Paid remains as the second line)
         $prIds = array_values(array_unique(array_filter(array_map(static fn ($c) => (int) ($c['pr_id'] ?? 0), $d['children']))));
+        if ($tfHeld = Bulk::heldRefusal($db, $prIds, 'finalisation (Paid) of the bulk payment')) {   // tf-finance-r3: Hold
+            return $this->json(['status' => 409, 'message' => $tfHeld, 'held' => true]);
+        }
         if ($sep = Separation::check($db, 'paid', $prIds)) {
             return $this->json(['status' => 403, 'message' => $sep, 'separation' => true], 403);
         }
@@ -1129,6 +1144,10 @@ class TourPaymentDeskController extends BaseController
         if (!empty($prep['account']) && !(int) $prep['account']['complete']) {   // tf-bankreg-r1: no batch without a complete registered account
             return $this->json(['status' => 428, 'message' => 'No complete registered bank account for ' . $prep['supplier'] . ' (' . implode(', ', SupplierAccounts::missing(['holder_name' => $prep['account']['holder_name'], 'bank_name' => $prep['account']['bank_name'], 'account_no' => $prep['account']['account_no']])) . ' missing). Complete it in the Supplier Bank Account Registry, then select it for these payments.', 'needs_account' => true, 'supplier_bank' => $prep['bank']]);
         }
+        if ($tfHeld = Bulk::heldRefusal($db, (array) $prep['pr_ids'], !empty($prep['individual']) || (int) $this->in('individual', 0) === 1 ? 'an individual payment' : 'a supplier payment batch')) {   // tf-finance-r2: Hold
+            Audit::log($db, ['action' => 'batch_refused', 'ref_type' => 'supplier', 'ref_id' => mb_substr($sup, 0, 80), 'reason' => mb_substr($tfHeld, 0, 500)]);
+            return $this->json(['status' => 409, 'message' => $tfHeld, 'held' => true]);
+        }
         if ($sep = Separation::check($db, 'batch', $prep['pr_ids'])) {   // tf-paydesk-r5
             return $this->json(['status' => 403, 'message' => $sep, 'separation' => true], 403);
         }
@@ -1414,6 +1433,10 @@ class TourPaymentDeskController extends BaseController
             return $this->json(['status' => 409, 'message' => 'Voucher ' . $vnum . ' belongs to bulk batch SB-' . str_pad((string) $batch['parent_id'], 5, '0', STR_PAD_LEFT) . ': the ONE bank transfer is initiated for the whole batch on its page, not voucher by voucher.', 'bulk_id' => (int) $batch['parent_id']]);
         }
         $items = $batch ? Batches::items($db, (int) $batch['id']) : [];
+        if ($tfHeld = Bulk::heldRefusal($db, $items ? array_column($items, 'pr_id') : $this->requestsPaidBy($db, $vnum, $v), 'the bank payment (recording)')) {   // tf-finance-r3: Hold
+            $this->refused($db, 'initiation_refused', $vnum, $v, mb_substr($tfHeld, 0, 400));
+            return $this->json(['status' => 409, 'message' => $tfHeld, 'held' => true]);
+        }
         if ($sep = Separation::check($db, 'initiate', $items ? array_column($items, 'pr_id') : $this->requestsPaidBy($db, $vnum, $v), $vnum)) {   // tf-paydesk-r5; r7h 5.2 (D-3): every stored link
             return $this->json(['status' => 403, 'message' => $sep, 'separation' => true], 403);
         }
@@ -1654,6 +1677,10 @@ class TourPaymentDeskController extends BaseController
             return $this->json(['status' => 409, 'message' => 'The currency of Payment Voucher No. ' . $vnum . ' cannot be established from its source records: ' . $cur['reason'] . '. It is not marked Paid. Nothing was written.', 'currency' => $cur]);
         }
         $items = $batch ? Batches::items($db, (int) $batch['id']) : [];
+        if ($tfHeld = Bulk::heldRefusal($db, $items ? array_column($items, 'pr_id') : $this->requestsPaidBy($db, $vnum, $v), 'finalisation (Paid)')) {   // tf-finance-r3: Hold
+            $this->refused($db, 'paid_refused', $vnum, $v, mb_substr($tfHeld, 0, 400));
+            return $this->json(['status' => 409, 'message' => $tfHeld, 'held' => true]);
+        }
         if ($sep = Separation::check($db, 'paid', $items ? array_column($items, 'pr_id') : $this->requestsPaidBy($db, $vnum, $v), $vnum)) {   // tf-paydesk-r5: not your own request, not your own initiation; r7h 5.2 (D-3): every stored link
             return $this->json(['status' => 403, 'message' => $sep, 'separation' => true], 403);
         }
@@ -1964,7 +1991,9 @@ class TourPaymentDeskController extends BaseController
             return $this->response->setStatusCode(404)->setBody('Voucher not found');
         }
         $data = ['d' => $d, 'company' => $d['company'], 'perms' => Perms::all(), 'bank_visible' => Perms::can('accountant') || Perms::can('bank_approver') || Perms::can('approver')];
-        if (!$this->request->getGet('pdf')) {
+        // tf-finance-r1 (23 Nov 2026, Shantha): the voucher is a preview until it is finalised — no print, no PDF before that
+        $data['final'] = (int) ($d['voucher']['finalized'] ?? 0) === 1;
+        if (!$data['final'] || !$this->request->getGet('pdf')) {
             return view('pages/tour/tpd_voucher', $data + ['for_pdf' => false]);
         }
         $pdf = $docs->pdf(view('pages/tour/tpd_voucher', $data + ['for_pdf' => true]), 'Payment-voucher-' . $vnum);

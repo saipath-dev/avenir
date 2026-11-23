@@ -87,7 +87,7 @@ final class Batches
             }
         }
         return [
-            'pr_id' => (int) $r['id'], 'tour_id' => (string) $r['tour_id'], 'manual_id' => (string) $r['manual_id'], 'guest' => (string) ($c['consignee'] ?? $r['consignee']),
+            'pr_id' => (int) $r['id'], 'tour_id' => (string) $r['tour_id'], 'manual_id' => (string) $r['manual_id'], 'inquiry_no' => PayDesk::inquiryNo($db, (string) $r['manual_id']), 'guest' => (string) ($c['consignee'] ?? $r['consignee']),
             'start_date' => $c['start_date'] ?? $r['start_date'], 'end_date' => $c['end_date'] ?? $r['end_date'], 'pax' => (int) ($c['passenger_count'] ?? 0), 'agent' => (string) ($c['agent_name'] ?? ''),
             'tour_cancelled' => (int) ($c['tour_cancel'] ?? 0) === 1,
             'sup_acc' => (string) $r['hotel_acc'], 'supplier' => (string) ($r['hotel_name'] ?: $r['consignee']), 'type' => (string) $r['type'], 'kind' => $kind,

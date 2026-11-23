@@ -268,10 +268,10 @@ class UserPermissionFilter implements FilterInterface
         // holders of the bank-initiation privilege (as for the initiation itself), its setup by the System Administrator only (group 1 never
         // reaches this line).
         // PaymentDeskController checks the exact privilege again. No privilege row is added or changed by this.
-        if (!$is_allowed && ($path === 'tour/payment_desk' || str_starts_with($path, 'tour/payment_desk/'))) {
+        if (!$is_allowed && ($path === 'tour/payment_desk' || str_starts_with($path, 'tour/payment_desk/') || $path === 'tour/finance' || $path === 'tour/finance/data')) {   // tf-finance-r1: the Finance page rides on the same payment roles
             $pdHeld = array_map(static fn ($u) => trim((string) $u['url'], '/'), $allowed_urls);
             $pdAny = ['tour/tour_payment_dashboard', 'tour/tour_payment_dashboard/request', 'tour/tour_payment_dashboard/approve', 'tour/tour_accounts/payment_approval_v2', 'tour/tour_payment_dashboard/payables', 'tour/tour_payment_dashboard/batch', 'report/bank_payment_check', 'report/bank_payment_check/initiate', 'report/bank_payment_check/approve'];
-            $pdNeed = in_array($path, ['tour/payment_desk', 'tour/payment_desk/data', 'tour/payment_desk/adopt_check'], true) ? $pdAny : ($path === 'tour/payment_desk/adopt' ? ['report/bank_payment_check/initiate'] : []);
+            $pdNeed = in_array($path, ['tour/payment_desk', 'tour/payment_desk/data', 'tour/payment_desk/adopt_check', 'tour/finance', 'tour/finance/data'], true) ? $pdAny : ($path === 'tour/payment_desk/adopt' ? ['report/bank_payment_check/initiate'] : []);
             if (array_intersect($pdHeld, $pdNeed)) {
                 $is_allowed = true;
             }

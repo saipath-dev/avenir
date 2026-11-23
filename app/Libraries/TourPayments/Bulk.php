@@ -100,6 +100,24 @@ final class Bulk
         return $out;
     }
 
+    /**
+     * tf-finance-r2: the requests among $prIds that are on hold (disputed), as a refusal message for a payment step, or null.
+     * A held amount stays outstanding: it enters neither an individual payment, a supplier batch nor a bulk payment until released.
+     */
+    public static function heldRefusal($db, array $prIds, string $step): ?string
+    {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $prIds))));
+        if (!$ids) {
+            return null;
+        }
+        $rows = $db->query("SELECT x.pr_id, x.dispute_reason, x.disputed_by FROM tpd_request_ext x WHERE x.disputed = 1 AND x.pr_id IN (" . implode(',', $ids) . ")")->getResultArray();
+        if (!$rows) {
+            return null;
+        }
+        return 'On hold: ' . implode('; ', array_map(static fn ($r) => 'request #' . (int) $r['pr_id'] . ' (' . trim((string) $r['dispute_reason']) . ' — ' . $r['disputed_by'] . ')', $rows))
+            . '. A held payment cannot enter ' . $step . ' until the hold is released with a reason. Nothing was written.';
+    }
+
     /** Mark / clear an item as disputed (excluded from bulk payment until cleared). */
     public static function dispute($db, int $prId, bool $disputed, string $reason, string $by): array
     {
@@ -108,14 +126,31 @@ final class Bulk
         // agrees, voucher line, review) — a desk value that does not agree with the request no longer blocks a dispute
         $pr0 = $db->query("SELECT * FROM payment_request WHERE id = ?", [$prId])->getRowArray();
         $st = $pr0 ? (RequestLink::earlierPayments($db, [$pr0], $x ? [$prId => $x] : [])[$prId] ?? null) : null;
-        if (($x && $x['batch_id']) || ($st && $st['state'] === 'linked')) {
-            return ['ok' => false, 'message' => 'This payment already has a voucher' . ($st && !empty($st['vnums']) ? ' (Payment Voucher No. ' . implode(', ', array_map('intval', $st['vnums'])) . ')' : '') . '; dispute it through the voucher (cancellation), not here.'];
+        // tf-finance-r3 (Shantha, 23 Nov 2026): a payment may be put on hold after its voucher exists, until it is finalised. The voucher
+        // and its history stay as they are; while held, the bank payment can be neither recorded nor finalised. Only a finalised (Paid)
+        // voucher can no longer be held — that is undone through the voucher (cancellation), not here.
+        $tfVn = [];
+        if ($x && $x['batch_id']) {
+            $tfB = $db->query("SELECT vnum FROM tpd_batch WHERE id = ?", [(int) $x['batch_id']])->getRowArray();
+            if ($tfB && $tfB['vnum']) {
+                $tfVn[] = (int) $tfB['vnum'];
+            }
+        }
+        if ($st && $st['state'] === 'linked') {
+            $tfVn = array_merge($tfVn, array_map('intval', (array) ($st['vnums'] ?? [])));
+        }
+        $tfVn = array_values(array_unique(array_filter($tfVn)));
+        if ($tfVn && (int) ($db->query("SELECT COUNT(*) AS n FROM voucher WHERE finalized = 1 AND Vnum IN (" . implode(',', $tfVn) . ")")->getRowArray()['n'] ?? 0) > 0) {
+            return ['ok' => false, 'message' => 'This payment is already finalised (Payment Voucher No. ' . implode(', ', $tfVn) . '); it can no longer be put on hold or released here.'];
         }
         if (!$x) {
             PayDesk::recordRequest($db, $prId, []);
         }
-        if ($disputed && trim($reason) === '') {
-            return ['ok' => false, 'message' => 'Say why the item is disputed (kept in the audit record).'];
+        if (trim($reason) === '') {   // tf-finance-r2 (Shantha, 23 Nov 2026): Hold AND Release both need a reason, kept in the audit record
+            return ['ok' => false, 'message' => $disputed ? 'Give the reason for the hold (kept in the audit record).' : 'Give the reason for releasing the hold (kept in the audit record).'];
+        }
+        if ($x && ((int) ($x['disputed'] ?? 0) === 1) === $disputed) {
+            return ['ok' => false, 'message' => $disputed ? 'This payment is already on hold.' : 'This payment is not on hold.'];
         }
         $db->query("UPDATE tpd_request_ext SET disputed = ?, dispute_reason = ?, disputed_by = ?, disputed_at = ? WHERE pr_id = ?", [$disputed ? 1 : 0, $disputed ? trim($reason) : null, $disputed ? $by : null, $disputed ? date('Y-m-d H:i:s') : null, $prId]);
         $pr = $db->query("SELECT tour_id, manual_id FROM payment_request WHERE id = ?", [$prId])->getRowArray() ?: [];
@@ -295,7 +330,7 @@ final class Bulk
             $sum['bank_credit'] += (float) ($k['ledger_bank_credit'] ?? 0);
             $sum['fx'] += (float) ($k['fx_diff'] ?? 0);
             $children[] = ['batch_id' => (int) $k['id'], 'batch_no' => $k['batch_no'], 'vnum' => (int) $k['vnum'], 'stage' => $stage, 'stage_label' => Batches::STAGES[$stage] ?? $stage,
-                'pr_id' => $it['pr_id'] ?? null, 'tour_id' => $it['tour_id'] ?? $k['ref_po'], 'manual_id' => $it['manual_id'] ?? null, 'guest' => $it['guest'] ?? null, 'kind' => $it['kind'] ?? null, 'service_dates' => $it['service_dates'] ?? [], 'invoice_no' => $it['invoice_no'] ?? null,
+                'pr_id' => $it['pr_id'] ?? null, 'tour_id' => $it['tour_id'] ?? $k['ref_po'], 'manual_id' => $it['manual_id'] ?? null, 'inquiry_no' => $it['inquiry_no'] ?? PayDesk::inquiryNo($db, (string) ($it['manual_id'] ?? '')), 'guest' => $it['guest'] ?? null, 'kind' => $it['kind'] ?? null, 'service_dates' => $it['service_dates'] ?? [], 'invoice_no' => $it['invoice_no'] ?? null,
                 'currency' => $it['currency'] ?? $k['currency'], 'usd_amount' => $it['usd_amount'] ?? null, 'lkr_amount' => $it['lkr_amount'] ?? null, 'approval_rate' => $it['approval_rate'] ?? null, 'approval_lkr' => $it['approval_lkr'] ?? null,
                 'voucher_amount' => $k['voucher_amount'] !== null ? (float) $k['voucher_amount'] : null, 'payment_date' => $k['payment_date'], 'init_rate' => $k['init_rate'], 'bank_ref' => $k['init_ref'],
                 'paid_date' => $k['paid_date'], 'paid_rate' => $k['paid_rate'], 'paid_lkr' => $k['paid_lkr'] !== null ? (float) $k['paid_lkr'] : null, 'fx_diff' => $k['fx_diff'] !== null ? (float) $k['fx_diff'] : null,

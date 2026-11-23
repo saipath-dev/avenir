@@ -14,6 +14,11 @@ $st = $schema;
 $e = static fn ($s): string => esc((string) ($s ?? ''));
 ?>
 <style>
+    /* tf-purple-r1 (Shantha, 23 Nov 2026): the payment screens in the Avenir colours — orchid purple #842484 for every bar, frame, heading and tab, green #78B848 for the primary action buttons. These pages only. */
+    :root { --vz-primary:#842484; --vz-primary-rgb:132,36,132; --vz-primary-text-emphasis:#6f1e6f; --vz-primary-bg-subtle:rgba(132,36,132,.08); --vz-header-bg:#842484; --vz-vertical-menu-bg:#842484; }
+    html body #page-topbar#page-topbar, html body .app-topbar.app-topbar, html body #avnl-note, html body .app-menu.navbar-menu, html body .navbar-menu .navbar-brand-box, html body .bg-primary, html body .bg-vertical-gradient { --vz-header-bg:#842484; --vz-header-border:#842484; background:#842484 !important; background-image:none !important; border-color:#842484; }
+    html body #avh-root { --avh-p:#6f1e6f; --avh-p2:#842484; } html body #avh-root .avh-fab { background:#842484; } html body #avh-root .avh-fab:hover { background:#6f1e6f; }
+
     .tps { --p:#842484; --p2:#6f1e6f; --soft:#f3e3f3; --ink:#2c3e50; --muted:#6c757d; --line:#e4e8ee; color:var(--ink); }
     .tps .btn-p { background:var(--p); border-color:var(--p); color:#fff; } .tps .btn-p:hover { background:var(--p2); color:#fff; }
     .tps .card { border:1px solid var(--line); border-radius:14px; } .tps .card h6 { font-weight:700; color:var(--p); }
