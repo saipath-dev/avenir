@@ -4306,6 +4306,14 @@
         const reqRate = d => { const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
             const want = [['SGL', Number(R.sgl) > 0, d.rate_sgl], ['DBL', Number(R.dbl) > 0, d.rate_dbl], ['TWN', Number(R.twn) > 0, d.rate_dbl], ['TPL', Number(R.tpl) > 0, d.rate_tpl]].filter(w => w[1] && f(w[2]) !== null);
             if (d.rate_state === 'rate' && want.length) return `<span>Hotel rate: ${want.length === 1 ? esc(cur) + ' ' + f(want[0][2]) : want.map(w => w[0] + ' ' + esc(cur) + ' ' + f(w[2])).join(' · ')}</span>`;
+            // tf-rate-label-r1 (24 Nov 2026, Shantha): the hotel HAS an approved rate plan for the night — say what actually stops the costing (the room mix, or a meal plan the hotel does not publish), not "Rate missing"
+            if (d.rate_state === 'rate') {
+                let meals = []; try { const rt = (JSON.parse(d.room_types_json || '[]') || []).find(x => Number(x.id) === Number(d.room_type_id)); meals = rt && rt.meals ? Object.keys(rt.meals) : []; } catch (e) {}
+                const noMix = !(d.room_mix && Number(d.room_mix.rooms) > 0) && !['sgl', 'dbl', 'twn', 'tpl'].some(k => Number(R[k]) > 0);
+                const noMeal = d.meal_plan && meals.length && !meals.includes(d.meal_plan);
+                const why = noMeal ? `No ${esc(d.meal_plan)} rate published — this hotel has ${esc(meals.join(', '))}` : (noMix ? 'Rate plan found — set the room mix to cost it' : 'Rate plan found — no figure for these rooms');
+                return `<span class="rm" style="color:#8a6100"><i class="bi bi-info-circle-fill"></i>${why}</span>`;
+            }
             return d.hotel_name_raw ? '<span class="rm"><i class="bi bi-exclamation-triangle-fill"></i>Rate missing</span>' : ''; };
         const reqRow = d => `<tr><td class="dd">${d.day_no} / ${esc(dm(d.day_date, { day:'numeric', month:'short', year:'numeric' }))}</td>
             <td class="ht">${d.hotel_name_raw ? `<b class="${it.locked ? '' : 'lnk'}" ${it.locked ? '' : `data-inqedit="${d.id}" title="Change the hotel, room type or meal plan"`}>${esc(d.hotel_name_raw)}</b>` : (it.locked ? '<b>Hotel not chosen</b>' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}
