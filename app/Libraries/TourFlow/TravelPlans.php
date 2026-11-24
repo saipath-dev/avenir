@@ -36,6 +36,7 @@ final class TravelPlans
         $this->user = $user !== '' ? $user : 'system';
         self::ensure($db);
         PaxRooms::ensure($db);   // its tables first: a CREATE inside the preview's trial would end the trial early
+        $take->ensureDayRooms();   // tf-hotelpick-r1: the same for the room rows of a night
     }
 
     public static function ensure($db): void

@@ -543,7 +543,21 @@ final class PaxMatrix
         $rooms  = (int) ($mix['sgl'] ?? 0) + (int) ($mix['dbl'] ?? 0) + (int) ($mix['twn'] ?? 0) + (int) ($mix['tpl'] ?? 0);
         $amount = 0.0;
         $unit   = ($d['rate_unit'] ?? null) !== null && $d['rate_unit'] !== '' ? (float) $d['rate_unit'] : null;
-        if ($unit !== null && ($d['rate_dbl'] ?? null) === null && ($d['rate_sgl'] ?? null) === null) {
+        if (!empty($mix['rows']) && !($unit !== null && ($d['rate_dbl'] ?? null) === null && ($d['rate_sgl'] ?? null) === null)) {
+            // tf-hotelpick-r1: the night's own room rows (the inquiry's own party only), priced row by row as the detailed costing does
+            $short = [];
+            foreach ($mix['rows'] as $r) {
+                $v = IntakeService::roomRowRate($d, $r);
+                if ($v === null) {
+                    $short[] = strtolower((string) $r['occ']) . ' ' . ($r['room_type_name'] ?? 'room');
+                    continue;
+                }
+                $amount += (int) $r['qty'] * $v;
+            }
+            if ($short !== []) {
+                return $fail("Night {$n}: {$hotel} publishes no {$d['meal_plan']} rate for " . implode(', ', $short) . '.', false);
+            }
+        } elseif ($unit !== null && ($d['rate_dbl'] ?? null) === null && ($d['rate_sgl'] ?? null) === null) {
             // a tent or a villa priced as one unit: one unit per room, as the detailed costing counts it
             $amount += max(1, $rooms) * $unit;
         } else {

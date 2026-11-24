@@ -313,6 +313,44 @@ final class QuoteService
                 $line['lines'][] = ['kind' => 'unit', 'label' => 'Per unit (up to ' . (int) ($d['unit_pax_max'] ?? 0) . ')', 'qty' => $units, 'rate' => $unit, 'amount' => round($units * $unit, 2)];
                 $amount += $units * $unit;
                 $warnings[] = ['code' => 'unit_' . $d['id'], 'label' => "{$hotel}, night {$n} is priced per unit (up to " . (int) ($d['unit_pax_max'] ?? 0) . " each); {$units} unit(s) are costed, one per room in the mix. Check the count."];
+            } elseif (!empty($d['room_rows'])) {
+                // tf-hotelpick-r1: the night's own room rows — each its category, occupancy and rooms, at that category's
+                // published figure for the meal plan (the figure kept on the night for its own room type). A missing rate is
+                // never a zero: the night stops the quotation and says which.
+                $types = [];
+                foreach ((array) ($d['room_types'] ?? []) as $t) {
+                    $types[(int) $t['id']] = $t;
+                }
+                $meal  = strtoupper((string) ($d['meal_plan'] ?? ''));
+                $occW  = ['sgl' => 'Single', 'dbl' => 'Double', 'twn' => 'Twin', 'tpl' => 'Triple'];
+                $short = [];
+                foreach ($d['room_rows'] as $r) {
+                    $tid   = $r['room_type_id'];
+                    $tname = $tid !== null && isset($types[$tid]) ? (string) $types[$tid]['name'] : ((string) ($r['room_type_name'] ?? '') ?: (string) ($line['room_type'] ?? 'room'));
+                    $rv    = IntakeService::roomRowRate($d, $r);
+                    if ($rv === null) {
+                        $short[] = strtolower($occW[$r['occ']]) . ' ' . $tname;
+                        continue;
+                    }
+                    $line['lines'][] = ['kind' => $r['occ'], 'label' => $tname . ' — ' . $occW[$r['occ']], 'qty' => (int) $r['qty'], 'rate' => (float) $rv, 'amount' => round((int) $r['qty'] * (float) $rv, 2)];
+                    $amount += (int) $r['qty'] * (float) $rv;
+                }
+                if ($short !== []) {
+                    $line['state'] = 'missing';
+                    $line['why']   = 'No published ' . $meal . ' rate for ' . implode(', ', $short) . '.';
+                    $blockers[]    = ['code' => 'rate_' . $d['id'], 'label' => "Published rate missing: {$hotel}, night {$n} — no {$meal} rate for " . implode(', ', $short) . ' on ' . date('j M Y', strtotime((string) $d['day_date'])) . '. Choose another category or fix it in Hotel Rates.'];
+                    $hotels[] = $line;
+                    continue;
+                }
+                $line['room_type'] = implode(' + ', array_unique(array_map(static fn ($l) => explode(' — ', $l['label'])[0], $line['lines'])));
+                // the rows must hold the guests there that night (Travel Plans, groups); more beds than guests is said, not stopped
+                $sleeps = (int) ($mix['sleeps'] ?? 0);
+                $guests = $mix['pax'] !== null ? (int) $mix['pax'] : 0;
+                if ($guests > 0 && $sleeps < $guests) {
+                    $blockers[] = ['code' => 'rows_short_' . $d['id'], 'label' => "Night {$n} ({$hotel}): the rooms set for this night sleep {$sleeps}, but {$guests} guests stay — change the rooms in Hotel & room selection."];
+                } elseif ($guests > 0 && $sleeps > $guests) {
+                    $warnings[] = ['code' => 'rows_over_' . $d['id'], 'label' => "Night {$n} ({$hotel}): the rooms set for this night sleep {$sleeps} for {$guests} guests. Check the room mix."];
+                }
             } else {
                 $need = [
                     ['sgl', 'Single', (int) $mix['sgl'], $d['rate_sgl']],

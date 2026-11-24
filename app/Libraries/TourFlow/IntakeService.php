@@ -241,6 +241,7 @@ final class IntakeService
     private ?bool $hasMealSource = null;
     private ?bool $hasRateFreeze = null;
     private ?bool $hasRoomTypeAuto = null;   // tf-walkfix-r1 (schema 35)
+    private ?bool $hasDayRooms = null;       // tf-hotelpick-r1: the room rows of a night
     private ?bool $hasTwoFigures = null;
     private ?bool $hasSamePlace = null;   // tf-walkfix-r1 (schema 35)
     private ?array $gatewayTowns = null;  // tf-walkfix-r1: the airport area, from the planner's gateway setting
@@ -442,6 +443,19 @@ final class IntakeService
         }
         $it['fields']     = json_decode((string) $it['fields_json'], true) ?: [];
         $it['days']       = $this->db->query('SELECT * FROM tf_intake_day WHERE intake_id = ? ORDER BY day_no, id', [$id])->getResultArray();
+        // tf-hotelpick-r1: the room rows a person set for a night (category, occupancy, rooms) — that night's room mix
+        $it['day_rooms'] = [];
+        if ($this->ensureDayRooms()) {
+            $dayNoOf = [];
+            foreach ($it['days'] as $dd) {
+                $dayNoOf[(int) $dd['id']] = (int) $dd['day_no'];
+            }
+            foreach ($this->db->query('SELECT r.*, NULL AS room_type_name FROM tf_intake_day_room r WHERE r.intake_id = ? ORDER BY r.day_id, r.sort_order, r.id', [$id])->getResultArray() as $rr) {
+                if (isset($dayNoOf[(int) $rr['day_id']])) {
+                    $it['day_rooms'][$dayNoOf[(int) $rr['day_id']]][] = ['id' => (int) $rr['id'], 'day_id' => (int) $rr['day_id'], 'room_type_id' => self::intOrNull($rr['room_type_id']), 'room_type_name' => $rr['room_type_label'], 'occ' => (string) $rr['occ'], 'qty' => (int) $rr['qty']];
+                }
+            }
+        }
         $it['passengers'] = $this->db->query('SELECT * FROM tf_intake_pax WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
         $it['requests']   = $this->db->query('SELECT * FROM tf_intake_request WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
         $it['services']   = $this->db->query('SELECT * FROM tf_intake_service WHERE intake_id = ? ORDER BY day_no, sort_order, id', [$id])->getResultArray();
@@ -503,6 +517,7 @@ final class IntakeService
             $d['services']   = $byDay[(int) $d['day_no']] ?? [];
             $d['sectors']    = $legsByDay[(int) $d['day_no']] ?? [];
             $d['excursions'] = $excByDay[(int) $d['day_no']] ?? [];
+            $d['room_rows']  = $it['day_rooms'][(int) $d['day_no']] ?? [];
             $d['room_mix']   = self::roomMix($it, (int) $d['day_no']);
             $d['room_types'] = json_decode((string) ($d['room_types_json'] ?? ''), true) ?: [];
             $d['rate_supp']  = json_decode((string) ($d['rate_supp_json'] ?? ''), true) ?: [];
@@ -1754,6 +1769,147 @@ final class IntakeService
     }
 
     /** Correct one requested night, then re-check it against the rates panel. */
+    /** tf-hotelpick-r1: the room rows of a night — created on first use (the same way as the other TourFlow tables). */
+    public function ensureDayRooms(): bool
+    {
+        if ($this->hasDayRooms !== null) {
+            return $this->hasDayRooms;
+        }
+        try {
+            $this->db->query("CREATE TABLE IF NOT EXISTS `tf_intake_day_room` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `intake_id` INT UNSIGNED NOT NULL,
+                `day_id` INT UNSIGNED NOT NULL,
+                `room_type_id` INT UNSIGNED NULL,
+                `room_type_label` VARCHAR(120) NULL,
+                `occ` CHAR(3) NOT NULL,
+                `qty` SMALLINT UNSIGNED NOT NULL DEFAULT 1,
+                `sort_order` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+                `set_by` VARCHAR(100) NULL,
+                `set_at` DATETIME NULL,
+                PRIMARY KEY (`id`), KEY `k_day` (`day_id`), KEY `k_intake` (`intake_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            $this->hasDayRooms = true;
+        } catch (\Throwable $e) {
+            $this->hasDayRooms = false;
+        }
+        return $this->hasDayRooms;
+    }
+
+    /**
+     * tf-hotelpick-r1: what the Hotel & room selection window shows while a person chooses — the hotel as the panel
+     * knows it, its area, and the room categories with the published figure for each meal plan on the date. Read only:
+     * nothing on the night changes. Published contract kinds only (tactical and special offers are walked past, as on
+     * every quotation), never a zero for a rate that is not there.
+     */
+    public function previewNightRates(int $id, int $dayId, array $in): array
+    {
+        $row = $this->db->query('SELECT * FROM tf_intake_day WHERE id = ? AND intake_id = ?', [$dayId, $id])->getRowArray();
+        if (!$row) {
+            throw new \RuntimeException('That night is not part of this inquiry.');
+        }
+        $raw  = trim((string) ($in['hotel_name_raw'] ?? ''));
+        $date = self::dateOrNull($in['day_date'] ?? null);
+        $out  = ['hotel' => null, 'state' => 'nothing_named', 'note' => null, 'currency' => null, 'plan' => null, 'room_types' => [], 'meals' => [], 'date' => $date];
+        if ($raw === '') {
+            return $out;
+        }
+        $hotel = $this->matchHotel($raw, (string) ($in['area'] ?? ''));
+        if ($hotel === null) {
+            $out['state'] = 'not_in_panel';
+            $out['note']  = 'No hotel of this name in the Hotel Master. It can be saved as written; it is flagged until the hotel is set up.';
+            return $out;
+        }
+        $area = null;
+        $town = null;
+        try {
+            $a = $this->db->query('SELECT l.name, h.address FROM hr2_hotel h LEFT JOIN hr2_location l ON l.id = h.location_id WHERE h.id = ?', [(int) $hotel['id']])->getRowArray();
+            $area = $a['name'] ?? null;
+            $town = self::cut(trim((string) ($a['address'] ?? '')), 60) ?: null;
+        } catch (\Throwable $e) {
+        }
+        $out['hotel'] = ['id' => (int) $hotel['id'], 'name' => (string) $hotel['name'], 'area' => $area, 'town' => $town];
+        if ($date === null) {
+            $out['state'] = 'not_checked';
+            $out['note']  = 'Choose the date to read the published rates.';
+            return $out;
+        }
+        $market = (string) ($this->db->query('SELECT market_code FROM tf_intake WHERE id = ?', [$id])->getRowArray()['market_code'] ?? '') ?: null;
+        try {
+            $on       = $this->rates()->ratesOn((int) $hotel['id'], $date, ($market ? ['market' => $market] : []) + ['plan_types' => $this->quotablePlanTypes()]);
+            $eligible = array_values(array_filter((array) ($on['plans'] ?? []), fn ($p) => $this->quotable((string) ($p['plan_type'] ?? ''))));
+            if (empty($on['available']) || !$eligible) {
+                $out['state'] = 'no_plan';
+                $out['note']  = self::whyNoRate($on, $date, $market);
+                return $out;
+            }
+            $snap = $this->roomRateSnapshot($on, $eligible, ['meal_plan' => $in['meal_plan'] ?? null, 'room_type_id' => null, 'room_type_auto' => 0]);
+            $types = json_decode((string) ($snap['room_types'] ?? ''), true) ?: [];
+            $meals = [];
+            foreach ($types as $t) {
+                foreach (array_keys((array) ($t['meals'] ?? [])) as $m) {
+                    $meals[$m] = true;
+                }
+            }
+            $plan = $eligible[0];
+            $out['state']      = 'rate';
+            $out['note']       = trim(($plan['name'] ?? 'Contract rate') . (!empty($plan['season']) ? ' · ' . $plan['season'] : '') . ($market ? ' · market ' . $market : ''));
+            $out['currency']   = $on['currency'] ?? ($snap['currency'] ?? null);
+            $out['plan']       = $plan['name'] ?? null;
+            $out['room_types'] = array_map(static fn ($t) => ['id' => (int) $t['id'], 'name' => (string) $t['name'], 'priced' => !empty($t['priced']), 'per_unit' => !empty($t['per_unit']), 'meals' => (array) ($t['meals'] ?? [])], $types);
+            $out['normal_id']  = $snap['room_type_id'] ?? null;
+            $order = ['RO', 'BB', 'HB', 'FB', 'AI'];
+            $out['meals'] = array_values(array_filter($order, static fn ($m) => isset($meals[$m])));
+        } catch (\Throwable $e) {
+            $out['state'] = 'not_checked';
+            $out['note']  = 'Could not read the rates: ' . $e->getMessage();
+        }
+        return $out;
+    }
+
+    /** tf-hotelpick-r1: the room rows of a night, as the window sent them; returns a line for the history, or null when nothing changed. */
+    private function saveRoomRows(int $id, int $dayId, $rows): ?string
+    {
+        if (!$this->ensureDayRooms() || !is_array($rows)) {
+            return null;
+        }
+        $clean = [];
+        foreach (array_slice($rows, 0, 12) as $r) {
+            if (!is_array($r)) {
+                continue;
+            }
+            $occ = strtolower(trim((string) ($r['occ'] ?? '')));
+            $qty = (int) ($r['qty'] ?? 0);
+            if (!in_array($occ, ['sgl', 'dbl', 'twn', 'tpl'], true) || $qty < 1) {
+                continue;
+            }
+            if ($qty > 60) {
+                throw new \InvalidArgumentException('A room row can hold at most 60 rooms.');
+            }
+            $label = self::cut(trim((string) ($r['room_type_name'] ?? '')), 120);
+            $clean[] = ['room_type_id' => self::intOrNull($r['room_type_id'] ?? null), 'room_type_label' => $label !== null && $label !== '' ? $label : null, 'occ' => $occ, 'qty' => $qty];
+        }
+        $word = static fn (array $list) => implode(' + ', array_map(static fn ($r) => $r['qty'] . ' ' . strtoupper($r['occ']) . ($r['room_type_label'] ? ' ' . $r['room_type_label'] : ''), $list));
+        $old  = $this->db->query('SELECT room_type_id, room_type_label, occ, qty FROM tf_intake_day_room WHERE day_id = ? AND intake_id = ? ORDER BY sort_order, id', [$dayId, $id])->getResultArray();
+        $oldW = $word(array_map(static fn ($r) => ['qty' => (int) $r['qty'], 'occ' => $r['occ'], 'room_type_label' => $r['room_type_label']], $old));
+        $newW = $word($clean);
+        $same = count($old) === count($clean);
+        foreach ($clean as $i => $r) {
+            $o = $old[$i] ?? null;
+            $same = $same && $o && (int) $o['qty'] === $r['qty'] && $o['occ'] === $r['occ'] && self::intOrNull($o['room_type_id']) === $r['room_type_id'];
+        }
+        if ($same) {
+            return null;
+        }
+        $this->db->query('DELETE FROM tf_intake_day_room WHERE day_id = ? AND intake_id = ?', [$dayId, $id]);
+        $now = date('Y-m-d H:i:s');
+        foreach ($clean as $i => $r) {
+            $this->db->query('INSERT INTO tf_intake_day_room (intake_id, day_id, room_type_id, room_type_label, occ, qty, sort_order, set_by, set_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [$id, $dayId, $r['room_type_id'], $r['room_type_label'], $r['occ'], $r['qty'], $i, $this->user, $now]);
+        }
+        return ($oldW !== '' ? $oldW : 'the inquiry\'s room mix') . ' → ' . ($newW !== '' ? $newW : 'the inquiry\'s room mix');
+    }
+
     public function saveDay(int $id, int $dayId, array $d): array
     {
         $this->assertOpen($id);
@@ -1829,6 +1985,18 @@ final class IntakeService
             $sets[] = '`day_date` = ?';
             $bind[] = self::dateOrNull($d['day_date']);
         }
+        // tf-hotelpick-r1: room rows sent — the first row's category is the night's room type (a person's choice)
+        $roomRows = array_key_exists('room_rows', $d) && is_array($d['room_rows']) ? $d['room_rows'] : null;
+        if ($roomRows !== null) {
+            $first = null;
+            foreach ($roomRows as $r) {
+                if (is_array($r) && self::intOrNull($r['room_type_id'] ?? null) !== null && (int) ($r['qty'] ?? 0) > 0) {
+                    $first = self::intOrNull($r['room_type_id']);
+                    break;
+                }
+            }
+            // (set after the night's own update below, so it also wins over a hotel change clearing the old type)
+        }
         // A night somebody has corrected is theirs from now on, so reading the email
         // again leaves it alone instead of replacing it with the version they fixed.
         if ($sets) {
@@ -1837,6 +2005,19 @@ final class IntakeService
         if ($sets) {
             $bind[] = $dayId;
             $this->db->query('UPDATE tf_intake_day SET ' . implode(', ', $sets) . ' WHERE id = ?', $bind);
+        }
+        if ($roomRows !== null) {
+            $said = $this->saveRoomRows($id, $dayId, $roomRows);
+            if ($first !== null) {
+                $this->db->query('UPDATE tf_intake_day SET room_type_id = ?' . ($this->hasRoomTypeAuto() ? ', room_type_auto = 0' : '') . ", origin = 'human' WHERE id = ?", [$first, $dayId]);
+            }
+            if ($said !== null) {
+                try {
+                    $this->activity()->record('intake', $id, $id, null, 'rooms', 'Rooms for night ' . (int) $row['day_no'] . ' set', [['what' => 'Rooms, night ' . (int) $row['day_no'], 'from' => null, 'to' => $said]]);
+                } catch (\Throwable $e) {
+                    // the history line is a record, never a gate
+                }
+            }
         }
         $this->touch($id);
         $this->checkHotels($id, $dayId);
@@ -4316,7 +4497,7 @@ final class IntakeService
             // rates_pending: no approved quotation rate plan at all — the hotel may be named (identification, preparation) but
             // it prices nothing until its rates are entered and approved (Shantha, 6 Oct 2026)
             $rows = $this->db->query(
-                'SELECT h.id, h.name, h.star_category, h.primary_sup_acc_no, ' . ($this->hotelCodeCol ? 'h.hotel_code' : 'NULL AS hotel_code') . ',
+                'SELECT h.id, h.name, h.star_category, h.primary_sup_acc_no, h.address, ' . ($this->hotelCodeCol ? 'h.hotel_code' : 'NULL AS hotel_code') . ',
                         (SELECT COUNT(*) FROM hr2_contract c WHERE c.hotel_id = h.id AND c.status = "approved" AND c.applies_to <> "payment") AS quote_plans
                  FROM hr2_hotel h
                  WHERE ' . ($locationId > 0 ? 'h.location_id = ?' : 'h.location_id IS NULL') . ' AND h.status = "active" ORDER BY h.name',   // tf-hotel-pick-r1: 0 = the hotels with no area set yet
@@ -4333,6 +4514,8 @@ final class IntakeService
             'has_supplier' => trim((string) ($r['primary_sup_acc_no'] ?? '')) !== '',
             'rates_pending' => ((int) ($r['quote_plans'] ?? 0)) === 0,
             'alt' => implode(', ', $tfAlt[(int) $r['id']] ?? []),
+            // tf-hotelpick-r1: the town from the Hotel Master's address, shown beside the name where no area is set yet
+            'town' => self::cut(trim((string) ($r['address'] ?? '')), 60) ?: null,
         ], $rows);
     }
 
@@ -6030,12 +6213,50 @@ final class IntakeService
                 $out['source'] = 'intake';
             }
         }
+        // tf-hotelpick-r1: a night whose rooms a person set row by row (Hotel & room selection) is costed and roomed on those rows
+        $rows = $dayNo !== null ? (array) ($it['day_rooms'][$dayNo] ?? []) : [];
+        if ($rows !== []) {
+            $out['sgl'] = $out['dbl'] = $out['twn'] = $out['tpl'] = 0;
+            foreach ($rows as $r) {
+                if (isset($out[$r['occ']])) {
+                    $out[$r['occ']] += (int) $r['qty'];
+                }
+            }
+            $out['source'] = 'night';
+            $out['rows'] = $rows;
+        }
         $out['rooms']  = $out['sgl'] + $out['dbl'] + $out['twn'] + $out['tpl'];
         $out['sleeps'] = $out['sgl'] + 2 * $out['dbl'] + 2 * $out['twn'] + 3 * $out['tpl'];
         if ($out['source'] === 'groups' && $out['rooms'] === 0) {
             $out['source'] = $out['groups'] === [] ? 'nobody' : 'groups_empty';
         }
         return $out;
+    }
+
+    /**
+     * tf-hotelpick-r1: the published figure for one room row of a night — its category at its occupancy on the night's meal
+     * plan (a twin at the double rate). The night's own room type takes the figure kept on the night; another category its
+     * figure from the panel's answer stored with the night. Null when there is none: never a zero.
+     */
+    public static function roomRowRate(array $d, array $r): ?float
+    {
+        $col = ($r['occ'] ?? '') === 'twn' ? 'dbl' : (string) ($r['occ'] ?? '');
+        if (!in_array($col, ['sgl', 'dbl', 'tpl'], true) || ($r['room_type_id'] ?? null) === null) {
+            return null;
+        }
+        if ((int) $r['room_type_id'] === (int) ($d['room_type_id'] ?? 0)) {
+            $v = $d['rate_' . $col] ?? null;
+            return $v === null || $v === '' ? null : (float) $v;
+        }
+        $types = is_array($d['room_types'] ?? null) ? $d['room_types'] : (json_decode((string) ($d['room_types_json'] ?? ''), true) ?: []);
+        $meal  = strtoupper((string) ($d['meal_plan'] ?? ''));
+        foreach ($types as $t) {
+            if ((int) ($t['id'] ?? 0) === (int) $r['room_type_id']) {
+                $v = $t['meals'][$meal][$col] ?? null;
+                return $v === null || $v === '' ? null : (float) $v;
+            }
+        }
+        return null;
     }
 
     /** Is a group on tour on a given night? Blank ends mean the whole tour. */

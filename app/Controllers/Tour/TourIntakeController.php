@@ -850,6 +850,17 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // POST intake/(:num)/day/(:num)/rates — tf-hotelpick-r1: the hotel, its area and its published room categories and
+    // meal plans on a date, for the Hotel & room selection window; nothing is saved
+    public function nightRates($id, $dayId)
+    {
+        try {
+            return $this->json(['status' => 200, 'data' => $this->svc()->previewNightRates((int) $id, (int) $dayId, $this->body())]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // POST intake/(:num)/day/(:num)/departure — a line on the departure day is the departure day (schema 32)
     public function departureDay($id, $dayId)
     {

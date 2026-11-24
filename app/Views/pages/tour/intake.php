@@ -31,6 +31,63 @@
     .tf .btn-light:hover { background:var(--tf-bg); }
     .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
     .tf .sugwrap { position:relative; }
+    /* tf-hotelpick-r1: Hotel & room selection (Avenir purple #842484, green #78b848) */
+    .hp .modal-content { border:0; border-radius:14px; overflow:hidden; }
+    .hp .hp-top { background:#842484; color:#fff; display:flex; align-items:center; justify-content:space-between; padding:12px 20px; }
+    .hp .hp-brand b { font-style:italic; font-size:17px; } .hp .hp-brand span { border-left:1px solid rgba(255,255,255,.5); margin-left:12px; padding-left:12px; font-size:16px; }
+    .hp .hp-x { background:none; border:0; color:#fff; font-size:20px; line-height:1; padding:4px; }
+    .hp .modal-body { padding:18px 22px; }
+    .hp .hp-h { font-weight:700; font-size:22px; margin:0; color:#1d1b20; }
+    .hp .hp-sub { color:#5E5964; font-size:14px; margin:2px 0 14px; }
+    .hp .hp-l { font-weight:700; font-size:13.5px; color:#1d1b20; margin-bottom:4px; display:block; } .hp .hp-l i { color:#c62828; font-style:normal; } .hp .hp-l span { font-weight:400; color:#5E5964; }
+    .hp .hp-grid { display:grid; grid-template-columns:120px 1fr; gap:6px 14px; align-items:start; }
+    .hp .hp-grid > .hp-l { margin-top:26px; }
+    .hp .hp-hint { font-size:12.5px; color:#5E5964; margin-bottom:4px; }
+    .hp .hp-combo { position:relative; display:flex; align-items:center; border:2px solid #842484; border-radius:8px; background:#fff; padding:0 8px; }
+    .hp .hp-combo > i { color:#5E5964; } .hp .hp-combo input { border:0; outline:0; flex:1; padding:9px 8px; font-size:15px; min-width:0; background:transparent; }
+    .hp .hp-caret { border:0; background:none; color:#5E5964; padding:4px; }
+    .hp .hp-list { position:absolute; left:-2px; right:-2px; top:100%; margin-top:4px; background:#fff; border:1px solid #ddd; border-radius:8px; box-shadow:0 10px 28px -8px rgba(16,24,40,.28); max-height:300px; overflow-y:auto; z-index:1090; padding:4px; }
+    .hp .hp-opt { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    .hp .hp-opt b { color:#1d1b20; font-size:14.5px; display:block; } .hp .hp-opt small { color:#5E5964; font-size:12.5px; }
+    .hp .hp-opt.on, .hp .hp-opt:hover { background:#f2e4f2; } .hp .hp-opt.on b { color:#842484; }
+    .hp .hp-opt .bi-check-lg { color:#842484; font-size:18px; }
+    .hp .hp-opt mark { background:none; color:inherit; text-decoration:underline; padding:0; }
+    .hp .hp-none { padding:10px 12px; color:#5E5964; font-size:13px; }
+    .hp .hp-chosen { background:#f2e4f2; border-radius:8px; padding:8px 14px; margin-top:8px; font-size:14.5px; }
+    .hp .hp-chosen b { color:#1d1b20; } .hp .hp-chosen .warn { color:#8a6100; }
+    .hp .hp-row2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px; }
+    .hp .form-control, .hp .form-select { font-size:14.5px; border-radius:8px; }
+    .hp .hp-sec { display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin:20px 0 8px; flex-wrap:wrap; }
+    .hp .hp-sec h5 { color:#842484; font-weight:700; font-size:17px; margin:0; } .hp .hp-plan { font-size:12.5px; color:#5E5964; font-style:italic; }
+    .hp .hp-state { border-radius:8px; padding:8px 12px; font-size:13px; margin-bottom:8px; background:#fff4e5; color:#7a4a00; border:1px solid #f3d39b; }
+    .hp .hp-state.ok { background:#eef7e6; color:#3b6b17; border-color:#cfe5b8; }
+    .hp .hp-table { border:1px solid #ddd; border-radius:8px; overflow:hidden; }
+    .hp .hp-tr { display:grid; grid-template-columns:1.6fr 1.2fr .7fr 1fr 1fr 34px; gap:10px; align-items:center; padding:8px 12px; border-top:1px solid #eee; }
+    .hp .hp-th { background:#f4f2f6; font-weight:700; font-size:13px; border-top:0; }
+    .hp .hp-tr .amt { font-weight:700; } .hp .hp-tr .miss { color:#b3261e; font-weight:600; font-size:12.5px; }
+    .hp .hp-tr .del { border:0; background:none; color:#8a8590; } .hp .hp-tr .del:hover { color:#b3261e; }
+    .hp .hp-tr input { max-width:90px; }
+    .hp .hp-empty { padding:12px; color:#5E5964; font-size:13px; }
+    .hp .hp-sum { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:10px; flex-wrap:wrap; }
+    .hp .hp-add { border:2px solid #842484; color:#842484; background:#fff; border-radius:8px; padding:7px 16px; font-weight:700; }
+    .hp .hp-add:hover { background:#f2e4f2; }
+    .hp .hp-tot { display:flex; align-items:center; gap:14px; font-size:15px; } .hp .hp-tot b { font-size:17px; } .hp .hp-sep { width:1px; height:26px; background:#ccc; }
+    .hp .hp-note, .hp .hp-small { font-size:12.5px; color:#5E5964; font-style:italic; margin-top:6px; }
+    .hp .hp-small { font-style:normal; }
+    .hp .hp-std { background:#f4f2f6; border:1px solid #e3e0e6; border-radius:8px; padding:9px 14px; font-size:14px; min-height:40px; }
+    .hp .hp-foot { display:flex; justify-content:flex-end; gap:12px; padding:12px 22px; border-top:1px solid #eee; background:#fff; position:sticky; bottom:0; }
+    .hp .hp-cancel { border:1.5px solid #5E5964; background:#fff; border-radius:8px; padding:9px 26px; font-weight:600; }
+    .hp .hp-save { border:0; background:#78b848; color:#fff; border-radius:8px; padding:9px 26px; font-weight:700; }
+    .hp .hp-save:hover { background:#68a63b; } .hp .hp-save:disabled { opacity:.6; }
+    @media (max-width: 767.98px) {
+        .hp .hp-grid, .hp .hp-row2 { grid-template-columns:1fr; } .hp .hp-grid > .hp-l { margin-top:0; }
+        .hp .hp-th { display:none; }
+        .hp .hp-tr { grid-template-columns:1fr 1fr; gap:6px 10px; position:relative; padding:10px 12px; }
+        .hp .hp-tr > [data-l]::before { content:attr(data-l); display:block; font-size:11.5px; color:#5E5964; font-weight:600; }
+        .hp .hp-tr .del { position:absolute; right:6px; top:6px; }
+        .hp .hp-tot { width:100%; justify-content:space-between; }
+        .hp .hp-foot { padding:10px 14px; } .hp .hp-foot button { flex:1; }
+    }
     .tf .sugg { position:absolute; left:0; right:0; top:100%; z-index:1080; background:#fff; border:1px solid var(--tf-line); border-radius:8px; box-shadow:0 8px 24px -8px rgba(16,24,40,.25); max-height:280px; overflow-y:auto; margin-top:3px; }
     .tf .sugg .it { padding:7px 10px; cursor:pointer; font-size:12.5px; border-bottom:1px solid var(--tf-line); }
     .tf .sugg .it:last-child { border-bottom:0; }
@@ -1363,35 +1420,54 @@
 </div></div></div>
 
 <!-- day edit -->
-<div class="modal fade tf" id="m_day" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h6 class="modal-title">Night</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+<!-- tf-hotelpick-r1 (24 Nov 2026, Shantha's mock-up): Hotel & room selection — one night's hotel, date, meal plan and room rows -->
+<div class="modal fade tf hp" id="m_day" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down"><div class="modal-content">
+    <div class="hp-top"><div class="hp-brand"><b>Avenir Holidays</b><span>TourFlow</span></div><button type="button" class="hp-x" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
     <div class="modal-body">
-        <div class="row g-2">
-            <div class="col-12"><label class="form-label help">Hotel <span class="text-muted">— start typing to search the Hotel Rates panel</span></label>
-                <div class="sugwrap"><input class="form-control" id="md_hotel" placeholder="e.g. Araliya, Cinnamon, Galle…" autocomplete="off">
-                    <div class="sugg" id="md_hotel_sugg" hidden></div></div>
-                <div class="help mt-1">Pick from the list to use the panel's own spelling, which is what makes the rate match; the area fills in by itself. A hotel that is not in the panel can still be typed here — it is kept as written and flagged, and its supplier record is made under Master Files → Supplier, never here.</div></div>
-            <div class="col-md-6"><label class="form-label help">Date</label><input type="date" class="form-control form-control-sm" id="md_date"></div>
-            <div class="col-md-6"><label class="form-label help">Area <span class="text-muted">— filled in from the hotel</span></label><input class="form-control form-control-sm" id="md_area"></div>
-            <div class="col-md-6"><label class="form-label help">Meal plan</label>
-                <select class="form-select form-select-sm" id="md_meal"><option value="">Not stated</option><option>RO</option><option>BB</option><option>HB</option><option>FB</option><option>AI</option></select></div>
-            <div class="col-md-6"><label class="form-label help">Rooms <span class="text-muted">— as the agent wrote it</span></label><input type="number" min="0" class="form-control form-control-sm" id="md_rooms"></div>
-            <div class="col-md-7" id="md_rtwrap" style="display:none"><label class="form-label help">Room type <span class="text-muted">— from the Hotel Rates panel, published rates only</span></label>
-                <select class="form-select form-select-sm" id="md_rt"></select>
-                <div class="help mt-1" id="md_rthint"></div></div>
-            <div class="col-md-5" id="md_rttextwrap" style="display:none"><label class="form-label help">Wording on this booking <span class="text-muted">(optional)</span></label>
-                <input class="form-control form-control-sm" id="md_rttext" maxlength="120" placeholder="as the master names it">
-                <div class="help mt-1">Only when this booking calls the room something else (a category renamed, a view). The rate follows the room type chosen; the Hotel Master is not changed.</div></div>
-            <div class="col-12"><label class="form-label help">Special note for this day</label>
-                <textarea class="form-control form-control-sm" id="md_note" rows="2" placeholder="Anything about this day the operations team needs to know"></textarea></div>
-            <div class="col-12"><label class="form-label help">Wording on the quotation <span class="text-muted">— leave blank for the standard wording</span></label>
-                <textarea class="form-control form-control-sm" id="md_text" rows="3" maxlength="2000" placeholder="Your own words for this day, if the standard wording does not say it right"></textarea>
-                <div class="help mt-1" id="md_text_std"></div></div>
+        <h4 class="hp-h">Hotel &amp; room selection</h4>
+        <div class="hp-sub" id="md_sub"></div>
+        <div class="hp-grid">
+            <label class="hp-l" for="md_hotel">Hotel <i>*</i></label>
+            <div>
+                <div class="hp-hint">Type a letter, then select a hotel</div>
+                <div class="hp-combo" id="md_combo">
+                    <i class="bi bi-search"></i>
+                    <input id="md_hotel" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="md_hotel_sugg" aria-autocomplete="list" placeholder="Hotel name, alternative name, area or code">
+                    <button type="button" class="hp-caret" id="md_caret" tabindex="-1" aria-label="Show hotels"><i class="bi bi-chevron-down"></i></button>
+                    <div class="hp-list" id="md_hotel_sugg" role="listbox" hidden></div>
+                </div>
+                <div class="hp-chosen" id="md_chosen" hidden></div>
+            </div>
         </div>
-        <div class="help mt-2">Changing the hotel or the date re-checks it against the Hotel Rates panel straight away — published contract rates only. A tactical or special-offer rate is never used for a quotation, even where one covers the date.</div>
+        <div class="hp-row2">
+            <div class="hp-f"><label class="hp-l" for="md_date">Date <i>*</i></label><input type="date" class="form-control" id="md_date"></div>
+            <div class="hp-f"><label class="hp-l" for="md_meal">Meal plan <i>*</i></label><select class="form-select" id="md_meal"></select></div>
+        </div>
+        <input type="hidden" id="md_area">
+
+        <div class="hp-sec"><h5>Room mix &amp; published rates</h5><span class="hp-plan" id="md_plan"></span></div>
+        <div class="hp-state" id="md_state" hidden></div>
+        <div class="hp-table">
+            <div class="hp-tr hp-th"><span>Category</span><span>Occupancy</span><span>Rooms</span><span>Rate per night</span><span>Amount</span><span></span></div>
+            <div id="md_rows"></div>
+        </div>
+        <div class="hp-sum">
+            <button type="button" class="hp-add" id="md_addrow"><i class="bi bi-plus-lg"></i> Add room row</button>
+            <div class="hp-tot"><span id="md_count">0 rooms</span><span class="hp-sep"></span><span>Night total <b id="md_total">—</b></span></div>
+        </div>
+        <div class="hp-note">Rates follow the selected hotel, date, category and meal plan. Published contract rates only — tactical and special-offer rates are never used on a quotation. A missing rate is shown as missing, never as zero.</div>
+
+        <div class="hp-f mt-3"><label class="hp-l" for="md_rttext">Room wording for this booking</label>
+            <input class="form-control" id="md_rttext" maxlength="120" placeholder="Leave blank to use the selected category">
+            <div class="hp-small">Only for this booking (a category renamed, a view). The Hotel Master is not changed.</div></div>
+        <div class="hp-row2 mt-2">
+            <div class="hp-f"><label class="hp-l" for="md_note">Operations note</label><textarea class="form-control" id="md_note" rows="3" maxlength="500" placeholder="Anything about this day the operations team needs to know"></textarea></div>
+            <div class="hp-f"><label class="hp-l" for="md_text">Quotation wording <span>(optional)</span></label><textarea class="form-control" id="md_text" rows="3" maxlength="2000" placeholder="Leave blank for the standard wording"></textarea></div>
+        </div>
+        <div class="hp-f mt-2"><label class="hp-l">Standard itinerary text preview</label><div class="hp-std" id="md_text_std">—</div></div>
         <input type="hidden" id="md_id">
     </div>
-    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary btn-sm" id="md_ok">Save</button></div>
+    <div class="hp-foot"><button type="button" class="hp-cancel" data-bs-dismiss="modal">Cancel</button><button type="button" class="hp-save" id="md_ok"><i class="bi bi-check2-circle"></i> Save hotel selection</button></div>
 </div></div></div>
 
 <!-- a special rate per kilometre for this job -->
@@ -4268,6 +4344,14 @@
         const rateLink = d => ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>` : '';
         const rateBox = d => {
             const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null;
+            // tf-hotelpick-r1: a night with its own room rows shows each row's published figure (category · occupancy)
+            if ((d.room_rows || []).length && d.rate_state === 'rate') {
+                const types = {}; (d.room_types || []).forEach(t => { types[Number(t.id)] = t; });
+                const OW = { sgl: 'Single', dbl: 'Double', twn: 'Twin', tpl: 'Triple' };
+                const lines = d.room_rows.map(r => { const col = r.occ === 'twn' ? 'dbl' : r.occ; const v = Number(r.room_type_id) === Number(d.room_type_id) ? d['rate_' + col] : (((types[Number(r.room_type_id)] || {}).meals || {})[String(d.meal_plan || '').toUpperCase()] || {})[col]; return [r.room_type_name || 'Room', OW[r.occ] || r.occ, f(v)]; });
+                const miss = lines.some(l => l[2] === null);
+                return `<div class="inq-rate2">${lines.map(l => `<b class="amt sm ${l[2] === null ? 'miss' : ''}"><span>${esc(l[0])} ${esc(l[1])}</span> ${l[2] === null ? 'Rate missing' : esc(cur) + ' ' + l[2]}</b>`).join('')}<span>per room / night</span>${miss ? '<em class="miss">Rate missing</em>' : '<em class="ok">Rate available</em>'}</div>`;
+            }
             const want = [['Single', Number(R.sgl) > 0, d.rate_sgl], ['Double', Number(R.dbl) > 0, d.rate_dbl], ['Twin', Number(R.twn) > 0, d.rate_dbl], ['Triple', Number(R.tpl) > 0, d.rate_tpl]];
             let shown = want.filter(w => w[1] && f(w[2]) !== null);
             if (!shown.length) shown = [['Single', 1, d.rate_sgl], ['Double', 1, d.rate_dbl], ['Triple', 1, d.rate_tpl]].filter(w => f(w[2]) !== null);
@@ -4287,7 +4371,7 @@
                 <div class="inq-day hday">
                     <div class="inq-dn"><span class="pill">Day ${d.day_no}</span><div class="d">${esc(dm(d.day_date, { weekday:'short', day:'numeric', month:'short', year:'numeric' }))}</div></div>
                     <div class="inq-place"><span>${esc(place(d))}</span><b>${esc(d.hotel_name_raw || 'Hotel not chosen')}</b></div>
-                    <div class="inq-f"><span>Room type</span><b class="${d.room_type_name ? '' : 'unset'}">${esc(d.room_type_name || 'Room type not set')}</b></div>
+                    <div class="inq-f"><span>Room type</span><b class="${d.room_type_name ? '' : 'unset'}">${esc((d.room_rows || []).some(r => r.room_type_name) ? [...new Set(d.room_rows.map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || 'Room type not set'))}</b></div>
                     <div class="inq-f"><span>Meal plan</span><b class="${d.meal_plan ? '' : 'unset'}">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan) : 'Meal plan not set')}</b></div>
                     <div class="inq-f inq-arr"><span>Room arrangement</span><b>${esc(arrange(d))}</b></div>
                     ${rateBox(d)}
@@ -4305,6 +4389,13 @@
         };
         // tf-signal-r1: the Requested Itinerary row of the mock-up — hotel in bold with room type and rate beneath, meal plan, rooms, the day's activities, the note
         const reqRate = d => { const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
+            // tf-hotelpick-r1: a night with its own room rows — each row's published figure, a missing one said as missing
+            if ((d.room_rows || []).length && d.rate_state === 'rate') {
+                const types = {}; (d.room_types || []).forEach(t => { types[Number(t.id)] = t; });
+                const multi = new Set(d.room_rows.map(r => r.room_type_id)).size > 1;
+                const parts = d.room_rows.map(r => { const col = r.occ === 'twn' ? 'dbl' : r.occ; const v = Number(r.room_type_id) === Number(d.room_type_id) ? d['rate_' + col] : (((types[Number(r.room_type_id)] || {}).meals || {})[String(d.meal_plan || '').toUpperCase()] || {})[col]; return (multi ? esc(r.room_type_name || '') + ' ' : '') + String(r.occ).toUpperCase() + ' ' + (f(v) === null ? 'missing' : esc(cur) + ' ' + f(v)); });
+                return parts.some(p => /missing$/.test(p)) ? `<span class="rm"><i class="bi bi-exclamation-triangle-fill"></i>Rate missing: ${esc(parts.filter(p => /missing$/.test(p)).join(', '))}</span>` : `<span>Hotel rate: ${[...new Set(parts)].join(' · ')}</span>`;
+            }
             const want = [['SGL', Number(R.sgl) > 0, d.rate_sgl], ['DBL', Number(R.dbl) > 0, d.rate_dbl], ['TWN', Number(R.twn) > 0, d.rate_dbl], ['TPL', Number(R.tpl) > 0, d.rate_tpl]].filter(w => w[1] && f(w[2]) !== null);
             if (d.rate_state === 'rate' && want.length) return `<span>Hotel rate: ${want.length === 1 ? esc(cur) + ' ' + f(want[0][2]) : want.map(w => w[0] + ' ' + esc(cur) + ' ' + f(w[2])).join(' · ')}</span>`;
             // tf-rate-label-r1 (24 Nov 2026, Shantha): the hotel HAS an approved rate plan for the night — say what actually stops the costing (the room mix, or a meal plan the hotel does not publish), not "Rate missing"
@@ -4318,9 +4409,9 @@
             return d.hotel_name_raw ? '<span class="rm"><i class="bi bi-exclamation-triangle-fill"></i>Rate missing</span>' : ''; };
         const reqRow = d => `<tr><td class="dd">${d.day_no} / ${esc(dm(d.day_date, { day:'numeric', month:'short', year:'numeric' }))}</td>
             <td class="ht">${d.hotel_name_raw ? `<b class="${it.locked ? '' : 'lnk'}" ${it.locked ? '' : `data-inqedit="${d.id}" title="Change the hotel, room type or meal plan"`}>${esc(d.hotel_name_raw)}</b>` : (it.locked ? '<b>Hotel not chosen</b>' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}
-                ${d.hotel_name_raw ? `<span>${esc(d.room_type_name || 'Room type pending')}</span>` : ''}${reqRate(d)}</td>
+                ${d.hotel_name_raw ? `<span>${esc((d.room_rows || []).some(r => r.room_type_name) ? [...new Set(d.room_rows.map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || 'Room type pending'))}</span>` : ''}${reqRate(d)}</td>
             <td class="mp">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan).replace(/\b\w/g, c => c.toUpperCase()).replace('& B', '& B') : 'Not set')}</td>
-            <td class="rr">${d.room_mix && Number(d.room_mix.rooms) > 0 && d.room_mix.source === 'groups' ? esc(roomsShort(d.room_mix)) + (d.room_mix.pax != null ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '') : esc(d.rooms || roomsTxt)}</td>
+            <td class="rr">${d.room_mix && Number(d.room_mix.rooms) > 0 ? esc(roomsShort(d.room_mix).replace(/ · /g, ' + ')) + (d.room_mix.source === 'night' && (d.room_rows || []).some(r => r.room_type_name) ? `<div class="help">${esc(Object.entries(d.room_rows.reduce((a, r) => { const k = r.room_type_name || 'Room'; (a[k] = a[k] || []).push(r.qty + ' ' + String(r.occ).toUpperCase()); return a; }, {})).map(([k, v]) => k + ': ' + v.join(' + ')).join(' · '))}</div>` : (d.room_mix.pax != null && d.room_mix.source === 'groups' ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '')) : esc(d.rooms || roomsTxt)}</td>
             <td data-reqact="${d.day_no}"><div class="tx">…</div></td>
             <td class="nt">${d.special_note ? esc(d.special_note) + (it.locked ? '' : ` <a data-inqedit="${d.id}" title="Change the note"><i class="bi bi-pencil"></i></a>`) : (it.locked ? '' : `<a data-inqedit="${d.id}">Add a note</a>`)}</td></tr>`;
         const depX = it.departure_day, reqDep = depX && !days.some(d => Number(d.day_no) === Number(depX.day_no)) ? `<tr><td class="dd">${depX.day_no} / ${esc(dm(depX.date, { day:'numeric', month:'short', year:'numeric' }))}</td>
@@ -5688,62 +5779,149 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     document.getElementById('mp_none').addEventListener('click', () => setDayPhoto(Number(document.getElementById('mp_day').value), 'none'));
     document.getElementById('mp_auto').addEventListener('click', () => setDayPhoto(Number(document.getElementById('mp_day').value), 'auto'));
 
+    // ---------- tf-hotelpick-r1 (24 Nov 2026, Shantha's mock-up): Hotel & room selection ----------
+    // One night: the hotel picked from the Hotel Master (searchable, its area beside it), the date, the meal plan, and the
+    // rooms row by row — category, occupancy, rooms — each priced at the hotel's PUBLISHED contract rate for that date and
+    // meal plan, read from the server whenever the hotel or the date changes. A rate that is not there is said, never a zero.
+    const HP = { day: null, rates: null, rows: [], seq: 0, picked: null, saved: null };
+    const HP_OCC = [['sgl', 'Single'], ['dbl', 'Double'], ['twn', 'Twin'], ['tpl', 'Triple']];
+    const HP_BEDS = { sgl: 1, dbl: 2, twn: 2, tpl: 3 };
+    const HP_MEALS = [['RO', 'Room Only (RO)'], ['BB', 'Bed & Breakfast (BB)'], ['HB', 'Half Board (HB)'], ['FB', 'Full Board (FB)'], ['AI', 'All Inclusive (AI)']];
+    const hpEl = id => document.getElementById(id);
+    const hpMoney = v => (HP.rates && HP.rates.currency ? HP.rates.currency : 'USD') + ' ' + Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    function hpSame() { const s = HP.saved; return s && s.hotel === hpEl('md_hotel').value.trim() && s.date === hpEl('md_date').value && s.meal === hpEl('md_meal').value; }
+    function hpRate(r) {
+        const meal = hpEl('md_meal').value, col = r.occ === 'twn' ? 'dbl' : r.occ, d = HP.day;
+        if (!r.room_type_id || !meal) return null;
+        // the figure kept on the night for its own room type (a rate moved in Hotel Rates is only taken on purpose), as the costing does
+        if (hpSame() && d && Number(d.room_type_id) === Number(r.room_type_id) && d.rate_state === 'rate') { const v = d['rate_' + col]; return v == null || v === '' ? null : Number(v); }
+        const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === Number(r.room_type_id));
+        const m = t && t.meals ? t.meals[meal] : null;
+        return m && m[col] != null ? Number(m[col]) : null;
+    }
+    function hpMealOptions() {
+        const sel = hpEl('md_meal'), cur = sel.value || (HP.day && HP.day.meal_plan) || '';
+        const has = HP.rates && HP.rates.state === 'rate' ? (HP.rates.meals || []) : null;
+        sel.innerHTML = '<option value="">Choose the meal plan</option>' + HP_MEALS.map(([k, w]) => `<option value="${k}">${esc(w)}${has && !has.includes(k) ? ' — no published rate' : ''}</option>`).join('');
+        sel.value = cur;
+    }
+    function hpDrawRows() {
+        const types = (HP.rates && HP.rates.room_types) || [], meal = hpEl('md_meal').value;
+        const typeOpts = r => {
+            const list = types.slice();
+            if (r.room_type_id && !list.some(t => Number(t.id) === Number(r.room_type_id))) list.unshift({ id: r.room_type_id, name: (r.room_type_name || 'Category') + ' (not offered on this date)', meals: {} });
+            return (list.length ? '' : '<option value="">Category — choose the hotel first</option>') + list.map(t => { const ok = meal && t.meals && t.meals[meal]; return `<option value="${t.id}" ${Number(t.id) === Number(r.room_type_id) ? 'selected' : ''}>${esc(t.name)}${!t.priced ? ' — no published rate' : (meal && !ok ? ' — no ' + esc(meal) + ' rate' : '')}</option>`; }).join('');
+        };
+        hpEl('md_rows').innerHTML = HP.rows.length ? HP.rows.map((r, i) => {
+            const v = hpRate(r), q = Number(r.qty) || 0;
+            const rateCell = !r.room_type_id ? '<span class="miss">Choose a category</span>' : !meal ? '<span class="miss">Choose the meal plan</span>' : v === null ? '<span class="miss"><i class="bi bi-exclamation-triangle-fill"></i> No published rate</span>' : esc(hpMoney(v));
+            return `<div class="hp-tr" data-i="${i}">
+                <div data-l="Category"><select class="form-select" data-k="room_type_id" aria-label="Category">${typeOpts(r)}</select></div>
+                <div data-l="Occupancy"><select class="form-select" data-k="occ" aria-label="Occupancy">${HP_OCC.map(([k, w]) => `<option value="${k}" ${r.occ === k ? 'selected' : ''}>${w}</option>`).join('')}</select></div>
+                <div data-l="Rooms"><input type="number" class="form-control" min="1" max="60" step="1" data-k="qty" value="${q || ''}" aria-label="Rooms"></div>
+                <div data-l="Rate per night">${rateCell}</div>
+                <div data-l="Amount" class="amt">${v !== null && q > 0 ? esc(hpMoney(v * q)) : '—'}</div>
+                <button type="button" class="del" data-del="${i}" title="Remove this row" aria-label="Remove this row"><i class="bi bi-trash3"></i></button></div>`;
+        }).join('') : '<div class="hp-empty">No room rows: the night uses the inquiry\'s room mix. Add a row to set this night\'s rooms.</div>';
+        hpEl('md_rows').querySelectorAll('[data-k]').forEach(el => el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', () => {
+            const r = HP.rows[Number(el.closest('[data-i]').dataset.i)];
+            if (el.dataset.k === 'qty') { r.qty = Math.max(0, Math.min(60, parseInt(el.value, 10) || 0)); hpTotals(); const row = el.closest('.hp-tr'); const v = hpRate(r); row.querySelector('.amt').textContent = v !== null && r.qty > 0 ? hpMoney(v * r.qty) : '—'; return; }
+            if (el.dataset.k === 'room_type_id') { r.room_type_id = el.value ? Number(el.value) : null; const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === r.room_type_id); r.room_type_name = t ? t.name : null; }
+            else r[el.dataset.k] = el.value;
+            hpDrawRows();
+        }));
+        hpEl('md_rows').querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { HP.rows.splice(Number(b.dataset.del), 1); hpDrawRows(); }));
+        hpTotals();
+    }
+    function hpTotals() {
+        let rooms = 0, beds = 0, tot = 0, gap = false;
+        HP.rows.forEach(r => { const q = Number(r.qty) || 0; if (q < 1) return; rooms += q; beds += q * HP_BEDS[r.occ]; const v = hpRate(r); if (v === null) gap = true; else tot += v * q; });
+        hpEl('md_count').textContent = rooms + ' room' + (rooms === 1 ? '' : 's') + ' · ' + beds + ' guest' + (beds === 1 ? '' : 's');
+        hpEl('md_total').innerHTML = !rooms ? '—' : gap ? '<span style="color:#b3261e">Rate missing</span>' : esc(hpMoney(tot));
+        const pax = Number((HP.day && HP.day.room_mix && HP.day.room_mix.pax) || (CURRENT && CURRENT.pax_total) || 0);
+        hpEl('md_count').title = pax && beds && beds !== pax ? `The rooms sleep ${beds}; ${pax} guest(s) are on the tour that night.` : '';
+    }
+    function hpState() {
+        const r = HP.rates, box = hpEl('md_state'), chosen = hpEl('md_chosen');
+        const h = r && r.hotel;
+        chosen.hidden = !hpEl('md_hotel').value.trim();
+        chosen.innerHTML = h ? `<b>${esc(h.name)}</b>${h.area || h.town ? ' · ' + esc(h.area || h.town) : ''}` : (hpEl('md_hotel').value.trim() ? `<b>${esc(hpEl('md_hotel').value.trim())}</b> <span class="warn">· not in the Hotel Master — saved as written and flagged</span>` : '');
+        hpEl('md_plan').textContent = r && r.state === 'rate' ? 'Published contract rate: ' + (r.note || '') : '';
+        if (!r || r.state === 'nothing_named') { box.hidden = true; return; }
+        box.hidden = r.state === 'rate';
+        box.className = 'hp-state';
+        box.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> ' + esc(r.state === 'loading' ? 'Reading the published rates…' : (r.note || 'No published rate for this hotel on this date.'));
+    }
+    async function hpLoadRates() {
+        const seq = ++HP.seq, hotel = hpEl('md_hotel').value.trim();
+        if (!hotel) { HP.rates = null; hpMealOptions(); hpState(); hpDrawRows(); return; }
+        HP.rates = { state: 'loading' }; hpState();
+        const j = await post('/intake/' + CURRENT.id + '/day/' + HP.day.id + '/rates', { hotel_name_raw: hotel, area: hpEl('md_area').value, day_date: hpEl('md_date').value, meal_plan: hpEl('md_meal').value });
+        if (seq !== HP.seq) return;   // a newer pick is on its way
+        HP.rates = j.status === 200 ? j.data : { state: 'error', note: j.message || 'The rates could not be read.' };
+        if (HP.rates.hotel) { if (HP.rates.hotel.area) hpEl('md_area').value = HP.rates.hotel.area; }
+        // a category that the hotel does not offer on the date: its normal category takes the row (a person can change it)
+        const ids = (HP.rates.room_types || []).map(t => Number(t.id));
+        const normal = HP.rates.normal_id || ((HP.rates.room_types || []).find(t => t.priced) || {}).id || null;
+        HP.rows.forEach(r => { if (ids.length && (!r.room_type_id || !ids.includes(Number(r.room_type_id)))) { r.room_type_id = normal; r.room_type_name = ((HP.rates.room_types || []).find(t => Number(t.id) === Number(normal)) || {}).name || null; } });
+        hpMealOptions(); hpState(); hpDrawRows();
+    }
     function openDay(id) {
         const d = (CURRENT.days || []).find(x => Number(x.id) === id);
         if (!d) return;
-        document.getElementById('md_id').value = id;
-        document.getElementById('md_date').value = d.day_date || '';
-        document.getElementById('md_area').value = d.area || '';
-        document.getElementById('md_hotel').value = d.hotel_name_raw || '';
-        document.getElementById('md_meal').value = d.meal_plan || '';
-        document.getElementById('md_rooms').value = d.rooms ?? '';
-        document.getElementById('md_note').value = d.special_note || '';
-        document.getElementById('md_text').value = d.client_text || '';
+        HP.day = d; HP.rates = null; HP.picked = d.hotel_name_raw || null;
+        HP.saved = { hotel: (d.hotel_name_raw || '').trim(), date: d.day_date || '', meal: d.meal_plan || '' };
+        hpEl('md_id').value = id;
+        hpEl('md_sub').textContent = [CURRENT.inquiry_no, 'Day ' + d.day_no, d.day_date ? fmtDate(d.day_date) : 'date not set'].filter(Boolean).join(' • ');
+        hpEl('md_date').value = d.day_date || '';
+        hpEl('md_area').value = d.area || '';
+        hpEl('md_hotel').value = d.hotel_name_raw || '';
+        hpEl('md_note').value = d.special_note || '';
+        hpEl('md_text').value = d.client_text || '';
+        hpEl('md_rttext').value = d.room_type_text || '';
         const stdText = ((CURRENT.itinerary || {}).days || {})[d.day_no] || ((CURRENT.itinerary || {}).days || {})[String(d.day_no)];
-        document.getElementById('md_text_std').innerHTML = stdText ? 'Standard wording: <i>' + esc(stdText.standard) + '</i>' : '';
-        // the room types the panel prices for this hotel and date; the chosen one is what the night is costed on
-        const rts = d.room_types || [];
-        const wrap = document.getElementById('md_rtwrap');
-        const sel = document.getElementById('md_rt');
-        const textWrap = document.getElementById('md_rttextwrap');
-        if (d.rate_state === 'rate' && rts.length) {
-            wrap.style.display = '';
-            textWrap.style.display = '';
-            const normal = rts.find(t => t.priced);   // the hotel's normal room type: the first with a published rate, in the panel's own order
-            sel.innerHTML = '<option value="">Not chosen — the hotel\'s normal type</option>' + rts.map(t => `<option value="${t.id}" ${!t.priced ? 'disabled' : ''}>${esc(t.name)}${normal && t.id === normal.id ? ' (the hotel\'s normal type)' : ''}${t.priced ? '' : ' — no published rate'}${t.per_unit ? ' (per unit' + (t.unit_pax_max ? ', up to ' + t.unit_pax_max : '') + ')' : ''}</option>`).join('');
-            sel.value = d.room_type_id != null ? String(d.room_type_id) : '';
-            document.getElementById('md_rthint').textContent = (Number(d.room_type_auto) === 1 ? 'Filled in from the master: the hotel\'s normal room type. Choose another here for this booking alone. ' : '') + 'The published rate for the room type and the meal plan is copied beside the night when you save. Nothing is typed.';
-            document.getElementById('md_rttext').value = d.room_type_text || '';
-        } else {
-            wrap.style.display = 'none';
-            textWrap.style.display = 'none';
-            sel.innerHTML = '';
-            document.getElementById('md_rttext').value = '';
-        }
-
+        hpEl('md_text_std').textContent = stdText && stdText.standard ? stdText.standard : 'No standard wording for this day yet.';
+        // the rows: the night's own, else the room mix the night has now (groups or the inquiry), on its room type
+        const m = d.room_mix || {};
+        HP.rows = (d.room_rows || []).length ? d.room_rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ, qty: r.qty }))
+            : HP_OCC.filter(([k]) => Number(m[k]) > 0).map(([k]) => ({ room_type_id: d.room_type_id ? Number(d.room_type_id) : null, room_type_name: d.room_type_name || null, occ: k, qty: Number(m[k]) }));
+        if (!HP.rows.length) HP.rows = [{ room_type_id: d.room_type_id ? Number(d.room_type_id) : null, room_type_name: d.room_type_name || null, occ: 'dbl', qty: 1 }];
+        hpMealOptions(); hpEl('md_meal').value = d.meal_plan || '';
+        hpState(); hpDrawRows();
         loadMasters();   // so the hotel search answers at once
-
         renderMail(d.source_quote || null);
         show('#m_day');
-        setTimeout(() => document.getElementById('md_hotel')?.focus(), 350);
+        hpLoadRates();
+        setTimeout(() => { const i = hpEl('md_hotel'); if (i && !i.value) i.focus(); }, 350);
     }
-    document.getElementById('md_ok').addEventListener('click', async () => {
-        const id = document.getElementById('md_id').value;
+    hpEl('md_date').addEventListener('change', hpLoadRates);
+    hpEl('md_meal').addEventListener('change', () => { hpDrawRows(); });
+    hpEl('md_addrow').addEventListener('click', () => {
+        const last = HP.rows[HP.rows.length - 1];
+        const normal = (HP.rates && (HP.rates.normal_id || ((HP.rates.room_types || []).find(t => t.priced) || {}).id)) || null;
+        HP.rows.push({ room_type_id: last ? last.room_type_id : normal, room_type_name: last ? last.room_type_name : null, occ: 'dbl', qty: 1 });
+        hpDrawRows();
+        const sels = hpEl('md_rows').querySelectorAll('[data-k="occ"]'); if (sels.length) sels[sels.length - 1].focus();
+    });
+    hpEl('md_ok').addEventListener('click', async () => {
+        const id = hpEl('md_id').value, hotel = hpEl('md_hotel').value.trim(), btn = hpEl('md_ok');
+        if (!hotel) { toast('error', 'Choose the hotel.'); hpEl('md_hotel').focus(); return; }
+        if (!hpEl('md_date').value) { toast('error', 'Choose the date.'); hpEl('md_date').focus(); return; }
+        if (!hpEl('md_meal').value) { toast('error', 'Choose the meal plan.'); hpEl('md_meal').focus(); return; }
+        const rows = HP.rows.filter(r => Number(r.qty) > 0);
+        if (HP.rows.length && !rows.length) { toast('error', 'Give each room row at least 1 room, or remove it.'); return; }
+        const missing = rows.filter(r => hpRate(r) === null).map(r => (r.room_type_name || 'room') + ' ' + (HP_OCC.find(o => o[0] === r.occ) || [, r.occ])[1].toLowerCase());
+        btn.disabled = true;
         const j = await post('/intake/' + CURRENT.id + '/day/' + id, {
-            day_date: document.getElementById('md_date').value, area: document.getElementById('md_area').value,
-            hotel_name_raw: document.getElementById('md_hotel').value, meal_plan: document.getElementById('md_meal').value,
-            rooms: document.getElementById('md_rooms').value,
-            special_note: document.getElementById('md_note').value,
-            client_text: document.getElementById('md_text').value,
-            ...(document.getElementById('md_rtwrap').style.display !== 'none' ? { room_type_id: document.getElementById('md_rt').value, room_type_text: document.getElementById('md_rttext').value } : {})
+            day_date: hpEl('md_date').value, area: hpEl('md_area').value, hotel_name_raw: hotel, meal_plan: hpEl('md_meal').value,
+            special_note: hpEl('md_note').value, client_text: hpEl('md_text').value, room_type_text: hpEl('md_rttext').value,
+            room_rows: rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ, qty: Number(r.qty) }))
         });
+        btn.disabled = false;
         if (j.status !== 200) { toast('error', j.message); return; }
         CURRENT = j.data; hide('#m_day'); renderDetail();
-        // tf-walkfix-r1: one trip — the hotel's normal room type is filled in from the master on Save, and the row says so
-        const saved = (CURRENT.days || []).find(x => Number(x.id) === Number(id));
-        if (saved && saved.rate_state === 'rate' && Number(saved.room_type_auto) === 1 && saved.room_type_name) {
-            toast('success', 'Saved. Room type ' + saved.room_type_name + ' — the hotel\'s normal type — was filled in from the master; Edit the night to choose another for this booking.');
-        }
+        if (missing.length) toast('warning', 'Saved. No published rate for ' + missing.join(', ') + ' — the night is not costed and the quotation stays blocked until a published rate covers it or another category is chosen.');
+        else toast('success', 'Hotel selection saved.');
     });
 
     // ---------- a special rate per kilometre ----------
@@ -7079,51 +7257,58 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         inp.addEventListener('blur', () => setTimeout(close, 150));
     })();
 
-    // Hotel search in the Night window: type part of the name (or the town) and pick from
-    // what the Hotel Rates panel holds. Picking fills in the panel's own spelling — which is
-    // what makes the rate look-up find anything — and the hotel's area. Nothing stops a name
-    // the panel does not have from being typed; it is kept as written and flagged.
+    // tf-hotelpick-r1: the hotel search of Hotel & room selection — one letter is enough; the list narrows as you type,
+    // each hotel with its area (two "Heritance" hotels are told apart by it), mouse or arrow keys + Enter, Escape closes.
+    // A name the master does not have can still be typed: it is kept as written and flagged.
     (function () {
-        const inp = document.getElementById('md_hotel');
-        const box = document.getElementById('md_hotel_sugg');
+        const inp = document.getElementById('md_hotel'), box = document.getElementById('md_hotel_sugg'), caret = document.getElementById('md_caret');
         if (!inp || !box) return;
         let items = [], cur = -1;
-        const close = () => { box.hidden = true; box.innerHTML = ''; items = []; cur = -1; };
-        const paint = () => [...box.querySelectorAll('.it')].forEach((el, i) => el.classList.toggle('on', i === cur));
+        const close = () => { box.hidden = true; box.innerHTML = ''; items = []; cur = -1; inp.setAttribute('aria-expanded', 'false'); };
+        const paint = () => [...box.querySelectorAll('.hp-opt')].forEach((el, i) => { el.classList.toggle('on', i === cur); if (i === cur) el.scrollIntoView({ block: 'nearest' }); });
+        const hl = (txt, q) => { const s = String(txt || ''), i = q ? s.toLowerCase().indexOf(q) : -1; return i < 0 ? esc(s) : esc(s.slice(0, i)) + '<mark>' + esc(s.slice(i, i + q.length)) + '</mark>' + esc(s.slice(i + q.length)); };
         const pick = i => {
             const h = items[i];
-            if (h) { inp.value = h.name; if (h.area) document.getElementById('md_area').value = h.area; }
-            close();
+            if (!h) return;
+            inp.value = h.name; HP.picked = h.name;
+            if (h.area) document.getElementById('md_area').value = h.area;   // the night's own area stays when the master has none (it routes the driving)
+            close(); hpLoadRates();
         };
-        inp.addEventListener('input', async () => {
+        async function open(all) {
             const q = inp.value.trim().toLowerCase();
-            if (q.length < 2) { close(); return; }
+            if (!all && q.length < 1) { close(); return; }
             await loadMasters();
-            const all = MASTERS?.flat || [];
-            if (!all.length) {
-                box.innerHTML = '<div class="none">The hotel list could not be read' + (MASTERS?.error ? ': ' + esc(MASTERS.error) : '') + '. Type the hotel in — it is still saved.</div>';
-                box.hidden = false; return;
-            }
+            const list = MASTERS?.flat || [];
+            if (!list.length) { box.innerHTML = '<div class="hp-none">The hotel list could not be read' + (MASTERS?.error ? ': ' + esc(MASTERS.error) : '') + '. Type the hotel in — it is still saved.</div>'; box.hidden = false; return; }
             const words = q.split(/\s+/).filter(Boolean);
-            const codeNo = (q.match(/^(?:htl[\s-]*|h)?0*(\d{1,6})$/i) || [])[1];   // the hotel code: "HTL-017", "htl17" or "17"
-            items = all.filter(h => { if (codeNo && h.code && parseInt(String(h.code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10)) return true; const t = (h.name + ' ' + (h.alt || '') + ' ' + (h.area || '') + ' ' + (h.code || '')).toLowerCase(); return words.every(w => t.includes(w)); })
+            const codeNo = (q.match(/^(?:htl[\s-]*|h)?0*(\d{1,6})$/i) || [])[1];
+            items = list.filter(h => { if (!words.length) return true; if (codeNo && h.code && parseInt(String(h.code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10)) return true; const t = (h.name + ' ' + (h.alt || '') + ' ' + (h.area || '') + ' ' + (h.town || '') + ' ' + (h.code || '')).toLowerCase(); return words.every(w => w.length < 3 ? new RegExp('(^|[^a-z0-9])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(t) : t.includes(w)); })
                 .sort((a, b) => (a.name.toLowerCase().startsWith(q) ? 0 : 1) - (b.name.toLowerCase().startsWith(q) ? 0 : 1) || a.name.localeCompare(b.name))
-                .slice(0, 12);
-            cur = -1;
+                .slice(0, 40);
+            const sel = (HP.picked || '').toLowerCase();
+            cur = items.length ? 0 : -1;
             box.innerHTML = items.length
-                ? items.map(h => `<div class="it"><b>${esc(h.name)}</b><span class="help">${h.alt ? 'also: ' + esc(h.alt) + ' · ' : ''}${h.code ? '<span class="mono">' + esc(h.code) + '</span> · ' : ''}${esc(h.area || 'area not set')}${h.star ? ' · ' + esc(h.star) : ''}${h.has_supplier ? '' : ' · no supplier account'}${h.rates_pending ? ' · <b style="color:var(--tf-red,#b3261e)">Incomplete — Rates Pending</b>' : ''}</span></div>`).join('')
-                : '<div class="none">No hotel in the panel matches. Keep typing — a name not in the panel is saved as written and flagged.</div>';
-            box.hidden = false;
-            [...box.querySelectorAll('.it')].forEach((el, i) => el.addEventListener('mousedown', e => { e.preventDefault(); pick(i); }));
-        });
+                ? items.map((h, i) => `<div class="hp-opt ${i === cur ? 'on' : ''}" role="option" id="md_opt_${i}"><div><b>${hl(h.name, q)}</b><small>${esc(h.area || h.town || 'Area not set in the Hotel Master')}${h.alt ? ' · also ' + hl(h.alt, q) : ''}${h.rates_pending ? ' · <span style="color:#b3261e">Rates pending</span>' : ''}</small></div>${h.name.toLowerCase() === sel ? '<i class="bi bi-check-lg"></i>' : ''}</div>`).join('')
+                : '<div class="hp-none">No saved hotel matches. Keep typing — a name not in the Hotel Master is saved as written and flagged.</div>';
+            box.hidden = false; inp.setAttribute('aria-expanded', 'true');
+            [...box.querySelectorAll('.hp-opt')].forEach((el, i) => el.addEventListener('mousedown', e => { e.preventDefault(); pick(i); }));
+        }
+        inp.addEventListener('input', () => { HP.picked = null; open(false); });
+        inp.addEventListener('focus', () => { if (inp.value.trim() && HP.picked !== inp.value.trim()) open(false); });
+        caret?.addEventListener('mousedown', e => { e.preventDefault(); if (box.hidden) { inp.focus(); open(true); } else close(); });
         inp.addEventListener('keydown', e => {
+            if (box.hidden && (e.key === 'ArrowDown')) { e.preventDefault(); open(true); return; }
             if (box.hidden) return;
             if (e.key === 'ArrowDown') { e.preventDefault(); cur = Math.min(cur + 1, items.length - 1); paint(); }
             else if (e.key === 'ArrowUp') { e.preventDefault(); cur = Math.max(cur - 1, 0); paint(); }
             else if (e.key === 'Enter') { if (cur >= 0) { e.preventDefault(); pick(cur); } }
-            else if (e.key === 'Escape') { close(); }
+            else if (e.key === 'Escape') { e.stopPropagation(); close(); }
         });
-        inp.addEventListener('blur', () => setTimeout(close, 150));
+        inp.addEventListener('blur', () => setTimeout(() => {
+            close();
+            // typed and left without picking: the server matches the name if it can, and says so if not
+            if (inp.value.trim() && inp.value.trim() !== (HP.rates && HP.rates.hotel ? HP.rates.hotel.name : '')) hpLoadRates();
+        }, 160));
     })();
 
     // ---------- draft protection ----------
