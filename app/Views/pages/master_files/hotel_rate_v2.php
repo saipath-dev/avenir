@@ -240,6 +240,76 @@
 .doc-clip{display:inline-flex;align-items:center;gap:2px;font-size:11.5px;font-weight:600;color:#5b3f8a;background:#efe9f8;border-radius:10px;padding:1px 7px;margin-left:6px;border:0;cursor:pointer;vertical-align:middle}
 .doc-clip.none{color:#9a6b00;background:#fff4dc;cursor:default}
 .doc-group{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#5b3f8a;margin:16px 0 6px}
+    /* ---------------- tf-hr-overview-r1 (25 Nov 2026, Shantha's mock-up): the first Hotel Rates page ---------------- */
+    .hr2 { --av-p:#842484; --av-p-soft:#f4e8f4; --av-g:#78b848; --av-g-dk:#4d8a24; --av-g-soft:#eef7e6; --av-r:#b3261e; --av-r-soft:#fdecec; --av-a:#a86a00; --av-a-soft:#fff6e3; }
+    .hr2 .hr-title h4 { color: var(--av-p); font-weight: 700; font-size: 26px; }
+    .hr2 .hr-title .sub { font-size: 14px; }
+    .hr2 .hr-actions .act-out { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 16px; border-radius:10px; border:1.5px solid var(--av-p); background:#fff; color:var(--av-p); font-weight:600; font-size:13.5px; }
+    .hr2 .hr-actions .act-out:hover { background:var(--av-p-soft); }
+    .hr2 #rate_alerts { display:none !important; }
+    .hr2 .hr-title .hr-tools { flex-basis:100%; margin-left:0; }   .hr2 .hr-title .hr-main { margin-left:auto; }   /* the expiry warnings are the Needs attention section now */
+    .hr2 .hr-shell { grid-template-columns: minmax(0, 1fr); }
+    .hr2 .hr-shell > .hr-card:first-child { display:none; }   /* the old hotel rail: replaced by the directory (its search and filters stay as data) */
+    .hr2.hro-list .hr-shell { display:none; }
+    .hr2.hro-detail #hr_overview { display:none; }
+    .hro-cards { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; }
+    .hro-card { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:12px; border:1px solid #e3dfe6; background:#fff; cursor:pointer; text-align:left; width:100%; transition:box-shadow .15s, transform .15s; }
+    .hro-card:hover { box-shadow:0 6px 18px rgba(16,24,40,.08); transform:translateY(-1px); }
+    .hro-card:focus-visible { outline:none; box-shadow:0 0 0 .2rem rgba(132,36,132,.25); }
+    .hro-card.on { outline:2px solid var(--av-p); outline-offset:-1px; }
+    .hro-card .ic { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; flex:0 0 52px; }
+    .hro-card .t { font-weight:600; font-size:14.5px; color:#1d1b20; }
+    .hro-card .n { font-weight:800; font-size:32px; line-height:1.05; }
+    .hro-card.k-total .ic { background:var(--av-p-soft); color:var(--av-p); } .hro-card.k-total .n { color:var(--av-p); }
+    .hro-card.k-valid { background:var(--av-g-soft); border-color:#cfe5b8; } .hro-card.k-valid .ic { background:#dff0cf; color:var(--av-g-dk); } .hro-card.k-valid .n { color:var(--av-g-dk); }
+    .hro-card.k-novalid, .hro-card.k-norates { background:var(--av-r-soft); border-color:#f2c4c1; } .hro-card.k-novalid .ic, .hro-card.k-norates .ic { background:#fbd9d6; color:var(--av-r); } .hro-card.k-novalid .n, .hro-card.k-norates .n { color:var(--av-r); }
+    .hro-card.k-awaiting { background:var(--av-a-soft); border-color:#f1dca8; } .hro-card.k-awaiting .ic { background:#fbe9bd; color:var(--av-a); } .hro-card.k-awaiting .n { color:var(--av-a); }
+    .hro-card.k-expiring { background:var(--av-g-soft); border-color:#cfe5b8; } .hro-card.k-expiring .ic { background:#dff0cf; color:var(--av-g-dk); } .hro-card.k-expiring .n { color:var(--av-g-dk); }
+    .hro-note { font-size:12.5px; color:#5E5964; font-style:italic; margin:8px 2px 14px; }
+    .hro-box { background:#fff; border:1px solid #e3dfe6; border-radius:12px; margin-bottom:16px; overflow:hidden; }
+    .hro-att-h { display:flex; align-items:center; gap:10px; background:var(--av-p-soft); padding:10px 16px; font-weight:700; color:var(--av-p); font-size:16px; }
+    .hro-att-row { display:grid; grid-template-columns:28px minmax(140px,1.2fr) minmax(150px,1fr) minmax(180px,1.6fr) 110px; gap:10px; align-items:center; padding:9px 16px; border-top:1px solid #eee; font-size:14px; }
+    .hro-att-row .why { font-weight:600; } .hro-att-row .why.red { color:var(--av-r); } .hro-att-row .why.amber { color:var(--av-a); } .hro-att-row .why.blue { color:#1f5fa8; }
+    .hro-att-row .why small { display:block; font-weight:400; color:#5E5964; font-size:12px; }
+    .hro-att-none { padding:12px 16px; color:#3b6b17; font-size:14px; }
+    .hro-btn { border:1.5px solid var(--av-g); color:var(--av-g-dk); background:#fff; border-radius:8px; padding:4px 14px; font-weight:600; font-size:13px; white-space:nowrap; }
+    .hro-btn:hover { background:var(--av-g-soft); } .hro-btn.fill { background:var(--av-g); color:#fff; } .hro-btn.fill:hover { background:#68a63b; }
+    .hro-dir-h { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid #eee; }
+    .hro-dir-h h5 { margin:0 auto 0 0; color:var(--av-p); font-weight:700; font-size:19px; display:flex; align-items:center; gap:8px; }
+    .hro-search { position:relative; flex:1 1 260px; max-width:420px; } .hro-search i { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:#5E5964; }
+    .hro-search input { width:100%; padding:7px 10px 7px 34px; border:1px solid #cfcad4; border-radius:8px; font-size:14px; }
+    .hro-search input:focus { outline:none; border-color:var(--av-p); box-shadow:0 0 0 .15rem rgba(132,36,132,.15); }
+    .hro-dir-h select { border:1px solid #cfcad4; border-radius:8px; padding:7px 10px; font-size:14px; background:#fff; }
+    .hro-tog { border:1px solid #cfcad4; border-radius:8px; padding:6px 12px; font-size:14px; background:#fff; display:inline-flex; align-items:center; gap:6px; }
+    .hro-tog.on { border-color:var(--av-p); background:var(--av-p-soft); color:var(--av-p); font-weight:600; }
+    .hro-date { border:1.5px solid var(--av-p); color:var(--av-p); border-radius:8px; padding:6px 12px; font-size:13.5px; font-weight:600; display:inline-flex; gap:6px; align-items:center; }
+    .hro-table { width:100%; border-collapse:collapse; font-size:14px; }
+    .hro-table th { background:#f6f2f7; color:var(--av-p); font-weight:700; padding:9px 12px; text-align:left; border-bottom:1px solid #e9e3ec; white-space:nowrap; }
+    .hro-table td { padding:8px 12px; border-bottom:1px solid #f0edf2; vertical-align:middle; }
+    .hro-table tr:hover td { background:#fbf8fc; }
+    .hro-table .nm { font-weight:700; color:#1d1b20; } .hro-table .nm small { display:block; font-weight:400; color:#5E5964; font-size:12px; }
+    .hro-table .star { border:0; background:none; font-size:18px; color:#8a8590; padding:0 4px; line-height:1; } .hro-table .star.on { color:var(--av-g-dk); }
+    .hro-pill { display:inline-block; border-radius:999px; padding:3px 12px; font-size:12.5px; font-weight:600; white-space:nowrap; }
+    .hro-pill.green { background:#e2f2d4; color:#3b6b17; } .hro-pill.red { background:#fde0de; color:var(--av-r); } .hro-pill.amber { background:#fdf0cf; color:#8a5a00; } .hro-pill.blue { background:#e3ecf8; color:#1f5fa8; } .hro-pill.grey { background:#eee; color:#555; }
+    .hro-pill.sm { font-size:11px; padding:2px 8px; margin-left:4px; }
+    .hro-foot { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 16px; font-size:14px; }
+    .hro-pager { display:flex; gap:6px; flex-wrap:wrap; } .hro-pager button { min-width:36px; height:34px; border:1px solid #cfcad4; background:#fff; border-radius:8px; font-size:14px; padding:0 10px; }
+    .hro-pager button.on { background:var(--av-p); border-color:var(--av-p); color:#fff; font-weight:700; } .hro-pager button:disabled { opacity:.45; }
+    .hro-hint { font-size:13px; color:#5E5964; font-style:italic; margin:4px 2px 18px; }
+    .hro-back { display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid #e3dfe6; border-left:4px solid var(--av-p); border-radius:10px; padding:8px 12px; margin-bottom:12px; position:sticky; top:70px; z-index:20; }
+    .hro-back button { border:1.5px solid var(--av-p); color:var(--av-p); background:#fff; border-radius:8px; padding:5px 14px; font-weight:600; }
+    .hro-back button:hover { background:var(--av-p-soft); } .hro-back span { color:#5E5964; font-size:13.5px; }
+    @media (max-width: 991.98px) { .hro-cards { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 767.98px) {
+        .hro-cards { grid-template-columns:1fr 1fr; gap:8px; } .hro-card { padding:10px; gap:10px; } .hro-card .ic { width:40px; height:40px; flex-basis:40px; font-size:20px; } .hro-card .n { font-size:24px; } .hro-card .t { font-size:13px; }
+        .hro-att-row { grid-template-columns:24px 1fr; } .hro-att-row > :nth-child(n+3) { grid-column:2; } .hro-att-row .hro-btn { justify-self:start; }
+        .hro-search { max-width:none; }
+        .hro-table thead { display:none; } .hro-table, .hro-table tbody, .hro-table tr, .hro-table td { display:block; width:100%; }
+        .hro-table tr { border-bottom:1px solid #eee; padding:8px 4px; position:relative; } .hro-table td { border:0; padding:3px 10px 3px 38px; }
+        .hro-table td.st0 { position:absolute; left:0; top:8px; width:auto; padding:0 4px; }
+        .hro-table td[data-l]::before { content:attr(data-l) ': '; color:#5E5964; font-size:12px; }
+        .hr2 .hr-title h4 { font-size:22px; } .hro-back { top:60px; }
+    }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -249,26 +319,14 @@
         <div class="page-content hr2" id="hr2">
             <div class="container-fluid">
 
-                <?php $tourdesk_badges = ['master_files/hotel_work' => $work_open ?? null]; ?>
-                <?= view('layouts/tourdesk_bar') ?>
+                <?php /* tf-hr-overview-r1 (25 Nov 2026, Shantha): no Tour Desk bar and no New quote on this page; the main top navigation stays */ ?>
 
                 <div class="hr-title">
                     <div>
                         <h4>Hotel Rates</h4>
-                        <div class="sub">Contracts, offers, seasons, supplements and policies — exactly as the hotels write them. Approved plans feed quotations and the old Hotel Rate screen automatically.</div>
+                        <div class="sub">Contract coverage and rate readiness at a glance</div>
                     </div>
-                    <div class="hr-actions">
-                        <div class="grp">
-                            <button class="act" id="btn_queue" title="Rate sheets read in and waiting to be approved"><i class="bi bi-inbox"></i><span>Approval queue</span> <span class="pill pill-blue" id="queue_count" style="display:none"></span></button>
-                            <button class="act" id="btn_dups" title="Hotels that may be on file twice"><i class="bi bi-intersect"></i><span>Duplicates</span></button>
-                            <button class="act" id="btn_check" title="Tours with no rate, plans about to expire, offers whose booking window has closed, drafts, flagged rows"><i class="bi bi-shield-check"></i><span>Health check</span></button>
-                            <a class="act" id="btn_readiness" style="text-decoration:none" href="<?= base_url(($panel_url ?? 'master_files/hotel_rate_v2') . '/readiness') ?>" title="Which hotels the quotation engine can price by itself, which it cannot and why, and the rate-expiry warnings"><i class="bi bi-clipboard2-check"></i><span>Quote readiness</span> <span class="pill pill-red" id="rate_alert_count" style="display:none"></span></a>
-                        </div>
-                        <div class="grp">
-                            <a class="act" id="btn_offers" style="text-decoration:none" href="<?= base_url($offers_url ?? 'master_files/hotel_rate_v2/offers') ?>" title="Tactical rates and Early Bird offers across hotels — active, deadline close, expired — and the hotels with none"><i class="bi bi-tags"></i><span>Tacticals &amp; Early Birds</span></a>
-                            <button class="act" id="btn_quote" title="Price a stay at any hotel on any dates"><i class="bi bi-calculator"></i><span>Try a quote</span></button>
-                            <button class="act" id="btn_settings" title="<?= !empty($can_approve) ? 'Markets, tiers, gala nights, check thresholds, country → market' : 'View the settings (changing them needs the Hotel Rate Approval privilege)' ?>"><i class="bi bi-sliders"></i><span>Settings</span></button>
-                        </div>
+                    <div class="hr-actions hr-main">
                         <div class="dropdown">
                             <button class="act-primary" id="btn_add_rates" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"><i class="bi bi-plus-lg"></i><span>Add rates</span><i class="bi bi-chevron-down chev"></i></button>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -276,10 +334,57 @@
                                 <?php if (!empty($ai_enabled)): ?><button class="dropdown-item" id="btn_ai" type="button"><span class="ic"><i class="bi bi-stars"></i></span><div><b>Read a PDF</b><span class="d">A PDF rate sheet read for you into a draft, for you to check and approve.</span></div></button><?php endif; ?>
                             </div>
                         </div>
+                        <button type="button" class="act-out" id="btn_export" title="Download the hotel directory as it is filtered now (CSV)"><i class="bi bi-download"></i><span>Export</span></button>
+                    </div>
+                    <div class="hr-actions hr-tools">
+                        <div class="grp">
+                            <button class="act" id="btn_queue" title="Rate sheets read in and waiting to be approved"><i class="bi bi-inbox"></i><span>Approval queue</span> <span class="pill pill-blue" id="queue_count" style="display:none"></span></button>
+                            <button class="act" id="btn_dups" title="Hotels that may be on file twice"><i class="bi bi-intersect"></i><span>Duplicates</span></button>
+                            <button class="act" id="btn_check" title="Tours with no rate, plans about to expire, offers whose booking window has closed, drafts, flagged rows"><i class="bi bi-shield-check"></i><span>Health check</span></button>
+                            <a class="act" id="btn_work" style="text-decoration:none" href="<?= base_url($work_url ?? 'master_files/hotel_work') ?>" title="Rate sheets waiting to be transcribed or loaded (Hotel Incomplete Work)"><i class="bi bi-journal-text"></i><span>Incomplete work</span><?php if (!empty($work_open)): ?> <span class="pill pill-red"><?= (int) $work_open ?></span><?php endif; ?></a>
+                            <a class="act" id="btn_readiness" style="text-decoration:none" href="<?= base_url(($panel_url ?? 'master_files/hotel_rate_v2') . '/readiness') ?>" title="Which hotels the quotation engine can price by itself, which it cannot and why, and the rate-expiry warnings"><i class="bi bi-clipboard2-check"></i><span>Quote readiness</span> <span class="pill pill-red" id="rate_alert_count" style="display:none"></span></a>
+                        </div>
+                        <div class="grp">
+                            <a class="act" id="btn_offers" style="text-decoration:none" href="<?= base_url($offers_url ?? 'master_files/hotel_rate_v2/offers') ?>" title="Tactical rates and Early Bird offers across hotels — active, deadline close, expired — and the hotels with none"><i class="bi bi-tags"></i><span>Tacticals &amp; Early Birds</span></a>
+                            <button class="act" id="btn_quote" title="Price a stay at any hotel on any dates"><i class="bi bi-calculator"></i><span>Try a quote</span></button>
+                            <button class="act" id="btn_settings" title="<?= !empty($can_approve) ? 'Markets, tiers, gala nights, check thresholds, country → market' : 'View the settings (changing them needs the Hotel Rate Approval privilege)' ?>"><i class="bi bi-sliders"></i><span>Settings</span></button>
+                        </div>
                     </div>
                 </div>
 
                 <div id="rate_alerts" class="hr-card" style="display:none;border-color:var(--hr-red);margin-bottom:14px"></div>
+                <!-- tf-hr-overview-r1: the overview — cards, needs attention, the hotel directory. Opening a hotel shows its rate screens in their place. -->
+                <div id="hr_overview">
+                    <div class="hro-cards" id="hro_cards" role="group" aria-label="Rate status summary"></div>
+                    <div class="hro-note">Select a card to filter hotels. Status groups may overlap.</div>
+                    <div class="hro-box" id="hro_att"></div>
+                    <div class="hro-box">
+                        <div class="hro-dir-h">
+                            <h5><i class="bi bi-buildings"></i> Hotel directory</h5>
+                            <label class="hro-search mb-0"><i class="bi bi-search"></i><input type="search" id="hro_q" placeholder="Search hotel, location, chain or code" aria-label="Search hotels"></label>
+                            <select id="hro_status" aria-label="Rate status">
+                                <option value="all">Status: All</option>
+                                <option value="valid">Valid rates today</option>
+                                <option value="novalid">No valid rate today</option>
+                                <option value="norates">No rates entered</option>
+                                <option value="awaiting">Awaiting approval</option>
+                                <option value="expiring">Expiring soon</option>
+                                <option value="expired">Expired</option>
+                                <option value="tactical">Tactical only today</option>
+                            </select>
+                            <button type="button" class="hro-tog" id="hro_fav" aria-pressed="false" title="Only the hotels marked Frequently Used"><i class="bi bi-star"></i> Favourites</button>
+                            <button type="button" class="hro-tog" id="hro_used" aria-pressed="false" title="Hotels used on a quotation in the last 12 months">Used last year</button>
+                            <span class="hro-date" title="Rate status is worked out for today's date"><i class="bi bi-calendar3"></i> Coverage date <span id="hro_date"></span></span>
+                        </div>
+                        <div class="table-responsive"><table class="hro-table" id="hro_table">
+                            <thead><tr><th style="width:36px"></th><th>Hotel</th><th>Code</th><th>Rate status</th><th>Coverage</th><th class="text-end">Action</th></tr></thead>
+                            <tbody><tr><td colspan="6" class="text-center py-4 text-muted">Loading hotels…</td></tr></tbody>
+                        </table></div>
+                        <div class="hro-foot"><span id="hro_showing"></span><div class="hro-pager" id="hro_pager"></div></div>
+                    </div>
+                    <div class="hro-hint"><i class="bi bi-info-circle"></i> Open a hotel to view its existing rates and contracts.</div>
+                </div>
+
 
                 <?php if (!empty($not_installed)): ?>
                 <div class="hr-card" style="border-color:var(--hr-amber);margin-bottom:14px"><div class="hr-card-b">
@@ -324,6 +429,7 @@ php spark hotelrates:migrate</pre>
 
                     <!-- ---------------- detail ---------------- -->
                     <div>
+                        <div class="hro-back" id="hro_back" style="display:none"><button type="button" id="hro_back_btn"><i class="bi bi-arrow-left"></i> Hotel directory</button><span>Rates for <b id="hro_back_name"></b> — search, filters and page are kept for when you go back.</span></div>
                         <div id="detail_empty" class="hr-card"><div class="empty"><i class="bi bi-building" style="font-size:28px"></i><br>Pick a hotel on the left.<br><span class="help">Hotels with <span class="pill pill-red">no rate</span> have nothing approved for today; <span class="pill pill-amber">ends …</span> shows when the last approved plan runs out.</span></div></div>
                         <div id="detail" style="display:none">
                             <div class="hr-card"><div class="hr-card-b hotel-head">
@@ -2109,11 +2215,179 @@ php spark hotelrates:migrate</pre>
     }
     if (JUMP) { const __re = renderEditor; renderEditor = function () { __re.apply(this, arguments); jumpMark(false); }; }
 
+    // ---------------- tf-hr-overview-r1 (25 Nov 2026, Shantha's mock-up): the overview page ----------------
+    // Counts are distinct hotels, from the same two answers the panel already gives: /hotels (plans, drafts, favourites)
+    // and readiness/data (whether a PUBLISHED quotation rate prices today, and why not — the Quote readiness rules), plus
+    // its expiry warnings (14 days ahead; cleared once an approved rate covers the night after). Nothing is stored here.
+    const HRO_PER = 15;
+    const HRO = Object.assign({ q: '', status: 'all', fav: false, used: false, page: 1, y: 0 }, (() => { try { return JSON.parse(sessionStorage.getItem('hro_state') || '{}'); } catch (e) { return {}; } })());
+    let HRD = null;
+    const hroRoot = document.getElementById('hr2');
+    const fmtD = d => { if (!d) return ''; const t = new Date(d + 'T00:00:00Z'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
+    function hroSave() { try { sessionStorage.setItem('hro_state', JSON.stringify({ q: HRO.q, status: HRO.status, fav: HRO.fav, used: HRO.used, page: HRO.page, y: HRO.y })); } catch (e) {} }
+    async function hroLoadReadiness() {
+        try {
+            const j = await api('/readiness/data');
+            if (j.status !== 200) throw new Error(j.message || 'not read');
+            const byId = {}; [...(j.data.ready || []), ...(j.data.not_ready || [])].forEach(r => { if (r.id) byId[r.id] = r; });
+            const alertBy = {}; (j.data.alerts || []).forEach(a => { if (a.hotel_id) alertBy[a.hotel_id] = a; });
+            HRD = { byId, alertBy, alerts: j.data.alerts || [], days: j.data.alert_days || 14, today: j.data.today || TODAY };
+        } catch (e) { HRD = { error: String(e.message || e), byId: {}, alertBy: {}, alerts: [], days: 14, today: TODAY }; }
+        hroRender();
+    }
+    function hroRow(h) {
+        const R = HRD ? HRD.byId[h.id] : null, al = HRD ? HRD.alertBy[h.id] : null;
+        const rk = R && R.reason ? R.reason.key : null;
+        const under = R ? ((R.notes || []).find(n => n.under) || R.reason) : null, uk = under ? under.key : null;
+        const valid = rk === 'ready';
+        const noRates = Number(h.approved_plans) === 0 && Number(h.draft_plans) === 0;
+        const awaiting = Number(h.draft_plans) > 0;
+        const expiring = !!(al && al.state === 'expiring');
+        let st, cov = '—';
+        if (!HRD) st = ['grey', 'Checking…'];
+        else if (valid) { st = expiring ? ['amber', 'Expiring soon'] : ['green', R.ready === 'some' ? 'Valid today · some markets' : 'Valid today']; cov = expiring ? 'Ends ' + fmtD(al.ends) + (al.next_start ? ' · next from ' + fmtD(al.next_start) : '') : (R.covered_until ? 'Covered until ' + fmtD(R.covered_until) : 'Approved coverage'); }
+        else if (noRates) st = ['red', 'No rates entered'];
+        else if (rk === 'draft' || rk === 'replacement_draft') { st = ['blue', 'Awaiting approval']; cov = R.reason.text; }
+        else if (uk === 'expired') { st = ['red', 'Expired']; cov = 'Ended ' + fmtD(R.prev_end); }
+        else if (uk === 'gap') { st = ['amber', 'Coverage gap']; cov = 'Gap ' + fmtD(R.prev_end) + ' → ' + fmtD(R.next_start); }
+        else if (uk === 'not_started') { st = ['amber', 'Not started']; cov = 'Starts ' + fmtD(R.next_start); }
+        else if (rk === 'offer_only') { st = ['amber', 'Tactical only']; cov = 'No published rate today'; }
+        else if (rk === 'sheet_waiting') { st = ['blue', 'Sheet waiting']; cov = 'Transcribed, not loaded'; }
+        else if (uk === 'no_contract') st = ['red', 'No published rates'];
+        else if (!R) st = ['grey', h.status === 'inactive' ? 'Inactive' : 'Not checked'];
+        else st = ['red', under ? under.text : 'No valid rate'];
+        return { h, R, al, valid, noRates, awaiting, expiring, st, cov, tactical: rk === 'offer_only', expired: uk === 'expired' };
+    }
+    const HRO_CARDS = [
+        ['total', 'Total hotels', 'bi-buildings', r => true],
+        ['valid', 'Valid rates today', 'bi-calendar2-check', r => r.valid],
+        ['novalid', 'No valid rate today', 'bi-exclamation-triangle', r => !r.valid],
+        ['norates', 'No rates entered', 'bi-file-earmark-x', r => r.noRates],
+        ['awaiting', 'Awaiting approval', 'bi-hourglass-split', r => r.awaiting],
+        ['expiring', 'Expiring within 14 days', 'bi-calendar2-event', r => r.expiring],
+    ];
+    const HRO_TEST = Object.assign(Object.fromEntries(HRO_CARDS.map(c => [c[0] === 'total' ? 'all' : c[0], c[3]])), { expired: r => r.expired, tactical: r => r.tactical });
+    function hroFiltered(rows) {
+        const q = HRO.q.trim().toLowerCase();
+        const codeNo = (q.match(/^(?:htl[\s-]*|h)?0*(\d{1,6})$/i) || [])[1];
+        const test = HRO_TEST[HRO.status] || HRO_TEST.all;
+        return rows.filter(r => {
+            const h = r.h;
+            if (q && !(`${h.name} ${h.location_name || ''} ${h.chain || ''} ${h.primary_sup_acc_no || ''} ${h.sup_acc_nos || ''} ${h.hotel_code || ''}`.toLowerCase().includes(q))
+                && !(codeNo && h.hotel_code && parseInt(String(h.hotel_code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10))) return false;
+            if (HRO.fav && !Number(h.frequently_used)) return false;
+            if (HRO.used && !Number(h.nights_last_year)) return false;
+            return test(r);
+        });
+    }
+    function hroRender() {
+        if (!document.getElementById('hro_cards')) return;
+        const rows = (S.hotels || []).map(hroRow);
+        document.getElementById('hro_date').textContent = fmtD(HRD ? HRD.today : TODAY);
+        // ---- cards
+        const days = HRD ? HRD.days : 14;
+        document.getElementById('hro_cards').innerHTML = HRO_CARDS.map(([k, t, ic, test]) => {
+            const n = k === 'total' || HRD ? rows.filter(test).length : '…';
+            const key = k === 'total' ? 'all' : k;
+            return `<button type="button" class="hro-card k-${k} ${HRO.status === key && key !== 'all' ? 'on' : ''}" data-card="${key}" aria-pressed="${HRO.status === key}" title="Show these hotels in the directory"><span class="ic"><i class="bi ${ic}"></i></span><span><span class="t">${k === 'expiring' ? 'Expiring within ' + days + ' days' : t}</span><br><span class="n">${n}</span></span></button>`;
+        }).join('');
+        document.querySelectorAll('[data-card]').forEach(b => b.addEventListener('click', () => {
+            HRO.status = HRO.status === b.dataset.card ? 'all' : b.dataset.card; HRO.page = 1;
+            document.getElementById('hro_status').value = HRO.status; hroSave(); hroRender();
+            document.getElementById('hro_table').closest('.hro-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }));
+        // ---- needs attention: the rate-expiry warnings (expired, expiring, coverage gaps)
+        const att = document.getElementById('hro_att');
+        if (!HRD) att.innerHTML = '<div class="hro-att-h"><i class="bi bi-exclamation-triangle"></i> Needs attention</div><div class="hro-att-none text-muted">Checking coverage…</div>';
+        else if (HRD.error) att.innerHTML = `<div class="hro-att-h"><i class="bi bi-exclamation-triangle"></i> Needs attention</div><div class="hro-att-none" style="color:#b3261e">The coverage check could not be read (${esc(HRD.error)}).</div>`;
+        else {
+            const tone = a => a.replacement && a.replacement.level ? a.replacement.level : (a.state === 'expired' ? 'red' : 'amber');
+            att.innerHTML = `<div class="hro-att-h"><i class="bi bi-exclamation-triangle"></i> Needs attention <span class="ms-auto" style="font-size:12.5px;font-weight:400;color:#5E5964">expired rates and coverage ending within ${HRD.days} days · <a href="${BASE}/readiness">Quote readiness</a></span></div>`
+                + (HRD.alerts.length ? HRD.alerts.map(a => `<div class="hro-att-row"><i class="bi ${a.state === 'expired' ? 'bi-exclamation-octagon' : 'bi-exclamation-triangle'}" style="color:${a.state === 'expired' ? '#b3261e' : '#a86a00'};font-size:18px"></i>
+                    <b>${esc(a.hotel)}</b><span>${a.state === 'expired' ? 'Expired ' : 'Ends '}${esc(fmtD(a.ends))}${a.next_start ? '<br><small class="text-muted">next rates from ' + esc(fmtD(a.next_start)) + '</small>' : ''}</span>
+                    <span class="why ${tone(a)}">${esc(a.replacement ? a.replacement.text : a.state_text)}${a.replacement && a.replacement.detail ? '<small>' + esc(a.replacement.detail) + '</small>' : ''}</span>
+                    <button type="button" class="hro-btn justify-self-end" data-open="${a.hotel_id}">Review</button></div>`).join('')
+                : '<div class="hro-att-none"><i class="bi bi-check-circle"></i> Nothing expired or ending soon — every approved rate is covered for the next ' + HRD.days + ' days.</div>');
+        }
+        // ---- directory
+        const list = hroFiltered(rows);
+        const pages = Math.max(1, Math.ceil(list.length / HRO_PER));
+        if (HRO.page > pages) HRO.page = pages;
+        const from = (HRO.page - 1) * HRO_PER, slice = list.slice(from, from + HRO_PER);
+        const tb = document.querySelector('#hro_table tbody');
+        tb.innerHTML = slice.length ? slice.map(r => {
+            const h = r.h, fav = Number(h.frequently_used) > 0;
+            const extra = (r.awaiting && r.st[1] !== 'Awaiting approval' ? `<span class="hro-pill blue sm" title="${h.draft_plans} draft plan(s) waiting for approval">draft</span>` : '') + (h.status === 'inactive' && r.st[1] !== 'Inactive' ? '<span class="hro-pill grey sm">inactive</span>' : '');
+            return `<tr><td class="st0">${S.favReady ? `<button type="button" class="star ${fav ? 'on' : ''}" data-fav="${h.id}" aria-pressed="${fav}" title="${fav ? 'Frequently Used — click to untick' : 'Mark as Frequently Used'}">${fav ? '&#9733;' : '&#9734;'}</button>` : ''}</td>
+                <td class="nm">${esc(h.name)}${h.location_name || h.chain ? `<small>${esc([h.location_name, h.chain].filter(Boolean).join(' · '))}</small>` : ''}</td>
+                <td data-l="Code" class="mono">${esc(h.hotel_code || '—')}</td>
+                <td data-l="Rate status"><span class="hro-pill ${r.st[0]}" title="${esc(r.R && r.R.reason ? (r.R.reason.detail || r.R.reason.text) : '')}">${esc(r.st[1])}</span>${extra}</td>
+                <td data-l="Coverage">${esc(r.cov)}</td>
+                <td class="text-end">${r.noRates ? `<button type="button" class="hro-btn fill" data-open="${h.id}" title="Open the hotel to enter its first rate plan">Add rates</button>` : `<button type="button" class="hro-btn" data-open="${h.id}" title="Open this hotel's rates">Open</button>`}</td></tr>`;
+        }).join('') : `<tr><td colspan="6" class="text-center py-4 text-muted">No hotels match${HRO.status !== 'all' || HRO.q || HRO.fav || HRO.used ? ' — <a href="#" id="hro_clear">clear the search and filters</a>' : ''}.</td></tr>`;
+        document.getElementById('hro_showing').textContent = list.length ? `Showing ${from + 1}–${from + slice.length} of ${list.length} hotel${list.length === 1 ? '' : 's'}${list.length !== rows.length ? ' (filtered from ' + rows.length + ')' : ''}` : `0 of ${rows.length} hotels`;
+        const pg = document.getElementById('hro_pager');
+        const nums = []; for (let p = 1; p <= pages; p++) { if (p === 1 || p === pages || Math.abs(p - HRO.page) <= 1) nums.push(p); else if (nums[nums.length - 1] !== '…') nums.push('…'); }
+        pg.innerHTML = `<button type="button" data-pg="${HRO.page - 1}" ${HRO.page <= 1 ? 'disabled' : ''}><i class="bi bi-chevron-left"></i> Previous</button>` + nums.map(p => p === '…' ? '<button type="button" disabled>…</button>' : `<button type="button" data-pg="${p}" class="${p === HRO.page ? 'on' : ''}" ${p === HRO.page ? 'aria-current="page"' : ''}>${p}</button>`).join('') + `<button type="button" data-pg="${HRO.page + 1}" ${HRO.page >= pages ? 'disabled' : ''}>Next <i class="bi bi-chevron-right"></i></button>`;
+        pg.querySelectorAll('[data-pg]').forEach(b => b.addEventListener('click', () => { HRO.page = Number(b.dataset.pg); hroSave(); hroRender(); }));
+        hroRoot.querySelectorAll('#hr_overview [data-open]').forEach(b => b.addEventListener('click', () => hroOpen(Number(b.dataset.open))));
+        tb.querySelectorAll('[data-fav]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); const h = S.hotels.find(x => x.id == b.dataset.fav); if (h) setFrequent(h.id, !Number(h.frequently_used)); }));
+        const clr = document.getElementById('hro_clear'); if (clr) clr.addEventListener('click', e => { e.preventDefault(); Object.assign(HRO, { q: '', status: 'all', fav: false, used: false, page: 1 }); hroSyncInputs(); hroSave(); hroRender(); });
+        S.hroRows = rows;
+    }
+    function hroSyncInputs() {
+        document.getElementById('hro_q').value = HRO.q; document.getElementById('hro_status').value = HRO.status;
+        [['hro_fav', HRO.fav], ['hro_used', HRO.used]].forEach(([id, on]) => { const b = document.getElementById(id); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+        document.querySelector('#hro_fav i').className = 'bi ' + (HRO.fav ? 'bi-star-fill' : 'bi-star');
+    }
+    function hroMode(detail) {
+        hroRoot.classList.toggle('hro-list', !detail); hroRoot.classList.toggle('hro-detail', !!detail);
+        document.getElementById('hro_back').style.display = detail ? '' : 'none';
+    }
+    async function hroOpen(id) {
+        HRO.y = Math.round(window.scrollY || 0); hroSave();
+        await selectHotel(id);
+    }
+    async function hroBackToList() {
+        if (S.sheet && !S.ro) { const go = await Swal.fire({ icon: 'question', title: 'Leave the rate plan?', text: 'Anything changed in this plan and not yet saved will be lost.', showCancelButton: true, confirmButtonText: 'Leave', cancelButtonText: 'Stay' }); if (!go.isConfirmed) return; closeEditor(); }
+        S.hotel = null; S.detail = null;
+        if (window.TfView) TfView.setParams({ hotel: null, tab: null, contract: null });
+        hroMode(false); hroRender();
+        requestAnimationFrame(() => window.scrollTo(0, HRO.y || 0));
+    }
+    // a hotel opened from anywhere (the directory, Needs attention, an import, ?hotel= in the address): its rate screens take the page
+    { const __selectHotel = selectHotel; selectHotel = async function (id, keepEditor) {
+        const wasList = !hroRoot.classList.contains('hro-detail');
+        const r = await __selectHotel(id, keepEditor);
+        if (S.hotel && Number(S.hotel.id) === Number(id)) {
+            document.getElementById('hro_back_name').textContent = S.hotel.name + (S.hotel.hotel_code ? ' · ' + S.hotel.hotel_code : '');
+            hroMode(true);
+            if (wasList) { const b = document.getElementById('hro_back'); window.scrollTo(0, Math.max(0, b.getBoundingClientRect().top + window.scrollY - 80)); }   // the hotel's rates straight into view
+        }
+        return r;
+    }; }
+    { const __loadHotels = loadHotels; loadHotels = async function () { const r = await __loadHotels(); hroRender(); return r; }; }
+    document.getElementById('hro_back_btn').addEventListener('click', hroBackToList);
+    document.getElementById('hro_q').addEventListener('input', e => { HRO.q = e.target.value; HRO.page = 1; hroSave(); hroRender(); });
+    document.getElementById('hro_status').addEventListener('change', e => { HRO.status = e.target.value; HRO.page = 1; hroSave(); hroRender(); });
+    document.getElementById('hro_fav').addEventListener('click', () => { HRO.fav = !HRO.fav; HRO.page = 1; hroSyncInputs(); hroSave(); hroRender(); });
+    document.getElementById('hro_used').addEventListener('click', () => { HRO.used = !HRO.used; HRO.page = 1; hroSyncInputs(); hroSave(); hroRender(); });
+    // Export: the directory as it is filtered now (hotel, code, status, coverage) — a CSV for a spreadsheet; no rates in it
+    document.getElementById('btn_export').addEventListener('click', () => {
+        const list = hroFiltered((S.hotels || []).map(hroRow));
+        const cell = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+        const csv = [['Hotel', 'Code', 'Location', 'Rate status', 'Coverage', 'Draft plans', 'Frequently used'].map(cell).join(',')]
+            .concat(list.map(r => [r.h.name, r.h.hotel_code || '', r.h.location_name || '', r.st[1], r.cov, r.h.draft_plans || 0, Number(r.h.frequently_used) ? 'yes' : ''].map(cell).join(','))).join('\r\n');
+        const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = 'hotel-rates-' + (HRD ? HRD.today : TODAY) + '.csv'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    });
+    hroSyncInputs(); hroMode(false);
+
     // ---------------- start ----------------
     (async () => {
         await loadHotels();
         loadQueueCount();
         loadRateAlerts();
+        hroLoadReadiness();   // tf-hr-overview-r1
         if (PRESELECT_ACC) { const h = S.hotels.find(x => String(x.primary_sup_acc_no) === PRESELECT_ACC || String(x.sup_acc_nos || '').split(',').includes(PRESELECT_ACC)); if (h) { await selectHotel(h.id); if (PRESELECT_TAB && OFFERS_READY) showTab(PRESELECT_TAB); } else toast('error', `No hotel with the supplier account ${PRESELECT_ACC} on the Hotel Master yet.`); }
         if (PRESELECT_CONTRACT) { const j = await api('/contract/' + PRESELECT_CONTRACT); if (j.status === 200 && j.data.hotel && j.data.hotel.id) { await selectHotel(j.data.hotel.id); await openContract(PRESELECT_CONTRACT); } else toast('error', j.message || 'That rate plan was not found.'); }
         else if (APPROVAL_MODE) openQueue();
@@ -2121,7 +2395,8 @@ php spark hotelrates:migrate</pre>
         const T0 = new URLSearchParams(location.search).get('tab');
         if (S.hotel && T0 && T0 !== PRESELECT_TAB && document.querySelector('.hr-tab[data-tab="' + T0 + '"]')) showTab(T0);
         if (JUMP) { if (S.sheet) { S.section = 'seasons'; renderEditor(); jumpMark(true); } jumpBar(); }
-        else if (window.TfView) TfView.restoreScroll();
+        else if (S.hotel && window.TfView) TfView.restoreScroll();
+        else if (!S.hotel && HRO.y) requestAnimationFrame(() => window.scrollTo(0, HRO.y));   // tf-hr-overview-r1: the directory where it was
     })();
 })();
 </script>
