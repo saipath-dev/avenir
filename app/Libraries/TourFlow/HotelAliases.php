@@ -103,7 +103,7 @@ final class HotelAliases
                 continue;
             }
             if (mb_strlen($n) > 190) {
-                throw new \RuntimeException('An other name is too long (190 characters at most).');
+                throw new \RuntimeException('An alternative name is too long (190 characters at most).');
             }
             $k = HotelRateService::nameKey($n);
             if ($k === '') {
@@ -123,7 +123,7 @@ final class HotelAliases
         }
         foreach ($db->query('SELECT a.alias, a.alias_key, h.name FROM tf_hotel_alias a JOIN hr2_hotel h ON h.id = a.hotel_id WHERE a.hotel_id <> ?', [$hotelId])->getResultArray() as $o) {
             if (isset($want[(string) $o['alias_key']])) {
-                throw new \RuntimeException('"' . $want[(string) $o['alias_key']] . '" is already an other name of ' . $o['name'] . '. One name points at one hotel only.');
+                throw new \RuntimeException('"' . $want[(string) $o['alias_key']] . '" is already an alternative name of ' . $o['name'] . '. One name points at one hotel only.');
             }
         }
         $have = [];

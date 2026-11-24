@@ -230,7 +230,7 @@ class HotelMasterController extends BaseController
                 if ($r['renamed']) {
                     // tf-hotel-names-r2: the name the hotel had stays findable — kept as one of its other names
                     if (\App\Libraries\TourFlow\HotelAliases::keep(\Config\Database::connect(), (int) $id, (string) $r['old_name'], (string) session()->get('username'))) {
-                        $msg[] = 'the previous name "' . $r['old_name'] . '" is kept under Other names';
+                        $msg[] = 'the previous name "' . $r['old_name'] . '" is kept under Alternative names';
                     }
                     $msg[] = "renamed \"{$r['old_name']}\" → \"{$r['name']}\" (Hotel Master, supplier record" . ($r['accounts'] ? ' ' . implode(', ', $r['accounts']) : '') . ', ledger name)';
                 }
@@ -239,7 +239,7 @@ class HotelMasterController extends BaseController
                 $on = \App\Libraries\TourFlow\HotelAliases::set(\Config\Database::connect(), (int) $id, (string) $b['other_names'], (string) session()->get('username'));
                 if ($on['added'] || $on['removed']) {
                     $svc->audit('hotel', (int) $id, 'update', ['other_names_removed' => $on['removed']], ['other_names_added' => $on['added'], 'other_names' => $on['names']]);
-                    $msg[] = 'other names: ' . ($on['added'] ? 'added ' . implode(', ', array_map(static fn ($n) => '"' . $n . '"', $on['added'])) : '') . ($on['added'] && $on['removed'] ? '; ' : '') . ($on['removed'] ? 'removed ' . implode(', ', array_map(static fn ($n) => '"' . $n . '"', $on['removed'])) : '');
+                    $msg[] = 'alternative names: ' . ($on['added'] ? 'added ' . implode(', ', array_map(static fn ($n) => '"' . $n . '"', $on['added'])) : '') . ($on['added'] && $on['removed'] ? '; ' : '') . ($on['removed'] ? 'removed ' . implode(', ', array_map(static fn ($n) => '"' . $n . '"', $on['removed'])) : '');
                 }
             }
             if ($fields) {
