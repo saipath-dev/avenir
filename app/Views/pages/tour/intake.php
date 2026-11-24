@@ -32,6 +32,7 @@
     .tf .not-installed { padding:14px 16px; border-radius:8px; background:var(--tf-amber-soft); border:1px solid #d9d3dd; color:var(--tf-amber); font-size:13px; }
     .tf .sugwrap { position:relative; }
     /* tf-hotelpick-r1: Hotel & room selection (Avenir purple #842484, green #78b848) */
+    body.modal-open:has(#m_day.show) .avh-fab { display:none; }   /* the User Manual button never covers Save */
     .hp .modal-content { border:0; border-radius:14px; overflow:hidden; }
     .hp .hp-top { background:#842484; color:#fff; display:flex; align-items:center; justify-content:space-between; padding:12px 20px; }
     .hp .hp-brand b { font-style:italic; font-size:17px; } .hp .hp-brand span { border-left:1px solid rgba(255,255,255,.5); margin-left:12px; padding-left:12px; font-size:16px; }

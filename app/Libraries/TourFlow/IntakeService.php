@@ -4830,6 +4830,29 @@ final class IntakeService
             // meal plan is another price, not a changed one — or when it had no figure yet.
             $key  = $freeze && $date !== null ? self::rateKey((int) $hotel['id'], (string) $date, self::intOrNull($snap['room_type_id'] ?? null), $d['meal_plan'] ?? null, $market) : null;
             $kept = $freeze && self::hasFigure($d) && (string) ($d['rate_key'] ?? '') !== '';
+            // tf-tactical-r1 (24 Nov 2026, Shantha): a figure kept from a plan that is no longer a published kind (re-classed as a
+            // tactical) does not stay on a quotation — the night is read again from the published plans, and the history says why
+            $notPublished = null;
+            if ($kept && !empty($d['rate_plan_id'])) {
+                try {
+                    $pp = $this->db->query('SELECT plan_type FROM hr2_contract WHERE id = ?', [(int) $d['rate_plan_id']])->getRowArray();
+                    if ($pp && !$this->quotable((string) $pp['plan_type'])) {
+                        $notPublished = (string) $pp['plan_type'];
+                        $kept = false;
+                    }
+                } catch (\Throwable $e) {
+                }
+            }
+            if ($notPublished !== null) {
+                try {
+                    $this->activity()->record('intake', $id, $id, null, 'hotel_rate', 'Night ' . (int) $d['day_no'] . ': tactical rate taken off the quotation', [[
+                        'what' => 'Night ' . (int) $d['day_no'] . ' (' . $raw . ') rate',
+                        'from' => trim((string) ($d['rate_plan_name'] ?? 'plan')) . ' — SGL ' . ($d['rate_sgl'] ?? '—') . ' / DBL ' . ($d['rate_dbl'] ?? '—'),
+                        'to'   => $state === 'rate' ? 'published plan: ' . (string) ($snap['plan_name'] ?? $note) : 'no published rate (' . (string) $note . ')',
+                    ]]);
+                } catch (\Throwable $e) {
+                }
+            }
             if ($kept && (string) $d['rate_key'] === $key && !$takeNew) {
                 $drift = self::rateDrift($d, $snap, $state, $note, $now);
                 $this->db->query(

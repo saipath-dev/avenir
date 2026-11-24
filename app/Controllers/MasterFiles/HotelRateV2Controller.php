@@ -572,6 +572,21 @@ class HotelRateV2Controller extends BaseController
         }
     }
 
+    // POST contract/{id}/reclass {plan_type: tactical|contract, why} — tf-tactical-r1: approvers only; the rates are not touched
+    public function reclass($id)
+    {
+        if (!$this->canApprove()) {
+            return $this->denied('re-class approved rate plans');
+        }
+        try {
+            $b = $this->request->getJSON(true) ?: $this->request->getPost();
+            $r = $this->svc()->reclassContract((int) $id, (string) ($b['plan_type'] ?? ''), (string) ($b['why'] ?? ''));
+            return $this->json(['status' => 200, 'message' => $r['changed'] ? ($r['plan_type'] === 'tactical' ? 'Re-classed as a tactical: kept for payment, no longer used on quotations.' : 'Re-classed as a published contract: used on quotations again.') : 'No change: the plan already is ' . $r['plan_type'] . '.', 'data' => $r]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // POST contract/{id}/delete
     public function deleteContract($id)
     {

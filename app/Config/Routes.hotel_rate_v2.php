@@ -87,6 +87,7 @@ $routes->group('master_files/hotel_rate_approval', static function ($routes) {
     $routes->post('contract/save', [HotelRateV2Controller::class, 'saveContract']);      // approve / correct approved plans
     $routes->post('contract/(:num)/approve', [HotelRateV2Controller::class, 'approve']);
     $routes->post('contract/(:num)/supersede', [HotelRateV2Controller::class, 'supersede']);
+    $routes->post('contract/(:num)/reclass', [HotelRateV2Controller::class, 'reclass']);   // tf-tactical-r1: tactical <-> published contract
     $routes->post('import/(:num)/commit', [HotelRateV2Controller::class, 'importCommit']);   // with approve / supersede
     $routes->post('merge', [HotelRateV2Controller::class, 'merge']);
     $routes->post('unmerge', [HotelRateV2Controller::class, 'unmerge']);

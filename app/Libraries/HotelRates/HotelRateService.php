@@ -977,6 +977,39 @@ class HotelRateService
         $this->projectHotel((int) $c['hotel_id']);
     }
 
+    /**
+     * tf-tactical-r1 (24 Nov 2026, Shantha): "In the quotation we show only published rates. The special rates we call
+     * tacticals; they are shown at the time of payment." An approved plan entered as a published contract that is really a
+     * special offer / tactical is re-classed here — its rates stay exactly as approved, on file for the payment side, and
+     * stop pricing quotations. Only the plan type changes; who, when and why go on the audit trail.
+     */
+    public function reclassContract(int $contractId, string $planType, string $why): array
+    {
+        $planType = strtolower(trim($planType));
+        if (!in_array($planType, ['tactical', 'contract'], true)) {
+            throw new \InvalidArgumentException('A plan can be re-classed as tactical, or back to a published contract.');
+        }
+        $why = trim($why);
+        if ($why === '') {
+            throw new \InvalidArgumentException('Say why the plan is re-classed.');
+        }
+        $c = $this->row('SELECT * FROM hr2_contract WHERE id = ?', [$contractId]);
+        if (!$c) {
+            throw new \RuntimeException("Plan {$contractId} not found.");
+        }
+        if ($c['status'] === 'superseded' || $c['status'] === 'cancelled') {
+            throw new \RuntimeException('A superseded or cancelled plan is not re-classed.');
+        }
+        if ((string) $c['plan_type'] === $planType) {
+            return ['changed' => false, 'plan_type' => $planType];
+        }
+        $this->db->query('UPDATE hr2_contract SET plan_type = ?, updated_at = ? WHERE id = ?', [$planType, date('Y-m-d H:i:s'), $contractId]);
+        $this->audit('contract', $contractId, 'update', ['plan_type' => $c['plan_type']], ['plan_type' => $planType, '_intended_action' => 'reclass', 'why' => mb_substr($why, 0, 300)]);
+        $this->lookupEngine()->forget((int) $c['hotel_id']);
+        $this->projectHotel((int) $c['hotel_id']);
+        return ['changed' => true, 'plan_type' => $planType, 'from' => $c['plan_type'], 'hotel_id' => (int) $c['hotel_id']];
+    }
+
     public function deleteContract(int $contractId): void
     {
         $c = $this->row('SELECT * FROM hr2_contract WHERE id = ?', [$contractId]);
