@@ -143,13 +143,25 @@ class FinanceController extends BaseController
                 }
                 return $out;
             };
+            // tf-finance-r5 (24 Nov 2026): the payment deadline. A prepaid hotel is due three calendar days before arrival; a due date
+            // stored on the request (an authorised exception) takes its place. Credit terms are not defined yet, so nothing else gets a deadline.
+            $today = date('Y-m-d');
+            $deadline = static function (?string $type, $checkIn, $stored) use ($today): array {
+                $ok = static fn ($d) => ($d = substr(trim((string) ($d ?? '')), 0, 10)) !== '' && !str_starts_with($d, '0000') && strtotime($d) ? $d : null;
+                $in = $ok($checkIn); $st = $ok($stored);
+                $by = $st ?: ($in && stripos((string) $type, 'hotel') !== false ? date('Y-m-d', strtotime($in . ' -3 days')) : null);
+                $days = $by ? (int) round((strtotime($by) - strtotime($today)) / 86400) : null;
+                return ['pay_by' => $by, 'pay_by_basis' => $st ? 'set on the request' : ($by ? '3 days before arrival' : null), 'days_left' => $days,
+                    'due_state' => $by === null ? null : ($days < 0 ? 'overdue' : ($days <= 3 ? 'soon' : 'ok'))];
+            };
             $approval = [];
             foreach ($req as $r) {
                 $x = $ext[$r['pr_id']] ?? [];
                 $approval[] = ['pr_id' => $r['pr_id'], 'payee' => $r['supplier'], 'type' => $r['type'], 'cat' => self::cat($r['type']), 'tour' => $r['manual_id'], 'tour_id' => $r['tour_id'],
                     'inq' => $inq($r['manual_id']), 'due' => ($x['due_date'] ?? null) ?: ($start[$r['pr_id']] ?? null), 'currency' => $x['currency'] ?? null,
                     'amount' => isset($x['amount']) && $x['amount'] !== null ? (float) $x['amount'] : (float) $r['amount'], 'invoice_no' => $x['invoice_no'] ?? null, 'booking_ref' => $x['booking_ref'] ?? null,
-                    'status' => $r['status'], 'by' => $r['by'], 'at' => $r['at'], 'tour_cancelled' => $r['tour_cancelled'], 'holds' => $holdOf([$r['pr_id']])];
+                    'status' => $r['status'], 'by' => $r['by'], 'at' => $r['at'], 'tour_cancelled' => $r['tour_cancelled'], 'holds' => $holdOf([$r['pr_id']])]
+                    + ['check_in' => $start[$r['pr_id']] ?? null] + $deadline($r['type'], $start[$r['pr_id']] ?? null, $x['due_date'] ?? null);
             }
 
             // ---- 2. Ready for Bank Payment: approved, not yet finalised ---------------------------------------------

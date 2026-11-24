@@ -182,7 +182,7 @@ function draw() {
     drawList();
 }
 const TH = {
-    approval: ['', 'Payee', 'Category', 'Tour / Inquiry', 'Check-in date', 'Amount', 'Status', ''],
+    approval: ['', 'Payee', 'Category', 'Tour / Inquiry', 'Check-in · Pay by', 'Amount', 'Status', ''],
     ready: ['Payee', 'Voucher', 'Tour / Inquiry', 'Payment date', 'Amount (LKR)', 'Status', ''],
     final: ['Voucher', 'Payee', 'Category', 'Tour / Inquiry', 'Paid date', 'Amount (LKR)', 'Bank reference', ''],
     recon: ['Bank account', 'Ledger', 'Status', 'Reconciled from', 'Last day prepared', 'Paid here (30 days)', ''],
@@ -194,13 +194,14 @@ const CAN_HOLD = !!(P.approver || P.initiator), CAN_RELEASE = !!P.approver;   //
 // Hold / Release: the existing 'disputed' record of the request — a reason is required both ways, each is written to the audit trail
 const holdBox = (prId, h) => box(h ? 'On hold' : 'Hold', (h ? kv([['Reason', esc(h.reason || '—')], ['Held by', `${esc(h.by || '—')} · ${dmyt(h.at)}`]]) + '<div class="lock mt-2 mb-2">A held amount stays outstanding. It cannot enter an individual payment, a supplier batch or a bulk payment, and its bank payment cannot be recorded or finalised, until it is released.</div>' : '') +
     ((h ? CAN_RELEASE : CAN_HOLD) ? `<textarea id="fh_reason_${prId}" maxlength="300" placeholder="${h ? 'Reason for releasing the hold (required)' : 'Reason for the hold (required)'}"></textarea><div class="mt-2"><button type="button" class="btn-o" id="fh_go_${prId}" onclick="doHold(${prId}, ${h ? 0 : 1})">${h ? 'Release Hold' : 'Put on Hold'}</button></div>` : `<span class="mut">${h ? 'Releasing a hold needs the management approval privilege.' : 'A hold needs the approval or the bank-initiation privilege.'}</span>`));
+const payBy = r => r.pay_by ? `<div class="mut">Pay by <b>${dmy(r.pay_by)}</b>${r.due_state === 'overdue' ? ' <span class="st r">Overdue</span>' : r.due_state === 'soon' ? ' <span class="st w">Due soon</span>' : ''}</div>` : '';   // tf-finance-r5
 const amt = r => `${r.currency ? esc(r.currency) + ' ' : ''}${money(r.amount)}`;
 function rowHtml(r) {
     if (TAB === 'approval') {
         const can = r.status === 'requested';
         return `<tr class="frow"><td>${can && P.approver ? `<input type="checkbox" ${PICK.has(r.pr_id) ? 'checked' : ''} onchange="pick(${r.pr_id}, this.checked)" aria-label="Select request ${r.pr_id}">` : ''}</td>
             <td><b>${esc(r.payee)}</b><div class="mut">Request #${r.pr_id} · ${esc(r.by || '')}</div></td><td><span class="cat" title="${esc(r.type || '')}">${esc(r.cat)}</span></td><td>${tourCell(r)}${r.tour_cancelled ? ' <span class="st r">Tour cancelled</span>' : ''}</td>
-            <td>${dmy(r.due)}</td><td class="r"><b>${amt(r)}</b></td><td>${can ? '<span class="st w">Awaiting approval</span>' : '<span class="st r">Waiting for the rate</span>'}${held(r) ? ' <span class="st r">On hold</span>' : ''}</td>
+            <td>${dmy(r.check_in || r.due)}${payBy(r)}</td><td class="r"><b>${amt(r)}</b></td><td>${can ? '<span class="st w">Awaiting approval</span>' : '<span class="st r">Waiting for the rate</span>'}${held(r) ? ' <span class="st r">On hold</span>' : ''}</td>
             <td class="r"><button type="button" class="btn-q" onclick="review('approval', ${r.pr_id})">Review →</button></td></tr>`;
     }
     if (TAB === 'ready') {
@@ -270,7 +271,7 @@ function review(tab, id) {
         const r = D.approval.find(x => x.pr_id === id); if (!r) return;
         openDrawer('Review & Approve — Request #' + r.pr_id,
             box('Payment request', kv([['Payee', `<b>${esc(r.payee)}</b>`], ['Category', `<span class="cat">${esc(r.cat)}</span> ${esc(r.type || '')}`], ['Tour', r.tour ? `<a href="${TPD_URL}?manual_id=${encodeURIComponent(r.tour)}" target="_blank">${esc(r.tour)}</a>` : '—'], ['Inquiry', r.inq ? 'INQ ' + esc(r.inq) : '—'],
-                ['Amount', `<b>${amt(r)}</b>`], ['Check-in date', dmy(r.due)], ['Invoice no.', esc(r.invoice_no || '—')], ['Booking reference', esc(r.booking_ref || '—')], ['Requested by', `${esc(r.by || '—')} · ${dmyt(r.at)}`]])) +
+                ['Amount', `<b>${amt(r)}</b>`], ['Check-in date', dmy(r.check_in || r.due)], r.pay_by ? ['Pay by', `<b>${dmy(r.pay_by)}</b> <span class="mut">(${esc(r.pay_by_basis || '')}${r.days_left !== null ? ' · ' + (r.days_left < 0 ? Math.abs(r.days_left) + ' day' + (Math.abs(r.days_left) === 1 ? '' : 's') + ' overdue' : r.days_left + ' day' + (r.days_left === 1 ? '' : 's') + ' left') : ''})</span>${r.due_state === 'overdue' ? ' <span class="st r">Overdue</span>' : r.due_state === 'soon' ? ' <span class="st w">Due soon</span>' : ''}`] : null, ['Invoice no.', esc(r.invoice_no || '—')], ['Booking reference', esc(r.booking_ref || '—')], ['Requested by', `${esc(r.by || '—')} · ${dmyt(r.at)}`]])) +
             box('Payee bank account', `<div id="fd_acct" class="mut">Reading…</div>`) +
             box('Voucher preview', `<div class="draft"><b>DRAFT — no voucher number yet</b><div class="mut mb-1">The voucher number is given when the approved payment is prepared for the bank.</div>${kv([['Pay to', esc(r.payee)], ['For', `${esc(r.type || '')} · ${esc(r.tour || '')}${r.inq ? ' · INQ ' + esc(r.inq) : ''}`], ['Amount', amt(r)]])}</div><div class="lock mt-2">Print / Download is unlocked only after finalization.</div>`) +
             holdBox(r.pr_id, held(r) ? r.holds[0] : null) +
