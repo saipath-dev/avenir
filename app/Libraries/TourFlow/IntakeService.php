@@ -2241,6 +2241,33 @@ final class IntakeService
         return $this->get($id);
     }
 
+    /**
+     * tf-travel-r1: one more vehicle line beside the others (an early departure's own airport transfer), with the rate the
+     * inquiry already carries for that size or today's master rate. Returns the new line's id. The line is the person's
+     * (chosen = manual), so the planner does not re-plan the vehicles over it.
+     */
+    public function addVehicleLine(int $id, string $classCode, int $qty, ?int $groupId, ?int $dayFrom, ?int $dayTo, string $label, string $why): int
+    {
+        $class = null;
+        foreach ($this->planner()->classes() as $c) {
+            if ($c['code'] === $classCode) {
+                $class = $c;
+                break;
+            }
+        }
+        if ($class === null) {
+            throw new \InvalidArgumentException('Choose a vehicle size the company uses.');
+        }
+        $line = $this->planner()->line($class, max(1, min(9, $qty)), $why);
+        $line['group_id'] = $groupId;
+        $line['day_from'] = $dayFrom;
+        $line['day_to']   = $dayTo;
+        $line['label']    = self::cut($label, 40);
+        $sort = (int) ($this->db->query('SELECT COALESCE(MAX(sort_order), -1) + 1 AS n FROM tf_intake_vehicle WHERE intake_id = ?', [$id])->getRowArray()['n'] ?? 0);
+        $this->insertVehicleLine($id, $line, 'manual', self::cut($why, 255), $sort, $this->rateSnapshots($id));
+        return (int) $this->db->insertID();
+    }
+
     /** Put the vehicle back under the planner's control. */
     public function autoVehicle(int $id): array
     {

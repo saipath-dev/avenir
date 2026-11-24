@@ -629,6 +629,15 @@ final class QuoteService
         }
 
         // ---- the groups shaped every line above; only their arithmetic is checked here --
+        // tf-travel-r1: what the travel plans still need (pickup, room allocation, the transfer) stops the quotation; the flight is shown beside it
+        if (TravelPlans::installed($this->db)) {
+            try {
+                $tp = (new TravelPlans($this->db, $this->take, $this->user))->issues($intakeId, $it);
+                $blockers = array_merge($blockers, $tp['blockers']);
+                $warnings = array_merge($warnings, $tp['warnings']);
+            } catch (\Throwable $e) {
+            }
+        }
         $sumGroups = array_sum(array_map(static fn ($g) => (int) $g['pax'], $it['groups'] ?? []));
         if (($it['groups'] ?? []) !== [] && $pax > 0 && $sumGroups !== $pax) {
             $blockers[] = ['code' => 'groups_pax', 'label' => "The groups add up to {$sumGroups} passenger(s), but the inquiry is for {$pax}."];

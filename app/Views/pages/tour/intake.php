@@ -1339,6 +1339,7 @@
 </div></div></div>
 
 <?= view('pages/tour/partials/pax_rooms') ?>
+<?= view('pages/tour/partials/travel_plans') ?>
 <!-- the picture for one day of the quotation (Master Files → Photo Master) -->
 <div class="modal fade tf" id="m_photo" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content">
     <div class="modal-header"><h6 class="modal-title" id="mp_title">Picture for day</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
@@ -4319,7 +4320,7 @@
             <td class="ht">${d.hotel_name_raw ? `<b class="${it.locked ? '' : 'lnk'}" ${it.locked ? '' : `data-inqedit="${d.id}" title="Change the hotel, room type or meal plan"`}>${esc(d.hotel_name_raw)}</b>` : (it.locked ? '<b>Hotel not chosen</b>' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}
                 ${d.hotel_name_raw ? `<span>${esc(d.room_type_name || 'Room type pending')}</span>` : ''}${reqRate(d)}</td>
             <td class="mp">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan).replace(/\b\w/g, c => c.toUpperCase()).replace('& B', '& B') : 'Not set')}</td>
-            <td class="rr">${esc(d.rooms || roomsTxt)}</td>
+            <td class="rr">${d.room_mix && Number(d.room_mix.rooms) > 0 && d.room_mix.source === 'groups' ? esc(roomsShort(d.room_mix)) + (d.room_mix.pax != null ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '') : esc(d.rooms || roomsTxt)}</td>
             <td data-reqact="${d.day_no}"><div class="tx">…</div></td>
             <td class="nt">${d.special_note ? esc(d.special_note) + (it.locked ? '' : ` <a data-inqedit="${d.id}" title="Change the note"><i class="bi bi-pencil"></i></a>`) : (it.locked ? '' : `<a data-inqedit="${d.id}">Add a note</a>`)}</td></tr>`;
         const depX = it.departure_day, reqDep = depX && !days.some(d => Number(d.day_no) === Number(depX.day_no)) ? `<tr><td class="dd">${depX.day_no} / ${esc(dm(depX.date, { day:'numeric', month:'short', year:'numeric' }))}</td>
@@ -4373,6 +4374,7 @@
                 <button type="button" class="inq-tab" data-tab="acts" title="Each day's activities and whether they have been checked">Activities <i class="inq-dot" id="inq_act_dot"></i></button>
                 <button type="button" class="inq-tab" data-tab="trans"><i class="bi oci oci-car"></i> Transport</button>
                 <button type="button" class="inq-tab" data-tab="pax"><i class="bi oci oci-group"></i> Passengers (${Number(it.pax_total || 0)})</button>
+                <button type="button" class="inq-tab" data-tab="travel" title="Passengers who leave before the rest: flight, pickup, transfer, rooms by night"><i class="bi bi-airplane"></i> Travel Plans</button>
                 <button type="button" class="inq-tab" data-tab="notes"><i class="bi bi-clock-history"></i> Notes &amp; History</button>
                 <button type="button" class="inq-tab" data-tab="check" title="Check each section, preview and email the quotation, then confirm the tour"><i class="bi bi-clipboard-check"></i> Before Quotation &amp; Confirmation <span id="inq_chk_n" style="display:none"></span></button>
             </div>
@@ -4414,6 +4416,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             <div class="inq-pane" data-pane="acts"><div id="inq_acts"><div class="help" style="padding:14px">Reading the days…</div></div></div>
             <div class="inq-pane" data-pane="trans"></div>
             <div class="inq-pane" data-pane="pax"></div>
+            <div class="inq-pane" data-pane="travel"></div>
             <div class="inq-pane" data-pane="notes"></div>
             <div class="inq-pane" data-pane="check"><div id="inq_check"><div class="help" style="padding:14px">Reading the sections…</div></div></div>
             <div class="inq-pane" data-pane="quote"><button type="button" class="inq-back" data-inqgo="itin"><i class="bi bi-arrow-left"></i> Back to Hotels</button></div>
@@ -4430,6 +4433,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         ['acts', 'trans', 'pax', 'notes', 'quote', 'book'].forEach(k => bins[k].forEach(c => pane(k).appendChild(c)));
         // tf-paxrooms-r1: the Passengers tab is the Passenger Management screen (partials/pax_rooms); the party and room counts the quotation is priced on fold below it
         if (window.PaxRooms && pane('pax')) window.PaxRooms.mount(pane('pax'), it.id);
+        if (window.TravelPlans && pane('travel')) window.TravelPlans.mount(pane('travel'), it.id);   // tf-travel-r1
         // tf-quotecheck-r1: the quotation (versions, Go for Quotation, previews, pricing) sits at the top of Before Quotation & Confirmation
         { const qp = pane('quote'), cp = pane('check'), at = document.getElementById('inq_check');
           if (qp && cp && at) { const qw = document.createElement('div'); qw.id = 'inq_quote_here';
@@ -4473,6 +4477,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         inqCrew(it, shell);
         inqPin(shell);
         inqSignal(it);
+        window.tfInqSignalAgain = () => inqSignal(it);   // tf-travel-r1: the Travel Plans tab redraws the status light after a save
         inqCheck(it, { latest, canConfirm, why: it.status === 'confirmed' ? 'This tour is already confirmed' : ((cb && cb.title) || '') });
     }
     // ---------- tf-signal-r1: the inquiry's traffic light, each day's activity status, and Send Quotation only on green ----------
@@ -7288,7 +7293,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     paint(read());                                   // collapsed unless this screen was left with it open
     // tf-inqnav-r2 (14 Nov 2026): on the tabbed inquiry page the sections live inside the tabs, so the side list is never built.
     // There the button opens a list of every tab and its sections instead; an entry opens its tab and scrolls to the section.
-    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['acts', 'Activities'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['notes', 'Notes & History'], ['check', 'Before Quotation & Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
+    var PANES = [['hotels', 'Itinerary & Services'], ['itin', 'Hotels'], ['acts', 'Activities'], ['trans', 'Transfers'], ['pax', 'Passengers'], ['travel', 'Travel Plans'], ['notes', 'Notes & History'], ['check', 'Before Quotation & Confirmation'], ['quote', 'Quotation & Costs'], ['book', 'Booking']];
     function inqMode() { var d = document.getElementById('view_detail'); return !!(d && d.classList.contains('inq-on') && d.offsetParent !== null && d.querySelector('.inq-pane')); }
     function shown(el, stop) { for (var n = el; n && n !== stop; n = n.parentElement) { if (getComputedStyle(n).display === 'none') return false; } return true; }
     function label(h) { var c = h.cloneNode(true); c.querySelectorAll('button, a, .help, .pill, small, input, select').forEach(function (x) { x.remove(); }); return (c.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60); }

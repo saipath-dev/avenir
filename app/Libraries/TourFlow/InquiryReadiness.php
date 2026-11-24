@@ -67,6 +67,9 @@ class InquiryReadiness
         if (preg_match('/^(km_|transfer_|crew_|accom_)/', $code) || in_array($code, ['no_vehicle', 'no_legs', 'no_usd_rate'], true)) {
             return ['trans', 'Airport Transfers & Excursions'];
         }
+        if (strpos($code, 'travel_') === 0) {   // tf-travel-r1
+            return ['travel', 'Travel Plans'];
+        }
         if (in_array($code, ['pax', 'child_review', 'child_count', 'groups_pax'], true)) {
             return ['pax', 'Passengers'];
         }

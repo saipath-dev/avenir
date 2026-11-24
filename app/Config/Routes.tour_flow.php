@@ -571,6 +571,9 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->post('intake/(:num)/dates', [TourIntakeController::class, 'dates']);
     $routes->post('intake/(:num)/nights_missing', [TourIntakeController::class, 'nightsMissing']);
     // tf-paxrooms-r1: the Passengers tab — passengers, room requirements per hotel stay, rooms and sharing
+    // tf-travel-r1: the Travel Plans tab — passengers who leave before the rest (departure, pickup, transfer, rooms, preview)
+    $routes->get('intake/(:num)/travel', [\App\Controllers\Tour\TravelPlansController::class, 'data']);
+    $routes->post('intake/(:num)/travel/(:segment)', [\App\Controllers\Tour\TravelPlansController::class, 'act']);
     $routes->get('intake/(:num)/paxrooms', [\App\Controllers\Tour\PaxRoomsController::class, 'data']);
     $routes->post('intake/(:num)/paxrooms/(:segment)', [\App\Controllers\Tour\PaxRoomsController::class, 'act']);
     $routes->get('intake/(:num)/paxrooms_export', [\App\Controllers\Tour\PaxRoomsController::class, 'export']);

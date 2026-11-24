@@ -937,6 +937,26 @@ final class MealMaster
      * gives, the party that day, and for lunch and for dinner what is there (the hotel, a meal of the master, an
      * old line, nothing) with the meals of the master that suit the day.
      */
+    /** tf-travel-r1: the vehicle lines (by sort_order, as tf_intake_sector.vehicle_seq) that are early-departure airport transfers of a travel plan. */
+    private function transferSeqs(int $intakeId): array
+    {
+        if ($intakeId < 1) {
+            return [];
+        }
+        try {
+            if (!$this->db->query("SHOW TABLES LIKE 'tf_travel_plan'")->getResultArray()) {
+                return [];
+            }
+            $out = [];
+            foreach ($this->db->query('SELECT v.sort_order FROM tf_intake_vehicle v JOIN tf_travel_plan p ON p.vehicle_line_id = v.id WHERE v.intake_id = ? AND p.intake_id = ?', [$intakeId, $intakeId])->getResultArray() as $r) {
+                $out[(int) $r['sort_order']] = true;
+            }
+            return $out;
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+
     public function plan(array $it): array
     {
         if (!self::installed($this->db)) {
@@ -965,15 +985,18 @@ final class MealMaster
         $rows = [];
         $nights = $it['days'] ?? [];
         $prev = null;
+        // tf-travel-r1: an early-departure airport transfer carries the passengers who leave — the lunch route of the day follows the party that stays
+        $skipSeq = $this->transferSeqs((int) ($it['id'] ?? 0));
+        $own = static fn (array $legs) => $skipSeq ? array_values(array_filter($legs, static fn ($l) => !isset($skipSeq[(int) ($l['vehicle_seq'] ?? -1)]))) : $legs;
         foreach ($nights as $d) {
-            $rows[] = $this->dayRow($it, $d, $d['sectors'] ?? [], $this->nightPlaces($d, $hotelTown), false, $byDay, $locked, $mealsById, $prev);
+            $rows[] = $this->dayRow($it, $d, $own($d['sectors'] ?? []), $this->nightPlaces($d, $hotelTown), false, $byDay, $locked, $mealsById, $prev);
             $prev = $d;
         }
         $dep = $it['departure_day'] ?? null;
         if (is_array($dep) && !empty($dep['day_no'])) {
             $last = $prev ?? [];
             $rows[] = $this->dayRow($it, ['day_no' => (int) $dep['day_no'], 'day_date' => $dep['date'] ?? null, 'area' => $dep['from_area'] ?? null, 'hotel_name_raw' => null, 'meal_plan' => null, 'hb_meal' => null, 'id' => null],
-                $dep['legs'] ?? [], $this->nightPlaces($last, $hotelTown), true, $byDay, $locked, $mealsById, $last);
+                $own($dep['legs'] ?? []), $this->nightPlaces($last, $hotelTown), true, $byDay, $locked, $mealsById, $last);
         }
         // a meal line on a day that is neither a night nor the departure day (a night removed since): said, so it is not left costed unseen
         $known = array_flip(array_map(static fn ($r) => $r['day_no'], $rows));
