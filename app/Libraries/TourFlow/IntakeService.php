@@ -6440,6 +6440,15 @@ final class IntakeService
                 return $exact ?? array_values($byArea)[0];
             }
         }
+        // tf-hotel-names-r1: the other names kept on the Hotel Master ("Goodwood Plaza" is KYNROCK Airport Hotel)
+        $tfOther = HotelAliases::keys($this->db);
+        if (isset($tfOther[$key])) {
+            foreach ($rows as $h) {
+                if ((int) $h['id'] === $tfOther[$key]) {
+                    return $h;
+                }
+            }
+        }
         $near = null;
         $begins = [];   // tf-intake-r1: "AMAGI ARIA" → "Amagi Aria Negombo" — the master's name begins with the agent's; taken only when it is the one such hotel
         foreach ($rows as $h) {
