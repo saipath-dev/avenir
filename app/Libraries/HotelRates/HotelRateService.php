@@ -182,6 +182,13 @@ class HotelRateService
                 $sql .= ' OR h.hotel_code = ?';
                 $binds[] = HotelCodes::format($no);
             }
+            // tf-hotel-names-r2: a hotel is also found by a name it used to have, or another name it is known by (Hotel Master → Other names)
+            try {
+                \App\Libraries\TourFlow\HotelAliases::ensure($this->db);
+                $sql .= ' OR h.id IN (SELECT a.hotel_id FROM tf_hotel_alias a WHERE a.alias LIKE ?)';
+                $binds[] = $like;
+            } catch (\Throwable $e) {
+            }
             $sql .= ')';
         }
         $sql .= ' ORDER BY h.name ASC LIMIT ' . (int) $limit;

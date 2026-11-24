@@ -119,7 +119,7 @@
                 <div class="hr-card">
                     <div class="hr-card-b">
                         <div class="filters">
-                            <input class="form-control form-control-sm" id="f_q" placeholder="Hotel code, name, location, supplier account…" style="width:300px" autocomplete="off">
+                            <input class="form-control form-control-sm" id="f_q" placeholder="Hotel code, name, previous name, location, supplier account…" style="width:300px" autocomplete="off">
                             <select class="form-select form-select-sm" id="f_status" style="width:auto">
                                 <option value="active">Active</option>
                                 <option value="inactive">Archived</option>
@@ -234,14 +234,14 @@
         const list = S.hotels.filter(h => {
             if (S.status !== 'all' && h.status !== S.status) return false;
             if (S.dups && !S.simKeys.has(h.id)) return false;
-            if (q && !(`${h.name} ${h.location_name || ''} ${h.chain || ''} ${h.primary_sup_acc_no || ''} ${h.hotel_code || ''}`.toLowerCase().includes(q)) && !(codeNo && h.hotel_code && parseInt(String(h.hotel_code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10))) return false;
+            if (q && !(`${h.name} ${h.other_names || ''} ${h.location_name || ''} ${h.chain || ''} ${h.primary_sup_acc_no || ''} ${h.hotel_code || ''}`.toLowerCase().includes(q)) && !(codeNo && h.hotel_code && parseInt(String(h.hotel_code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10))) return false;
             return true;
         });
         document.getElementById('count').textContent = `${list.length} of ${S.hotels.length} hotel(s)`;
         const st = h => h.status === 'active' ? pill('green', 'active') : h.status === 'inactive' ? pill('amber', 'archived') : pill('grey', 'merged into ' + (h.merged_into_code || '') + ' ' + (h.merged_into_name || ''));
         document.getElementById('rows').innerHTML = list.map(h => `<tr class="${esc(h.status)}" data-id="${h.id}">
             <td><span class="hcode">${esc(h.hotel_code || '')}</span></td>
-            <td><b>${esc(h.name)}</b>${S.simKeys.has(h.id) ? ' ' + pill('amber', 'similar name on file') : ''}${h.chain ? `<div class="help">${esc(h.chain)}</div>` : ''}</td>
+            <td><b>${esc(h.name)}</b>${S.simKeys.has(h.id) ? ' ' + pill('amber', 'similar name on file') : ''}${h.other_names ? `<div class="help">Also known as: ${esc(h.other_names)}</div>` : ''}${h.chain ? `<div class="help">${esc(h.chain)}</div>` : ''}</td>
             <td>${esc(h.location_name || '')}</td><td class="mono">${esc(h.primary_sup_acc_no || '')}</td><td>${st(h)}</td>
             <td class="num">${h.plans_approved}</td><td class="num">${h.plans_draft}</td><td class="num">${h.nights_last_year}</td><td class="num">${h.nights_all}</td>
             <td class="text-nowrap text-end"><button class="btn btn-primary btn-sm" data-open="${h.id}" title="Open the hotel: name, details, dependencies, room types, history"><i class="bi bi-pencil"></i> ${CAN_MANAGE ? 'Edit' : 'View'}</button>${CAN_MANAGE ? ` <button class="btn btn-sm" style="background:var(--hr-red);border-color:var(--hr-red);color:#fff" data-remove="${h.id}" title="Opens the Remove / archive / delete options for this hotel — nothing happens until a typed confirmation"><i class="bi bi-x-circle"></i> Remove</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="10" class="empty">No hotel matches.</td></tr>';

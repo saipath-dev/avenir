@@ -165,6 +165,11 @@ class HotelMasterController extends BaseController
                 LEFT JOIN (SELECT a.hotel_id, COUNT(*) AS n FROM tour_quotations q JOIN hr2_hotel_account a ON a.sup_acc_no = q.hotel_acc WHERE q.tour_date >= DATE_SUB(CURDATE(), INTERVAL 365 DAY) GROUP BY a.hotel_id) tq ON tq.hotel_id = h.id
                 LEFT JOIN (SELECT a.hotel_id, COUNT(*) AS n FROM tour_quotations q JOIN hr2_hotel_account a ON a.sup_acc_no = q.hotel_acc GROUP BY a.hotel_id) tqa ON tqa.hotel_id = h.id
                 ORDER BY h.name")->getResultArray();
+            $tfOther = \App\Libraries\TourFlow\HotelAliases::byHotel($db);   // tf-hotel-names-r2: the list is searched by the other names too
+            foreach ($rows as &$tfRow) {
+                $tfRow['other_names'] = implode(', ', $tfOther[(int) $tfRow['id']] ?? []);
+            }
+            unset($tfRow);
             return $this->json(['status' => 200, 'data' => $rows, 'can_manage' => $this->canManage()]);
         } catch (\Throwable $e) {
             return $this->fail($e, 500);
@@ -223,6 +228,10 @@ class HotelMasterController extends BaseController
             if (array_key_exists('name', $b)) {
                 $r = $svc->renameHotel((int) $id, (string) $b['name']);
                 if ($r['renamed']) {
+                    // tf-hotel-names-r2: the name the hotel had stays findable — kept as one of its other names
+                    if (\App\Libraries\TourFlow\HotelAliases::keep(\Config\Database::connect(), (int) $id, (string) $r['old_name'], (string) session()->get('username'))) {
+                        $msg[] = 'the previous name "' . $r['old_name'] . '" is kept under Other names';
+                    }
                     $msg[] = "renamed \"{$r['old_name']}\" → \"{$r['name']}\" (Hotel Master, supplier record" . ($r['accounts'] ? ' ' . implode(', ', $r['accounts']) : '') . ', ledger name)';
                 }
             }

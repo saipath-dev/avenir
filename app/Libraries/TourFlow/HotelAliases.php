@@ -42,6 +42,34 @@ final class HotelAliases
         }
     }
 
+    /** @return array<int,string[]> hotel id => its other names */
+    public static function byHotel($db): array
+    {
+        try {
+            self::ensure($db);
+            $out = [];
+            foreach ($db->query('SELECT hotel_id, alias FROM tf_hotel_alias ORDER BY alias')->getResultArray() as $r) {
+                $out[(int) $r['hotel_id']][] = (string) $r['alias'];
+            }
+            return $out;
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+
+    /** Keep one more name for a hotel (a rename keeps the old name this way). Quietly does nothing when the name is taken or is the hotel's own. */
+    public static function keep($db, int $hotelId, string $name, string $user): bool
+    {
+        try {
+            $names = self::of($db, $hotelId);
+            $names[] = $name;
+            $r = self::set($db, $hotelId, implode("\n", $names), $user);
+            return in_array(trim(preg_replace('/\s+/', ' ', $name) ?? ''), $r['added'], true);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
     /** @return array<string,int> name key => hotel id, for matching */
     public static function keys($db): array
     {
