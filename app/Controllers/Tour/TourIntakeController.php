@@ -1018,6 +1018,11 @@ class TourIntakeController extends BaseController
             foreach ($areas as $a) {
                 $byArea[$a['id']] = $svc->hotelsIn((int) $a['id']);
             }
+            // tf-hotel-pick-r1 (24 Nov 2026, Shantha): a hotel of the Hotel Master with no area set yet can still be chosen on a night
+            $noArea = $svc->hotelsIn(0);
+            if ($noArea) {
+                $byArea[0] = $noArea;
+            }
             // agents: the customers marked as agents (the whole ledger until one is marked);
             // customers: everyone, for the one that has to be picked although not marked yet
             $marked = $svc->agentsMarked();

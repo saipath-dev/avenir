@@ -4292,9 +4292,10 @@ final class IntakeService
                 'SELECT h.id, h.name, h.star_category, h.primary_sup_acc_no, ' . ($this->hotelCodeCol ? 'h.hotel_code' : 'NULL AS hotel_code') . ',
                         (SELECT COUNT(*) FROM hr2_contract c WHERE c.hotel_id = h.id AND c.status = "approved" AND c.applies_to <> "payment") AS quote_plans
                  FROM hr2_hotel h
-                 WHERE h.location_id = ? AND h.status = "active" ORDER BY h.name',
-                [$locationId]
+                 WHERE ' . ($locationId > 0 ? 'h.location_id = ?' : 'h.location_id IS NULL') . ' AND h.status = "active" ORDER BY h.name',   // tf-hotel-pick-r1: 0 = the hotels with no area set yet
+                $locationId > 0 ? [$locationId] : []
             )->getResultArray();
+            $tfAlt = HotelAliases::byHotel($this->db);   // the alternative names, so the search finds a hotel by a previous name
         } catch (\Throwable $e) {
             return [];
         }
@@ -4304,6 +4305,7 @@ final class IntakeService
             'star' => trim((string) ($r['star_category'] ?? '')) ?: null,
             'has_supplier' => trim((string) ($r['primary_sup_acc_no'] ?? '')) !== '',
             'rates_pending' => ((int) ($r['quote_plans'] ?? 0)) === 0,
+            'alt' => implode(', ', $tfAlt[(int) $r['id']] ?? []),
         ], $rows);
     }
 

@@ -7093,12 +7093,12 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             }
             const words = q.split(/\s+/).filter(Boolean);
             const codeNo = (q.match(/^(?:htl[\s-]*|h)?0*(\d{1,6})$/i) || [])[1];   // the hotel code: "HTL-017", "htl17" or "17"
-            items = all.filter(h => { if (codeNo && h.code && parseInt(String(h.code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10)) return true; const t = (h.name + ' ' + (h.area || '') + ' ' + (h.code || '')).toLowerCase(); return words.every(w => t.includes(w)); })
+            items = all.filter(h => { if (codeNo && h.code && parseInt(String(h.code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10)) return true; const t = (h.name + ' ' + (h.alt || '') + ' ' + (h.area || '') + ' ' + (h.code || '')).toLowerCase(); return words.every(w => t.includes(w)); })
                 .sort((a, b) => (a.name.toLowerCase().startsWith(q) ? 0 : 1) - (b.name.toLowerCase().startsWith(q) ? 0 : 1) || a.name.localeCompare(b.name))
                 .slice(0, 12);
             cur = -1;
             box.innerHTML = items.length
-                ? items.map(h => `<div class="it"><b>${esc(h.name)}</b><span class="help">${h.code ? '<span class="mono">' + esc(h.code) + '</span> · ' : ''}${esc(h.area || 'area not set')}${h.star ? ' · ' + esc(h.star) : ''}${h.has_supplier ? '' : ' · no supplier account'}${h.rates_pending ? ' · <b style="color:var(--tf-red,#b3261e)">Incomplete — Rates Pending</b>' : ''}</span></div>`).join('')
+                ? items.map(h => `<div class="it"><b>${esc(h.name)}</b><span class="help">${h.alt ? 'also: ' + esc(h.alt) + ' · ' : ''}${h.code ? '<span class="mono">' + esc(h.code) + '</span> · ' : ''}${esc(h.area || 'area not set')}${h.star ? ' · ' + esc(h.star) : ''}${h.has_supplier ? '' : ' · no supplier account'}${h.rates_pending ? ' · <b style="color:var(--tf-red,#b3261e)">Incomplete — Rates Pending</b>' : ''}</span></div>`).join('')
                 : '<div class="none">No hotel in the panel matches. Keep typing — a name not in the panel is saved as written and flagged.</div>';
             box.hidden = false;
             [...box.querySelectorAll('.it')].forEach((el, i) => el.addEventListener('mousedown', e => { e.preventDefault(); pick(i); }));
