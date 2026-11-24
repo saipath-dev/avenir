@@ -2352,6 +2352,7 @@ php spark hotelrates:migrate</pre>
         if (S.sheet && !S.ro) { const go = await Swal.fire({ icon: 'question', title: 'Leave the rate plan?', text: 'Anything changed in this plan and not yet saved will be lost.', showCancelButton: true, confirmButtonText: 'Leave', cancelButtonText: 'Stay' }); if (!go.isConfirmed) return; closeEditor(); }
         S.hotel = null; S.detail = null;
         if (window.TfView) TfView.setParams({ hotel: null, tab: null, contract: null });
+        else { try { const u = new URL(location.href); ['hotel', 'tab', 'contract', 'from', 'date', 'to'].forEach(k => u.searchParams.delete(k)); history.replaceState(history.state, '', u.pathname + (u.search || '') + u.hash); } catch (e) {} }   // a refresh then shows the directory, not the hotel
         hroMode(false); hroRender();
         requestAnimationFrame(() => window.scrollTo(0, HRO.y || 0));
     }
