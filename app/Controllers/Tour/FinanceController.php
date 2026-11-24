@@ -211,8 +211,14 @@ class FinanceController extends BaseController
                 'read_back' => $r['ledger_bank_credit'] !== null ? (float) $r['ledger_bank_credit'] : null, 'reconciled' => (int) $r['reconciled'] === 1, 'remittance' => $r['remit_status'], 'batch_id' => $r['batch_id'] !== null ? (int) $r['batch_id'] : null,
                 'old_route' => stripos((string) $r['note'], 'Marked finalized on Bank Payment Check') === 0], $fin);
 
+            // tf-finance-r6: the three things the reconciliation overview card reports
+            $tfSetup = ['paying_account' => !empty($o['bank_accounts']['accounts']), 'ledger_mapping' => false, 'reconciliation' => !empty($o['reconciliation']['rows'])];
+            try {
+                $tfSetup['ledger_mapping'] = !empty(\App\Libraries\TourPayments\Batches::fxMapping($db)['complete']) && !empty(\App\Libraries\TourPayments\Batches::chargeMapping($db)['complete']);
+            } catch (\Throwable $e) {
+            }
             $d = ['today' => date('Y-m-d'), 'generated_at' => date('Y-m-d H:i:s'), 'user' => Perms::user(), 'approval' => $approval, 'ready' => $ready, 'final' => $final,
-                'recon' => $o['reconciliation'] ?? ['rows' => []], 'bank_accounts' => $o['bank_accounts'] ?? ['accounts' => []], 'attention' => $o['exceptions']['items'] ?? [], 'adoption_ready' => !empty($o['adoption_ready']),
+                'recon' => $o['reconciliation'] ?? ['rows' => []], 'bank_accounts' => $o['bank_accounts'] ?? ['accounts' => []], 'attention' => $o['exceptions']['items'] ?? [], 'setup' => $tfSetup, 'adoption_ready' => !empty($o['adoption_ready']),
                 'counts' => ['approval' => count($approval), 'ready' => count($ready), 'final' => count($final), 'recon' => count(($o['reconciliation']['rows'] ?? [])), 'attention' => (int) ($o['counts']['exceptions'] ?? 0)]];
         } catch (\Throwable $e) {
             log_message('error', 'finance page: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
