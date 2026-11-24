@@ -316,8 +316,16 @@
             }
             body.name = name;
         } else { delete body.name; }
-        const r = await post(`/hotel/${h.id}/update`, body); toast(r.status === 200 ? 'success' : 'error', r.message);
-        if (r.status === 200) { await load(); openHotel(h.id, 'details'); }
+        // tf-hotel-save-r1 (24 Nov 2026, Shantha): one press saves; the button says Saved and the panel closes
+        const btn = document.getElementById('h_save'); if (btn.disabled) return;
+        btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving…';
+        let r; try { r = await post(`/hotel/${h.id}/update`, body); } catch (e) { r = { status: 0, message: 'Not saved — the connection failed. Try again.' }; }
+        toast(r.status === 200 ? 'success' : 'error', r.message);
+        if (r.status === 200) {
+            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Saved';
+            await load();
+            setTimeout(() => { bootstrap.Modal.getOrCreateInstance(document.getElementById('m_hotel')).hide(); btn.disabled = false; btn.innerHTML = '<i class="bi bi-save"></i> Save changes'; }, 900);
+        } else { btn.disabled = false; btn.innerHTML = '<i class="bi bi-save"></i> Save changes'; }
     });
 
     async function typed(word, title, html, confirmText, color) {
