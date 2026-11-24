@@ -77,6 +77,7 @@ $P = $tpd_perms ?? [];
     .fin-msg .m { background:#fff; border:1px solid #e6e0ea; border-left:4px solid #78B848; border-radius:10px; padding:10px 14px; box-shadow:0 6px 18px rgba(16,24,40,.14); font-size:13px; }
     .fin-msg .m.err { border-left-color:#b3261e; }
     @media (max-width:640px) { .fin .fn-bar input[type=date] { flex:1 1 120px; min-width:0; } .fin .fn-bar select { flex:1 1 100%; } .fin .fn-tab { flex:1 1 calc(50% - 6px); justify-content:space-between; padding:0 10px; } .fin-drawer .fg { grid-template-columns:1fr; } .fin-drawer .kv { grid-template-columns:120px 1fr; } }
+    .fin .fn-att { padding:14px 4px 4px; } .fin .fn-att h6 { font-weight:700; color:var(--pur); margin:0 0 8px; } .fin details.att { border:1px solid #e6dbe6; border-radius:10px; padding:10px 12px; margin-bottom:8px; background:#fff; } .fin details.att summary { cursor:pointer; list-style:none; } .fin details.att .fn-wrap { margin-top:8px; }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -85,7 +86,7 @@ $P = $tpd_perms ?? [];
     <div class="main-content"><div class="page-content tf" id="tf"><div class="container-fluid">
         <div class="fin" id="fin">
             <div class="fn-head">
-                <div class="fn-brand"><span class="fn-logo"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></span><div><h4>Finance</h4><div class="sub">Supplier payments: approval → bank payment → finalized voucher · bank reconciliation</div></div></div>
+                <div class="fn-brand"><span class="fn-logo"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></span><div><h4>Finance</h4><div class="sub">Supplier payments: approval → bank payment → finalized voucher · bank reconciliation</div><div class="sub" id="fn_who" style="opacity:.85"></div></div></div>
                 <div class="d-flex flex-wrap gap-2">
                     <a class="hbtn" href="<?= base_url('tour/payment_desk') ?>">Payment Desk (full chain)</a>
                     <button class="hbtn" type="button" onclick="load()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
@@ -111,6 +112,10 @@ $P = $tpd_perms ?? [];
 <script>
 const FIN_URL = '<?= base_url('tour/finance/') ?>';
 const TPD_URL = '<?= base_url('tour/tour_payment_dashboard/') ?>';
+const PD_URL = '<?= base_url('tour/payment_desk/') ?>';
+const RATE_URL = '<?= base_url('master_files/daily_usd_rate') ?>';
+const FOCUS = Number(new URLSearchParams(location.search).get('vnum') || 0);
+let FOCUSED = false;
 const DBR_URL = '<?= base_url('accounts/daily_bank_rec/') ?>';
 const P = <?= json_encode($P) ?>;
 const ME = <?= json_encode((string) ($tpd_user ?? '')) ?>;
@@ -135,14 +140,19 @@ async function post(url, data) {
 async function load() {
     const j = await fetch(FIN_URL + 'data', { headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, cache: 'no-store' }).then(r => r.json()).catch(() => ({ status: 0, message: 'Network error.' }));
     if (j.status !== 200) { document.getElementById('fn_list').innerHTML = `<div class="empty">${esc(j.message || 'The list could not be loaded.')}</div>`; return; }
-    D = j.data; PICK = new Set([...PICK].filter(id => D.approval.some(r => r.pr_id === id))); draw();
+    D = j.data; PICK = new Set([...PICK].filter(id => D.approval.some(r => r.pr_id === id)));
+    const roles = [['admin', 'Administrator'], ['approver', 'Management approver'], ['batch', 'Prepares payments'], ['initiate', 'Records bank payments'], ['bank_approver', 'Finalizes payments'], ['requester', 'Requests']].filter(([k]) => P[k]).map(([, n]) => n);
+    const who = document.getElementById('fn_who'); if (who) who.textContent = `${ME}${roles.length ? ' · ' + roles.join(' · ') : ' · view only'} · updated ${String(D.generated_at || '').slice(11, 16)}`;
+    let open = null;
+    if (FOCUS && !FOCUSED) { FOCUSED = true; const a = D.ready.find(r => Number(r.vnum) === FOCUS), b = D.final.find(r => Number(r.vnum) === FOCUS); if (a) { TAB = 'ready'; open = () => review('ready', a.key); } else if (b) { TAB = 'final'; open = () => review('final', b.vnum); } }
+    draw(); if (open) open();
 }
 function setTab(t) { TAB = t; PAGE = 1; F = { q: '', cat: '', from: '', to: '' }; history.replaceState(null, '', '?tab=' + t); draw(); }
 function setF(k, v) { F[k] = v; PAGE = 1; drawList(); }
 
 // ---- what each tab lists ------------------------------------------------------------------------------------------------------
 const dateOf = r => TAB === 'approval' ? (r.due || '') : TAB === 'final' ? (r.paid_date || '') : (r.payment_date || String(r.created || '').slice(0, 10));
-const catOf = r => TAB === 'ready' ? (r.kind === 'payable' ? 'To prepare' : r.stage === 'record' ? 'To record' : 'To finalize') : (r.cat || '');
+const catOf = r => TAB === 'ready' ? (r.kind === 'payable' ? 'To prepare' : r.kind === 'adopt' ? 'To check & add' : r.stage === 'record' ? 'To record' : 'To finalize') : (r.cat || '');
 function rows() {
     if (!D) return [];
     const all = TAB === 'recon' ? ((D.recon && D.recon.rows) || []) : (D[TAB] || []);
@@ -158,7 +168,7 @@ function rows() {
     });
 }
 function draw() {
-    document.getElementById('fn_tabs').innerHTML = TABS.map(([k, n, ic]) => `<button type="button" class="fn-tab${k === TAB ? ' on' : ''}" onclick="setTab('${k}')"><i class="bi ${ic}"></i>${n}<span class="n">${D ? Number(D.counts[k] || 0) : '–'}</span></button>`).join('');
+    document.getElementById('fn_tabs').innerHTML = TABS.map(([k, n, ic]) => `<button type="button" class="fn-tab${k === TAB ? ' on' : ''}" onclick="setTab('${k}')"><i class="bi ${ic}"></i>${n}<span class="n">${D ? Number(D.counts[k] || 0) : '–'}</span>${k === 'recon' && D && D.counts.attention ? `<span class="n" style="background:#c0392b;color:#fff" title="Items needing attention">! ${Number(D.counts.attention)}</span>` : ''}</button>`).join('');
     const bar = document.getElementById('fn_bar');
     if (TAB === 'recon') { bar.innerHTML = ''; }
     else {
@@ -177,6 +187,8 @@ const TH = {
     final: ['Voucher', 'Payee', 'Category', 'Tour / Inquiry', 'Paid date', 'Amount (LKR)', 'Bank reference', ''],
     recon: ['Bank account', 'Ledger', 'Status', 'Reconciled from', 'Last day prepared', 'Paid here (30 days)', ''],
 };
+const REM = { pending: 'Not prepared', prepared: 'Prepared — not sent', sent: 'Sent', failed: 'Send failed' };   // tf-docs-r2
+const remCls = s => s === 'sent' ? 'g' : s === 'failed' ? 'r' : s === 'prepared' ? 'b' : 'w';
 const held = r => !!(r.holds && r.holds.length);
 const CAN_HOLD = !!(P.approver || P.initiator), CAN_RELEASE = !!P.approver;   // Hold: approver or accountant; Release: management approver only
 // Hold / Release: the existing 'disputed' record of the request — a reason is required both ways, each is written to the audit trail
@@ -192,14 +204,14 @@ function rowHtml(r) {
             <td class="r"><button type="button" class="btn-q" onclick="review('approval', ${r.pr_id})">Review →</button></td></tr>`;
     }
     if (TAB === 'ready') {
-        const st = r.kind === 'payable' ? '<span class="st p">Approved — to prepare for bank</span>' + (held(r) ? ` <span class="st r">${r.holds.length} on hold</span>` : '') : (r.stage === 'record' ? '<span class="st w">Bank payment to record</span>' : (r.locked ? '<span class="st r">Finalization interrupted — resume</span>' : '<span class="st b">Recorded — awaiting finalization</span>') ) + (held(r) ? ' <span class="st r">On hold</span>' : '');
-        return `<tr class="frow"><td><b>${esc(r.payee)}</b>${r.kind === 'payable' ? `<div class="mut">${Number(r.items)} approved item${r.items === 1 ? '' : 's'}</div>` : (r.batch_no ? `<div class="mut">Batch ${esc(r.batch_no)}${r.bulk_parent ? ' · bulk payment' : ''}</div>` : '')}</td>
+        const st = r.kind === 'adopt' ? '<span class="st w">Raised outside — to check &amp; add</span>' : r.kind === 'payable' ? '<span class="st p">Approved — to prepare for bank</span>' + (held(r) ? ` <span class="st r">${r.holds.length} on hold</span>` : '') + (r.rate_missing ? ' <span class="st w">Rate missing</span>' : '') : (r.stage === 'record' ? '<span class="st w">Bank payment to record</span>' : (r.locked ? '<span class="st r">Finalization interrupted — resume</span>' : '<span class="st b">Recorded — awaiting finalization</span>') ) + (held(r) ? ' <span class="st r">On hold</span>' : '');
+        return `<tr class="frow"><td><b>${esc(r.payee)}</b>${r.kind === 'payable' ? `<div class="mut">${Number(r.items)} approved item${r.items === 1 ? '' : 's'}</div>` : (r.batch_no ? `<div class="mut">Batch ${esc(r.batch_no)}${r.bulk_parent ? ' · bulk payment' : ''}</div>` : (r.non_tour ? `<div class="mut">Non-tour payment${r.ref ? ' · ' + esc(r.ref) : ''}</div>` : (r.via === 'adoption' ? '<div class="mut">Added from outside the chain</div>' : '')))}</td>
             <td>${r.vnum ? `<b>PV ${Number(r.vnum)}</b>` : '<span class="mut">not issued yet</span>'}</td><td>${tourCell(r)}</td><td>${r.payment_date ? dmy(r.payment_date) : '<span class="mut">—</span>'}</td>
             <td class="r"><b>${money(r.amount)}</b>${r.usd ? `<div class="mut">USD ${money(r.usd)}</div>` : ''}</td><td>${st}</td>
             <td class="r"><button type="button" class="btn-q" onclick="review('ready', '${esc(r.key)}')">Review →</button></td></tr>`;
     }
     if (TAB === 'final') {
-        return `<tr class="frow"><td><b>PV ${Number(r.vnum)}</b></td><td><b>${esc(r.payee)}</b></td><td><span class="cat">${esc(r.cat)}</span></td><td>${tourCell(r)}</td><td>${dmy(r.paid_date)}</td>
+        return `<tr class="frow"><td><b>PV ${Number(r.vnum)}</b></td><td><b>${esc(r.payee)}</b>${r.read_back !== null && !r.reconciled ? ' <span class="st r">Ledger differs</span>' : ''}${r.old_route ? ' <span class="st w">Older Mark Finalized</span>' : ''}${r.remittance ? ` <span class="st ${remCls(r.remittance)}">Advice: ${esc(REM[r.remittance] || 'Not prepared')}</span>` : ''}</td><td><span class="cat">${esc(r.cat)}</span></td><td>${tourCell(r)}</td><td>${dmy(r.paid_date)}</td>
             <td class="r"><b>${money(r.amount)}</b>${r.usd ? `<div class="mut">USD ${money(r.usd)}</div>` : ''}</td><td>${esc(r.bank_ref || '—')}</td>
             <td class="r"><button type="button" class="btn-q" onclick="review('final', ${Number(r.vnum)})">View voucher →</button></td></tr>`;
     }
@@ -214,6 +226,7 @@ function drawList() {
     if (!D) empty = 'Loading…';
     if (D && TAB !== 'recon' && (D[TAB] || []).length && !list.length) empty = 'Nothing matches the search and filters.';
     document.getElementById('fn_list').innerHTML = part.length ? `<table class="ft"><thead><tr>${TH[TAB].map((h, i) => `<th${/Amount/.test(h) ? ' class="r"' : ''}>${TAB === 'approval' && i === 0 && P.approver ? '<input type="checkbox" onchange="pickPage(this.checked)" aria-label="Select all on this page">' : h}</th>`).join('')}</tr></thead><tbody>${part.map(rowHtml).join('')}</tbody></table>` : `<div class="empty">${esc(empty)}</div>`;
+    if (TAB === 'recon' && D) document.getElementById('fn_list').innerHTML += attentionHtml();
     const pg = document.getElementById('fn_pg'); let b = `<span class="mut me-2">${list.length ? `${(PAGE - 1) * PER + 1}–${Math.min(PAGE * PER, list.length)} of ${list.length}` : '0 items'}</span>`;
     if (pages > 1) { b += `<button ${PAGE === 1 ? 'disabled' : ''} onclick="go(${PAGE - 1})">‹</button>`; for (let i = 1; i <= pages; i++) { if (i === 1 || i === pages || Math.abs(i - PAGE) <= 2) b += `<button class="${i === PAGE ? 'on' : ''}" onclick="go(${i})">${i}</button>`; else if (Math.abs(i - PAGE) === 3) b += '<span class="mut">…</span>'; } b += `<button ${PAGE === pages ? 'disabled' : ''} onclick="go(${PAGE + 1})">›</button>`; }
     pg.innerHTML = b;
@@ -222,6 +235,14 @@ function drawList() {
     else if (TAB === 'recon') sel.innerHTML = P.dbr ? `<a class="btn-g" href="${DBR_URL}">Open Daily Bank Reconciliation</a>` : '<span class="mut">The Daily Bank Reconciliation needs its own privilege.</span>';
     else if (TAB === 'ready') sel.innerHTML = P.payables ? `<a class="btn-q" href="${TPD_URL}payables">Older screen: Supplier Payables</a>` : '';
     else sel.innerHTML = '';
+}
+// tf-finance-r3: what needs a person's attention (was the Payment Desk's "Exceptions")
+function attentionHtml() {
+    const items = D.attention || []; if (!items.length) return '';
+    const pvl = n => `<a href="${TPD_URL}voucher/${Number(n)}" target="_blank"><b>PV ${Number(n)}</b></a>`;
+    return `<div class="fn-att"><h6>Needs attention</h6>` + items.map(x => { const n = (x.rows || []).length; const cols = n ? Object.keys(x.rows[0]) : [];
+        return `<details class="att"${n && x.key !== 'refusals' ? ' open' : ''}><summary><span class="st ${n ? (x.key === 'refusals' ? 'b' : 'r') : 'g'}">${n ? n : 'None'}</span> <b>${esc(x.title)}</b><div class="mut">${esc(x.help)}</div></summary>` +
+            (n ? `<div class="fn-wrap"><table class="ft" style="min-width:0"><thead><tr>${cols.map(c => `<th>${esc(c.replace(/_/g, ' '))}</th>`).join('')}</tr></thead><tbody>${x.rows.map(r => `<tr>${cols.map(c => `<td>${c === 'vnum' ? pvl(r[c]) : esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '') + `</details>`; }).join('') + `</div>`;
 }
 function go(p) { PAGE = p; drawList(); }
 function pick(id, on) { on ? PICK.add(id) : PICK.delete(id); drawList(); }
@@ -273,8 +294,9 @@ function review(tab, id) {
             batchSum(r.key);
             return;
         }
+        if (r.kind === 'adopt') { openAdopt(r); return; }
         const head = box('Payment', kv([['Voucher', `<b>PV ${Number(r.vnum)}</b>`], ['Payee', `<b>${esc(r.payee)}</b>`], ['Tour', esc(r.tour || (r.non_tour ? 'non-tour payment' : '—'))], ['Inquiry', r.inq ? 'INQ ' + esc(r.inq) : '—'], ['Amount (LKR)', `<b>${money(r.amount)}</b>`], r.usd ? ['Amount (USD)', money(r.usd)] : null,
-            r.batch_no ? ['Batch', esc(r.batch_no)] : null])) + box('Payee bank account', `<div id="fd_acct" class="mut">Reading…</div>`) + box('Voucher', voucherBtns(r.vnum, false)) +
+            r.batch_no ? ['Batch', `${esc(r.batch_no)}${r.batch_id && !r.bulk_parent && P.payables ? ` · <a href="${TPD_URL}batch/${Number(r.batch_id)}" target="_blank">items &amp; remittance advice</a>` : ''}`] : null, r.via === 'adoption' ? ['Source', 'Raised outside the payment chain, checked and added'] : null, r.bank_leg ? ['Bank leg', 'Posted once at finalization (Bank Control voucher)'] : null, r.ref ? ['Reference', esc(r.ref)] : null])) + box('Payee bank account', `<div id="fd_acct" class="mut">Reading…</div>`) + box('Voucher', voucherBtns(r.vnum, false)) +
             (r.pr_ids || []).map(id => holdBox(id, (r.holds || []).find(h => h.pr_id === id) || null).replace('<h6>', `<h6>Request #${id} — `)).join('');
         if (r.bulk_parent) {
             openDrawer('Bank payment — PV ' + r.vnum, head + `<div class="lock">This voucher is part of one bulk payment (one bank transfer for several vouchers). The bank details and the finalization are entered once, for the whole payment.</div>`, `<a class="btn-g" href="${TPD_URL}bulk/${Number(r.bulk_parent)}">Open the bulk payment</a>`);
@@ -285,7 +307,7 @@ function review(tab, id) {
                 <div><label>Transaction reference</label><input id="fr_ref" maxlength="100"></div>
                 <div><label>Amount paid (LKR)</label><input value="${money(r.amount)}" disabled></div>
                 <div><label>Bank charges (LKR)</label><input id="fr_chg" placeholder="0.00"></div>
-                <div class="w2" id="fr_rate_box" style="display:none"><label>USD rate of the payment date (LKR per 1 USD)</label><input id="fr_rate" inputmode="decimal" placeholder="for example 327.25"></div>
+                <div class="w2" id="fr_rate_box" style="display:none"></div>
                 <div class="w2" id="fr_reason_box" style="display:none"><label>Reason for a different paying account</label><input id="fr_reason" maxlength="300"></div>
                 <div class="w2"><label>Note</label><input id="fr_note" maxlength="300"></div></div>`),
                 P.initiate ? `<button class="btn-g" id="fr_go" onclick="doRecord(${Number(r.vnum)})">Save Payment Details</button>` : '<span class="mut">Recording the bank payment needs the bank-initiation privilege.</span>');
@@ -293,7 +315,7 @@ function review(tab, id) {
             openDrawer('Review & Finalize — PV ' + r.vnum, head + box('Bank payment recorded', kv([['Recorded by', `${esc(r.initiated_by || '—')} · ${dmyt(r.initiated_at)}`], ['Payment date', dmy(r.payment_date)], ['Transaction reference', esc(r.bank_ref || '—')], ['Bank charges', money(r.charges || 0)], ['Total debit (LKR)', `<b>${money(r.total_debit)}</b>`]])) +
                 box('Finalize', `<div class="fg"><div class="w2"><label>Bank account the payment was made from</label><select id="fz_acct">${accountOptions(r.init_ledger || r.bank_ledger)}</select></div><div><label>Paid date (bank)</label><input type="date" id="fz_date" value="${esc(r.payment_date || D.today)}" max="${D.today}"></div><div><label>Final bank reference</label><input id="fz_ref" maxlength="100" value="${esc(r.bank_ref || '')}"></div>
                 <div><label>Bank charges (LKR)</label><input id="fz_chg" value="${r.charges !== null && r.charges !== undefined ? esc(r.charges) : ''}"></div><div><label>Note</label><input id="fz_note" maxlength="300"></div>
-                <div class="w2" id="fz_rate_box" style="display:none"><label>USD rate of the paid date (LKR per 1 USD)</label><input id="fz_rate" inputmode="decimal" placeholder="for example 327.25"></div>
+                <div class="w2" id="fz_rate_box" style="display:none"></div>
                 <div class="w2" id="fz_reason_box" style="display:none"><label>Reason for a different paying account</label><input id="fz_reason" maxlength="300"></div>
                 <div class="w2"><label style="font-weight:400"><input type="checkbox" id="fz_conf" style="width:auto;height:auto;margin-right:6px">I have checked the paying account and the payee account shown above.</label></div></div>
                 <div class="lock mt-2">Finalizing marks the payment Paid, posts it to the accounts once and unlocks the voucher for printing. It must be done by a different person from the one who recorded the bank payment.</div>`),
@@ -304,9 +326,32 @@ function review(tab, id) {
     }
     const r = D.final.find(x => x.vnum === id); if (!r) return;
     openDrawer('Final Voucher — PV ' + r.vnum, box('Finalized payment', kv([['Voucher', `<b>PV ${Number(r.vnum)}</b> <span class="st g">Finalized</span>`], ['Payee', `<b>${esc(r.payee)}</b>`], ['Tour', esc(r.tour || '—')], ['Inquiry', r.inq ? 'INQ ' + esc(r.inq) : '—'], ['Paid date', dmy(r.paid_date)],
-        ['Amount (LKR)', `<b>${money(r.amount)}</b>`], r.usd ? ['Amount (USD)', money(r.usd)] : null, ['Bank charges', money(r.charges || 0)], ['Total debit (LKR)', money(r.total_debit)], ['Bank reference', esc(r.bank_ref || '—')]])) +
+        ['Amount (LKR)', `<b>${money(r.amount)}</b>`], r.usd ? ['Amount (USD)', money(r.usd)] : null, ['Bank charges', money(r.charges || 0)], ['Total debit (LKR)', money(r.total_debit)], ['Bank reference', esc(r.bank_ref || '—')], r.rate ? ['USD rate', money(r.rate)] : null, r.fx_diff ? ['Exchange difference', (r.fx_diff > 0 ? 'Loss ' : 'Gain ') + money(Math.abs(r.fx_diff))] : null,
+        ['Ledger check', r.read_back === null ? '<span class="st w">Not read back</span>' : (r.reconciled ? `<span class="st g">Agrees with the bank debit</span> ${money(r.read_back)}` : `<span class="st r">Differs from the bank debit</span> ${money(r.read_back)}`)],
+        ['Remittance advice', r.remittance ? `<span class="st ${remCls(r.remittance)}">${esc(REM[r.remittance] || 'Not prepared')}</span> <a href="${TPD_URL}remittance/${Number(r.vnum)}" target="_blank">view</a>` : (r.batch_id && P.payables ? `<a href="${TPD_URL}batch/${Number(r.batch_id)}" target="_blank">prepare on the payment page</a>` : '—')]])) +
         box('Signatures on record', kv([['Prepared by', esc(r.prepared_by || '—')], ['Approved by', esc(r.mgmt_by || '—')], ['Bank payment recorded by', esc(r.recorded_by || '—')], ['Finalized by', `${esc(r.finalized_by || '—')} · ${dmyt(r.finalized_at)}`]])), voucherBtns(r.vnum, true));
 }
+
+// ---- tf-finance-r3: a voucher raised outside the chain is checked and added before its bank payment (the Payment Desk's "Check & adopt") ----
+async function openAdopt(r) {
+    const vnum = Number(r.vnum);
+    const top = box('Voucher raised outside the payment chain', kv([['Voucher', `<b>PV ${vnum}</b>`], ['Payee', `<b>${esc(r.payee)}</b>`], ['For', r.non_tour ? 'Non-tour payment' : esc(r.tour || '—')], ['Reference', esc(r.ref || '—')], ['Description', esc(r.description || '—')],
+        ['Amount (LKR)', `<b>${money(r.amount)}</b>`], ['Raised', `${dmy(r.created)} · ${esc(r.created_by || '')}`], ['Voucher status', r.aflag === 1 ? 'Authorised' : 'Issued']])) + box('Voucher', voucherBtns(vnum, false));
+    if (!D.adoption_ready) { openDrawer('Check & Add — PV ' + vnum, top + '<div class="lock">Adding outside vouchers is not set up on this system yet.</div>', P.admin ? `<button class="btn-g" id="fa_setup" onclick="doAdoptSetup()">Set up</button>` : '<span class="mut">The System Administrator sets this up once.</span>'); return; }
+    openDrawer('Check & Add — PV ' + vnum, top + box('Checks', '<div id="fa_checks" class="mut">Checking…</div>'), '');
+    if (!P.initiate && !P.accountant) { document.getElementById('fa_checks').textContent = 'Checking and adding a voucher needs the bank-payment (accountant) privilege.'; return; }
+    const j = await fetch(`${PD_URL}adopt_check?vnum=${vnum}`, { headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, cache: 'no-store' }).then(x => x.json()).catch(() => ({ status: 0, message: 'Network error.' }));
+    const el = document.getElementById('fa_checks'); if (!el) return; el.classList.remove('mut');
+    if (j.status !== 200) { el.innerHTML = `<span class="st r">${esc(j.message || 'The checks could not be read.')}</span>`; return; }
+    const c = j.data, v = c.voucher || {};
+    const blocking = (c.checks || []).filter(x => !x.ok && x.key !== 'posting_mode');
+    el.innerHTML = (c.checks || []).filter(x => x.key !== 'posting_mode' || !c.needs_bank_leg).map(x => `<div style="display:flex;gap:8px;margin:6px 0"><span class="st ${x.ok ? 'g' : 'r'}">${x.ok ? '✓' : '✗'}</span><div><b>${esc(x.what)}</b><div class="mut">${esc(x.detail)}</div></div></div>`).join('') +
+        (c.needs_bank_leg ? `<div class="lock mt-2"><label style="font-weight:400"><input type="checkbox" id="fa_leg" style="width:auto;height:auto;margin-right:6px"><b>Post the bank leg at finalization.</b> This voucher's posting credits Bank Control only. Tick to have the system post, once at finalization, Dr Bank Control / Cr the paying account for LKR ${money(v.amount)}, so the paying account and the Daily Bank Reconciliation show the payment.</label></div>` : '') +
+        `<div class="mt-2"><label>Note (optional)</label><input id="fa_note" maxlength="300" style="width:100%"></div><div class="mut mt-2">Adding records the voucher in the payment chain only. It does not change the voucher or the ledger.</div>`;
+    document.getElementById('fd_foot').innerHTML = blocking.length ? '<span class="st r">Cannot be added — see the checks marked ✗.</span>' : (P.initiate ? `<button class="btn-g" id="fa_go" onclick="doAdopt(${vnum})">Add to Bank Payments</button>` : '<span class="mut">Adding needs the bank-initiation privilege.</span>');
+}
+function doAdopt(vnum) { busy(['fa_go'], async () => { const leg = document.getElementById('fa_leg'); const r = await post(PD_URL + 'adopt', { vnum, bank_leg: leg && leg.checked ? 1 : 0, note: (document.getElementById('fa_note') || {}).value || '' }); say(r.message || 'No answer.', r.status === 200 ? '' : 'err'); if (r.status === 200) { closeDrawer(); await load(); } }); }
+function doAdoptSetup() { busy(['fa_setup'], async () => { const r = await post(PD_URL + 'setup', {}); say(r.message || (r.status === 200 ? 'Set up.' : 'No answer.'), r.status === 200 ? '' : 'err'); if (r.status === 200) { closeDrawer(); await load(); } }); }
 
 // ---- the actions: each goes to the endpoint that already does it -----------------------------------------------------------------
 async function busy(ids, fn) { if (BUSY) return; BUSY = true; ids.forEach(i => { const b = document.getElementById(i); if (b) b.disabled = true; }); try { await fn(); } finally { BUSY = false; ids.forEach(i => { const b = document.getElementById(i); if (b) b.disabled = false; }); } }
@@ -328,14 +373,12 @@ async function returnMany() {
     BUSY = false; if (ok) say(`${ok} request${ok === 1 ? '' : 's'} returned.`); bad.forEach(m => say(m, 'err')); await load();
 }
 // a USD payment needs the confirmed rate of its date: the existing rule. The field appears only when the system asks for it.
-function needRate(pfx, r) { document.getElementById(pfx + '_rate_box').style.display = ''; document.getElementById(pfx + '_rate').focus(); say(r.message || 'The USD rate of that day is needed.', 'err'); }
-async function rateFirst(pfx, date) {
-    const box = document.getElementById(pfx + '_rate_box'), v = document.getElementById(pfx + '_rate').value.trim();
-    if (box.style.display === 'none' || !v) return true;
-    const r = await post(TPD_URL + 'confirm_rate', { rate: v, date });
-    if (r.status !== 200) { say(r.message || 'The rate could not be saved.', 'err'); return false; }
-    return true;
+function needRate(pfx, r) {
+    const b = document.getElementById(pfx + '_rate_box'); b.style.display = '';
+    b.innerHTML = `<div class="lock">${esc(r.message || 'The USD rate of that day is needed.')} Exchange rates are kept in one place: <a href="${RATE_URL}" target="_blank"><b>open Daily USD Rate</b></a>, enter the rate for the payment date, then press the button here again.</div>`;
+    say('The USD rate for that date has not been entered on the Daily USD Rate page.', 'err');
 }
+async function rateFirst() { return true; }   // tf-finance-r3: rates are entered only on the central Daily USD Rate page
 function batchSum(key) {
     const r = D.ready.find(x => x.key === key), el = document.getElementById('fb_sum'); if (!r || !el) return;
     const ids = [...document.querySelectorAll('.fb_pick:checked')].map(c => Number(c.value)); const pickd = (r.lines || []).filter(l => ids.includes(l.pr_id));

@@ -170,13 +170,22 @@ class FinanceController extends BaseController
             foreach (array_merge($o['initiation']['rows'] ?? [], $o['authorisation']['rows'] ?? []) as $v) {
                 $vp = array_map('intval', array_column($db->query("SELECT x.pr_id FROM tpd_request_ext x LEFT JOIN tpd_batch b ON b.id = x.batch_id WHERE x.voucher_vnum = ? OR b.vnum = ?", [(int) $v['vnum'], (int) $v['vnum']])->getResultArray(), 'pr_id'));
                 $ready[] = ['pr_ids' => array_values(array_unique($vp)), 'holds' => $holdOf(array_values(array_unique($vp))), 'kind' => 'voucher', 'key' => 'v' . $v['vnum'], 'vnum' => $v['vnum'], 'payee' => $v['payee'], 'tour' => $v['manual_id'], 'inq' => $inq($v['manual_id']), 'usd' => $v['usd'], 'amount' => $v['amount'],
-                    'stage' => $v['initiated'] ? 'finalize' : 'record', 'locked' => $v['locked'], 'bulk_parent' => $v['bulk_parent'], 'batch_id' => $v['batch_id'], 'batch_no' => $v['batch_no'], 'non_tour' => $v['kind'] === 'non_tour',
+                    'stage' => $v['initiated'] ? 'finalize' : 'record', 'via' => $v['via'] ?? null, 'bank_leg' => !empty($v['bank_leg']), 'ref' => $v['ref'] ?? null, 'locked' => $v['locked'], 'bulk_parent' => $v['bulk_parent'], 'batch_id' => $v['batch_id'], 'batch_no' => $v['batch_no'], 'non_tour' => $v['kind'] === 'non_tour',
                     'bank' => $v['bank'], 'bank_ledger' => $v['bank_ledger'], 'init_ledger' => $v['init_ledger'], 'aflag' => $v['aflag'], 'initiated_by' => $v['initiated_by'], 'initiated_at' => $v['initiated_at'], 'payment_date' => $v['payment_date'],
                     'bank_ref' => $v['bank_ref'], 'charges' => $v['charges'], 'total_debit' => $v['total_debit'], 'created' => $v['created']];
             }
 
+            // tf-finance-r3: vouchers raised outside the payment chain (utility bills, office costs, older screens) — checked and adopted here before their bank payment
+            foreach (($o['not_on_desk']['rows'] ?? []) as $v) {
+                $ready[] = ['kind' => 'adopt', 'key' => 'a' . $v['vnum'], 'vnum' => $v['vnum'], 'payee' => $v['payee'], 'tour' => $v['manual_id'], 'inq' => $inq($v['manual_id']), 'usd' => null, 'amount' => $v['amount'], 'stage' => 'adopt',
+                    'non_tour' => ($v['kind'] ?? '') !== 'tour', 'mode' => $v['mode'], 'aflag' => $v['aflag'], 'bank' => $v['bank'], 'bank_ledger' => $v['bank_ledger'], 'ref' => $v['ref'], 'description' => $v['description'],
+                    'created' => $v['created'], 'created_by' => $v['created_by'], 'desk_record' => $v['desk_record'] ?? 'none', 'holds' => [], 'pr_ids' => []];
+            }
+
             // ---- 3. Finalized Payments: Paid — the voucher is finalised, its print is unlocked ------------------------
-            $fin = $db->query("SELECT a.vnum, a.paid_date, a.lkr_amount, a.usd_amount, a.charges, a.total_debit, a.initiated_by, a.approved_by, a.approved_at, v.S_name, v.type, i.bank_ref,
+            $fin = $db->query("SELECT a.vnum, a.paid_date, a.lkr_amount, a.usd_amount, a.charges, a.total_debit, a.initiated_by, a.approved_by, a.approved_at, a.usd_rate, a.fx_diff, a.ledger_bank_credit, a.reconciled, a.note, v.S_name, v.type, i.bank_ref,
+                                      (SELECT r.status FROM tpd_remittance r WHERE r.vnum = a.vnum ORDER BY r.id DESC LIMIT 1) AS remit_status,
+                                      (SELECT b.id FROM tpd_batch b WHERE b.vnum = a.vnum LIMIT 1) AS batch_id,
                                       (SELECT pr.manual_id FROM tpd_request_ext x JOIN payment_request pr ON pr.id = x.pr_id WHERE x.voucher_vnum = a.vnum LIMIT 1) AS manual_id,
                                       (SELECT pr.type FROM tpd_request_ext x JOIN payment_request pr ON pr.id = x.pr_id WHERE x.voucher_vnum = a.vnum LIMIT 1) AS req_type,
                                       (SELECT pr.payment_request_user FROM tpd_request_ext x JOIN payment_request pr ON pr.id = x.pr_id WHERE x.voucher_vnum = a.vnum LIMIT 1) AS prepared_by,
@@ -186,11 +195,13 @@ class FinanceController extends BaseController
             $final = array_map(static fn ($r) => ['vnum' => (int) $r['vnum'], 'payee' => $r['S_name'], 'cat' => self::cat($r['req_type'] ?: null), 'tour' => $r['manual_id'], 'inq' => $inq($r['manual_id']),
                 'paid_date' => $r['paid_date'], 'amount' => (float) $r['lkr_amount'], 'usd' => $r['usd_amount'] !== null ? (float) $r['usd_amount'] : null, 'charges' => $r['charges'] !== null ? (float) $r['charges'] : null,
                 'total_debit' => (float) $r['total_debit'], 'bank_ref' => $r['bank_ref'], 'prepared_by' => $r['prepared_by'], 'mgmt_by' => $r['mgmt_by'], 'recorded_by' => $r['initiated_by'], 'finalized_by' => $r['approved_by'],
-                'finalized_at' => $r['approved_at']], $fin);
+                'finalized_at' => $r['approved_at'], 'rate' => $r['usd_rate'] !== null ? (float) $r['usd_rate'] : null, 'fx_diff' => $r['fx_diff'] !== null ? (float) $r['fx_diff'] : null,
+                'read_back' => $r['ledger_bank_credit'] !== null ? (float) $r['ledger_bank_credit'] : null, 'reconciled' => (int) $r['reconciled'] === 1, 'remittance' => $r['remit_status'], 'batch_id' => $r['batch_id'] !== null ? (int) $r['batch_id'] : null,
+                'old_route' => stripos((string) $r['note'], 'Marked finalized on Bank Payment Check') === 0], $fin);
 
             $d = ['today' => date('Y-m-d'), 'generated_at' => date('Y-m-d H:i:s'), 'user' => Perms::user(), 'approval' => $approval, 'ready' => $ready, 'final' => $final,
-                'recon' => $o['reconciliation'] ?? ['rows' => []], 'bank_accounts' => $o['bank_accounts'] ?? ['accounts' => []],
-                'counts' => ['approval' => count($approval), 'ready' => count($ready), 'final' => count($final), 'recon' => count(($o['reconciliation']['rows'] ?? []))]];
+                'recon' => $o['reconciliation'] ?? ['rows' => []], 'bank_accounts' => $o['bank_accounts'] ?? ['accounts' => []], 'attention' => $o['exceptions']['items'] ?? [], 'adoption_ready' => !empty($o['adoption_ready']),
+                'counts' => ['approval' => count($approval), 'ready' => count($ready), 'final' => count($final), 'recon' => count(($o['reconciliation']['rows'] ?? [])), 'attention' => (int) ($o['counts']['exceptions'] ?? 0)]];
         } catch (\Throwable $e) {
             log_message('error', 'finance page: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
             return $this->json(['status' => 500, 'message' => 'The Finance page could not be built: ' . $e->getMessage()]);

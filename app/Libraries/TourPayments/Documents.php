@@ -135,14 +135,16 @@ final class Documents
             . '<table cellpadding="4" style="border-collapse:collapse;font-size:13px;">'
             . ($multi ? '<tr><td style="color:#555;">Tours</td><td><b>' . esc(implode(', ', array_unique(array_column($items, 'manual_id')))) . '</b> (' . count($items) . ' invoices — see the list below)</td></tr>'
                       : '<tr><td style="color:#555;">Tour</td><td><b>' . esc($tour['manual_id'] ?? '') . '</b> · ' . esc($tour['consignee'] ?? '') . '</td></tr>'
-                      . '<tr><td style="color:#555;">Service dates</td><td>' . esc($this->dateSpan($d['service_dates'])) . '</td></tr>')
-            . '<tr><td style="color:#555;">Amount paid</td><td><b>LKR ' . number_format((float) ($d['approval']['lkr_amount'] ?? $v['Amount']), 2) . '</b>' . ($d['usd'] ? ' (USD ' . number_format((float) $v['doller_amt'], 2) . ' at ' . number_format((float) $d['usd_rate'], 2) . ')' : '') . '</td></tr>'
+                      . (($d['kind'] ?? '') === 'Hotel' && ($tfStay = $this->stay((array) $d['service_dates'], $d['request']['start_date'] ?? null, $d['request']['end_date'] ?? null))
+                          ? '<tr><td style="color:#555;">Check-in</td><td>' . esc($tfStay['in_text']) . '</td></tr><tr><td style="color:#555;">Check-out</td><td>' . esc($tfStay['out_text']) . ' · ' . esc($tfStay['nights_text']) . '</td></tr>'
+                          : '<tr><td style="color:#555;">Service dates</td><td>' . esc($this->dateSpan($d['service_dates'])) . '</td></tr>'))
+            . '<tr><td style="color:#555;">Amount paid to you</td><td><b>LKR ' . number_format((float) ($d['approval']['lkr_amount'] ?? $v['Amount']), 2) . '</b>' . ($d['usd'] ? ' (USD ' . number_format((float) $v['doller_amt'], 2) . ' at ' . number_format((float) $d['usd_rate'], 2) . ')' : '') . '</td></tr>'
             . '<tr><td style="color:#555;">Payment date</td><td>' . esc((string) ($d['approval']['paid_date'] ?? $v['bank_date'] ?? '')) . '</td></tr>'
             . '<tr><td style="color:#555;">Our reference</td><td><b>Payment Voucher No. ' . (int) $v['Vnum'] . '</b>' . ($d['batch'] ? ' · batch ' . esc($d['batch']['batch_no']) : '') . ($d['initiation']['bank_ref'] ?? $d['approval']['bank_ref'] ?? null ? ' · bank ref ' . esc((string) ($d['approval']['bank_ref'] ?? $d['initiation']['bank_ref'])) : '') . '</td></tr>'
             . '</table>';
         if ($multi) {
             $fig = $d['figures'] ?? null;
-            $body .= '<table cellpadding="4" style="border-collapse:collapse;font-size:12.5px;margin-top:8px;border:1px solid #ddd;"><tr style="background:#f3e7eb;"><th align="left">Tour</th><th align="left">Guest</th><th align="left">Service</th><th align="left">Invoice</th><th align="right">Amount</th><th align="right">LKR paid</th></tr>';
+            $body .= '<table cellpadding="4" style="border-collapse:collapse;font-size:12.5px;margin-top:8px;border:1px solid #ddd;"><tr style="background:#f3e3f3;"><th align="left">Tour</th><th align="left">Guest</th><th align="left">Service</th><th align="left">Invoice</th><th align="right">Amount</th><th align="right">LKR paid</th></tr>';
             foreach ($items as $k => $it) {
                 $lkr = $fig['lines'][$k]['actual_lkr'] ?? $it['approval_lkr'];
                 $body .= '<tr><td>' . esc($it['manual_id']) . '</td><td>' . esc($it['guest']) . '</td><td>' . esc($it['kind']) . ($it['service_dates'] ? ' · ' . esc($this->dateSpan($it['service_dates'])) : '') . '</td><td>' . esc($it['invoice_no'] ?: '—') . '</td><td align="right">' . ($it['currency'] === 'USD' ? 'USD ' . number_format((float) $it['usd_amount'], 2) : 'LKR ' . number_format((float) $it['lkr_amount'], 2)) . '</td><td align="right">' . number_format((float) $lkr, 2) . '</td></tr>';
@@ -151,6 +153,34 @@ final class Documents
         }
         $body .= '<p>Kind regards,<br>Avenir Holidays</p>';
         return ['to' => $sup['remittance_email'] ?: ($sup['master_email'] ?: ''), 'subject' => $subject, 'body' => $body, 'supplier_name' => $name];
+    }
+
+    /**
+     * tf-docs-r1 (24 Nov 2026): a hotel stay stated in full — check-in, check-out and nights. The booking's own dates (the request's
+     * start and end) are used when they are a valid stay; otherwise the stay is read from the booked nights (check-out = the day
+     * after the last night). Returns null when no date is known.
+     */
+    public function stay(array $nights, $in = null, $out = null): ?array
+    {
+        $d = static fn ($x) => ($x = substr(trim((string) ($x ?? '')), 0, 10)) !== '' && !str_starts_with($x, '0000') && strtotime($x) ? $x : null;
+        $in = $d($in); $out = $d($out);
+        $nights = array_values(array_unique(array_filter(array_map($d, $nights))));
+        sort($nights);
+        if (!($in && $out && $out > $in)) {
+            if (!$nights) {
+                return null;
+            }
+            $in = $nights[0];
+            $out = date('Y-m-d', strtotime(end($nights) . ' +1 day'));
+        }
+        $n = (int) round((strtotime($out) - strtotime($in)) / 86400);
+        return ['check_in' => $in, 'check_out' => $out, 'nights' => $n, 'in_text' => date('j F Y', strtotime($in)), 'out_text' => date('j F Y', strtotime($out)), 'nights_text' => $n . ' night' . ($n === 1 ? '' : 's')];
+    }
+
+    public function stayText(array $nights, $in = null, $out = null): string
+    {
+        $s = $this->stay($nights, $in, $out);
+        return $s ? 'Check-in ' . $s['in_text'] . ' · Check-out ' . $s['out_text'] . ' · ' . $s['nights_text'] : '';
     }
 
     public function dateSpan(array $dates): string

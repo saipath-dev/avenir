@@ -161,8 +161,22 @@ final class HotelPayLink
         self::ensure($this->db);
         $jobId = (int) $j['id'];
         $done = $this->db->query("SELECT * FROM tf_hotel_pay WHERE job_id = ? AND state IN ('raised','held')", [$jobId])->getRowArray();
+        $resubmit = null;   // tf-resdesk-r3 (24 Nov 2026): a request that was returned or cancelled can be sent again from Hotel Bookings
         if ($done) {
-            return ['ok' => true, 'state' => $done['state'], 'message' => 'Already raised.', 'payment_request_id' => $done['payment_request_id'] !== null ? (int) $done['payment_request_id'] : null];
+            $prev = $done['payment_request_id'] !== null ? $this->db->query('SELECT id, payment_request FROM payment_request WHERE id = ?', [(int) $done['payment_request_id']])->getRowArray() : null;
+            if (!($done['state'] === 'raised' && $prev && in_array((int) $prev['payment_request'], [3, 5], true))) {
+                return ['ok' => true, 'state' => $done['state'], 'message' => 'Already raised.', 'payment_request_id' => $done['payment_request_id'] !== null ? (int) $done['payment_request_id'] : null];
+            }
+            $resubmit = (int) $prev['id'];
+            // one open request per stay: if the stay already has an open request (sent again from another screen), this booking takes it — no second one
+            if (!empty($done['legacy_tour_id']) && !empty($done['hotel_acc'])) {
+                $open = $this->db->query("SELECT id FROM payment_request WHERE tour_id = ? AND hotel_acc = ? AND type = 'Hotel' AND payment_request NOT IN (3,5) AND id > ? ORDER BY id DESC LIMIT 1", [(string) $done['legacy_tour_id'], (string) $done['hotel_acc'], $resubmit])->getRowArray();
+                if ($open) {
+                    $this->db->query("UPDATE tf_hotel_pay SET payment_request_id = ?, state = 'raised', message = ?, `by` = ?, `at` = ? WHERE job_id = ?",
+                        [(int) $open['id'], mb_substr('Request #' . $resubmit . ' was returned; this stay is already resubmitted as request #' . (int) $open['id'] . '. No new request was made.', 0, 500), $this->user, date('Y-m-d H:i:s'), $jobId]);
+                    return ['ok' => true, 'state' => 'raised', 'message' => 'Request #' . $resubmit . ' was returned; this stay is already resubmitted as request #' . (int) $open['id'] . '. No new request was made.', 'payment_request_id' => (int) $open['id']];
+                }
+            }
         }
         $acc = $this->hotelAcc($j);
         $record = function (string $state, string $msg, ?int $prId = null, ?float $amt = null, string $legacy = '') use ($jobId, $j, $acc) {
@@ -208,7 +222,14 @@ final class HotelPayLink
             // the hotel's confirmation reference on the nights (the chain's handler clears it when it writes the request)
             $this->db->query('UPDATE tour_quotations SET confirmation_reference = ? WHERE quotation_id = ? AND hotel_acc = ? AND tour_date BETWEEN ? AND ?',
                 [mb_substr($ref, 0, 255), $legacy, $acc, $j['check_in'], date('Y-m-d', strtotime((string) $j['check_out'] . ' -1 day'))]);
-            return $record('raised', 'Hotel payment request #' . $prId . ' raised for USD ' . number_format($cost['total'], 2) . ' — waiting in Payment Approval.', $prId, $cost['total'], $legacy);
+            if ($resubmit) {   // the new request is tied to the returned one in the payment audit trail; the returned request and its reversal stay as they are
+                try {
+                    \App\Libraries\TourPayments\Audit::log($this->db, ['action' => 'request_resubmitted', 'user' => $this->user, 'tour_id' => $legacy, 'ref_type' => 'request', 'ref_id' => $prId,
+                        'prev' => ['returned_request' => $resubmit], 'new' => ['request' => $prId, 'hotel_job' => $jobId], 'reason' => 'Resubmitted from Hotel Bookings after request #' . $resubmit . ' was returned or cancelled']);
+                } catch (\Throwable $e) {
+                }
+            }
+            return $record('raised', ($resubmit ? 'Resubmitted after request #' . $resubmit . ' was returned: hotel' : 'Hotel') . ' payment request #' . $prId . ' raised for USD ' . number_format($cost['total'], 2) . ' — waiting in Payment Approval.', $prId, $cost['total'], $legacy);
         }
         if ($code === 409 && $prId) {
             return $record('raised', 'A payment request already exists for this stay (#' . $prId . ').', $prId, $cost['total'], $legacy);

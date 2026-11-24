@@ -912,7 +912,7 @@
                     ${m ? `<a class="rd3-b" href="${BASE}/message/${m.id}" target="_blank">View Sent Email</a>` : '<button class="rd3-b" disabled>View Sent Email</button>'}
                     ${p.voucher_no ? `<a class="rd3-b" href="<?= base_url('accounts/voucher_print') ?>/${encodeURIComponent(p.voucher_no)}?id=${encodeURIComponent(p.voucher_no)}" target="_blank">View Payment Voucher</a>` : ''}
                     ${(!m || !sentOk) && !confirmed ? `<button class="rd3-b" data-open="${j.id}">Send booking voucher</button>` : ''}
-                    ${confirmed && !p.payment_request_id && p.link_state !== 'held' ? `<button class="rd3-b" data-raise="${j.id}">Raise payment request</button>` : ''}
+                    ${confirmed && !p.payment_request_id && p.link_state !== 'held' ? `<button class="rd3-b" data-raise="${j.id}">Raise payment request</button>` : ''}${confirmed && p.payment_request_id && (p.stage === 'rejected' || p.stage === 'cancelled') ? `<button class="rd3-b" data-raise="${j.id}">Resubmit payment request</button>` : ''}
                     ${canConfirm ? `<button class="rd3-b primary" data-cb="${j.id}">Record Hotel Confirmation</button>` : ''}
                 </div>
                 <details class="rd3-fold rd3-bd"><summary>Booking details</summary>
