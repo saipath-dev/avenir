@@ -78,45 +78,6 @@ $P = $tpd_perms ?? [];
     .fin-msg .m.err { border-left-color:#b3261e; }
     @media (max-width:640px) { .fin .fn-bar input[type=date] { flex:1 1 120px; min-width:0; } .fin .fn-bar select { flex:1 1 100%; } .fin .fn-tab { flex:1 1 calc(50% - 6px); justify-content:space-between; padding:0 10px; } .fin-drawer .fg { grid-template-columns:1fr; } .fin-drawer .kv { grid-template-columns:120px 1fr; } }
     .fin .fn-att { padding:14px 4px 4px; } .fin .fn-att h6 { font-weight:700; color:var(--pur); margin:0 0 8px; } .fin details.att { border:1px solid #e6dbe6; border-radius:10px; padding:10px 12px; margin-bottom:8px; background:#fff; } .fin details.att summary { cursor:pointer; list-style:none; } .fin details.att .fn-wrap { margin-top:8px; }
-    /* tf-finance-r6: the mock-up's look — white header, counters, underlined tabs, soft cards */
-    .fin .fn-top { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; margin:2px 0 16px; }
-    .fin .fn-top h2 { margin:0; font-size:30px; font-weight:800; color:#1f1a24; letter-spacing:-.3px; } .fin .fn-top .sub { color:#5b5463; font-size:15px; }
-    .fin .fn-top .fn-logo { background:#fff; border:1px solid var(--line); border-radius:10px; padding:6px 10px; } .fin .fn-top .fn-logo img { height:38px; }
-    .fin .fn-role { display:flex; align-items:center; gap:14px; flex-wrap:wrap; } .fin .fn-role .chip { background:#f1eef3; border-radius:10px; padding:7px 14px; font-weight:600; font-size:14px; color:#2a2230; }
-    .fin .fn-role a { color:var(--pur); text-decoration:underline; font-size:13.5px; } .fin .fn-role .icon { border:1px solid var(--line); background:#fff; border-radius:8px; width:34px; height:34px; color:#5b5463; cursor:pointer; }
-    .fin .fn-cards { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:12px; margin-bottom:18px; }
-    .fin .fcard { display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px; cursor:pointer; text-align:left; box-shadow:0 1px 2px rgba(40,20,50,.04); }
-    .fin .fcard:hover { border-color:#cdb6cd; } .fin .fcard.on { border-color:var(--pur); box-shadow:0 0 0 2px rgba(132,36,132,.12); }
-    .fin .fcard .ic { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex:none; }
-    .fin .fcard .ic.p { background:#f6e9f6; color:var(--pur); } .fin .fcard .ic.g { background:#eaf5e0; color:#5a9a2c; }
-    .fin .fcard .lb { font-size:13.5px; color:#3b3442; } .fin .fcard .nm { font-size:28px; font-weight:800; color:#1f1a24; line-height:1.1; }
-    .fin .fn-tabs { display:flex; flex-wrap:nowrap; gap:0; margin-bottom:16px; border-bottom:2px solid var(--pur); }
-    .fin .fn-tab { flex:1 1 0; justify-content:center; height:50px; border-radius:10px 10px 0 0; border:1px solid var(--line); border-bottom:0; background:#fff; font-size:16px; font-weight:600; color:#2a2230; margin-right:6px; }
-    .fin .fn-tab:last-child { margin-right:0; } .fin .fn-tab i { color:#2a2230; font-size:19px; } .fin .fn-tab.on { background:var(--pur); border-color:var(--pur); color:#fff; box-shadow:none; } .fin .fn-tab.on i { color:#fff; }
-    .fin .fn-tab .n.att { background:#c0392b; color:#fff; }
-    .fin .fn-bar { gap:10px; margin-bottom:14px; } .fin .fn-bar input, .fin .fn-bar select { height:40px; border-radius:10px; font-size:14px; }
-    .fin .fn-bar .qwrap { position:relative; flex:1 1 280px; min-width:200px; } .fin .fn-bar .qwrap i { position:absolute; left:13px; top:11px; color:#6c6473; } .fin .fn-bar .qwrap input { width:100%; padding-left:38px; }
-    .fin .fn-bar .btn-q { height:40px; padding:0 16px; border-radius:10px; font-size:14px; background:#f1eef3; border-color:#f1eef3; } .fin .fn-bar .btn-g { height:40px; padding:0 16px; border-radius:10px; font-size:14px; display:inline-flex; align-items:center; gap:6px; margin-left:auto; }
-    .fin .fn-panel { background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:18px; }
-    .fin .fn-panel .fn-wrap { border:0; border-radius:0; } .fin .fn-panel .ft thead th { background:#f7f5f8; color:#2a2230; font-size:14px; font-weight:600; text-transform:none; letter-spacing:0; padding:12px 16px; border-bottom:1px solid var(--line); }
-    .fin .fn-panel .ft td { padding:14px 16px; font-size:14.5px; } .fin .fn-panel .fn-foot { padding:8px 14px; } .fin .fn-panel .fn-foot:empty { display:none; }
-    .fin .payee { display:flex; align-items:center; gap:12px; } .fin .payee > i { color:var(--pur); font-size:20px; } .fin .payee b { font-size:15.5px; }
-    .fin .st.dot::before { content:''; display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; margin-right:8px; vertical-align:1px; } .fin .st.dot { padding:5px 14px; font-weight:600; font-size:13.5px; border-radius:16px; }
-    .fin .btn-v { background:#fff; border:1.5px solid #6aa83a; color:#3f7a1c; border-radius:9px; padding:6px 26px; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap; } .fin .btn-v:hover { background:#eef7e6; }
-    .fin .fn-low { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px; }
-    .fin .lcard { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 18px; } .fin .lcard h5 { margin:0; font-size:18px; font-weight:700; color:#1f1a24; display:flex; align-items:center; gap:12px; } .fin .lcard h5 i { color:var(--pur); font-size:22px; }
-    .fin .lcard .hd { display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:12px; border-bottom:1px solid var(--line); margin-bottom:4px; }
-    .fin .lrow { display:flex; align-items:center; gap:14px; padding:11px 2px; border-bottom:1px solid #f0ecf2; font-size:15px; } .fin .lrow:last-child { border-bottom:0; } .fin .lrow .o { width:20px; height:20px; border-radius:50%; border:2px solid #cfc6d3; flex:none; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; } .fin .lrow .o.ok { background:#6aa83a; border-color:#6aa83a; } .fin .lrow span.t { flex:1; }
-    .fin .lcard .mid { text-align:center; padding:26px 8px 10px; color:#5b5463; font-size:15px; } .fin .lcard .mid b { display:block; color:#3b3442; font-weight:600; font-size:15.5px; margin-bottom:6px; } .fin .lcard .more { display:block; text-align:center; color:var(--pur); font-size:15px; padding:14px 0 4px; text-decoration:none; }
-    .fin .fn-old { margin-top:14px; font-size:12.5px; } .fin .fn-old a { color:#6c6473; }
-    .fin .fn-tab .sm { display:none; }
-    @media (max-width:900px) { .fin .fn-cards { grid-template-columns:repeat(2, minmax(0, 1fr)); } .fin .fn-low { grid-template-columns:1fr; } .fin .fn-top h2 { font-size:25px; } }
-    @media (max-width:640px) {
-        .fin .fn-tab { font-size:13px; height:42px; padding:0 4px; margin-right:3px; flex:1 1 0; } .fin .fn-tab i { display:none; } .fin .fn-tab .lg { display:none; } .fin .fn-tab .sm { display:inline; }
-        .fin .fcard { padding:10px 12px; gap:10px; } .fin .fcard .nm { font-size:23px; } .fin .fcard .ic { width:38px; height:38px; font-size:17px; }
-        .fin .fn-bar .btn-g { margin-left:0; flex:1 1 100%; justify-content:center; }
-        .fin .fn-panel .ft { min-width:0 !important; } .fin .fn-panel .ft thead { display:none; } .fin .fn-panel .ft tr.frow { display:block; padding:12px 14px; border-bottom:1px solid var(--line); } .fin .fn-panel .ft tr.frow td { display:block; padding:3px 0; border:0; text-align:left !important; } .fin .fn-panel .ft tr.frow td:empty { display:none; }
-    }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -124,22 +85,19 @@ $P = $tpd_perms ?? [];
     <?= view('layouts/sidebar') ?>
     <div class="main-content"><div class="page-content tf" id="tf"><div class="container-fluid">
         <div class="fin" id="fin">
-            <!-- tf-finance-r6 (24 Nov 2026, Shantha's mock-up): white page header, four counters, tabs, one list, the reconciliation overview and Needs attention -->
-            <div class="fn-top">
-                <div class="fn-brand"><span class="fn-logo"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></span><div><h2>Finance</h2><div class="sub">Supplier payments &amp; bank reconciliation</div></div></div>
-                <div class="fn-role"><span class="chip"><i class="bi bi-person"></i> <span id="fn_role">…</span></span><a href="#" onclick="showPerms(); return false;">View permissions</a><button class="icon" type="button" onclick="load()" title="Refresh" aria-label="Refresh"><i class="bi bi-arrow-clockwise"></i></button></div>
+            <div class="fn-head">
+                <div class="fn-brand"><span class="fn-logo"><img src="<?= base_url('assets/images/Logo-new.png') ?>" alt="Avenir Holidays — Connecting Cultures"></span><div><h4>Finance</h4><div class="sub">Supplier payments: approval → bank payment → finalized voucher · bank reconciliation</div><div class="sub" id="fn_who" style="opacity:.85"></div></div></div>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="hbtn" href="<?= base_url('tour/payment_desk') ?>">Payment Desk (full chain)</a>
+                    <button class="hbtn" type="button" onclick="load()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
             </div>
-            <div class="sub" id="fn_who" style="display:none"></div>
-            <?php if (empty($tpd_ready)): ?><div class="alert alert-warning">The Tour Payment Desk is not installed on this system, so Finance has nothing to show.</div><?php endif; ?>
-            <div class="fn-cards" id="fn_cards"></div>
-            <div class="fn-tabs" id="fn_tabs"></div>
-            <div class="fn-bar" id="fn_bar"></div>
-            <div class="fn-panel">
+            <div class="fn-frame">
+                <?php if (empty($tpd_ready)): ?><div class="alert alert-warning">The Tour Payment Desk is not installed on this system, so Finance has nothing to show.</div><?php endif; ?>
+                <div class="fn-tabs" id="fn_tabs"></div>
+                <div class="fn-bar" id="fn_bar"></div>
                 <div class="fn-wrap"><div id="fn_list"><div class="empty">Loading…</div></div></div>
                 <div class="fn-foot"><div class="sel" id="fn_sel"></div><div class="pg" id="fn_pg"></div></div>
-            </div>
-            <div class="fn-low" id="fn_low"></div>
-            <div class="fn-old"><a href="<?= base_url('tour/payment_desk') ?>">Older screen: Payment Desk (full chain)</a></div>
             </div>
         </div>
     </div></div></div>
@@ -163,9 +121,8 @@ const P = <?= json_encode($P) ?>;
 const ME = <?= json_encode((string) ($tpd_user ?? '')) ?>;
 const CSRF = { name: '<?= csrf_token() ?>', hash: '<?= csrf_hash() ?>' };
 const PER = 25;
-const TABS = [['approval', 'Approvals', 'bi-clipboard-check', 'Approvals'], ['ready', 'Bank payments', 'bi-bank', 'Payments'], ['final', 'Finalised', 'bi-patch-check', 'Finalised'], ['recon', 'Reconciliation', 'bi-arrow-left-right', 'Reconcile']];
-const CARDS = [['approval', 'Awaiting approval', 'bi-clipboard-check', 'p'], ['ready', 'Ready for payment', 'bi-bank', 'g'], ['final', 'Finalised', 'bi-patch-check', 'p'], ['recon', 'To reconcile', 'bi-arrow-left-right', 'g']];
-let D = null, TAB = (new URLSearchParams(location.search).get('tab')) || 'approval', PAGE = 1, BUSY = false, PICK = new Set(), F = { q: '', cat: '', from: '', to: '', range: '' };
+const TABS = [['approval', 'Payment Approval', 'bi-clipboard-check'], ['ready', 'Ready for Bank Payment', 'bi-bank'], ['final', 'Finalized Payments', 'bi-patch-check'], ['recon', 'Bank Reconciliation', 'bi-arrow-left-right']];
+let D = null, TAB = (new URLSearchParams(location.search).get('tab')) || 'approval', PAGE = 1, BUSY = false, PICK = new Set(), F = { q: '', cat: '', from: '', to: '' };
 if (!TABS.some(t => t[0] === TAB)) TAB = 'approval';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -188,14 +145,13 @@ async function load() {
     const who = document.getElementById('fn_who'); if (who) who.textContent = `${ME}${roles.length ? ' · ' + roles.join(' · ') : ' · view only'} · updated ${String(D.generated_at || '').slice(11, 16)}`;
     let open = null;
     if (FOCUS && !FOCUSED) { FOCUSED = true; const a = D.ready.find(r => Number(r.vnum) === FOCUS), b = D.final.find(r => Number(r.vnum) === FOCUS); if (a) { TAB = 'ready'; open = () => review('ready', a.key); } else if (b) { TAB = 'final'; open = () => review('final', b.vnum); } }
-    const rc = document.getElementById('fn_role'); if (rc) rc.textContent = roles[0] || 'View only';
     draw(); if (open) open();
 }
-function setTab(t) { TAB = t; PAGE = 1; F = { q: '', cat: '', from: '', to: '', range: '' }; history.replaceState(null, '', '?tab=' + t); draw(); }
+function setTab(t) { TAB = t; PAGE = 1; F = { q: '', cat: '', from: '', to: '' }; history.replaceState(null, '', '?tab=' + t); draw(); }
 function setF(k, v) { F[k] = v; PAGE = 1; drawList(); }
 
 // ---- what each tab lists ------------------------------------------------------------------------------------------------------
-const dateOf = r => TAB === 'approval' ? (r.check_in || r.due || '') : TAB === 'final' ? (r.paid_date || '') : (r.payment_date || String(r.created || '').slice(0, 10));
+const dateOf = r => TAB === 'approval' ? (r.due || '') : TAB === 'final' ? (r.paid_date || '') : (r.payment_date || String(r.created || '').slice(0, 10));
 const catOf = r => TAB === 'ready' ? (r.kind === 'payable' ? 'To prepare' : r.kind === 'adopt' ? 'To check & add' : r.stage === 'record' ? 'To record' : 'To finalize') : (r.cat || '');
 function rows() {
     if (!D) return [];
@@ -206,34 +162,27 @@ function rows() {
         if (q && ![r.payee, r.tour, r.inq, r.vnum, r.pr_id ? '#' + r.pr_id : '', r.batch_no, r.bank_ref, r.invoice_no].some(x => String(x ?? '').toLowerCase().includes(q))) return false;
         if (F.cat && catOf(r) !== F.cat) return false;
         const d = String(dateOf(r) || '').slice(0, 10);
-        if (F.range) { const t0 = D.today, add = n => { const x = new Date(t0 + 'T00:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
-            if (F.range === 'od') { if (r.due_state !== 'overdue') return false; }
-            else if (F.range[0] === 'n') { if (!d || d < t0 || d > add(Number(F.range.slice(1)))) return false; }
-            else if (F.range[0] === 'p') { if (!d || d > t0 || d < add(-Number(F.range.slice(1)))) return false; } }
         if (F.from && (!d || d < F.from)) return false;
         if (F.to && (!d || d > F.to)) return false;
         return true;
     });
 }
 function draw() {
-    document.getElementById('fn_cards').innerHTML = CARDS.map(([k, n, ic, c]) => `<button type="button" class="fcard${k === TAB ? ' on' : ''}" onclick="setTab('${k}')"><span class="ic ${c}"><i class="bi ${ic}"></i></span><span><span class="lb">${n}</span><div class="nm">${D ? Number(D.counts[k] || 0) : '–'}</div></span></button>`).join('');
-    document.getElementById('fn_tabs').innerHTML = TABS.map(([k, n, ic, sm]) => `<button type="button" class="fn-tab${k === TAB ? ' on' : ''}" onclick="setTab('${k}')"><i class="bi ${ic}"></i><span class="lg">${n}</span><span class="sm">${sm}</span>${k === 'recon' && D && D.counts.attention ? `<span class="n att" title="Items needing attention">! ${Number(D.counts.attention)}</span>` : ''}</button>`).join('');
+    document.getElementById('fn_tabs').innerHTML = TABS.map(([k, n, ic]) => `<button type="button" class="fn-tab${k === TAB ? ' on' : ''}" onclick="setTab('${k}')"><i class="bi ${ic}"></i>${n}<span class="n">${D ? Number(D.counts[k] || 0) : '–'}</span>${k === 'recon' && D && D.counts.attention ? `<span class="n" style="background:#c0392b;color:#fff" title="Items needing attention">! ${Number(D.counts.attention)}</span>` : ''}</button>`).join('');
     const bar = document.getElementById('fn_bar');
     if (TAB === 'recon') { bar.innerHTML = ''; }
     else {
         const all = D ? (D[TAB] || []) : []; const cats = [...new Set(all.map(catOf).filter(Boolean))].sort();
-        const ranges = TAB === 'approval' ? [['', 'All dates'], ['od', 'Overdue (pay by)'], ['n7', 'Check-in in the next 7 days'], ['n30', 'Check-in in the next 30 days']] : [['', 'All dates'], ['p0', 'Today'], ['p7', 'Last 7 days'], ['p30', 'Last 30 days']];
-        bar.innerHTML = `<span class="qwrap"><i class="bi bi-search"></i><input class="q" id="ff_q" placeholder="Search payee, tour, inquiry or voucher" value="${esc(F.q)}" oninput="setF('q', this.value)"></span>
-            <select onchange="setF('cat', this.value)" aria-label="Category"><option value="">${TAB === 'ready' ? 'All steps' : 'All categories'}</option>${cats.map(c => `<option${c === F.cat ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>
-            <select onchange="setF('range', this.value)" aria-label="Dates">${ranges.map(([k, n]) => `<option value="${k}"${k === (F.range || '') ? ' selected' : ''}>${n}</option>`).join('')}</select>
-            <button type="button" class="btn-q" onclick="setTab(TAB)">Reset</button>
-            ${P.requester ? `<a class="btn-g" href="${TPD_URL}" title="Payment requests are raised from the tour: Hotel Bookings or the Tour Payment Dashboard"><i class="bi bi-plus-lg"></i> New payment</a>` : ''}`;
+        const dl = TAB === 'approval' ? 'Check-in' : TAB === 'final' ? 'Paid' : 'Date';
+        bar.innerHTML = `<input class="q" id="ff_q" placeholder="Search payee, tour, inquiry or voucher" value="${esc(F.q)}" oninput="setF('q', this.value)">
+            <select onchange="setF('cat', this.value)"><option value="">${TAB === 'ready' ? 'All steps' : 'All categories'}</option>${cats.map(c => `<option${c === F.cat ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>
+            <label>${dl} from</label><input type="date" value="${esc(F.from)}" onchange="setF('from', this.value)"><label>to</label><input type="date" value="${esc(F.to)}" onchange="setF('to', this.value)">
+            <button type="button" class="btn-q" onclick="setTab(TAB)">Clear</button>`;
     }
-    drawLow();
     drawList();
 }
 const TH = {
-    approval: ['', 'Payee / Supplier', 'Request #', 'Amount', 'Status', 'Action'],
+    approval: ['', 'Payee', 'Category', 'Tour / Inquiry', 'Check-in · Pay by', 'Amount', 'Status', ''],
     ready: ['Payee', 'Voucher', 'Tour / Inquiry', 'Payment date', 'Amount (LKR)', 'Status', ''],
     final: ['Voucher', 'Payee', 'Category', 'Tour / Inquiry', 'Paid date', 'Amount (LKR)', 'Bank reference', ''],
     recon: ['Bank account', 'Ledger', 'Status', 'Reconciled from', 'Last day prepared', 'Paid here (30 days)', ''],
@@ -250,11 +199,10 @@ const amt = r => `${r.currency ? esc(r.currency) + ' ' : ''}${money(r.amount)}`;
 function rowHtml(r) {
     if (TAB === 'approval') {
         const can = r.status === 'requested';
-        return `<tr class="frow"><td style="width:34px">${can && P.approver ? `<input type="checkbox" ${PICK.has(r.pr_id) ? 'checked' : ''} onchange="pick(${r.pr_id}, this.checked)" aria-label="Select request ${r.pr_id}">` : ''}</td>
-            <td><div class="payee"><i class="bi bi-bank"></i><div><b>${esc(r.payee)}</b><div class="mut">${r.tour ? esc(r.tour) : 'no tour'}${r.inq ? ' · INQ ' + esc(r.inq) : ''}${r.check_in ? ' · check-in ' + dmy(r.check_in) : ''}${r.tour_cancelled ? ' <span class="st r">Tour cancelled</span>' : ''}</div>${payBy(r)}</div></div></td>
-            <td>${r.pr_id}</td><td class="r"><b>${amt(r)}</b></td>
-            <td>${can ? '<span class="st w dot">Pending approval</span>' : '<span class="st r dot">Waiting for the rate</span>'}${held(r) ? ' <span class="st r dot">On hold</span>' : ''}</td>
-            <td><button type="button" class="btn-v" onclick="review('approval', ${r.pr_id})">View</button></td></tr>`;
+        return `<tr class="frow"><td>${can && P.approver ? `<input type="checkbox" ${PICK.has(r.pr_id) ? 'checked' : ''} onchange="pick(${r.pr_id}, this.checked)" aria-label="Select request ${r.pr_id}">` : ''}</td>
+            <td><b>${esc(r.payee)}</b><div class="mut">Request #${r.pr_id} · ${esc(r.by || '')}</div></td><td><span class="cat" title="${esc(r.type || '')}">${esc(r.cat)}</span></td><td>${tourCell(r)}${r.tour_cancelled ? ' <span class="st r">Tour cancelled</span>' : ''}</td>
+            <td>${dmy(r.check_in || r.due)}${payBy(r)}</td><td class="r"><b>${amt(r)}</b></td><td>${can ? '<span class="st w">Awaiting approval</span>' : '<span class="st r">Waiting for the rate</span>'}${held(r) ? ' <span class="st r">On hold</span>' : ''}</td>
+            <td class="r"><button type="button" class="btn-q" onclick="review('approval', ${r.pr_id})">Review →</button></td></tr>`;
     }
     if (TAB === 'ready') {
         const st = r.kind === 'adopt' ? '<span class="st w">Raised outside — to check &amp; add</span>' : r.kind === 'payable' ? '<span class="st p">Approved — to prepare for bank</span>' + (held(r) ? ` <span class="st r">${r.holds.length} on hold</span>` : '') + (r.rate_missing ? ' <span class="st w">Rate missing</span>' : '') : (r.stage === 'record' ? '<span class="st w">Bank payment to record</span>' : (r.locked ? '<span class="st r">Finalization interrupted — resume</span>' : '<span class="st b">Recorded — awaiting finalization</span>') ) + (held(r) ? ' <span class="st r">On hold</span>' : '');
@@ -288,23 +236,6 @@ function drawList() {
     else if (TAB === 'recon') sel.innerHTML = P.dbr ? `<a class="btn-g" href="${DBR_URL}">Open Daily Bank Reconciliation</a>` : '<span class="mut">The Daily Bank Reconciliation needs its own privilege.</span>';
     else if (TAB === 'ready') sel.innerHTML = P.payables ? `<a class="btn-q" href="${TPD_URL}payables">Older screen: Supplier Payables</a>` : '';
     else sel.innerHTML = '';
-}
-// tf-finance-r6: the two cards under the list, and the signed-in person's payment permissions
-function drawLow() {
-    const el = document.getElementById('fn_low'); if (!el) return; if (!D) { el.innerHTML = ''; return; }
-    const s = D.setup || {}; const done = [s.paying_account, s.ledger_mapping, s.reconciliation].filter(Boolean).length;
-    const row = (t, ok, where) => `<div class="lrow"><span class="o${ok ? ' ok' : ''}">${ok ? '✓' : ''}</span><span class="t">${t}</span>${ok ? '<span class="st g">Done</span>' : `<span class="st w">Pending</span>`}${where && !ok ? ` <a href="${where}" style="font-size:12.5px">Open</a>` : ''}</div>`;
-    const items = (D.attention || []).filter(x => x.key !== 'refusals'); const bad = items.filter(x => (x.rows || []).length);
-    el.innerHTML = `<div class="lcard"><div class="hd"><h5><i class="bi bi-bank"></i>Reconciliation overview</h5><span class="st ${done === 3 ? 'g' : 'w'}">${done === 3 ? 'Ready' : 'Setup required'}</span></div>
-            ${row('Paying account', s.paying_account, P.bank_master ? '<?= base_url('master_files/bank_accounts') ?>' : '')}${row('Ledger mapping', s.ledger_mapping, P.admin || P.bank_master ? TPD_URL + 'settings' : '')}${row('Reconciliation setup', s.reconciliation, P.dbr ? DBR_URL : '')}</div>
-        <div class="lcard"><div class="hd"><h5><i class="bi bi-exclamation-circle"></i>Needs attention</h5>${bad.length ? `<span class="st r">${bad.length}</span>` : ''}</div>
-            <div class="mid">${bad.length ? `<b>${bad.length} check${bad.length === 1 ? '' : 's'} need${bad.length === 1 ? 's' : ''} a person</b>${bad.slice(0, 3).map(x => esc(x.title)).join('<br>')}` : `<b>No exceptions found in current records</b>${D.counts.final ? Number(D.counts.final) + ' completed payment' + (D.counts.final === 1 ? '' : 's') + ' checked' : 'No completed payments checked yet'}`}</div>
-            <a class="more" href="#" onclick="setTab('recon'); setTimeout(() => { const a = document.querySelector('.fn-att'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60); return false;">View all checks <i class="bi bi-arrow-right"></i></a></div>`;
-}
-function showPerms() {
-    const rows = [['Raise payment requests', P.requester], ['Approve or return requests (management)', P.approver], ['Prepare payments and create vouchers', P.batch], ['Record bank payments', P.initiate], ['Finalise payments', P.bank_approver], ['Place a hold', P.approver || P.initiator], ['Release a hold', P.approver], ['Daily Bank Reconciliation', P.dbr], ['System Administrator', P.admin]];
-    openDrawer('Your payment permissions — ' + ME, box('What this sign-in may do', rows.map(([t, ok]) => `<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid #f0ecf2"><span class="st ${ok ? 'g' : 'w'}">${ok ? 'Yes' : 'No'}</span><span>${t}</span></div>`).join('')) +
-        '<div class="lock">One person never approves, prepares, records or finalises a payment they requested themselves, and never finalises a payment they recorded — the System Administrator included.</div>', '');
 }
 // tf-finance-r3: what needs a person's attention (was the Payment Desk's "Exceptions")
 function attentionHtml() {
