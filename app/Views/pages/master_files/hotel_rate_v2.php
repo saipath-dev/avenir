@@ -2460,6 +2460,17 @@ php spark hotelrates:migrate</pre>
     });
     // the tools in the ⋯ menu close it when used
     document.querySelectorAll('.hro-tools .act').forEach(el => el.addEventListener('click', () => { const t = document.getElementById('btn_tools'); if (t && window.bootstrap) { const d = bootstrap.Dropdown.getInstance(t); if (d) d.hide(); } }));
+    // tf-hr-overview-r3: the mock-up is drawn for a 1536px-wide window (content 1468px). On a wider or narrower desktop window
+    // the overview keeps the mock-up's proportions — letters, cards and buttons scale with the window instead of looking
+    // smaller on a big screen. Phones and tablets (under 1200px) use their own layout at normal size.
+    function hroFit() {
+        const cont = hroRoot.querySelector('.container-fluid'); if (!cont) return;
+        const cs = getComputedStyle(cont), w = cont.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        const z = window.innerWidth >= 1200 ? Math.min(1.3, Math.max(0.85, w / 1468)) : 1;
+        hroRoot.querySelectorAll('.hr-title, #hr_overview, .hro-back').forEach(el => { el.style.zoom = z === 1 ? '' : z.toFixed(3); });
+    }
+    window.addEventListener('resize', () => { clearTimeout(hroFit.t); hroFit.t = setTimeout(hroFit, 120); });
+    hroFit();
     hroSyncInputs(); hroMode(false);
 
     // ---------------- start ----------------
