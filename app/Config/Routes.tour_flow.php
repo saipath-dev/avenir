@@ -458,6 +458,7 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->get('intake/(:num)/checks', [TourIntakeController::class, 'checks']);
     $routes->get('intake/(:num)/readiness', [TourIntakeController::class, 'readiness']);   // tf-signal-r1: the traffic light
     $routes->post('intake/(:num)/day_check', [TourIntakeController::class, 'dayCheck']);
+    $routes->post('intake/(:num)/dayplan/(:num)', [TourIntakeController::class, 'dayPlan']);   // tf-dayplan-r1
     $routes->get('intake/(:num)/day/(:num)/rate_jump', [TourIntakeController::class, 'rateJump']);   // tf-ratejump-r1: Super Admin only
     $routes->post('intake/(:num)/check', [TourIntakeController::class, 'check']);
     $routes->post('intake/(:num)/markup', [TourIntakeController::class, 'markup']);

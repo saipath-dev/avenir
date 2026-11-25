@@ -850,6 +850,17 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // POST intake/(:num)/dayplan/(:num) — tf-dayplan-r1: Save draft / Save day plan on the Daily journey & activities panel
+    public function dayPlan($id, $dayNo)
+    {
+        try {
+            $plans = $this->svc()->saveDayPlan((int) $id, (int) $dayNo, $this->body());
+            return $this->json(['status' => 200, 'message' => 'Saved.', 'data' => $plans]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // POST intake/(:num)/day/(:num)/rates — tf-hotelpick-r1: the hotel, its area and its published room categories and
     // meal plans on a date, for the Hotel & room selection window; nothing is saved
     public function nightRates($id, $dayId)

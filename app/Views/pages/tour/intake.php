@@ -1,4 +1,5 @@
 <?= view('layouts/head') ?>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
     /* ---------- Tour Inquiry (same tokens as the Hotel Rates panel) ---------- */
     .tf { --tf-navy:#1e3553; --tf-navy-2:#2c4a73; --tf-teal:#0f8b7e; --tf-teal-soft:#e3f4f1; --tf-amber:#1a1a1a; --tf-amber-soft:#ffffff;
@@ -1064,6 +1065,92 @@
         .inq .inq-crewcol { padding:4px 6px; flex-wrap:wrap; } .inq .inq-crewcol + .inq-crewcol { border-left:0; }
         .inq .inq-day { grid-template-columns:104px minmax(0,1fr) 30px; } .inq .inq-day > .inq-f, .inq .inq-day > .inq-rm, .inq .inq-day > .inq-rate { display:none; }
         .inq .inq-two { grid-template-columns:minmax(0,1fr); } .tf .inq .inq-tab { padding:0 12px; font-size:13px; }
+    }
+    /* ---------------- tf-dayplan-r1 (25 Nov 2026, Shantha's mock-up): Activities tab → Daily journey & activities ---------------- */
+    .dj { --p:#842484; --p-soft:#f7eef8; --p-line:#e2d0e5; --g:#78b848; --g-dk:#3d8a26; --ink:#1f1d24; --mute:#4b4751; --line:#d9d5de; --amber:#c98a06; --amber-bg:#fdf1d6;
+        font-family:'Figtree','Segoe UI',system-ui,sans-serif; color:var(--ink); background:#fff; border-radius:8px; margin:0 0 14px; }
+    .dj-grid { display:grid; grid-template-columns:268px minmax(0,1fr); }
+    .dj-days { padding:26px 12px 24px 16px; border-right:1px solid #ece8ef; background:#fcfbfd; }
+    .dj-days h4 { font-size:25px; font-weight:800; margin:6px 10px 22px; color:var(--ink); }
+    .dj-day { display:block; width:100%; text-align:left; background:#fff; border:1.5px solid var(--line); border-radius:8px; padding:12px 18px 12px; margin-bottom:12px; cursor:pointer; font-family:inherit; }
+    .dj-day:hover { border-color:#c9b5cd; } .dj-day.on { border:2px solid var(--p); background:#fbf3fc; padding:11px 17px; }
+    .dj-day b { display:block; font-size:21px; font-weight:800; color:var(--ink); }
+    .dj-day span.s { display:block; font-size:18.5px; color:#2f2c34; margin:3px 0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .dj-pill { display:inline-block; border-radius:6px; padding:3px 12px; font-size:16px; font-weight:600; }
+    .dj-pill.draft { background:#f0e3f2; color:var(--p); } .dj-pill.review { background:var(--amber-bg); color:#8a5a00; } .dj-pill.ready { background:#e2f3d4; color:var(--g-dk); }
+    .dj-main { padding:20px 16px 18px 28px; min-width:0; }
+    .dj-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:16px; border-bottom:1px solid #ece8ef; }
+    .dj-head h2 { font-size:38px; font-weight:800; margin:0; letter-spacing:-.3px; color:var(--ink); }
+    .dj-head p { font-size:19.5px; color:var(--mute); margin:4px 0 0; }
+    .dj-tabs { display:flex; flex:0 0 auto; margin-top:16px; border:1.5px solid var(--line); border-radius:8px; overflow:hidden; }
+    .dj-tabs button { height:48px; padding:0 30px; border:0; border-left:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:20px; color:#2b2830; cursor:pointer; }
+    .dj-tabs button:first-child { border-left:0; } .dj-tabs button.on { background:var(--p); color:#fff; font-weight:600; border-radius:6px; }
+    .dj-title { margin:16px 0 18px; } .dj-title h3 { font-size:38px; font-weight:800; margin:0; color:var(--ink); } .dj-title div { font-size:22px; color:var(--mute); margin-top:6px; padding-left:4px; }
+    .dj-sum { display:grid; grid-template-columns:1fr 1fr 1fr; border:1.5px solid var(--line); border-radius:8px; padding:16px 18px; margin-bottom:22px; }
+    .dj-sum > div { display:flex; gap:22px; align-items:flex-start; padding:4px 18px; border-left:1.5px solid #e2dee6; position:relative; }
+    .dj-sum > div:first-child { border-left:0; padding-left:4px; }
+    .dj-sum svg { width:42px; height:42px; color:var(--p); flex:0 0 42px; margin-top:4px; }
+    .dj-sum small { display:block; font-size:16px; font-weight:700; color:var(--p); letter-spacing:.3px; text-transform:uppercase; }
+    .dj-sum b { display:block; font-size:21.5px; font-weight:800; margin:2px 0 6px; }
+    .dj-sum span { display:block; font-size:17.5px; color:var(--mute); }
+    .dj-sum .dj-out { margin-left:auto; align-self:center; }
+    .dj-btn-out { height:42px; padding:0 18px; border:1.5px solid var(--p); color:var(--p); background:#fff; border-radius:6px; font-family:inherit; font-size:19px; font-weight:700; white-space:nowrap; cursor:pointer; }
+    .dj-btn-out:hover { background:var(--p-soft); }
+    .dj-planrow { display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-bottom:22px; }
+    .dj-planrow > b { font-size:20.5px; font-weight:800; padding-left:4px; }
+    .dj-seg { display:flex; border:1.5px solid var(--line); border-radius:6px; overflow:hidden; }
+    .dj-seg button { height:40px; padding:0 26px; border:0; border-left:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:18px; color:#2b2830; cursor:pointer; }
+    .dj-seg button:first-child { border-left:0; } .dj-seg button.on { background:var(--p); color:#fff; font-weight:600; } .dj-seg button:disabled { cursor:default; }
+    .dj-info { flex:1 1 360px; display:flex; align-items:center; gap:12px; background:var(--p-soft); border-radius:6px; padding:9px 16px; font-size:15.5px; color:#2b2830; }
+    .dj-info svg { width:22px; height:22px; flex:0 0 22px; color:#4b4751; }
+    .dj-cols { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); gap:18px; align-items:start; }
+    .dj-card { border:1.5px solid var(--line); border-radius:8px; padding:18px 20px 22px; background:#fff; }
+    .dj-card h4 { font-size:25px; font-weight:800; margin:0 0 18px; color:var(--ink); }
+    .dj-sched { position:relative; }
+    .dj-item { display:grid; grid-template-columns:30px 72px minmax(0,1fr) auto; gap:0 18px; align-items:center; padding:10px 0; border-bottom:1px solid #ece8ef; position:relative; }
+    .dj-item:last-child { border-bottom:0; }
+    .dj-item .dot { width:18px; height:18px; border:2px solid var(--p); border-radius:50%; background:#fff; justify-self:center; z-index:1; }
+    .dj-sched::before { content:''; position:absolute; left:14px; top:34px; bottom:34px; width:2px; background:#c9a7cd; }
+    .dj-item .ib { width:72px; height:58px; border:1.5px solid var(--line); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--p); }
+    .dj-item .ib svg { width:34px; height:34px; }
+    .dj-item .tx b { display:block; font-size:21px; font-weight:800; } .dj-item .tx span { display:block; font-size:18px; color:var(--mute); margin-top:2px; }
+    .dj-tpill { border-radius:7px; padding:5px 16px; font-size:16px; font-weight:500; background:var(--amber-bg); color:#7a4f00; white-space:nowrap; }
+    .dj-tpill.ok { background:#e2f3d4; color:var(--g-dk); }
+    .dj-link { background:none; border:0; padding:0; font-family:inherit; font-size:19px; font-weight:600; color:var(--p); text-decoration:underline; text-underline-offset:3px; cursor:pointer; white-space:nowrap; }
+    .dj-none { display:flex; gap:16px; align-items:center; border:1.5px solid #a7d48b; background:#f3f9ee; border-radius:8px; padding:14px 22px; margin:16px 0 18px; }
+    .dj-none svg { width:36px; height:36px; color:var(--g-dk); flex:0 0 36px; }
+    .dj-none b { display:block; font-size:21px; font-weight:800; } .dj-none span { display:block; font-size:18.5px; color:#2b2830; }
+    .dj-add { display:inline-flex; align-items:center; gap:12px; height:44px; padding:0 20px; border:1.5px solid var(--p); color:var(--p); background:#fff; border-radius:6px; font-family:inherit; font-size:19.5px; font-weight:700; cursor:pointer; }
+    .dj-add:hover { background:var(--p-soft); } .dj-add svg { width:22px; height:22px; }
+    .dj-rv { list-style:none; padding:0; margin:0 0 22px; border-bottom:1px solid #e6e2ea; padding-bottom:20px; }
+    .dj-rv li { display:flex; align-items:center; gap:18px; font-size:19.5px; padding:6px 0; }
+    .dj-rv li svg { width:28px; height:28px; flex:0 0 28px; }
+    .dj-rv li.w svg { color:#e08a00; } .dj-rv li.ok svg { color:#3ba24a; }
+    .dj-rv li button { background:none; border:0; padding:0; font:inherit; color:inherit; text-align:left; cursor:pointer; } .dj-rv li button:hover { text-decoration:underline; }
+    .dj-card h5 { font-size:23px; font-weight:800; margin:0 0 16px; }
+    .dj-sel { width:100%; height:48px; border:1.5px solid var(--line); border-radius:6px; padding:0 46px 0 18px; font-family:inherit; font-size:19.5px; color:var(--ink); background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f1d24' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center / 18px; appearance:none; -webkit-appearance:none; cursor:pointer; }
+    .dj-sel:focus { outline:none; border-color:var(--p); box-shadow:0 0 0 .15rem rgba(132,36,132,.15); }
+    .dj-help { font-size:15.5px; color:var(--mute); margin-top:10px; line-height:1.35; }
+    .dj-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; border-top:1.5px solid #e2dee6; padding:16px 16px 4px 28px; margin-top:24px; background:#fff; position:sticky; bottom:0; z-index:15; }
+    body:has(.inq-pane.on #dj_foot:not([style*="none"])) #avh-root .avh-fab { bottom:92px !important; }   /* the User Manual button rises above the day plan's Save buttons instead of covering them */
+    .dj-foot .st { display:flex; align-items:center; gap:14px; font-size:22.5px; font-weight:800; color:var(--p); }
+    .dj-foot .st svg { width:34px; height:34px; color:#e08a00; } .dj-foot .st.ok svg { color:#3ba24a; }
+    .dj-foot .bt { display:flex; gap:16px; flex-wrap:wrap; }
+    .dj-foot button { height:48px; min-width:146px; padding:0 22px; border-radius:6px; font-family:inherit; font-size:20px; font-weight:700; cursor:pointer; }
+    .dj-foot .o { border:1.5px solid var(--p); color:var(--p); background:#fff; } .dj-foot .o:hover { background:var(--p-soft); }
+    .dj-foot .g { border:1.5px solid var(--g); background:var(--g); color:#fff; min-width:184px; } .dj-foot .g:hover { background:#6aa83d; }
+    .dj-foot button:disabled { opacity:.55; cursor:default; }
+    .dj-flash { animation:djflash 1.4s ease; } @keyframes djflash { 0%,100% { box-shadow:none; } 25%,60% { box-shadow:0 0 0 4px rgba(132,36,132,.3); } }
+    .dj-cost table { width:100%; border-collapse:collapse; font-size:18px; } .dj-cost th { background:#f4ecf6; color:var(--p); font-weight:600; padding:10px 12px; text-align:left; } .dj-cost td { padding:10px 12px; border-bottom:1px solid #ece8ef; } .dj-cost .r { text-align:right; white-space:nowrap; }
+    .dj-cost .tot td { font-weight:800; border-bottom:0; } .dj-cost .nt { font-size:15.5px; color:var(--mute); margin-top:12px; }
+    .dj-view { display:none; } .dj-view.on { display:block; }
+    .dj-locked { font-size:15.5px; color:#8a5a00; background:var(--amber-bg); border-radius:6px; padding:8px 14px; margin:0 0 16px; }
+    @media (max-width: 1199.98px) { .dj-grid { grid-template-columns:220px minmax(0,1fr); } .dj-cols { grid-template-columns:1fr; } .dj-head { flex-wrap:wrap; } .dj-sum { grid-template-columns:1fr; gap:12px; } .dj-sum > div { border-left:0; padding-left:4px; } }
+    @media (max-width: 767.98px) {
+        .dj-grid { grid-template-columns:1fr; } .dj-days { border-right:0; border-bottom:1px solid #ece8ef; padding:14px; display:flex; gap:10px; overflow-x:auto; } .dj-days h4 { display:none; } .dj-day { flex:0 0 200px; margin:0; }
+        .dj-main { padding:14px; } .dj-head h2, .dj-title h3 { font-size:26px; } .dj-head p, .dj-title div { font-size:16px; } .dj-tabs { width:100%; } .dj-tabs button { flex:1; padding:0 8px; font-size:15px; height:42px; }
+        .dj-seg button { padding:0 12px; font-size:15px; } .dj-item { grid-template-columns:24px 52px minmax(0,1fr); } .dj-item .ib { width:52px; height:46px; } .dj-item > :last-child:not(.tx) { grid-column:3; justify-self:start; margin-top:6px; }
+        .dj-foot { padding:12px 14px; } .dj-foot .st { font-size:17px; } .dj-foot button { flex:1; min-width:0; font-size:16px; height:44px; padding:0 10px; }
     }
 </style>
 <body>
@@ -4547,6 +4634,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const cc = document.getElementById('comms_card'); if (cc) pane('notes').appendChild(cc);
         inqNotes(pane('notes'), it);   // tf-notes-r1: after every card of this tab is in it
         inqMeals(pane('acts'), it);   // tf-lunch-r1
+        djMount(pane('acts'), it);   // tf-dayplan-r1
         wrap.remove();
         if (bar) shell.appendChild(bar);
 
@@ -4627,7 +4715,191 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         document.querySelectorAll('.inq [data-actgo]').forEach(b => b.addEventListener('click', () => inqActGo(Number(b.dataset.actgo))));
         inqGate();
     }
-    function inqActGo(dayNo) { inqShow('acts'); if (window.tfActSub) window.tfActSub('tix'); const el = document.getElementById('inq_aday_' + dayNo) || document.getElementById('inq_acts'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } }
+    function inqActGo(dayNo) { inqShow('acts'); if (document.getElementById('dj')) { DJ.view = 'find'; DJ.day = Number(dayNo); djDraw(); } if (window.tfActSub) window.tfActSub('tix'); const el = document.getElementById('inq_aday_' + dayNo) || document.getElementById('inq_acts'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } }
+    // ---------------- tf-dayplan-r1 (25 Nov 2026, Shantha's mock-up): the Activities tab as "Daily journey & activities" ----------------
+    // Day plan (new): each tour day's arrival / transfer / overnight, the plan type and transport arrangement (saved per day),
+    // the day's checks, Save draft / Review day / Save day plan. Find activities: the panel as it was (Meals & Restaurants,
+    // Activities / Tickets, the per-day check list). Costs & settlement: the day's costed lines already on the inquiry.
+    const DJ = { forId: null, day: null, view: 'plan', local: {} };
+    const DJ_SVG = (p, sw) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw || 1.8}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+    const DJI = {
+        plane: DJ_SVG('<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>'),
+        car: DJ_SVG('<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18.4 10.6 16.3 6.4A2 2 0 0 0 14.5 5h-5a2 2 0 0 0-1.8 1.1L5.6 10.6 3.5 11.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/><path d="M5.6 10.6h12.8"/>'),
+        bed: DJ_SVG('<path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/><rect x="7.5" y="10" width="4" height="3" rx="1"/>'),
+        ticket: DJ_SVG('<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/>'),
+        info: DJ_SVG('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>', 2),
+        infoG: DJ_SVG('<circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5h.01"/>', 2.2),
+        warn: DJ_SVG('<circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5h.01"/>', 2.2),
+        ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        plus: DJ_SVG('<path d="M12 5v14M5 12h14"/>', 2.4),
+    };
+    const DJ_TYPES = { transfer: 'Transfer only', visits: 'Transfer + visits', leisure: 'Activities / leisure' };
+    const DJ_TR = { tour_driver: 'Tour driver', separate: 'Separate transfer', shuttle: 'Hotel shuttle', client: 'Client arranged' };
+    const DJ_MEALS = ['lunch', 'dinner', 'breakfast', 'meal'];
+    const djFmtLong = d => { if (!d) return 'Date not set'; const t = new Date(d + 'T00:00:00Z'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }); };
+    const djFmtShort = d => { if (!d) return ''; const t = new Date(d + 'T00:00:00Z'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }); };
+    const djFlightNo = s => String(s || '').trim().split(/\s+/).slice(0, 2).join(' ');
+    // the landing / take-off time from the flight line the agent wrote ("UL 455 26 NOV NRT CMB 1115 1705" -> 17:05), never guessed
+    function djFlightTime(s) {
+        const rest = String(s || '').replace(/^\s*[A-Z0-9]{2}\s*-?\s*\d{2,4}\b/i, '');
+        const t = rest.match(/\b(?:[01]\d|2[0-3]):?[0-5]\d\b/g) || [];
+        if (!t.length) return null;
+        const x = t[t.length - 1].replace(':', '');
+        return x.slice(0, 2) + ':' + x.slice(2);
+    }
+    function djDays(it) {
+        const nights = (it.days || []).slice().sort((a, b) => a.day_no - b.day_no);
+        const out = nights.map((d, i) => ({ no: Number(d.day_no), date: d.day_date, night: d, prev: i ? nights[i - 1] : null, dep: false, services: d.services || [], exc: d.excursions || [] }));
+        const dep = it.departure_day;
+        if (dep && !nights.some(d => Number(d.day_no) === Number(dep.day_no))) out.push({ no: Number(dep.day_no), date: dep.date, night: null, prev: nights[nights.length - 1] || null, dep: true, services: dep.services || [], exc: dep.excursions || [] });
+        return out;
+    }
+    // heads on a line: the qty the agent set, else adults + children, else what the costing used (amount ÷ unit price)
+    const djQty = s => { if (s.qty != null && s.qty !== '') return Number(s.qty); if (s.qty_adult != null) return Number(s.qty_adult) + Number(s.qty_child || 0); if (s.pax != null && s.pax !== '') return Number(s.pax); const a = Number(s.amount_usd), u = Number(s.unit_usd); return a && u ? Math.round(a / u) : null; };
+    const djPlace = n => n ? (n.area || n.hotel_name_raw || 'Place not set') : '';
+    function djInfo(it, d) {
+        const all = djDays(it), first = d.no === Math.min(...all.map(x => x.no));
+        const place = djPlace(d.night), prevPlace = djPlace(d.prev);
+        const moving = first || d.dep || !!(prevPlace && place && prevPlace !== place);
+        const visits = [...d.services.filter(s => !DJ_MEALS.includes(String(s.kind)) && !s.meal_id), ...d.exc];
+        const saved = (it.day_plans || {})[d.no] || null;
+        const loc = DJ.local[d.no] || {};
+        const plan = loc.plan_type || (saved && saved.plan_type) || (visits.length ? 'visits' : 'transfer');
+        const transport = loc.transport !== undefined ? loc.transport : ((saved && saved.transport) || '');
+        const fl = first ? it.arrival_flight : (d.dep ? it.departure_flight : null), ft = fl ? djFlightTime(fl) : null;
+        const title = first ? 'Arrival' : (d.dep ? 'Departure' : (moving ? 'Transfer to ' + place : place));
+        const sub = first ? 'Arrival · ' + (place || 'Katunayake') : (d.dep ? 'Departure · BIA' : (moving ? prevPlace + ' → ' + place : place));
+        const checks = [];
+        if (first || d.dep) checks.push(fl && ft ? { ok: true, t: 'Flight ' + djFlightNo(fl) + ' · ' + (first ? 'lands ' : 'departs ') + ft } : { ok: false, t: first ? 'Flight / arrival time needed' : 'Flight / departure time needed', go: 'flight' });
+        if (!d.dep) checks.push(d.night && d.night.hotel_name_raw ? (d.night.rate_state === 'rate' ? { ok: true, t: 'Overnight: ' + d.night.hotel_name_raw } : { ok: false, t: 'Overnight hotel rate missing', go: 'hotel' }) : { ok: false, t: 'Overnight hotel needed', go: 'hotel' });
+        if (moving) checks.push(transport ? { ok: true, t: 'Transfer: ' + DJ_TR[transport] } : { ok: false, t: 'Transfer arrangement needed', go: 'transport' });
+        checks.push(visits.length ? { ok: true, t: 'Activities: ' + visits.length + ' planned' } : (plan === 'transfer' ? { ok: true, t: 'Activities: None planned' } : { ok: false, t: 'Activities: none added yet', go: 'visit' }));
+        const issues = checks.filter(c => !c.ok).length;
+        const status = !saved ? 'draft' : (issues ? 'review' : (saved.status === 'done' ? 'ready' : 'draft'));
+        return { first, dep: d.dep, place, prevPlace, moving, visits, saved, plan, transport, fl, ft, title, sub, checks, issues, status };
+    }
+    function djMount(pane, it) {
+        if (!pane || document.getElementById('dj')) return;
+        if (DJ.forId !== it.id) { DJ.forId = it.id; DJ.day = null; DJ.view = 'plan'; DJ.local = {}; }
+        const days = djDays(it);
+        if (!days.length) return;
+        if (DJ.day === null || !days.some(d => d.no === DJ.day)) DJ.day = days[0].no;
+        const root = document.createElement('div'); root.className = 'dj'; root.id = 'dj';
+        root.innerHTML = `<div class="dj-grid"><aside class="dj-days"><h4>Tour days</h4><div id="dj_list"></div></aside>
+            <section class="dj-main"><div class="dj-head"><div><h2>Daily journey &amp; activities</h2><p>Arrival, transfers, visits and overnight stays in one place</p></div>
+                <div class="dj-tabs" role="tablist"><button type="button" data-dj="plan" role="tab">Day plan</button><button type="button" data-dj="find" role="tab">Find activities</button><button type="button" data-dj="cost" role="tab">Costs &amp; settlement</button></div></div>
+                <div class="dj-view" data-djv="plan" id="dj_plan"></div><div class="dj-view" data-djv="find" id="dj_find"></div><div class="dj-view" data-djv="cost" id="dj_cost"></div></section></div>
+            <div class="dj-foot" id="dj_foot"></div>`;
+        const kids = [...pane.children];
+        pane.insertBefore(root, pane.firstChild);
+        const find = root.querySelector('#dj_find'); kids.forEach(k => find.appendChild(k));   // the panel as it was: Meals & Restaurants, Activities / Tickets
+        root.querySelectorAll('[data-dj]').forEach(b => b.addEventListener('click', () => { DJ.view = b.dataset.dj; djDraw(); }));
+        djDraw();
+        djFit();
+    }
+    function djFit() {
+        const el = document.getElementById('dj'); if (!el) return;
+        const w = el.parentElement ? el.parentElement.clientWidth : 0;
+        const z = window.innerWidth >= 1200 && w ? Math.min(1.3, Math.max(0.8, w / 1500)) : 1;
+        el.style.zoom = z === 1 ? '' : z.toFixed(3);
+    }
+    window.addEventListener('resize', () => { clearTimeout(djFit.t); djFit.t = setTimeout(djFit, 120); });
+    function djDraw() {
+        const it = CURRENT, root = document.getElementById('dj'); if (!it || !root) return;
+        const days = djDays(it), d = days.find(x => x.no === DJ.day) || days[0], I = djInfo(it, d), locked = !!it.locked;
+        root.querySelectorAll('[data-dj]').forEach(b => { b.classList.toggle('on', b.dataset.dj === DJ.view); b.setAttribute('aria-selected', b.dataset.dj === DJ.view); });
+        root.querySelectorAll('[data-djv]').forEach(v => v.classList.toggle('on', v.dataset.djv === DJ.view));
+        // ---- tour days
+        const PILL = { draft: ['draft', 'Draft'], review: ['review', 'Needs review'], ready: ['ready', 'Ready'] };
+        root.querySelector('#dj_list').innerHTML = days.map(x => { const X = djInfo(it, x), p = PILL[X.status]; return `<button type="button" class="dj-day ${x.no === d.no ? 'on' : ''}" data-djday="${x.no}"><b>Day ${x.no} · ${esc(djFmtShort(x.date))}</b><span class="s" title="${esc(X.sub)}">${esc(X.sub)}</span><span class="dj-pill ${p[0]}">${p[1]}</span></button>`; }).join('');
+        root.querySelectorAll('[data-djday]').forEach(b => b.addEventListener('click', () => {
+            DJ.day = Number(b.dataset.djday); djDraw();
+            if (DJ.view === 'find') { if (window.tfActSub) window.tfActSub('tix'); const el = document.getElementById('inq_aday_' + DJ.day); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
+        }));
+        // ---- day plan
+        const fno = I.fl ? esc(djFlightNo(I.fl)) : '';
+        const sumCol1 = I.first ? `${DJI.plane}<div><small>Arrival</small><b>BIA · Katunayake</b><span>Flight and landing time: ${I.fl ? fno + (I.ft ? ' · ' + I.ft : ' · time not entered') : 'Not entered'}</span></div>`
+            : (I.dep ? `${DJI.bed}<div><small>From</small><b>${esc(I.prevPlace || 'Last hotel')}</b><span>Check-out after ${d.prev ? 'night ' + d.prev.day_no : 'the last night'}</span></div>`
+            : `${DJI.bed}<div><small>From</small><b>${esc(I.prevPlace || '—')}</b><span>${d.prev && d.prev.hotel_name_raw ? esc(d.prev.hotel_name_raw) : 'Previous night'}</span></div>`);
+        const sumCol2 = I.dep ? `${DJI.car}<div><small>Transfer to</small><b>BIA · Katunayake</b><span>Hotel → airport${I.fl ? ' · ' + fno + (I.ft ? ' ' + I.ft : '') : ''}</span></div>`
+            : (I.moving ? `${DJI.car}<div><small>Transfer to</small><b>${esc(I.place || '—')}</b><span>${I.first ? 'Airport → overnight hotel' : esc(I.prevPlace + ' → ' + I.place)}</span></div>`
+            : `${DJI.car}<div><small>Stay in</small><b>${esc(I.place)}</b><span>No transfer — the day in ${esc(I.place)}</span></div>`);
+        const hotel = d.night && d.night.hotel_name_raw;
+        const sumCol3 = I.dep ? `${DJI.plane}<div><small>Departure</small><b>BIA · Katunayake</b><span>Flight and time: ${I.fl ? fno + (I.ft ? ' · ' + I.ft : ' · time not entered') : 'Not entered'}</span></div>`
+            : `${DJI.bed}<div><small>Overnight</small><b>${hotel ? esc(hotel) : (I.first ? 'Airport-area hotel' : esc(I.place) + ' hotel')}</b><span>${hotel ? (d.night.rate_state === 'rate' ? esc([d.night.room_type_name, d.night.meal_plan].filter(Boolean).join(' · ') || 'Rate on file') : 'Rate missing') : 'Hotel not selected'}</span></div>${locked ? '' : `<button type="button" class="dj-btn-out" data-djgo="hotel">${hotel ? 'Change hotel' : 'Select hotel'}</button>`}`;
+        const NOTE = { transfer: 'Start with arrival and the overnight stay. Add sightseeing only when needed.', visits: 'Add the visits on the way, then the overnight stay.', leisure: 'A day at leisure, or with activities near the hotel.' };
+        const item = (ic, title, sub, right) => `<div class="dj-item"><span class="dot"></span><span class="ib">${ic}</span><div class="tx"><b>${title}</b>${sub ? `<span>${sub}</span>` : ''}</div>${right || '<span></span>'}</div>`;
+        const trLink = locked ? '' : '<button type="button" class="dj-link" data-djgo="transport">Arrange transfer</button>';
+        let sched = '';
+        if (I.first) sched += item(DJI.plane, 'Arrive at BIA', I.fl ? esc(I.fl) : 'Flight not entered', I.ft ? `<span class="dj-tpill ok">Lands ${I.ft}</span>` : '<span class="dj-tpill">Time needed</span>');
+        if (I.moving && !I.dep) sched += item(DJI.car, I.first ? 'Airport → hotel transfer' : esc(I.prevPlace + ' → ' + I.place) + ' transfer', 'Transport arrangement: ' + (I.transport ? DJ_TR[I.transport] : 'Not selected'), trLink);
+        I.visits.forEach(v => {
+            const sub = [v.kind ? String(v.kind).replace(/_/g, ' ') : 'visit', djQty(v) ? djQty(v) + ' pax' : null].filter(Boolean).join(' · ');
+            sched += item(DJI.ticket, esc(v.title || v.name || 'Visit'), esc(sub.charAt(0).toUpperCase() + sub.slice(1)), locked || !v.id || !d.services.includes(v) ? '' : `<button type="button" class="dj-link" data-djedit="${Number(v.id)}">Edit</button>`);
+        });
+        if (I.dep) { sched += item(DJI.car, 'Hotel → airport transfer', 'Transport arrangement: ' + (I.transport ? DJ_TR[I.transport] : 'Not selected'), trLink); sched += item(DJI.plane, 'Depart from BIA', I.fl ? esc(I.fl) : 'Flight not entered', I.ft ? `<span class="dj-tpill ok">Departs ${I.ft}</span>` : '<span class="dj-tpill">Time needed</span>'); }
+        else sched += item(DJI.bed, 'Check-in &amp; overnight', hotel ? esc(hotel) + (d.night.meal_plan ? ' · ' + esc(d.night.meal_plan) : '') : 'Select a hotel to complete the stay.');
+        const none = I.visits.length ? '' : `<div class="dj-none">${DJI.infoG}<div><b>No sightseeing planned</b><span>${I.plan === 'transfer' ? 'Transfer only selected for this day.' : (I.plan === 'leisure' ? 'Activities / leisure selected — add the activities for this day.' : 'Transfer + visits selected — add the visits for this day.')}</span></div></div>`;
+        root.querySelector('#dj_plan').innerHTML = `${locked ? '<div class="dj-locked"><i class="bi bi-lock"></i> This inquiry is closed; the day plan can be read but not changed.</div>' : ''}
+            <div class="dj-title"><h3>Day ${d.no} · ${esc(I.title)}</h3><div>${esc(djFmtLong(d.date))}</div></div>
+            <div class="dj-sum"><div>${sumCol1}</div><div>${sumCol2}</div><div>${sumCol3}</div></div>
+            <div class="dj-planrow"><b>Day plan</b><div class="dj-seg" role="radiogroup" aria-label="Day plan">${Object.entries(DJ_TYPES).map(([k, w]) => `<button type="button" role="radio" aria-checked="${I.plan === k}" class="${I.plan === k ? 'on' : ''}" data-djtype="${k}" ${locked ? 'disabled' : ''}>${w}</button>`).join('')}</div>
+                <div class="dj-info">${DJI.info}<span>${NOTE[I.plan]}</span></div></div>
+            <div class="dj-cols"><div class="dj-card"><h4>Day schedule</h4><div class="dj-sched">${sched}</div>${none}${locked ? '' : `<button type="button" class="dj-add" data-djgo="visit">${DJI.plus} Add an optional visit</button>`}</div>
+                <div class="dj-card" id="dj_review"><h4>Day review</h4><ul class="dj-rv">${I.checks.map(c => `<li class="${c.ok ? 'ok' : 'w'}">${c.ok ? DJI.ok : DJI.warn}${!c.ok && c.go && !locked ? `<button type="button" data-djgo="${c.go}">${esc(c.t)}</button>` : `<span>${esc(c.t)}</span>`}</li>`).join('')}</ul>
+                    <h5>Transport arrangement</h5><select class="dj-sel" id="dj_tr" ${locked ? 'disabled' : ''}><option value="">Select arrangement</option>${Object.entries(DJ_TR).map(([k, w]) => `<option value="${k}" ${I.transport === k ? 'selected' : ''}>${w}</option>`).join('')}</select>
+                    <div class="dj-help">Tour driver, separate transfer, hotel shuttle or client arranged.<br>No automatic driver assignment.</div></div></div>`;
+        // ---- footer
+        const foot = root.querySelector('#dj_foot'); foot.style.display = DJ.view === 'plan' ? '' : 'none';
+        const word = I.saved && I.saved.status === 'done' ? 'Day plan saved' : 'Draft';
+        foot.innerHTML = `<div class="st ${I.issues ? '' : 'ok'}">${I.issues ? DJI.warn : DJI.ok}<span>${word} · ${I.issues ? I.issues + ' detail' + (I.issues === 1 ? '' : 's') + ' need' + (I.issues === 1 ? 's' : '') + ' attention' : 'all details complete'}</span></div>
+            <div class="bt"><button type="button" class="o" data-djsave="draft" ${locked ? 'disabled' : ''}>Save draft</button><button type="button" class="o" data-djreview>Review day</button><button type="button" class="g" data-djsave="done" ${locked ? 'disabled' : ''}>Save day plan</button></div>`;
+        // ---- costs & settlement: the day's costed lines already on the inquiry (no new settlement logic)
+        const num = v => v != null && v !== '' ? Number(v) : null;
+        const lines = [...d.services, ...d.exc].map(s => ({ t: s.title || s.name || 'Line', k: String(s.kind || (s.meal_id ? 'meal' : 'excursion')).replace(/_/g, ' '), q: djQty(s) ?? '', usd: num(s.amount_usd), lkr: num(s.amount_lkr) }));
+        const usd = lines.reduce((a, l) => a + (l.usd || 0), 0), lkr = lines.reduce((a, l) => a + (l.lkr || 0), 0);
+        const m = (c, v) => c + ' ' + Number(v).toLocaleString('en-US', { minimumFractionDigits: c === 'USD' ? 2 : 0, maximumFractionDigits: 2 });
+        root.querySelector('#dj_cost').innerHTML = `<div class="dj-title"><h3>Day ${d.no} · ${esc(I.title)}</h3><div>${esc(djFmtLong(d.date))}</div></div><div class="dj-card dj-cost"><h4>Costs on this day</h4>
+            ${lines.length ? `<table><thead><tr><th>Item</th><th>Type</th><th class="r">Pax / qty</th>${SEES_PRICING ? '<th class="r">Amount</th>' : ''}</tr></thead><tbody>${lines.map(l => `<tr><td>${esc(l.t)}</td><td>${esc(l.k.charAt(0).toUpperCase() + l.k.slice(1))}</td><td class="r">${esc(l.q === '' || l.q == null ? '—' : String(l.q))}</td>${SEES_PRICING ? `<td class="r">${l.usd != null ? m('USD', l.usd) : (l.lkr != null ? m('LKR', l.lkr) : '<span style="color:#b3261e">Rate missing</span>')}</td>` : ''}</tr>`).join('')}
+                ${SEES_PRICING ? `<tr class="tot"><td colspan="3">Day total</td><td class="r">${usd ? m('USD', usd) : ''}${usd && lkr ? ' + ' : ''}${lkr ? m('LKR', lkr) : ''}${!usd && !lkr ? '—' : ''}</td></tr>` : ''}</tbody></table>` : '<div class="help" style="font-size:16px">No activity, entrance or meal costs on this day.</div>'}
+            <div class="nt">Hotel nights and transport are costed on the Hotels and Transport tabs; the full costing is under Before Quotation &amp; Confirmation.${SEES_PRICING ? '' : ' Amounts are shown to the Pricing group only.'}</div></div>`;
+        // ---- actions
+        root.querySelectorAll('[data-djtype]').forEach(b => b.addEventListener('click', () => { DJ.local[d.no] = Object.assign(DJ.local[d.no] || {}, { plan_type: b.dataset.djtype }); djDraw(); }));
+        const sel = root.querySelector('#dj_tr'); if (sel) sel.addEventListener('change', () => { DJ.local[d.no] = Object.assign(DJ.local[d.no] || {}, { transport: sel.value }); djDraw(); });
+        root.querySelectorAll('[data-djgo]').forEach(b => b.addEventListener('click', () => djGo(b.dataset.djgo, d)));
+        root.querySelectorAll('[data-djedit]').forEach(b => b.addEventListener('click', () => openServices(d.no, Number(b.dataset.djedit))));
+        root.querySelectorAll('[data-djsave]').forEach(b => b.addEventListener('click', () => djSave(d, b.dataset.djsave, b)));
+        const rv = root.querySelector('[data-djreview]');
+        if (rv) rv.addEventListener('click', () => {
+            const c = document.getElementById('dj_review'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'center' }); c.classList.remove('dj-flash'); void c.offsetWidth; c.classList.add('dj-flash'); }
+            const open = djInfo(it, d).checks.filter(x => !x.ok);
+            toast(open.length ? 'warning' : 'success', open.length ? 'Day ' + d.no + ' — still to do: ' + open.map(x => x.t).join('; ') + '.' : 'Day ' + d.no + ' — every detail is complete.');
+        });
+    }
+    function djGo(what, d) {
+        if (what === 'hotel' && d.night) return openDay(Number(d.night.id));
+        if (what === 'visit') return openServices(d.no);
+        if (what === 'flight') { const b = document.querySelector('[data-inqgo="book"]'); if (b) b.click(); return; }
+        if (what === 'transport') { const s = document.getElementById('dj_tr'); if (s) { s.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { s.focus(); s.classList.remove('dj-flash'); void s.offsetWidth; s.classList.add('dj-flash'); }, 250); } }
+    }
+    async function djSave(d, status, btn) {
+        const it = CURRENT, I = djInfo(it, d);
+        btn.disabled = true;
+        const j = await post('/intake/' + it.id + '/dayplan/' + d.no, { plan_type: I.plan, transport: I.transport, status });
+        btn.disabled = false;
+        if (j.status !== 200) { toast('error', j.message || 'The day plan was not saved.'); return; }
+        it.day_plans = j.data; delete DJ.local[d.no];
+        // Save day plan also settles the day on the existing activity check (the quotation's traffic light), as the per-day buttons do
+        if (status === 'done') {
+            const st = I.visits.length ? 'checked' : (I.plan === 'transfer' ? 'none' : null);
+            if (st) { const r = await post('/intake/' + it.id + '/day_check', { day_no: d.no, status: st }); if (r.status === 200) { INQ_SIG = r.data; inqSignalDraw(it); } else toast('warning', 'Day plan saved. The activity check was not set: ' + (r.message || '')); }
+        }
+        djDraw();
+        const left = djInfo(it, d).issues;
+        if (status === 'done' && left) toast('warning', 'Day ' + d.no + ' plan saved — ' + left + ' detail' + (left === 1 ? '' : 's') + ' still need' + (left === 1 ? 's' : '') + ' attention.');
+        else toast('success', status === 'done' ? 'Day ' + d.no + ' plan saved.' : 'Day ' + d.no + ' saved as draft.');
+    }
+
     // 5 — Send Quotation (and Send Email) only on green: blocked here, and refused again by the server when the e-mail is sent
     function inqGate() {
         const s = INQ_SIG; if (!s) return;

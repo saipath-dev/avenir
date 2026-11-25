@@ -242,6 +242,7 @@ final class IntakeService
     private ?bool $hasRateFreeze = null;
     private ?bool $hasRoomTypeAuto = null;   // tf-walkfix-r1 (schema 35)
     private ?bool $hasDayRooms = null;       // tf-hotelpick-r1: the room rows of a night
+    private ?bool $hasDayPlans = null;       // tf-dayplan-r1: the day plan of each tour day
     private ?bool $hasTwoFigures = null;
     private ?bool $hasSamePlace = null;   // tf-walkfix-r1 (schema 35)
     private ?array $gatewayTowns = null;  // tf-walkfix-r1: the airport area, from the planner's gateway setting
@@ -443,6 +444,8 @@ final class IntakeService
         }
         $it['fields']     = json_decode((string) $it['fields_json'], true) ?: [];
         $it['days']       = $this->db->query('SELECT * FROM tf_intake_day WHERE intake_id = ? ORDER BY day_no, id', [$id])->getResultArray();
+        // tf-dayplan-r1: each tour day's plan (transfer only / transfer + visits / activities or leisure), transport arrangement and status
+        $it['day_plans'] = $this->dayPlans($id);
         // tf-hotelpick-r1: the room rows a person set for a night (category, occupancy, rooms) — that night's room mix
         $it['day_rooms'] = [];
         if ($this->ensureDayRooms()) {
@@ -1769,6 +1772,75 @@ final class IntakeService
     }
 
     /** Correct one requested night, then re-check it against the rates panel. */
+    /** tf-dayplan-r1: the day plans of an inquiry — created on first use. */
+    public function ensureDayPlans(): bool
+    {
+        if ($this->hasDayPlans !== null) {
+            return $this->hasDayPlans;
+        }
+        try {
+            $this->db->query("CREATE TABLE IF NOT EXISTS `tf_intake_dayplan` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `intake_id` INT UNSIGNED NOT NULL,
+                `day_no` SMALLINT UNSIGNED NOT NULL,
+                `plan_type` VARCHAR(16) NULL,
+                `transport` VARCHAR(16) NULL,
+                `status` VARCHAR(10) NOT NULL DEFAULT 'draft',
+                `set_by` VARCHAR(100) NULL,
+                `set_at` DATETIME NULL,
+                PRIMARY KEY (`id`), UNIQUE KEY `u_day` (`intake_id`, `day_no`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            $this->hasDayPlans = true;
+        } catch (\Throwable $e) {
+            $this->hasDayPlans = false;
+        }
+        return $this->hasDayPlans;
+    }
+
+    public const DAYPLAN_TYPES = ['transfer' => 'Transfer only', 'visits' => 'Transfer + visits', 'leisure' => 'Activities / leisure'];
+    public const DAYPLAN_TRANSPORT = ['tour_driver' => 'Tour driver', 'separate' => 'Separate transfer', 'shuttle' => 'Hotel shuttle', 'client' => 'Client arranged'];
+
+    /** tf-dayplan-r1: day_no => the saved plan of that day. */
+    public function dayPlans(int $id): array
+    {
+        if (!$this->ensureDayPlans()) {
+            return [];
+        }
+        $out = [];
+        foreach ($this->db->query('SELECT day_no, plan_type, transport, status, set_by, set_at FROM tf_intake_dayplan WHERE intake_id = ?', [$id])->getResultArray() as $r) {
+            $out[(int) $r['day_no']] = ['plan_type' => $r['plan_type'], 'transport' => $r['transport'], 'status' => $r['status'], 'set_by' => $r['set_by'], 'set_at' => $r['set_at']];
+        }
+        return $out;
+    }
+
+    /** tf-dayplan-r1: save one day's plan (Save draft / Save day plan). Only the plan, the arrangement and the status — nothing else on the day changes. */
+    public function saveDayPlan(int $id, int $dayNo, array $in): array
+    {
+        $this->assertOpen($id);
+        if (!$this->ensureDayPlans()) {
+            throw new \RuntimeException('The day plans could not be set up on this site.');
+        }
+        if ($dayNo < 1 || $dayNo > 400) {
+            throw new \InvalidArgumentException('Which day?');
+        }
+        $type = (string) ($in['plan_type'] ?? '');
+        $type = isset(self::DAYPLAN_TYPES[$type]) ? $type : null;
+        $tr = (string) ($in['transport'] ?? '');
+        $tr = isset(self::DAYPLAN_TRANSPORT[$tr]) ? $tr : null;
+        $st = (string) ($in['status'] ?? 'draft') === 'done' ? 'done' : 'draft';
+        $old = $this->dayPlans($id)[$dayNo] ?? null;
+        $this->db->query('INSERT INTO tf_intake_dayplan (intake_id, day_no, plan_type, transport, status, set_by, set_at) VALUES (?, ?, ?, ?, ?, ?, ?)
+                          ON DUPLICATE KEY UPDATE plan_type = VALUES(plan_type), transport = VALUES(transport), status = VALUES(status), set_by = VALUES(set_by), set_at = VALUES(set_at)',
+            [$id, $dayNo, $type, $tr, $st, $this->user, date('Y-m-d H:i:s')]);
+        $word = static fn ($p) => $p ? ((self::DAYPLAN_TYPES[$p['plan_type'] ?? ''] ?? 'no plan type') . ' · ' . (self::DAYPLAN_TRANSPORT[$p['transport'] ?? ''] ?? 'no transport arrangement') . ' · ' . ($p['status'] === 'done' ? 'day plan saved' : 'draft')) : null;
+        try {
+            $this->activity()->record('intake', $id, $id, null, 'dayplan', 'Day ' . $dayNo . ' plan ' . ($st === 'done' ? 'saved' : 'saved as draft'), [['what' => 'Day plan, day ' . $dayNo, 'from' => $word($old), 'to' => $word(['plan_type' => $type, 'transport' => $tr, 'status' => $st])]]);
+        } catch (\Throwable $e) {
+        }
+        $this->touch($id);
+        return $this->dayPlans($id);
+    }
+
     /** tf-hotelpick-r1: the room rows of a night — created on first use (the same way as the other TourFlow tables). */
     public function ensureDayRooms(): bool
     {
