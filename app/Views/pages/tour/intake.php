@@ -4830,12 +4830,13 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const m = v => v == null ? '—' : 'USD ' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const labels = []; rows.forEach(r => (r.guests || []).forEach(g => { if (!labels.includes(g.label)) labels.push(g.label); }));
         const cell = (r, lab) => { const g = (r.guests || []).find(x => x.label === lab); return g ? m(g.sell_usd) + (g.count > 1 ? ` <small>× ${g.count}</small>` : '') : (r.ready ? '—' : ''); };
-        const sec = k => rows.map(r => `<td>${m(r.sections ? r.sections[k] : null)}</td>`).join('');
+        const part = (r, v) => r.ready ? m(v) : '<span style="color:#8A5A00">not priced yet</span>';   // an option still missing rates shows no partial figures
+        const sec = k => rows.map(r => `<td>${part(r, r.sections ? r.sections[k] : null)}</td>`).join('');
         box.innerHTML = `<div class="ro-ch"><h4>Quotation — ${cols} room categor${cols === 1 ? 'y' : 'ies'}</h4><span>Whole tour, ${Number(it.nights || (it.days || []).length)} nights. ${sees ? 'Cost and markup are shown to the Pricing group only.' : 'Prices per guest; the costing is shown to the Pricing group.'}</span></div>
             <div class="ro-tw"><table class="ro-t"><thead><tr><th></th>${rows.map((r, i) => `<th style="border-top:3px solid ${RO_TONE[i % 5]}">${roNo(r.no)} ${esc(r.name)}</th>`).join('')}</tr></thead><tbody>
-            ${sees ? `<tr><td>Hotels</td>${sec('hotels')}</tr><tr><td>Transport</td>${sec('transport')}</tr><tr><td>Driver &amp; guide</td>${rows.map(r => `<td>${m(r.sections ? (Number(r.sections.crew || 0) + Number(r.sections.crew_rooms || 0)) : null)}</td>`).join('')}</tr>
-                <tr><td>Entrances &amp; activities</td>${rows.map(r => `<td>${m(r.sections ? (Number(r.sections.services || 0) + Number(r.sections.excursions || 0)) : null)}</td>`).join('')}</tr>
-                <tr class="tot"><td>Total cost</td>${rows.map(r => `<td>${m(r.cost_usd)}</td>`).join('')}</tr><tr><td>Markup</td>${rows.map(r => `<td>${r.markup_pct == null ? '—' : Number(r.markup_pct) + '%'}</td>`).join('')}</tr>` : ''}
+            ${sees ? `<tr><td>Hotels</td>${sec('hotels')}</tr><tr><td>Transport</td>${sec('transport')}</tr><tr><td>Driver &amp; guide</td>${rows.map(r => `<td>${part(r, r.sections ? (Number(r.sections.crew || 0) + Number(r.sections.crew_rooms || 0)) : null)}</td>`).join('')}</tr>
+                <tr><td>Entrances &amp; activities</td>${rows.map(r => `<td>${part(r, r.sections ? (Number(r.sections.services || 0) + Number(r.sections.excursions || 0)) : null)}</td>`).join('')}</tr>
+                <tr class="tot"><td>Total cost</td>${rows.map(r => `<td>${part(r, r.cost_usd)}</td>`).join('')}</tr><tr><td>Markup</td>${rows.map(r => `<td>${r.markup_pct == null ? '—' : Number(r.markup_pct) + '%'}</td>`).join('')}</tr>` : ''}
             ${labels.map(l => `<tr><td>${esc(l)}${l === 'Adult' ? ' — per person' : ''}</td>${rows.map(r => `<td>${cell(r, l)}</td>`).join('')}</tr>`).join('')}
             <tr class="sell"><td>Selling price — ${Number(it.pax_total || 0)} pax</td>${rows.map(r => `<td>${m(r.total_usd)}</td>`).join('')}</tr>
             <tr><td>Ready to quote?</td>${rows.map(r => `<td class="${r.ready ? 'ok' : 'no'}">${r.ready ? 'Yes' : 'No — ' + r.blockers.length + ' thing' + (r.blockers.length === 1 ? '' : 's') + ' to fix'}</td>`).join('')}</tr></tbody></table></div>
