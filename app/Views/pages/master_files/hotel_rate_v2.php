@@ -240,75 +240,109 @@
 .doc-clip{display:inline-flex;align-items:center;gap:2px;font-size:11.5px;font-weight:600;color:#5b3f8a;background:#efe9f8;border-radius:10px;padding:1px 7px;margin-left:6px;border:0;cursor:pointer;vertical-align:middle}
 .doc-clip.none{color:#9a6b00;background:#fff4dc;cursor:default}
 .doc-group{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#5b3f8a;margin:16px 0 6px}
-    /* ---------------- tf-hr-overview-r1 (25 Nov 2026, Shantha's mock-up): the first Hotel Rates page ---------------- */
-    .hr2 { --av-p:#842484; --av-p-soft:#f4e8f4; --av-g:#78b848; --av-g-dk:#4d8a24; --av-g-soft:#eef7e6; --av-r:#b3261e; --av-r-soft:#fdecec; --av-a:#a86a00; --av-a-soft:#fff6e3; }
-    .hr2 .hr-title h4 { color: var(--av-p); font-weight: 700; font-size: 26px; }
-    .hr2 .hr-title .sub { font-size: 14px; }
-    .hr2 .hr-actions .act-out { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 16px; border-radius:10px; border:1.5px solid var(--av-p); background:#fff; color:var(--av-p); font-weight:600; font-size:13.5px; }
-    .hr2 .hr-actions .act-out:hover { background:var(--av-p-soft); }
+    /* ---------------- tf-hr-overview-r2 (25 Nov 2026, Shantha: "match the mock-up — same colours, same letters"): the first Hotel Rates page ---------------- */
+    .hr2 { --av-p:#842484; --av-p-dk:#6e1d6e; --av-p-soft:#f6ecf6; --av-p-line:#e7d3e7; --av-g:#78b848; --av-g-dk:#3f8a24; --av-g-soft:#f1f8ea; --av-g-line:#c6e3ad; --av-r:#c0262d; --av-r-soft:#fdf1f2; --av-r-line:#f3c7cc; --av-a:#d69a0e; --av-a-soft:#fffaee; --av-a-line:#f2dfaa; --av-ink:#1f1a24; --av-mute:#4b4652; }
+    .hr2.hro-list, .hr2.hro-detail { background:#fff; }
     .hr2 #rate_alerts { display:none !important; }
-    .hr2 .hr-title .hr-tools { flex-basis:100%; margin-left:0; }   .hr2 .hr-title .hr-main { margin-left:auto; }   /* the expiry warnings are the Needs attention section now */
-    .hr2 .hr-shell { grid-template-columns: minmax(0, 1fr); }
-    .hr2 .hr-shell > .hr-card:first-child { display:none; }   /* the old hotel rail: replaced by the directory (its search and filters stay as data) */
+    .hr2 .hr-shell { grid-template-columns:minmax(0,1fr); }
+    .hr2 .hr-shell > .hr-card:first-child { display:none; }
     .hr2.hro-list .hr-shell { display:none; }
     .hr2.hro-detail #hr_overview { display:none; }
-    .hro-cards { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; }
-    .hro-card { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:12px; border:1px solid #e3dfe6; background:#fff; cursor:pointer; text-align:left; width:100%; transition:box-shadow .15s, transform .15s; }
-    .hro-card:hover { box-shadow:0 6px 18px rgba(16,24,40,.08); transform:translateY(-1px); }
-    .hro-card:focus-visible { outline:none; box-shadow:0 0 0 .2rem rgba(132,36,132,.25); }
-    .hro-card.on { outline:2px solid var(--av-p); outline-offset:-1px; }
-    .hro-card .ic { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; flex:0 0 52px; }
-    .hro-card .t { font-weight:600; font-size:14.5px; color:#1d1b20; }
-    .hro-card .n { font-weight:800; font-size:32px; line-height:1.05; }
-    .hro-card.k-total .ic { background:var(--av-p-soft); color:var(--av-p); } .hro-card.k-total .n { color:var(--av-p); }
-    .hro-card.k-valid { background:var(--av-g-soft); border-color:#cfe5b8; } .hro-card.k-valid .ic { background:#dff0cf; color:var(--av-g-dk); } .hro-card.k-valid .n { color:var(--av-g-dk); }
-    .hro-card.k-novalid, .hro-card.k-norates { background:var(--av-r-soft); border-color:#f2c4c1; } .hro-card.k-novalid .ic, .hro-card.k-norates .ic { background:#fbd9d6; color:var(--av-r); } .hro-card.k-novalid .n, .hro-card.k-norates .n { color:var(--av-r); }
-    .hro-card.k-awaiting { background:var(--av-a-soft); border-color:#f1dca8; } .hro-card.k-awaiting .ic { background:#fbe9bd; color:var(--av-a); } .hro-card.k-awaiting .n { color:var(--av-a); }
-    .hro-card.k-expiring { background:var(--av-g-soft); border-color:#cfe5b8; } .hro-card.k-expiring .ic { background:#dff0cf; color:var(--av-g-dk); } .hro-card.k-expiring .n { color:var(--av-g-dk); }
-    .hro-note { font-size:12.5px; color:#5E5964; font-style:italic; margin:8px 2px 14px; }
-    .hro-box { background:#fff; border:1px solid #e3dfe6; border-radius:12px; margin-bottom:16px; overflow:hidden; }
-    .hro-att-h { display:flex; align-items:center; gap:10px; background:var(--av-p-soft); padding:10px 16px; font-weight:700; color:var(--av-p); font-size:16px; }
-    .hro-att-row { display:grid; grid-template-columns:28px minmax(140px,1.2fr) minmax(150px,1fr) minmax(180px,1.6fr) 110px; gap:10px; align-items:center; padding:9px 16px; border-top:1px solid #eee; font-size:14px; }
-    .hro-att-row .why { font-weight:600; } .hro-att-row .why.red { color:var(--av-r); } .hro-att-row .why.amber { color:var(--av-a); } .hro-att-row .why.blue { color:#1f5fa8; }
-    .hro-att-row .why small { display:block; font-weight:400; color:#5E5964; font-size:12px; }
-    .hro-att-none { padding:12px 16px; color:#3b6b17; font-size:14px; }
-    .hro-btn { border:1.5px solid var(--av-g); color:var(--av-g-dk); background:#fff; border-radius:8px; padding:4px 14px; font-weight:600; font-size:13px; white-space:nowrap; }
-    .hro-btn:hover { background:var(--av-g-soft); } .hro-btn.fill { background:var(--av-g); color:#fff; } .hro-btn.fill:hover { background:#68a63b; }
-    .hro-dir-h { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid #eee; }
-    .hro-dir-h h5 { margin:0 auto 0 0; color:var(--av-p); font-weight:700; font-size:19px; display:flex; align-items:center; gap:8px; }
-    .hro-search { position:relative; flex:1 1 260px; max-width:420px; } .hro-search i { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:#5E5964; }
-    .hro-search input { width:100%; padding:7px 10px 7px 34px; border:1px solid #cfcad4; border-radius:8px; font-size:14px; }
+    /* title row */
+    .hr2 .hr-title { align-items:flex-start; margin:6px 0 22px; }
+    .hr2 .hr-title h4 { color:var(--av-p); font-weight:800; font-size:40px; line-height:1.1; letter-spacing:-.3px; margin:0; }
+    .hr2 .hr-title .sub { color:var(--av-mute); font-size:20px; margin-top:4px; }
+    .hr2 .hr-title .hr-main { margin-left:auto; gap:14px; align-items:center; }
+    .hr2 .hr-actions .act-primary { height:52px; padding:0 22px; border-radius:10px; font-size:19px; font-weight:700; background:var(--av-g); box-shadow:0 2px 6px rgba(120,184,72,.35); }
+    .hr2 .hr-actions .act-primary i { font-size:20px; }
+    .hr2 .hr-actions .act-out { display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 22px; border-radius:10px; border:2px solid var(--av-p); background:#fff; color:var(--av-p); font-weight:700; font-size:19px; }
+    .hr2 .hr-actions .act-out i { font-size:20px; } .hr2 .hr-actions .act-out:hover { background:var(--av-p-soft); }
+    .hr2 .hr-actions .act-tools { height:52px; width:52px; justify-content:center; padding:0; font-size:22px; }
+    .hr2 .hro-tools { min-width:300px; padding:6px; border-radius:12px; border:1px solid var(--av-p-line); box-shadow:0 12px 32px rgba(16,24,40,.14); }
+    .hr2 .hro-tools .act { display:flex; width:100%; height:42px; padding:0 12px; border-radius:8px; color:var(--av-ink); font-size:15px; font-weight:600; text-decoration:none; }
+    .hr2 .hro-tools .act i { color:var(--av-p); font-size:17px; width:22px; } .hr2 .hro-tools .act .pill { margin-left:auto; }
+    .hr2 .hro-tools .sep { height:1px; background:#eee; margin:4px 6px; }
+    /* cards */
+    .hro-cards { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+    .hro-card { display:flex; align-items:center; gap:24px; min-height:102px; padding:14px 22px; border-radius:10px; border:1.5px solid #dcd8e0; background:#fff; cursor:pointer; text-align:left; width:100%; transition:box-shadow .15s, transform .15s; }
+    .hro-card:hover { box-shadow:0 8px 22px rgba(16,24,40,.09); transform:translateY(-1px); }
+    .hro-card:focus-visible { outline:none; box-shadow:0 0 0 .22rem rgba(132,36,132,.28); }
+    .hro-card.on { box-shadow:0 0 0 3px rgba(132,36,132,.35); }
+    .hro-card .ic { width:66px; height:66px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex:0 0 66px; }
+    .hro-card .ic svg { width:38px; height:38px; }
+    .hro-card .t { display:block; font-weight:700; font-size:20px; color:var(--av-ink); line-height:1.2; }
+    .hro-card .n { display:block; font-weight:800; font-size:46px; line-height:1.05; margin-top:2px; }
+    .hro-card.k-total .ic { background:#efe3f0; color:var(--av-p); } .hro-card.k-total .n { color:var(--av-p); }
+    .hro-card.k-valid, .hro-card.k-expiring { background:var(--av-g-soft); border-color:var(--av-g-line); } .hro-card.k-valid .ic, .hro-card.k-expiring .ic { background:#e2f1d4; color:var(--av-g-dk); } .hro-card.k-valid .n, .hro-card.k-expiring .n { color:var(--av-g-dk); }
+    .hro-card.k-novalid, .hro-card.k-norates { background:var(--av-r-soft); border-color:var(--av-r-line); } .hro-card.k-novalid .ic, .hro-card.k-norates .ic { background:#fbe1e4; color:var(--av-r); } .hro-card.k-novalid .n, .hro-card.k-norates .n { color:var(--av-r); }
+    .hro-card.k-awaiting { background:var(--av-a-soft); border-color:var(--av-a-line); } .hro-card.k-awaiting .ic { background:#fdf0cf; color:var(--av-a); } .hro-card.k-awaiting .n { color:var(--av-a); }
+    .hro-note { font-size:17px; color:var(--av-mute); font-style:italic; margin:12px 2px 22px; }
+    /* boxes */
+    .hro-box { background:#fff; border:1.5px solid #dcd8e0; border-radius:10px; margin-bottom:24px; overflow:hidden; }
+    .hro-att { border-color:var(--av-p-line); }
+    .hro-att-h { display:flex; align-items:center; gap:12px; background:var(--av-p-soft); padding:12px 22px; font-weight:700; color:var(--av-p); font-size:22px; border-bottom:1px solid var(--av-p-line); }
+    .hro-att-h svg { width:28px; height:28px; }
+    .hro-att-row { display:grid; grid-template-columns:30px minmax(160px,1.1fr) minmax(180px,1.1fr) minmax(200px,2.4fr) 140px; align-items:center; padding:9px 22px; border-top:1px solid #efeaf1; font-size:18px; color:var(--av-ink); }
+    .hro-att-row:first-of-type { border-top:0; }
+    .hro-att-row svg { width:24px; height:24px; color:var(--av-r); }
+    .hro-att-row .nm { font-weight:700; padding-right:16px; }
+    .hro-att-row .dt, .hro-att-row .why { border-left:1.5px solid #cfcad4; padding-left:46px; }
+    .hro-att-row .why { font-weight:700; color:var(--av-r); } .hro-att-row .why.blue { color:#1f5fa8; } .hro-att-row .why.amber { color:#9a6500; }
+    .hro-att-none { padding:14px 22px; color:var(--av-g-dk); font-size:17px; }
+    .hro-btn { display:inline-flex; align-items:center; justify-content:center; min-width:120px; height:34px; border:1.8px solid var(--av-g); color:var(--av-g-dk); background:#fff; border-radius:7px; padding:0 14px; font-weight:700; font-size:16px; white-space:nowrap; }
+    .hro-btn:hover { background:var(--av-g-soft); }
+    .hro-btn.fill { background:#56a83a; border-color:#56a83a; color:#fff; } .hro-btn.fill:hover { background:#4a9631; }
+    .hro-att-row .hro-btn { justify-self:end; }
+    /* directory */
+    .hro-dir-h { display:flex; flex-wrap:wrap; align-items:center; gap:18px; padding:16px 22px 14px; }
+    .hro-dir-h h5 { margin:0 auto 0 0; color:var(--av-p); font-weight:800; font-size:30px; display:flex; align-items:center; gap:12px; letter-spacing:-.2px; }
+    .hro-dir-h h5 svg { width:32px; height:32px; }
+    .hro-search { position:relative; flex:1 1 300px; max-width:450px; margin:0; } .hro-search svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:20px; height:20px; color:var(--av-mute); }
+    .hro-search input { width:100%; height:40px; padding:0 12px 0 44px; border:1.5px solid #bdb7c3; border-radius:6px; font-size:17px; color:var(--av-ink); }
+    .hro-search input::placeholder { color:#6d6874; }
     .hro-search input:focus { outline:none; border-color:var(--av-p); box-shadow:0 0 0 .15rem rgba(132,36,132,.15); }
-    .hro-dir-h select { border:1px solid #cfcad4; border-radius:8px; padding:7px 10px; font-size:14px; background:#fff; }
-    .hro-tog { border:1px solid #cfcad4; border-radius:8px; padding:6px 12px; font-size:14px; background:#fff; display:inline-flex; align-items:center; gap:6px; }
-    .hro-tog.on { border-color:var(--av-p); background:var(--av-p-soft); color:var(--av-p); font-weight:600; }
-    .hro-date { border:1.5px solid var(--av-p); color:var(--av-p); border-radius:8px; padding:6px 12px; font-size:13.5px; font-weight:600; display:inline-flex; gap:6px; align-items:center; }
-    .hro-table { width:100%; border-collapse:collapse; font-size:14px; }
-    .hro-table th { background:#f6f2f7; color:var(--av-p); font-weight:700; padding:9px 12px; text-align:left; border-bottom:1px solid #e9e3ec; white-space:nowrap; }
-    .hro-table td { padding:8px 12px; border-bottom:1px solid #f0edf2; vertical-align:middle; }
-    .hro-table tr:hover td { background:#fbf8fc; }
-    .hro-table .nm { font-weight:700; color:#1d1b20; } .hro-table .nm small { display:block; font-weight:400; color:#5E5964; font-size:12px; }
-    .hro-table .star { border:0; background:none; font-size:18px; color:#8a8590; padding:0 4px; line-height:1; } .hro-table .star.on { color:var(--av-g-dk); }
-    .hro-pill { display:inline-block; border-radius:999px; padding:3px 12px; font-size:12.5px; font-weight:600; white-space:nowrap; }
-    .hro-pill.green { background:#e2f2d4; color:#3b6b17; } .hro-pill.red { background:#fde0de; color:var(--av-r); } .hro-pill.amber { background:#fdf0cf; color:#8a5a00; } .hro-pill.blue { background:#e3ecf8; color:#1f5fa8; } .hro-pill.grey { background:#eee; color:#555; }
-    .hro-pill.sm { font-size:11px; padding:2px 8px; margin-left:4px; }
-    .hro-foot { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 16px; font-size:14px; }
-    .hro-pager { display:flex; gap:6px; flex-wrap:wrap; } .hro-pager button { min-width:36px; height:34px; border:1px solid #cfcad4; background:#fff; border-radius:8px; font-size:14px; padding:0 10px; }
-    .hro-pager button.on { background:var(--av-p); border-color:var(--av-p); color:#fff; font-weight:700; } .hro-pager button:disabled { opacity:.45; }
-    .hro-hint { font-size:13px; color:#5E5964; font-style:italic; margin:4px 2px 18px; }
-    .hro-back { display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid #e3dfe6; border-left:4px solid var(--av-p); border-radius:10px; padding:8px 12px; margin-bottom:12px; position:sticky; top:70px; z-index:20; }
-    .hro-back button { border:1.5px solid var(--av-p); color:var(--av-p); background:#fff; border-radius:8px; padding:5px 14px; font-weight:600; }
-    .hro-back button:hover { background:var(--av-p-soft); } .hro-back span { color:#5E5964; font-size:13.5px; }
-    @media (max-width: 991.98px) { .hro-cards { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+    .hro-dir-h select { height:40px; min-width:178px; border:1.5px solid #bdb7c3; border-radius:6px; padding:0 34px 0 14px; font-size:17px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f1a24' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 16px; appearance:none; -webkit-appearance:none; color:var(--av-ink); }
+    .hro-tog { height:40px; border:1.5px solid #bdb7c3; border-radius:6px; padding:0 16px; font-size:17px; background:#fff; display:inline-flex; align-items:center; gap:8px; color:var(--av-ink); }
+    .hro-tog svg { width:20px; height:20px; } .hro-tog.on { border-color:var(--av-p); background:var(--av-p-soft); color:var(--av-p); font-weight:700; }
+    .hro-vsep { width:1.5px; height:28px; background:#bdb7c3; }
+    .hro-date { height:40px; border:1.8px solid var(--av-p); color:var(--av-p); border-radius:6px; padding:0 16px; font-size:17px; font-weight:600; display:inline-flex; gap:10px; align-items:center; background:#fff; }
+    .hro-date svg { width:20px; height:20px; }
+    .hro-tablewrap { margin:0 10px; border:1px solid #e3dde6; border-radius:6px; overflow:hidden; }
+    .hro-table { width:100%; border-collapse:collapse; font-size:18px; color:var(--av-ink); }
+    .hro-table th { background:#f5ecf6; color:var(--av-p); font-weight:700; padding:10px 14px; text-align:left; border-bottom:1px solid #e3dde6; white-space:nowrap; font-size:18px; }
+    .hro-table td { padding:7px 14px; border-bottom:1px solid #ebe6ee; vertical-align:middle; }
+    .hro-table tbody tr:last-child td { border-bottom:0; }
+    .hro-table tbody tr:hover td { background:#fcf9fd; }
+    .hro-table .nm { font-weight:700; }
+    .hro-table .star { border:0; background:none; padding:0 4px; line-height:1; color:#3a3540; } .hro-table .star svg { width:22px; height:22px; } .hro-table .star.on { color:#2f8a2a; }
+    .hro-pill { display:inline-block; border-radius:999px; padding:3px 16px; font-size:16px; font-weight:700; white-space:nowrap; }
+    .hro-pill.green { background:#e3f2d6; color:var(--av-g-dk); } .hro-pill.red { background:#fde3e6; color:var(--av-r); } .hro-pill.amber { background:#fdf0cf; color:#c58300; } .hro-pill.blue { background:#e3ecf8; color:#1f5fa8; } .hro-pill.grey { background:#eee; color:#555; }
+    .hro-pill.sm { font-size:12.5px; padding:2px 9px; margin-left:6px; }
+    .hro-table .act { text-align:center; width:190px; } .hro-table .hro-btn { min-width:126px; }
+    .hro-foot { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; padding:14px 20px 16px; font-size:17px; color:var(--av-ink); }
+    .hro-pager { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .hro-pager button { min-width:38px; height:38px; border:1.5px solid #bdb7c3; background:#fff; border-radius:6px; font-size:16px; padding:0 12px; color:var(--av-ink); display:inline-flex; align-items:center; gap:6px; }
+    .hro-pager button svg { width:16px; height:16px; }
+    .hro-pager button.on { background:var(--av-p); border-color:var(--av-p); color:#fff; font-weight:700; } .hro-pager button:disabled { opacity:.45; } .hro-pager .gap { border:0; min-width:auto; padding:0 2px; }
+    .hro-hint { font-size:17px; color:var(--av-mute); font-style:italic; margin:-8px 4px 24px; display:flex; align-items:center; gap:10px; } .hro-hint svg { width:22px; height:22px; flex:0 0 22px; }
+    .hro-back { display:flex; align-items:center; gap:14px; flex-wrap:wrap; background:#fff; border:1.5px solid var(--av-p-line); border-left:5px solid var(--av-p); border-radius:10px; padding:10px 14px; margin-bottom:14px; position:sticky; top:70px; z-index:20; }
+    .hro-back button { border:1.8px solid var(--av-p); color:var(--av-p); background:#fff; border-radius:7px; height:38px; padding:0 16px; font-weight:700; font-size:15px; }
+    .hro-back button:hover { background:var(--av-p-soft); } .hro-back span { color:var(--av-mute); font-size:15px; }
+    @media (max-width: 1199.98px) { .hro-card .t { font-size:17px; } .hro-card .n { font-size:38px; } .hro-card .ic { width:56px; height:56px; flex-basis:56px; } .hro-att-row .dt, .hro-att-row .why { padding-left:18px; } }
+    @media (max-width: 991.98px) { .hro-cards { grid-template-columns:repeat(2, minmax(0,1fr)); } .hr2 .hr-title h4 { font-size:32px; } .hr2 .hr-title .sub { font-size:17px; } }
     @media (max-width: 767.98px) {
-        .hro-cards { grid-template-columns:1fr 1fr; gap:8px; } .hro-card { padding:10px; gap:10px; } .hro-card .ic { width:40px; height:40px; flex-basis:40px; font-size:20px; } .hro-card .n { font-size:24px; } .hro-card .t { font-size:13px; }
-        .hro-att-row { grid-template-columns:24px 1fr; } .hro-att-row > :nth-child(n+3) { grid-column:2; } .hro-att-row .hro-btn { justify-self:start; }
-        .hro-search { max-width:none; }
+        .hr2 .hr-title { gap:12px; } .hr2 .hr-title .hr-main { margin-left:0; width:100%; }
+        .hr2 .hr-actions .act-primary, .hr2 .hr-actions .act-out { height:44px; font-size:16px; padding:0 14px; } .hr2 .hr-actions .act-tools { height:44px; width:44px; }
+        .hro-cards { grid-template-columns:1fr 1fr; gap:10px; } .hro-card { gap:10px; padding:10px 12px; min-height:84px; } .hro-card .ic { width:42px; height:42px; flex-basis:42px; border-radius:10px; } .hro-card .ic svg { width:24px; height:24px; } .hro-card .n { font-size:28px; } .hro-card .t { font-size:14px; }
+        .hro-note, .hro-hint { font-size:14px; } .hro-att-h { font-size:18px; padding:10px 14px; }
+        .hro-att-row { grid-template-columns:26px 1fr; row-gap:2px; padding:10px 14px; font-size:15px; } .hro-att-row > :nth-child(n+3) { grid-column:2; } .hro-att-row .dt, .hro-att-row .why { border-left:0; padding-left:0; } .hro-att-row .hro-btn { justify-self:start; margin-top:6px; }
+        .hro-dir-h { gap:10px; padding:12px 14px; } .hro-dir-h h5 { font-size:22px; width:100%; } .hro-search { max-width:none; flex-basis:100%; } .hro-vsep { display:none; } .hro-dir-h select, .hro-tog, .hro-date, .hro-search input { font-size:15px; }
+        .hro-tablewrap { margin:0 8px; } .hro-table { font-size:15px; }
         .hro-table thead { display:none; } .hro-table, .hro-table tbody, .hro-table tr, .hro-table td { display:block; width:100%; }
-        .hro-table tr { border-bottom:1px solid #eee; padding:8px 4px; position:relative; } .hro-table td { border:0; padding:3px 10px 3px 38px; }
+        .hro-table tr { border-bottom:1px solid #eee; padding:8px 4px; position:relative; } .hro-table td { border:0; padding:3px 10px 3px 40px; text-align:left !important; }
         .hro-table td.st0 { position:absolute; left:0; top:8px; width:auto; padding:0 4px; }
-        .hro-table td[data-l]::before { content:attr(data-l) ': '; color:#5E5964; font-size:12px; }
-        .hr2 .hr-title h4 { font-size:22px; } .hro-back { top:60px; }
+        .hro-table td[data-l]::before { content:attr(data-l) ': '; color:var(--av-mute); font-size:13px; }
+        .hro-table .act { width:auto; padding-top:6px; } .hro-foot { font-size:15px; } .hro-back { top:60px; }
     }
 </style>
 <body>
@@ -328,63 +362,64 @@
                     </div>
                     <div class="hr-actions hr-main">
                         <div class="dropdown">
-                            <button class="act-primary" id="btn_add_rates" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"><i class="bi bi-plus-lg"></i><span>Add rates</span><i class="bi bi-chevron-down chev"></i></button>
+                            <button class="act-primary" id="btn_add_rates" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"><i class="bi bi-plus-lg"></i><span>Add rates</span></button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <button class="dropdown-item" id="btn_import" type="button"><span class="ic"><i class="bi bi-file-earmark-spreadsheet"></i></span><div><b>Import an Excel sheet</b><span class="d">The hotel's rate sheet, checked line by line before anything is saved.</span></div></button>
                                 <?php if (!empty($ai_enabled)): ?><button class="dropdown-item" id="btn_ai" type="button"><span class="ic"><i class="bi bi-stars"></i></span><div><b>Read a PDF</b><span class="d">A PDF rate sheet read for you into a draft, for you to check and approve.</span></div></button><?php endif; ?>
                             </div>
                         </div>
-                        <button type="button" class="act-out" id="btn_export" title="Download the hotel directory as it is filtered now (CSV)"><i class="bi bi-download"></i><span>Export</span></button>
-                    </div>
-                    <div class="hr-actions hr-tools">
-                        <div class="grp">
-                            <button class="act" id="btn_queue" title="Rate sheets read in and waiting to be approved"><i class="bi bi-inbox"></i><span>Approval queue</span> <span class="pill pill-blue" id="queue_count" style="display:none"></span></button>
-                            <button class="act" id="btn_dups" title="Hotels that may be on file twice"><i class="bi bi-intersect"></i><span>Duplicates</span></button>
-                            <button class="act" id="btn_check" title="Tours with no rate, plans about to expire, offers whose booking window has closed, drafts, flagged rows"><i class="bi bi-shield-check"></i><span>Health check</span></button>
-                            <a class="act" id="btn_work" style="text-decoration:none" href="<?= base_url($work_url ?? 'master_files/hotel_work') ?>" title="Rate sheets waiting to be transcribed or loaded (Hotel Incomplete Work)"><i class="bi bi-journal-text"></i><span>Incomplete work</span><?php if (!empty($work_open)): ?> <span class="pill pill-red"><?= (int) $work_open ?></span><?php endif; ?></a>
-                            <a class="act" id="btn_readiness" style="text-decoration:none" href="<?= base_url(($panel_url ?? 'master_files/hotel_rate_v2') . '/readiness') ?>" title="Which hotels the quotation engine can price by itself, which it cannot and why, and the rate-expiry warnings"><i class="bi bi-clipboard2-check"></i><span>Quote readiness</span> <span class="pill pill-red" id="rate_alert_count" style="display:none"></span></a>
-                        </div>
-                        <div class="grp">
-                            <a class="act" id="btn_offers" style="text-decoration:none" href="<?= base_url($offers_url ?? 'master_files/hotel_rate_v2/offers') ?>" title="Tactical rates and Early Bird offers across hotels — active, deadline close, expired — and the hotels with none"><i class="bi bi-tags"></i><span>Tacticals &amp; Early Birds</span></a>
-                            <button class="act" id="btn_quote" title="Price a stay at any hotel on any dates"><i class="bi bi-calculator"></i><span>Try a quote</span></button>
-                            <button class="act" id="btn_settings" title="<?= !empty($can_approve) ? 'Markets, tiers, gala nights, check thresholds, country → market' : 'View the settings (changing them needs the Hotel Rate Approval privilege)' ?>"><i class="bi bi-sliders"></i><span>Settings</span></button>
+                        <button type="button" class="act-out" id="btn_export" title="Download the hotel directory as it is filtered now (CSV)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg><span>Export</span></button>
+                        <!-- the panel's other tools (approval queue, duplicates, health check, readiness, offers, quote, settings): one menu, so the page reads as the mock-up -->
+                        <div class="dropdown">
+                            <button type="button" class="act-out act-tools" id="btn_tools" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" title="More tools: approval queue, duplicates, health check, incomplete work, quote readiness, tacticals & early birds, try a quote, settings" aria-label="More tools"><i class="bi bi-three-dots"></i><span class="pill pill-red" id="tools_dot" style="display:none;position:absolute;top:-6px;right:-6px;font-size:10px"></span></button>
+                            <div class="dropdown-menu dropdown-menu-end hro-tools">
+                                <button class="act" id="btn_queue" title="Rate sheets read in and waiting to be approved"><i class="bi bi-inbox"></i><span>Approval queue</span> <span class="pill pill-blue" id="queue_count" style="display:none"></span></button>
+                                <button class="act" id="btn_dups" title="Hotels that may be on file twice"><i class="bi bi-intersect"></i><span>Duplicates</span></button>
+                                <button class="act" id="btn_check" title="Tours with no rate, plans about to expire, offers whose booking window has closed, drafts, flagged rows"><i class="bi bi-shield-check"></i><span>Health check</span></button>
+                                <a class="act" id="btn_work" href="<?= base_url($work_url ?? 'master_files/hotel_work') ?>" title="Rate sheets waiting to be transcribed or loaded (Hotel Incomplete Work)"><i class="bi bi-journal-text"></i><span>Incomplete work</span><?php if (!empty($work_open)): ?> <span class="pill pill-red"><?= (int) $work_open ?></span><?php endif; ?></a>
+                                <a class="act" id="btn_readiness" href="<?= base_url(($panel_url ?? 'master_files/hotel_rate_v2') . '/readiness') ?>" title="Which hotels the quotation engine can price by itself, which it cannot and why, and the rate-expiry warnings"><i class="bi bi-clipboard2-check"></i><span>Quote readiness</span> <span class="pill pill-red" id="rate_alert_count" style="display:none"></span></a>
+                                <div class="sep"></div>
+                                <a class="act" id="btn_offers" href="<?= base_url($offers_url ?? 'master_files/hotel_rate_v2/offers') ?>" title="Tactical rates and Early Bird offers across hotels — active, deadline close, expired — and the hotels with none"><i class="bi bi-tags"></i><span>Tacticals &amp; Early Birds</span></a>
+                                <button class="act" id="btn_quote" title="Price a stay at any hotel on any dates"><i class="bi bi-calculator"></i><span>Try a quote</span></button>
+                                <button class="act" id="btn_settings" title="<?= !empty($can_approve) ? 'Markets, tiers, gala nights, check thresholds, country → market' : 'View the settings (changing them needs the Hotel Rate Approval privilege)' ?>"><i class="bi bi-sliders"></i><span>Settings</span></button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div id="rate_alerts" class="hr-card" style="display:none;border-color:var(--hr-red);margin-bottom:14px"></div>
-                <!-- tf-hr-overview-r1: the overview — cards, needs attention, the hotel directory. Opening a hotel shows its rate screens in their place. -->
+                <!-- tf-hr-overview-r2: the overview — cards, needs attention, the hotel directory (the mock-up of 25 Nov 2026). Opening a hotel shows its rate screens in their place. -->
                 <div id="hr_overview">
                     <div class="hro-cards" id="hro_cards" role="group" aria-label="Rate status summary"></div>
                     <div class="hro-note">Select a card to filter hotels. Status groups may overlap.</div>
-                    <div class="hro-box" id="hro_att"></div>
+                    <div class="hro-box hro-att" id="hro_att"></div>
                     <div class="hro-box">
                         <div class="hro-dir-h">
-                            <h5><i class="bi bi-buildings"></i> Hotel directory</h5>
-                            <label class="hro-search mb-0"><i class="bi bi-search"></i><input type="search" id="hro_q" placeholder="Search hotel, location, chain or code" aria-label="Search hotels"></label>
+                            <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="1.5"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg> Hotel directory</h5>
+                            <label class="hro-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="hro_q" placeholder="Search hotel, location, chain or code" aria-label="Search hotels"></label>
                             <select id="hro_status" aria-label="Rate status">
                                 <option value="all">Status: All</option>
-                                <option value="valid">Valid rates today</option>
+                                <option value="valid">Valid today</option>
                                 <option value="novalid">No valid rate today</option>
                                 <option value="norates">No rates entered</option>
                                 <option value="awaiting">Awaiting approval</option>
                                 <option value="expiring">Expiring soon</option>
                                 <option value="expired">Expired</option>
                                 <option value="tactical">Tactical only today</option>
+                                <option value="used">Used last year</option>
                             </select>
-                            <button type="button" class="hro-tog" id="hro_fav" aria-pressed="false" title="Only the hotels marked Frequently Used"><i class="bi bi-star"></i> Favourites</button>
-                            <button type="button" class="hro-tog" id="hro_used" aria-pressed="false" title="Hotels used on a quotation in the last 12 months">Used last year</button>
-                            <span class="hro-date" title="Rate status is worked out for today's date"><i class="bi bi-calendar3"></i> Coverage date <span id="hro_date"></span></span>
+                            <button type="button" class="hro-tog" id="hro_fav" aria-pressed="false" title="Only the hotels marked Frequently Used"></button>
+                            <span class="hro-vsep" aria-hidden="true"></span>
+                            <span class="hro-date" title="Rate status is worked out for this date (today)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Coverage date <span id="hro_date"></span></span>
                         </div>
-                        <div class="table-responsive"><table class="hro-table" id="hro_table">
-                            <thead><tr><th style="width:36px"></th><th>Hotel</th><th>Code</th><th>Rate status</th><th>Coverage</th><th class="text-end">Action</th></tr></thead>
+                        <div class="hro-tablewrap"><table class="hro-table" id="hro_table">
+                            <thead><tr><th style="width:48px"></th><th>Hotel</th><th>Code</th><th>Rate status</th><th>Coverage</th><th class="act">Action</th></tr></thead>
                             <tbody><tr><td colspan="6" class="text-center py-4 text-muted">Loading hotels…</td></tr></tbody>
                         </table></div>
                         <div class="hro-foot"><span id="hro_showing"></span><div class="hro-pager" id="hro_pager"></div></div>
                     </div>
-                    <div class="hro-hint"><i class="bi bi-info-circle"></i> Open a hotel to view its existing rates and contracts.</div>
+                    <div class="hro-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg> Open a hotel to view its existing rates and contracts.</div>
                 </div>
-
 
                 <?php if (!empty($not_installed)): ?>
                 <div class="hr-card" style="border-color:var(--hr-amber);margin-bottom:14px"><div class="hr-card-b">
@@ -2215,16 +2250,39 @@ php spark hotelrates:migrate</pre>
     }
     if (JUMP) { const __re = renderEditor; renderEditor = function () { __re.apply(this, arguments); jumpMark(false); }; }
 
-    // ---------------- tf-hr-overview-r1 (25 Nov 2026, Shantha's mock-up): the overview page ----------------
+    // ---------------- tf-hr-overview-r2 (25 Nov 2026, Shantha's mock-up): the overview page ----------------
     // Counts are distinct hotels, from the same two answers the panel already gives: /hotels (plans, drafts, favourites)
     // and readiness/data (whether a PUBLISHED quotation rate prices today, and why not — the Quote readiness rules), plus
     // its expiry warnings (14 days ahead; cleared once an approved rate covers the night after). Nothing is stored here.
     const HRO_PER = 15;
-    const HRO = Object.assign({ q: '', status: 'all', fav: false, used: false, page: 1, y: 0 }, (() => { try { return JSON.parse(sessionStorage.getItem('hro_state') || '{}'); } catch (e) { return {}; } })());
+    const HRO = Object.assign({ q: '', status: 'all', fav: false, page: 1, y: 0 }, (() => { try { const o = JSON.parse(sessionStorage.getItem('hro_state') || '{}'); delete o.used; return o; } catch (e) { return {}; } })());
     let HRD = null;
     const hroRoot = document.getElementById('hr2');
+    const SVG = (p, sw) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw || 2}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+    const ICO = {
+        total: SVG('<rect x="4" y="2" width="16" height="20" rx="1.5"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/>', 2.2),
+        valid: SVG('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/>', 2.2),
+        novalid: SVG('<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>', 2.2),
+        norates: SVG('<path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/><circle cx="7" cy="11.5" r=".5" fill="currentColor"/>', 2.2),
+        awaiting: SVG('<path d="M5 22h14M5 2h14"/><path d="M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22"/><path d="M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>', 2.2),
+        expiring: SVG('<path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4M8 2v4M3 10h5"/><circle cx="16" cy="16" r="6"/><path d="M16 14v2l1.5 1"/>', 2.2),
+        warn: SVG('<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>', 2),
+        star: SVG('<path d="M12 2.5l2.95 6 6.55.95-4.75 4.62 1.12 6.53L12 17.5l-5.87 3.1 1.12-6.53L2.5 9.45l6.55-.95z"/>', 1.8),
+        starOn: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.95 6 6.55.95-4.75 4.62 1.12 6.53L12 17.5l-5.87 3.1 1.12-6.53L2.5 9.45l6.55-.95z"/></svg>',
+        left: SVG('<path d="m15 18-6-6 6-6"/>', 2.4), right: SVG('<path d="m9 18 6-6-6-6"/>', 2.4),
+    };
     const fmtD = d => { if (!d) return ''; const t = new Date(d + 'T00:00:00Z'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
-    function hroSave() { try { sessionStorage.setItem('hro_state', JSON.stringify({ q: HRO.q, status: HRO.status, fav: HRO.fav, used: HRO.used, page: HRO.page, y: HRO.y })); } catch (e) {} }
+    const addD = (d, n) => { const t = new Date(d + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+    // "1–18 Dec 2026", "28 Dec – 4 Jan 2027": the nights with no rate between two approved plans
+    function fmtRange(a, b, year) {
+        if (!a || !b) return '';
+        const A = new Date(a + 'T00:00:00Z'), B = new Date(b + 'T00:00:00Z'), o = { timeZone: 'UTC' };
+        const mon = t => t.toLocaleDateString('en-GB', Object.assign({ month: 'short' }, o));
+        const y = year === false ? '' : ' ' + B.getUTCFullYear();
+        if (A.getUTCFullYear() === B.getUTCFullYear() && A.getUTCMonth() === B.getUTCMonth()) return A.getUTCDate() + (a === b ? '' : '–' + B.getUTCDate()) + ' ' + mon(B) + y;
+        return A.getUTCDate() + ' ' + mon(A) + ' – ' + B.getUTCDate() + ' ' + mon(B) + y;
+    }
+    function hroSave() { try { sessionStorage.setItem('hro_state', JSON.stringify({ q: HRO.q, status: HRO.status, fav: HRO.fav, page: HRO.page, y: HRO.y })); } catch (e) {} }
     async function hroLoadReadiness() {
         try {
             const j = await api('/readiness/data');
@@ -2243,30 +2301,35 @@ php spark hotelrates:migrate</pre>
         const noRates = Number(h.approved_plans) === 0 && Number(h.draft_plans) === 0;
         const awaiting = Number(h.draft_plans) > 0;
         const expiring = !!(al && al.state === 'expiring');
-        let st, cov = '—';
+        let st, cov = '—', covTip = '';
         if (!HRD) st = ['grey', 'Checking…'];
-        else if (valid) { st = expiring ? ['amber', 'Expiring soon'] : ['green', R.ready === 'some' ? 'Valid today · some markets' : 'Valid today']; cov = expiring ? 'Ends ' + fmtD(al.ends) + (al.next_start ? ' · next from ' + fmtD(al.next_start) : '') : (R.covered_until ? 'Covered until ' + fmtD(R.covered_until) : 'Approved coverage'); }
+        else if (valid) {
+            st = expiring ? ['amber', 'Expiring soon'] : ['green', 'Valid today'];
+            if (expiring) cov = al.next_start ? 'Gap ' + fmtRange(addD(al.ends, 1), addD(al.next_start, -1)) : 'Ends ' + fmtD(al.ends);
+            else { cov = 'Approved coverage'; covTip = R.covered_until ? 'Covered until ' + fmtD(R.covered_until) : 'Covered well beyond the next months'; }
+            if (R.ready === 'some') covTip = (covTip ? covTip + ' · ' : '') + 'contract rate for some markets only';
+        }
         else if (noRates) st = ['red', 'No rates entered'];
         else if (rk === 'draft' || rk === 'replacement_draft') { st = ['blue', 'Awaiting approval']; cov = R.reason.text; }
-        else if (uk === 'expired') { st = ['red', 'Expired']; cov = 'Ended ' + fmtD(R.prev_end); }
-        else if (uk === 'gap') { st = ['amber', 'Coverage gap']; cov = 'Gap ' + fmtD(R.prev_end) + ' → ' + fmtD(R.next_start); }
+        else if (uk === 'expired') { st = ['red', 'Expired']; cov = 'Ends ' + fmtD(R.prev_end); }
+        else if (uk === 'gap') { st = ['amber', 'Coverage gap']; cov = 'Gap ' + fmtRange(addD(R.prev_end, 1), addD(R.next_start, -1)); }
         else if (uk === 'not_started') { st = ['amber', 'Not started']; cov = 'Starts ' + fmtD(R.next_start); }
         else if (rk === 'offer_only') { st = ['amber', 'Tactical only']; cov = 'No published rate today'; }
         else if (rk === 'sheet_waiting') { st = ['blue', 'Sheet waiting']; cov = 'Transcribed, not loaded'; }
         else if (uk === 'no_contract') st = ['red', 'No published rates'];
         else if (!R) st = ['grey', h.status === 'inactive' ? 'Inactive' : 'Not checked'];
         else st = ['red', under ? under.text : 'No valid rate'];
-        return { h, R, al, valid, noRates, awaiting, expiring, st, cov, tactical: rk === 'offer_only', expired: uk === 'expired' };
+        return { h, R, al, valid, noRates, awaiting, expiring, st, cov, covTip, tactical: rk === 'offer_only', expired: uk === 'expired' };
     }
     const HRO_CARDS = [
-        ['total', 'Total hotels', 'bi-buildings', r => true],
-        ['valid', 'Valid rates today', 'bi-calendar2-check', r => r.valid],
-        ['novalid', 'No valid rate today', 'bi-exclamation-triangle', r => !r.valid],
-        ['norates', 'No rates entered', 'bi-file-earmark-x', r => r.noRates],
-        ['awaiting', 'Awaiting approval', 'bi-hourglass-split', r => r.awaiting],
-        ['expiring', 'Expiring within 14 days', 'bi-calendar2-event', r => r.expiring],
+        ['total', 'Total hotels', r => true],
+        ['valid', 'Valid rates today', r => r.valid],
+        ['novalid', 'No valid rate today', r => !r.valid],
+        ['norates', 'No rates entered', r => r.noRates],
+        ['awaiting', 'Awaiting approval', r => r.awaiting],
+        ['expiring', 'Expiring within 14 days', r => r.expiring],
     ];
-    const HRO_TEST = Object.assign(Object.fromEntries(HRO_CARDS.map(c => [c[0] === 'total' ? 'all' : c[0], c[3]])), { expired: r => r.expired, tactical: r => r.tactical });
+    const HRO_TEST = Object.assign(Object.fromEntries(HRO_CARDS.map(c => [c[0] === 'total' ? 'all' : c[0], c[2]])), { expired: r => r.expired, tactical: r => r.tactical, used: r => Number(r.h.nights_last_year) > 0 });
     function hroFiltered(rows) {
         const q = HRO.q.trim().toLowerCase();
         const codeNo = (q.match(/^(?:htl[\s-]*|h)?0*(\d{1,6})$/i) || [])[1];
@@ -2276,9 +2339,14 @@ php spark hotelrates:migrate</pre>
             if (q && !(`${h.name} ${h.location_name || ''} ${h.chain || ''} ${h.primary_sup_acc_no || ''} ${h.sup_acc_nos || ''} ${h.hotel_code || ''}`.toLowerCase().includes(q))
                 && !(codeNo && h.hotel_code && parseInt(String(h.hotel_code).replace(/\D/g, ''), 10) === parseInt(codeNo, 10))) return false;
             if (HRO.fav && !Number(h.frequently_used)) return false;
-            if (HRO.used && !Number(h.nights_last_year)) return false;
             return test(r);
         });
+    }
+    function hroAttReason(a) {
+        const k = a.replacement ? a.replacement.key : '';
+        if (k === 'required') return ['red', 'Replacement required'];
+        if (k === 'gap' && a.next_start) return ['red', 'Coverage gap ' + fmtRange(addD(a.ends, 1), addD(a.next_start, -1), false)];
+        return [a.replacement && a.replacement.level === 'blue' ? 'blue' : 'red', a.replacement ? a.replacement.text : a.state_text];
     }
     function hroRender() {
         if (!document.getElementById('hro_cards')) return;
@@ -2286,10 +2354,10 @@ php spark hotelrates:migrate</pre>
         document.getElementById('hro_date').textContent = fmtD(HRD ? HRD.today : TODAY);
         // ---- cards
         const days = HRD ? HRD.days : 14;
-        document.getElementById('hro_cards').innerHTML = HRO_CARDS.map(([k, t, ic, test]) => {
+        document.getElementById('hro_cards').innerHTML = HRO_CARDS.map(([k, t, test]) => {
             const n = k === 'total' || HRD ? rows.filter(test).length : '…';
             const key = k === 'total' ? 'all' : k;
-            return `<button type="button" class="hro-card k-${k} ${HRO.status === key && key !== 'all' ? 'on' : ''}" data-card="${key}" aria-pressed="${HRO.status === key}" title="Show these hotels in the directory"><span class="ic"><i class="bi ${ic}"></i></span><span><span class="t">${k === 'expiring' ? 'Expiring within ' + days + ' days' : t}</span><br><span class="n">${n}</span></span></button>`;
+            return `<button type="button" class="hro-card k-${k} ${HRO.status === key && key !== 'all' ? 'on' : ''}" data-card="${key}" aria-pressed="${HRO.status === key}" title="Show these hotels in the directory"><span class="ic">${ICO[k]}</span><span><span class="t">${k === 'expiring' ? 'Expiring within ' + days + ' days' : t}</span><span class="n">${n}</span></span></button>`;
         }).join('');
         document.querySelectorAll('[data-card]').forEach(b => b.addEventListener('click', () => {
             HRO.status = HRO.status === b.dataset.card ? 'all' : b.dataset.card; HRO.page = 1;
@@ -2298,17 +2366,14 @@ php spark hotelrates:migrate</pre>
         }));
         // ---- needs attention: the rate-expiry warnings (expired, expiring, coverage gaps)
         const att = document.getElementById('hro_att');
-        if (!HRD) att.innerHTML = '<div class="hro-att-h"><i class="bi bi-exclamation-triangle"></i> Needs attention</div><div class="hro-att-none text-muted">Checking coverage…</div>';
-        else if (HRD.error) att.innerHTML = `<div class="hro-att-h"><i class="bi bi-exclamation-triangle"></i> Needs attention</div><div class="hro-att-none" style="color:#b3261e">The coverage check could not be read (${esc(HRD.error)}).</div>`;
-        else {
-            const tone = a => a.replacement && a.replacement.level ? a.replacement.level : (a.state === 'expired' ? 'red' : 'amber');
-            att.innerHTML = `<div class="hro-att-h"><i class="bi bi-exclamation-triangle"></i> Needs attention <span class="ms-auto" style="font-size:12.5px;font-weight:400;color:#5E5964">expired rates and coverage ending within ${HRD.days} days · <a href="${BASE}/readiness">Quote readiness</a></span></div>`
-                + (HRD.alerts.length ? HRD.alerts.map(a => `<div class="hro-att-row"><i class="bi ${a.state === 'expired' ? 'bi-exclamation-octagon' : 'bi-exclamation-triangle'}" style="color:${a.state === 'expired' ? '#b3261e' : '#a86a00'};font-size:18px"></i>
-                    <b>${esc(a.hotel)}</b><span>${a.state === 'expired' ? 'Expired ' : 'Ends '}${esc(fmtD(a.ends))}${a.next_start ? '<br><small class="text-muted">next rates from ' + esc(fmtD(a.next_start)) + '</small>' : ''}</span>
-                    <span class="why ${tone(a)}">${esc(a.replacement ? a.replacement.text : a.state_text)}${a.replacement && a.replacement.detail ? '<small>' + esc(a.replacement.detail) + '</small>' : ''}</span>
-                    <button type="button" class="hro-btn justify-self-end" data-open="${a.hotel_id}">Review</button></div>`).join('')
-                : '<div class="hro-att-none"><i class="bi bi-check-circle"></i> Nothing expired or ending soon — every approved rate is covered for the next ' + HRD.days + ' days.</div>');
-        }
+        const head = `<div class="hro-att-h">${ICO.warn} Needs attention</div>`;
+        if (!HRD) att.innerHTML = head + '<div class="hro-att-none text-muted">Checking coverage…</div>';
+        else if (HRD.error) att.innerHTML = head + `<div class="hro-att-none" style="color:#c0262d">The coverage check could not be read (${esc(HRD.error)}).</div>`;
+        else att.innerHTML = head + (HRD.alerts.length ? HRD.alerts.map(a => { const why = hroAttReason(a); return `<div class="hro-att-row">${ICO.warn}
+                <span class="nm">${esc(a.hotel)}</span><span class="dt">${a.state === 'expired' ? 'Expired ' : 'Ends '}${esc(fmtD(a.ends))}</span>
+                <span class="why ${why[0]}" title="${esc(a.replacement && a.replacement.detail ? a.replacement.detail : '')}">${esc(why[1])}</span>
+                <button type="button" class="hro-btn" data-open="${a.hotel_id}">Review</button></div>`; }).join('')
+            : '<div class="hro-att-none"><i class="bi bi-check-circle"></i> Nothing expired or ending within ' + HRD.days + ' days.</div>');
         // ---- directory
         const list = hroFiltered(rows);
         const pages = Math.max(1, Math.ceil(list.length / HRO_PER));
@@ -2318,27 +2383,29 @@ php spark hotelrates:migrate</pre>
         tb.innerHTML = slice.length ? slice.map(r => {
             const h = r.h, fav = Number(h.frequently_used) > 0;
             const extra = (r.awaiting && r.st[1] !== 'Awaiting approval' ? `<span class="hro-pill blue sm" title="${h.draft_plans} draft plan(s) waiting for approval">draft</span>` : '') + (h.status === 'inactive' && r.st[1] !== 'Inactive' ? '<span class="hro-pill grey sm">inactive</span>' : '');
-            return `<tr><td class="st0">${S.favReady ? `<button type="button" class="star ${fav ? 'on' : ''}" data-fav="${h.id}" aria-pressed="${fav}" title="${fav ? 'Frequently Used — click to untick' : 'Mark as Frequently Used'}">${fav ? '&#9733;' : '&#9734;'}</button>` : ''}</td>
-                <td class="nm">${esc(h.name)}${h.location_name || h.chain ? `<small>${esc([h.location_name, h.chain].filter(Boolean).join(' · '))}</small>` : ''}</td>
-                <td data-l="Code" class="mono">${esc(h.hotel_code || '—')}</td>
+            return `<tr><td class="st0">${S.favReady ? `<button type="button" class="star ${fav ? 'on' : ''}" data-fav="${h.id}" aria-pressed="${fav}" title="${fav ? 'Frequently Used — click to untick' : 'Mark as Frequently Used'}">${fav ? ICO.starOn : ICO.star}</button>` : ''}</td>
+                <td class="nm" title="${esc([h.location_name, h.chain].filter(Boolean).join(' · '))}">${esc(h.name)}</td>
+                <td data-l="Code">${esc(h.hotel_code || '–')}</td>
                 <td data-l="Rate status"><span class="hro-pill ${r.st[0]}" title="${esc(r.R && r.R.reason ? (r.R.reason.detail || r.R.reason.text) : '')}">${esc(r.st[1])}</span>${extra}</td>
-                <td data-l="Coverage">${esc(r.cov)}</td>
-                <td class="text-end">${r.noRates ? `<button type="button" class="hro-btn fill" data-open="${h.id}" title="Open the hotel to enter its first rate plan">Add rates</button>` : `<button type="button" class="hro-btn" data-open="${h.id}" title="Open this hotel's rates">Open</button>`}</td></tr>`;
-        }).join('') : `<tr><td colspan="6" class="text-center py-4 text-muted">No hotels match${HRO.status !== 'all' || HRO.q || HRO.fav || HRO.used ? ' — <a href="#" id="hro_clear">clear the search and filters</a>' : ''}.</td></tr>`;
-        document.getElementById('hro_showing').textContent = list.length ? `Showing ${from + 1}–${from + slice.length} of ${list.length} hotel${list.length === 1 ? '' : 's'}${list.length !== rows.length ? ' (filtered from ' + rows.length + ')' : ''}` : `0 of ${rows.length} hotels`;
+                <td data-l="Coverage" title="${esc(r.covTip)}">${esc(r.cov)}</td>
+                <td class="act">${r.noRates ? `<button type="button" class="hro-btn fill" data-open="${h.id}" title="Open the hotel to enter its first rate plan">Add rates</button>` : `<button type="button" class="hro-btn" data-open="${h.id}" title="Open this hotel's rates">Open</button>`}</td></tr>`;
+        }).join('') : `<tr><td colspan="6" class="text-center py-4 text-muted">No hotels match${HRO.status !== 'all' || HRO.q || HRO.fav ? ' — <a href="#" id="hro_clear">clear the search and filters</a>' : ''}.</td></tr>`;
+        document.getElementById('hro_showing').textContent = list.length ? `Showing ${from + 1}–${from + slice.length} of ${list.length} hotel${list.length === 1 ? '' : 's'}` : `0 of ${rows.length} hotels`;
         const pg = document.getElementById('hro_pager');
-        const nums = []; for (let p = 1; p <= pages; p++) { if (p === 1 || p === pages || Math.abs(p - HRO.page) <= 1) nums.push(p); else if (nums[nums.length - 1] !== '…') nums.push('…'); }
-        pg.innerHTML = `<button type="button" data-pg="${HRO.page - 1}" ${HRO.page <= 1 ? 'disabled' : ''}><i class="bi bi-chevron-left"></i> Previous</button>` + nums.map(p => p === '…' ? '<button type="button" disabled>…</button>' : `<button type="button" data-pg="${p}" class="${p === HRO.page ? 'on' : ''}" ${p === HRO.page ? 'aria-current="page"' : ''}>${p}</button>`).join('') + `<button type="button" data-pg="${HRO.page + 1}" ${HRO.page >= pages ? 'disabled' : ''}>Next <i class="bi bi-chevron-right"></i></button>`;
+        const nums = []; for (let p = 1; p <= pages; p++) { if (p <= 3 || p === pages || Math.abs(p - HRO.page) <= 1) nums.push(p); else if (nums[nums.length - 1] !== '…') nums.push('…'); }
+        pg.innerHTML = `<button type="button" data-pg="${HRO.page - 1}" ${HRO.page <= 1 ? 'disabled' : ''}>${ICO.left} Previous</button>` + nums.map(p => p === '…' ? '<button type="button" class="gap" disabled>…</button>' : `<button type="button" data-pg="${p}" class="${p === HRO.page ? 'on' : ''}" ${p === HRO.page ? 'aria-current="page"' : ''}>${p}</button>`).join('') + `<button type="button" data-pg="${HRO.page + 1}" ${HRO.page >= pages ? 'disabled' : ''}>Next ${ICO.right}</button>`;
         pg.querySelectorAll('[data-pg]').forEach(b => b.addEventListener('click', () => { HRO.page = Number(b.dataset.pg); hroSave(); hroRender(); }));
         hroRoot.querySelectorAll('#hr_overview [data-open]').forEach(b => b.addEventListener('click', () => hroOpen(Number(b.dataset.open))));
         tb.querySelectorAll('[data-fav]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); const h = S.hotels.find(x => x.id == b.dataset.fav); if (h) setFrequent(h.id, !Number(h.frequently_used)); }));
-        const clr = document.getElementById('hro_clear'); if (clr) clr.addEventListener('click', e => { e.preventDefault(); Object.assign(HRO, { q: '', status: 'all', fav: false, used: false, page: 1 }); hroSyncInputs(); hroSave(); hroRender(); });
-        S.hroRows = rows;
+        const clr = document.getElementById('hro_clear'); if (clr) clr.addEventListener('click', e => { e.preventDefault(); Object.assign(HRO, { q: '', status: 'all', fav: false, page: 1 }); hroSyncInputs(); hroSave(); hroRender(); });
+        // the ⋯ tools menu carries the counts the old buttons showed (drafts waiting, expiry warnings)
+        const dot = document.getElementById('tools_dot'), qc = document.getElementById('queue_count');
+        if (dot && qc) { const n = qc.style.display !== 'none' ? Number(qc.textContent) || 0 : 0; dot.textContent = n; dot.style.display = n ? '' : 'none'; }
     }
     function hroSyncInputs() {
-        document.getElementById('hro_q').value = HRO.q; document.getElementById('hro_status').value = HRO.status;
-        [['hro_fav', HRO.fav], ['hro_used', HRO.used]].forEach(([id, on]) => { const b = document.getElementById(id); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
-        document.querySelector('#hro_fav i').className = 'bi ' + (HRO.fav ? 'bi-star-fill' : 'bi-star');
+        document.getElementById('hro_q').value = HRO.q;
+        const sel = document.getElementById('hro_status'); sel.value = HRO_TEST[HRO.status] ? HRO.status : 'all';
+        const f = document.getElementById('hro_fav'); f.classList.toggle('on', !!HRO.fav); f.setAttribute('aria-pressed', !!HRO.fav); f.innerHTML = (HRO.fav ? ICO.starOn : ICO.star) + ' Favourites';
     }
     function hroMode(detail) {
         hroRoot.classList.toggle('hro-list', !detail); hroRoot.classList.toggle('hro-detail', !!detail);
@@ -2363,7 +2430,7 @@ php spark hotelrates:migrate</pre>
         if (S.hotel && Number(S.hotel.id) === Number(id)) {
             document.getElementById('hro_back_name').textContent = S.hotel.name + (S.hotel.hotel_code ? ' · ' + S.hotel.hotel_code : '');
             hroMode(true);
-            if (wasList) { const b = document.getElementById('hro_back'); window.scrollTo(0, Math.max(0, b.getBoundingClientRect().top + window.scrollY - 80)); }   // the hotel's rates straight into view
+            if (wasList) requestAnimationFrame(() => { const b = document.getElementById('hro_back'); window.scrollTo(0, Math.max(0, b.getBoundingClientRect().top + window.scrollY - 80)); });   // the hotel's rates straight into view
         }
         return r;
     }; }
@@ -2372,15 +2439,16 @@ php spark hotelrates:migrate</pre>
     document.getElementById('hro_q').addEventListener('input', e => { HRO.q = e.target.value; HRO.page = 1; hroSave(); hroRender(); });
     document.getElementById('hro_status').addEventListener('change', e => { HRO.status = e.target.value; HRO.page = 1; hroSave(); hroRender(); });
     document.getElementById('hro_fav').addEventListener('click', () => { HRO.fav = !HRO.fav; HRO.page = 1; hroSyncInputs(); hroSave(); hroRender(); });
-    document.getElementById('hro_used').addEventListener('click', () => { HRO.used = !HRO.used; HRO.page = 1; hroSyncInputs(); hroSave(); hroRender(); });
     // Export: the directory as it is filtered now (hotel, code, status, coverage) — a CSV for a spreadsheet; no rates in it
     document.getElementById('btn_export').addEventListener('click', () => {
         const list = hroFiltered((S.hotels || []).map(hroRow));
         const cell = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
         const csv = [['Hotel', 'Code', 'Location', 'Rate status', 'Coverage', 'Draft plans', 'Frequently used'].map(cell).join(',')]
-            .concat(list.map(r => [r.h.name, r.h.hotel_code || '', r.h.location_name || '', r.st[1], r.cov, r.h.draft_plans || 0, Number(r.h.frequently_used) ? 'yes' : ''].map(cell).join(','))).join('\r\n');
+            .concat(list.map(r => [r.h.name, r.h.hotel_code || '', r.h.location_name || '', r.st[1], r.cov + (r.covTip ? ' (' + r.covTip + ')' : ''), r.h.draft_plans || 0, Number(r.h.frequently_used) ? 'yes' : ''].map(cell).join(','))).join('\r\n');
         const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = 'hotel-rates-' + (HRD ? HRD.today : TODAY) + '.csv'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
     });
+    // the tools in the ⋯ menu close it when used
+    document.querySelectorAll('.hro-tools .act').forEach(el => el.addEventListener('click', () => { const t = document.getElementById('btn_tools'); if (t && window.bootstrap) { const d = bootstrap.Dropdown.getInstance(t); if (d) d.hide(); } }));
     hroSyncInputs(); hroMode(false);
 
     // ---------------- start ----------------
