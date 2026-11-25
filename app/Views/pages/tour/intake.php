@@ -324,6 +324,7 @@
     .tf .reqrow:last-child { border-bottom:0; }
     .tf .reqrow .dot { width:7px; height:7px; border-radius:50%; margin-top:6px; background:var(--tf-teal); }
     .tf .reqrow.q .dot { background:#b7791f; }
+    .tf .reqrow .reqno { color:#842484; font-weight:800; }   /* tf-questions-r1 */
     .tf .reqrow q { display:block; font-style:normal; color:var(--tf-muted); font-size:12px; margin-top:2px; }
     .tf .paxgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:7px; }
     /* the itinerary as the quotation says it */
@@ -2851,9 +2852,10 @@
         document.getElementById('sv_list')?.addEventListener('click', () => { SAVED_NOTICE = null; setView('view_list'); loadList(); });
         document.getElementById('sv_close')?.addEventListener('click', () => { SAVED_NOTICE = null; renderDetail(); });
 
+        let reqQn = 0;   // tf-questions-r1 (25 Nov 2026, Shantha): the questions are numbered Question 1, 2, 3 … in the order they were recorded
         const reqs = (it.requests || []).map(r => `<div class="reqrow ${r.kind === 'question' ? 'q' : ''}" data-req="${r.id}" style="cursor:pointer">
             <span class="dot"></span>
-            <div><b style="font-size:12.5px">${esc(r.title)}</b>${r.quote_text ? `<q>“${esc(r.quote_text)}”</q>` : ''}${r.answer ? `<q style="color:var(--tf-navy)">${esc(r.answer)}</q>` : ''}</div>
+            <div><b style="font-size:12.5px">${r.kind === 'question' ? `<span class="reqno">Question ${++reqQn}</span> · ` : ''}${esc(r.title)}</b>${r.quote_text ? `<q>“${esc(r.quote_text)}”</q>` : ''}${r.answer ? `<q style="color:var(--tf-navy)">${esc(r.answer)}</q>` : ''}</div>
             <span class="pill ${r.status === 'open' ? (r.kind === 'question' ? 'pill-amber' : 'pill-grey') : 'pill-green'}">${esc(r.status)}</span>
             <button class="btn btn-light btn-sm rowdel" data-delreq="${r.id}" title="Remove">&times;</button></div>`).join('')
             || `<div class="empty">${hasMail ? 'Nothing was asked for in this email.' : 'Nothing recorded yet.'}</div>`;
@@ -4632,6 +4634,9 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const act = document.getElementById('act_card'); if (act) pane('notes').appendChild(act);
         [document.getElementById('masters_card'), document.querySelector('#view_detail .mailbox'), document.getElementById('er_card')].forEach(el => { if (el) pane('notes').appendChild(el); });
         const cc = document.getElementById('comms_card'); if (cc) pane('notes').appendChild(cc);
+        // tf-questions-r1 (25 Nov 2026, Shantha): Requests & questions shows again on the first tab, where the pasted inquiry opens,
+        // instead of one click down under Notes & History → Requests & Corrections; the card and its Add one / edit / status are unchanged
+        { const rq = document.getElementById('d_addreq'); const rc = rq && rq.closest('.tf-card'); if (rc && pane('hotels')) pane('hotels').appendChild(rc); }
         inqNotes(pane('notes'), it);   // tf-notes-r1: after every card of this tab is in it
         inqMeals(pane('acts'), it);   // tf-lunch-r1
         djMount(pane('acts'), it);   // tf-dayplan-r1
