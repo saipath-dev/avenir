@@ -516,6 +516,11 @@ final class TourService
         if (!empty($it['missing_nights'])) {
             $out[] = 'a line for every night the dates give (nights ' . TourDates::runs($it['missing_nights']) . ' have none)';
         }
+        // tf-roomopt-r1: a quotation with room options is confirmed on the one the agent chose
+        $ropts = (array) ($it['room_options'] ?? []);
+        if ($ropts !== [] && !array_filter($ropts, static fn ($o) => !empty($o['chosen']))) {
+            $out[] = 'the room option the agent chose (Itinerary & Services → Room options → Agent chose this)';
+        }
         // the agent accepts a quotation that was sent: Confirm records which version
         if ($this->hasServiceJobs() && $this->issuedQuote((int) ($it['id'] ?? 0)) === null) {
             $out[] = 'an issued quotation (Go for Quotation, then Issue the version the agent accepted)';
@@ -708,7 +713,7 @@ final class TourService
             // the room mix the night is costed on (typed, or the groups present), in words
             $mix = is_array($d['room_mix'] ?? null) ? $d['room_mix'] : null;
             $mixWords = [];
-            foreach ([['sgl', 'SGL'], ['dbl', 'DBL'], ['twn', 'TWN'], ['tpl', 'TPL']] as [$k, $l]) {
+            foreach ([['sgl', 'SGL'], ['dbl', 'DBL'], ['twn', 'TWN'], ['tpl', 'TPL'], ['fam', 'FAMILY']] as [$k, $l]) {   // tf-roomopt-r1: FAMILY from a chosen room option
                 if ($mix && (int) ($mix[$k] ?? 0) > 0) {
                     $mixWords[] = (int) $mix[$k] . ' ' . $l;
                 }

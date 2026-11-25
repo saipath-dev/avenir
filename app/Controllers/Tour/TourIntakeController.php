@@ -850,6 +850,40 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // POST intake/(:num)/roomopt          — tf-roomopt-r1: add a room option {name, rooms:[{type, adults, children:[{n, bed}]}]}
+    // POST intake/(:num)/roomopt/(:num)   — change it, keep it in / leave it out {included}, or take it off {delete:1}
+    public function roomOption($id, $optId = null)
+    {
+        try {
+            $b = $this->body();
+            $this->svc()->saveRoomOption((int) $id, $optId === null ? null : (int) $optId, $b);
+            $data = $this->svc()->get((int) $id);   // the whole inquiry, as every row editor on the page takes it
+            return $this->json(['status' => 200, 'message' => !empty($b['delete']) ? 'Room option removed.' : ($optId ? 'Room option saved.' : 'Room option added.'), 'data' => $data]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // GET intake/(:num)/options_costing — tf-roomopt-r1: each room option priced, per guest. Cost figures and the markup only for the Pricing group.
+    public function optionsCosting($id)
+    {
+        try {
+            $rows = $this->quotes()->optionsCosting((int) $id);
+            if (!$this->holds(self::PRICING_URL)) {
+                foreach ($rows as &$r) {
+                    $r['cost_usd'] = null; $r['markup_pct'] = null;
+                    $r['sections'] = array_map(static fn () => null, (array) $r['sections']);
+                    $r['warnings'] = array_values(array_filter((array) $r['warnings'], static fn ($w) => empty($w['internal'])));
+                    foreach ((array) $r['guests'] as $k => $g) { $r['guests'][$k]['cost_usd'] = null; }
+                }
+                unset($r);
+            }
+            return $this->json(['status' => 200, 'data' => $rows, 'sees_cost' => $this->holds(self::PRICING_URL)]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // POST intake/(:num)/dayplan/(:num) — tf-dayplan-r1: Save draft / Save day plan on the Daily journey & activities panel
     public function dayPlan($id, $dayNo)
     {

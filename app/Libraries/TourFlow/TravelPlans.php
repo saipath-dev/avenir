@@ -38,6 +38,7 @@ final class TravelPlans
         PaxRooms::ensure($db);   // its tables first: a CREATE inside the preview's trial would end the trial early
         $take->ensureDayRooms();   // tf-hotelpick-r1: the same for the room rows of a night
         $take->ensureDayPlans();   // tf-dayplan-r1: and the day plans
+        $take->ensureRoomOptions();   // tf-roomopt-r1
     }
 
     public static function ensure($db): void

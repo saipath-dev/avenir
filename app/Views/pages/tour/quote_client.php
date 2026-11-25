@@ -277,6 +277,14 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
 </div>
 <div class="qx-sec">
     <h2>Your tour price</h2>
+    <?php if (!empty($c['room_options'])): /* tf-roomopt-r1: one price per guest for each room option */ ?>
+    <p style="margin:-4px 0 10px">In US dollars, for your party of <b><?= (int) $c['pax'] ?></b>, for each way of rooming the party.</p>
+    <?php foreach ($c['room_options'] as $ro): ?>
+    <table class="qx-pt" style="margin-bottom:14px"><tr><th colspan="2">Option <?= ['①','②','③','④','⑤'][$ro['no'] - 1] ?? (int) $ro['no'] ?> — <?= esc($ro['name']) ?><br><small style="font-weight:500"><?= esc(implode(' · ', (array) $ro['words'])) ?></small></th></tr>
+        <?php foreach ((array) $ro['guests'] as $g): ?><tr><td class="cat"><?= esc($g['label']) ?><?= $g['label'] === 'Adult' ? ', ' . (int) $g['count'] . ' pax — per person' : ($g['count'] > 1 ? ' × ' . (int) $g['count'] : '') ?></td><td><b><?= $usd($g['sell_usd']) ?></b></td></tr><?php endforeach; ?>
+        <tr class="sel"><td class="cat"><b><?= (int) $c['pax'] ?> pax total</b></td><td><b><?= $usd($ro['total_usd']) ?></b></td></tr></table>
+    <?php endforeach; ?>
+    <?php else: ?>
     <p style="margin:-4px 0 10px">Per person, in US dollars, for a party of <b><?= (int) $c['pax'] ?></b>, by room category and how the rooms are shared.</p>
     <table class="qx-pt"><tr><th>Room category</th><th><?= $xShare ? 'Per person sharing<br>double / twin' : 'Per person<br>rooms as requested' ?></th><th>Per person<br>in a single room</th><th>Per person<br>sharing a triple</th></tr>
         <tr class="sel"><td class="cat"><b><?= esc($xCat ?: 'As requested') ?> <span class="pill">AS REQUESTED</span></b><small><?= esc(implode(' · ', array_unique(array_map(static fn ($h) => $h['hotel'], $xHotels)))) ?></small></td>
@@ -288,6 +296,7 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
         <div><small>Per person</small><b><?= $usd($c['per_person_usd']) ?></b><div class="eq"><?= $xShare ? 'sharing double / twin' : 'rooms as requested' ?></div></div>
         <div><small>Rooms</small><b class="sm"><?= esc($mixWords ? implode(', ', $mixWords) : '—') ?></b><div class="eq">a party is totalled as singles × single rate + sharers × sharing rate</div></div>
     </div>
+    <?php endif; /* tf-roomopt-r1 */ ?>
 </div>
 </div>
 <?php else: ?>
@@ -417,6 +426,17 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
 <table width="100%" cellpadding="3" cellspacing="0" style="font-size:11.5px;"><tr><td width="4%" style="vertical-align:top;">&#8226;</td><td width="96%"><?= esc(implode(', ', array_unique($direct))) ?>.</td></tr></table>
 <?php endif; ?>
 
+<?php if (!empty($c['room_options'])): /* tf-roomopt-r1: the price for each room option, per guest */ ?>
+<?php foreach ($c['room_options'] as $ro): ?>
+<table width="100%" cellpadding="6" cellspacing="0" style="margin-top:16px; border:1px solid <?= $LINE ?>;">
+    <tr><td colspan="2" style="background:#faf5f7; font-size:13px; font-weight:bold; color:<?= $P ?>;">Option <?= ['①','②','③','④','⑤'][$ro['no'] - 1] ?? (int) $ro['no'] ?> — <?= esc($ro['name']) ?><br><span style="font-size:11px; font-weight:normal; color:<?= $MUTED ?>;"><?= esc(implode(' · ', (array) $ro['words'])) ?></span></td></tr>
+    <?php foreach ((array) $ro['guests'] as $g): ?>
+    <tr><td width="65%" style="font-size:12px; border-top:1px solid <?= $LINE ?>;"><?= esc($g['label']) ?><?= $g['label'] === 'Adult' ? ', ' . (int) $g['count'] . ' pax — per person' : ($g['count'] > 1 ? ' × ' . (int) $g['count'] : '') ?></td><td width="35%" align="right" style="font-size:12.5px; font-weight:bold; border-top:1px solid <?= $LINE ?>;"><?= $usd($g['sell_usd']) ?></td></tr>
+    <?php endforeach; ?>
+    <tr><td style="font-size:12.5px; font-weight:bold; border-top:1px solid <?= $LINE ?>;"><?= (int) $c['pax'] ?> pax total</td><td align="right" style="font-size:15px; font-weight:bold; color:<?= $P ?>; border-top:1px solid <?= $LINE ?>;"><?= $usd($ro['total_usd']) ?></td></tr>
+</table>
+<?php endforeach; ?>
+<?php else: ?>
 <table width="100%" cellpadding="8" cellspacing="0" style="margin-top:22px; border:1px solid <?= $LINE ?>; background:#faf5f7;">
     <tr>
         <td width="55%" style="font-size:12px; color:<?= $MUTED ?>; vertical-align:middle;">Total for <?= (int) $c['pax'] ?> passenger<?= (int) $c['pax'] === 1 ? '' : 's' ?>, in US dollars <span style="display:inline-block; margin-left:6px; padding:1px 7px; border:1px solid <?= $P ?>; border-radius:10px; color:<?= $P ?>; font-size:10px; font-weight:bold; letter-spacing:.04em;">AS REQUESTED</span></td>
@@ -427,6 +447,7 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
         <td align="right" style="font-size:14px; font-weight:bold; color:<?= $INK ?>; border-top:1px solid <?= $LINE ?>;"><?= $usd($c['per_person_usd']) ?></td></tr>
     <?php endif; ?>
 </table>
+<?php endif; /* tf-roomopt-r1 */ ?>
 
 <?php endif; /* tf-clientdoc-r1: end of the paper-only top */ ?>
 <?php if (!$pdf): ?><div class="qx qx-staff"><?php endif; ?>

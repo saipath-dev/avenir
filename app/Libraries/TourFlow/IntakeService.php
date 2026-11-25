@@ -243,6 +243,7 @@ final class IntakeService
     private ?bool $hasRoomTypeAuto = null;   // tf-walkfix-r1 (schema 35)
     private ?bool $hasDayRooms = null;       // tf-hotelpick-r1: the room rows of a night
     private ?bool $hasDayPlans = null;       // tf-dayplan-r1: the day plan of each tour day
+    private ?bool $hasRoomOptions = null;    // tf-roomopt-r1: room options priced side by side
     private ?bool $hasTwoFigures = null;
     private ?bool $hasSamePlace = null;   // tf-walkfix-r1 (schema 35)
     private ?array $gatewayTowns = null;  // tf-walkfix-r1: the airport area, from the planner's gateway setting
@@ -446,6 +447,7 @@ final class IntakeService
         $it['days']       = $this->db->query('SELECT * FROM tf_intake_day WHERE intake_id = ? ORDER BY day_no, id', [$id])->getResultArray();
         // tf-dayplan-r1: each tour day's plan (transfer only / transfer + visits / activities or leisure), transport arrangement and status
         $it['day_plans'] = $this->dayPlans($id);
+        $it['room_options'] = $this->roomOptions($id, $it);   // tf-roomopt-r1
         // tf-hotelpick-r1: the room rows a person set for a night (category, occupancy, rooms) — that night's room mix
         $it['day_rooms'] = [];
         if ($this->ensureDayRooms()) {
@@ -1841,6 +1843,238 @@ final class IntakeService
         return $this->dayPlans($id);
     }
 
+    // =====================================================================
+    //  tf-roomopt-r1 (25 Nov 2026, Shantha): room options — up to 5 ways to room the same party, each priced on its own
+    //  (INQ 1062: ① 1 family room, ② 1 twin + 1 triple, ③ 2 twins). The inquiry's own room mix is not touched.
+    // =====================================================================
+    public const ROOMOPT_TYPES = ['family' => 'Family room', 'single' => 'Single', 'double' => 'Double', 'twin' => 'Twin', 'triple' => 'Triple'];
+    public const ROOMOPT_BEDS  = ['family' => 5, 'single' => 1, 'double' => 2, 'twin' => 2, 'triple' => 3];
+
+    public function ensureRoomOptions(): bool
+    {
+        if ($this->hasRoomOptions !== null) {
+            return $this->hasRoomOptions;
+        }
+        try {
+            $this->db->query("CREATE TABLE IF NOT EXISTS `tf_intake_roomopt` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `intake_id` INT UNSIGNED NOT NULL,
+                `sort_no` SMALLINT UNSIGNED NOT NULL DEFAULT 1,
+                `name` VARCHAR(120) NOT NULL,
+                `rooms_json` TEXT NOT NULL,
+                `included` TINYINT(1) NOT NULL DEFAULT 1,
+                `note` VARCHAR(300) NULL,
+                `created_by` VARCHAR(100) NULL, `created_at` DATETIME NULL,
+                `updated_by` VARCHAR(100) NULL, `updated_at` DATETIME NULL,
+                PRIMARY KEY (`id`), KEY `k_intake` (`intake_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            if (!$this->db->query("SHOW COLUMNS FROM tf_intake_roomopt LIKE 'chosen'")->getResultArray()) {
+                $this->db->query("ALTER TABLE tf_intake_roomopt ADD COLUMN `chosen` TINYINT(1) NOT NULL DEFAULT 0 AFTER `included`");
+            }
+            $this->hasRoomOptions = true;
+        } catch (\Throwable $e) {
+            $this->hasRoomOptions = false;
+        }
+        return $this->hasRoomOptions;
+    }
+
+    /** The room options of an inquiry, in order, each room with its guests in words (ages read live from the party). */
+    public function roomOptions(int $id, ?array $it = null): array
+    {
+        if (!$this->ensureRoomOptions()) {
+            return [];
+        }
+        $rows = $this->db->query('SELECT id, sort_no, name, rooms_json, included, chosen, note, updated_by, updated_at FROM tf_intake_roomopt WHERE intake_id = ? ORDER BY sort_no, id', [$id])->getResultArray();
+        if (!$rows) {
+            return [];
+        }
+        $it = $it ?? ($this->db->query('SELECT pax_adults, pax_children, child_json FROM tf_intake WHERE id = ?', [$id])->getRowArray() ?: []);
+        $kids = [];
+        foreach (ChildFares::children($it) as $c) {
+            $kids[(int) $c['n']] = $c;
+        }
+        $out = [];
+        foreach ($rows as $i => $r) {
+            $rooms = json_decode((string) $r['rooms_json'], true);
+            $rooms = is_array($rooms) ? $rooms : [];
+            $words = [];
+            foreach ($rooms as &$rm) {
+                $who = [];
+                if ((int) ($rm['adults'] ?? 0) > 0) {
+                    $who[] = (int) $rm['adults'] . ' adult' . ((int) $rm['adults'] === 1 ? '' : 's');
+                }
+                foreach ((array) ($rm['children'] ?? []) as $ch) {
+                    $k = $kids[(int) ($ch['n'] ?? 0)] ?? null;
+                    $age = $k && $k['age'] !== null ? rtrim(rtrim(number_format((float) $k['age'], 2, '.', ''), '0'), '.') : null;
+                    $who[] = 'child ' . ($age !== null ? $age : '#' . (int) ($ch['n'] ?? 0)) . (empty($ch['bed']) ? ' (no bed)' : '');
+                }
+                $rm['label'] = (self::ROOMOPT_TYPES[$rm['type'] ?? ''] ?? 'Room') . ' — ' . ($who ? implode(' · ', $who) : 'nobody');
+                $words[] = $rm['label'];
+            }
+            unset($rm);
+            $out[] = ['id' => (int) $r['id'], 'no' => $i + 1, 'name' => $r['name'], 'rooms' => $rooms, 'words' => $words, 'included' => (int) $r['included'] === 1, 'chosen' => (int) ($r['chosen'] ?? 0) === 1,
+                'note' => $r['note'], 'updated_by' => $r['updated_by'], 'updated_at' => $r['updated_at'], 'check' => self::roomOptionCheck($rooms, $it)];
+        }
+        return $out;
+    }
+
+    /** Every guest in exactly one room, and no room holding more beds than it has: what is wrong, in words (empty = fine). */
+    public static function roomOptionCheck(array $rooms, array $it): array
+    {
+        $issues = [];
+        $adults = 0;
+        $seen = [];
+        $nKids = max(0, (int) ($it['pax_children'] ?? 0));
+        foreach ($rooms as $i => $rm) {
+            $t = (string) ($rm['type'] ?? '');
+            if (!isset(self::ROOMOPT_TYPES[$t])) {
+                $issues[] = 'Room ' . ($i + 1) . ': choose the room type.';
+                continue;
+            }
+            $a = max(0, (int) ($rm['adults'] ?? 0));
+            $adults += $a;
+            $beds = $a;
+            foreach ((array) ($rm['children'] ?? []) as $ch) {
+                $n = (int) ($ch['n'] ?? 0);
+                if ($n < 1 || $n > $nKids) {
+                    $issues[] = 'Room ' . ($i + 1) . ': a child who is not in the party.';
+                    continue;
+                }
+                if (isset($seen[$n])) {
+                    $issues[] = 'Child ' . $n . ' is in two rooms.';
+                }
+                $seen[$n] = true;
+                if (!empty($ch['bed'])) {
+                    $beds++;
+                }
+            }
+            if ($beds === 0 && empty($rm['children'])) {
+                $issues[] = 'Room ' . ($i + 1) . ' has nobody in it.';
+            }
+            if ($beds > self::ROOMOPT_BEDS[$t]) {
+                $issues[] = 'Room ' . ($i + 1) . ' (' . self::ROOMOPT_TYPES[$t] . ') has ' . $beds . ' guests in a bed but sleeps ' . self::ROOMOPT_BEDS[$t] . ' — mark a child "no bed" or choose a bigger room.';
+            }
+        }
+        if ($rooms === []) {
+            $issues[] = 'Add at least one room.';
+        }
+        if ($adults !== (int) ($it['pax_adults'] ?? 0)) {
+            $issues[] = 'The rooms hold ' . $adults . ' adult(s); the party has ' . (int) ($it['pax_adults'] ?? 0) . '.';
+        }
+        if (count($seen) !== $nKids) {
+            $issues[] = 'The rooms hold ' . count($seen) . ' child(ren); the party has ' . $nKids . '.';
+        }
+        return $issues;
+    }
+
+    /** Add (optId null) or change one option, or take it off ({delete:1}). Nothing else on the inquiry changes. */
+    public function saveRoomOption(int $id, ?int $optId, array $in): array
+    {
+        $this->assertOpen($id);
+        if (!$this->ensureRoomOptions()) {
+            throw new \RuntimeException('Room options could not be set up on this site.');
+        }
+        $old = $optId ? $this->db->query('SELECT * FROM tf_intake_roomopt WHERE id = ? AND intake_id = ?', [$optId, $id])->getRowArray() : null;
+        if ($optId && !$old) {
+            throw new \RuntimeException('That room option is not on this inquiry.');
+        }
+        $now = date('Y-m-d H:i:s');
+        if ($old && !empty($in['delete'])) {
+            $this->db->query('DELETE FROM tf_intake_roomopt WHERE id = ?', [$optId]);
+            try { $this->activity()->record('intake', $id, $id, null, 'roomopt', 'Room option removed: ' . $old['name']); } catch (\Throwable $e) {}
+            $this->touch($id);
+            return $this->roomOptions($id);
+        }
+        if ($old && !empty($in['choose'])) {
+            return $this->chooseRoomOption($id, $old);
+        }
+        if ($old && array_key_exists('included', $in) && count($in) === 1) {
+            $this->db->query('UPDATE tf_intake_roomopt SET included = ?, updated_by = ?, updated_at = ? WHERE id = ?', [!empty($in['included']) ? 1 : 0, $this->user, $now, $optId]);
+            try { $this->activity()->record('intake', $id, $id, null, 'roomopt', 'Room option ' . (!empty($in['included']) ? 'put back in' : 'left out of') . ' the quotation: ' . $old['name']); } catch (\Throwable $e) {}
+            $this->touch($id);
+            return $this->roomOptions($id);
+        }
+        $name = trim(mb_substr((string) ($in['name'] ?? ''), 0, 120));
+        if ($name === '') {
+            throw new \InvalidArgumentException('Give the option a name, e.g. "1 Family Room".');
+        }
+        $rooms = [];
+        foreach (array_slice((array) ($in['rooms'] ?? []), 0, 12) as $rm) {
+            $t = (string) ($rm['type'] ?? '');
+            $kids = [];
+            foreach ((array) ($rm['children'] ?? []) as $ch) {
+                $kids[] = ['n' => (int) ($ch['n'] ?? 0), 'bed' => !empty($ch['bed'])];
+            }
+            $rooms[] = ['type' => isset(self::ROOMOPT_TYPES[$t]) ? $t : '', 'adults' => max(0, min(5, (int) ($rm['adults'] ?? 0))), 'children' => $kids];
+        }
+        if (!$old) {
+            $n = (int) ($this->db->query('SELECT COUNT(*) n FROM tf_intake_roomopt WHERE intake_id = ?', [$id])->getRowArray()['n'] ?? 0);
+            if ($n >= 5) {
+                throw new \InvalidArgumentException('An inquiry holds up to 5 room options.');
+            }
+            $this->db->query('INSERT INTO tf_intake_roomopt (intake_id, sort_no, name, rooms_json, included, note, created_by, created_at, updated_by, updated_at) VALUES (?,?,?,?,1,?,?,?,?,?)',
+                [$id, $n + 1, $name, json_encode($rooms, JSON_UNESCAPED_UNICODE), isset($in['note']) ? mb_substr(trim((string) $in['note']), 0, 300) : null, $this->user, $now, $this->user, $now]);
+            try { $this->activity()->record('intake', $id, $id, null, 'roomopt', 'Room option added: ' . $name); } catch (\Throwable $e) {}
+        } else {
+            $this->db->query('UPDATE tf_intake_roomopt SET name = ?, rooms_json = ?, note = ?, updated_by = ?, updated_at = ? WHERE id = ?',
+                [$name, json_encode($rooms, JSON_UNESCAPED_UNICODE), isset($in['note']) ? mb_substr(trim((string) $in['note']), 0, 300) : $old['note'], $this->user, $now, $optId]);
+            try { $this->activity()->record('intake', $id, $id, null, 'roomopt', 'Room option changed: ' . $name, [['what' => 'Room option', 'from' => $old['name'] . ' ' . $old['rooms_json'], 'to' => $name . ' ' . json_encode($rooms)]]); } catch (\Throwable $e) {}
+        }
+        $this->touch($id);
+        return $this->roomOptions($id);
+    }
+
+
+    /**
+     * tf-roomopt-r1, step 6: the agent chose one option. Its rooms become the rooms of every night (row by row, as Hotel & room
+     * selection keeps them) and the inquiry's room mix; the other options are left out. Confirm Tour then books exactly these rooms.
+     */
+    private function chooseRoomOption(int $id, array $opt): array
+    {
+        $it = $this->get($id);
+        $rooms = json_decode((string) $opt['rooms_json'], true) ?: [];
+        $chk = self::roomOptionCheck($rooms, $it);
+        if ($chk) {
+            throw new \InvalidArgumentException('Fix this option first: ' . implode(' ', $chk));
+        }
+        $occ = ['single' => 'sgl', 'double' => 'dbl', 'twin' => 'twn', 'triple' => 'tpl', 'family' => 'fam'];
+        $mix = ['sgl' => 0, 'dbl' => 0, 'twn' => 0, 'tpl' => 0];
+        foreach ($rooms as $rm) {
+            $o = $occ[$rm['type']] ?? null;
+            if (isset($mix[$o])) {
+                $mix[$o]++;
+            }
+        }
+        $words = array_column($this->roomOptions($id, $it), 'words', 'id')[(int) $opt['id']] ?? [];
+        $this->db->transStart();
+        foreach (($it['days'] ?? []) as $d) {
+            $famId = null;
+            foreach ((array) ($d['room_types'] ?? []) as $t) {
+                if (preg_match('/family/i', (string) ($t['name'] ?? ''))) {
+                    $famId = (int) $t['id'];
+                    break;
+                }
+            }
+            $rows = [];
+            foreach ($rooms as $rm) {
+                $o = $occ[$rm['type']] ?? null;
+                if ($o === null) {
+                    continue;
+                }
+                $rows[] = $o === 'fam' ? ['room_type_id' => $famId, 'room_type_name' => 'Family room', 'occ' => 'fam', 'qty' => 1]
+                                       : ['room_type_id' => self::intOrNull($d['room_type_id'] ?? null), 'room_type_name' => null, 'occ' => $o, 'qty' => 1];
+            }
+            $this->saveRoomRows($id, (int) $d['id'], $rows, true);
+        }
+        $this->db->query('UPDATE tf_intake SET rooms_sgl = ?, rooms_dbl = ?, rooms_twn = ?, rooms_tpl = ?, rooms_note = ? WHERE id = ?',
+            [$mix['sgl'], $mix['dbl'], $mix['twn'], $mix['tpl'], self::cut('Agent chose option: ' . $opt['name'] . ' — ' . implode('; ', $words), 255), $id]);
+        $this->db->query('UPDATE tf_intake_roomopt SET chosen = IF(id = ?, 1, 0), included = IF(id = ?, 1, 0), updated_by = ?, updated_at = ? WHERE intake_id = ?', [(int) $opt['id'], (int) $opt['id'], $this->user, date('Y-m-d H:i:s'), $id]);
+        $this->db->transComplete();
+        try { $this->activity()->record('intake', $id, $id, null, 'roomopt', 'The agent chose room option: ' . $opt['name'] . ' (' . implode('; ', $words) . '). Its rooms are now on every night.'); } catch (\Throwable $e) {}
+        $this->touch($id);
+        return $this->roomOptions($id);
+    }
+
     /** tf-hotelpick-r1: the room rows of a night — created on first use (the same way as the other TourFlow tables). */
     public function ensureDayRooms(): bool
     {
@@ -1940,7 +2174,7 @@ final class IntakeService
     }
 
     /** tf-hotelpick-r1: the room rows of a night, as the window sent them; returns a line for the history, or null when nothing changed. */
-    private function saveRoomRows(int $id, int $dayId, $rows): ?string
+    private function saveRoomRows(int $id, int $dayId, $rows, bool $allowFamily = false): ?string
     {
         if (!$this->ensureDayRooms() || !is_array($rows)) {
             return null;
@@ -1952,7 +2186,7 @@ final class IntakeService
             }
             $occ = strtolower(trim((string) ($r['occ'] ?? '')));
             $qty = (int) ($r['qty'] ?? 0);
-            if (!in_array($occ, ['sgl', 'dbl', 'twn', 'tpl'], true) || $qty < 1) {
+            if (!in_array($occ, ['sgl', 'dbl', 'twn', 'tpl', 'fam'], true) || $qty < 1) {   // tf-roomopt-r1: a family room only from a chosen room option
                 continue;
             }
             if ($qty > 60) {
@@ -6280,7 +6514,7 @@ final class IntakeService
      */
     public static function roomMix(array $it, ?int $dayNo): array
     {
-        $out    = ['sgl' => 0, 'dbl' => 0, 'twn' => 0, 'tpl' => 0, 'rooms' => 0, 'sleeps' => 0, 'pax' => null, 'source' => 'none', 'groups' => []];
+        $out    = ['sgl' => 0, 'dbl' => 0, 'twn' => 0, 'tpl' => 0, 'fam' => 0, 'rooms' => 0, 'sleeps' => 0, 'pax' => null, 'source' => 'none', 'groups' => []];
         $groups = (array) ($it['groups'] ?? []);
         if ($groups !== []) {
             $out['source'] = 'groups';
@@ -6320,8 +6554,8 @@ final class IntakeService
             $out['source'] = 'night';
             $out['rows'] = $rows;
         }
-        $out['rooms']  = $out['sgl'] + $out['dbl'] + $out['twn'] + $out['tpl'];
-        $out['sleeps'] = $out['sgl'] + 2 * $out['dbl'] + 2 * $out['twn'] + 3 * $out['tpl'];
+        $out['rooms']  = $out['sgl'] + $out['dbl'] + $out['twn'] + $out['tpl'] + $out['fam'];
+        $out['sleeps'] = $out['sgl'] + 2 * $out['dbl'] + 2 * $out['twn'] + 3 * $out['tpl'] + 5 * $out['fam'];   // tf-roomopt-r1: a family room sleeps the family (up to 5)
         if ($out['source'] === 'groups' && $out['rooms'] === 0) {
             $out['source'] = $out['groups'] === [] ? 'nobody' : 'groups_empty';
         }
@@ -6335,6 +6569,21 @@ final class IntakeService
      */
     public static function roomRowRate(array $d, array $r): ?float
     {
+        // tf-roomopt-r1: a family room (a room option) — its per-room (unit) figure, else its triple figure
+        if (($r['occ'] ?? '') === 'fam') {
+            if (($r['room_type_id'] ?? null) === null) {
+                return null;
+            }
+            $meal = strtoupper((string) ($d['meal_plan'] ?? ''));
+            foreach ((is_array($d['room_types'] ?? null) ? $d['room_types'] : (json_decode((string) ($d['room_types_json'] ?? ''), true) ?: [])) as $t) {
+                if ((int) ($t['id'] ?? 0) === (int) $r['room_type_id']) {
+                    $v = $t['meals'][$meal]['unit'] ?? null;
+                    $v = $v === null || $v === '' ? ($t['meals'][$meal]['tpl'] ?? null) : $v;
+                    return $v === null || $v === '' ? null : (float) $v;
+                }
+            }
+            return null;
+        }
         $col = ($r['occ'] ?? '') === 'twn' ? 'dbl' : (string) ($r['occ'] ?? '');
         if (!in_array($col, ['sgl', 'dbl', 'tpl'], true) || ($r['room_type_id'] ?? null) === null) {
             return null;

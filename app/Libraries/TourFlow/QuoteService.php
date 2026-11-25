@@ -118,11 +118,14 @@ final class QuoteService
      *
      * @return array<string, mixed>
      */
-    public function costing(int $intakeId): array
+    public function costing(int $intakeId, ?array $option = null): array
     {
         $it = $this->take->get($intakeId);
         if (!$it) {
             throw new \RuntimeException('No such inquiry.');
+        }
+        if ($option !== null) {
+            $it = self::applyRoomOption($it, $option);   // tf-roomopt-r1: this option's rooms on every night, nothing saved
         }
         $blockers = [];
         $warnings = [];
@@ -219,6 +222,10 @@ final class QuoteService
                     $childByDay[$dn] = $ci;
                 }
             }
+        }
+        // tf-roomopt-r1: an option in which every child has a bed carries no separate child charge — the children are in the rooms
+        if ($option !== null && (int) ($it['_room_option']['no_bed'] ?? 0) === 0) {
+            $childByDay = [];
         }
         $mixAll = $it['rooms'] ?? IntakeService::roomMix($it, null);
         if (in_array($mixAll['source'], ['none', 'groups_empty', 'nobody'], true) && ($it['days'] ?? []) !== []) {
@@ -322,7 +329,7 @@ final class QuoteService
                     $types[(int) $t['id']] = $t;
                 }
                 $meal  = strtoupper((string) ($d['meal_plan'] ?? ''));
-                $occW  = ['sgl' => 'Single', 'dbl' => 'Double', 'twn' => 'Twin', 'tpl' => 'Triple'];
+                $occW  = ['sgl' => 'Single', 'dbl' => 'Double', 'twn' => 'Twin', 'tpl' => 'Triple', 'fam' => 'Family'];
                 $short = [];
                 foreach ($d['room_rows'] as $r) {
                     $tid   = $r['room_type_id'];
@@ -727,7 +734,7 @@ final class QuoteService
         $matrix = null;
         try {
             $px = new PaxMatrix($this->db, $this->take->planner());
-            if ($px->available()) {
+            if ($option === null && $px->available()) {   // tf-roomopt-r1: a room option is quoted for its own party, without the table by party size
                 $matrix = $px->build($it, $rate, $pct);
                 $matrix['check'] = PaxMatrix::check($matrix, $parts, $costUsd);
                 $chk = $matrix['check'];
@@ -961,6 +968,9 @@ final class QuoteService
             // the price per person by party size (schema 31): the size, the rooms, the price — and
             // nothing else; a version frozen before the matrix existed has no table
             'pax_prices' => PaxMatrix::forAgent($cost['pax_matrix'] ?? null),
+            // tf-roomopt-r1: one price per guest for each room option — the names, the rooms and the prices, nothing internal
+            'room_options' => !empty($cost['room_options']) ? array_map(static fn ($o) => ['no' => $o['no'], 'name' => $o['name'], 'words' => $o['words'], 'total_usd' => $o['total_usd'],
+                'guests' => array_map(static fn ($g) => ['label' => $g['label'], 'count' => $g['count'], 'sell_usd' => $g['sell_usd']], (array) $o['guests'])], $cost['room_options']) : null,
         ];
     }
 
@@ -976,6 +986,180 @@ final class QuoteService
     }
 
     // =====================================================================
+    //  tf-roomopt-r1 (25 Nov 2026, Shantha): room options — the same tour costed once per way of rooming the party
+    // =====================================================================
+
+    /** The inquiry as costing() reads it, with every night's rooms replaced by the option's rooms (nothing is saved). */
+    private static function applyRoomOption(array $it, array $opt): array
+    {
+        $occ = ['single' => 'sgl', 'double' => 'dbl', 'twin' => 'twn', 'triple' => 'tpl', 'family' => 'fam'];
+        $guests = 0;
+        $noBed = 0;
+        $mix = ['sgl' => 0, 'dbl' => 0, 'twn' => 0, 'tpl' => 0, 'fam' => 0];
+        foreach ((array) ($opt['rooms'] ?? []) as $rm) {
+            $o = $occ[$rm['type'] ?? ''] ?? null;
+            if ($o === null) {
+                continue;
+            }
+            $mix[$o]++;
+            $guests += (int) ($rm['adults'] ?? 0) + count((array) ($rm['children'] ?? []));
+            foreach ((array) ($rm['children'] ?? []) as $ch) {
+                if (empty($ch['bed'])) {
+                    $noBed++;
+                }
+            }
+        }
+        $m = ['sgl' => $mix['sgl'], 'dbl' => $mix['dbl'], 'twn' => $mix['twn'], 'tpl' => $mix['tpl'], 'rooms' => array_sum($mix), 'sleeps' => $guests, 'pax' => $guests, 'source' => 'option', 'groups' => []];
+        foreach ($it['days'] as &$d) {
+            $rows = [];
+            foreach ((array) ($opt['rooms'] ?? []) as $rm) {
+                $o = $occ[$rm['type'] ?? ''] ?? null;
+                if ($o === null) {
+                    continue;
+                }
+                $tid = $d['room_type_id'] ?? null;
+                $tname = null;
+                if ($o === 'fam') {
+                    $tid = null;
+                    foreach ((array) ($d['room_types'] ?? []) as $t) {
+                        if (preg_match('/family/i', (string) ($t['name'] ?? ''))) {
+                            $tid = (int) $t['id'];
+                            $tname = (string) $t['name'];
+                            break;
+                        }
+                    }
+                    $tname = $tname ?? 'room';
+                }
+                $rows[] = ['occ' => $o, 'qty' => 1, 'room_type_id' => $tid, 'room_type_name' => $tname];
+            }
+            $d['room_rows'] = $rows;
+            $d['room_mix']  = $m;
+        }
+        unset($d);
+        $it['rooms'] = $m;
+        $it['_room_option'] = ['id' => $opt['id'] ?? null, 'name' => $opt['name'] ?? '', 'no_bed' => $noBed];
+        return $it;
+    }
+
+    /**
+     * Each included room option costed on its own, and its price split per guest:
+     * a room's cost is shared by the guests with a bed in it; a child without a bed carries the child charge of the night;
+     * a hotel supplement and everything outside the hotels (transport, guide, entrances, activities, meals) is shared equally
+     * by every guest; the markup is the inquiry's, on each guest's share.
+     */
+    public function optionsCosting(int $intakeId, bool $withCost = false): array
+    {
+        $it = $this->take->get($intakeId);
+        if (!$it) {
+            throw new \RuntimeException('No such inquiry.');
+        }
+        $kids = [];
+        foreach (ChildFares::children($it) as $c) {
+            $kids[(int) $c['n']] = $c;
+        }
+        $out = [];
+        foreach (($it['room_options'] ?? []) as $o) {
+            if (empty($o['included'])) {
+                continue;
+            }
+            $c = $this->costing($intakeId, $o);
+            $blk = $c['blockers'];
+            foreach ((array) $o['check'] as $msg) {
+                array_unshift($blk, ['code' => 'roomopt_' . $o['id'] . '_' . md5($msg), 'label' => $msg]);
+            }
+            $row = ['id' => $o['id'], 'no' => $o['no'], 'name' => $o['name'], 'words' => $o['words'], 'ready' => $blk === [], 'blockers' => $blk, 'warnings' => $c['warnings'],
+                'sections' => $c['sections'], 'cost_usd' => $c['cost_usd'], 'markup_pct' => $c['markup']['pct'], 'guests' => null, 'total_usd' => null];
+            if ($blk === [] && $c['markup']['pct'] !== null) {
+                $row['guests'] = self::splitPerGuest($c, $o, $kids);
+                $row['total_usd'] = round(array_sum(array_map(static fn ($g) => $g['sell_usd'] * $g['count'], $row['guests'])), 2);
+            }
+            if ($withCost) {
+                $row['cost'] = $c;
+            }
+            $out[] = $row;
+        }
+        return $out;
+    }
+
+    private static function splitPerGuest(array $c, array $o, array $kids): array
+    {
+        $g = [];          // one entry per guest
+        $roomOf = [];     // room index => guest indexes with a bed
+        $noBed = [];
+        foreach ((array) $o['rooms'] as $ri => $rm) {
+            for ($a = 0; $a < (int) ($rm['adults'] ?? 0); $a++) {
+                $g[] = ['kind' => 'adult', 'age' => null, 'bed' => true, 'room' => $ri, 'type' => $rm['type'], 'cost' => 0.0];
+                $roomOf[$ri][] = count($g) - 1;
+            }
+            foreach ((array) ($rm['children'] ?? []) as $ch) {
+                $k = $kids[(int) $ch['n']] ?? null;
+                $g[] = ['kind' => 'child', 'age' => $k['age'] ?? null, 'bed' => !empty($ch['bed']), 'room' => $ri, 'type' => $rm['type'], 'cost' => 0.0];
+                if (!empty($ch['bed'])) {
+                    $roomOf[$ri][] = count($g) - 1;
+                } else {
+                    $noBed[] = count($g) - 1;
+                }
+            }
+        }
+        $n = count($g);
+        if ($n === 0) {
+            return [];
+        }
+        $all = range(0, $n - 1);
+        $share = static function (array &$g, array $who, float $usd) {
+            if ($who === [] || $usd == 0.0) {
+                return;
+            }
+            $each = $usd / count($who);
+            foreach ($who as $i) {
+                $g[$i]['cost'] += $each;
+            }
+        };
+        $placed = 0.0;
+        foreach ($c['hotels'] as $h) {
+            if (($h['amount_usd'] ?? null) === null || !$h['amount']) {
+                continue;
+            }
+            $f = (float) $h['amount_usd'] / (float) $h['amount'];   // the night's own currency to USD
+            $ri = 0;
+            foreach ($h['lines'] as $l) {
+                $usd = (float) $l['amount'] * $f;
+                if ($l['kind'] === 'child') {
+                    $share($g, $noBed !== [] ? $noBed : $all, $usd);
+                } elseif (in_array($l['kind'], ['sgl', 'dbl', 'twn', 'tpl', 'fam'], true)) {
+                    $share($g, $roomOf[$ri] ?? $all, $usd);
+                    $ri++;
+                } else {
+                    $share($g, $all, $usd);
+                }
+                $placed += $usd;
+            }
+            foreach ($h['supplements'] as $s) {
+                $share($g, $all, (float) $s['amount'] * $f);
+                $placed += (float) $s['amount'] * $f;
+            }
+        }
+        $share($g, $all, (float) $c['sections']['hotels'] - $placed);                       // a hotel's own airport transfer kept apart
+        $share($g, $all, (float) $c['cost_usd'] - (float) $c['sections']['hotels']);       // transport, guide, entrances, activities, meals
+        $pct = (float) $c['markup']['pct'];
+        $rows = [];
+        foreach ($g as $x) {
+            $age = $x['age'] !== null ? rtrim(rtrim(number_format((float) $x['age'], 2, '.', ''), '0'), '.') : null;
+            $label = $x['kind'] === 'adult' ? 'Adult' : 'Child' . ($age !== null ? ', ' . $age . ' years' : '') . ($x['bed'] ? '' : ' — no bed');
+            $cost = round($x['cost'], 2);
+            $sell = round($x['cost'] * (1 + $pct / 100), 2);
+            $key = $label . '|' . $sell;
+            if (isset($rows[$key])) {
+                $rows[$key]['count']++;
+            } else {
+                $rows[$key] = ['label' => $label, 'kind' => $x['kind'], 'count' => 1, 'cost_usd' => $cost, 'sell_usd' => $sell];
+            }
+        }
+        return array_values($rows);
+    }
+
+
+    // =====================================================================
     //  Go for Quotation: validate, then freeze a version
     // =====================================================================
 
@@ -988,7 +1172,23 @@ final class QuoteService
     public function goForQuotation(int $intakeId): array
     {
         $this->take->assertOpen($intakeId);
-        $cost = $this->costing($intakeId);
+        // tf-roomopt-r1: with room options on the inquiry, every option kept in is priced and the version carries them all;
+        // the first option stands as the version's own figures
+        $opts = array_values(array_filter((array) ($this->take->roomOptions($intakeId)), static fn ($o) => !empty($o['included'])));
+        if ($opts !== []) {
+            $all = $this->optionsCosting($intakeId, true);
+            $cost = $all[0]['cost'];
+            $blk = [];
+            foreach ($all as $oc) {
+                foreach ($oc['blockers'] as $b) {
+                    $blk[] = ['code' => 'opt' . $oc['id'] . '_' . $b['code'], 'label' => 'Option ' . $oc['no'] . ' (' . $oc['name'] . '): ' . $b['label']];
+                }
+            }
+            $cost['blockers'] = $blk;
+            $cost['room_options'] = array_map(static function ($oc) { unset($oc['cost']); return $oc; }, $all);
+        } else {
+            $cost = $this->costing($intakeId);
+        }
         if ($cost['blockers'] !== []) {
             return ['ok' => false, 'blockers' => $cost['blockers'], 'warnings' => $cost['warnings'], 'quote' => null, 'cost' => $cost];
         }

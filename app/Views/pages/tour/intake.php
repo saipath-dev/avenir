@@ -776,6 +776,7 @@
     .inq table.inq-req td.dd { white-space:nowrap; font-size:17px; } .inq table.inq-req td.ht b { display:block; font-size:18px; font-weight:800; line-height:1.25; } .inq table.inq-req td.ht b.lnk { cursor:pointer; } .inq table.inq-req td.ht b.lnk:hover { color:#842484; }
     .inq table.inq-req td.ht span { display:block; font-size:15px; line-height:1.4; } .inq table.inq-req td.ht .rm { color:#E0661F; font-weight:700; } .inq table.inq-req td.ht .rm i { margin-right:5px; }
     .inq table.inq-req td.mp, .inq table.inq-req td.rr { white-space:nowrap; font-size:17px; }
+    .inq table.inq-req td.rr .rr-note { white-space:pre-line; min-width:220px; max-width:320px; font-size:15px; line-height:1.45; }   /* tf-roomsnote-r1: the email's room wording (several options) wraps one option per line instead of stretching the table */
     .inq [data-reqact] .st, .inq .inq-arow .st { display:flex; align-items:center; gap:8px; font-weight:800; font-size:14.5px; } .inq .st.red { color:#C8101A; } .inq .st.yellow { color:#B87A00; } .inq .st.green { color:#1E7A1E; }
     .inq [data-reqact] .tx { font-style:italic; font-size:15px; margin:1px 0 6px; } .inq [data-reqact] .tx2 { font-size:13px; color:#5E5964; margin:-4px 0 6px; }
     .tf .inq .inq-btn.act { height:32px; padding:0 20px; border:2px solid #1E8E1E; color:#1E7A1E; font-weight:800; font-size:14.5px; border-radius:7px; } .tf .inq .inq-btn.act:hover { background:#1E8E1E; color:#fff; }
@@ -1153,6 +1154,27 @@
         .dj-seg button { padding:0 12px; font-size:15px; } .dj-item { grid-template-columns:24px 52px minmax(0,1fr); } .dj-item .ib { width:52px; height:46px; } .dj-item > :last-child:not(.tx) { grid-column:3; justify-self:start; margin-top:6px; }
         .dj-foot { padding:12px 14px; } .dj-foot .st { font-size:17px; } .dj-foot button { flex:1; min-width:0; font-size:16px; height:44px; padding:0 10px; }
     }
+    /* ---------------- tf-roomopt-r1: room options ---------------- */
+    .inq .ro-card { background:#fff; border:1px solid #D9D3DD; border-radius:12px; padding:18px 20px; margin:0 0 16px; }
+    .inq .ro-h { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; } .inq .ro-h h4 { margin:0 0 3px; font-size:20px; font-weight:800; } .inq .ro-h > div span { font-size:14px; color:#55505B; }
+    .inq .ro-party { margin-left:auto; font-size:14px; color:#55505B; }
+    .inq .ro-add { height:42px; padding:0 16px; border:1.5px solid #842484; color:#842484; background:#fff; border-radius:8px; font-weight:700; font-size:14.5px; } .inq .ro-add:disabled { opacity:.45; }
+    .inq .ro-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:14px; margin-top:14px; }
+    .inq .ro-opt { border:1.5px solid var(--t); border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:10px; } .inq .ro-opt.off { border-style:dashed; opacity:.65; }
+    .inq .ro-oh { display:flex; align-items:center; gap:10px; } .inq .ro-oh b { font-size:17px; } .inq .ro-n { width:30px; height:30px; border-radius:50%; background:var(--t); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; }
+    .inq .ro-tag.ch { background:#E6F4DF; color:#2E6B1F; } .inq .ro-pick { width:100%; border-color:#78b848 !important; color:#3D7A2A !important; }
+    .inq .ro-tag { margin-left:auto; font-size:12px; font-weight:700; background:#F1EFF4; color:#55505B; border-radius:999px; padding:3px 9px; }
+    .inq .ro-opt ul { margin:0; padding:10px 12px 10px 28px; background:#F8F6FA; border-radius:8px; font-size:14px; line-height:1.55; }
+    .inq .ro-warn { font-size:13px; color:#8A5A00; background:#FDF3DC; border-radius:8px; padding:8px 11px; }
+    .inq .ro-act { display:flex; gap:8px; } .inq .ro-btn { height:38px; padding:0 14px; border:1.5px solid #842484; background:#fff; color:#842484; border-radius:8px; font-weight:700; font-size:14px; } .inq .ro-btn.g { border:1px solid #D9D3DD; color:#55505B; font-weight:600; }
+    .tf .ro-room { display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; padding:12px; border:1px solid #E4DFE8; border-radius:10px; margin-bottom:10px; background:#FCFBFD; } .tf .ro-room > b { width:100%; color:#842484; }
+    .tf .ro-room label { display:flex; flex-direction:column; gap:4px; font-size:13px; color:#55505B; } .tf .ro-room select, .tf .ro-room input { height:38px; border:1px solid #CFC7D6; border-radius:6px; padding:0 8px; font-size:14px; } .tf .ro-room input { width:72px; }
+    .tf .ro-room .ro-btn { height:38px; padding:0 12px; border:1px solid #D9D3DD; background:#fff; color:#55505B; border-radius:8px; font-weight:600; font-size:13.5px; }
+    .inq .ro-cost { background:#fff; border:1px solid #D9D3DD; border-radius:12px; padding:18px 20px; margin:0 0 16px; } .inq .ro-ch h4 { margin:0 0 3px; font-size:20px; font-weight:800; } .inq .ro-ch span { font-size:14px; color:#55505B; }
+    .inq .ro-tw { overflow-x:auto; margin-top:12px; } .inq .ro-t { width:100%; border-collapse:collapse; font-size:15px; } .inq .ro-t th { background:#F1EFF4; text-align:left; padding:11px 14px; font-weight:800; white-space:nowrap; } .inq .ro-t td { padding:10px 14px; border-top:1px solid #E4DFE8; white-space:nowrap; } .inq .ro-t td:first-child { color:#3a3540; }
+    .inq .ro-t tr.tot td, .inq .ro-t tr.sell td { font-weight:800; background:#F8F6FA; } .inq .ro-t tr.sell td { background:#F3EAF3; color:#842484; } .inq .ro-t td.ok { color:#2E7D32; font-weight:700; } .inq .ro-t td.no { color:#B3261E; font-weight:700; } .inq .ro-t small { color:#55505B; }
+    .inq .ro-miss { margin-top:12px; font-size:14px; } .inq .ro-miss summary { cursor:pointer; font-weight:700; color:#842484; } .inq .ro-miss ul { margin:4px 0 10px; }
+    .inq .ro-note { margin-top:10px; font-size:13px; color:#55505B; }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -1876,7 +1898,19 @@
 </div></div></div>
 
 <!-- request answer -->
-<div class="modal fade tf" id="m_req" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+<div class="modal fade tf" id="m_req" tabindex="-1"><!-- tf-roomopt-r1: add / edit a room option -->
+<div class="modal fade tf" id="m_roomopt" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content">
+    <div class="modal-header"><h6 class="modal-title" id="ro_title">Room option</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+        <label class="form-label help">Option name</label>
+        <input class="form-control form-control-sm mb-3" id="ro_name" placeholder="e.g. 1 Family Room" maxlength="120">
+        <div id="ro_rooms"></div>
+        <button type="button" class="btn btn-light btn-sm" id="ro_addroom"><i class="bi bi-plus-lg"></i> Add a room</button>
+        <div class="help mt-2">Put every guest in one room. A child marked "No bed" shares a bed and is charged the hotel's child rate.</div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button><button class="btn btn-primary btn-sm" id="ro_ok">Save option</button></div>
+</div></div></div>
+<div class="modal-dialog"><div class="modal-content">
     <div class="modal-header"><h6 class="modal-title" id="mr_title">Request</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
     <div class="modal-body">
         <div class="help" id="mr_quote"></div>
@@ -4501,7 +4535,7 @@
             <td class="ht">${d.hotel_name_raw ? `<b class="${it.locked ? '' : 'lnk'}" ${it.locked ? '' : `data-inqedit="${d.id}" title="Change the hotel, room type or meal plan"`}>${esc(d.hotel_name_raw)}</b>` : (it.locked ? '<b>Hotel not chosen</b>' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}
                 ${d.hotel_name_raw ? `<span>${esc((d.room_rows || []).some(r => r.room_type_name) ? [...new Set(d.room_rows.map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || 'Room type pending'))}</span>` : ''}${reqRate(d)}</td>
             <td class="mp">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan).replace(/\b\w/g, c => c.toUpperCase()).replace('& B', '& B') : 'Not set')}</td>
-            <td class="rr">${d.room_mix && Number(d.room_mix.rooms) > 0 ? esc(roomsShort(d.room_mix).replace(/ · /g, ' + ')) + (d.room_mix.source === 'night' && (d.room_rows || []).some(r => r.room_type_name) ? `<div class="help">${esc(Object.entries(d.room_rows.reduce((a, r) => { const k = r.room_type_name || 'Room'; (a[k] = a[k] || []).push(r.qty + ' ' + String(r.occ).toUpperCase()); return a; }, {})).map(([k, v]) => k + ': ' + v.join(' + ')).join(' · '))}</div>` : (d.room_mix.pax != null && d.room_mix.source === 'groups' ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '')) : esc(d.rooms || roomsTxt)}</td>
+            <td class="rr">${(it.room_options || []).length ? `<div class="rr-note">${(it.room_options || []).length} room categor${(it.room_options || []).length === 1 ? 'y' : 'ies'} — see Room options</div>` : d.room_mix && Number(d.room_mix.rooms) > 0 ? esc(roomsShort(d.room_mix).replace(/ · /g, ' + ')) + (d.room_mix.source === 'night' && (d.room_rows || []).some(r => r.room_type_name) ? `<div class="help">${esc(Object.entries(d.room_rows.reduce((a, r) => { const k = r.room_type_name || 'Room'; (a[k] = a[k] || []).push(r.qty + ' ' + String(r.occ).toUpperCase()); return a; }, {})).map(([k, v]) => k + ': ' + v.join(' + ')).join(' · '))}</div>` : (d.room_mix.pax != null && d.room_mix.source === 'groups' ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '')) : `<div class="rr-note">${esc(d.rooms || roomsTxt)}</div>`}</td>
             <td data-reqact="${d.day_no}"><div class="tx">…</div></td>
             <td class="nt">${d.special_note ? esc(d.special_note) + (it.locked ? '' : ` <a data-inqedit="${d.id}" title="Change the note"><i class="bi bi-pencil"></i></a>`) : (it.locked ? '' : `<a data-inqedit="${d.id}">Add a note</a>`)}</td></tr>`;
         const depX = it.departure_day, reqDep = depX && !days.some(d => Number(d.day_no) === Number(depX.day_no)) ? `<tr><td class="dd">${depX.day_no} / ${esc(dm(depX.date, { day:'numeric', month:'short', year:'numeric' }))}</td>
@@ -4640,6 +4674,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         inqNotes(pane('notes'), it);   // tf-notes-r1: after every card of this tab is in it
         inqMeals(pane('acts'), it);   // tf-lunch-r1
         djMount(pane('acts'), it);   // tf-dayplan-r1
+        roMount(pane('hotels'), it); roCosting(pane('check'), it);   // tf-roomopt-r1
         wrap.remove();
         if (bar) shell.appendChild(bar);
 
@@ -4721,6 +4756,92 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         inqGate();
     }
     function inqActGo(dayNo) { inqShow('acts'); if (document.getElementById('dj')) { DJ.view = 'find'; DJ.day = Number(dayNo); djDraw(); } if (window.tfActSub) window.tfActSub('tix'); const el = document.getElementById('inq_aday_' + dayNo) || document.getElementById('inq_acts'); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); inqSettle(el); } }
+    // ---------------- tf-roomopt-r1 (25 Nov 2026, Shantha): room options — the same tour quoted for several ways of rooming the party ----------------
+    const RO_TYPES = { family: 'Family room', single: 'Single', double: 'Double', twin: 'Twin', triple: 'Triple' };
+    const RO_TONE = ['#842484', '#5B2E8C', '#3D7A2A', '#9A5B00', '#1F5F8B'];
+    const roKids = it => { let l = []; try { l = JSON.parse(it.child_json || '[]') || []; } catch (e) { l = []; } const n = Math.max(0, Number(it.pax_children || 0)); return Array.from({ length: n }, (_, i) => ({ n: i + 1, age: l[i] && l[i].age !== '' && l[i].age != null ? Number(l[i].age) : null, bed: l[i] ? l[i].bed : '' })); };
+    const roKidName = k => 'Child ' + (k.age != null ? k.age : '#' + k.n);
+    const roNo = n => ['①', '②', '③', '④', '⑤'][n - 1] || String(n);
+    function roMount(pane, it) {
+        if (!pane) return;
+        const opts = it.room_options || [], locked = !!it.locked, kids = roKids(it);
+        const party = `${Number(it.pax_adults || 0)} adult${Number(it.pax_adults || 0) === 1 ? '' : 's'}${kids.length ? ' · children ' + kids.map(k => k.age != null ? k.age : '?').join(', ') : ''}`;
+        const card = document.createElement('div'); card.className = 'ro-card'; card.id = 'ro_card';
+        card.innerHTML = `<div class="ro-h"><div><h4>Room options</h4><span>${opts.length ? 'Each option is priced on its own; the quotation shows one price per guest for every option kept in.' : 'Quote the same tour for several ways of rooming the party (for example a family room, or a twin + a triple).'}</span></div>
+            <span class="ro-party">Party: <b>${Number(it.pax_total || 0)} guests</b> · ${esc(party)}</span>
+            ${locked ? '' : `<button type="button" class="ro-add" data-roadd ${opts.length >= 5 ? 'disabled' : ''}><i class="bi bi-plus-lg"></i> Add an option</button>`}</div>
+            ${opts.length ? `<div class="ro-grid">${opts.map((o, i) => `<div class="ro-opt ${o.included ? '' : 'off'}" style="--t:${RO_TONE[i % 5]}">
+                <div class="ro-oh"><span class="ro-n">${roNo(o.no)}</span><b>${esc(o.name)}</b>${o.chosen ? '<span class="ro-tag ch">Agent\'s choice</span>' : (o.included ? '' : '<span class="ro-tag">Left out</span>')}</div>
+                <ul>${(o.words || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>
+                ${(o.check || []).length ? `<div class="ro-warn">${o.check.map(esc).join('<br>')}</div>` : ''}
+                ${locked ? '' : `<div class="ro-act"><button type="button" class="ro-btn" data-roedit="${o.id}">Edit</button><button type="button" class="ro-btn g" data-roinc="${o.id}" data-v="${o.included ? 0 : 1}">${o.included ? 'Leave out' : 'Put back'}</button><button type="button" class="ro-btn g" data-rodel="${o.id}">Remove</button></div>
+                ${o.chosen ? '' : `<button type="button" class="ro-btn ro-pick" data-rochoose="${o.id}" title="When the agent replies: this option's rooms go on every night, and Confirm Tour books them">Agent chose this</button>`}`}
+            </div>`).join('')}</div>` : ''}`;
+        pane.insertBefore(card, pane.firstChild);
+        card.querySelectorAll('[data-roadd]').forEach(b => b.addEventListener('click', () => roOpen(null)));
+        card.querySelectorAll('[data-roedit]').forEach(b => b.addEventListener('click', () => roOpen(Number(b.dataset.roedit))));
+        card.querySelectorAll('[data-roinc]').forEach(b => b.addEventListener('click', () => rowPost('/roomopt/' + b.dataset.roinc, { included: b.dataset.v === '1' })));
+        card.querySelectorAll('[data-rochoose]').forEach(b => b.addEventListener('click', async () => { const o = opts.find(x => x.id === Number(b.dataset.rochoose)); if (await ask('The agent chose ' + roNo(o.no) + ' ' + o.name + '? Its rooms will be put on every night and the other options left out. Confirm Tour then books these rooms.', 'Yes, the agent chose it')) rowPost('/roomopt/' + o.id, { choose: 1 }, 'Saved: the agent chose ' + o.name + '.'); }));
+        card.querySelectorAll('[data-rodel]').forEach(b => b.addEventListener('click', async () => { if (await ask('Remove this room option? The inquiry and its other options stay as they are.', 'Remove')) rowPost('/roomopt/' + b.dataset.rodel, { delete: 1 }); }));
+    }
+    let RO_EDIT = null;
+    function roOpen(id) {
+        const it = CURRENT, o = id ? (it.room_options || []).find(x => x.id === id) : null;
+        RO_EDIT = { id: o ? o.id : null, name: o ? o.name : '', rooms: o ? JSON.parse(JSON.stringify(o.rooms || [])) : [{ type: 'double', adults: Number(it.pax_adults || 0), children: roKids(it).map(k => ({ n: k.n, bed: k.bed !== 'no_bed' })) }] };
+        document.getElementById('ro_title').textContent = o ? 'Edit ' + roNo(o.no) + ' ' + o.name : 'Add a room option';
+        roDraw(); show('#m_roomopt');
+    }
+    function roDraw() {
+        const it = CURRENT, kids = roKids(it), E = RO_EDIT;
+        const where = {}; E.rooms.forEach((r, ri) => (r.children || []).forEach(c => { where[c.n] = { ri, bed: !!c.bed }; }));
+        document.getElementById('ro_name').value = E.name;
+        document.getElementById('ro_rooms').innerHTML = E.rooms.map((r, ri) => `<div class="ro-room"><b>Room ${ri + 1}</b>
+            <label>Type<select data-rof="type" data-ri="${ri}">${Object.entries(RO_TYPES).map(([k, w]) => `<option value="${k}" ${r.type === k ? 'selected' : ''}>${w}</option>`).join('')}</select></label>
+            <label>Adults<input type="number" min="0" max="5" data-rof="adults" data-ri="${ri}" value="${Number(r.adults || 0)}"></label>
+            ${kids.map(k => { const w = where[k.n], v = w && w.ri === ri ? (w.bed ? 'bed' : 'nobed') : ''; return `<label>${esc(roKidName(k))}<select data-rok="${k.n}" data-ri="${ri}"><option value="">Not in this room</option><option value="bed" ${v === 'bed' ? 'selected' : ''}>In a bed</option><option value="nobed" ${v === 'nobed' ? 'selected' : ''}>No bed (shares)</option></select></label>`; }).join('')}
+            ${E.rooms.length > 1 ? `<button type="button" class="ro-btn g" data-rorm="${ri}">Remove room</button>` : ''}</div>`).join('');
+        const box = document.getElementById('ro_rooms');
+        box.querySelectorAll('[data-rof]').forEach(el => el.addEventListener('change', () => { const r = E.rooms[Number(el.dataset.ri)]; r[el.dataset.rof] = el.dataset.rof === 'adults' ? Math.max(0, Number(el.value) || 0) : el.value; }));
+        box.querySelectorAll('[data-rok]').forEach(el => el.addEventListener('change', () => {
+            const n = Number(el.dataset.rok), ri = Number(el.dataset.ri);
+            E.rooms.forEach(r => { r.children = (r.children || []).filter(c => c.n !== n); });
+            if (el.value) E.rooms[ri].children.push({ n, bed: el.value === 'bed' });
+            E.name = document.getElementById('ro_name').value; roDraw();
+        }));
+        box.querySelectorAll('[data-rorm]').forEach(b => b.addEventListener('click', () => { E.rooms.splice(Number(b.dataset.rorm), 1); E.name = document.getElementById('ro_name').value; roDraw(); }));
+    }
+    document.getElementById('ro_addroom').addEventListener('click', () => { RO_EDIT.name = document.getElementById('ro_name').value; RO_EDIT.rooms.push({ type: 'twin', adults: 0, children: [] }); roDraw(); });
+    document.getElementById('ro_ok').addEventListener('click', async () => {
+        RO_EDIT.name = document.getElementById('ro_name').value;
+        const ok = await rowPost('/roomopt' + (RO_EDIT.id ? '/' + RO_EDIT.id : ''), { name: RO_EDIT.name, rooms: RO_EDIT.rooms });
+        if (ok) hide('#m_roomopt');
+    });
+    // Before Quotation & Confirmation: each option kept in, priced for the whole tour — no night-by-night check
+    async function roCosting(pane, it) {
+        const opts = (it.room_options || []).filter(o => o.included);
+        if (!pane || !opts.length) return;
+        const box = document.createElement('div'); box.className = 'ro-cost'; box.id = 'ro_cost';
+        box.innerHTML = '<div class="help" style="padding:14px">Pricing the room options…</div>';
+        pane.insertBefore(box, pane.firstChild);
+        let j; try { j = await api('/intake/' + it.id + '/options_costing'); } catch (e) { j = { status: 0 }; }
+        if (!document.getElementById('ro_cost') || !CURRENT || CURRENT.id !== it.id) return;
+        if (!j || j.status !== 200) { box.innerHTML = `<div class="help" style="padding:14px">${esc((j && j.message) || 'The room options could not be priced.')}</div>`; return; }
+        const rows = j.data || [], sees = !!j.sees_cost, cols = rows.length;
+        const m = v => v == null ? '—' : 'USD ' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const labels = []; rows.forEach(r => (r.guests || []).forEach(g => { if (!labels.includes(g.label)) labels.push(g.label); }));
+        const cell = (r, lab) => { const g = (r.guests || []).find(x => x.label === lab); return g ? m(g.sell_usd) + (g.count > 1 ? ` <small>× ${g.count}</small>` : '') : (r.ready ? '—' : ''); };
+        const sec = k => rows.map(r => `<td>${m(r.sections ? r.sections[k] : null)}</td>`).join('');
+        box.innerHTML = `<div class="ro-ch"><h4>Quotation — ${cols} room categor${cols === 1 ? 'y' : 'ies'}</h4><span>Whole tour, ${Number(it.nights || (it.days || []).length)} nights. ${sees ? 'Cost and markup are shown to the Pricing group only.' : 'Prices per guest; the costing is shown to the Pricing group.'}</span></div>
+            <div class="ro-tw"><table class="ro-t"><thead><tr><th></th>${rows.map((r, i) => `<th style="border-top:3px solid ${RO_TONE[i % 5]}">${roNo(r.no)} ${esc(r.name)}</th>`).join('')}</tr></thead><tbody>
+            ${sees ? `<tr><td>Hotels</td>${sec('hotels')}</tr><tr><td>Transport</td>${sec('transport')}</tr><tr><td>Driver &amp; guide</td>${rows.map(r => `<td>${m(r.sections ? (Number(r.sections.crew || 0) + Number(r.sections.crew_rooms || 0)) : null)}</td>`).join('')}</tr>
+                <tr><td>Entrances &amp; activities</td>${rows.map(r => `<td>${m(r.sections ? (Number(r.sections.services || 0) + Number(r.sections.excursions || 0)) : null)}</td>`).join('')}</tr>
+                <tr class="tot"><td>Total cost</td>${rows.map(r => `<td>${m(r.cost_usd)}</td>`).join('')}</tr><tr><td>Markup</td>${rows.map(r => `<td>${r.markup_pct == null ? '—' : Number(r.markup_pct) + '%'}</td>`).join('')}</tr>` : ''}
+            ${labels.map(l => `<tr><td>${esc(l)}${l === 'Adult' ? ' — per person' : ''}</td>${rows.map(r => `<td>${cell(r, l)}</td>`).join('')}</tr>`).join('')}
+            <tr class="sell"><td>Selling price — ${Number(it.pax_total || 0)} pax</td>${rows.map(r => `<td>${m(r.total_usd)}</td>`).join('')}</tr>
+            <tr><td>Ready to quote?</td>${rows.map(r => `<td class="${r.ready ? 'ok' : 'no'}">${r.ready ? 'Yes' : 'No — ' + r.blockers.length + ' thing' + (r.blockers.length === 1 ? '' : 's') + ' to fix'}</td>`).join('')}</tr></tbody></table></div>
+            ${rows.some(r => !r.ready) ? `<details class="ro-miss"><summary>Still needed before Go for Quotation</summary>${rows.filter(r => !r.ready).map(r => `<div><b>${roNo(r.no)} ${esc(r.name)}</b><ul>${r.blockers.slice(0, 12).map(b => `<li>${esc(b.label)}</li>`).join('')}${r.blockers.length > 12 ? `<li>… and ${r.blockers.length - 12} more</li>` : ''}</ul></div>`).join('')}</details>` : ''}
+            <div class="ro-note">How each guest's price is made: a room's cost is shared by the guests with a bed in it; a child without a bed carries the hotel's child charge; transport, guide, entrances, activities and hotel supplements are shared equally by every guest; the markup is added to each share. Go for Quotation prices every option kept in and puts them all in one quotation.</div>`;
+    }
     // ---------------- tf-dayplan-r1 (25 Nov 2026, Shantha's mock-up): the Activities tab as "Daily journey & activities" ----------------
     // Day plan (new): each tour day's arrival / transfer / overnight, the plan type and transport arrangement (saved per day),
     // the day's checks, Save draft / Review day / Save day plan. Find activities: the panel as it was (Meals & Restaurants,
@@ -6063,7 +6184,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     // meal plan, read from the server whenever the hotel or the date changes. A rate that is not there is said, never a zero.
     const HP = { day: null, rates: null, rows: [], seq: 0, picked: null, saved: null };
     const HP_OCC = [['sgl', 'Single'], ['dbl', 'Double'], ['twn', 'Twin'], ['tpl', 'Triple']];
-    const HP_BEDS = { sgl: 1, dbl: 2, twn: 2, tpl: 3 };
+    const HP_BEDS = { sgl: 1, dbl: 2, twn: 2, tpl: 3, fam: 5 };
     const HP_MEALS = [['RO', 'Room Only (RO)'], ['BB', 'Bed & Breakfast (BB)'], ['HB', 'Half Board (HB)'], ['FB', 'Full Board (FB)'], ['AI', 'All Inclusive (AI)']];
     const hpEl = id => document.getElementById(id);
     const hpMoney = v => (HP.rates && HP.rates.currency ? HP.rates.currency : 'USD') + ' ' + Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -6071,6 +6192,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     function hpRate(r) {
         const meal = hpEl('md_meal').value, col = r.occ === 'twn' ? 'dbl' : r.occ, d = HP.day;
         if (!r.room_type_id || !meal) return null;
+        if (r.occ === 'fam') { const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === Number(r.room_type_id)), m = t && t.meals ? t.meals[meal] : null; return m ? (m.unit != null ? Number(m.unit) : (m.tpl != null ? Number(m.tpl) : null)) : null; }   // tf-roomopt-r1: a family room from a chosen room option
         // the figure kept on the night for its own room type (a rate moved in Hotel Rates is only taken on purpose), as the costing does
         if (hpSame() && d && Number(d.room_type_id) === Number(r.room_type_id) && d.rate_state === 'rate') { const v = d['rate_' + col]; return v == null || v === '' ? null : Number(v); }
         const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === Number(r.room_type_id));
@@ -6095,7 +6217,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             const rateCell = !r.room_type_id ? '<span class="miss">Choose a category</span>' : !meal ? '<span class="miss">Choose the meal plan</span>' : v === null ? '<span class="miss"><i class="bi bi-exclamation-triangle-fill"></i> No published rate</span>' : esc(hpMoney(v));
             return `<div class="hp-tr" data-i="${i}">
                 <div data-l="Category"><select class="form-select" data-k="room_type_id" aria-label="Category">${typeOpts(r)}</select></div>
-                <div data-l="Occupancy"><select class="form-select" data-k="occ" aria-label="Occupancy">${HP_OCC.map(([k, w]) => `<option value="${k}" ${r.occ === k ? 'selected' : ''}>${w}</option>`).join('')}</select></div>
+                <div data-l="Occupancy"><select class="form-select" data-k="occ" aria-label="Occupancy">${(r.occ === 'fam' ? HP_OCC.concat([['fam', 'Family room']]) : HP_OCC).map(([k, w]) => `<option value="${k}" ${r.occ === k ? 'selected' : ''}>${w}</option>`).join('')}</select></div>
                 <div data-l="Rooms"><input type="number" class="form-control" min="1" max="60" step="1" data-k="qty" value="${q || ''}" aria-label="Rooms"></div>
                 <div data-l="Rate per night">${rateCell}</div>
                 <div data-l="Amount" class="amt">${v !== null && q > 0 ? esc(hpMoney(v * q)) : '—'}</div>
@@ -6188,7 +6310,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         if (!hpEl('md_meal').value) { toast('error', 'Choose the meal plan.'); hpEl('md_meal').focus(); return; }
         const rows = HP.rows.filter(r => Number(r.qty) > 0);
         if (HP.rows.length && !rows.length) { toast('error', 'Give each room row at least 1 room, or remove it.'); return; }
-        const missing = rows.filter(r => hpRate(r) === null).map(r => (r.room_type_name || 'room') + ' ' + (HP_OCC.find(o => o[0] === r.occ) || [, r.occ])[1].toLowerCase());
+        const missing = rows.filter(r => hpRate(r) === null).map(r => (r.room_type_name || 'room') + ' ' + (HP_OCC.concat([['fam', 'Family room']]).find(o => o[0] === r.occ) || [, r.occ])[1].toLowerCase());
         btn.disabled = true;
         const j = await post('/intake/' + CURRENT.id + '/day/' + id, {
             day_date: hpEl('md_date').value, area: hpEl('md_area').value, hotel_name_raw: hotel, meal_plan: hpEl('md_meal').value,
