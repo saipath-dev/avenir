@@ -1258,7 +1258,35 @@ final class QuoteService
         if ($code === 'rates_unreviewed') {
             return ['review', 'Rate changes', 'Rates moved since the inquiry was costed: review them and press Recalculate or Keep the saved figures.', $base . '&tab=check', 'Before Quotation & Confirmation'];
         }
+        if (preg_match('/^act_day_/', $code)) {
+            return ['activity', 'Activities by day', 'Enter the day\'s activities on the Activities tab and press Check for that day — or tick "No activities required". A later change to the day opens it again.', $base . '&tab=acts', 'Activities'];
+        }
         return ['other', 'Other checks', 'Fix it on the inquiry; the text says what is missing.', $base . '&tab=check', 'Before Quotation & Confirmation'];
+    }
+
+    /**
+     * tf-roomopt-r4: the costing the readiness light and Send / Issue judge. With room options kept in the quotation, the blockers are those of
+     * the options (each option costed on its own rooms), not of the inquiry's own room mix, which an option inquiry may leave empty.
+     */
+    public function readyCost(int $intakeId): array
+    {
+        $cost = $this->costing($intakeId);
+        $it = $this->take->get($intakeId);
+        $opts = array_values(array_filter((array) ($it['room_options'] ?? []), static fn ($o) => !empty($o['included'])));
+        if ($opts !== []) {
+            $bl = [];
+            foreach ($this->optionsCosting($intakeId) as $oc) {
+                foreach ($oc['blockers'] as $b) {
+                    $own = strpos((string) $b['code'], 'roomopt_') === 0;
+                    $k = $own ? 'roomopt_' . $oc['id'] . '_' . substr(md5((string) $b['label']), 0, 8) : (string) $b['code'];
+                    if (!isset($bl[$k])) {
+                        $bl[$k] = ['code' => $k, 'label' => ($own ? 'Option ' . $oc['no'] . ' (' . $oc['name'] . '): ' : '') . $b['label']] + $b;
+                    }
+                }
+            }
+            $cost['blockers'] = array_values($bl);
+        }
+        return $cost;
     }
 
     /**
@@ -1289,9 +1317,19 @@ final class QuoteService
                     $add(strpos($b['code'], 'roomopt_') === 0 ? 'roomopt_' . $oc['id'] . '_' . substr(md5($b['label']), 0, 8) : $b['code'], $b['label'], (int) $oc['no']);
                 }
             }
-        } else {
-            foreach ($this->costing($intakeId)['blockers'] as $b) {
+        }
+        $base = $this->costing($intakeId);
+        if ($opts === []) {
+            foreach ($base['blockers'] as $b) {
                 $add($b['code'], $b['label'], null);
+            }
+        }
+        // tf-roomopt-r4: the day-by-day activity checks of the readiness light are items of the same list (a day turns green only when
+        // its activities are entered and checked, or "No activities required" is ticked — and opens again when the day changes)
+        $rd = (new InquiryReadiness($this->db, $this->user))->state($it, array_merge($base, ['blockers' => []]));
+        foreach ((array) $rd['items'] as $ri) {
+            if (strpos((string) $ri['code'], 'act_day_') === 0) {
+                $add((string) $ri['code'], (string) $ri['label'], null);
             }
         }
         $now = date('Y-m-d H:i:s');

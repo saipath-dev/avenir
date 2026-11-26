@@ -1829,7 +1829,7 @@ class TourIntakeController extends BaseController
                 return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
             }
             $rd = new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName());
-            return $this->json(['status' => 200, 'data' => $rd->state($it, $this->quotes()->costing((int) $id))]);
+            return $this->json(['status' => 200, 'data' => $rd->state($it, $this->quotes()->readyCost((int) $id))]);   // tf-roomopt-r4: option-aware
         } catch (\Throwable $e) {
             return $this->fail($e, 400);
         }
@@ -1845,7 +1845,7 @@ class TourIntakeController extends BaseController
                 return $this->json(['status' => 404, 'message' => 'Inquiry not found.'], 404);
             }
             $rd = new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName());
-            return $this->json(['status' => 200, 'message' => 'Saved.', 'data' => $rd->setDay($it, $this->quotes()->costing((int) $id), (int) ($b['day_no'] ?? 0), (string) ($b['status'] ?? ''))]);
+            return $this->json(['status' => 200, 'message' => 'Saved.', 'data' => $rd->setDay($it, $this->quotes()->readyCost((int) $id), (int) ($b['day_no'] ?? 0), (string) ($b['status'] ?? ''))]);
         } catch (\Throwable $e) {
             return $this->fail($e, 400);
         }
@@ -1979,6 +1979,14 @@ class TourIntakeController extends BaseController
             }
             if ($action === 'issue') {
                 $b = $this->body();
+                // tf-roomopt-r4: issuing is refused, like sending, until every missing item is resolved (checked again here, on the server)
+                $itNow = $this->svc()->get((int) $id);
+                if ($itNow && in_array((string) ($itNow['status'] ?? ''), ['new', 'working', 'quoted'], true)) {
+                    $chk = $q->checklist((int) $id);
+                    if (!$chk['ready']) {
+                        return $this->json(['status' => 400, 'message' => 'Version ' . $row['version'] . ' cannot be issued yet: ' . $chk['open'] . ' of ' . $chk['total'] . ' missing items are still open (Room options & quotation → Quotation rates). Nothing was issued.']);
+                    }
+                }
                 $q->issue((int) $qid, $b['note'] ?? null);
                 return $this->json(['status' => 200, 'message' => 'Version ' . $row['version'] . ' issued. The inquiry is marked quoted.', 'data' => $this->svc()->get((int) $id)]);
             }
@@ -2376,7 +2384,7 @@ class TourIntakeController extends BaseController
             $itNow = $this->svc()->get((int) $id);
             if ($itNow && in_array((string) ($itNow['status'] ?? ''), ['new', 'working', 'quoted'], true)) {
                 try {
-                    (new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName()))->assertReady($itNow, $q->costing((int) $id));
+                    (new InquiryReadiness($this->db(), $this->user(), $this->userId(), $this->actorName()))->assertReady($itNow, $q->readyCost((int) $id));   // tf-roomopt-r4: option-aware
                 } catch (NotReadyToQuote $e) {
                     try {
                         (new Activity($this->db(), $this->user(), $this->userId(), $this->actorName()))->record('inquiry', (int) $id, (int) $id, null, 'quotation', 'Send Quotation v' . $row['version'] . ' refused: the inquiry is not green');
