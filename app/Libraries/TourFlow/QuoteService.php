@@ -1753,7 +1753,7 @@ final class QuoteService
             'price'       => $q['sell_usd'] !== null ? 'USD ' . number_format((float) $q['sell_usd'], 2) : '',
             'per_person'  => $q['per_person_usd'] !== null ? 'USD ' . number_format((float) $q['per_person_usd'], 2) : '',
             'valid_until' => $fmtD($q['valid_until'] ?? null),
-            'me'          => trim((string) ($sender['name'] ?? '')) ?: self::SENDER_PLACEHOLDER,   // tf-greet-r1: the signed-in person's own name
+            'me'          => self::personName((string) ($sender['name'] ?? '')) ?? self::SENDER_PLACEHOLDER,   // tf-greet-r1: the signed-in person's own name
             'company'     => (string) ($company['name'] ?? 'Avenir Holidays'),
         ];
         $vars['today'] = date('j M Y');
@@ -1779,8 +1779,9 @@ final class QuoteService
             'to'       => filter_var($to, FILTER_VALIDATE_EMAIL) ? $to : '',
             'to_note'  => $to === '' ? 'The inquiry has no agent email address; type one, or add it on the inquiry.' : (filter_var($to, FILTER_VALIDATE_EMAIL) ? '' : 'The address on the inquiry (' . $to . ') does not look like an email address.'),
             // tf-greet-r1: where the greeting's name came from — or that staff must type it
-            'contact_note' => $contact !== null ? 'Greeting: “Dear ' . $contact['name'] . ',” — ' . $contact['how'] . '. Check it before sending.'
-                : 'No contact name could be read with certainty — replace ' . self::CONTACT_PLACEHOLDER . ' in the message with the name of the person who wrote to us (or enter it on the inquiry as Agent contact). Nothing is sent while it is there.',
+            'contact_note' => ($contact !== null ? 'Greeting: “Dear ' . $contact['name'] . ',” — ' . $contact['how'] . '. Check it before sending.'
+                : 'No contact name could be read with certainty — replace ' . self::CONTACT_PLACEHOLDER . ' in the message with the name of the person who wrote to us (or enter it on the inquiry as Agent contact). Nothing is sent while it is there.')
+                . (self::personName((string) ($sender['name'] ?? '')) === null ? ' Signature: this account’s profile name (' . trim((string) ($sender['name'] ?? '')) . ') is not a person’s name — replace ' . self::SENDER_PLACEHOLDER . ' with your own name.' : ''),
             'dept_from' => DeptMailbox::info($this->db, 'agent'),   // tf-deptmail-r1: land@ once set up
             'cc'       => '',
             'template_id' => (int) $start['id'],
@@ -1807,6 +1808,20 @@ final class QuoteService
      * the e-mail's sign-off or sender name (AgentContact), never a traveller. Null when no name is certain: staff type it.
      * @return array{name:string, how:string}|null
      */
+    /**
+     * tf-greet-r2 (26 Nov 2026, Shantha: "Kind regards, Avenir Holidays" twice): the signature names a PERSON. A shared account whose
+     * profile name is the company or a role ("Avenir Holidays", "super admin", "System Administrator") gives no person's name —
+     * the signature then shows [Your name] for the sender to type, and nothing is sent until they have.
+     */
+    public static function personName(string $name): ?string
+    {
+        $n = trim($name);
+        if ($n === '' || preg_match('/\b(?:avenir|holidays|admin|administrator|system|super|test\s+only|user|staff|office|reservations?)\b/iu', $n)) {
+            return null;
+        }
+        return $n;
+    }
+
     public static function agentContact(int $intakeId, array $it): ?array
     {
         $f = json_decode((string) ($it['fields_json'] ?? ''), true) ?: [];
