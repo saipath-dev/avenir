@@ -721,6 +721,23 @@
     .tf .inq .inq-tab.was { box-shadow:inset 0 -4px 0 #842484; color:#842484; }
     .inq .inq-panebox { border-radius:12px; }
     .inq .inq-hh { margin:2px 0 16px; } .inq .inq-hh h3 { font-size:30px; font-weight:800; margin:0 0 4px; color:#1A1A1A; letter-spacing:-.01em; } .inq .inq-hh > div { font-size:16px; color:#1A1A1A; }
+    /* tf-accreq-r1: Room arrangement (types and counts) and Special Accommodation Requirements, once, under the summary */
+    .inq .inq-accom { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:flex-start; margin:12px 0 8px; padding:14px 18px; background:#fff; border:1px solid #DCD5E0; border-radius:12px; }
+    .inq .ia-rooms { flex:1 1 320px; min-width:0; }
+    .inq .ia-k { font-size:14px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#5E5964; margin-bottom:10px; }
+    .inq .ia-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
+    .inq .ia-opt { font-size:15px; font-weight:700; color:#842484; min-width:78px; }
+    .inq .ia-chip { background:#F3EEF5; border-radius:10px; padding:8px 14px; font-size:18px; font-weight:600; color:#1A1A1A; line-height:1.3; }
+    .inq .ia-chip.ia-none { color:#5E5964; font-weight:500; }
+    .inq .ia-box { flex:1 1 360px; max-width:560px; background:#F4F4F4; border-radius:12px; padding:14px 18px; }
+    .inq .ia-h { display:flex; gap:10px; align-items:center; font-size:20px; font-weight:800; color:#1A1A1A; margin-bottom:6px; } .inq .ia-h i { color:#5E5964; }
+    .inq .ia-kv { display:grid; grid-template-columns:auto 1fr; gap:6px 16px; font-size:17px; padding:8px 0; border-top:1px solid #e2e2e2; } .inq .ia-kv:nth-child(2) { border-top:0; }
+    .inq .ia-kv b { text-align:right; font-weight:800; }
+    .inq .ia-imp { color:#9B2C22; font-weight:700; font-size:16px; margin-top:6px; }
+    .inq small.ia-o { display:inline-block; font-size:12.5px; font-weight:700; color:#842484; margin-right:6px; }
+    .inq .inq-day.hday .inq-arr b { white-space:nowrap; font-size:15.5px; margin-bottom:3px; }
+    .inq .inq-hlist .inq-day.hday { grid-template-columns:150px minmax(170px,1.3fr) 118px 120px minmax(200px,1fr) minmax(176px,1fr) auto; }
+    @media (max-width:1400px) { .inq .inq-hlist .inq-day.hday { grid-template-columns:132px minmax(150px,1.2fr) 104px 108px minmax(190px,1fr) minmax(160px,1fr) auto; } }
     .inq .inq-hlist { position:relative; padding-left:38px; margin-bottom:16px; }
     .inq .inq-hlist::before { content:''; position:absolute; left:13px; top:34px; bottom:34px; width:3px; background:#78B848; border-radius:2px; }
     .inq .inq-drow.hcard { position:relative; background:#fff; border:1px solid #DCD5E0; border-radius:12px; margin-bottom:12px; box-shadow:0 1px 3px rgba(16,24,40,.06); }
@@ -4447,7 +4464,7 @@
             : dm(a, { day:'numeric', month:'short' }) + ' – ' + dm(z, { day:'numeric', month:'short', year:'numeric' })) : (a ? dm(a, { day:'numeric', month:'short', year:'numeric' }) : 'Dates not set');
         const nights = td.nights != null ? td.nights : days.length, ndays = td.days != null ? td.days : (days.length ? days.length + 1 : 0);
         const shape = nights ? `${nights} Night${nights === 1 ? '' : 's'} / ${ndays} Day${ndays === 1 ? '' : 's'}` : '';
-        const R = it.rooms || {}, roomsTxt = ['sgl', 'dbl', 'twn', 'tpl'].filter(k => Number(R[k]) > 0).map(k => R[k] + ' ' + k.toUpperCase()).join(', ') || (it.rooms_note || '—');
+        const R = it.rooms || {}, roomsTxt = ['sgl', 'dbl', 'twn', 'tpl'].filter(k => Number(R[k]) > 0).map(k => R[k] + ' ' + k.toUpperCase()).join(', ') || ((it.room_options || []).filter(o => o.included).length ? (it.room_options || []).filter(o => o.included).length + ' room options' : 'Not set');   // tf-accreq-r1: never the e-mail's long room text
         const ST = { new:'New', working:'In progress', quoted:'Quoted', confirmed:'Confirmed', declined:'Declined', cancelled:'Cancelled' };
         const stCls = it.status === 'confirmed' ? 'ok' : (['declined', 'cancelled'].includes(it.status) ? 'bad' : '');
         const cb = document.getElementById('d_confirm_top') || document.getElementById('d_confirm');
@@ -4465,6 +4482,24 @@
         // tf-hotels-r2 (mock-up of 14 Nov 2026): one card a night — day, place and hotel, room type, meal plan, room arrangement, the rate, Edit hotel
         const MEALW = { RO: 'Room only', BB: 'Bed & breakfast', HB: 'Half board', FB: 'Full board', AI: 'All inclusive' };
         const ROOMW = { sgl: 'Single', dbl: 'Double', twn: 'Twin', tpl: 'Triple' };
+        // tf-accreq-r1 (26 Nov 2026, Shantha's mock-up): rooms are said as room types and counts only ("1 Family Room"); the children's bedding
+        // is said once, in Special Accommodation Requirements under the inquiry's summary — never repeated on each hotel row
+        const RT_W = { family: 'Family Room', single: 'Single Room', double: 'Double Room', twin: 'Twin Room', triple: 'Triple Room' };
+        const OCC_W = { sgl: 'single', dbl: 'double', twn: 'twin', tpl: 'triple', fam: 'family' };
+        const roomCount = types => { const c = {}; types.forEach(t => { c[t] = (c[t] || 0) + 1; }); return Object.keys(c).map(t => c[t] + ' ' + (RT_W[t] || t) + (c[t] > 1 ? 's' : '')); };
+        const optsIn = (it.room_options || []).filter(o => o.included), optChosen = optsIn.find(o => o.chosen);
+        const roomLines = d => {
+            if (optsIn.length && !optChosen) return optsIn.map(o => ['Option ' + o.no, roomCount((o.rooms || []).map(r => r.type))]);
+            if (optChosen) return [[null, roomCount((optChosen.rooms || []).map(r => r.type))]];
+            const out = [];
+            if (d && (d.room_rows || []).length) { d.room_rows.forEach(r => { for (let i = 0; i < Number(r.qty || 0); i++) out.push(OCC_W[r.occ] || r.occ); }); }
+            else { const m = d && d.room_mix && Number(d.room_mix.rooms) > 0 ? d.room_mix : R; ['sgl', 'dbl', 'twn', 'tpl', 'fam'].forEach(k => { for (let i = 0; i < Number(m[k] || 0); i++) out.push(OCC_W[k]); }); }
+            return out.length ? [[null, roomCount(out)]] : [];
+        };
+        const roomText = d => roomLines(d).map(([l, w]) => (l ? l + ': ' : '') + w.join(' + ')).join(' · ') || 'Not set';
+        const accomBlock = () => { const L = roomLines(null), A = it.accom_reqs || [];
+            return `<div class="inq-accom"><div class="ia-rooms"><div class="ia-k">Room arrangement</div>${L.length ? L.map(([l, w]) => `<div class="ia-row">${l ? `<span class="ia-opt">${esc(l)}</span>` : ''}${w.map(x => `<span class="ia-chip">${esc(x)}</span>`).join('')}</div>`).join('') : '<div class="ia-row"><span class="ia-chip ia-none">Not set</span></div>'}</div>
+                ${A.length ? `<div class="ia-box"><div class="ia-h"><i class="bi bi-clipboard-check"></i>Special Accommodation Requirements</div>${A.map(r => `<div class="ia-kv"><span>Child age</span><b>${r.age != null ? esc(r.age) + ' years' : 'Not given'}</b><span>Bed arrangement</span><b>${esc(r.arrangement)}</b>${r.options_word ? `<span>Applies to</span><b>${esc(r.options_word)}</b>` : ''}</div>`).join('')}<div class="ia-imp">Important: this condition is printed in red in the quotation and in the hotel booking request.</div></div>` : ''}</div>`; };
         const arrange = d => { const m = d.room_mix || {}; const t = ['sgl', 'dbl', 'twn', 'tpl'].filter(k => Number(m[k] != null ? m[k] : R[k]) > 0).map(k => Number(m[k] != null ? m[k] : R[k]) + ' ' + ROOMW[k]).join(', '); return t || (d.rooms || roomsTxt); };
         const rateLink = d => ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>` : '';
         const rateBox = d => {
@@ -4498,13 +4533,13 @@
                     <div class="inq-place"><span>${esc(place(d))}</span><b>${esc(d.hotel_name_raw || 'Hotel not chosen')}</b></div>
                     <div class="inq-f"><span>Room type</span><b class="${d.room_type_name ? '' : 'unset'}">${esc((d.room_rows || []).some(r => r.room_type_name) ? [...new Set(d.room_rows.map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || 'Room type not set'))}</b></div>
                     <div class="inq-f"><span>Meal plan</span><b class="${d.meal_plan ? '' : 'unset'}">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan) : 'Meal plan not set')}</b></div>
-                    <div class="inq-f inq-arr"><span>Room arrangement</span><b>${esc(arrange(d))}</b></div>
+                    <div class="inq-f inq-arr"><span>Room arrangement</span>${roomLines(d).map(([l, w]) => `<b>${l ? `<small class="ia-o">${esc(l)}</small>` : ''}${esc(w.join(' + '))}</b>`).join('') || '<b class="unset">Not set</b>'}</div>
                     ${rateBox(d)}
                     <div class="inq-hact">${d.hotel_name_raw ? (IS_SUPER ? `<button type="button" class="inq-btn" data-inqrate="${d.id}" title="Super Admin: opens the Hotel Rates master on the rate this night uses">Edit hotel</button>` : '') : (it.locked ? '' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}<button type="button" class="inq-chev" data-inqtoggle="${d.day_no}" title="More about this night" aria-label="Show the details of day ${d.day_no}"><i class="bi bi-chevron-down"></i></button></div>
                 </div>
                 <div class="inq-more"><div class="kv">
                     <span>Hotel</span><span><b>${esc(d.hotel_name_raw || '—')}</b>${d.room_type_name ? ' · ' + esc(d.room_type_name) : ''}</span>
-                    <span>Rooms and meals</span><span>${esc(d.rooms || roomsTxt)} · ${esc(d.meal_plan || 'meal plan not set')}</span>
+                    <span>Rooms and meals</span><span>${esc(roomText(d))} · ${esc(d.meal_plan || 'meal plan not set')}</span>
                     <span>Hotel rate</span><span>${rate || '—'} ${rateLink(d)}</span>
                     <span>Activities</span><span>${things.length ? esc(things.join(', ')) : '—'}</span>
                     ${note ? `<span>Special note</span><span>${note}</span>` : ''}
@@ -4536,7 +4571,7 @@
             <td class="ht">${d.hotel_name_raw ? `<b class="${it.locked ? '' : 'lnk'}" ${it.locked ? '' : `data-inqedit="${d.id}" title="Change the hotel, room type or meal plan"`}>${esc(d.hotel_name_raw)}</b>` : (it.locked ? '<b>Hotel not chosen</b>' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">Choose hotel</button>`)}
                 ${d.hotel_name_raw ? `<span>${esc((d.room_rows || []).some(r => r.room_type_name) ? [...new Set(d.room_rows.map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || 'Room type pending'))}</span>` : ''}${reqRate(d)}</td>
             <td class="mp">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan).replace(/\b\w/g, c => c.toUpperCase()).replace('& B', '& B') : 'Not set')}</td>
-            <td class="rr">${(it.room_options || []).length ? `<div class="rr-note">${(it.room_options || []).length} room categor${(it.room_options || []).length === 1 ? 'y' : 'ies'} — see Room options</div>` : d.room_mix && Number(d.room_mix.rooms) > 0 ? esc(roomsShort(d.room_mix).replace(/ · /g, ' + ')) + (d.room_mix.source === 'night' && (d.room_rows || []).some(r => r.room_type_name) ? `<div class="help">${esc(Object.entries(d.room_rows.reduce((a, r) => { const k = r.room_type_name || 'Room'; (a[k] = a[k] || []).push(r.qty + ' ' + String(r.occ).toUpperCase()); return a; }, {})).map(([k, v]) => k + ': ' + v.join(' + ')).join(' · '))}</div>` : (d.room_mix.pax != null && d.room_mix.source === 'groups' ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '')) : `<div class="rr-note">${esc(d.rooms || roomsTxt)}</div>`}</td>
+            <td class="rr">${optsIn.length && !optChosen ? roomLines(d).map(([l, w]) => `<div><small class="ia-o">${esc(l)}</small>${esc(w.join(' + '))}</div>`).join('') : d.room_mix && Number(d.room_mix.rooms) > 0 ? esc(roomsShort(d.room_mix).replace(/ · /g, ' + ')) + (d.room_mix.source === 'night' && (d.room_rows || []).some(r => r.room_type_name) ? `<div class="help">${esc(Object.entries(d.room_rows.reduce((a, r) => { const k = r.room_type_name || 'Room'; (a[k] = a[k] || []).push(r.qty + ' ' + String(r.occ).toUpperCase()); return a; }, {})).map(([k, v]) => k + ': ' + v.join(' + ')).join(' · '))}</div>` : (d.room_mix.pax != null && d.room_mix.source === 'groups' ? `<div class="help">${Number(d.room_mix.pax)} guests</div>` : '')) : esc(roomText(d))}</td>
             <td data-reqact="${d.day_no}"><div class="tx">…</div></td>
             <td class="nt">${d.special_note ? esc(d.special_note) + (it.locked ? '' : ` <a data-inqedit="${d.id}" title="Change the note"><i class="bi bi-pencil"></i></a>`) : (it.locked ? '' : `<a data-inqedit="${d.id}">Add a note</a>`)}</td></tr>`;
         const depX = it.departure_day, reqDep = depX && !days.some(d => Number(d.day_no) === Number(depX.day_no)) ? `<tr><td class="dd">${depX.day_no} / ${esc(dm(depX.date, { day:'numeric', month:'short', year:'numeric' }))}</td>
@@ -4584,6 +4619,7 @@
                     <div class="inq-adl"><span>Departure</span><b>${esc(dm(z, { day:'numeric', month:'short', year:'numeric' }) || '—')}</b><small>${it.departure_flight ? esc(it.departure_flight) : 'Flight &amp; time not given'}</small></div></div></div>
                 </div><div class="inq-crew"><a href="#" class="inq-backlist" data-inqlist title="Back to the list of inquiries"><i class="bi bi-arrow-left"></i> Back to Inquiries</a>${crewCol('driver')}${crewCol('guide')}</div>
             </div>
+            ${accomBlock()}
             <div class="inq-tabs" role="tablist">
                 <button type="button" class="inq-tab" data-tab="hotels"><i class="bi bi-signpost-split"></i> Itinerary &amp; Services</button>
                 <button type="button" class="inq-tab" data-tab="itin"><i class="bi oci oci-bed"></i> Hotels (${hotelsN})</button>

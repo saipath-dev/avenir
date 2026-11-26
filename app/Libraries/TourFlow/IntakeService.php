@@ -463,6 +463,7 @@ final class IntakeService
         $it['passengers'] = $this->db->query('SELECT * FROM tf_intake_pax WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
         $it['room_options'] = $this->roomOptions($id, $it);   // tf-roomopt-r1 (after the names, so each room shows who is in it)
         $it['party_slots'] = array_values(self::partySlots($it));   // tf-roomopt-r2
+        $it['accom_reqs'] = self::accomRequirements($it);   // tf-accreq-r1
         $it['requests']   = $this->db->query('SELECT * FROM tf_intake_request WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
         $it['services']   = $this->db->query('SELECT * FROM tf_intake_service WHERE intake_id = ? ORDER BY day_no, sort_order, id', [$id])->getResultArray();
         // Entrance & Activities follows the list, the party and the settings on its own (see syncServices) —
@@ -1952,6 +1953,77 @@ final class IntakeService
             unset($rm);
             $out[] = ['id' => (int) $r['id'], 'no' => $i + 1, 'name' => $r['name'], 'rooms' => $rooms, 'words' => $words, 'included' => (int) $r['included'] === 1, 'chosen' => (int) ($r['chosen'] ?? 0) === 1,
                 'note' => $r['note'], 'updated_by' => $r['updated_by'], 'updated_at' => $r['updated_at'], 'check' => self::roomOptionCheck($rooms, $it)];
+        }
+        return $out;
+    }
+
+    /**
+     * tf-accreq-r1 (26 Nov 2026, Shantha's mock-up): the party's special accommodation requirements, said once — each child who does not have
+     * a bed of their own (shares an existing bed, or has an extra bed). Read from the room options kept in the quotation (only the chosen one
+     * once the agent has chosen), else from the children's bedding in the Child Fare Review. The inquiry screen, the quotation and the hotel
+     * booking request all print these lines; nothing is stored here, so a change to a room option or to a child's bedding shows everywhere.
+     */
+    public static function accomRequirements(array $it): array
+    {
+        $slots = self::partySlots($it);
+        $opts = array_values(array_filter((array) ($it['room_options'] ?? []), static fn ($o) => !empty($o['included'])));
+        $chosen = array_values(array_filter($opts, static fn ($o) => !empty($o['chosen'])));
+        if ($chosen !== []) {
+            $opts = $chosen;
+        }
+        $optWords = static function (array $n): string {
+            sort($n);
+            $w = array_map(static fn ($x) => 'Option ' . $x, $n);
+            return count($w) > 1 ? implode(', ', array_slice($w, 0, -1)) . ' and ' . end($w) : (string) ($w[0] ?? '');
+        };
+        $out = [];
+        foreach (ChildFares::children($it) as $k) {
+            $sl = $slots['c' . $k['n']] ?? [];
+            $age = $k['age'] !== null ? rtrim(rtrim(number_format((float) $k['age'], 2, '.', ''), '0'), '.') : null;
+            $bed = null;
+            $in = [];
+            if ($opts !== []) {
+                $share = [];
+                foreach ($opts as $o) {
+                    foreach ((array) ($o['rooms'] ?? []) as $rm) {
+                        if (isset($rm['guests']) && is_array($rm['guests'])) {
+                            foreach ($rm['guests'] as $g) {
+                                if ((string) ($g['slot'] ?? '') === 'c' . $k['n'] && empty($g['bed'])) {
+                                    $share[] = (int) $o['no'];
+                                }
+                            }
+                        } else {
+                            foreach ((array) ($rm['children'] ?? []) as $ch) {
+                                if ((int) ($ch['n'] ?? 0) === (int) $k['n'] && empty($ch['bed'])) {
+                                    $share[] = (int) $o['no'];
+                                }
+                            }
+                        }
+                    }
+                }
+                $share = array_values(array_unique($share));
+                if ($share !== []) {
+                    $bed = 'no_bed';
+                    $in = count($share) < count($opts) ? $share : [];
+                }
+            } elseif (in_array($k['bed'], ['no_bed', 'extra_bed'], true)) {
+                $bed = $k['bed'];
+            }
+            if ($bed === null) {
+                continue;
+            }
+            $who = $age !== null ? $age . '-year-old child' : 'child ' . $k['n'];
+            $where = $in !== [] ? ' (' . $optWords($in) . ')' : '';
+            $name = trim((string) ($sl['name'] ?? ''));
+            $out[] = [
+                'n' => (int) $k['n'], 'age' => $age, 'name' => $name !== '' ? $name : null, 'bed' => $bed, 'options' => $in, 'options_word' => $in !== [] ? $optWords($in) : null,
+                'arrangement' => $bed === 'no_bed' ? 'No separate bed' : 'Extra bed',
+                'condition' => $bed === 'no_bed'
+                    ? 'IMPORTANT: The ' . $who . ' will not be provided with a separate bed and will share an existing bed' . $where . '.'
+                    : 'The ' . $who . ' will be provided with an extra bed' . $where . '.',
+                'hotel' => 'Child aged ' . ($age ?? '?') . ($name !== '' ? ' (' . $name . ')' : '') . ': '
+                    . ($bed === 'no_bed' ? 'shares an existing bed with the parents — NO extra bed required.' : 'EXTRA BED required in the room.'),
+            ];
         }
         return $out;
     }

@@ -421,11 +421,22 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
     <?php endif; ?>
 </table>
 
-<h3 style="font-size:14px; color:<?= $P ?>; margin:20px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">The price includes</h3>
+<h3 style="font-size:14px; color:<?= $P ?>; margin:20px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">Included in the Quotation</h3>
 <table width="100%" cellpadding="3" cellspacing="0" style="font-size:11.5px;">
     <tr><td width="4%" style="vertical-align:top;">&#8226;</td><td width="96%">Accommodation for <?= (int) $c['nights'] ?> night<?= (int) $c['nights'] === 1 ? '' : 's' ?> in the hotels and room types listed, on the meal basis shown<?= $mixWords ? ', in ' . esc(implode(', ', $mixWords)) : '' ?>.</td></tr>
     <?php if ($vehicles): ?><tr><td style="vertical-align:top;">&#8226;</td><td>Transport throughout by <?= esc(implode(' and ', $vehicles)) ?><?= $c['crew'] ? ' with ' . esc(implode(' and ', $c['crew'])) : '' ?><?php $tA = $J['transfers']['arrival'] ?? 'car'; $tD = $J['transfers']['departure'] ?? 'car'; ?><?= $tA === 'hotel' && $tD === 'hotel' ? '; airport pick-up and drop-off by the hotel' : ($tA === 'hotel' ? ', including the airport drop-off; airport pick-up by the hotel' : ($tD === 'hotel' ? ', including the airport pick-up; airport drop-off by the hotel' : ', including airport transfers')) ?>.</td></tr><?php endif; ?>
     <?php if ($included): ?><tr><td style="vertical-align:top;">&#8226;</td><td><?= esc(implode(', ', array_unique($included))) ?>.</td></tr><?php endif; ?>
+</table>
+<h3 style="font-size:14px; color:<?= $P ?>; margin:16px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">Not Included / Important Conditions</h3>
+<?php if (!empty($c['accom_conditions'])): /* tf-accreq-r1: the child accommodation condition, in red, before the price */ ?>
+<table width="100%" cellpadding="7" cellspacing="0" nobr="true" style="border:1.2px solid #b42318; background-color:#fdecea; margin-bottom:6px;">
+    <?php foreach ($c['accom_conditions'] as $ac): ?><tr><td style="font-size:12.5px; font-weight:bold; color:#b42318;"><?= esc($ac['text']) ?></td></tr><?php endforeach; ?>
+</table>
+<?php endif; ?>
+<table width="100%" cellpadding="3" cellspacing="0" style="font-size:11.5px;">
+    <tr><td width="4%" style="vertical-align:top;">&#8226;</td><td width="96%">Meals and entrance fees not listed as included.</td></tr>
+    <tr><td style="vertical-align:top;">&#8226;</td><td>International flights, visas and insurance.</td></tr>
+    <tr><td style="vertical-align:top;">&#8226;</td><td>Personal expenses, drinks, tips and gratuities.</td></tr>
 </table>
 <?php if ($direct): ?>
 <h3 style="font-size:14px; color:<?= $P ?>; margin:16px 0 6px 0; border-bottom:1px solid <?= $LINE ?>; padding-bottom:4px;">Payable direct on the day</h3>
@@ -506,12 +517,13 @@ $rows    = $staffUi ? $ppAll : $pp;
 <div class="qx-sec">
     <h2>What your price covers</h2>
     <div class="qx-svc">
-        <div class="in"><h3>&#10004; Included in the price</h3>
+        <div class="in"><h3>&#10004; Included in the Quotation</h3>
             <?php foreach ($xHotels as $h): ?><div class="li"><b>Accommodation, <?= (int) $h['nights'] ?> night<?= (int) $h['nights'] === 1 ? '' : 's' ?></b><small><?= esc($h['hotel']) ?><?= $h['room'] ? ', ' . esc($h['room']) : '' ?><?= $h['meal'] ? ', ' . esc($meals[$h['meal']] ?? $h['meal']) : '' ?><?= $mixWords ? ', ' . esc(implode(', ', $mixWords)) : '' ?></small></div><?php endforeach; ?>
             <?php if ($vehicles): ?><div class="li"><b><?= esc(implode(' and ', $vehicles)) ?><?= $c['crew'] ? ' with ' . esc(implode(' and ', array_unique($c['crew']))) : ' with driver' ?> throughout</b><small>including airport arrival and departure transfers</small></div><?php endif; ?>
             <?php foreach (array_unique($included) as $i): ?><div class="li"><b><?= esc($i) ?></b></div><?php endforeach; ?>
         </div>
-        <div class="out"><h3>&#128179; Paid by the guests / not included</h3>
+        <div class="out"><h3>&#128179; Not Included / Important Conditions</h3>
+            <?php foreach ((array) ($c['accom_conditions'] ?? []) as $ac): /* tf-accreq-r1 */ ?><div class="li" style="background:#fdecea;border:1.5px solid #b42318;border-radius:8px;padding:10px 12px;margin-bottom:8px"><b style="color:#b42318"><?= esc($ac['text']) ?></b></div><?php endforeach; ?>
             <?php foreach (array_unique($xPaid) as $i): ?><div class="li"><b><?= esc($i) ?></b><small>paid by the guests on the day</small></div><?php endforeach; ?>
             <?php foreach (array_unique($xOpt) as $i): ?><div class="li"><b><?= esc($i) ?></b><small>optional</small></div><?php endforeach; ?>
             <div class="li"><b>Meals and entrance fees not listed as included</b><small>paid by the guests</small></div>

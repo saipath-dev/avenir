@@ -207,6 +207,7 @@ final class HotelBookingDocs
             . $row('Rooms', $e($rl['summary'] !== '' ? $rl['summary'] . ' (' . $rl['total_rooms'] . ' room' . ($rl['total_rooms'] === 1 ? '' : 's') . ')' : '—'))
             . $row('Meal plan', $e(count($rl['meals']) > 1 ? 'Differs by room — see the Rooming List' : self::mealWord($s['meal_plan'])))
             . $row('Special requests', !empty($s['special_note']) ? nl2br($e($s['special_note'])) : '—')
+            . (!empty($doc['accom_reqs']) ? $row('Child bedding', '<b style="color:#b42318">' . implode('<br>', array_map($e, (array) $doc['accom_reqs'])) . '</b>') : '')   // tf-accreq-r1
             . (!empty($s['crew_rooms']) ? $row('Crew rooms', $e($s['crew_rooms'])) : '')
             . $row('Rooming list', '<b>Rooming List attached</b> — ' . (int) $rl['total_guests'] . ' guests in ' . (int) $rl['total_rooms'] . ' rooms')
             . '</table><br><br>'
@@ -314,6 +315,9 @@ final class HotelBookingDocs
         $rows = [['Rooms', $nr > 0 ? $nr . ' room' . ($nr === 1 ? '' : 's') : '—'], ['Room category', $mix($cats)], ['Bed arrangement', $mix($beds)],
                  ['Meal plan', count($rl['meals']) > 1 ? 'Differs by room — see the Rooming List' : self::mealWord($s['meal_plan'])],
                  ['Special requests', trim((string) ($s['special_note'] ?? '')) !== '' ? (string) $s['special_note'] : 'None specified']];
+        if (!empty($doc['accom_reqs'])) {   // tf-accreq-r1
+            $rows[] = ['Child bedding', implode("\n", (array) $doc['accom_reqs'])];
+        }
         if (!empty($s['crew_rooms'])) {
             $rows[] = ['Crew rooms', (string) $s['crew_rooms']];
         }
@@ -329,7 +333,8 @@ final class HotelBookingDocs
             $need($rh);
             $pdf->SetDrawColor(...$line); $pdf->SetFillColor(237, 245, 244); $pdf->Rect($L - 0.5, $y, $kw, $rh, 'DF'); $pdf->Rect($L - 0.5 + $kw, $y, $W + 1 - $kw, $rh, 'D');
             $pdf->SetTextColor(...$ink); $pdf->SetFont($f, 'B', 10.5); $pdf->SetXY($L + 3.8, $y + 1); $pdf->Cell($kw - 5, 5.1, $k, 0, 0, 'L');
-            $pdf->SetFont($f, '', 10.5); $pdf->SetXY($L + $kw + 5, $y + 1); $pdf->MultiCell($W - $kw - 10, 5.1, $v, 0, 'L');
+            if ($k === 'Child bedding') { $pdf->SetTextColor(180, 35, 24); $pdf->SetFont($f, 'B', 10.5); } else { $pdf->SetFont($f, '', 10.5); }   // tf-accreq-r1: in red
+            $pdf->SetXY($L + $kw + 5, $y + 1); $pdf->MultiCell($W - $kw - 10, 5.1, $v, 0, 'L'); $pdf->SetTextColor(...$ink);
             $y += $rh;
         }
         // the rooming list — named only when it is attached

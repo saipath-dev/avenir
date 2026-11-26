@@ -94,6 +94,7 @@ $box = static function (string $k, string $v) use ($font, $G, $ink, $bd) {
       <?= $row('Bed arrangement', $e($mix($beds))) ?>
       <?= $row('Meal plan', $e(count($rl['meals']) > 1 ? 'Differs by room — see the Rooming List' : HotelBookingDocs::mealWord($s['meal_plan']))) ?>
       <?= $row('Special requests', !empty($s['special_note']) ? nl2br($e($s['special_note'])) : 'None specified') ?>
+      <?php if (!empty($doc['accom_reqs'])): /* tf-accreq-r1 */ ?><?= $row('Child bedding', '<b style="color:#b42318">' . implode('<br>', array_map($e, (array) $doc['accom_reqs'])) . '</b>') ?><?php endif; ?>
       <?php if (!empty($s['crew_rooms'])): ?><?= $row('Crew rooms', $e($s['crew_rooms'])) ?><?php endif; ?>
       <?php if (trim((string) ($doc['rate_basis'] ?? '')) !== ''): ?><?= $row('Rate', $e($doc['rate_basis'])) ?><?php endif; ?>
     </table>

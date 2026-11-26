@@ -2317,6 +2317,8 @@ final class TourService
                 'needs_hotel' => (int) $j['needs_hotel'], 'needs_meal' => (int) $j['needs_meal'], 'needs_supplier' => (int) $j['needs_supplier'],
             ],
             'passengers' => $pax,
+            // tf-accreq-r1: the child bedding the hotel must know (from the room option the agent chose, else the Child Fare Review)
+            'accom_reqs' => !empty($j['intake_id']) ? array_values(array_map(static fn ($r) => $r['hotel'], IntakeService::accomRequirements($this->intake()->get((int) $j['intake_id']) ?: []))) : [],
             'subject'   => trim(($j['tour_no'] ?? '') . ' — ' . ($j['tour_name'] ?: '') . ' — ' . ($hotel['name'] ?: 'hotel') . ' — ' . ($kind === 'voucher' ? 'Hotel voucher ' . ($j['voucher_no'] ?? '') : 'Booking request')),
         ];
     }

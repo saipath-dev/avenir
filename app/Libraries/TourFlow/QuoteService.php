@@ -785,6 +785,7 @@ final class QuoteService
 
         return [
             'intake_id'   => $intakeId,
+            'accom_reqs'  => IntakeService::accomRequirements($it),   // tf-accreq-r1: frozen with each version
             'inquiry_no'  => $it['inquiry_no'],
             'agent_name'  => $it['agent_name'],
             'agent_acc'   => $it['agent_acc'] ?? null,
@@ -974,6 +975,8 @@ final class QuoteService
             // the price per person by party size (schema 31): the size, the rooms, the price — and
             // nothing else; a version frozen before the matrix existed has no table
             'pax_prices' => PaxMatrix::forAgent($cost['pax_matrix'] ?? null),
+            // tf-accreq-r1: the child accommodation conditions, printed in red under Important Conditions
+            'accom_conditions' => array_values(array_map(static fn ($r) => ['bed' => $r['bed'], 'text' => $r['condition']], (array) ($cost['accom_reqs'] ?? []))),
             // tf-roomopt-r2: every room category the options use at each hotel (Family room, Superior …)
             'room_categories' => !empty($cost['room_options']) ? array_map(static fn ($v) => array_values(array_unique($v)), array_reduce($cost['room_options'], static function ($a, $o) { foreach ((array) ($o['nights'] ?? []) as $n) { if (!empty($n['hotel']) && !empty($n['category'])) { $a[$n['hotel']][] = $n['category']; } } return $a; }, [])) : null,
             // tf-roomopt-r1: one price per guest for each room option — the names, the rooms and the prices, nothing internal
