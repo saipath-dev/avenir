@@ -2200,20 +2200,14 @@ final class IntakeService
         $words = array_column($this->roomOptions($id, $it), 'words', 'id')[(int) $opt['id']] ?? [];
         $this->db->transStart();
         foreach (($it['days'] ?? []) as $d) {
-            $famId = null;
-            foreach ((array) ($d['room_types'] ?? []) as $t) {
-                if (preg_match('/family/i', (string) ($t['name'] ?? ''))) {
-                    $famId = (int) $t['id'];
-                    break;
-                }
-            }
+            $famId = self::familyRoom($d)['id'];   // tf-famroom-r1: the hotel's verified family room, if it has one — never guessed from a name
             $rows = [];
             foreach ($rooms as $rm) {
                 $o = $occ[$rm['type']] ?? null;
                 if ($o === null) {
                     continue;
                 }
-                $rows[] = $o === 'fam' ? ['room_type_id' => $famId, 'room_type_name' => 'Family room', 'occ' => 'fam', 'qty' => 1]
+                $rows[] = $o === 'fam' ? ['room_type_id' => $famId, 'room_type_name' => 'Family Room', 'occ' => 'fam', 'qty' => 1]
                                        : ['room_type_id' => self::intOrNull($d['room_type_id'] ?? null), 'room_type_name' => null, 'occ' => $o, 'qty' => 1];
             }
             $this->saveRoomRows($id, (int) $d['id'], $rows, true);
@@ -5514,6 +5508,7 @@ final class IntakeService
                         'dbl'  => isset($c['dbl']) && $c['dbl'] !== null ? round((float) $c['dbl'], 2) : null,
                         'tpl'  => isset($c['tpl']) && $c['tpl'] !== null ? round((float) $c['tpl'], 2) : null,
                         'unit' => isset($c['unit']) && $c['unit'] !== null ? round((float) $c['unit'], 2) : null,
+                        'fam'  => isset($c['fam']) && $c['fam'] !== null ? round((float) $c['fam'], 2) : null,   // tf-famroom-r1
                     ];
                 }
             }
@@ -5524,7 +5519,10 @@ final class IntakeService
             $fit = $fit * 2 + ((($row['priced_as'] ?? 'base') === 'base') ? 0 : 1);   // the hotel's normal room (a base room) before a suite priced as base + supplement
             $types[] = ['id' => (int) $row['room_type_id'], 'name' => (string) $row['name'], 'priced' => $priced,
                 'per_unit' => ($row['priced_as'] ?? '') === 'per_unit' || (int) ($row['unit_pax_max'] ?? 0) > 0, 'unit_pax_max' => self::intOrNull($row['unit_pax_max'] ?? null),
-                'meals' => $meals, 'fit' => $fit];
+                'meals' => $meals, 'fit' => $fit,
+                // tf-famroom-r1: the room's own details from Hotel Rates (a family room needs them before it is quoted)
+                'max_adults' => self::intOrNull($row['max_adults'] ?? null), 'max_children' => self::intOrNull($row['max_children'] ?? null),
+                'max_occupancy' => self::intOrNull($row['max_occupancy'] ?? null), 'bed_config' => isset($row['bed_config']) && trim((string) $row['bed_config']) !== '' ? (string) $row['bed_config'] : null];
         }
         $out['room_types'] = $types ? json_encode($types) : null;
         $pricedTypes = array_values(array_filter($types, static fn ($t) => $t['priced']));
@@ -6719,9 +6717,69 @@ final class IntakeService
      * plan (a twin at the double rate). The night's own room type takes the figure kept on the night; another category its
      * figure from the panel's answer stored with the night. Null when there is none: never a zero.
      */
+    /**
+     * tf-famroom-r1 (26 Nov 2026, Shantha): the agent's "1 Family Room" checked against what THIS hotel offers on THIS night. A family room
+     * is a room the Hotel Rates admin set up by hand — its own Family Room rate for the meal plan on the date (approved, published), its
+     * capacity (Max occ.) and its beds. Nothing is assumed: a hotel without one, or with one whose capacity or beds are not recorded, or
+     * too small for the party, answers with the question staff must resolve (enter the verified details, or agree an alternative).
+     * $party = ['adults' => n, 'children' => n] of the guests in that family room, when known.
+     */
+    public static function familyRoom(array $d, ?int $pickedId = null, ?array $party = null): array
+    {
+        $meal  = strtoupper((string) ($d['meal_plan'] ?? ''));
+        $types = is_array($d['room_types'] ?? null) ? $d['room_types'] : (json_decode((string) ($d['room_types_json'] ?? ''), true) ?: []);
+        $hotel = trim((string) ($d['hotel_name_raw'] ?? '')) ?: 'the hotel';
+        $cands = array_values(array_filter($types, static fn ($t) => isset($t['meals'][$meal]['fam']) && $t['meals'][$meal]['fam'] !== null && $t['meals'][$meal]['fam'] !== ''));
+        if ($cands === []) {
+            return ['id' => null, 'name' => null, 'rate' => null, 'issue' => "{$hotel} has no verified Family Room for {$meal} on these dates: no approved Family Room rate is on file. Enter the hotel's family room (its capacity, beds and rate from the contract) in Hotel Rates and have it approved — or agree an alternative with the agent (another room option or another hotel)."];
+        }
+        $pick = null;
+        foreach ($cands as $t) {
+            if ($pickedId !== null && (int) $t['id'] === $pickedId) {
+                $pick = $t;
+            }
+        }
+        if ($pick === null && count($cands) === 1) {
+            $pick = $cands[0];
+        }
+        if ($pick === null) {
+            return ['id' => null, 'name' => null, 'rate' => null, 'issue' => "{$hotel} has more than one room with a Family Room rate (" . implode(', ', array_map(static fn ($t) => (string) $t['name'], $cands)) . "). Choose which one the family takes in Hotel & room selection for the night."];
+        }
+        $name = (string) $pick['name'];
+        $miss = [];
+        if (($pick['max_occupancy'] ?? null) === null) {
+            $miss[] = 'its capacity (Max occ.)';
+        }
+        if (($pick['bed_config'] ?? null) === null) {
+            $miss[] = 'its beds';
+        }
+        if ($miss !== []) {
+            return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name}: the family room's " . implode(' and ', $miss) . ' are not recorded. Enter them from the contract in Hotel Rates → Room types, so the room can be checked against the party.'];
+        }
+        if ($party !== null) {
+            $a = (int) ($party['adults'] ?? 0);
+            $c = (int) ($party['children'] ?? 0);
+            $tooMany = [];
+            if ($a + $c > (int) $pick['max_occupancy']) {
+                $tooMany[] = 'it holds up to ' . (int) $pick['max_occupancy'] . ' guests';
+            }
+            if (($pick['max_adults'] ?? null) !== null && $a > (int) $pick['max_adults']) {
+                $tooMany[] = 'up to ' . (int) $pick['max_adults'] . ' adults';
+            }
+            if (($pick['max_children'] ?? null) !== null && $c > (int) $pick['max_children']) {
+                $tooMany[] = 'up to ' . (int) $pick['max_children'] . ' children';
+            }
+            if ($tooMany !== []) {
+                return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name} is too small for this family: " . implode(', ', $tooMany) . ", but the option puts {$a} adult(s) and {$c} child(ren) in it. Agree an alternative with the agent, or correct the room's capacity in Hotel Rates if the contract allows more."];
+            }
+        }
+        return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => (float) $pick['meals'][$meal]['fam'], 'issue' => null, 'beds' => (string) $pick['bed_config'], 'capacity' => (int) $pick['max_occupancy']];
+    }
+
     public static function roomRowRate(array $d, array $r): ?float
     {
-        // tf-roomopt-r1: a family room (a room option) — its per-room (unit) figure, else its triple figure
+        // tf-famroom-r1 (26 Nov 2026, Shantha): a family room is priced ONLY by the hotel's own Family Room rate for the meal plan —
+        // never a single, double, triple or unit figure in its place. No such rate = no price (the quotation stays blocked).
         if (($r['occ'] ?? '') === 'fam') {
             if (($r['room_type_id'] ?? null) === null) {
                 return null;
@@ -6729,8 +6787,7 @@ final class IntakeService
             $meal = strtoupper((string) ($d['meal_plan'] ?? ''));
             foreach ((is_array($d['room_types'] ?? null) ? $d['room_types'] : (json_decode((string) ($d['room_types_json'] ?? ''), true) ?: [])) as $t) {
                 if ((int) ($t['id'] ?? 0) === (int) $r['room_type_id']) {
-                    $v = $t['meals'][$meal]['unit'] ?? null;
-                    $v = $v === null || $v === '' ? ($t['meals'][$meal]['tpl'] ?? null) : $v;
+                    $v = $t['meals'][$meal]['fam'] ?? null;
                     return $v === null || $v === '' ? null : (float) $v;
                 }
             }

@@ -170,9 +170,35 @@ final class Installer
      * Column-level upgrades CREATE TABLE IF NOT EXISTS cannot make on existing tables.
      * Each step checks first, so re-running is harmless.
      */
+    /**
+     * tf-famroom-r1 (26 Nov 2026, Shantha): the optional Family Room rate — one figure per room per night for the whole family room,
+     * entered by hand only when a customer needs one (never derived from SGL / DBL / TPL). Added on first use, so the live site
+     * gains the column with no manual step; harmless when it is already there.
+     */
+    private static ?bool $famReady = null;
+
+    public static function ensureFamilyColumn($db): bool
+    {
+        if (self::$famReady !== null) {
+            return self::$famReady;
+        }
+        try {
+            if (!$db->query("SHOW COLUMNS FROM hr2_rate LIKE 'fam'")->getRowArray()) {
+                $db->query("ALTER TABLE hr2_rate ADD COLUMN `fam` DECIMAL(10,2) NULL AFTER `unit`");
+            }
+            self::$famReady = true;
+        } catch (\Throwable $e) {
+            self::$famReady = false;
+        }
+        return self::$famReady;
+    }
+
     public static function upgradeColumns($db): array
     {
         $notes = [];
+        if (self::ensureFamilyColumn($db)) {
+            $notes[] = 'hr2_rate.fam (Family Room rate) present.';
+        }
         // schema 5: the audit log records "unmerge" (undo of a duplicate merge)
         $col = $db->query("SHOW COLUMNS FROM hr2_audit LIKE 'action'")->getRowArray();
         if ($col && stripos((string) $col['Type'], "'unmerge'") === false) {

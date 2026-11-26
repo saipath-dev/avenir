@@ -629,6 +629,14 @@ final class TourService
             throw new \RuntimeException('Already confirmed on ' . $existing['confirmed_at'] . '.');
         }
         $blockers = $this->confirmBlockers($it);
+        // tf-famroom-r1 (26 Nov 2026, Shantha): a new tour is confirmed only when every required check of its quotation is green —
+        // hotel rates, room suitability, mileage and every other cost (the numbered missing items, read again here on the server)
+        if (!$blockers && in_array((string) ($it['status'] ?? ''), ['new', 'working', 'quoted'], true)) {
+            $chk = (new QuoteService($this->db, $this->user, $this->intake()))->checklist((int) $it['id']);
+            if (!$chk['ready']) {
+                $blockers[] = 'every missing item resolved first (' . $chk['open'] . ' of ' . $chk['total'] . ' still open — Room options & quotation → Quotation rates)';
+            }
+        }
         if ($blockers) {
             throw new \RuntimeException('Confirm needs ' . implode(', ', $blockers) . '. Nothing else is required — every other gap travels with the tour as a flag.');
         }

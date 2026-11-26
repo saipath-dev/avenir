@@ -201,6 +201,7 @@ final class Sheet
                     'tpl' => self::num($r['tpl'] ?? null),
                     'quad' => self::num($r['quad'] ?? null),
                     'unit' => self::num($r['unit'] ?? null),
+                    'fam' => self::num($r['fam'] ?? null),   // tf-famroom-r1: optional Family Room rate (whole room, per night)
                     'child_with_bed' => self::num($r['child_with_bed'] ?? null),
                     'child_no_bed' => self::num($r['child_no_bed'] ?? ($r['child_rate'] ?? null)),
                     'note' => self::strOrNull($r['note'] ?? null, 200),

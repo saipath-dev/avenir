@@ -721,6 +721,20 @@
     .tf .inq .inq-tab.was { box-shadow:inset 0 -4px 0 #842484; color:#842484; }
     .inq .inq-panebox { border-radius:12px; }
     .inq .inq-hh { margin:2px 0 16px; } .inq .inq-hh h3 { font-size:30px; font-weight:800; margin:0 0 4px; color:#1A1A1A; letter-spacing:-.01em; } .inq .inq-hh > div { font-size:16px; color:#1A1A1A; }
+    /* tf-famroom-r1: the Hotels tab as one table (Day / Date · Hotel · Room Type · No. of Rooms · Meal Plan · Room Rate · Status / Actions) */
+    .inq .ht-wrap { overflow-x:auto; background:#fff; border:1px solid #DCD5E0; border-radius:12px; margin-bottom:16px; }
+    .inq table.ht { width:100%; min-width:1080px; border-collapse:collapse; font-size:16px; color:#1A1A1A; }
+    .inq table.ht th { background:#F6F1F7; color:#5E5964; font-size:13.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; text-align:left; padding:12px 14px; border-bottom:1px solid #DCD5E0; white-space:nowrap; }
+    .inq table.ht td { padding:14px; border-bottom:1px solid #EEE8F0; vertical-align:top; }
+    .inq table.ht tr.ht-more td { background:#FBF9FC; padding:10px 18px 14px; }
+    .inq table.ht td > div + div { margin-top:6px; }
+    .inq .ht-d { width:150px; white-space:nowrap; } .inq .ht-d .pill { display:inline-block; background:#78B848; color:#fff; border-radius:7px; padding:3px 12px; font-size:15px; font-weight:700; } .inq .ht-d div { margin-top:6px; font-size:15px; }
+    .inq .ht-h { min-width:210px; } .inq .ht-h span { display:block; font-size:14px; color:#5E5964; } .inq .ht-h b { display:block; font-size:18px; font-weight:800; line-height:1.25; } .inq .ht-h small { display:block; font-size:14px; color:#5E5964; margin-top:2px; }
+    .inq .ht-t { min-width:200px; white-space:nowrap; font-weight:700; } .inq .ht-n { width:110px; text-align:center; font-weight:700; } .inq .ht-m { width:140px; }
+    .inq .ht-rate { width:150px; white-space:nowrap; font-weight:700; } .inq .ht-rate .miss { color:#B42318; } .inq .ht-rate small { display:block; font-weight:400; font-size:13px; color:#5E5964; margin-top:4px; }
+    .inq .ht-s { min-width:230px; } .inq .ht-s .ok { color:#2E7D32; font-weight:700; } .inq .ht-s .miss { color:#B45309; font-weight:700; font-size:15px; line-height:1.35; }
+    .inq .ht-a { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; } .inq .ht-a .inq-btn { min-height:40px; } .inq .ht-a .inq-chev.open i { transform:rotate(180deg); }
+    .inq .ht-more .kv { display:grid; grid-template-columns:160px 1fr; gap:6px 14px; font-size:15px; } .inq .ht-more .kv > span:nth-child(odd) { color:#5E5964; } .inq .ht-more .acts { margin-top:10px; }
     /* tf-accreq-r1: Room arrangement (types and counts) and Special Accommodation Requirements, once, under the summary */
     .inq .inq-accom { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:flex-start; margin:12px 0 8px; padding:14px 18px; background:#fff; border:1px solid #DCD5E0; border-radius:12px; }
     .inq .ia-rooms { flex:1 1 320px; min-width:0; }
@@ -4497,6 +4511,53 @@
             return out.length ? [[null, roomCount(out)]] : [];
         };
         const roomText = d => roomLines(d).map(([l, w]) => (l ? l + ': ' : '') + w.join(' + ')).join(' · ') || 'Not set';
+        // tf-famroom-r1 (26 Nov 2026, Shantha): the Hotels tab as one table — Day / Date · Hotel · Room Type · No. of Rooms · Meal Plan ·
+        // Room Rate · Status / Actions. Each night lists its rooms (per option while the agent has not chosen) with the hotel's own
+        // published figure per room and night; a Family Room shows only the hotel's verified Family Room rate, else "No verified Family Room".
+        const OCC_RT = { sgl: 'Single Room', dbl: 'Double Room', twn: 'Twin Room', tpl: 'Triple Room', fam: 'Family Room' };
+        const RT_OCC = { single: 'sgl', double: 'dbl', twin: 'twn', triple: 'tpl', family: 'fam' };
+        const nTypes = d => Array.isArray(d.room_types) ? d.room_types : [];
+        const famOf = d => { const M = String(d.meal_plan || '').toUpperCase(); const c = nTypes(d).filter(t => t.meals && t.meals[M] && t.meals[M].fam != null);
+            if (!c.length) return { rate: null, why: 'No verified Family Room' };
+            if (c.length > 1) return { rate: null, why: 'Choose which family room' };
+            if (c[0].max_occupancy == null || !c[0].bed_config) return { rate: null, why: 'Family room capacity / beds not recorded' };
+            return { rate: Number(c[0].meals[M].fam), name: c[0].name, why: '' }; };
+        const occRate = (d, occ, typeId) => { if (occ === 'fam') return famOf(d).rate; const col = occ === 'twn' ? 'dbl' : occ, M = String(d.meal_plan || '').toUpperCase();
+            if (typeId == null || Number(typeId) === Number(d.room_type_id)) { const v = d['rate_' + col]; return v != null && v !== '' ? Number(v) : null; }
+            const t = nTypes(d).find(x => Number(x.id) === Number(typeId)); const v = t && t.meals && t.meals[M] ? t.meals[M][col] : null; return v != null && v !== '' ? Number(v) : null; };
+        const nightLines = d => {   // [{opt, occ, n, rate, why}]
+            const out = [], add = (opt, occ, n, typeId) => { const f = occ === 'fam' ? famOf(d) : null; out.push({ opt, occ, n, rate: d.rate_state === 'rate' ? occRate(d, occ, typeId) : null, why: f && f.rate == null ? f.why : '' }); };
+            const fromRooms = (opt, rooms) => { const c = {}; (rooms || []).forEach(r => { const o = RT_OCC[r.type]; if (o) c[o] = (c[o] || 0) + 1; }); Object.keys(c).forEach(o => add(opt, o, c[o], null)); };
+            if (optsIn.length && !optChosen) optsIn.forEach(o => fromRooms('Option ' + o.no, o.rooms));
+            else if ((d.room_rows || []).length) { const c = {}; d.room_rows.forEach(r => { const k = r.occ + '|' + (r.occ === 'fam' ? '' : (r.room_type_id || '')); c[k] = c[k] || { occ: r.occ, n: 0, t: r.room_type_id }; c[k].n += Number(r.qty || 0); }); Object.values(c).forEach(x => add(null, x.occ, x.n, x.occ === 'fam' ? null : x.t)); }
+            else if (optChosen) fromRooms(null, optChosen.rooms);
+            else { const m = d.room_mix && Number(d.room_mix.rooms) > 0 ? d.room_mix : R; ['sgl', 'dbl', 'twn', 'tpl'].forEach(k => { if (Number(m[k]) > 0) add(null, k, Number(m[k]), null); }); }
+            return out; };
+        const money2 = v => Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const htRow = d => {
+            const L = nightLines(d), cur = d.rate_currency || 'USD', cat = (d.room_rows || []).some(r => r.room_type_name && r.occ !== 'fam') ? [...new Set(d.room_rows.filter(r => r.occ !== 'fam').map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || '');
+            const ok = d.hotel_name_raw && d.rate_state === 'rate' && L.length && L.every(l => l.rate != null);
+            const why = !d.hotel_name_raw ? 'Hotel not chosen' : (d.rate_state !== 'rate' ? (String(d.rate_note || '').split(/(?<=[.;])\s/)[0].replace(/[.;]$/, '').slice(0, 90) || 'No approved rate for this date')
+                : (!L.length ? 'Rooms not set' : [...new Set(L.filter(l => l.rate == null).map(l => l.why || (OCC_RT[l.occ] + ': no ' + (d.meal_plan || '') + ' rate')))].join(' · ')));
+            const optCell = l => l.opt ? `<small class="ia-o">${esc(l.opt)}</small>` : '';
+            const w = (I.days || {})[d.day_no] || (I.days || {})[String(d.day_no)], things = dayThings(d.day_no);
+            const tr = (host.querySelector(`table.itin [data-day="${d.id}"]`) || { closest: () => null }).closest('tr');
+            const note = (n => /^Add a note$/i.test(n.replace(/<[^>]+>/g, '').trim()) ? '' : n)(cellHtml(tr, 8));
+            return `<tr class="ht-r" data-inqday="${d.day_no}">
+                <td class="ht-d"><span class="pill">Day ${d.day_no}</span><div>${esc(dm(d.day_date, { weekday:'short', day:'numeric', month:'short', year:'numeric' }))}</div></td>
+                <td class="ht-h"><span>${esc(place(d))}</span><b>${esc(d.hotel_name_raw || 'Hotel not chosen')}</b>${cat ? `<small>${esc(cat)}</small>` : ''}</td>
+                <td class="ht-t">${L.map(l => `<div>${optCell(l)}${esc(OCC_RT[l.occ] || l.occ)}</div>`).join('') || '<div class="unset">Not set</div>'}</td>
+                <td class="ht-n">${L.map(l => `<div>${l.n}</div>`).join('') || '<div>—</div>'}</td>
+                <td class="ht-m">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan) : 'Not set')}</td>
+                <td class="ht-rate">${L.map(l => `<div class="${l.rate == null ? 'miss' : ''}">${l.rate == null ? 'Missing' : esc(cur) + ' ' + money2(l.rate)}</div>`).join('') || '<div class="miss">—</div>'}${L.length ? '<small>per room / night</small>' : ''}</td>
+                <td class="ht-s"><div class="${ok ? 'ok' : 'miss'}">${ok ? '<i class="bi bi-check-circle-fill"></i> Rate available' : '<i class="bi bi-exclamation-triangle-fill"></i> ' + esc(why || 'Rate missing')}</div>
+                    <div class="ht-a">${it.locked ? '' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">${d.hotel_name_raw ? 'Change' : 'Choose hotel'}</button>`}${d.hotel_name_raw && IS_SUPER ? `<button type="button" class="inq-btn" data-inqrate="${d.id}" title="Super Admin: opens the Hotel Rates master on the rate this night uses">Edit hotel</button>` : ''}<button type="button" class="inq-chev" data-htog="${d.day_no}" aria-label="Details of night ${d.day_no}"><i class="bi bi-chevron-down"></i></button></div></td></tr>
+                <tr class="ht-more" data-hmore="${d.day_no}" ${INQ_OPEN['h' + d.day_no] ? '' : 'hidden'}><td colspan="7"><div class="kv">
+                    <span>Activities</span><span>${things.length ? esc(things.join(', ')) : '—'}</span>
+                    ${note ? `<span>Special note</span><span>${note}</span>` : ''}
+                    ${w && w.text ? `<span>Itinerary text</span><span>${esc(w.text)}</span>` : ''}
+                    ${rateLink(d) ? `<span>Hotel rates</span><span>${rateLink(d)}</span>` : ''}
+                </div>${it.locked ? '' : `<div class="acts"><button type="button" class="inq-btn" data-inqsvc="${d.day_no}"><i class="bi bi-plus-lg"></i> Activities and services</button></div>`}</td></tr>`; };
         const accomBlock = () => { const L = roomLines(null), A = it.accom_reqs || [];
             return `<div class="inq-accom"><div class="ia-rooms"><div class="ia-k">Room arrangement</div>${L.length ? L.map(([l, w]) => `<div class="ia-row">${l ? `<span class="ia-opt">${esc(l)}</span>` : ''}${w.map(x => `<span class="ia-chip">${esc(x)}</span>`).join('')}</div>`).join('') : '<div class="ia-row"><span class="ia-chip ia-none">Not set</span></div>'}</div>
                 ${A.length ? `<div class="ia-box"><div class="ia-h"><i class="bi bi-clipboard-check"></i>Special Accommodation Requirements</div>${A.map(r => `<div class="ia-kv"><span>Child age</span><b>${r.age != null ? esc(r.age) + ' years' : 'Not given'}</b><span>Bed arrangement</span><b>${esc(r.arrangement)}</b>${r.options_word ? `<span>Applies to</span><b>${esc(r.options_word)}</b>` : ''}</div>`).join('')}<div class="ia-imp">Important: this condition is printed in red in the quotation and in the hotel booking request.</div></div>` : ''}</div>`; };
@@ -4596,7 +4657,7 @@
         const longRange = a && z ? dm(a, { day:'numeric', month:'long' }) + (a.slice(0, 4) === z.slice(0, 4) ? '' : ' ' + a.slice(0, 4)) + ' – ' + dm(z, { day:'numeric', month:'long', year:'numeric' }) : (a ? dm(a, { day:'numeric', month:'long', year:'numeric' }) : 'Dates not set');
         const nAd = Number(it.pax_adults || 0), nCh = Number(it.pax_children || 0), nPx = Number(it.pax_total || 0);
         const party = nAd || nCh ? [nAd ? nAd + ' adult' + (nAd === 1 ? '' : 's') : '', nCh ? nCh + ' child' + (nCh === 1 ? '' : 'ren') : ''].filter(Boolean).join(', ') : (nPx ? nPx + ' pax' : '');
-        const awaiting = days.filter(d => !(d.rate_state === 'rate' && [d.rate_sgl, d.rate_dbl, d.rate_tpl].some(v => v != null && v !== ''))).length;
+        const awaiting = days.filter(d => !(d.rate_state === 'rate' && [d.rate_sgl, d.rate_dbl, d.rate_tpl].some(v => v != null && v !== '')) || nightLines(d).some(l => l.rate == null)).length;   // tf-famroom-r1: a room without its rate (a Family Room too) is not complete
         const shell = document.createElement('div'); shell.className = 'inq';
         shell.innerHTML = `
             <div class="inq-top">
@@ -4633,7 +4694,7 @@
             </div>
             <div class="inq-pane" data-pane="itin">
                 <div class="inq-hh"><h3>Hotels</h3><div>${esc(longRange)}${nights ? ' · ' + nights + ' night' + (nights === 1 ? '' : 's') : ''}${party ? ' · ' + esc(party) : ''}</div></div>
-                <div class="inq-hlist">${days.map(dayRow).join('') + depRow || '<div class="help" style="padding:10px 0">No nights on this inquiry yet. Add them under Itinerary &amp; Services.</div>'}</div>
+                ${days.length ? `<div class="ht-wrap"><table class="ht"><thead><tr><th>Day / Date</th><th>Hotel</th><th>Room Type</th><th>No. of Rooms</th><th>Meal Plan</th><th>Room Rate</th><th>Status / Actions</th></tr></thead><tbody>${days.map(htRow).join('')}${dep && !days.some(d => Number(d.day_no) === Number(depNo)) ? `<tr class="ht-r ht-dep"><td class="ht-d"><span class="pill">Day ${depNo}</span><div>${esc(dm(dep.date, { weekday:'short', day:'numeric', month:'short', year:'numeric' }))}</div></td><td class="ht-h" colspan="5"><span>Departure — no hotel night</span><b>Airport transfer${it.departure_flight ? ' · Flight ' + esc(it.departure_flight) : ''}</b></td><td class="ht-s"><div class="ht-a"><button type="button" class="inq-btn" data-inqgo="trans">Transfers</button></div></td></tr>` : ''}</tbody></table></div>` : '<div class="help" style="padding:10px 0">No nights on this inquiry yet. Add them under Itinerary &amp; Services.</div>'}
                 ${days.length ? `<div class="inq-hsub ${awaiting ? 'inc' : ''}" id="inq_hsub"><div><b>${awaiting ? (SEES_PRICING ? 'Hotel subtotal · incomplete' : 'Hotel rates · incomplete') : (SEES_PRICING ? 'Hotel total' : 'Hotel rates · complete')}</b><span>${awaiting ? awaiting + ' night' + (awaiting === 1 ? '' : 's') + ' awaiting rates' : 'Every night has a rate'}</span></div><div class="amt" id="inq_hsub_amt"></div></div>` : ''}
                 <div class="inq-grid">
                     <div>
@@ -4719,6 +4780,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         shell.querySelectorAll('[data-inqrates]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); const r = b.closest('.inq-drow'); INQ_OPEN[b.dataset.inqrates] = true; r.classList.add('open'); }));
         shell.querySelectorAll('[data-inqgo]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); inqShow(b.dataset.inqgo); inqSettle(pane(b.dataset.inqgo) || shell); }));
         shell.querySelectorAll('[data-inqlist]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); (document.getElementById('d_back') || document.getElementById('btn_list')).click(); }));
+        shell.querySelectorAll('[data-htog]').forEach(b => b.addEventListener('click', () => { const n = b.dataset.htog, r = shell.querySelector(`[data-hmore="${n}"]`); INQ_OPEN['h' + n] = !INQ_OPEN['h' + n]; if (r) r.hidden = !INQ_OPEN['h' + n]; b.classList.toggle('open', !!INQ_OPEN['h' + n]); }));   // tf-famroom-r1
         shell.querySelectorAll('[data-inqtoggle]').forEach(b => b.addEventListener('click', () => { const n = b.dataset.inqtoggle; INQ_OPEN[n] = !INQ_OPEN[n]; b.closest('.inq-drow').classList.toggle('open', !!INQ_OPEN[n]); }));
         shell.querySelectorAll('[data-inqedit]').forEach(b => b.addEventListener('click', () => { const t = host.querySelector(`table.itin [data-day="${b.dataset.inqedit}"]`); if (t) t.click(); }));
         // Edit hotel (Super Admin): the Hotel Rates master opens in its own tab, so this inquiry — and anything typed on it and not yet saved — stays exactly as it is
@@ -6231,7 +6293,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     function hpRate(r) {
         const meal = hpEl('md_meal').value, col = r.occ === 'twn' ? 'dbl' : r.occ, d = HP.day;
         if (!r.room_type_id || !meal) return null;
-        if (r.occ === 'fam') { const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === Number(r.room_type_id)), m = t && t.meals ? t.meals[meal] : null; return m ? (m.unit != null ? Number(m.unit) : (m.tpl != null ? Number(m.tpl) : null)) : null; }   // tf-roomopt-r1: a family room from a chosen room option
+        if (r.occ === 'fam') { const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === Number(r.room_type_id)), m = t && t.meals ? t.meals[meal] : null; return m && m.fam != null ? Number(m.fam) : null; }   // tf-famroom-r1: only the hotel's own Family Room rate — never a triple or unit figure
         // the figure kept on the night for its own room type (a rate moved in Hotel Rates is only taken on purpose), as the costing does
         if (hpSame() && d && Number(d.room_type_id) === Number(r.room_type_id) && d.rate_state === 'rate') { const v = d['rate_' + col]; return v == null || v === '' ? null : Number(v); }
         const t = ((HP.rates && HP.rates.room_types) || []).find(x => Number(x.id) === Number(r.room_type_id));

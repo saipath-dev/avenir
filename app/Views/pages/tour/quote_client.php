@@ -197,6 +197,7 @@ if ($logo && is_file($logo)) {
     <?php if (!empty($preview)): ?><span class="preview" style="padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600">Preview — follows the inquiry as it stands; nothing is issued</span>
     <?php elseif ($q): ?><span class="note">Version <?= (int) $q['version'] ?> · <?= esc($q['status']) ?><?= $q['issued_at'] ? ' · issued ' . esc(substr((string) $q['issued_at'], 0, 16)) . ' by ' . esc((string) $q['issued_by']) : '' ?></span><?php endif; ?>
 </div>
+<?php if (!empty($c['price_withheld']) && empty($pdf)): /* tf-famroom-r1 */ ?><div style="width:210mm;max-width:100%;margin:14px auto 0;font:600 14px/1.45 Arial,sans-serif;color:#b42318;background:#fdecea;border:1.5px solid #b42318;border-radius:8px;padding:10px 14px;">DRAFT PREVIEW — NOT A VALID QUOTATION. <?= (int) $c['price_withheld'] ?> required item<?= (int) $c['price_withheld'] === 1 ? ' is' : 's are' ?> still open, so no price is shown.</div><?php endif; ?>
 <?php if (!empty($no_pdf_lib)): ?><div style="width:210mm;margin:14px auto -8px;font-size:12px;color:#1a1a1a;background:#ffffff;border:1px solid #d9d3dd;border-radius:8px;padding:8px 12px;">The PDF library is not installed on this server yet, so this is the print view: choose <b>Save as PDF</b> in the print dialog. (Ask the administrator to run <span style="font-family:monospace">composer install</span> — tecnickcom/tcpdf is already in composer.json.)</div><?php endif; ?>
 <div class="sheet qx-on">
 <?php endif; ?>
@@ -318,6 +319,9 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
     </tr>
 </table>
 
+<?php if (!empty($c['price_withheld'])): /* tf-famroom-r1 */ ?>
+<table width="100%" cellpadding="8" cellspacing="0" style="margin-top:12px; border:1.5px solid #b42318; background-color:#fdecea;"><tr><td style="font-size:12.5px; font-weight:bold; color:#b42318;">DRAFT PREVIEW — NOT A VALID QUOTATION. <?= (int) $c['price_withheld'] ?> required item<?= (int) $c['price_withheld'] === 1 ? ' is' : 's are' ?> still open (hotel rates, room suitability, mileage or other costs), so no price is shown. Do not send this to the agent.</td></tr></table>
+<?php endif; ?>
 <table width="100%" cellpadding="4" cellspacing="0" style="margin-top:14px;">
     <tr>
         <td width="60%" style="vertical-align:top;">

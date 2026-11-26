@@ -289,6 +289,7 @@ CREATE TABLE IF NOT EXISTS `hr2_rate` (
   `tpl`             DECIMAL(10,2) NULL,
   `quad`            DECIMAL(10,2) NULL,
   `unit`            DECIMAL(10,2) NULL,
+  `fam`             DECIMAL(10,2) NULL,
   `child_with_bed`  DECIMAL(10,2) NULL,
   `child_no_bed`    DECIMAL(10,2) NULL,
   `quality_flags`   VARCHAR(200) NULL,

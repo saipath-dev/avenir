@@ -128,6 +128,7 @@ final class QuoteService
             $it = self::applyRoomOption($it, $option);   // tf-roomopt-r1: this option's rooms on every night, nothing saved
         }
         $blockers = [];
+        $famAt = [];   // tf-famroom-r1: the family-room question of each hotel
         $warnings = [];
         $pax      = (int) ($it['pax_total'] ?? 0);
         // schema 32: the dates decide the nights; the column is kept in step with them
@@ -331,7 +332,33 @@ final class QuoteService
                 $meal  = strtoupper((string) ($d['meal_plan'] ?? ''));
                 $occW  = ['sgl' => 'Single', 'dbl' => 'Double', 'twn' => 'Twin', 'tpl' => 'Triple', 'fam' => 'Family'];
                 $short = [];
+                $famShort = false;
                 foreach ($d['room_rows'] as $r) {
+                    // tf-famroom-r1 (26 Nov 2026, Shantha): "1 Family Room" is the agent's request; whether THIS hotel has a verified family
+                    // room big enough, with an approved Family Room rate for the meal plan on the date, is its own numbered question
+                    if (($r['occ'] ?? '') === 'fam') {
+                        $fr = IntakeService::familyRoom($d, $r['room_type_id'] !== null ? (int) $r['room_type_id'] : null, self::famParty($it));
+                        if ($fr['issue'] !== null) {
+                            // one question per hotel (all its nights), not one per night
+                            $hk = (int) ($d['hotel_id'] ?? 0) ?: crc32(strtolower($hotel));
+                            $famAt[$hk]['nights'][] = $n . ' (' . date('j M', strtotime((string) $d['day_date'])) . ')';
+                            $famAt[$hk]['issue'] = $famAt[$hk]['issue'] ?? $fr['issue'];
+                            $famAt[$hk]['hotel'] = $hotel;
+                            $label = 'Family Room at ' . $hotel . ', night' . (count($famAt[$hk]['nights']) > 1 ? 's ' : ' ') . (count($famAt[$hk]['nights']) > 1 ? implode(', ', array_slice($famAt[$hk]['nights'], 0, -1)) . ' and ' . end($famAt[$hk]['nights']) : $famAt[$hk]['nights'][0]) . ' — ' . $famAt[$hk]['issue'];
+                            if (isset($famAt[$hk]['at'])) {
+                                $blockers[$famAt[$hk]['at']]['label'] = $label;
+                            } else {
+                                $blockers[] = ['code' => 'famh_' . $hk, 'label' => $label];
+                                $famAt[$hk]['at'] = array_key_last($blockers);
+                            }
+                            $famShort = true;
+                            continue;
+                        }
+                        $r['room_type_id'] = $fr['id'];
+                        $line['lines'][] = ['kind' => 'fam', 'label' => $fr['name'] . ' — Family Room (' . $fr['beds'] . ', up to ' . $fr['capacity'] . ')', 'qty' => (int) $r['qty'], 'rate' => (float) $fr['rate'], 'amount' => round((int) $r['qty'] * (float) $fr['rate'], 2)];
+                        $amount += (int) $r['qty'] * (float) $fr['rate'];
+                        continue;
+                    }
                     $tid   = $r['room_type_id'];
                     $tname = $tid !== null && isset($types[$tid]) ? (string) $types[$tid]['name'] : ((string) ($r['room_type_name'] ?? '') ?: (string) ($line['room_type'] ?? 'room'));
                     $rv    = IntakeService::roomRowRate($d, $r);
@@ -341,6 +368,12 @@ final class QuoteService
                     }
                     $line['lines'][] = ['kind' => $r['occ'], 'label' => $tname . ' — ' . $occW[$r['occ']], 'qty' => (int) $r['qty'], 'rate' => (float) $rv, 'amount' => round((int) $r['qty'] * (float) $rv, 2)];
                     $amount += (int) $r['qty'] * (float) $rv;
+                }
+                if ($famShort && $short === []) {
+                    $line['state'] = 'missing';
+                    $line['why']   = 'No verified Family Room at this hotel for the night.';
+                    $hotels[] = $line;
+                    continue;
                 }
                 if ($short !== []) {
                     $line['state'] = 'missing';
@@ -921,6 +954,14 @@ final class QuoteService
      */
     public static function clientView(array $cost): array
     {
+        // tf-famroom-r1 (26 Nov 2026, Shantha): while any required check is open, a preview shows NO price at all — a figure built from the
+        // nights and services that happen to be priced (USD 525.68 on INQ 1062) is not a quotation and must never read as one
+        if (!empty($cost['blockers'])) {
+            $cost['markup']['sell_usd'] = null;
+            $cost['markup']['per_person_usd'] = null;
+            $cost['pax_matrix'] = null;
+            $cost['room_options'] = null;
+        }
         $days = [];
         foreach ($cost['hotels'] as $h) {
             $rt = $h['room_type'];
@@ -975,6 +1016,7 @@ final class QuoteService
             // the price per person by party size (schema 31): the size, the rooms, the price — and
             // nothing else; a version frozen before the matrix existed has no table
             'pax_prices' => PaxMatrix::forAgent($cost['pax_matrix'] ?? null),
+            'price_withheld' => !empty($cost['blockers']) ? count($cost['blockers']) : 0,   // tf-famroom-r1
             // tf-accreq-r1: the child accommodation conditions, printed in red under Important Conditions
             'accom_conditions' => array_values(array_map(static fn ($r) => ['bed' => $r['bed'], 'text' => $r['condition']], (array) ($cost['accom_reqs'] ?? []))),
             // tf-roomopt-r2: every room category the options use at each hotel (Family room, Superior …)
@@ -999,6 +1041,30 @@ final class QuoteService
     // =====================================================================
     //  tf-roomopt-r1 (25 Nov 2026, Shantha): room options — the same tour costed once per way of rooming the party
     // =====================================================================
+
+    /** tf-famroom-r1: who sleeps in the family room — of the option being costed, else of the option the agent chose (null = not known). */
+    private static function famParty(array $it): ?array
+    {
+        $rooms = $it['_room_option']['rooms'] ?? null;
+        if ($rooms === null) {
+            foreach ((array) ($it['room_options'] ?? []) as $o) {
+                if (!empty($o['chosen'])) {
+                    $rooms = (array) ($o['rooms'] ?? []);
+                }
+            }
+        }
+        foreach ((array) $rooms as $rm) {
+            if (($rm['type'] ?? '') !== 'family') {
+                continue;
+            }
+            if (isset($rm['guests']) && is_array($rm['guests'])) {
+                $a = count(array_filter($rm['guests'], static fn ($g) => str_starts_with((string) ($g['slot'] ?? ''), 'a')));
+                return ['adults' => $a, 'children' => count($rm['guests']) - $a];
+            }
+            return ['adults' => (int) ($rm['adults'] ?? 0), 'children' => count((array) ($rm['children'] ?? []))];
+        }
+        return null;
+    }
 
     /** The inquiry as costing() reads it, with every night's rooms replaced by the option's rooms (nothing is saved). */
     private static function applyRoomOption(array $it, array $opt): array
@@ -1031,15 +1097,9 @@ final class QuoteService
                 $tid = $d['room_type_id'] ?? null;
                 $tname = null;
                 if ($o === 'fam') {
+                    // tf-famroom-r1: which of the hotel's rooms is the family room is settled in costing() from Hotel Rates — never by its name
                     $tid = null;
-                    foreach ((array) ($d['room_types'] ?? []) as $t) {
-                        if (preg_match('/family/i', (string) ($t['name'] ?? ''))) {
-                            $tid = (int) $t['id'];
-                            $tname = (string) $t['name'];
-                            break;
-                        }
-                    }
-                    $tname = $tname ?? 'room';
+                    $tname = 'Family Room';
                 }
                 $rows[] = ['occ' => $o, 'qty' => 1, 'room_type_id' => $tid, 'room_type_name' => $tname];
             }
@@ -1048,7 +1108,7 @@ final class QuoteService
         }
         unset($d);
         $it['rooms'] = $m;
-        $it['_room_option'] = ['id' => $opt['id'] ?? null, 'name' => $opt['name'] ?? '', 'no_bed' => $noBed];
+        $it['_room_option'] = ['id' => $opt['id'] ?? null, 'name' => $opt['name'] ?? '', 'no_bed' => $noBed, 'rooms' => (array) ($opt['rooms'] ?? [])];
         return $it;
     }
 
@@ -1232,6 +1292,17 @@ final class QuoteService
             }
             return null;
         };
+        if (preg_match('/^famh_(\d+)$/', $code, $fm)) {   // tf-famroom-r1: the family room at one hotel
+            $d = null;
+            foreach ((array) ($it['days'] ?? []) as $x) {
+                if ((int) ($x['hotel_id'] ?? 0) === (int) $fm[1]) {
+                    $d = $x;
+                    break;
+                }
+            }
+            return ['room', 'Room suitability', 'Enter the hotel\'s family room from its contract in Hotel Rates — Room types (capacity, beds) and the Family Room rate for the meal plan and dates — and have it approved; or agree an alternative with the agent (another room option or another hotel) and change it on the inquiry.',
+                !empty($d['hotel_acc']) ? 'master_files/hotel_rate_v2?hotel=' . rawurlencode((string) $d['hotel_acc']) : $base . '&tab=itin', !empty($d['hotel_acc']) ? 'Hotel Rates' : 'Hotels'];
+        }
         if (preg_match('/^roomopt_/', $code)) {
             return ['room', 'Guests and rooms', 'Place every guest in exactly one room (and say which children share a bed) in Room options.', 'tour/intake/intake/' . (int) $it['id'] . '/options?step=1', 'Room options'];
         }
@@ -1298,6 +1369,13 @@ final class QuoteService
      */
     public function checklist(int $intakeId): array
     {
+        // tf-famroom-r1: read every night's hotel again first (what Check hotels again does), so a rate, a family room or a capacity
+        // corrected in Hotel Rates shows here at once — the kept figures on the nights move only as that button already decides
+        try {
+            $this->take->checkHotels($intakeId);
+        } catch (\Throwable $e) {
+            // a locked (confirmed) inquiry is read as it stands
+        }
         $it = $this->take->get($intakeId);
         if (!$it) {
             throw new \RuntimeException('No such inquiry.');

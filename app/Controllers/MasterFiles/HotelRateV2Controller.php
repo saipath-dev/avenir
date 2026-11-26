@@ -691,7 +691,7 @@ class HotelRateV2Controller extends BaseController
                 return $this->json(['status' => 404, 'message' => "No approved contract rate for this hotel, room type, meal plan, date and market ({$market}).", 'market' => $market, 'flags' => $svc->lookupFlags(null, $date)]);
             }
             // flags: gala / peak / festival supplements, festive seasons, minimum stays, meal-plan rules — what a quotation must not miss
-            return $this->json(['status' => 200, 'SGL' => $r['sgl'], 'DBL' => $r['dbl'], 'TPL' => $r['tpl'], 'QUAD' => $r['quad'], 'UNIT' => $r['unit'], 'market' => $market, 'flags' => $svc->lookupFlags($r, $date), 'data' => $r]);
+            return $this->json(['status' => 200, 'SGL' => $r['sgl'], 'DBL' => $r['dbl'], 'TPL' => $r['tpl'], 'QUAD' => $r['quad'], 'UNIT' => $r['unit'], 'FAM' => $r['fam'] ?? null, 'market' => $market, 'flags' => $svc->lookupFlags($r, $date), 'data' => $r]);
         } catch (\Throwable $e) {
             return $this->fail($e);
         }

@@ -163,11 +163,12 @@ class RateLookup
             }
             foreach ($this->rows("SELECT * FROM hr2_rate WHERE season_id IN ({$sin})") as $r) {
                 $any = false;
-                foreach (['sgl', 'dbl', 'tpl', 'quad', 'unit', 'child_with_bed', 'child_no_bed'] as $k) {
+                $r['fam'] = $r['fam'] ?? null;   // tf-famroom-r1
+                foreach (['sgl', 'dbl', 'tpl', 'quad', 'unit', 'fam', 'child_with_bed', 'child_no_bed'] as $k) {
                     if ($r[$k] !== null && (float) $r[$k] <= 0) {
                         $r[$k] = null; // 0 is never a price
                     }
-                    if ($r[$k] !== null && in_array($k, ['sgl', 'dbl', 'tpl', 'quad', 'unit'], true)) {
+                    if ($r[$k] !== null && in_array($k, ['sgl', 'dbl', 'tpl', 'quad', 'unit', 'fam'], true)) {
                         $any = true;
                     }
                 }
@@ -636,6 +637,8 @@ class RateLookup
         $n = static fn ($v) => $v === null ? null : (float) $v;
         return [
             'sgl' => $n($r['sgl']), 'dbl' => $n($r['dbl']), 'tpl' => $n($r['tpl']), 'quad' => $n($r['quad']), 'unit' => $n($r['unit']),
+            // tf-famroom-r1: the Family Room rate is only ever the hotel's own printed figure for that meal plan — never derived
+            'fam' => $derived === 'direct' ? $n($r['fam'] ?? null) : null,
             'child_with_bed' => $n($r['child_with_bed'] ?? null), 'child_no_bed' => $n($r['child_no_bed'] ?? null),
             'quality_flags' => $r['quality_flags'] ?? null, 'derived' => $derived, 'components' => $components,
         ];

@@ -61,7 +61,7 @@ class InquiryReadiness
         if (preg_match('/^exc_/', $code)) {
             return ['trans', 'Airport Transfers & Excursions'];
         }
-        if (preg_match('/^(rate_|hotel_|group_rooms_|departure_row_)/', $code) || in_array($code, ['rooms_mix', 'nights_missing', 'no_nights', 'rates_unreviewed'], true)) {
+        if (preg_match('/^(rate_|hotel_|famh_|group_rooms_|departure_row_)/', $code) || in_array($code, ['rooms_mix', 'nights_missing', 'no_nights', 'rates_unreviewed'], true)) {
             return ['itin', 'Hotels'];
         }
         if (preg_match('/^(km_|transfer_|crew_|accom_)/', $code) || in_array($code, ['no_vehicle', 'no_legs', 'no_usd_rate'], true)) {

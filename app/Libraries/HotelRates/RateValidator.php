@@ -235,7 +235,7 @@ class RateValidator
                 }
                 $seenRows[$key] = true;
 
-                $vals = ['sgl' => $row['sgl'], 'dbl' => $row['dbl'], 'tpl' => $row['tpl'], 'quad' => $row['quad'], 'unit' => $row['unit']];
+                $vals = ['sgl' => $row['sgl'], 'dbl' => $row['dbl'], 'tpl' => $row['tpl'], 'quad' => $row['quad'], 'unit' => $row['unit'], 'fam' => $row['fam'] ?? null];
                 $anyValue = false;
                 foreach ($vals as $occ => $v) {
                     if ($v === null) {

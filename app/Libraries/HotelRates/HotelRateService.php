@@ -28,6 +28,7 @@ class HotelRateService
     {
         $this->db = $db;
         $this->user = $user ?: 'system';
+        Installer::ensureFamilyColumn($db);   // tf-famroom-r1
     }
 
     public function lookupEngine(): RateLookup
@@ -515,7 +516,7 @@ class HotelRateService
             $dates = array_map(static fn ($d) => ['from' => $d['date_from'], 'to' => $d['date_to']], $this->rows('SELECT date_from, date_to FROM hr2_season_date WHERE season_id = ? ORDER BY date_from', [$s['id']]));
             $rates = [];
             foreach ($this->rows("SELECT r.* FROM hr2_rate r JOIN hr2_room_type rt ON rt.id = r.room_type_id WHERE r.season_id = ? ORDER BY rt.sort_order, rt.name, FIELD(r.meal_plan,'RO','BB','HB','FB','AI')", [$s['id']]) as $r) {
-                $rates[] = ['id' => (int) $r['id'], 'room_type' => $roomNames[(int) $r['room_type_id']] ?? '', 'room_type_id' => (int) $r['room_type_id'], 'meal_plan' => $r['meal_plan'], 'sgl' => $r['sgl'], 'dbl' => $r['dbl'], 'tpl' => $r['tpl'], 'quad' => $r['quad'], 'unit' => $r['unit'], 'child_with_bed' => $r['child_with_bed'], 'child_no_bed' => $r['child_no_bed'], 'note' => $r['note'], 'quality_flags' => $r['quality_flags']];
+                $rates[] = ['id' => (int) $r['id'], 'room_type' => $roomNames[(int) $r['room_type_id']] ?? '', 'room_type_id' => (int) $r['room_type_id'], 'meal_plan' => $r['meal_plan'], 'sgl' => $r['sgl'], 'dbl' => $r['dbl'], 'tpl' => $r['tpl'], 'quad' => $r['quad'], 'unit' => $r['unit'], 'fam' => $r['fam'] ?? null, 'child_with_bed' => $r['child_with_bed'], 'child_no_bed' => $r['child_no_bed'], 'note' => $r['note'], 'quality_flags' => $r['quality_flags']];
             }
             $label = $s['name'] ?: Sheet::seasonLabel(['name' => null, 'dates' => $dates], count($seasons));
             $seasonName[(int) $s['id']] = $label;
@@ -793,11 +794,11 @@ class HotelRateService
                     continue;
                 }
                 $vals = [];
-                foreach (['sgl', 'dbl', 'tpl', 'quad', 'unit', 'child_with_bed', 'child_no_bed'] as $k) {
-                    $v = $r[$k];
+                foreach (['sgl', 'dbl', 'tpl', 'quad', 'unit', 'fam', 'child_with_bed', 'child_no_bed'] as $k) {
+                    $v = $r[$k] ?? null;
                     $vals[$k] = ($v === null || $v <= 0) ? null : round($v, 2);
                 }
-                if ($vals['sgl'] === null && $vals['dbl'] === null && $vals['tpl'] === null && $vals['quad'] === null && $vals['unit'] === null) {
+                if ($vals['sgl'] === null && $vals['dbl'] === null && $vals['tpl'] === null && $vals['quad'] === null && $vals['unit'] === null && $vals['fam'] === null) {
                     continue; // empty row = not offered
                 }
                 $key = $rid . '|' . $meal;
@@ -807,8 +808,8 @@ class HotelRateService
                 $seen[$key] = true;
                 $flags = self::rowFlags($vals, $c['pricing_mode'], (float) $this->settings()->get('tiny_rate'), (float) $this->settings()->get('huge_rate'));
                 $this->db->query(
-                    'INSERT INTO hr2_rate (season_id, room_type_id, meal_plan, sgl, dbl, tpl, quad, unit, child_with_bed, child_no_bed, quality_flags, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    [$sid, $rid, $meal, $vals['sgl'], $vals['dbl'], $vals['tpl'], $vals['quad'], $vals['unit'], $vals['child_with_bed'], $vals['child_no_bed'], $flags ?: null, $r['note']]
+                    'INSERT INTO hr2_rate (season_id, room_type_id, meal_plan, sgl, dbl, tpl, quad, unit, fam, child_with_bed, child_no_bed, quality_flags, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [$sid, $rid, $meal, $vals['sgl'], $vals['dbl'], $vals['tpl'], $vals['quad'], $vals['unit'], $vals['fam'], $vals['child_with_bed'], $vals['child_no_bed'], $flags ?: null, $r['note']]
                 );
             }
         }
@@ -1213,7 +1214,9 @@ class HotelRateService
             }
             $rid = (int) $rt['id'];
             $row = ['room_type_id' => $rid, 'name' => $rt['name'], 'priced_as' => $rt['priced_as'], 'base_room_type' => $rt['base_room_type_id'] ? ($b['room_types'][(int) $rt['base_room_type_id']]['name'] ?? null) : null,
-                'max_adults' => $rt['max_adults'], 'unit_pax_max' => $rt['unit_pax_max'], 'rates' => []];
+                'max_adults' => $rt['max_adults'], 'unit_pax_max' => $rt['unit_pax_max'], 'rates' => [],
+                // tf-famroom-r1: the room's own details, which a family room must have before a quotation may use it
+                'max_children' => $rt['max_children'] ?? null, 'max_occupancy' => $rt['max_occupancy'] ?? null, 'bed_config' => $rt['bed_config'] ?? null];
             $any = false;
             foreach (Sheet::MEAL_PLANS as $meal) {
                 $r = $engine->price($hotelId, $date, 'hr2:' . $rid, $meal, $lookupOpts);
@@ -1223,7 +1226,7 @@ class HotelRateService
                 }
                 $any = true;
                 $pid = (int) $r['plan']['id'];
-                $row['rates'][$meal] = ['sgl' => $r['sgl'], 'dbl' => $r['dbl'], 'tpl' => $r['tpl'], 'quad' => $r['quad'], 'unit' => $r['unit'],
+                $row['rates'][$meal] = ['sgl' => $r['sgl'], 'dbl' => $r['dbl'], 'tpl' => $r['tpl'], 'quad' => $r['quad'], 'unit' => $r['unit'], 'fam' => $r['fam'] ?? null,
                     'child_with_bed' => $r['child_with_bed'] ?? null, 'child_no_bed' => $r['child_no_bed'] ?? null,
                     'derived' => $r['derived'], 'components' => $r['components'], 'plan_id' => $pid, 'season' => $r['season']['name'], 'pricing_mode' => $r['pricing_mode'], 'quality_flags' => $r['quality_flags'] ?? null];
                 if (!isset($plansUsed[$pid])) {
@@ -2215,12 +2218,12 @@ class HotelRateService
         $out = [];
         try {
             foreach ($this->rows(
-                'SELECT s.name AS season, rt.name AS room, r.meal_plan, r.sgl, r.dbl, r.tpl, r.quad, r.unit, r.child_with_bed, r.child_no_bed
+                'SELECT s.name AS season, rt.name AS room, r.meal_plan, r.sgl, r.dbl, r.tpl, r.quad, r.unit, r.fam, r.child_with_bed, r.child_no_bed
                  FROM hr2_rate r JOIN hr2_season s ON s.id = r.season_id JOIN hr2_room_type rt ON rt.id = r.room_type_id
                  WHERE s.contract_id = ? ORDER BY s.sort_order, s.id, rt.name, r.meal_plan',
                 [$contractId]
             ) as $r) {
-                $out[$r['season'] . ' · ' . $r['room'] . ' · ' . $r['meal_plan']] = ['sgl' => $r['sgl'], 'dbl' => $r['dbl'], 'tpl' => $r['tpl'], 'quad' => $r['quad'], 'unit' => $r['unit'], 'child_with_bed' => $r['child_with_bed'], 'child_no_bed' => $r['child_no_bed']];
+                $out[$r['season'] . ' · ' . $r['room'] . ' · ' . $r['meal_plan']] = ['sgl' => $r['sgl'], 'dbl' => $r['dbl'], 'tpl' => $r['tpl'], 'quad' => $r['quad'], 'unit' => $r['unit'], 'fam' => $r['fam'] ?? null, 'child_with_bed' => $r['child_with_bed'], 'child_no_bed' => $r['child_no_bed']];
             }
         } catch (\Throwable $e) {
             // a snapshot that cannot be read costs nothing; the save goes ahead
@@ -2238,7 +2241,7 @@ class HotelRateService
     {
         try {
             $after = $this->rateGridSnapshot($contractId);
-            $labels = ['sgl' => 'single', 'dbl' => 'double', 'tpl' => 'triple', 'quad' => 'quad', 'unit' => 'per unit', 'child_with_bed' => 'child with bed', 'child_no_bed' => 'child no bed'];
+            $labels = ['sgl' => 'single', 'dbl' => 'double', 'tpl' => 'triple', 'quad' => 'quad', 'unit' => 'per unit', 'fam' => 'family room', 'child_with_bed' => 'child with bed', 'child_no_bed' => 'child no bed'];
             $norm = static fn ($v) => $v === null || $v === '' ? null : rtrim(rtrim(number_format((float) $v, 2, '.', ''), '0'), '.');
             $changes = [];
             foreach (array_unique(array_merge(array_keys($before), array_keys($after))) as $k) {
