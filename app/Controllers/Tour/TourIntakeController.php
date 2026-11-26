@@ -850,6 +850,36 @@ class TourIntakeController extends BaseController
         }
     }
 
+    // GET intake/(:num)/checklist — tf-roomopt-r3: the numbered missing items, rechecked against the records each time
+    public function checklist($id)
+    {
+        try {
+            return $this->json(['status' => 200, 'data' => $this->quotes()->checklist((int) $id)]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // POST intake/(:num)/checklist_note {key, note} — a staff note on one item; it never changes the item's status
+    public function checklistNote($id)
+    {
+        try {
+            $b = $this->body();
+            return $this->json(['status' => 200, 'message' => 'Note saved. The item stays open until the check itself is satisfied.', 'data' => $this->quotes()->checkNote((int) $id, (string) ($b['key'] ?? ''), (string) ($b['note'] ?? ''))]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // GET intake/(:num)/options — tf-roomopt-r2: the page Room options → Quotation rates → PDF preview of one inquiry
+    public function optionsPage($id)
+    {
+        $data = $this->menuData();
+        $data['intake_id']    = (int) $id;
+        $data['sees_pricing'] = $this->holds(self::PRICING_URL);
+        return view('pages/tour/intake_options', $data);
+    }
+
     // POST intake/(:num)/roomopt          — tf-roomopt-r1: add a room option {name, rooms:[{type, adults, children:[{n, bed}]}]}
     // POST intake/(:num)/roomopt/(:num)   — change it, keep it in / leave it out {included}, or take it off {delete:1}
     public function roomOption($id, $optId = null)

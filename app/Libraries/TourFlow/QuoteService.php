@@ -922,7 +922,13 @@ final class QuoteService
     {
         $days = [];
         foreach ($cost['hotels'] as $h) {
-            $days[$h['day_no']] = ['day_no' => $h['day_no'], 'date' => $h['date'], 'area' => $h['area'], 'hotel' => $h['hotel'], 'room_type' => $h['room_type'], 'meal_plan' => $h['meal_plan'], 'services' => [], 'excursions' => []];
+            $rt = $h['room_type'];
+            if (!empty($cost['room_options'])) {   // tf-roomopt-r2: the night lists every category the options use there
+                $cats = [];
+                foreach ($cost['room_options'] as $o) { foreach ((array) ($o['nights'] ?? []) as $n) { if ((int) $n['day_no'] === (int) $h['day_no'] && !empty($n['category'])) { $cats[$n['category']] = true; } } }
+                $rt = $cats ? implode(' / ', array_keys($cats)) : $rt;
+            }
+            $days[$h['day_no']] = ['day_no' => $h['day_no'], 'date' => $h['date'], 'area' => $h['area'], 'hotel' => $h['hotel'], 'room_type' => $rt, 'meal_plan' => $h['meal_plan'], 'services' => [], 'excursions' => []];
         }
         // a day with something on it but no night (schema 32: the departure day — a late check-out, lunch
         // on the way) is a day of its own, dated from the arrival, with no hotel: it reads as the departure
@@ -968,6 +974,8 @@ final class QuoteService
             // the price per person by party size (schema 31): the size, the rooms, the price — and
             // nothing else; a version frozen before the matrix existed has no table
             'pax_prices' => PaxMatrix::forAgent($cost['pax_matrix'] ?? null),
+            // tf-roomopt-r2: every room category the options use at each hotel (Family room, Superior …)
+            'room_categories' => !empty($cost['room_options']) ? array_map(static fn ($v) => array_values(array_unique($v)), array_reduce($cost['room_options'], static function ($a, $o) { foreach ((array) ($o['nights'] ?? []) as $n) { if (!empty($n['hotel']) && !empty($n['category'])) { $a[$n['hotel']][] = $n['category']; } } return $a; }, [])) : null,
             // tf-roomopt-r1: one price per guest for each room option — the names, the rooms and the prices, nothing internal
             'room_options' => !empty($cost['room_options']) ? array_map(static fn ($o) => ['no' => $o['no'], 'name' => $o['name'], 'words' => $o['words'], 'total_usd' => $o['total_usd'],
                 'guests' => array_map(static fn ($g) => ['label' => $g['label'], 'count' => $g['count'], 'sell_usd' => $g['sell_usd']], (array) $o['guests'])], $cost['room_options']) : null,
@@ -1068,7 +1076,10 @@ final class QuoteService
                 array_unshift($blk, ['code' => 'roomopt_' . $o['id'] . '_' . md5($msg), 'label' => $msg]);
             }
             $row = ['id' => $o['id'], 'no' => $o['no'], 'name' => $o['name'], 'words' => $o['words'], 'ready' => $blk === [], 'blockers' => $blk, 'warnings' => $c['warnings'],
-                'sections' => $c['sections'], 'cost_usd' => $c['cost_usd'], 'markup_pct' => $c['markup']['pct'], 'guests' => null, 'total_usd' => null];
+                'sections' => $c['sections'], 'cost_usd' => $c['cost_usd'], 'markup_pct' => $c['markup']['pct'], 'guests' => null, 'total_usd' => null,
+                // tf-roomopt-r2: each night's hotel, room category and meal plan for this option, and whether its rooms are priced
+                'nights' => array_map(static fn ($h) => ['day_no' => $h['day_no'], 'date' => $h['date'], 'hotel' => $h['hotel'], 'category' => $h['room_type'], 'meal' => $h['meal_plan'],
+                    'ok' => $h['state'] === 'ok', 'why' => $h['why'], 'rooms' => array_values(array_map(static fn ($l) => $l['label'] . ($l['qty'] > 1 ? ' × ' . $l['qty'] : ''), array_filter((array) $h['lines'], static fn ($l) => in_array($l['kind'], ['sgl', 'dbl', 'twn', 'tpl', 'fam'], true))))], (array) $c['hotels'])];
             if ($blk === [] && $c['markup']['pct'] !== null) {
                 $row['guests'] = self::splitPerGuest($c, $o, $kids);
                 $row['total_usd'] = round(array_sum(array_map(static fn ($g) => $g['sell_usd'] * $g['count'], $row['guests'])), 2);
@@ -1152,10 +1163,180 @@ final class QuoteService
             if (isset($rows[$key])) {
                 $rows[$key]['count']++;
             } else {
-                $rows[$key] = ['label' => $label, 'kind' => $x['kind'], 'count' => 1, 'cost_usd' => $cost, 'sell_usd' => $sell];
+                $rows[$key] = ['label' => $label, 'kind' => $x['kind'], 'count' => 1, 'cost_usd' => $cost, 'sell_usd' => $sell, 'room' => (string) ($x['type'] ?? '')];
             }
         }
+        // tf-roomopt-r2: the same kind of guest at two prices (an adult in the twin, another in the triple) says which room
+        $byLabel = array_count_values(array_column($rows, 'label'));
+        $roomWord = ['family' => 'family room', 'single' => 'single room', 'double' => 'double room', 'twin' => 'twin room', 'triple' => 'triple room'];
+        foreach ($rows as &$r) {
+            if (($byLabel[$r['label']] ?? 0) > 1 && isset($roomWord[$r['room']])) {
+                $r['label'] .= ' (' . $roomWord[$r['room']] . ')';
+            }
+            unset($r['room']);
+        }
+        unset($r);
         return array_values($rows);
+    }
+
+
+    // =====================================================================
+    //  tf-roomopt-r3 (26 Nov 2026, Shantha): the numbered missing-items list of a quotation. Every item comes from the
+    //  checks the costing itself runs (nothing is ticked by hand): an item turns green only when the check no longer
+    //  finds the problem, and opens again if it comes back. Staff may keep a note on an item; a note never closes it.
+    // =====================================================================
+    private ?bool $hasChecks = null;
+
+    private function ensureChecks(): bool
+    {
+        if ($this->hasChecks !== null) {
+            return $this->hasChecks;
+        }
+        try {
+            $this->db->query("CREATE TABLE IF NOT EXISTS `tf_intake_missing` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `intake_id` INT UNSIGNED NOT NULL,
+                `item_key` VARCHAR(120) NOT NULL,
+                `category` VARCHAR(30) NOT NULL,
+                `label` TEXT NOT NULL,
+                `affects` VARCHAR(120) NULL,
+                `first_seen` DATETIME NOT NULL,
+                `last_seen` DATETIME NOT NULL,
+                `resolved_at` DATETIME NULL,
+                `reopened` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+                `note` TEXT NULL, `note_by` VARCHAR(100) NULL, `note_at` DATETIME NULL,
+                PRIMARY KEY (`id`), UNIQUE KEY `u_item` (`intake_id`, `item_key`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            $this->hasChecks = true;
+        } catch (\Throwable $e) {
+            $this->hasChecks = false;
+        }
+        return $this->hasChecks;
+    }
+
+    /** What kind of item a costing check is, what to do about it, and where. */
+    private static function checkKind(string $code, array $it): array
+    {
+        $base = 'tour/intake?id=' . (int) $it['id'];
+        $dayAcc = static function (string $code) use ($it): ?array {
+            if (!preg_match('/_(\d+)$/', $code, $m)) {
+                return null;
+            }
+            foreach ((array) ($it['days'] ?? []) as $d) {
+                if ((int) $d['id'] === (int) $m[1]) {
+                    return $d;
+                }
+            }
+            return null;
+        };
+        if (preg_match('/^roomopt_/', $code)) {
+            return ['room', 'Guests and rooms', 'Place every guest in exactly one room (and say which children share a bed) in Room options.', 'tour/intake/intake/' . (int) $it['id'] . '/options?step=1', 'Room options'];
+        }
+        if (preg_match('/^(hotel_|rate_|roomtype_|reread_|accom_|unit_|supp_|rows_|mix_|rooms_mix|group_rooms_)/', $code)) {
+            $d = $dayAcc($code);
+            $acc = $d['hotel_acc'] ?? null;
+            if (preg_match('/^(hotel_none_|hotel_meal_|hotel_date_|roomtype_|reread_|rows_|mix_)/', $code) || !$acc) {
+                return ['hotel', 'Hotels and rooms', 'Choose the hotel, room category and meal plan for the night in Hotel & room selection (click the hotel on the night).', $base . '&tab=hotels', 'Itinerary & Services'];
+            }
+            return ['rate', 'Hotel rates', 'Enter the hotel\'s published contract rate for this date and room in Hotel Rates, and have it approved — or choose another hotel or category on the night. Tactical and offer rates do not count for a quotation.', 'master_files/hotel_rate_v2?hotel=' . rawurlencode((string) $acc), 'Hotel Rates'];
+        }
+        if (preg_match('/^child_/', $code)) {
+            return ['child', 'Child fares', 'Open Child Fare Review (Before Quotation & Confirmation → All quotation tools) and mark each item Applicable or Not applicable; Not applicable needs a reason.', $base . '&tab=check', 'Child Fare Review'];
+        }
+        if (preg_match('/^(no_vehicle|no_legs|km_|crew_|transfer_|no_crew)/', $code)) {
+            return ['transport', 'Transport', 'Complete the vehicle, the kilometres of each leg and the driver/guide on the Transport tab.', $base . '&tab=trans', 'Transport'];
+        }
+        if (preg_match('/^(svc_|exc_)/', $code)) {
+            return ['service', 'Services and entrances', 'Pick the priced entry for each activity, entrance or meal, or mark it No charge with a reason (Activities tab), or add it to the master.', $base . '&tab=acts', 'Activities'];
+        }
+        if ($code === 'pricing') {
+            return ['pricing', 'Pricing', 'Management sets the markup for this inquiry or the default under Pricing.', 'tour/pricing', 'Pricing'];
+        }
+        if (preg_match('/^(dates_|nights_missing|departure_row_|arrival|pax|no_nights|groups_pax)/', $code)) {
+            return ['inquiry', 'Dates and party', 'Correct the dates, nights or party on the inquiry (Edit), or confirm the dates the email gives.', $base . '&tab=hotels', 'Itinerary & Services'];
+        }
+        if ($code === 'rates_unreviewed') {
+            return ['review', 'Rate changes', 'Rates moved since the inquiry was costed: review them and press Recalculate or Keep the saved figures.', $base . '&tab=check', 'Before Quotation & Confirmation'];
+        }
+        return ['other', 'Other checks', 'Fix it on the inquiry; the text says what is missing.', $base . '&tab=check', 'Before Quotation & Confirmation'];
+    }
+
+    /**
+     * The numbered list for one inquiry: every check the costing (or each room option kept in) still fails, plus every item that was
+     * found earlier and is now resolved. Run each time the list is read, so a correction anywhere shows at once.
+     */
+    public function checklist(int $intakeId): array
+    {
+        $it = $this->take->get($intakeId);
+        if (!$it) {
+            throw new \RuntimeException('No such inquiry.');
+        }
+        $opts = array_values(array_filter((array) ($it['room_options'] ?? []), static fn ($o) => !empty($o['included'])));
+        $found = [];   // item_key => [code, label, affects[]]
+        $add = static function (string $code, string $label, ?int $optNo) use (&$found) {
+            $key = mb_substr($code, 0, 120);
+            if (!isset($found[$key])) {
+                $found[$key] = ['code' => $code, 'label' => $label, 'affects' => []];
+            }
+            if ($optNo !== null) {
+                $found[$key]['affects'][$optNo] = $optNo;
+            }
+        };
+        if ($opts !== []) {
+            foreach ($this->optionsCosting($intakeId) as $oc) {
+                foreach ($oc['blockers'] as $b) {
+                    // a room-option check belongs to that option; any other check is the same item whichever option shows it
+                    $add(strpos($b['code'], 'roomopt_') === 0 ? 'roomopt_' . $oc['id'] . '_' . substr(md5($b['label']), 0, 8) : $b['code'], $b['label'], (int) $oc['no']);
+                }
+            }
+        } else {
+            foreach ($this->costing($intakeId)['blockers'] as $b) {
+                $add($b['code'], $b['label'], null);
+            }
+        }
+        $now = date('Y-m-d H:i:s');
+        $rows = [];
+        if ($this->ensureChecks()) {
+            foreach ($found as $key => $f) {
+                [$cat] = self::checkKind($f['code'], $it);
+                $aff = $f['affects'] ? implode(',', array_values($f['affects'])) : null;
+                $this->db->query('INSERT INTO tf_intake_missing (intake_id, item_key, category, label, affects, first_seen, last_seen) VALUES (?,?,?,?,?,?,?)
+                    ON DUPLICATE KEY UPDATE label = VALUES(label), category = VALUES(category), affects = VALUES(affects), last_seen = VALUES(last_seen),
+                    reopened = reopened + IF(resolved_at IS NULL, 0, 1), resolved_at = NULL', [$intakeId, $key, $cat, $f['label'], $aff, $now, $now]);
+            }
+            // what was open and is no longer found is resolved — by the records, never by a tick
+            $open = $this->db->query('SELECT item_key FROM tf_intake_missing WHERE intake_id = ? AND resolved_at IS NULL', [$intakeId])->getResultArray();
+            foreach ($open as $o) {
+                if (!isset($found[$o['item_key']])) {
+                    $this->db->query('UPDATE tf_intake_missing SET resolved_at = ? WHERE intake_id = ? AND item_key = ?', [$now, $intakeId, $o['item_key']]);
+                }
+            }
+            $rows = $this->db->query('SELECT * FROM tf_intake_missing WHERE intake_id = ? ORDER BY first_seen, id', [$intakeId])->getResultArray();
+        }
+        $items = [];
+        $n = 0;
+        foreach ($rows as $r) {
+            $n++;
+            [$cat, $catWord, $action, $link, $where] = self::checkKind((string) $r['item_key'], $it);
+            $items[] = ['no' => $n, 'key' => $r['item_key'], 'category' => $cat, 'category_word' => $catWord, 'label' => $r['label'],
+                'affects' => $r['affects'] !== null && $r['affects'] !== '' ? array_map('intval', explode(',', $r['affects'])) : [],
+                'action' => $action, 'link' => $link, 'where' => $where, 'resolved' => $r['resolved_at'] !== null, 'resolved_at' => $r['resolved_at'],
+                'reopened' => (int) $r['reopened'], 'first_seen' => $r['first_seen'], 'note' => $r['note'], 'note_by' => $r['note_by'], 'note_at' => $r['note_at']];
+        }
+        $done = count(array_filter($items, static fn ($i) => $i['resolved']));
+        return ['items' => $items, 'total' => count($items), 'resolved' => $done, 'open' => count($items) - $done, 'ready' => count($items) === $done, 'checked_at' => $now,
+            'options' => count($opts)];
+    }
+
+    /** A staff note on one item (what was asked, who will send the rate …). It never changes the item's status. */
+    public function checkNote(int $intakeId, string $key, string $note): array
+    {
+        if (!$this->ensureChecks()) {
+            throw new \RuntimeException('The checklist is not available on this site.');
+        }
+        $note = trim(mb_substr($note, 0, 2000));
+        $this->db->query('UPDATE tf_intake_missing SET note = ?, note_by = ?, note_at = ? WHERE intake_id = ? AND item_key = ?', [$note === '' ? null : $note, $this->user, date('Y-m-d H:i:s'), $intakeId, $key]);
+        return $this->checklist($intakeId);
     }
 
 

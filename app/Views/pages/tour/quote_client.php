@@ -31,6 +31,10 @@ foreach ([['sgl', 'single'], ['dbl', 'double'], ['twn', 'twin'], ['tpl', 'triple
         $mixWords[] = (int) $mix[$k] . ' ' . $w . ((int) $mix[$k] > 1 ? ' rooms' : ' room');
     }
 }
+// tf-roomopt-r2: a quotation with room options names no single room mix — each option's rooms are listed with its price
+if (!empty($c['room_options'])) {
+    $mixWords = [count($c['room_options']) . ' room options, each priced below'];
+}
 $meals = ['RO' => 'room only', 'BB' => 'bed & breakfast', 'HB' => 'half board', 'FB' => 'full board', 'AI' => 'all inclusive'];
 $included = [];
 $direct   = [];
@@ -220,6 +224,8 @@ if ($coverUrl === '') { $coverUrl = base_url('tour/intake/list_photo/beach-hero.
 $xDays = (int) $c['nights'] + 1;
 $xHotels = [];
 foreach ($c['days'] as $d) { if (!empty($d['hotel'])) { $k = $d['hotel'] . '|' . ($d['room_type'] ?? '') . '|' . ($d['meal_plan'] ?? ''); $xHotels[$k] = $xHotels[$k] ?? ['hotel' => $d['hotel'], 'room' => $d['room_type'], 'meal' => $d['meal_plan'], 'nights' => 0, 'from' => $d['date'], 'to' => $d['date']]; $xHotels[$k]['nights']++; $xHotels[$k]['to'] = $d['date']; } }
+// tf-roomopt-r2: with room options the category can differ per option (a family room in one, Superior in another): each hotel lists them all
+if (!empty($c['room_categories'])) { foreach ($xHotels as $k => $h) { if (!empty($c['room_categories'][$h['hotel']])) { $xHotels[$k]['room'] = implode(' / ', $c['room_categories'][$h['hotel']]); } } }
 $xCat  = implode(' / ', array_unique(array_filter(array_map(static fn ($h) => (string) $h['room'], $xHotels))));
 $xShare = (int) ($mix['sgl'] ?? 0) === 0 && (int) ($mix['tpl'] ?? 0) === 0 && ((int) ($mix['dbl'] ?? 0) + (int) ($mix['twn'] ?? 0)) > 0;
 $xTag = static function (array $s): array {
@@ -280,7 +286,7 @@ foreach ($c['days'] as $d) { foreach ($d['services'] as $s) { [$k] = $xTag($s); 
     <?php if (!empty($c['room_options'])): /* tf-roomopt-r1: one price per guest for each room option */ ?>
     <p style="margin:-4px 0 10px">In US dollars, for your party of <b><?= (int) $c['pax'] ?></b>, for each way of rooming the party.</p>
     <?php foreach ($c['room_options'] as $ro): ?>
-    <table class="qx-pt" style="margin-bottom:14px"><tr><th colspan="2">Option <?= ['①','②','③','④','⑤'][$ro['no'] - 1] ?? (int) $ro['no'] ?> — <?= esc($ro['name']) ?><br><small style="font-weight:500"><?= esc(implode(' · ', (array) $ro['words'])) ?></small></th></tr>
+    <table class="qx-pt" style="margin-bottom:14px"><tr><th colspan="2">Option <?= (int) $ro['no'] ?> — <?= esc($ro['name']) ?><br><small style="font-weight:500"><?= esc(implode(' · ', (array) $ro['words'])) ?></small></th></tr>
         <?php foreach ((array) $ro['guests'] as $g): ?><tr><td class="cat"><?= esc($g['label']) ?><?= $g['label'] === 'Adult' ? ', ' . (int) $g['count'] . ' pax — per person' : ($g['count'] > 1 ? ' × ' . (int) $g['count'] : '') ?></td><td><b><?= $usd($g['sell_usd']) ?></b></td></tr><?php endforeach; ?>
         <tr class="sel"><td class="cat"><b><?= (int) $c['pax'] ?> pax total</b></td><td><b><?= $usd($ro['total_usd']) ?></b></td></tr></table>
     <?php endforeach; ?>
@@ -428,8 +434,8 @@ $CELL = 'border-top:1px solid ' . $LINE . '; vertical-align:top;';
 
 <?php if (!empty($c['room_options'])): /* tf-roomopt-r1: the price for each room option, per guest */ ?>
 <?php foreach ($c['room_options'] as $ro): ?>
-<table width="100%" cellpadding="6" cellspacing="0" style="margin-top:16px; border:1px solid <?= $LINE ?>;">
-    <tr><td colspan="2" style="background:#faf5f7; font-size:13px; font-weight:bold; color:<?= $P ?>;">Option <?= ['①','②','③','④','⑤'][$ro['no'] - 1] ?? (int) $ro['no'] ?> — <?= esc($ro['name']) ?><br><span style="font-size:11px; font-weight:normal; color:<?= $MUTED ?>;"><?= esc(implode(' · ', (array) $ro['words'])) ?></span></td></tr>
+<table width="100%" cellpadding="6" cellspacing="0" nobr="true" style="margin-top:16px; border:1px solid <?= $LINE ?>; page-break-inside:avoid;">
+    <tr><td colspan="2" style="background:#faf5f7; font-size:13px; font-weight:bold; color:<?= $P ?>;">Option <?= (int) $ro['no'] ?> — <?= esc($ro['name']) ?><br><span style="font-size:11px; font-weight:normal; color:<?= $MUTED ?>;"><?= esc(implode(' · ', (array) $ro['words'])) ?></span></td></tr>
     <?php foreach ((array) $ro['guests'] as $g): ?>
     <tr><td width="65%" style="font-size:12px; border-top:1px solid <?= $LINE ?>;"><?= esc($g['label']) ?><?= $g['label'] === 'Adult' ? ', ' . (int) $g['count'] . ' pax — per person' : ($g['count'] > 1 ? ' × ' . (int) $g['count'] : '') ?></td><td width="35%" align="right" style="font-size:12.5px; font-weight:bold; border-top:1px solid <?= $LINE ?>;"><?= $usd($g['sell_usd']) ?></td></tr>
     <?php endforeach; ?>

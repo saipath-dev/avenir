@@ -462,6 +462,9 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->post('intake/(:num)/roomopt', [TourIntakeController::class, 'roomOption']);   // tf-roomopt-r1
     $routes->post('intake/(:num)/roomopt/(:num)', [TourIntakeController::class, 'roomOption']);
     $routes->get('intake/(:num)/options_costing', [TourIntakeController::class, 'optionsCosting']);
+    $routes->get('intake/(:num)/options', [TourIntakeController::class, 'optionsPage']);   // tf-roomopt-r2: the room options & quotation page
+    $routes->get('intake/(:num)/checklist', [TourIntakeController::class, 'checklist']);   // tf-roomopt-r3
+    $routes->post('intake/(:num)/checklist_note', [TourIntakeController::class, 'checklistNote']);
     $routes->get('intake/(:num)/day/(:num)/rate_jump', [TourIntakeController::class, 'rateJump']);   // tf-ratejump-r1: Super Admin only
     $routes->post('intake/(:num)/check', [TourIntakeController::class, 'check']);
     $routes->post('intake/(:num)/markup', [TourIntakeController::class, 'markup']);

@@ -1158,6 +1158,7 @@
     .inq .ro-card { background:#fff; border:1px solid #D9D3DD; border-radius:12px; padding:18px 20px; margin:0 0 16px; }
     .inq .ro-h { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; } .inq .ro-h h4 { margin:0 0 3px; font-size:20px; font-weight:800; } .inq .ro-h > div span { font-size:14px; color:#55505B; }
     .inq .ro-party { margin-left:auto; font-size:14px; color:#55505B; }
+    .inq .ro-open { display:inline-flex; align-items:center; text-decoration:none; background:#842484; color:#fff !important; }
     .inq .ro-add { height:42px; padding:0 16px; border:1.5px solid #842484; color:#842484; background:#fff; border-radius:8px; font-weight:700; font-size:14.5px; } .inq .ro-add:disabled { opacity:.45; }
     .inq .ro-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:14px; margin-top:14px; }
     .inq .ro-opt { border:1.5px solid var(--t); border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:10px; } .inq .ro-opt.off { border-style:dashed; opacity:.65; }
@@ -4769,7 +4770,8 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const card = document.createElement('div'); card.className = 'ro-card'; card.id = 'ro_card';
         card.innerHTML = `<div class="ro-h"><div><h4>Room options</h4><span>${opts.length ? 'Each option is priced on its own; the quotation shows one price per guest for every option kept in.' : 'Quote the same tour for several ways of rooming the party (for example a family room, or a twin + a triple).'}</span></div>
             <span class="ro-party">Party: <b>${Number(it.pax_total || 0)} guests</b> · ${esc(party)}</span>
-            ${locked ? '' : `<button type="button" class="ro-add" data-roadd ${opts.length >= 5 ? 'disabled' : ''}><i class="bi bi-plus-lg"></i> Add an option</button>`}</div>
+            <a class="ro-add ro-open" href="${BASE}/intake/${it.id}/options">Open room options &amp; quotation →</a>
+            ${locked ? '' : `<button type="button" class="ro-add" data-roadd><i class="bi bi-plus-lg"></i> Add an option</button>`}</div>
             ${opts.length ? `<div class="ro-grid">${opts.map((o, i) => `<div class="ro-opt ${o.included ? '' : 'off'}" style="--t:${RO_TONE[i % 5]}">
                 <div class="ro-oh"><span class="ro-n">${roNo(o.no)}</span><b>${esc(o.name)}</b>${o.chosen ? '<span class="ro-tag ch">Agent\'s choice</span>' : (o.included ? '' : '<span class="ro-tag">Left out</span>')}</div>
                 <ul>${(o.words || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>

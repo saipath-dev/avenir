@@ -447,7 +447,6 @@ final class IntakeService
         $it['days']       = $this->db->query('SELECT * FROM tf_intake_day WHERE intake_id = ? ORDER BY day_no, id', [$id])->getResultArray();
         // tf-dayplan-r1: each tour day's plan (transfer only / transfer + visits / activities or leisure), transport arrangement and status
         $it['day_plans'] = $this->dayPlans($id);
-        $it['room_options'] = $this->roomOptions($id, $it);   // tf-roomopt-r1
         // tf-hotelpick-r1: the room rows a person set for a night (category, occupancy, rooms) — that night's room mix
         $it['day_rooms'] = [];
         if ($this->ensureDayRooms()) {
@@ -462,6 +461,8 @@ final class IntakeService
             }
         }
         $it['passengers'] = $this->db->query('SELECT * FROM tf_intake_pax WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
+        $it['room_options'] = $this->roomOptions($id, $it);   // tf-roomopt-r1 (after the names, so each room shows who is in it)
+        $it['party_slots'] = array_values(self::partySlots($it));   // tf-roomopt-r2
         $it['requests']   = $this->db->query('SELECT * FROM tf_intake_request WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
         $it['services']   = $this->db->query('SELECT * FROM tf_intake_service WHERE intake_id = ? ORDER BY day_no, sort_order, id', [$id])->getResultArray();
         // Entrance & Activities follows the list, the party and the settings on its own (see syncServices) —
@@ -1878,6 +1879,30 @@ final class IntakeService
         return $this->hasRoomOptions;
     }
 
+    /**
+     * tf-roomopt-r2: the party as places to put in rooms — a1…aN for the adults, c1…cN for the children (in the order of the
+     * Child Fare Review ages) — each with the passenger name when the names list shows who it is (MISS / MSTR / CHILD = a child).
+     */
+    public static function partySlots(array $it): array
+    {
+        $adultsN = max(0, (int) ($it['pax_adults'] ?? 0));
+        $kids = ChildFares::children($it);
+        $names = array_map(static fn ($p) => trim((string) ($p['full_name'] ?? '')), (array) ($it['passengers'] ?? []));
+        $childNames = array_values(array_filter($names, static fn ($n) => preg_match('/\b(MISS|MSTR|MASTER|CHD|CHILD)\b/i', $n)));
+        $adultNames = array_values(array_filter($names, static fn ($n) => $n !== '' && !preg_match('/\b(MISS|MSTR|MASTER|CHD|CHILD)\b/i', $n)));
+        $out = [];
+        for ($i = 1; $i <= $adultsN; $i++) {
+            $out['a' . $i] = ['slot' => 'a' . $i, 'kind' => 'adult', 'age' => null, 'name' => $adultNames[$i - 1] ?? null, 'label' => 'Adult ' . $i . (isset($adultNames[$i - 1]) ? ' · ' . $adultNames[$i - 1] : '')];
+        }
+        foreach ($kids as $k) {
+            $age = $k['age'] !== null ? rtrim(rtrim(number_format((float) $k['age'], 2, '.', ''), '0'), '.') : null;
+            $nm = $childNames[(int) $k['n'] - 1] ?? null;
+            $out['c' . $k['n']] = ['slot' => 'c' . $k['n'], 'kind' => 'child', 'age' => $age, 'n' => (int) $k['n'], 'name' => $nm,
+                'label' => 'Child ' . ($age !== null ? $age : '#' . $k['n']) . ($nm ? ' · ' . $nm : '')];
+        }
+        return $out;
+    }
+
     /** The room options of an inquiry, in order, each room with its guests in words (ages read live from the party). */
     public function roomOptions(int $id, ?array $it = null): array
     {
@@ -1888,7 +1913,11 @@ final class IntakeService
         if (!$rows) {
             return [];
         }
-        $it = $it ?? ($this->db->query('SELECT pax_adults, pax_children, child_json FROM tf_intake WHERE id = ?', [$id])->getRowArray() ?: []);
+        if ($it === null) {
+            $it = $this->db->query('SELECT pax_adults, pax_children, child_json FROM tf_intake WHERE id = ?', [$id])->getRowArray() ?: [];
+            $it['passengers'] = $this->db->query('SELECT full_name FROM tf_intake_pax WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
+        }
+        $slots = self::partySlots($it);
         $kids = [];
         foreach (ChildFares::children($it) as $c) {
             $kids[(int) $c['n']] = $c;
@@ -1900,6 +1929,15 @@ final class IntakeService
             $words = [];
             foreach ($rooms as &$rm) {
                 $who = [];
+                if (isset($rm['guests']) && is_array($rm['guests'])) {   // tf-roomopt-r2: who exactly, by name
+                    foreach ($rm['guests'] as $g) {
+                        $sl = $slots[$g['slot'] ?? ''] ?? null;
+                        $who[] = ($sl ? ($sl['kind'] === 'adult' ? ($sl['name'] ?: 'Adult ' . substr($sl['slot'], 1)) : 'child ' . ($sl['age'] ?? '?') . ($sl['name'] ? ' (' . $sl['name'] . ')' : '')) : 'someone not in the party') . (!empty($g['bed']) || ($sl['kind'] ?? '') === 'adult' ? '' : ' — shares a bed');
+                    }
+                    $rm['label'] = (self::ROOMOPT_TYPES[$rm['type'] ?? ''] ?? 'Room') . ' — ' . ($who ? implode(' · ', $who) : 'nobody');
+                    $words[] = $rm['label'];
+                    continue;
+                }
                 if ((int) ($rm['adults'] ?? 0) > 0) {
                     $who[] = (int) $rm['adults'] . ' adult' . ((int) $rm['adults'] === 1 ? '' : 's');
                 }
@@ -1922,6 +1960,34 @@ final class IntakeService
     public static function roomOptionCheck(array $rooms, array $it): array
     {
         $issues = [];
+        // tf-roomopt-r2: rooms holding named places — every place exactly once, none left out
+        if ($rooms !== [] && isset($rooms[0]['guests'])) {
+            $slots = self::partySlots($it);
+            $seenS = [];
+            foreach ($rooms as $i => $rm) {
+                $t = (string) ($rm['type'] ?? '');
+                if (!isset(self::ROOMOPT_TYPES[$t])) {
+                    $issues[] = 'Room ' . ($i + 1) . ': choose the room type.';
+                    continue;
+                }
+                $beds = 0;
+                foreach ((array) ($rm['guests'] ?? []) as $g) {
+                    $sl = (string) ($g['slot'] ?? '');
+                    if (!isset($slots[$sl])) { $issues[] = 'Room ' . ($i + 1) . ': a guest who is not in the party.'; continue; }
+                    if (isset($seenS[$sl])) { $issues[] = $slots[$sl]['label'] . ' is in two rooms.'; }
+                    $seenS[$sl] = true;
+                    if ($slots[$sl]['kind'] === 'adult' || !empty($g['bed'])) { $beds++; }
+                }
+                if (empty($rm['guests'])) { $issues[] = 'Room ' . ($i + 1) . ' has nobody in it.'; }
+                if ($beds > self::ROOMOPT_BEDS[$t]) {
+                    $issues[] = 'Room ' . ($i + 1) . ' (' . self::ROOMOPT_TYPES[$t] . ') has ' . $beds . ' guests in a bed but sleeps ' . self::ROOMOPT_BEDS[$t] . ' — mark a child "shares a bed" or choose a bigger room.';
+                }
+            }
+            foreach ($slots as $sl => $x) {
+                if (!isset($seenS[$sl])) { $issues[] = 'Not in any room yet: ' . $x['label'] . ' — confirm with the agent who shares with whom.'; }
+            }
+            return $issues;
+        }
         $adults = 0;
         $seen = [];
         $nKids = max(0, (int) ($it['pax_children'] ?? 0));
@@ -2001,6 +2067,20 @@ final class IntakeService
         $rooms = [];
         foreach (array_slice((array) ($in['rooms'] ?? []), 0, 12) as $rm) {
             $t = (string) ($rm['type'] ?? '');
+            if (isset($rm['guests']) && is_array($rm['guests'])) {   // tf-roomopt-r2: named places; the counts follow from them
+                $gs = [];
+                $ad = 0;
+                $kids = [];
+                foreach ($rm['guests'] as $g) {
+                    $sl = (string) ($g['slot'] ?? '');
+                    if (!preg_match('/^[ac]\d{1,2}$/', $sl)) { continue; }
+                    $bed = $sl[0] === 'a' ? true : !empty($g['bed']);
+                    $gs[] = ['slot' => $sl, 'bed' => $bed];
+                    if ($sl[0] === 'a') { $ad++; } else { $kids[] = ['n' => (int) substr($sl, 1), 'bed' => $bed]; }
+                }
+                $rooms[] = ['type' => isset(self::ROOMOPT_TYPES[$t]) ? $t : '', 'adults' => $ad, 'children' => $kids, 'guests' => $gs];
+                continue;
+            }
             $kids = [];
             foreach ((array) ($rm['children'] ?? []) as $ch) {
                 $kids[] = ['n' => (int) ($ch['n'] ?? 0), 'bed' => !empty($ch['bed'])];
@@ -2009,8 +2089,8 @@ final class IntakeService
         }
         if (!$old) {
             $n = (int) ($this->db->query('SELECT COUNT(*) n FROM tf_intake_roomopt WHERE intake_id = ?', [$id])->getRowArray()['n'] ?? 0);
-            if ($n >= 5) {
-                throw new \InvalidArgumentException('An inquiry holds up to 5 room options.');
+            if ($n >= 20) {   // tf-roomopt-r2: no fixed number of alternatives; a ceiling only against a runaway screen
+                throw new \InvalidArgumentException('An inquiry holds up to 20 room options.');
             }
             $this->db->query('INSERT INTO tf_intake_roomopt (intake_id, sort_no, name, rooms_json, included, note, created_by, created_at, updated_by, updated_at) VALUES (?,?,?,?,1,?,?,?,?,?)',
                 [$id, $n + 1, $name, json_encode($rooms, JSON_UNESCAPED_UNICODE), isset($in['note']) ? mb_substr(trim((string) $in['note']), 0, 300) : null, $this->user, $now, $this->user, $now]);
