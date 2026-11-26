@@ -128,7 +128,21 @@ final class QuoteService
             $it = self::applyRoomOption($it, $option);   // tf-roomopt-r1: this option's rooms on every night, nothing saved
         }
         $blockers = [];
-        $famAt = [];   // tf-famroom-r1: the family-room question of each hotel
+        $famAt = [];   // tf-famroom-r1: the family-room question of each hotel — one per hotel, naming all its nights
+        $famAdd = static function (array $d, int $n, string $hotel, string $issue) use (&$famAt, &$blockers): void {
+            $hk = (int) ($d['hotel_id'] ?? 0) ?: crc32(strtolower($hotel));
+            $famAt[$hk]['nights'][] = $n . ' (' . date('j M', strtotime((string) $d['day_date'])) . ')';
+            $famAt[$hk]['issue'] = $famAt[$hk]['issue'] ?? $issue;
+            $nn = $famAt[$hk]['nights'];
+            $label = 'Family Room at ' . $hotel . ', night' . (count($nn) > 1 ? 's ' . implode(', ', array_slice($nn, 0, -1)) . ' and ' . end($nn) : ' ' . $nn[0]) . ' — ' . $famAt[$hk]['issue'];
+            if (isset($famAt[$hk]['at'])) {
+                $blockers[$famAt[$hk]['at']]['label'] = $label;
+            } else {
+                $blockers[] = ['code' => 'famh_' . $hk, 'label' => $label];
+                $famAt[$hk]['at'] = array_key_last($blockers);
+            }
+        };
+        $needFam = self::famParty($it) !== null;
         $warnings = [];
         $pax      = (int) ($it['pax_total'] ?? 0);
         // schema 32: the dates decide the nights; the column is kept in step with them
@@ -269,6 +283,11 @@ final class QuoteService
                 $blockers[]    = ['code' => 'hotel_meal_' . $d['id'], 'label' => "Night {$n} ({$hotel}): meal plan not stated."];
             }
             $state = (string) ($d['rate_state'] ?? '');
+            // tf-famroom-r1: a family room is asked for, but this hotel has no published plan for the night at all — the family room
+            // is its own question too (the plan's rates alone would not make a family room)
+            if ($needFam && $state !== 'rate') {
+                $famAdd($d, $n, $hotel, $hotel . ' has no approved published rate for these dates yet, so no Family Room can be verified. When the contract is entered, enter the family room too (capacity, beds, Family Room rate) — or agree an alternative with the agent.');
+            }
             if (in_array($state, ['not_in_panel', 'no_supplier'], true)) {
                 $line['state'] = 'missing';
                 $line['why']   = $state === 'no_supplier' ? 'No supplier record.' : 'Not in the Hotel Rates panel.';
@@ -339,18 +358,7 @@ final class QuoteService
                     if (($r['occ'] ?? '') === 'fam') {
                         $fr = IntakeService::familyRoom($d, $r['room_type_id'] !== null ? (int) $r['room_type_id'] : null, self::famParty($it));
                         if ($fr['issue'] !== null) {
-                            // one question per hotel (all its nights), not one per night
-                            $hk = (int) ($d['hotel_id'] ?? 0) ?: crc32(strtolower($hotel));
-                            $famAt[$hk]['nights'][] = $n . ' (' . date('j M', strtotime((string) $d['day_date'])) . ')';
-                            $famAt[$hk]['issue'] = $famAt[$hk]['issue'] ?? $fr['issue'];
-                            $famAt[$hk]['hotel'] = $hotel;
-                            $label = 'Family Room at ' . $hotel . ', night' . (count($famAt[$hk]['nights']) > 1 ? 's ' : ' ') . (count($famAt[$hk]['nights']) > 1 ? implode(', ', array_slice($famAt[$hk]['nights'], 0, -1)) . ' and ' . end($famAt[$hk]['nights']) : $famAt[$hk]['nights'][0]) . ' — ' . $famAt[$hk]['issue'];
-                            if (isset($famAt[$hk]['at'])) {
-                                $blockers[$famAt[$hk]['at']]['label'] = $label;
-                            } else {
-                                $blockers[] = ['code' => 'famh_' . $hk, 'label' => $label];
-                                $famAt[$hk]['at'] = array_key_last($blockers);
-                            }
+                            $famAdd($d, $n, $hotel, $fr['issue']);   // one question per hotel (all its nights), not one per night
                             $famShort = true;
                             continue;
                         }
