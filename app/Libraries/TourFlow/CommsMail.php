@@ -176,7 +176,7 @@ final class CommsMail
         if (MailRedirect::active()) {
             $msg['html']    = MailRedirect::banner($to, array_merge((array) ($msg['cc'] ?? []), (array) ($msg['bcc'] ?? []))) . (string) ($msg['html'] ?? '');
             $msg['subject'] = MailRedirect::subject((string) $msg['subject']);
-            $to = [MailRedirect::TO];
+            $to = explode(',', MailRedirect::target($to));   // tf-mailallow-r1
             $msg['cc'] = [];
             $msg['bcc'] = [];
         }

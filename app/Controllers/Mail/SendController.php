@@ -23,7 +23,7 @@ class SendController extends BaseController
         if (\App\Libraries\TourFlow\MailRedirect::active()) {
             $body    = \App\Libraries\TourFlow\MailRedirect::banner($to, $cc) . $body;
             $subject = \App\Libraries\TourFlow\MailRedirect::subject((string) $subject);
-            $to      = \App\Libraries\TourFlow\MailRedirect::TO;
+            $to      = \App\Libraries\TourFlow\MailRedirect::target($to);   // tf-mailallow-r1: an approved test address, else the one test inbox
             $cc      = null;
         }
         if (\App\Libraries\TourFlow\TestMailbox::active()) {
