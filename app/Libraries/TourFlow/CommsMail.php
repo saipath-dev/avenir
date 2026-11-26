@@ -52,9 +52,14 @@ final class CommsMail
      * Which mailbox a message from this person goes through, and why: the system mailbox when it is set up with a
      * password; otherwise the person's own. ['kind' => 'system'|'own'|'none', 'email', 'name', 'reply_to', 'note'].
      */
-    public static function senderFor($db, ?int $userId, string $username): array
+    public static function senderFor($db, ?int $userId, string $username, ?string $dept = null): array
     {
         $who = Staff::contact($db, $userId, $username);
+        // tf-deptmail-r1: an e-mail of a department goes from its mailbox (land@ / htl@) once that is set up, Reply-To the same
+        if ($dept !== null && ($di = DeptMailbox::info($db, $dept))['ready']) {
+            return ['kind' => 'dept', 'dept' => $dept, 'email' => $di['email'], 'name' => 'Avenir Holidays', 'reply_to' => $di['email'], 'staff' => $who,
+                'note' => 'Sent from the ' . $di['label'] . ' mailbox ' . $di['email'] . '; replies come back to it.'];
+        }
         $sys = self::systemMailbox($db);
         if ($sys && $sys['has_password']) {
             return ['kind' => 'system', 'email' => $sys['email'], 'name' => $sys['name'], 'reply_to' => $who['email'] && strcasecmp($who['email'], $sys['email']) !== 0 ? $who['email'] : null,
@@ -193,6 +198,13 @@ final class CommsMail
         $fromEmail = trim((string) ($msg['from_email'] ?? ''));
         $fromName  = trim((string) ($msg['from_name'] ?? '')) ?: 'Avenir Holidays';
         $password  = (string) ($msg['password'] ?? '');
+        // tf-deptmail-r1: a department's e-mail (msg['dept'] = agent | hotel) goes from that department's mailbox when it is set up
+        if (!empty($msg['dept']) && self::$transport === null && ($dc = DeptMailbox::credentials($db, (string) $msg['dept'])) !== null) {
+            $fromEmail = $dc['email'];
+            $password  = $dc['password'];
+            $fromName  = 'Avenir Holidays';
+            $msg['reply_to'] = $dc['email'];
+        }
         $userHost  = null;
         // tf-supmail-r2: with a test transport installed there is no mail server to authenticate to, so a
         // mailbox password is not asked for. This changes nothing on a real install: $transport is null there,

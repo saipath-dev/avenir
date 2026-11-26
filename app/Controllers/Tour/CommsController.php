@@ -336,7 +336,7 @@ class CommsController extends BaseController
                 return $this->json(['status' => 404, 'message' => 'Inquiry not found.']);
             }
             $tour = $db->query('SELECT id, tour_no FROM tf_tour WHERE intake_id = ?', [(int) $id])->getRowArray();
-            $sender = CommsMail::senderFor($db, $this->userId(), $this->user());
+            $sender = CommsMail::senderFor($db, $this->userId(), $this->user(), 'agent');
             unset($sender['staff']);
             $ref = $it['inquiry_no'] . ($tour ? ' / ' . $tour['tour_no'] : '');
             $dates = $it['arrival_date'] ? date('j M Y', strtotime((string) $it['arrival_date'])) . ($it['departure_date'] ? ' – ' . date('j M Y', strtotime((string) $it['departure_date'])) : '') : '';
@@ -563,7 +563,7 @@ class CommsController extends BaseController
             if (!$it) {
                 return $this->json(['status' => 404, 'message' => 'Inquiry not found.']);
             }
-            $sender    = CommsMail::senderFor($db, $this->userId(), $this->user());
+            $sender    = CommsMail::senderFor($db, $this->userId(), $this->user(), 'agent');
             $signature = CommsMail::signature($db, $this->userId(), $this->user());
             $to      = trim((string) ($b['to'] ?? ''));
             $cc      = trim((string) ($b['cc'] ?? ''));
@@ -686,7 +686,7 @@ class CommsController extends BaseController
             if ($total > 25 * 1048576) {
                 return $this->json(['status' => 400, 'message' => 'The attachments come to more than 25 MB together; most mail servers refuse that. Send fewer at a time.']);
             }
-            $sender = CommsMail::senderFor($this->db(), $this->userId(), $this->user());
+            $sender = CommsMail::senderFor($this->db(), $this->userId(), $this->user(), 'agent');
             $r = $this->comms()->sendEmail((int) $id, $b, $files, $sender);
             $to = $r['comm']['to_addr'] ?? '';
             return $this->json(['status' => $r['ok'] ? 200 : 400, 'ok' => $r['ok'],

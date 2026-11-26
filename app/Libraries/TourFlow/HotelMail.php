@@ -35,6 +35,7 @@ final class HotelMail
             if (self::$transport !== null) {
                 $r = (self::$transport)($to, $subject, $body, $cc, $attachments);
             } elseif (class_exists('\App\Controllers\Mail\SendController')) {
+                \App\Controllers\Mail\SendController::$department = 'hotel';   // tf-deptmail-r1: every hotel letter from htl@ when it is set up
                 $r = (new \App\Controllers\Mail\SendController())->send($to, $subject, $body, $cc ?: null, $attachments);
             } else {
                 return ['ok' => false, 'error' => 'Email sending is not set up on this install. Print the letter and send it as you do today.'];

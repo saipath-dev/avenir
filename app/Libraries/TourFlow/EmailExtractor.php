@@ -30,7 +30,7 @@ final class EmailExtractor
 
     /** Scalar fields asked for, in the order the panel shows them. */
     public const FIELDS = [
-        'agent_name', 'agent_email', 'agent_country', 'agent_reference',
+        'agent_name', 'agent_email', 'agent_contact', 'agent_country', 'agent_reference',
         'tour_name', 'arrival_date', 'departure_date', 'nights',
         'pax_total', 'pax_adults', 'pax_children',
         'rooms_note', 'hotel_class', 'arrival_flight', 'departure_flight',
@@ -595,6 +595,8 @@ final class EmailExtractor
         $props = [
             'agent_name'       => $cited('Travel agency or company sending the inquiry.'),
             'agent_email'      => $cited('Email address of the agent who wrote it.'),
+            // tf-greet-r1: the person to greet — never the agency, a traveller, or the Avenir colleague the e-mail is addressed to
+            'agent_contact'    => $cited('The name of the PERSON at the agency who wrote this email, as they sign it (the sign-off or signature of the newest message, e.g. "Thank you. Kurumi" → Kurumi). Not the agency name, not a traveller or passenger, not the Avenir Holidays person greeted with "Dear …". Null when it is not clear.'),
             'agent_country'    => $cited('Country the agent writes from.'),
             'agent_reference'  => $cited("The agent's own booking or file reference, if they quote one."),
             'tour_name'        => $cited('Name of the group or tour, as the agent calls it.'),

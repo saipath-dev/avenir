@@ -2285,6 +2285,19 @@ class TourIntakeController extends BaseController
         if (trim($message) === '') {
             throw new \InvalidArgumentException('The email needs a message.');
         }
+        // tf-greet-r1: never send a greeting, a signature or a word still unfilled
+        $left = [];
+        foreach ([QuoteService::CONTACT_PLACEHOLDER, QuoteService::SENDER_PLACEHOLDER] as $ph) {
+            if (strpos($message . ' ' . $subject, $ph) !== false) {
+                $left[] = $ph;
+            }
+        }
+        if (preg_match_all('/\{[a-z_]+\}/', $message . ' ' . $subject, $mm)) {
+            $left = array_merge($left, array_unique($mm[0]));
+        }
+        if ($left) {
+            throw new \InvalidArgumentException('Replace ' . implode(', ', $left) . ' in the email before sending — for example the name of the person who wrote to us after "Dear". Nothing was sent.');
+        }
         if (($row['max_pax'] ?? null) === null && QuoteService::paxLevels($row['cost']) !== []) {
             throw new \InvalidArgumentException('Choose the Maximum Number of Travellers first; the quotation goes out with the price rows up to it.');
         }
@@ -2396,6 +2409,11 @@ class TourIntakeController extends BaseController
             }
             $m   = $this->emailFields($this->body(), $row);
             $who = Staff::contact($this->db(), $this->userId(), $this->user());
+            // tf-deptmail-r1: a quotation goes from the agent department's mailbox (land@) once it is set up; the person's own until then
+            $dept = \App\Libraries\TourFlow\DeptMailbox::info($this->db(), 'agent');
+            if ($dept['ready']) {
+                $who['can_send'] = true;
+            }
             if (!$who['can_send'] && QuoteMail::$transport === null) {
                 return $this->json(['status' => 400, 'message' => 'Your account has no mailbox set up to send from (email, password and host on your user profile). Download the PDF and send it from your mail program, or ask Management to set the mailbox up.']);
             }
@@ -2405,7 +2423,9 @@ class TourIntakeController extends BaseController
             if (!is_string($made) || !is_file($tmp) || filesize($tmp) < 100) {
                 return $this->json(['status' => 400, 'message' => 'The quotation PDF could not be made (is the PDF library installed?), so nothing was sent.']);
             }
-            $r = QuoteMail::send($m['to'], $m['subject'], QuoteMail::html($m['message']), $m['cc_list'], [['path' => $tmp, 'name' => $m['pdf_name']]]);
+            $msgId = \App\Libraries\TourFlow\CommsMail::messageId((string) ($dept['ready'] ? $dept['email'] : ($who['email'] ?? '')), (int) $id);
+            $r = QuoteMail::send($m['to'], $m['subject'], QuoteMail::html($m['message']), $m['cc_list'], [['path' => $tmp, 'name' => $m['pdf_name']]], 'agent', $msgId);
+            $sentFrom = QuoteMail::$lastFrom ?: ($dept['ready'] ? $dept['email'] : $who['email']);
             $log = new Activity($this->db(), $this->user(), $this->userId(), $this->actorName());
             if (!$r['ok']) {
                 try {
@@ -2417,9 +2437,10 @@ class TourIntakeController extends BaseController
                 }
                 return $this->json(['status' => 400, 'message' => $r['error']]);
             }
-            $rec = $q->recordEmail((int) $qid, $m, 'sent', null, $this->user(), $this->userId(), $this->actorName(), $who['email']);
+            $rec = $q->recordEmail((int) $qid, $m, 'sent', null, $this->user(), $this->userId(), $this->actorName(), $sentFrom);
             try {   // tf-comms-r1: the quotation e-mail and its PDF join the Communications & History record
-                (new \App\Libraries\TourFlow\Comms($this->db(), $this->user(), $this->userId(), $this->actorName()))->captureQuoteEmail((int) $rec['id'], $tmp);
+                // tf-deptmail-r1: with its Message-ID, so the agent's reply is filed on this inquiry by itself
+                (new \App\Libraries\TourFlow\Comms($this->db(), $this->user(), $this->userId(), $this->actorName()))->captureQuoteEmail((int) $rec['id'], $tmp, $msgId);
             } catch (\Throwable $e) {
                 log_message('error', 'Communications capture (quotation e-mail) failed: ' . $e->getMessage());
             }

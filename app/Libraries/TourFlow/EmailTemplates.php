@@ -41,6 +41,10 @@ final class EmailTemplates
     public const WORDS = [
         'agent'       => "the agent's name (the person or company the email goes to)",
         'agent_name'  => "the agent's name",
+        // tf-greet-r1 (26 Nov 2026): the person greeted, and the two phrases that differ for an agent and a direct customer
+        'contact'     => 'the name of the person who writes to us (the agent contact), as they sign',
+        'clients_visit' => "“your clients’ visit” for an agent, “your visit” for a direct customer",
+        'clients_preferences' => "“your clients’ preferences” for an agent, “your preferences” for a direct customer",
         'inquiry_no'  => 'the inquiry number',
         'ref'         => 'the quotation reference (inquiry number and version)',
         'version'     => 'the quotation version number',
@@ -85,10 +89,13 @@ final class EmailTemplates
         'today'       => "today's date",
     ];
 
+    /** tf-greet-r1: the standard quotation message as it was until 26 Nov 2026 — replaced once on a site that still has it word for word. */
+    public const OLD_QUOTATION_STANDARD = "Dear {agent},\n\nThank you for your enquiry. Please find attached our quotation {ref} for {tour_name}, {dates}, for up to {max_pax} travellers ({pax} as enquired). The price per person for each party size is on the quotation, valid until {valid_until}.\n\nWe would be glad to adjust the programme or the hotels to suit your clients; just let us know.\n\nKind regards,\n{me}\n{company}";
+
     /** The standard set, written once by the installer when the table is empty. */
     public const SEED = [
         ['Quotation – Standard', 'quotation', 1, 'Quotation {ref} — {tour_name}, {dates}',
-            "Dear {agent},\n\nThank you for your enquiry. Please find attached our quotation {ref} for {tour_name}, {dates}, for up to {max_pax} travellers ({pax} as enquired). The price per person for each party size is on the quotation, valid until {valid_until}.\n\nWe would be glad to adjust the programme or the hotels to suit your clients; just let us know.\n\nKind regards,\n{me}\n{company}"],
+            "Dear {contact},\n\nThank you for your enquiry and the opportunity to arrange {clients_visit} to Sri Lanka.\n\nPlease find attached our quotation {ref} for travel from {arrival} to {departure}, prepared according to your requirements.\n\nWe would be pleased to discuss any adjustments to the programme or hotel selection to suit {clients_preferences}.\n\nWe look forward to your feedback and to working with you on this booking.\n\nKind regards,\n{me}\nAvenir Holidays"],
         ['Quotation – Follow-up', 'quotation', 0, 'Following up: quotation {ref} — {tour_name}',
             "Dear {agent},\n\nWe hope this finds you well. We are following up on our quotation {ref} for {tour_name}, {dates}, sent earlier. The offer is valid until {valid_until}; should your clients wish to go ahead, we will be glad to hold the hotels and confirm the arrangements.\n\nIf anything in the programme or the price needs a change, please tell us and we will revise it.\n\nKind regards,\n{me}\n{company}"],
         ['Invoice – Standard', 'invoice', 1, 'Invoice — {tour_name}, {dates}',
@@ -212,6 +219,19 @@ final class EmailTemplates
     {
         if (!$this->available()) {
             return [];
+        }
+        if ($category === 'quotation') {
+            // tf-greet-r1 (26 Nov 2026, Shantha): the new standard quotation wording, once — only where the old text is still unchanged
+            try {
+                $this->db->query("UPDATE tf_email_template SET message = ?, updated_at = ?, updated_by = 'tf-greet-r1' WHERE name = 'Quotation – Standard' AND category = 'quotation' AND message = ?",
+                    [self::SEED[0][4], date('Y-m-d H:i:s'), self::OLD_QUOTATION_STANDARD]);
+            } catch (\Throwable $e) {
+                // a table without updated_at / updated_by: the plain change
+                try {
+                    $this->db->query("UPDATE tf_email_template SET message = ? WHERE name = 'Quotation – Standard' AND category = 'quotation' AND message = ?", [self::SEED[0][4], self::OLD_QUOTATION_STANDARD]);
+                } catch (\Throwable $e2) {
+                }
+            }
         }
         return $this->db->query('SELECT id, name, category, subject, message, is_default FROM tf_email_template WHERE archived_at IS NULL AND category IN (?, ?) ORDER BY category = ? DESC, is_default DESC, sort_order, name', [$category, 'general', $category])->getResultArray();
     }

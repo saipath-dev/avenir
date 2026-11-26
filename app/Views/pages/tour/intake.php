@@ -2032,14 +2032,14 @@
     const staffName = u => { if (!u) return ''; const h = HANDLERS.find(x => x.username === u); return h ? h.name : u; };
     const NAMES = Object.fromEntries(HANDLERS.filter(h => h.username).map(h => [h.username, h.name]));
     const LABELS = {
-        agent_name:'Agent', agent_email:'Agent email', agent_country:'Country', agent_reference:'Agent booking reference',
+        agent_name:'Agent', agent_email:'Agent email', agent_contact:'Agent contact (person to greet)', agent_country:'Country', agent_reference:'Agent booking reference',
         tour_name:'Group / tour name', arrival_date:'Arrival', departure_date:'Departure', nights:'Nights',
         pax_total:'Passengers', pax_adults:'Adults', pax_children:'Children',
         rooms_note:'Rooms', hotel_class:'Hotel class', arrival_flight:'Arrival flight', departure_flight:'Departure flight',
         meal_basis:'Meal basis (whole tour)'
     };
     const GROUPS = [
-        { title:'Agent & booking', keys:['agent_name','agent_email','agent_country','agent_reference','tour_name','hotel_class'] },
+        { title:'Agent & booking', keys:['agent_name','agent_contact','agent_email','agent_country','agent_reference','tour_name','hotel_class'] },
         { title:'Dates & party',   keys:['arrival_date','departure_date','nights','pax_total','pax_adults','pax_children','rooms_note','meal_basis','arrival_flight','departure_flight'] }
     ];
     const RATE = {

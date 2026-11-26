@@ -552,11 +552,12 @@
     function ibCards(ib) {
         const B = ib.boxes || {}; const adm = !!ib.sysadmin; const dis = adm ? '' : 'disabled';
         const pill = s => s === 'connected' ? '<span class="ibx-pill" style="color:#4f8a22">Connected</span>' : (s === 'failed' ? '<span class="ibx-pill" style="color:#b3261e">Connection failed</span>' : '<span class="ibx-pill" style="color:#842484">Not connected</span>');
-        const purpose = { agent: 'New inquiries and agent replies → Agent Emails', hotel: 'Hotel replies → Supplier Emails panel in Confirmed Tours' };
+        // tf-deptmail-r1: each department is one mailbox — it collects the replies AND sends that department's e-mails (From and Reply-To)
+        const purpose = { agent: 'land@ — sends quotations and agent / customer e-mails (From and Reply-To); collects their replies → Inquiry Communications, filed on the matching inquiry', hotel: 'htl@ — sends hotel reservation requests and letters (From and Reply-To); collects hotel replies → Hotel Reservations (Supplier Emails), staff review before any booking is confirmed' };
         const one = (k) => { const b = B[k] || {}; const saved = b.password_state === 'sealed';
             return `<div class="ibx-box" data-box="${k}"><div class="ibx-h"><span>${esc(b.label || k)}</span>${pill(b.status)}</div><div class="ibx-b">
                 <div class="ibx-r"><label>Purpose</label><div>${esc(purpose[k] || '')}</div></div>
-                <div class="ibx-r"><label>Mailbox address</label><input class="form-control form-control-sm ibx-email" value="${esc(b.email || '')}" maxlength="120" placeholder="${k === 'hotel' ? 'htl.res@avenirholidays.com' : 'Address to be selected'}" ${dis}></div>
+                <div class="ibx-r"><label>Mailbox address</label><input class="form-control form-control-sm ibx-email" value="${esc(b.email || '')}" maxlength="120" placeholder="${k === 'hotel' ? 'htl@avenirholidays.com' : 'land@avenirholidays.com'}" ${dis}></div>
                 <div class="ibx-r"><label>Password</label><input type="password" class="form-control form-control-sm ibx-pass" autocomplete="new-password" placeholder="${saved ? 'Saved — type only to replace it' : 'Enter password privately'}" ${dis}><span class="ibx-tag ${saved ? 'ok' : 'bad'}">${saved ? 'Saved' : (b.password_state === 'unreadable' ? 'Enter again' : 'Not saved')}</span></div>
                 <div class="ibx-r"><label>Last successful check</label><div>${esc(b.last_ok || 'Never')}</div></div>
                 <div class="ibx-r"><label>Latest error</label><div class="${b.last_error ? 'text-danger' : ''}">${esc(b.last_error || 'None')}</div></div>

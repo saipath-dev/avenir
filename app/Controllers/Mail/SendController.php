@@ -10,6 +10,14 @@ use PHPMailer\PHPMailer\SMTP;
 
 class SendController extends BaseController
 {
+    /**
+     * tf-deptmail-r1: set by the caller for the next send only — 'agent' (land@) or 'hotel' (htl@). When that department's
+     * mailbox is set up (DeptMailbox) the e-mail goes From it, with Reply-To it; otherwise from the person's own mailbox.
+     * $messageId: the Message-ID to give the e-mail, so the reply is filed by it. $lastFrom: the address it went from.
+     */
+    public static ?string $department = null;
+    public static ?string $messageId = null;
+    public static ?string $lastFrom = null;
 
     public function send($to, $subject, $body, $cc = null, $attachments = [], $tour_quotation_id = null, $tour_id = null)
     {
@@ -33,6 +41,18 @@ class SendController extends BaseController
         require_once ROOTPATH . 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
         require_once ROOTPATH . 'vendor/phpmailer/phpmailer/src/SMTP.php';
 
+        $dept = self::$department;
+        $msgId = self::$messageId;
+        self::$department = null;
+        self::$messageId = null;
+        self::$lastFrom = null;
+        $deptBox = $dept !== null ? \App\Libraries\TourFlow\DeptMailbox::credentials(\Config\Database::connect(), $dept) : null;
+        if ($deptBox !== null) {
+            // tf-deptmail-r1: the department's own mailbox (land@ / htl@) — the person's name stays in the signature
+            $host = '';
+            $email = $deptBox['email'];
+            $emailPassword = $deptBox['password'];
+        } else {
         $userId = session()->get('user_id');
 
         // Load the user's email and email password
@@ -50,8 +70,9 @@ class SendController extends BaseController
         if ($emailPassword === '') {
             return 'Not sent: the saved mailbox password for ' . $email . ' cannot be read on this install (saved under another server\'s key). Enter it again under My Profile → Mailbox.';
         }
+        }
 
-        if (empty($host) || empty($email) || empty($emailPassword)) {
+        if ((empty($host) && $deptBox === null) || empty($email) || empty($emailPassword)) {
             return 'Email configuration is not set.';
         }
 
@@ -88,6 +109,12 @@ class SendController extends BaseController
 
             // Recipients
             $mail->setFrom($email, 'Avenir Holidays');
+            if ($deptBox !== null) {
+                $mail->addReplyTo($email, 'Avenir Holidays');   // tf-deptmail-r1: replies come back to the department
+            }
+            if ($msgId !== null && $msgId !== '') {
+                $mail->MessageID = $msgId;   // tf-deptmail-r1: the reply's In-Reply-To names this, and the reply is filed by it
+            }
             $mail->addAddress($to);
 
             // Add CCs if provided
@@ -131,6 +158,7 @@ class SendController extends BaseController
 
             // Send the email
             if ($mail->send()) {// Log the message ID to email_sents.log
+                self::$lastFrom = $email;
 
                 
                 $logMessage = date('Y-m-d H:i:s') . " | TTTo: $to | Subject: $subject";

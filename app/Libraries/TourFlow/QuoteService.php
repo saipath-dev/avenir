@@ -1718,11 +1718,27 @@ final class QuoteService
         if (!$q) {
             throw new \RuntimeException('No such quotation.');
         }
-        $it   = $this->db->query('SELECT agent_email, agent_name, tour_name, inquiry_no, arrival_date, departure_date, nights, pax_total FROM tf_intake WHERE id = ?', [(int) $q['intake_id']])->getRowArray() ?: [];
+        $it   = $this->db->query('SELECT agent_email, agent_name, agent_acc, tour_name, inquiry_no, arrival_date, departure_date, nights, pax_total, fields_json, source_text FROM tf_intake WHERE id = ?', [(int) $q['intake_id']])->getRowArray() ?: [];
         $cost = $q['cost'];
         $fmtD = static fn ($d) => $d ? date('j M Y', strtotime((string) $d)) : '';
+        // tf-greet-r1 (26 Nov 2026, Shantha): greet the PERSON who writes to us — "Dear Kurumi," not "Dear LION TOURS"
+        $contact = self::agentContact((int) $q['intake_id'], $it);
+        // a direct customer (a customer account not marked as an agent) is "your visit", an agent "your clients' visit"
+        $direct = false;
+        if (trim((string) ($it['agent_acc'] ?? '')) !== '') {
+            try {
+                $cr = $this->db->query('SELECT agent FROM customers WHERE Sup_Acc_No = ? LIMIT 1', [trim((string) $it['agent_acc'])])->getRowArray();
+                $direct = $cr !== null && (int) ($cr['agent'] ?? 0) !== 1;
+            } catch (\Throwable $e) {
+                $direct = false;
+            }
+        }
+        $greet = $contact['name'] ?? self::CONTACT_PLACEHOLDER;
         $vars = [
-            'agent'       => trim((string) ($cost['agent_name'] ?? $it['agent_name'] ?? '')) ?: 'Sir or Madam',
+            'agent'       => $greet,   // tf-greet-r1: in the quotation window the greeting names the person, never the agency
+            'contact'     => $greet,
+            'clients_visit'       => $direct ? 'your visit' : 'your clients’ visit',
+            'clients_preferences' => $direct ? 'your preferences' : 'your clients’ preferences',
             'agent_name'  => trim((string) ($cost['agent_name'] ?? $it['agent_name'] ?? '')),
             'ref'         => ($cost['inquiry_no'] ?? $it['inquiry_no'] ?? '') . ' / v' . (int) $q['version'],
             'inquiry_no'  => (string) ($cost['inquiry_no'] ?? $it['inquiry_no'] ?? ''),
@@ -1737,7 +1753,7 @@ final class QuoteService
             'price'       => $q['sell_usd'] !== null ? 'USD ' . number_format((float) $q['sell_usd'], 2) : '',
             'per_person'  => $q['per_person_usd'] !== null ? 'USD ' . number_format((float) $q['per_person_usd'], 2) : '',
             'valid_until' => $fmtD($q['valid_until'] ?? null),
-            'me'          => (string) ($sender['name'] ?? ''),
+            'me'          => trim((string) ($sender['name'] ?? '')) ?: self::SENDER_PLACEHOLDER,   // tf-greet-r1: the signed-in person's own name
             'company'     => (string) ($company['name'] ?? 'Avenir Holidays'),
         ];
         $vars['today'] = date('j M Y');
@@ -1762,6 +1778,10 @@ final class QuoteService
         return [
             'to'       => filter_var($to, FILTER_VALIDATE_EMAIL) ? $to : '',
             'to_note'  => $to === '' ? 'The inquiry has no agent email address; type one, or add it on the inquiry.' : (filter_var($to, FILTER_VALIDATE_EMAIL) ? '' : 'The address on the inquiry (' . $to . ') does not look like an email address.'),
+            // tf-greet-r1: where the greeting's name came from — or that staff must type it
+            'contact_note' => $contact !== null ? 'Greeting: “Dear ' . $contact['name'] . ',” — ' . $contact['how'] . '. Check it before sending.'
+                : 'No contact name could be read with certainty — replace ' . self::CONTACT_PLACEHOLDER . ' in the message with the name of the person who wrote to us (or enter it on the inquiry as Agent contact). Nothing is sent while it is there.',
+            'dept_from' => DeptMailbox::info($this->db, 'agent'),   // tf-deptmail-r1: land@ once set up
             'cc'       => '',
             'template_id' => (int) $start['id'],
             'templates'   => $list,
@@ -1775,6 +1795,31 @@ final class QuoteService
             'history'  => $this->emails($quoteId),
             'locked'   => $this->lastEmail($quoteId, 'sent') !== null,
         ];
+    }
+
+    /** tf-greet-r1: what an unfilled greeting or signature shows; a message still carrying one of these is not sent. */
+    public const CONTACT_PLACEHOLDER = '[Contact name]';
+    public const SENDER_PLACEHOLDER  = '[Your name]';
+
+    /**
+     * tf-greet-r1: the person to greet — the inquiry's Agent contact field (typed, or read from the e-mail with its proof), else
+     * the e-mail's sign-off or sender name (AgentContact), never a traveller. Null when no name is certain: staff type it.
+     * @return array{name:string, how:string}|null
+     */
+    public static function agentContact(int $intakeId, array $it): ?array
+    {
+        $f = json_decode((string) ($it['fields_json'] ?? ''), true) ?: [];
+        $v = trim((string) ($f['agent_contact']['value'] ?? ''));
+        if ($v !== '') {
+            return ['name' => $v, 'how' => ($f['agent_contact']['origin'] ?? '') === 'human' ? 'as entered on the inquiry (Agent contact)' : 'read from the e-mail (Agent contact on the inquiry)'];
+        }
+        $pax = [];
+        try {
+            $pax = array_column(\Config\Database::connect()->query('SELECT full_name FROM tf_intake_pax WHERE intake_id = ?', [$intakeId])->getResultArray(), 'full_name');
+        } catch (\Throwable $e) {
+            $pax = [];
+        }
+        return AgentContact::fromEmail((string) ($it['source_text'] ?? ''), $pax);
     }
 
     public static function pdfName($inquiryNo, int $version): string

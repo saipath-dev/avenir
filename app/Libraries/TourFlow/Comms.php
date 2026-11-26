@@ -518,7 +518,7 @@ final class Comms
     }
 
     /** A quotation e-mail the system sent (tf_quote_email row), with the PDF kept as the attachment when given. */
-    public function captureQuoteEmail(int $quoteEmailId, ?string $pdfPath = null): ?array
+    public function captureQuoteEmail(int $quoteEmailId, ?string $pdfPath = null, ?string $messageId = null): ?array
     {
         if (!self::ready($this->db)) {
             return null;
@@ -533,7 +533,7 @@ final class Comms
         $c = $this->add((int) $m['intake_id'], ['direction' => 'out', 'channel' => 'email', 'source' => 'system', 'ref_table' => 'tf_quote_email', 'ref_id' => $quoteEmailId, 'tag' => '',
             'occurred_at' => $m['sent_at'], 'from_addr' => $m['sent_from'], 'to_addr' => $m['to_email'], 'cc_addr' => $m['cc_email'],
             'subject' => ($m['status'] === 'failed' ? '[NOT SENT — ' . ($m['error'] ?: 'failed') . '] ' : '') . (string) $m['subject'], 'body' => $m['message'],
-            'links' => [['kind' => 'quote', 'id' => (int) $m['quote_id'], 'label' => 'quotation version ' . $m['version']]]]);
+            'links' => [['kind' => 'quote', 'id' => (int) $m['quote_id'], 'label' => 'quotation version ' . $m['version']]], 'message_id' => $messageId]);
         if ($pdfPath && is_file($pdfPath)) {
             try {
                 $this->attach((int) $c['id'], ['tmp' => $pdfPath, 'name' => $m['pdf_name'] ?: ('quotation-v' . $m['version'] . '.pdf'), 'size' => (int) filesize($pdfPath), 'mime' => 'application/pdf']);
@@ -777,7 +777,8 @@ final class Comms
             $subject = mb_substr($subject, 0, 330) . ' [AVH:' . $inquiryNo . ']';
         }
         $msg = ['to' => $to, 'cc' => $cc, 'bcc' => $bcc, 'subject' => $subject, 'html' => CommsMail::html($body, $signature, 'AVH-REF:' . $threadKey), 'attachments' => $attachments, 'reply_to' => $sender['reply_to'] ?? null,
-            'from_email' => $sender['kind'] === 'system' ? $sender['email'] : '', 'from_name' => $sender['name'] ?? 'Avenir Holidays', 'password' => $sender['kind'] === 'system' ? CommsMail::systemPassword($this->db) : '', 'user_id' => $this->userId, 'intake_id' => $intakeId];
+            'from_email' => $sender['kind'] === 'system' ? $sender['email'] : '', 'from_name' => $sender['name'] ?? 'Avenir Holidays', 'password' => $sender['kind'] === 'system' ? CommsMail::systemPassword($this->db) : '', 'user_id' => $this->userId, 'intake_id' => $intakeId,
+            'dept' => 'agent'];   // tf-deptmail-r1: inquiry correspondence goes from land@ when it is set up
         $r = CommsMail::send($this->db, $msg);
         $msg['password'] = '';
         $ccAll = array_merge($cc, $r['cc_added'] ?? []);

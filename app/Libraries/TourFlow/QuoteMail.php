@@ -24,8 +24,12 @@ final class QuoteMail
      * @param array<int, array{path:string, name:string}> $attachments
      * @return array{ok:bool, error:?string}
      */
-    public static function send(string $to, string $subject, string $body, array $cc = [], array $attachments = []): array
+    /** tf-deptmail-r1: after a send — the address it went from and the Message-ID it carried (for filing the reply). */
+    public static ?string $lastFrom = null;
+
+    public static function send(string $to, string $subject, string $body, array $cc = [], array $attachments = [], ?string $dept = null, ?string $messageId = null): array
     {
+        self::$lastFrom = null;
         $to = trim($to);
         if ($to === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
             return ['ok' => false, 'error' => 'Enter the agent\'s email address.'];
@@ -43,7 +47,10 @@ final class QuoteMail
             if (self::$transport !== null) {
                 $r = (self::$transport)($to, $subject, $body, $cc, $attachments);
             } elseif (class_exists('\App\Controllers\Mail\SendController')) {
+                \App\Controllers\Mail\SendController::$department = $dept;        // tf-deptmail-r1: land@ for quotations
+                \App\Controllers\Mail\SendController::$messageId  = $messageId;
                 $r = (new \App\Controllers\Mail\SendController())->send($to, $subject, $body, $cc ?: null, $attachments);
+                self::$lastFrom = \App\Controllers\Mail\SendController::$lastFrom;
             } else {
                 return ['ok' => false, 'error' => 'Email sending is not set up on this install. Download the PDF and send it from your mail program.'];
             }
