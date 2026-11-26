@@ -2399,10 +2399,7 @@ class TourIntakeController extends BaseController
             if (!$who['can_send'] && QuoteMail::$transport === null) {
                 return $this->json(['status' => 400, 'message' => 'Your account has no mailbox set up to send from (email, password and host on your user profile). Download the PDF and send it from your mail program, or ask Management to set the mailbox up.']);
             }
-            $dir = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail';
-            if (!is_dir($dir)) {
-                @mkdir($dir, 0775, true);
-            }
+            $dir = QuoteMail::tempDir();   // tf-mailtmp-r1: writable/tf_mail, or the server's temporary folder when the web server may not write there
             $tmp  = $dir . DIRECTORY_SEPARATOR . 'q' . (int) $qid . '-' . bin2hex(random_bytes(6)) . '.pdf';
             $made = $this->renderQuote($row['cost'], $row, 'client', true, $tmp);
             if (!is_string($made) || !is_file($tmp) || filesize($tmp) < 100) {

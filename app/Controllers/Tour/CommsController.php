@@ -435,10 +435,7 @@ class CommsController extends BaseController
             if (!$q || (int) $q['intake_id'] !== $intakeId) {
                 throw new \RuntimeException('That quotation is not on this inquiry.');
             }
-            $dir = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail';
-            if (!is_dir($dir)) {
-                @mkdir($dir, 0775, true);
-            }
+            $dir = \App\Libraries\TourFlow\QuoteMail::tempDir();   // tf-mailtmp-r1: writable/tf_mail, or the server's temporary folder when the web server may not write there
             $tmp = $dir . DIRECTORY_SEPARATOR . 'cq' . $ref . '-' . bin2hex(random_bytes(5)) . '.pdf';
             $name = (new TourIntakeController())->quotePdfToFile($ref, $tmp);
             if (!is_string($name) || !is_file($tmp) || filesize($tmp) < 100) {

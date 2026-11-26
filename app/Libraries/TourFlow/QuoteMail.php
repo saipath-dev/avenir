@@ -60,6 +60,32 @@ final class QuoteMail
         return ['ok' => false, 'error' => is_string($r) && $r !== '' ? MailServer::readable($r) : 'The mail server did not accept the message.'];
     }
 
+    /**
+     * tf-mailtmp-r1 (26 Nov 2026, Shantha — UAT: "file_put_contents(.../UAT/writable/tf_mail/q13-….pdf): Failed to open stream:
+     * Permission denied"): the folder the quotation PDF is written to for a moment before it is attached. writable/tf_mail first;
+     * when the web server may not write there (a folder created by another user on the server), the server's own temporary
+     * folder instead — the file is deleted right after the send either way, so nothing is kept outside writable/.
+     */
+    public static function tempDir(): string
+    {
+        $dir = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'tf_mail';
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        if (is_dir($dir) && is_writable($dir)) {
+            return $dir;
+        }
+        $alt = rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . 'avenir_tf_mail';
+        if (!is_dir($alt)) {
+            @mkdir($alt, 0700, true);
+        }
+        if (is_dir($alt) && is_writable($alt)) {
+            log_message('warning', 'writable/tf_mail is not writable by the web server; the quotation PDF went through ' . $alt . ' instead.');
+            return $alt;
+        }
+        return rtrim(sys_get_temp_dir(), '/\\');
+    }
+
     /** The message as it goes: the typed text as paragraphs, nothing else — no tracking, no pictures. */
     public static function html(string $message): string
     {
