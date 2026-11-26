@@ -34,6 +34,17 @@ final class DeptMailbox
         return ['email' => $email !== '' ? $email : $d['default'], 'ready' => (bool) $ready, 'label' => $d['label']];
     }
 
+    /**
+     * tf-deptmail-r2 (26 Nov 2026, Shantha): no department e-mail ever goes from a personal mailbox. Until the department's
+     * mailbox has its own password saved, sending is refused with this message.
+     */
+    public static function setupMessage($db, string $dept): string
+    {
+        $i = self::info($db, $dept);
+        return 'Department mailbox setup required: ' . ($i['email'] ?: (self::DEPTS[$dept]['default'] ?? 'the department mailbox')) . ' (' . ($i['label'] ?: $dept)
+            . ') is not connected with its own password yet. The System Administrator sets it under Tour Desk Admin → Settings → Mail Administration → Incoming mailboxes. Nothing was sent — e-mails of this department never go from a personal mailbox.';
+    }
+
     /** For sending, this request only: ['email', 'password'] — or null when the department has no usable mailbox yet. */
     public static function credentials($db, string $dept): ?array
     {

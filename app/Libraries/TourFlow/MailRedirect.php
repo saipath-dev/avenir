@@ -21,7 +21,7 @@ class MailRedirect
      * purpose"): test addresses Shantha has approved — a message addressed ONLY to these is delivered to them on UAT (still marked
      * [UAT TEST], never with copies). Anything else on UAT still goes to TO alone.
      */
-    public const ALLOWED = ['samafonso11@gmail.com'];
+    public const ALLOWED = ['samafonso11@gmail.com', 'saipath29@gmail.com'];   // tf-mailallow-r2: Shantha's two test-agent accounts (UAT testing only)
 
     /** Where a UAT message goes: its own address when every recipient is an approved test address, else TO. */
     public static function target($to): string

@@ -47,6 +47,10 @@ class SendController extends BaseController
         self::$messageId = null;
         self::$lastFrom = null;
         $deptBox = $dept !== null ? \App\Libraries\TourFlow\DeptMailbox::credentials(\Config\Database::connect(), $dept) : null;
+        if ($dept !== null && $deptBox === null) {
+            // tf-deptmail-r2: a department e-mail never falls back to the person's own mailbox
+            return \App\Libraries\TourFlow\DeptMailbox::setupMessage(\Config\Database::connect(), $dept);
+        }
         if ($deptBox !== null) {
             // tf-deptmail-r1: the department's own mailbox (land@ / htl@) — the person's name stays in the signature
             $host = '';

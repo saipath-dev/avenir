@@ -561,8 +561,8 @@ $rows    = $staffUi ? $ppAll : $pp;
 <?php if ($emailOn): $em = $email; ?>
 <div class="mailbox" id="mailbox">
     <h2>Email this quotation to the agent</h2>
-    <p class="sub">The PDF of version <?= (int) $q['version'] ?> goes attached (<span class="mono" id="em_pdf"><?= esc($em['pdf_name']) ?></span>), with the price rows up to the maximum chosen above. <?php $dfm = $em['dept_from'] ?? null; /* tf-deptmail-r1 */ ?><?= !empty($dfm['ready']) ? 'It is sent from the agent mailbox <b>' . esc($dfm['email']) . '</b> (From and Reply-To), signed with your name' : 'It is sent from your own mailbox' . (!empty($em['from']) ? ' (<b>' . esc($em['from']) . '</b>)' : '') . ' — the agent mailbox ' . esc($dfm['email'] ?? 'land@avenirholidays.com') . ' is not connected yet' ?>; nothing is sent until you press Send and confirm. Every send is kept on the version and on the Activity log<?= $q['status'] === 'draft' ? '; sending issues this draft as the version the agent has' : '' ?>.</p>
-    <?php if (empty($em['can_send'])): ?><div class="warn">Your account has no mailbox set up to send from (email, password and host on your user profile), so Send is off. Preview still works; download the PDF and send it from your mail program, or ask Management to set the mailbox up.</div><?php endif; ?>
+    <p class="sub">The PDF of version <?= (int) $q['version'] ?> goes attached (<span class="mono" id="em_pdf"><?= esc($em['pdf_name']) ?></span>), with the price rows up to the maximum chosen above. <?php $dfm = $em['dept_from'] ?? null; /* tf-deptmail-r1 */ ?>It is sent from the agent mailbox <b><?= esc($dfm['email'] ?? 'land@avenirholidays.com') ?></b> (From and Reply-To), signed with your name; nothing is sent until you press Send and confirm. Every send is kept on the version and on the Activity log<?= $q['status'] === 'draft' ? '; sending issues this draft as the version the agent has' : '' ?>.</p>
+    <?php if (empty($em['can_send'])): /* tf-deptmail-r2 */ ?><div class="warn"><b>Department mailbox setup required.</b> <?= esc((string) ($em['dept_block'] ?? 'The agent mailbox land@avenirholidays.com is not connected yet.')) ?> Preview still works; Send is off.</div><?php endif; ?>
     <?php if (!empty($em['to_note'])): ?><div class="warn" id="em_to_note"><?= esc($em['to_note']) ?></div><?php endif; ?>
     <?php if (!empty($em['contact_note'])): /* tf-greet-r1 */ ?><div class="<?= strpos((string) $em['contact_note'], '[Contact name]') !== false ? 'warn' : 'sub' ?>" id="em_contact_note" style="margin:6px 0"><?= esc($em['contact_note']) ?></div><?php endif; ?>
     <?php if (!empty($em['templates'])): ?>
@@ -654,7 +654,7 @@ $rows    = $staffUi ? $ppAll : $pp;
             $('em_html').innerHTML = d.html;
             var w = $('em_warn'); if (w) { w.style.display = d.warning ? '' : 'none'; w.textContent = d.warning || ''; }
             $('em_attname').textContent = d.attachment; $('em_att').href = d.pdf_url;
-            $('em_msend').disabled = !d.can_send; $('em_msend').title = d.can_send ? '' : 'Your account has no mailbox set up to send from';
+            $('em_msend').disabled = !d.can_send; $('em_msend').title = d.can_send ? '' : 'Department mailbox setup required (land@avenirholidays.com)';
             $('em_overlay').classList.add('on');
             return true;
         });

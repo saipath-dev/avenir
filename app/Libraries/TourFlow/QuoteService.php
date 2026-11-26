@@ -1788,7 +1788,8 @@ final class QuoteService
             'subject'  => (string) $start['subject'],
             'message'  => (string) $start['message'],
             'from'     => $sender['email'] ?? null,
-            'can_send' => (bool) ($sender['can_send'] ?? false),
+            'can_send' => DeptMailbox::info($this->db, 'agent')['ready'] || TestMailbox::active(),   // tf-deptmail-r2: land@ only
+            'dept_block' => DeptMailbox::info($this->db, 'agent')['ready'] ? null : DeptMailbox::setupMessage($this->db, 'agent'),
             'max_pax'  => ($q['max_pax'] ?? null) !== null ? (int) ($q['max_pax'] ?? null) : null,
             'levels'   => self::paxLevels($cost),
             'pdf_name' => self::pdfName($cost['inquiry_no'] ?? null, (int) $q['version']),

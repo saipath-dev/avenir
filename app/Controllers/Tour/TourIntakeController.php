@@ -2411,9 +2411,11 @@ class TourIntakeController extends BaseController
             $who = Staff::contact($this->db(), $this->userId(), $this->user());
             // tf-deptmail-r1: a quotation goes from the agent department's mailbox (land@) once it is set up; the person's own until then
             $dept = \App\Libraries\TourFlow\DeptMailbox::info($this->db(), 'agent');
-            if ($dept['ready']) {
-                $who['can_send'] = true;
+            // tf-deptmail-r2: a quotation goes from land@ only — never from a personal mailbox
+            if (!$dept['ready'] && QuoteMail::$transport === null && !\App\Libraries\TourFlow\TestMailbox::active()) {
+                return $this->json(['status' => 400, 'message' => \App\Libraries\TourFlow\DeptMailbox::setupMessage($this->db(), 'agent')]);
             }
+            $who['can_send'] = true;
             if (!$who['can_send'] && QuoteMail::$transport === null) {
                 return $this->json(['status' => 400, 'message' => 'Your account has no mailbox set up to send from (email, password and host on your user profile). Download the PDF and send it from your mail program, or ask Management to set the mailbox up.']);
             }
@@ -2425,7 +2427,7 @@ class TourIntakeController extends BaseController
             }
             $msgId = \App\Libraries\TourFlow\CommsMail::messageId((string) ($dept['ready'] ? $dept['email'] : ($who['email'] ?? '')), (int) $id);
             $r = QuoteMail::send($m['to'], $m['subject'], QuoteMail::html($m['message']), $m['cc_list'], [['path' => $tmp, 'name' => $m['pdf_name']]], 'agent', $msgId);
-            $sentFrom = QuoteMail::$lastFrom ?: ($dept['ready'] ? $dept['email'] : $who['email']);
+            $sentFrom = QuoteMail::$lastFrom ?: $dept['email'];
             $log = new Activity($this->db(), $this->user(), $this->userId(), $this->actorName());
             if (!$r['ok']) {
                 try {
