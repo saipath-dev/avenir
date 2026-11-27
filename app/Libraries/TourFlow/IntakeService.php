@@ -5509,6 +5509,10 @@ final class IntakeService
                         'tpl'  => isset($c['tpl']) && $c['tpl'] !== null ? round((float) $c['tpl'], 2) : null,
                         'unit' => isset($c['unit']) && $c['unit'] !== null ? round((float) $c['unit'], 2) : null,
                         'fam'  => isset($c['fam']) && $c['fam'] !== null ? round((float) $c['fam'], 2) : null,   // tf-famroom-r1
+                        // tf-roomcats-r1: the quad rate and the child charges, shown in Room categories (read only)
+                        'quad' => isset($c['quad']) && $c['quad'] !== null ? round((float) $c['quad'], 2) : null,
+                        'cwb'  => isset($c['child_with_bed']) && $c['child_with_bed'] !== null ? round((float) $c['child_with_bed'], 2) : null,
+                        'cnb'  => isset($c['child_no_bed']) && $c['child_no_bed'] !== null ? round((float) $c['child_no_bed'], 2) : null,
                     ];
                 }
             }
