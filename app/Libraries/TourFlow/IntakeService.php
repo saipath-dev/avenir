@@ -5508,7 +5508,8 @@ final class IntakeService
                         'dbl'  => isset($c['dbl']) && $c['dbl'] !== null ? round((float) $c['dbl'], 2) : null,
                         'tpl'  => isset($c['tpl']) && $c['tpl'] !== null ? round((float) $c['tpl'], 2) : null,
                         'unit' => isset($c['unit']) && $c['unit'] !== null ? round((float) $c['unit'], 2) : null,
-                        'fam'  => isset($c['fam']) && $c['fam'] !== null ? round((float) $c['fam'], 2) : null,   // tf-famroom-r1
+                        // tf-famroom-r1; tf-roomkind-r1: the hotel's quad rate is the family price only where Hotel Rates says so for this room
+                        'fam'  => isset($c['fam']) && $c['fam'] !== null ? round((float) $c['fam'], 2) : ((int) ($row['quad_is_family'] ?? 0) === 1 && isset($c['quad']) && $c['quad'] !== null ? round((float) $c['quad'], 2) : null),
                         // tf-roomcats-r1: the quad rate and the child charges, shown in Room categories (read only)
                         'quad' => isset($c['quad']) && $c['quad'] !== null ? round((float) $c['quad'], 2) : null,
                         'cwb'  => isset($c['child_with_bed']) && $c['child_with_bed'] !== null ? round((float) $c['child_with_bed'], 2) : null,
@@ -5526,7 +5527,8 @@ final class IntakeService
                 'meals' => $meals, 'fit' => $fit,
                 // tf-famroom-r1: the room's own details from Hotel Rates (a family room needs them before it is quoted)
                 'max_adults' => self::intOrNull($row['max_adults'] ?? null), 'max_children' => self::intOrNull($row['max_children'] ?? null),
-                'max_occupancy' => self::intOrNull($row['max_occupancy'] ?? null), 'bed_config' => isset($row['bed_config']) && trim((string) $row['bed_config']) !== '' ? (string) $row['bed_config'] : null];
+                'max_occupancy' => self::intOrNull($row['max_occupancy'] ?? null), 'bed_config' => isset($row['bed_config']) && trim((string) $row['bed_config']) !== '' ? (string) $row['bed_config'] : null,
+                'room_kind' => $row['room_kind'] ?? null, 'child_share' => $row['child_share'] ?? null, 'child_share_usd' => isset($row['child_share_usd']) && $row['child_share_usd'] !== null ? (float) $row['child_share_usd'] : null, 'quad_is_family' => (int) ($row['quad_is_family'] ?? 0)];
         }
         $out['room_types'] = $types ? json_encode($types) : null;
         $pricedTypes = array_values(array_filter($types, static fn ($t) => $t['priced']));
@@ -6757,8 +6759,11 @@ final class IntakeService
         if (($pick['bed_config'] ?? null) === null) {
             $miss[] = 'its beds';
         }
+        if (array_key_exists('child_share', $pick) && ($pick['child_share'] ?? null) === null) {
+            $miss[] = 'how a child sharing a bed is charged';   // tf-roomkind-r1
+        }
         if ($miss !== []) {
-            return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name}: the family room's " . implode(' and ', $miss) . ' are not recorded. Enter them from the contract in Hotel Rates → Room types, so the room can be checked against the party.'];
+            return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name}: the family room's " . implode(', ', $miss) . ' not recorded. Enter them from the contract in Hotel Rates → Room types, so the room can be checked against the party.'];
         }
         if ($party !== null) {
             $a = (int) ($party['adults'] ?? 0);

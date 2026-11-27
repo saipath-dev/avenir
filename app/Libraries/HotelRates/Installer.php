@@ -193,6 +193,37 @@ final class Installer
         return self::$famReady;
     }
 
+    private static ?bool $kindReady = null;
+
+    /**
+     * tf-roomkind-r1 (27 Nov 2026, Shantha): what kind of room a room type is (Double / Twin, Triple, Suite, Family,
+     * Quadruple) and, for a family or quadruple room, how a child sharing a bed is charged and whether the hotel's quad rate
+     * is the family price. Added once; nothing changes for a room type that does not use them.
+     */
+    public static function ensureRoomKindColumns($db): bool
+    {
+        if (self::$kindReady !== null) {
+            return self::$kindReady;
+        }
+        try {
+            $add = [
+                'room_kind'       => "ADD COLUMN `room_kind` VARCHAR(20) NULL AFTER `priced_as`",
+                'child_share'     => "ADD COLUMN `child_share` VARCHAR(12) NULL AFTER `max_occupancy`",
+                'child_share_usd' => "ADD COLUMN `child_share_usd` DECIMAL(10,2) NULL AFTER `child_share`",
+                'quad_is_family'  => "ADD COLUMN `quad_is_family` TINYINT(1) NOT NULL DEFAULT 0 AFTER `child_share_usd`",
+            ];
+            foreach ($add as $col => $sql) {
+                if (!$db->query("SHOW COLUMNS FROM hr2_room_type LIKE '{$col}'")->getRowArray()) {
+                    $db->query('ALTER TABLE hr2_room_type ' . $sql);
+                }
+            }
+            self::$kindReady = true;
+        } catch (\Throwable $e) {
+            self::$kindReady = false;
+        }
+        return self::$kindReady;
+    }
+
     public static function upgradeColumns($db): array
     {
         $notes = [];

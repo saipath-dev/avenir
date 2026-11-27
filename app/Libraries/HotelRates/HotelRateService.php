@@ -29,6 +29,7 @@ class HotelRateService
         $this->db = $db;
         $this->user = $user ?: 'system';
         Installer::ensureFamilyColumn($db);   // tf-famroom-r1
+        Installer::ensureRoomKindColumns($db);   // tf-roomkind-r1
     }
 
     public function lookupEngine(): RateLookup
@@ -409,7 +410,11 @@ class HotelRateService
         return $this->row('SELECT * FROM hr2_room_type WHERE id = ?', [$id]);
     }
 
-    public const ROOM_FIELDS = ['name', 'code', 'priced_as', 'base_room_type_id', 'room_count', 'size_sqm', 'bed_config', 'view', 'max_adults', 'max_children', 'max_occupancy', 'extra_bed_allowed', 'unit_pax_min', 'unit_pax_max', 'description', 'sort_order', 'status'];
+    public const ROOM_FIELDS = ['name', 'code', 'priced_as', 'base_room_type_id', 'room_count', 'size_sqm', 'bed_config', 'view', 'max_adults', 'max_children', 'max_occupancy', 'extra_bed_allowed', 'unit_pax_min', 'unit_pax_max', 'description', 'sort_order', 'status',
+        'room_kind', 'child_share', 'child_share_usd', 'quad_is_family'];   // tf-roomkind-r1
+    /** tf-roomkind-r1: the kinds of room, and how a child sharing a bed is charged in a family or quadruple room. */
+    public const ROOM_KINDS = ['double' => 'Double / Twin', 'triple' => 'Triple', 'suite' => 'Suite', 'family' => 'Family room', 'quad' => 'Quadruple'];
+    public const CHILD_SHARE = ['free' => 'Free', 'charge' => 'Charged per night', 'not_allowed' => 'Not allowed'];
 
     public function updateRoomType(int $id, array $fields): void
     {
@@ -449,6 +454,21 @@ class HotelRateService
             if ($f === 'priced_as') {
                 $v = $v === 'supplement' ? 'supplement' : 'base';
             }
+            if ($f === 'room_kind' && $v !== null && !isset(self::ROOM_KINDS[$v])) {
+                throw new \RuntimeException('Room kind must be one of: ' . implode(', ', self::ROOM_KINDS) . '.');
+            }
+            if ($f === 'child_share' && $v !== null && !isset(self::CHILD_SHARE[$v])) {
+                throw new \RuntimeException('Child sharing a bed must be Free, Charged per night or Not allowed.');
+            }
+            if ($f === 'child_share_usd' && $v !== null && (!is_numeric($v) || (float) $v < 0 || (float) $v > 1000)) {
+                throw new \RuntimeException('The child-sharing charge must be a USD amount between 0 and 1,000.');
+            }
+            if ($f === 'quad_is_family') {
+                $v = in_array($v, [1, '1', true, 'true', 'on', 'yes'], true) ? 1 : 0;
+            }
+            if (in_array($f, ['max_occupancy', 'max_adults', 'max_children'], true) && $v !== null && (!ctype_digit((string) $v) || (int) $v > 20)) {
+                throw new \RuntimeException('Max adults, children and occupancy are whole numbers up to 20.');
+            }
             $set[] = "`{$f}` = ?"; $binds[] = $v;
         }
         if (!$set) {
@@ -461,7 +481,20 @@ class HotelRateService
             $this->db->query('UPDATE room_type SET rtype = ? WHERE id = ?', [$fields['name'], $old['legacy_room_type_id']]);
         }
         $this->audit('room_type', $id, 'update', $old, $fields);
+        // tf-roomkind-r1: a family or quadruple room needs its capacity, beds and child-sharing rule before a quotation may use it
+        $now = $this->row('SELECT * FROM hr2_room_type WHERE id = ?', [$id]);
+        if ($now && in_array((string) ($now['room_kind'] ?? ''), ['family', 'quad'], true)) {
+            $miss = [];
+            if ($now['max_occupancy'] === null) { $miss[] = 'Max occ.'; }
+            if (trim((string) $now['bed_config']) === '') { $miss[] = 'Beds'; }
+            if (($now['child_share'] ?? null) === null) { $miss[] = 'Child sharing a bed'; }
+            if (($now['child_share'] ?? null) === 'charge' && $now['child_share_usd'] === null) { $miss[] = 'the child-sharing charge'; }
+            $this->lastNote = $miss ? 'Saved. This family room still needs ' . implode(', ', $miss) . ' before a quotation can use it.' : 'Saved. The family room is complete.';
+        }
     }
+
+    /** tf-roomkind-r1: a note on the last room-type save (what a family room still needs), or null. */
+    public ?string $lastNote = null;
 
     /** The global legacy room_type table still feeds tour_quotations.room_type. */
     public function ensureLegacyRoomTypeId(string $name): int
@@ -1216,7 +1249,9 @@ class HotelRateService
             $row = ['room_type_id' => $rid, 'name' => $rt['name'], 'priced_as' => $rt['priced_as'], 'base_room_type' => $rt['base_room_type_id'] ? ($b['room_types'][(int) $rt['base_room_type_id']]['name'] ?? null) : null,
                 'max_adults' => $rt['max_adults'], 'unit_pax_max' => $rt['unit_pax_max'], 'rates' => [],
                 // tf-famroom-r1: the room's own details, which a family room must have before a quotation may use it
-                'max_children' => $rt['max_children'] ?? null, 'max_occupancy' => $rt['max_occupancy'] ?? null, 'bed_config' => $rt['bed_config'] ?? null];
+                'max_children' => $rt['max_children'] ?? null, 'max_occupancy' => $rt['max_occupancy'] ?? null, 'bed_config' => $rt['bed_config'] ?? null,
+                // tf-roomkind-r1: the kind of room and, for a family or quadruple room, the child-sharing rule and whether its quad rate is the family price
+                'room_kind' => $rt['room_kind'] ?? null, 'child_share' => $rt['child_share'] ?? null, 'child_share_usd' => $rt['child_share_usd'] ?? null, 'quad_is_family' => (int) ($rt['quad_is_family'] ?? 0)];
             $any = false;
             foreach (Sheet::MEAL_PLANS as $meal) {
                 $r = $engine->price($hotelId, $date, 'hr2:' . $rid, $meal, $lookupOpts);

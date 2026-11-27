@@ -424,7 +424,7 @@ class HotelRateV2Controller extends BaseController
             if (!empty($b['id'])) {
                 $fields = array_intersect_key($b, array_flip(array_merge(HotelRateService::ROOM_FIELDS, ['base_room_type'])));
                 $svc->updateRoomType((int) $b['id'], $fields);
-                return $this->json(['status' => 200, 'message' => 'Room type updated.']);
+                return $this->json(['status' => 200, 'message' => $svc->lastNote ?? 'Room type updated.']);
             }
             $name = trim((string) ($b['name'] ?? ''));
             if ($name === '') {

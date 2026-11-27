@@ -354,6 +354,14 @@
         .hro-table td[data-l]::before { content:attr(data-l) ': '; color:var(--av-mute); font-size:14px; }
         .hro-table td.act { padding-top:8px; } .hro-foot { font-size:16px; } .hro-back { top:60px; }
     }
+    /* tf-roomkind-r1 */
+    .rk-banner { background:#fff8ea; border:1px solid #f0d9ae; color:#6b4708; border-radius:10px; padding:9px 12px; font-size:12.5px; margin-bottom:10px; }
+    tr.rk-fam td { background:#fbf5fb; }
+    .rk-miss { color:#b23a32; font-size:11px; font-weight:600; margin-top:2px; }
+    .rk-ok { color:#3f6f1f; font-size:11px; font-weight:600; margin-top:2px; }
+    .rk-hint { border:2px solid #842484 !important; }
+    .rk-cell { min-width:210px; } .rk-cell select, .rk-cell input[type=number] { display:block; margin-bottom:4px; }
+    .rk-q { font-size:11.5px; display:flex; gap:5px; align-items:center; white-space:nowrap; }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -1376,14 +1384,26 @@ php spark hotelrates:migrate</pre>
         const box = document.getElementById('rooms_box');
         const rooms = S.detail.room_types;
         const baseOpts = r => `<option value="">—</option>` + rooms.filter(x => x.id !== r.id).map(x => `<option value="${x.id}" ${String(r.base_room_type_id) === String(x.id) ? 'selected' : ''}>${esc(x.name)}</option>`).join('');
+        // tf-roomkind-r1 (27 Nov 2026, Shantha): the kind of each room, and for a family or quadruple room what a quotation needs —
+        // capacity, beds, how a child sharing a bed is charged, and whether the hotel's quad rate is the family price
+        const RK = { '': '— kind —', double: 'Double / Twin', triple: 'Triple', suite: 'Suite', family: 'Family room', quad: 'Quadruple' };
+        const isFam = r => r.room_kind === 'family' || r.room_kind === 'quad';
+        const famMiss = r => !isFam(r) ? [] : [r.max_occupancy == null || r.max_occupancy === '' ? 'Max occ.' : null, !String(r.bed_config || '').trim() ? 'Beds' : null, !r.child_share ? 'Child sharing' : null, r.child_share === 'charge' && (r.child_share_usd == null || r.child_share_usd === '') ? 'Child charge' : null].filter(Boolean);
+        const looksFam = r => !r.room_kind && /family|quad/i.test(r.name || '');
+        const incomplete = rooms.filter(r => famMiss(r).length);
+        const famBanner = (incomplete.length || rooms.some(looksFam)) ? `<div class="rk-banner">${incomplete.length ? `<b>${incomplete.length} family room${incomplete.length === 1 ? '' : 's'} incomplete</b> — ${incomplete.map(r => esc(r.name) + ': ' + famMiss(r).join(', ')).join(' · ')}. A quotation cannot use a family room until these are entered.` : ''}${rooms.some(looksFam) ? `${incomplete.length ? '<br>' : ''}<b>Looks like a family room:</b> ${rooms.filter(looksFam).map(r => esc(r.name)).join(', ')} — set its kind to Family room or Quadruple.` : ''}</div>` : '';
         box.innerHTML = `<div class="d-flex gap-2 mb-3 flex-wrap align-items-end"><div><label class="form-label">Add a room type</label><input class="form-control form-control-sm" id="rt_new" placeholder="Exactly as the hotel writes it" style="min-width:260px"></div><button class="btn btn-sm btn-primary" id="rt_add">Add</button><span class="help ms-2">Rooms priced as "base + supplement" (Sheraton, Radisson, Amaya…) get a base room here and their supplement inside each plan.</span></div>
-            <div class="table-responsive"><table class="hr-table grid"><thead><tr><th>Name</th><th>Code</th><th>Priced as</th><th>Base room</th><th>Rooms</th><th>m²</th><th>Beds</th><th>View</th><th>Max ad.</th><th>Max ch.</th><th title="Most guests the room holds — required before a quotation can use it as a family room">Max occ.</th><th>Extra bed</th><th>Unit pax</th><th>Status</th><th>Legacy id</th><th></th></tr></thead><tbody>` +
-            rooms.map(r => `<tr data-id="${r.id}"><td><input class="wide" value="${esc(r.name)}" data-f="name"></td><td><input class="narrow" value="${esc(val(r.code))}" data-f="code"></td>
+            ${famBanner}<div class="table-responsive"><table class="hr-table grid"><thead><tr><th>Name</th><th title="What kind of room this is. Family room and Quadruple open the family details.">Kind</th><th>Code</th><th>Priced as</th><th>Base room</th><th>Rooms</th><th>m²</th><th>Beds</th><th>View</th><th>Max ad.</th><th>Max ch.</th><th title="Most guests the room holds — required before a quotation can use it as a family room">Max occ.</th><th>Extra bed</th><th>Unit pax</th><th title="Family room / Quadruple only: how a child sharing a bed is charged, and whether the quad rate is the family price">Family room</th><th>Status</th><th>Legacy id</th><th></th></tr></thead><tbody>` +
+            rooms.map(r => `<tr data-id="${r.id}" class="${isFam(r) ? 'rk-fam' : ''}"><td><input class="wide" value="${esc(r.name)}" data-f="name">${famMiss(r).length ? `<div class="rk-miss">needs ${esc(famMiss(r).join(', '))}</div>` : (isFam(r) ? '<div class="rk-ok">family room complete</div>' : '')}</td>
+                <td><select data-f="room_kind" class="${looksFam(r) ? 'rk-hint' : ''}">${Object.keys(RK).map(k => `<option value="${k}" ${String(r.room_kind || '') === k ? 'selected' : ''}>${RK[k]}</option>`).join('')}</select></td><td><input class="narrow" value="${esc(val(r.code))}" data-f="code"></td>
                 <td>${sel({ base: 'base rate', supplement: 'base + suppl.' }, r.priced_as, 'data-f="priced_as"')}</td><td><select data-f="base_room_type_id">${baseOpts(r)}</select></td>
                 <td><input type="number" class="narrow" value="${val(r.room_count)}" data-f="room_count"></td><td><input type="number" class="narrow" value="${val(r.size_sqm)}" data-f="size_sqm"></td>
                 <td><input value="${esc(val(r.bed_config))}" data-f="bed_config"></td><td><input class="narrow" value="${esc(val(r.view))}" data-f="view"></td>
                 <td><input type="number" class="narrow" value="${val(r.max_adults)}" data-f="max_adults"></td><td><input type="number" class="narrow" value="${val(r.max_children)}" data-f="max_children"></td><td><input type="number" class="narrow" value="${val(r.max_occupancy)}" data-f="max_occupancy" placeholder="—"></td>
                 <td>${sel({ 1: 'yes', 0: 'no' }, r.extra_bed_allowed, 'data-f="extra_bed_allowed"')}</td><td><input class="narrow" value="${val(r.unit_pax_max)}" data-f="unit_pax_max" placeholder="max"></td>
+                <td class="rk-cell">${isFam(r) ? `<select data-f="child_share"><option value="">child sharing a bed…</option>${[['free', 'Child sharing: free'], ['charge', 'Child sharing: charged'], ['not_allowed', 'Child sharing: not allowed']].map(([k, l]) => `<option value="${k}" ${r.child_share === k ? 'selected' : ''}>${l}</option>`).join('')}</select>
+                    <input type="number" step="0.01" min="0" class="narrow" value="${val(r.child_share_usd)}" data-f="child_share_usd" placeholder="USD / night" ${r.child_share === 'charge' ? '' : 'hidden'}>
+                    <label class="rk-q"><input type="checkbox" data-f="quad_is_family" ${Number(r.quad_is_family) === 1 ? 'checked' : ''}> Quad rate is the family price</label>` : '<span class="help">—</span>'}</td>
                 <td>${sel({ active: 'active', inactive: 'inactive' }, r.status, 'data-f="status"')}</td><td class="mono">${r.legacy_room_type_id || ''}</td>
                 <td><button class="btn btn-sm btn-light" data-save="${r.id}">Save</button></td></tr>`).join('') + '</tbody></table></div>';
         box.querySelector('#rt_add').addEventListener('click', async () => {
@@ -1392,9 +1412,12 @@ php spark hotelrates:migrate</pre>
         });
         box.querySelectorAll('[data-save]').forEach(b => b.addEventListener('click', async () => {
             const tr = b.closest('tr'); const body = { id: tr.dataset.id };
-            tr.querySelectorAll('[data-f]').forEach(i => body[i.dataset.f] = i.value);
-            const j = await post(`/hotel/${S.hotel.id}/room_type`, body); toast(j.status === 200 ? 'success' : 'error', j.message); selectHotel(S.hotel.id, true);
+            tr.querySelectorAll('[data-f]').forEach(i => body[i.dataset.f] = i.type === 'checkbox' ? (i.checked ? 1 : 0) : i.value);
+            const j = await post(`/hotel/${S.hotel.id}/room_type`, body); toast(j.status === 200 ? (/still needs/.test(j.message || '') ? 'warning' : 'success') : 'error', j.message); selectHotel(S.hotel.id, true);
         }));
+        // tf-roomkind-r1: choosing Family room / Quadruple opens the family details at once (saved with the row)
+        box.querySelectorAll('select[data-f="room_kind"]').forEach(s => s.addEventListener('change', () => { const r = rooms.find(x => String(x.id) === s.closest('tr').dataset.id); if (r) { r.room_kind = s.value; const keep = {}; s.closest('tr').querySelectorAll('[data-f]').forEach(i => keep[i.dataset.f] = i.type === 'checkbox' ? (i.checked ? 1 : 0) : i.value); Object.assign(r, keep); renderRooms(); toast('info', 'Kind changed — press Save on the row to keep it.'); } }));
+        box.querySelectorAll('select[data-f="child_share"]').forEach(s => s.addEventListener('change', () => { const u = s.closest('td').querySelector('[data-f="child_share_usd"]'); if (u) u.hidden = s.value !== 'charge'; }));
     }
 
     // ---------------- hotel form ----------------
