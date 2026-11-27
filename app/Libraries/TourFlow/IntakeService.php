@@ -6823,6 +6823,11 @@ final class IntakeService
             $this->db->query('INSERT INTO tf_intake_room_match (intake_id, day_id, option_id, rows_json, status, edited, confirmed_by, confirmed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE rows_json = VALUES(rows_json), status = VALUES(status), edited = VALUES(edited), confirmed_by = VALUES(confirmed_by), confirmed_at = VALUES(confirmed_at)',
                 [$id, $dayId, $oid, json_encode($rows), 'confirmed', !empty($m['edited']) ? 1 : 0, $this->user, date('Y-m-d H:i:s')]);
+            // the chosen option (or the night without options) is the night's own rooms too, so the inquiry's main costing uses the arrangement
+            $isChosen = $oid === 0 || (int) ($this->db->query('SELECT chosen FROM tf_intake_roomopt WHERE id = ? AND intake_id = ?', [$oid, $id])->getRowArray()['chosen'] ?? 0) === 1;
+            if ($isChosen) {
+                $this->saveRoomRows($id, $dayId, array_map(static fn ($r) => ['room_type_id' => $r['room_type_id'], 'room_type_name' => $r['room_type_name'], 'occ' => $r['occ'], 'qty' => $r['qty']], $rows), true);
+            }
             $said[] = ($oid ? 'option ' . $oid : 'the night') . ': ' . implode(' + ', array_map(static fn ($r) => $r['qty'] . ' × ' . ($r['room_type_name'] ?: 'room') . ' ' . ($r['extra_bed'] ? 'twin + extra bed' : $r['occ']), $rows));
         }
         try {
@@ -6865,7 +6870,7 @@ final class IntakeService
             $miss[] = 'how a child sharing a bed is charged';   // tf-roomkind-r1
         }
         if ($miss !== []) {
-            return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name}: the family room's " . implode(', ', $miss) . ' not recorded. Enter them from the contract in Hotel Rates → Room types, so the room can be checked against the party.'];
+            return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name}: not recorded yet — " . implode(', ', $miss) . '. Enter them from the contract in Hotel Rates → Room types, so the room can be checked against the party.'];
         }
         if ($party !== null) {
             $a = (int) ($party['adults'] ?? 0);
