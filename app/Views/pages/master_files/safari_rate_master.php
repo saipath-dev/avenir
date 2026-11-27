@@ -170,20 +170,18 @@
             </div></div>
           </div>
           <div class="col-xl-5">
-            <div class="card2"><div class="h"><b>Quotation settings</b><span>what the agent pays</span></div><div class="b"><div class="row g-2">
-              <div class="col-4"><label class="l">Adult / person (USD)</label>${inp('sell_adult_usd', p.sell_adult_usd)}</div>
-              <div class="col-4"><label class="l">Child / person (USD)</label>${inp('sell_child_usd', p.sell_child_usd, 'placeholder="open"')}</div>
-              <div class="col-4"><label class="l">LKR per USD</label>${inp('fx_lkr', p.fx_lkr)}</div>
-              <div class="col-12"><label class="l">Season used for quotations</label><select class="form-select form-select-sm" data-f="season">${Object.keys(D.seasons).map(k => `<option value="${k}" ${p.season === k ? 'selected' : ''}>${esc(D.seasons[k])}</option>`).join('')}</select></div>
+            <div class="card2"><div class="h"><b>Quotation settings</b><span>costing only</span></div><div class="b"><div class="row g-2">
+              <div class="col-5"><label class="l">LKR per USD</label>${inp('fx_lkr', p.fx_lkr)}</div>
+              <div class="col-7"><label class="l">Season used for quotations</label><select class="form-select form-select-sm" data-f="season">${Object.keys(D.seasons).map(k => `<option value="${k}" ${p.season === k ? 'selected' : ''}>${esc(D.seasons[k])}</option>`).join('')}</select></div>
             </div>
-            <div class="mt-2" style="font-weight:700;color:var(--p-dark)">${p.sell_child_usd == null ? 'Leave the child selling price open for approval.' : 'Child selling price set.'}</div>
-            <div class="note">Fixed quotation FX applies until Avenir revises it. Actual payments use the Daily USD Rate${D.daily_usd ? ' (today ' + esc(Number(D.daily_usd.rate).toFixed(2)) + ', ' + esc(D.daily_usd.rate_date) + ')' : ''}. The Wildlife Department declares the tourist-season dates.</div>
+            <div class="mt-2" style="font-weight:700;color:var(--p-dark)">No fixed selling price.</div>
+            <div class="note">The safari's exact cost for the party goes into the tour cost, and the quotation's markup is added to the total, as for hotels and transport. Fixed quotation FX applies until Avenir revises it. Actual payments use the Daily USD Rate${D.daily_usd ? ' (today ' + esc(Number(D.daily_usd.rate).toFixed(2)) + ', ' + esc(D.daily_usd.rate_date) + ')' : ''}. The Wildlife Department declares the tourist-season dates.</div>
             </div></div>
-            <div class="quote-card"><small>CUSTOMER QUOTATION &nbsp;/&nbsp; EXAMPLE</small><div class="nm">${esc(p.label)}</div>
-              <div class="pr" id="q_price">${usd(p.sell_adult_usd)}<span>per adult</span></div>
-              <div class="ln" id="q_line"></div><div class="ln">Park entrance, taxes and private jeep included.</div></div>
+            <div class="quote-card"><small>CUSTOMER QUOTATION &nbsp;/&nbsp; WHAT THE AGENT SEES</small><div class="nm">${esc(p.label)}</div>
+              <div class="ln">Park entrance, taxes and private jeep included.</div>
+              <div class="ln" style="opacity:.8">Shown as one line on the day; its price is inside the tour price, which the agent sees per person by party size.</div></div>
             <div class="card2"><div class="h"><b>Internal cost preview</b><span>never shown to the agent</span></div><div class="b">
-              <div class="d-flex align-items-center gap-2 mb-2 note"><span id="pv_head"></span><select class="form-select form-select-sm" id="pv_n" style="width:auto">${[1,2,3,4,5,6,7,8,12].map(n => `<option ${n === PREV ? 'selected' : ''}>${n}</option>`).join('')}</select><span>foreign adult(s)</span></div>
+              <div class="d-flex align-items-center gap-2 mb-2 note"><span id="pv_head"></span><label for="pv_n">Guests:</label><input class="form-control form-control-sm" id="pv_n" type="number" min="1" max="60" step="1" value="${PREV}" style="width:80px"><span>foreign adult(s)</span></div>
               <div id="pv"></div>
               <div class="d-flex gap-2 mt-3 flex-wrap">
                 <button class="btn btn-go" id="b_save"><i class="bi bi-check2-circle"></i> Save ${esc(p.label.replace(/ Jeep Safari$/, ''))}</button>
@@ -194,20 +192,16 @@
           </div>
         </div>`;
         const preview = () => {
-            const f = readForm(p), n = Number($('pv_n').value || 2), c = costOf(f, n);
-            const sell = f.sell_adult_usd == null ? null : n * Number(f.sell_adult_usd), m = sell == null ? null : sell - c.total;
+            const f = readForm(p), n = Math.max(1, Number($('pv_n').value) || 1), c = costOf(f, n);
             $('pv_head').textContent = (D.seasons[f.season] || f.season) + ' · ' + c.jeeps + ' jeep' + (c.jeeps === 1 ? '' : 's') + ' ·';
             $('pv').innerHTML = `<div class="prev-row"><span>Park entrance and charges incl. VAT</span><span>${usd(c.gate)}</span></div>
                 <div class="prev-row"><span>Jeep hire (${c.jeeps} × LKR ${Number(f.hire_lkr || 0).toLocaleString('en-US')} ÷ ${val(f.fx_lkr)})</span><span>${usd3(c.hire)}</span></div>
                 <div class="prev-row tot"><span>Total internal cost</span><span>${usd(c.total)}</span></div>
-                <div class="prev-row"><span>Cost per guest</span><span>${usd(c.total / n)}</span></div>
-                <div class="prev-row tot"><span>Total customer price</span><span>${usd(sell)}</span></div>
-                ${m == null ? '' : (m >= -0.004 ? `<div class="margin ok"><span>Margin</span><span>${usd(m)}</span></div>` : `<div class="margin short"><span>Below selling price by</span><span>${usd(-m)}</span></div>`)}`;
-            $('q_price').innerHTML = usd(f.sell_adult_usd) + '<span>per adult</span>';
-            $('q_line').textContent = sell == null ? '' : `${p.label} — ${n} adult${n === 1 ? '' : 's'} × USD ${val(f.sell_adult_usd)} = USD ${Number(sell).toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+                <div class="prev-row tot"><span>Our cost per guest</span><span>${usd(c.total / n)}</span></div>
+                ${D.markup_pct != null ? `<div class="margin ok"><span>On a quotation at the default markup (${val(D.markup_pct)}%)</span><span>${usd(c.total / n * (1 + D.markup_pct / 100))} per guest</span></div>` : ''}`;
         };
         $('body').querySelectorAll('[data-f]').forEach(i => i.addEventListener('input', preview));
-        $('pv_n').addEventListener('change', () => { PREV = Number($('pv_n').value); preview(); });
+        $('pv_n').addEventListener('input', () => { PREV = Math.max(1, Number($('pv_n').value) || 1); preview(); });
         preview();
         $('b_checks').addEventListener('click', () => { TAB = 'checks'; history.replaceState(null, '', '?park=checks'); render(); });
         $('b_save').addEventListener('click', async () => {
@@ -224,18 +218,19 @@
         $('parkline').textContent = '';
         const parks = D.parks;
         const sizes = parks.length ? parks[0].checks.map(c => c.guests) : [];
-        const head = `<tr><th>Guests</th><th>Jeeps</th><th class="r">Gate / person</th>${parks.map(p => `<th class="r">${esc(p.label.replace(/ Jeep Safari$/, ''))} cost / person</th>`).join('')}${parks.map(p => `<th class="r">${esc(p.label.replace(/ Jeep Safari$/, ''))} margin</th>`).join('')}</tr>`;
+        const mk = D.markup_pct;
+        const head = `<tr><th>Guests</th><th>Jeeps</th><th class="r">Gate / person</th>${parks.map(p => `<th class="r">${esc(p.label.replace(/ Jeep Safari$/, ''))} cost / person</th>`).join('')}${mk != null ? parks.map(p => `<th class="r">${esc(p.label.replace(/ Jeep Safari$/, ''))} with ${val(mk)}% markup</th>`).join('') : ''}</tr>`;
         const body = sizes.map((n, i) => {
             const c0 = parks[0].checks[i];
             return `<tr><td><b>${n}</b></td><td>${c0.jeeps}</td><td class="r">${usd(c0.gate_pp_usd)}</td>`
-                + parks.map(p => { const c = p.checks[i]; return `<td class="r ${c.short_pp_usd ? 'short-v' : ''}">${usd(c.cost_pp_usd)}${c.short_pp_usd ? ' <span class="note">(USD ' + c.short_pp_usd.toFixed(2) + ' short)</span>' : ''}</td>`; }).join('')
-                + parks.map(p => { const c = p.checks[i]; return `<td class="r ${c.margin_usd < 0 ? 'short-v' : ''}">${usd(c.margin_usd)}</td>`; }).join('') + '</tr>';
+                + parks.map(p => { const c = p.checks[i]; return `<td class="r">${usd(c.cost_pp_usd)}</td>`; }).join('')
+                + (mk != null ? parks.map(p => { const c = p.checks[i]; return `<td class="r">${usd(c.cost_pp_usd * (1 + mk / 100))}</td>`; }).join('') : '') + '</tr>';
         }).join('');
         const p0 = parks[0] || {};
         $('body').innerHTML = `
-          <div class="card2"><div class="h"><b>Cost checks by party size</b><span>Tourist season · Foreign adults · USD ${esc(val(p0.sell_adult_usd))} per adult · LKR ${esc(val(p0.fx_lkr))} per USD · ${esc(val(p0.seats))} guest seats per jeep</span></div><div class="b" style="overflow-x:auto">
+          <div class="card2"><div class="h"><b>Cost checks by party size</b><span>Tourist season · Foreign adults · LKR ${esc(val(p0.fx_lkr))} per USD · ${esc(val(p0.seats))} guest seats per jeep</span></div><div class="b" style="overflow-x:auto">
             <table class="checks"><thead>${head}</thead><tbody>${body}</tbody></table>
-            <div class="note mt-2">Seven guests require a second jeep. The service charge, vehicle entry and hire apply once for each jeep used. Margin = guests × selling price − internal cost; a negative margin is flagged on the inquiry for Management.</div>
+            <div class="note mt-2">Seven guests require a second jeep. The service charge, vehicle entry and hire apply once for each jeep used. The cost per person falls as more guests share a jeep. On a quotation the safari's cost joins the tour cost and the inquiry's markup is added to the total${mk != null ? ' (default ' + val(mk) + '%, shown for reference)' : ''}.</div>
           </div></div>
           <div class="row g-3">
             <div class="col-lg-6"><div class="card2"><div class="h"><b>Rate entry and verification</b></div><div class="b note">
@@ -245,7 +240,7 @@
             </div></div></div>
             <div class="col-lg-6"><div class="card2"><div class="h"><b>Quotation behaviour</b></div><div class="b note">
               <div style="font-weight:700;color:var(--p-dark)">Internal calculation</div><div class="mb-2">Total guest tickets + per-jeep gate charges, then VAT. Jeep hire after gate VAT. Rounded after the total.</div>
-              <div style="font-weight:700;color:var(--p-dark)">Customer output</div><div class="mb-2">One all-inclusive safari line per park on the quotation screen and in the PDF. Below-cost quotations are flagged internally. An unset child selling price stops the quotation for a party with children until Management decides it.</div>
+              <div style="font-weight:700;color:var(--p-dark)">Customer output</div><div class="mb-2">One all-inclusive safari line per park on the quotation screen and in the PDF, with no amount on it. Its exact cost for the party is inside the tour price, which the agent sees per person by party size. Children are costed by their park tickets as the Child Fare Review decides.</div>
               <div style="font-weight:700;color:var(--p-dark)">Existing tour transport</div><div>The safari jeep applies only to the safari excursion. Any transfer or other travel that day stays as planned.</div>
             </div></div></div>
           </div>`;

@@ -41,8 +41,8 @@ $direct   = [];
 foreach ($c['days'] as $d) {
     foreach ($d['services'] as $s) {
         if ($s['included']) {
-            // tf-safarirate-r1: a safari is one all-inclusive line with its price ("Minneriya Jeep Safari — 2 adults × USD 75 = USD 150")
-            $included[] = !empty($s['safari']) ? $s['title'] . ' — ' . str_replace(' · ', ' (', (string) $s['note']) . (strpos((string) $s['note'], ' · ') !== false ? ')' : '') : $s['title'];
+            // tf-safarirate-r2: a safari is one all-inclusive line ("Minneriya Jeep Safari (park entrance, taxes and private jeep included)")
+            $included[] = !empty($s['safari']) ? $s['title'] . ' (' . (string) $s['note'] . ')' : $s['title'];
         } elseif ($s['note'] === 'payable direct') {
             $direct[] = $s['title'];
         }

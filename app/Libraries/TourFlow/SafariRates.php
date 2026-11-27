@@ -14,12 +14,14 @@ namespace App\Libraries\TourFlow;
  *              subtotal = guest tickets + the per-jeep gate charges
  *   jeep       the operator's hire per jeep (LKR), up to six guests a jeep; its source, contract dates and whether the
  *              supplier's agreement or invoice has confirmed it ("Awaiting supplier evidence" until then)
- *   quotation  the selling price per adult (USD 75) and per child (left open for Management), and the fixed quotation
- *              exchange rate (USD 1 = LKR 320) — for safari quotation costing only; payments keep the Daily USD Rate
+ *   quotation  the fixed quotation exchange rate (USD 1 = LKR 320) — for safari quotation costing only; payments keep the
+ *              Daily USD Rate
  *
  * Internal cost of one safari = (tickets + jeeps × (service + vehicle entry)) × (1 + VAT) + jeeps × hire, all at the fixed
- * rate, rounded once at the end. The agent sees one all-inclusive line ("Minneriya Jeep Safari — 2 adults × USD 75 =
- * USD 150"); the breakdown stays internal. A safari whose cost is above its selling price is flagged for Management.
+ * rate, rounded once at the end. tf-safarirate-r2 (27 Nov 2026, Shantha): the safari is a cost like any other — its exact
+ * cost for the party (falling as more guests share a jeep) goes into the tour cost, and the quotation's markup is added to
+ * the total. There is no fixed selling price. The agent sees one all-inclusive line ("Minneriya Jeep Safari — park entrance,
+ * taxes and private jeep included") inside the tour price; the breakdown stays internal.
  */
 final class SafariRates
 {
@@ -287,9 +289,6 @@ final class SafariRates
         if (($r['fx_lkr'] ?? 0) <= 0) {
             $g[] = 'the quotation exchange rate (LKR per USD)';
         }
-        if ($r['sell_adult_usd'] === null) {
-            $g[] = 'the selling price per adult';
-        }
         return $g;
     }
 
@@ -373,18 +372,14 @@ final class SafariRates
         return ['usd' => $usd, 'child_open' => $open, 'words' => $words];
     }
 
-    /** The cost checks by party size (foreign adults): gate per person, the park's cost per person, against the selling price. */
+    /** The cost checks by party size (foreign adults): gate per person and the park's exact cost per person (before the quotation markup). */
     public static function checks(array $r, array $sizes = [1, 2, 6, 7], ?string $season = 'tourist'): array
     {
         $out = [];
         foreach ($sizes as $n) {
-            $c    = self::cost($r, (int) $n, [], 0, $season);
-            $sell = $r['sell_adult_usd'];
+            $c = self::cost($r, (int) $n, [], 0, $season);
             $out[] = ['guests' => (int) $n, 'jeeps' => $c['jeeps'], 'gate_pp_usd' => $c['gate_pp_usd'], 'cost_pp_usd' => $c['per_person_usd'], 'total_usd' => $c['total_usd'],
-                'gate_usd' => $c['gate_usd'], 'hire_usd' => round($c['hire_usd'], 2),
-                'sell_usd' => $sell !== null ? round($sell * $n, 2) : null,
-                'margin_usd' => $sell !== null ? round($sell * $n - $c['total_usd'], 2) : null,
-                'short_pp_usd' => $sell !== null && $c['per_person_usd'] > $sell ? round($c['per_person_usd'] - $sell, 2) : null];
+                'gate_usd' => $c['gate_usd'], 'hire_usd' => round($c['hire_usd'], 2)];
         }
         return $out;
     }
@@ -437,7 +432,7 @@ final class SafariRates
         $n['vehicle_lkr']    = $money($pick('vehicle_lkr'), 'Vehicle entry per jeep (LKR)', true, 100000);
         $n['vat_pct']        = $money($pick('vat_pct'), 'VAT on the gate subtotal (%)', true, 100);
         $n['hire_lkr']       = $money($pick('hire_lkr'), 'Hire per jeep (LKR)', true, 1000000);
-        $n['sell_adult_usd'] = $money($pick('sell_adult_usd'), 'Adult selling price per person (USD)', true, 5000);
+        $n['sell_adult_usd'] = $money($pick('sell_adult_usd'), 'Adult selling price per person (USD)', false, 5000);
         $n['sell_child_usd'] = $money($pick('sell_child_usd'), 'Child selling price per person (USD)', false, 5000);
         $n['fx_lkr']         = $money($pick('fx_lkr'), 'LKR per USD', true, 10000);
         if ((float) $n['fx_lkr'] < 50) {

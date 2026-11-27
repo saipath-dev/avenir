@@ -121,7 +121,13 @@ class SafariRateController extends BaseController
                 $usd = $db->query('SELECT rate, rate_date FROM daily_usd_rate ORDER BY rate_date DESC LIMIT 1')->getRowArray();
             } catch (\Throwable $e) {
             }
-            return $this->json(['status' => 200, 'data' => ['parks' => $parks, 'cats' => SafariRates::CATS, 'seasons' => SafariRates::SEASONS, 'evidence' => SafariRates::EVIDENCE, 'daily_usd' => $usd]]);
+            $markup = null;   // tf-safarirate-r2: the company default markup, to show what a cost becomes on a quotation
+            try {
+                $m = $db->query("SELECT v FROM tf_meta WHERE k = 'markup_default_pct'")->getRowArray();
+                $markup = $m && is_numeric($m['v']) ? (float) $m['v'] : null;
+            } catch (\Throwable $e) {
+            }
+            return $this->json(['status' => 200, 'data' => ['markup_pct' => $markup, 'parks' => $parks, 'cats' => SafariRates::CATS, 'seasons' => SafariRates::SEASONS, 'evidence' => SafariRates::EVIDENCE, 'daily_usd' => $usd]]);
         } catch (\Throwable $e) {
             return $this->json(['status' => 500, 'message' => $e->getMessage()], 500);
         }
