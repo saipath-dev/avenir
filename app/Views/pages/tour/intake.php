@@ -1251,6 +1251,35 @@
     .rc-opt { border:1px solid #e4dde6; border-radius:10px; padding:10px 12px; margin-bottom:8px; }
     .rc-oh { display:flex; justify-content:space-between; gap:8px; margin-bottom:4px; }
     .rc-foot { font-size:12.5px; }
+    /* tf-roommatch-r1: Room matching in Hotel & room selection — Avenir purple header, green confirm */
+    .hp .rm { border:1px solid #e4dde6; border-radius:12px; overflow:hidden; margin-top:14px; }
+    .hp .rm-h { background:#842484; color:#fff; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .hp .rm-h b { font-size:15px; margin-right:10px; } .hp .rm-h span { font-size:12px; opacity:.92; }
+    .hp .rm-btn { background:#fff; color:#3f1a44; border:0; border-radius:8px; padding:6px 14px; font-weight:700; font-size:13px; }
+    .hp .rm-edit { background:#fff; color:#842484; }
+    .hp .rm-b { padding:12px 14px; display:flex; flex-direction:column; gap:12px; }
+    .hp .rm-set { border:1px solid #e4dde6; border-radius:10px; padding:10px 12px; }
+    .hp .rm-sh { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+    .hp .rm-sh b { color:#3f1a44; }
+    .hp .rm-ok { background:#eef7e6; color:#3f6f1f; border-radius:999px; padding:2px 10px; font-weight:700; font-size:11.5px; white-space:nowrap; }
+    .hp .rm-sug { background:#fff3df; color:#7a4d0b; border-radius:999px; padding:2px 10px; font-weight:700; font-size:11.5px; white-space:nowrap; }
+    .hp .rm-w { font-size:12px; color:#5f6f80; margin:4px 0 6px; }
+    .hp .rm-r { display:grid; grid-template-columns:minmax(0, 2.2fr) minmax(0, 1.6fr) minmax(0, .9fr) auto; gap:8px; align-items:center; padding:6px 0; border-top:1px solid #f1ecf2; }
+    .hp .rm-r:first-child { border-top:0; }
+    .hp .rm-r:has(select) { grid-template-columns:minmax(0, 2fr) minmax(0, 1.4fr) 70px 34px minmax(0, .9fr); }
+    .hp .rm-cat { font-weight:600; } .hp .rm-occ { color:#5f6f80; font-size:12.5px; }
+    .hp .rm-rate { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; } .hp .rm-rate small { display:block; font-weight:400; color:#7d8a98; font-size:11px; }
+    .hp .rm-fl { grid-column:1 / -1; display:flex; gap:6px; flex-wrap:wrap; }
+    .hp .rm-fl span { background:#fbe9e7; color:#8a2a22; border-radius:6px; padding:2px 8px; font-size:11.5px; }
+    .hp .rm-miss { color:#b23a32; }
+    .hp .rm-del { border:1px solid #efc9c5; background:#fff; color:#b23a32; border-radius:8px; height:31px; }
+    .hp .rm-add { border:1px dashed #c9b7cc; background:#fff; color:#842484; border-radius:8px; padding:5px 12px; font-size:12.5px; font-weight:600; margin-top:6px; }
+    .hp .rm-tot { text-align:right; margin-top:6px; font-size:13px; }
+    .hp .rm-foot { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .hp .rm-note { font-size:12px; color:#5f6f80; max-width:520px; }
+    .hp .rm-save { background:#78b848; border:0; color:#10230a; font-weight:700; border-radius:10px; padding:9px 16px; }
+    .hp .rm-save:hover { background:#5f9a36; color:#fff; }
+    @media (max-width:600px) { .hp .rm-r, .hp .rm-r:has(select) { grid-template-columns:1fr 1fr; } }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -1643,6 +1672,7 @@
             <div class="hp-tot"><span id="md_count">0 rooms</span><span class="hp-sep"></span><span>Night total <b id="md_total">—</b></span></div>
         </div>
         <div class="hp-note">Rates follow the selected hotel, date, category and meal plan. Published contract rates only — tactical and special-offer rates are never used on a quotation. A missing rate is shown as missing, never as zero.</div>
+        <div class="rm" id="md_match" hidden></div>
 
         <div class="hp-f mt-3"><label class="hp-l" for="md_rttext">Room wording for this booking</label>
             <input class="form-control" id="md_rttext" maxlength="120" placeholder="Leave blank to use the selected category">
@@ -4572,7 +4602,7 @@
         const nightLines = d => {   // [{opt, occ, n, rate, why}]
             const out = [], add = (opt, occ, n, typeId) => { const f = occ === 'fam' ? famOf(d) : null; out.push({ opt, occ, n, rate: d.rate_state === 'rate' ? occRate(d, occ, typeId) : null, why: f && f.rate == null ? f.why : '' }); };
             const fromRooms = (opt, rooms) => { const c = {}; (rooms || []).forEach(r => { const o = RT_OCC[r.type]; if (o) c[o] = (c[o] || 0) + 1; }); Object.keys(c).forEach(o => add(opt, o, c[o], null)); };
-            if (optsIn.length && !optChosen) optsIn.forEach(o => fromRooms('Option ' + o.no, o.rooms));
+            if (optsIn.length && !optChosen) optsIn.forEach(o => { const cm = (d.room_match || {})[o.id]; if (cm && (cm.rows || []).length) cm.rows.forEach(r => add('Option ' + o.no, r.occ, Number(r.qty) || 1, r.occ === 'fam' ? null : r.room_type_id)); else fromRooms('Option ' + o.no, o.rooms); });   // tf-roommatch-r1: the confirmed arrangement
             else if ((d.room_rows || []).length) { const c = {}; d.room_rows.forEach(r => { const k = r.occ + '|' + (r.occ === 'fam' ? '' : (r.room_type_id || '')); c[k] = c[k] || { occ: r.occ, n: 0, t: r.room_type_id }; c[k].n += Number(r.qty || 0); }); Object.values(c).forEach(x => add(null, x.occ, x.n, x.occ === 'fam' ? null : x.t)); }
             else if (optChosen) fromRooms(null, optChosen.rooms);
             else { const m = d.room_mix && Number(d.room_mix.rooms) > 0 ? d.room_mix : R; ['sgl', 'dbl', 'twn', 'tpl'].forEach(k => { if (Number(m[k]) > 0) add(null, k, Number(m[k]), null); }); }
@@ -6453,6 +6483,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         }));
         hpEl('md_rows').querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { HP.rows.splice(Number(b.dataset.del), 1); hpDrawRows(); }));
         hpTotals();
+        if (typeof rmDraw === 'function') rmDraw();   // tf-roommatch-r1: the panel opens by itself once hotel, rates and meal plan are known
     }
     function hpTotals() {
         let rooms = 0, beds = 0, tot = 0, gap = false;
@@ -6507,6 +6538,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         HP.rows = (d.room_rows || []).length ? d.room_rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ, qty: r.qty }))
             : HP_OCC.filter(([k]) => Number(m[k]) > 0).map(([k]) => ({ room_type_id: d.room_type_id ? Number(d.room_type_id) : null, room_type_name: d.room_type_name || null, occ: k, qty: Number(m[k]) }));
         if (!HP.rows.length) HP.rows = [{ room_type_id: d.room_type_id ? Number(d.room_type_id) : null, room_type_name: d.room_type_name || null, occ: 'dbl', qty: 1 }];
+        RM.key = ''; RM.edit = false;   // tf-roommatch-r1
         hpMealOptions(); hpEl('md_meal').value = d.meal_plan || '';
         hpState(); hpDrawRows();
         loadMasters();   // so the hotel search answers at once
@@ -6524,13 +6556,14 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         hpDrawRows();
         const sels = hpEl('md_rows').querySelectorAll('[data-k="occ"]'); if (sels.length) sels[sels.length - 1].focus();
     });
-    hpEl('md_ok').addEventListener('click', async () => {
+    // tf-roommatch-r1: the save is one function, so Save & confirm in Room matching can save the night first and keep the dialog open
+    async function hpSaveNight(keepOpen) {
         const id = hpEl('md_id').value, hotel = hpEl('md_hotel').value.trim(), btn = hpEl('md_ok');
-        if (!hotel) { toast('error', 'Choose the hotel.'); hpEl('md_hotel').focus(); return; }
-        if (!hpEl('md_date').value) { toast('error', 'Choose the date.'); hpEl('md_date').focus(); return; }
-        if (!hpEl('md_meal').value) { toast('error', 'Choose the meal plan.'); hpEl('md_meal').focus(); return; }
+        if (!hotel) { toast('error', 'Choose the hotel.'); hpEl('md_hotel').focus(); return false; }
+        if (!hpEl('md_date').value) { toast('error', 'Choose the date.'); hpEl('md_date').focus(); return false; }
+        if (!hpEl('md_meal').value) { toast('error', 'Choose the meal plan.'); hpEl('md_meal').focus(); return false; }
         const rows = HP.rows.filter(r => Number(r.qty) > 0);
-        if (HP.rows.length && !rows.length) { toast('error', 'Give each room row at least 1 room, or remove it.'); return; }
+        if (HP.rows.length && !rows.length) { toast('error', 'Give each room row at least 1 room, or remove it.'); return false; }
         const missing = rows.filter(r => hpRate(r) === null).map(r => (r.room_type_name || 'room') + ' ' + (HP_OCC.concat([['fam', 'Family room']]).find(o => o[0] === r.occ) || [, r.occ])[1].toLowerCase());
         btn.disabled = true;
         const j = await post('/intake/' + CURRENT.id + '/day/' + id, {
@@ -6539,11 +6572,125 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             room_rows: rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ, qty: Number(r.qty) }))
         });
         btn.disabled = false;
-        if (j.status !== 200) { toast('error', j.message); return; }
-        CURRENT = j.data; hide('#m_day'); renderDetail();
+        if (j.status !== 200) { toast('error', j.message); return false; }
+        CURRENT = j.data;
+        if (keepOpen) {
+            HP.day = (CURRENT.days || []).find(x => Number(x.id) === Number(id)) || HP.day;
+            HP.saved = { hotel: (HP.day.hotel_name_raw || '').trim(), date: HP.day.day_date || '', meal: HP.day.meal_plan || '' };
+            renderDetail(); return true;
+        }
+        hide('#m_day'); renderDetail();
         if (missing.length) toast('warning', 'Saved. No published rate for ' + missing.join(', ') + ' — the night is not costed and the quotation stays blocked until a published rate covers it or another category is chosen.');
         else toast('success', 'Hotel selection saved.');
-    });
+        return true;
+    }
+    hpEl('md_ok').addEventListener('click', () => hpSaveNight(false));
+    // ---------- tf-roommatch-r1 (27 Nov 2026, Shantha): room matching inside Hotel & room selection ----------
+    // As soon as the hotel, its published rates and the meal plan are known, the panel matches the party's rooms — each room
+    // option of the agent, or the night's own rooms — to the hotel's categories from Hotel Rates: twin, double, triple, a twin
+    // with an extra bed (at the hotel's triple rate) and the family room, with what each sleeps and its rate. It is a
+    // suggestion: Edit changes any row, and Save & confirm keeps the arrangement on the night (the option's costing uses it).
+    const RM = { edit: false, sets: [], key: '' };
+    const RM_OCC = [['sgl', 'Single'], ['dbl', 'Double'], ['twn', 'Twin'], ['tpl', 'Triple'], ['xbd', 'Twin + extra bed'], ['fam', 'Family room']];
+    const RM_COL = { sgl: 'sgl', dbl: 'dbl', twn: 'dbl', tpl: 'tpl', xbd: 'tpl', fam: 'fam' };
+    const rmMoney = v => Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const rmTypes = () => (HP.rates && HP.rates.room_types) || [];
+    const rmMeal = () => hpEl('md_meal').value;
+    const rmRate = (typeId, occ) => { const t = rmTypes().find(x => Number(x.id) === Number(typeId)), m = t && t.meals ? (t.meals[rmMeal()] || {}) : {}; const v = m[RM_COL[occ]]; return v == null ? null : Number(v); };
+    const rmFits = (t, a, k) => (t.max_occupancy == null || a + k <= Number(t.max_occupancy)) && (t.max_adults == null || a <= Number(t.max_adults)) && (t.max_children == null || k <= Number(t.max_children));
+    // one room of an option → the occupancy it needs: a family room, a triple, a twin that holds 3 in beds (extra bed), a twin, a double, a single
+    const rmNeed = r => { const kids = (r.children || []), beds = Number(r.adults || 0) + kids.filter(c => c.bed).length;
+        if (r.type === 'family') return 'fam'; if (r.type === 'triple') return 'tpl'; if (r.type === 'single') return 'sgl'; if (r.type === 'double') return beds > 2 ? 'xbd' : 'dbl'; return beds > 2 ? 'xbd' : 'twn'; };
+    // the suggestion for a set of rooms: one category for all where one prices every room (the cheapest), else each room on its cheapest category
+    function rmSuggest(rooms) {
+        const types = rmTypes().filter(t => t.priced), need = rooms.map(r => ({ r, occ: rmNeed(r), a: Number(r.adults || 0), k: (r.children || []).length }));
+        const priceOn = (t, n) => { const v = rmRate(t.id, n.occ); return v != null && (n.occ !== 'fam' || true) && rmFits(t, n.a, n.k) ? v : null; };
+        let best = null;
+        types.forEach(t => { const vs = need.map(n => priceOn(t, n)); if (vs.every(v => v != null)) { const tot = vs.reduce((s, v) => s + v, 0); if (!best || tot < best.tot) best = { t, tot }; } });
+        const rows = need.map(n => { let t = best ? best.t : null;
+            if (!t) { const c = types.map(x => ({ x, v: priceOn(x, n) })).filter(y => y.v != null).sort((p, q) => p.v - q.v)[0]; t = c ? c.x : (n.occ === 'fam' ? (types.find(x => x.room_kind === 'family' || x.room_kind === 'quad' || /family|quad/i.test(x.name)) || null) : null); }
+            return { room_type_id: t ? t.id : null, room_type_name: t ? t.name : null, occ: n.occ, qty: 1, a: n.a, k: n.k, nobed: (n.r.children || []).some(c => !c.bed) }; });
+        // the same category and occupancy together
+        const out = []; rows.forEach(r => { const o = out.find(x => x.room_type_id === r.room_type_id && x.occ === r.occ); if (o) { o.qty++; o.nobed = o.nobed || r.nobed; o.a = Math.max(o.a, r.a); o.k = Math.max(o.k, r.k); } else out.push(Object.assign({}, r)); });
+        return out;
+    }
+    function rmFlags(row) {
+        const t = rmTypes().find(x => Number(x.id) === Number(row.room_type_id)), f = [];
+        if (!t) { f.push(row.occ === 'fam' ? 'No family room in Hotel Rates for this hotel' : 'No category chosen'); return f; }
+        if (rmRate(t.id, row.occ) == null) f.push(row.occ === 'fam' ? 'No family rate (or quad rate marked as the family price) for ' + (rmMeal() || 'the meal plan') : 'No ' + (rmMeal() || '') + ' ' + (RM_OCC.find(o => o[0] === row.occ) || [, row.occ])[1].toLowerCase() + ' rate');
+        if (row.occ === 'fam') { if (t.max_occupancy == null) f.push('capacity not entered'); if (!t.bed_config) f.push('beds not entered'); if (row.nobed && !t.child_share) f.push('child-sharing rule not entered'); if (row.nobed && t.child_share === 'not_allowed') f.push('the hotel does not allow a child to share a bed'); }
+        if (row.a != null && !rmFits(t, row.a, row.k || 0)) f.push('too small for ' + (row.a + (row.k || 0)) + ' guests');
+        if (row.occ === 'xbd' && Number(t.extra_bed_allowed) === 0) f.push('the hotel allows no extra bed in this category');
+        if (row.nobed && row.occ !== 'fam') { const m = (t.meals || {})[rmMeal()] || {}; if (m.cnb == null) f.push('child without a bed: no charge in the contract'); }
+        return f;
+    }
+    function rmBuild() {
+        const opts = ((CURRENT && CURRENT.room_options) || []).filter(o => o.included), chosen = opts.find(o => o.chosen), saved = (HP.day && HP.day.room_match) || {};
+        const sets = (chosen ? [chosen] : opts).map(o => ({ option_id: Number(o.id), label: 'Option ' + o.no + ' · ' + o.name, words: o.words || [], rooms: o.rooms || [] }));
+        if (!sets.length) {
+            // no room options: the night's own rooms as they stand in the room rows above
+            sets.push({ option_id: 0, label: 'This night\'s rooms', words: [], rooms: null });
+        }
+        RM.sets = sets.map(s => { const sv = saved[s.option_id] || saved[String(s.option_id)];
+            const rows = sv && sv.rows && sv.rows.length ? sv.rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.extra_bed ? 'xbd' : r.occ, qty: r.qty }))
+                : (s.rooms ? rmSuggest(s.rooms) : HP.rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ, qty: r.qty })));
+            return Object.assign(s, { rows, saved: sv || null, edited: false }); });
+    }
+    function rmTotal(rows) { let t = 0, gap = false; rows.forEach(r => { const v = rmRate(r.room_type_id, r.occ); if (v == null) gap = true; else t += v * (Number(r.qty) || 0); }); return gap ? null : t; }
+    function rmDraw() {
+        const box = hpEl('md_match'); if (!box) return;
+        const ready = HP.rates && HP.rates.state === 'rate' && rmMeal() && rmTypes().length;
+        if (!ready) { box.hidden = true; return; }
+        box.hidden = false;
+        const key = [hpEl('md_hotel').value.trim(), hpEl('md_date').value, rmMeal()].join('|');
+        if (RM.key !== key) { RM.key = key; RM.edit = false; rmBuild(); }
+        const hotel = (HP.rates.hotel && HP.rates.hotel.name) || hpEl('md_hotel').value.trim(), cur = HP.rates.currency || 'USD';
+        const typeOpts = r => '<option value="">— category —</option>' + rmTypes().map(t => `<option value="${t.id}" ${Number(t.id) === Number(r.room_type_id) ? 'selected' : ''}>${esc(t.name)}${t.max_occupancy != null ? ' · up to ' + t.max_occupancy : ''}</option>`).join('');
+        const setHtml = (s, si) => { const tot = rmTotal(s.rows), anyFlag = s.rows.some(r => rmFlags(r).length);
+            return `<div class="rm-set"><div class="rm-sh"><b>${esc(s.label)}</b>${s.saved ? `<span class="rm-ok">Confirmed${s.saved.by ? ' by ' + esc(s.saved.by) : ''}</span>` : `<span class="rm-sug">${anyFlag ? 'Suggested — check the flags' : 'Suggested'}</span>`}</div>
+                ${s.words.length ? `<div class="rm-w">${s.words.map(esc).join(' · ')}</div>` : ''}
+                <div class="rm-rows">${s.rows.map((r, ri) => { const v = rmRate(r.room_type_id, r.occ), fl = rmFlags(r), t = rmTypes().find(x => Number(x.id) === Number(r.room_type_id));
+                    return `<div class="rm-r" data-s="${si}" data-r="${ri}">${RM.edit
+                        ? `<select class="form-select form-select-sm" data-rk="room_type_id">${typeOpts(r)}</select><select class="form-select form-select-sm" data-rk="occ">${RM_OCC.map(([k, w]) => `<option value="${k}" ${r.occ === k ? 'selected' : ''}>${w}</option>`).join('')}</select><input type="number" class="form-control form-control-sm" min="1" max="20" data-rk="qty" value="${Number(r.qty) || 1}"><button type="button" class="rm-del" data-rdel="1" aria-label="Remove this row"><i class="bi bi-trash3"></i></button>`
+                        : `<span class="rm-cat">${esc(r.qty)} × ${esc(t ? t.name : (r.room_type_name || 'no category'))}</span><span class="rm-occ">${esc((RM_OCC.find(o => o[0] === r.occ) || [, r.occ])[1])}${t && t.max_occupancy != null ? ' · sleeps ' + esc(t.max_occupancy) : ''}${t && t.bed_config ? ' · ' + esc(t.bed_config) : ''}</span>`}
+                        <span class="rm-rate">${v == null ? '<b class="rm-miss">no rate</b>' : esc(cur) + ' ' + rmMoney(v)}${r.occ === 'xbd' ? '<small>triple rate</small>' : ''}</span>
+                        ${fl.length ? `<div class="rm-fl">${fl.map(x => `<span>${esc(x)}</span>`).join('')}</div>` : ''}</div>`; }).join('')}</div>
+                ${RM.edit ? `<button type="button" class="rm-add" data-radd="${si}"><i class="bi bi-plus-lg"></i> Add a room</button>` : ''}
+                <div class="rm-tot">${tot == null ? '<span class="rm-miss">Night total: a rate is missing</span>' : 'Night total <b>' + esc(cur) + ' ' + rmMoney(tot) + '</b>'}</div></div>`; };
+        box.innerHTML = `<div class="rm-h"><div><b>Room matching</b><span>${esc(hotel)} · ${esc(rmMeal())} · from Hotel Rates</span></div>
+                <div class="rm-acts">${RM.edit ? '<button type="button" class="rm-btn" id="rm_reset">Back to the suggestion</button>' : '<button type="button" class="rm-btn rm-edit" id="rm_edit"><i class="bi bi-pencil-square"></i> Edit</button>'}</div></div>
+            <div class="rm-b">${RM.sets.map(setHtml).join('')}
+                <div class="rm-foot"><span class="rm-note">Suggested from each category's rates and what it sleeps. Review it, Edit any row, then save. Nothing is booked here.</span>
+                <button type="button" class="rm-save" id="rm_save"><i class="bi bi-check2-circle"></i> Save &amp; confirm room arrangement</button></div></div>`;
+        const ed = hpEl('rm_edit'); if (ed) ed.addEventListener('click', () => { RM.edit = true; rmDraw(); });
+        const rs = hpEl('rm_reset'); if (rs) rs.addEventListener('click', () => { RM.sets.forEach(s => { s.rows = s.rooms ? rmSuggest(s.rooms) : HP.rows.map(r => Object.assign({}, r)); s.edited = false; }); RM.edit = false; rmDraw(); });
+        box.querySelectorAll('[data-rk]').forEach(el => el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', () => { const w = el.closest('[data-s]'), s = RM.sets[Number(w.dataset.s)], r = s.rows[Number(w.dataset.r)];
+            if (el.dataset.rk === 'qty') r.qty = Math.max(1, Math.min(20, parseInt(el.value, 10) || 1));
+            else if (el.dataset.rk === 'room_type_id') { r.room_type_id = el.value ? Number(el.value) : null; const t = rmTypes().find(x => Number(x.id) === r.room_type_id); r.room_type_name = t ? t.name : null; }
+            else r.occ = el.value;
+            s.edited = true; if (el.dataset.rk !== 'qty') rmDraw(); else { const tt = rmTotal(s.rows); w.closest('.rm-set').querySelector('.rm-tot').innerHTML = tt == null ? '<span class="rm-miss">Night total: a rate is missing</span>' : 'Night total <b>' + esc(cur) + ' ' + rmMoney(tt) + '</b>'; } }));
+        box.querySelectorAll('[data-rdel]').forEach(b => b.addEventListener('click', () => { const w = b.closest('[data-s]'), s = RM.sets[Number(w.dataset.s)]; s.rows.splice(Number(w.dataset.r), 1); s.edited = true; rmDraw(); }));
+        box.querySelectorAll('[data-radd]').forEach(b => b.addEventListener('click', () => { const s = RM.sets[Number(b.dataset.radd)], last = s.rows[s.rows.length - 1] || {}; s.rows.push({ room_type_id: last.room_type_id || null, room_type_name: last.room_type_name || null, occ: 'twn', qty: 1 }); s.edited = true; rmDraw(); }));
+        hpEl('rm_save').addEventListener('click', rmSave);
+    }
+    async function rmSave() {
+        const bad = RM.sets.find(s => !s.rows.length || s.rows.some(r => !r.room_type_id));
+        if (bad) { toast('error', bad.label + ': every room needs a category of the hotel.'); return; }
+        // the night's hotel, date and meal plan are saved first when they changed, so the arrangement belongs to the hotel shown
+        if (!hpSame() || !HP.day.hotel_name_raw) { if (!(await hpSaveNight(true))) return; }
+        const noOpt = RM.sets.length === 1 && RM.sets[0].option_id === 0;
+        if (noOpt) {   // the night without options: the arrangement is the night's own room rows
+            HP.rows = RM.sets[0].rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ === 'xbd' ? 'tpl' : r.occ, qty: Number(r.qty) || 1 }));
+            hpDrawRows();
+        }
+        const j = await post('/intake/' + CURRENT.id + '/day/' + HP.day.id + '/room_match', { matches: RM.sets.map(s => ({ option_id: s.option_id, edited: s.edited ? 1 : 0,
+            rows: s.rows.map(r => ({ room_type_id: r.room_type_id, room_type_name: r.room_type_name, occ: r.occ === 'xbd' ? 'tpl' : r.occ, extra_bed: r.occ === 'xbd' ? 1 : 0, qty: Number(r.qty) || 1 })) })) });
+        if (j.status !== 200) { toast('error', j.message || 'Not saved.'); return; }
+        CURRENT = j.data; HP.day = (CURRENT.days || []).find(x => Number(x.id) === Number(HP.day.id)) || HP.day; RM.key = ''; RM.edit = false; rmDraw();
+        if (noOpt) { await hpSaveNight(false); return; }
+        renderDetail(); toast('success', 'Room arrangement saved and confirmed for this night.');
+    }
+
 
     // ---------- a special rate per kilometre ----------
     function openVehicleRate(id) {

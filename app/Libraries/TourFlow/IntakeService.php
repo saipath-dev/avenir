@@ -520,6 +520,7 @@ final class IntakeService
         foreach ($it['excursions'] as $x) {
             $excByDay[(int) $x['day_no']][] = $x;
         }
+        $matches = $this->roomMatches((int) $it['id']);
         foreach ($it['days'] as &$d) {
             $d['services']   = $byDay[(int) $d['day_no']] ?? [];
             $d['sectors']    = $legsByDay[(int) $d['day_no']] ?? [];
@@ -527,6 +528,7 @@ final class IntakeService
             $d['room_rows']  = $it['day_rooms'][(int) $d['day_no']] ?? [];
             $d['room_mix']   = self::roomMix($it, (int) $d['day_no']);
             $d['room_types'] = json_decode((string) ($d['room_types_json'] ?? ''), true) ?: [];
+            $d['room_match'] = $matches[(int) $d['id']] ?? [];   // tf-roommatch-r1: the confirmed room arrangement per room option
             $d['rate_supp']  = json_decode((string) ($d['rate_supp_json'] ?? ''), true) ?: [];
             // the panel's answer where it has moved away from the figure kept on the night
             $d['rate_drift'] = json_decode((string) ($d['rate_drift_json'] ?? ''), true) ?: null;
@@ -2308,7 +2310,10 @@ final class IntakeService
             $out['note']       = trim(($plan['name'] ?? 'Contract rate') . (!empty($plan['season']) ? ' · ' . $plan['season'] : '') . ($market ? ' · market ' . $market : ''));
             $out['currency']   = $on['currency'] ?? ($snap['currency'] ?? null);
             $out['plan']       = $plan['name'] ?? null;
-            $out['room_types'] = array_map(static fn ($t) => ['id' => (int) $t['id'], 'name' => (string) $t['name'], 'priced' => !empty($t['priced']), 'per_unit' => !empty($t['per_unit']), 'meals' => (array) ($t['meals'] ?? [])], $types);
+            // tf-roommatch-r1: with each category's own details, so the room-matching panel can check what a room sleeps
+            $out['room_types'] = array_map(static fn ($t) => ['id' => (int) $t['id'], 'name' => (string) $t['name'], 'priced' => !empty($t['priced']), 'per_unit' => !empty($t['per_unit']), 'meals' => (array) ($t['meals'] ?? []),
+                'max_adults' => $t['max_adults'] ?? null, 'max_children' => $t['max_children'] ?? null, 'max_occupancy' => $t['max_occupancy'] ?? null, 'bed_config' => $t['bed_config'] ?? null,
+                'room_kind' => $t['room_kind'] ?? null, 'child_share' => $t['child_share'] ?? null, 'child_share_usd' => $t['child_share_usd'] ?? null, 'quad_is_family' => (int) ($t['quad_is_family'] ?? 0)], $types);
             $out['normal_id']  = $snap['room_type_id'] ?? null;
             $order = ['RO', 'BB', 'HB', 'FB', 'AI'];
             $out['meals'] = array_values(array_filter($order, static fn ($m) => isset($meals[$m])));
@@ -6730,6 +6735,103 @@ final class IntakeService
      * too small for the party, answers with the question staff must resolve (enter the verified details, or agree an alternative).
      * $party = ['adults' => n, 'children' => n] of the guests in that family room, when known.
      */
+    // =====================================================================
+    //  tf-roommatch-r1 (27 Nov 2026, Shantha): the room arrangement of a night, matched and confirmed in Hotel & room selection.
+    //  One record per night and room option (option 0 = the night without options): the rows of the hotel's categories the
+    //  option's rooms take — category, occupancy, rooms, and whether a twin takes an extra bed (priced at the hotel's triple
+    //  rate). The panel suggests it from Hotel Rates; a person reviews, edits and confirms it here. The option's costing uses
+    //  the confirmed rows instead of the night's single category.
+    // =====================================================================
+    private ?bool $matchReady = null;
+
+    private function ensureRoomMatch(): bool
+    {
+        if ($this->matchReady !== null) {
+            return $this->matchReady;
+        }
+        try {
+            $this->db->query("CREATE TABLE IF NOT EXISTS `tf_intake_room_match` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                `intake_id` INT UNSIGNED NOT NULL,
+                `day_id` INT UNSIGNED NOT NULL,
+                `option_id` INT UNSIGNED NOT NULL DEFAULT 0,
+                `rows_json` TEXT NOT NULL,
+                `status` VARCHAR(12) NOT NULL DEFAULT 'confirmed',
+                `edited` TINYINT(1) NOT NULL DEFAULT 0,
+                `confirmed_by` VARCHAR(100) NULL,
+                `confirmed_at` DATETIME NULL,
+                PRIMARY KEY (`id`), UNIQUE KEY `u_day_opt` (`day_id`, `option_id`), KEY `k_intake` (`intake_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            $this->matchReady = true;
+        } catch (\Throwable $e) {
+            $this->matchReady = false;
+        }
+        return $this->matchReady;
+    }
+
+    /** day_id => option_id => {rows, status, edited, by, at} */
+    public function roomMatches(int $intakeId): array
+    {
+        $out = [];
+        if (!$this->ensureRoomMatch()) {
+            return $out;
+        }
+        foreach ($this->db->query('SELECT * FROM tf_intake_room_match WHERE intake_id = ?', [$intakeId])->getResultArray() as $r) {
+            $out[(int) $r['day_id']][(int) $r['option_id']] = ['rows' => json_decode((string) $r['rows_json'], true) ?: [], 'status' => (string) $r['status'],
+                'edited' => (int) $r['edited'], 'by' => $r['confirmed_by'], 'at' => $r['confirmed_at']];
+        }
+        return $out;
+    }
+
+    /**
+     * Save and confirm the room arrangement of one night: $matches = [{option_id, rows:[{room_type_id, room_type_name, occ, qty, extra_bed}], edited}].
+     * A night with no options saves option 0. Returns the inquiry.
+     */
+    public function saveRoomMatch(int $id, int $dayId, array $matches): array
+    {
+        $this->assertOpen($id);
+        if (!$this->ensureRoomMatch()) {
+            throw new \RuntimeException('The room arrangement could not be stored (database).');
+        }
+        $day = $this->db->query('SELECT id, day_no, hotel_name_raw FROM tf_intake_day WHERE id = ? AND intake_id = ?', [$dayId, $id])->getRowArray();
+        if (!$day) {
+            throw new \InvalidArgumentException('That night is not on this inquiry.');
+        }
+        $optIds = [0 => true];
+        foreach ($this->db->query('SELECT id FROM tf_intake_roomopt WHERE intake_id = ?', [$id])->getResultArray() as $o) {
+            $optIds[(int) $o['id']] = true;
+        }
+        $said = [];
+        foreach ($matches as $m) {
+            $oid = (int) ($m['option_id'] ?? 0);
+            if (!isset($optIds[$oid])) {
+                throw new \InvalidArgumentException('Unknown room option.');
+            }
+            $rows = [];
+            foreach ((array) ($m['rows'] ?? []) as $r) {
+                $occ = (string) ($r['occ'] ?? '');
+                $qty = (int) ($r['qty'] ?? 0);
+                if (!in_array($occ, ['sgl', 'dbl', 'twn', 'tpl', 'fam'], true) || $qty < 1 || $qty > 20) {
+                    throw new \InvalidArgumentException('Each room row needs an occupancy (single, double, twin, triple or family) and 1–20 rooms.');
+                }
+                $rows[] = ['room_type_id' => self::intOrNull($r['room_type_id'] ?? null), 'room_type_name' => self::cut($r['room_type_name'] ?? null, 120),
+                    'occ' => $occ, 'qty' => $qty, 'extra_bed' => !empty($r['extra_bed']) && $occ === 'tpl' ? 1 : 0];
+            }
+            if ($rows === []) {
+                throw new \InvalidArgumentException('An arrangement needs at least one room row.');
+            }
+            $this->db->query('INSERT INTO tf_intake_room_match (intake_id, day_id, option_id, rows_json, status, edited, confirmed_by, confirmed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE rows_json = VALUES(rows_json), status = VALUES(status), edited = VALUES(edited), confirmed_by = VALUES(confirmed_by), confirmed_at = VALUES(confirmed_at)',
+                [$id, $dayId, $oid, json_encode($rows), 'confirmed', !empty($m['edited']) ? 1 : 0, $this->user, date('Y-m-d H:i:s')]);
+            $said[] = ($oid ? 'option ' . $oid : 'the night') . ': ' . implode(' + ', array_map(static fn ($r) => $r['qty'] . ' × ' . ($r['room_type_name'] ?: 'room') . ' ' . ($r['extra_bed'] ? 'twin + extra bed' : $r['occ']), $rows));
+        }
+        try {
+            $this->activity()->record('intake', $id, $id, null, 'rooms', 'Room arrangement confirmed for night ' . (int) $day['day_no'] . ' (' . trim((string) $day['hotel_name_raw']) . ')', [['what' => 'Room arrangement, night ' . (int) $day['day_no'], 'from' => null, 'to' => mb_substr(implode('; ', $said), 0, 500)]]);
+        } catch (\Throwable $e) {
+        }
+        return $this->get($id);
+    }
+
     public static function familyRoom(array $d, ?int $pickedId = null, ?array $party = null): array
     {
         $meal  = strtoupper((string) ($d['meal_plan'] ?? ''));

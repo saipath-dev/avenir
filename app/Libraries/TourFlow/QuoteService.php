@@ -1123,6 +1123,16 @@ final class QuoteService
         $m = ['sgl' => $mix['sgl'], 'dbl' => $mix['dbl'], 'twn' => $mix['twn'], 'tpl' => $mix['tpl'], 'rooms' => array_sum($mix), 'sleeps' => $guests, 'pax' => $guests, 'source' => 'option', 'groups' => []];
         foreach ($it['days'] as &$d) {
             $rows = [];
+            // tf-roommatch-r1: the night's confirmed room arrangement for this option, where one is saved — its categories and occupancies
+            $cm = $d['room_match'][(int) ($opt['id'] ?? 0)] ?? null;
+            if (is_array($cm) && ($cm['status'] ?? '') === 'confirmed' && !empty($cm['rows'])) {
+                foreach ($cm['rows'] as $r) {
+                    $rows[] = ['occ' => (string) $r['occ'], 'qty' => (int) $r['qty'], 'room_type_id' => $r['room_type_id'] !== null ? (int) $r['room_type_id'] : null, 'room_type_name' => $r['room_type_name'] ?? null];
+                }
+                $d['room_rows'] = $rows;
+                $d['room_mix']  = $m;
+                continue;
+            }
             foreach ((array) ($opt['rooms'] ?? []) as $rm) {
                 $o = $occ[$rm['type'] ?? ''] ?? null;
                 if ($o === null) {

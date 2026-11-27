@@ -2477,6 +2477,17 @@ class TourIntakeController extends BaseController
         return is_string($made) ? $made : null;
     }
 
+    // tf-roommatch-r1: POST intake/(:num)/day/(:num)/room_match {matches:[{option_id, rows, edited}]} — save and confirm a night's room arrangement
+    public function roomMatch($id, $dayId)
+    {
+        try {
+            $b = $this->body();
+            return $this->json(['status' => 200, 'message' => 'Room arrangement saved and confirmed.', 'data' => $this->svc()->saveRoomMatch((int) $id, (int) $dayId, (array) ($b['matches'] ?? []))]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
     // tf-safari-r2: GET intake/(:num)/safari_slip/(:num) — the safari payment slip(s) of one safari line, printable
     public function safariSlip($id, $serviceId)
     {
