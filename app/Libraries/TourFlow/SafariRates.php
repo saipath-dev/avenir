@@ -101,6 +101,7 @@ final class SafariRates
                 PRIMARY KEY (`id`), KEY `k_rate` (`rate_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
             self::seed($db);
+            self::menu($db);
             self::$ready[$k] = true;
         } catch (\Throwable $e) {
             log_message('error', 'SafariRates::ensure: ' . $e->getMessage());
@@ -143,6 +144,31 @@ final class SafariRates
             if ($place) {
                 self::syncPlace($db, (int) $place['id'], 6, 6.0, 12.0);
             }
+        }
+    }
+
+    /**
+     * The sidebar entry (Master Files, beside Place to Visit / Entrance Fee Master), added once. Its privilege is given to
+     * exactly the groups and people who hold Places & Entrance Fees, so nobody gains or loses access by it.
+     */
+    private static function menu($db): void
+    {
+        try {
+            if ($db->query('SELECT id FROM menu_list WHERE url = ? AND del = 0', [self::URL])->getRowArray()) {
+                return;
+            }
+            $em = $db->query("SELECT id, cat_id, order_id FROM menu_list WHERE url = 'master_files/entrance_master' AND del = 0 ORDER BY id LIMIT 1")->getRowArray();
+            if (!$em) {
+                return;
+            }
+            $db->query('INSERT INTO menu_list (cat_id, name, user, del, url, order_id, show_in_menu_bar) VALUES (?, ?, 0, 0, ?, ?, 0)',
+                [(int) $em['cat_id'], 'Safari Rate Master', self::URL, (int) $em['order_id']]);
+            $mid = (int) $db->insertID();
+            if ($mid > 0) {
+                $db->query('INSERT INTO user_privileges (group_id, user_id, menu_id) SELECT group_id, user_id, ? FROM user_privileges WHERE menu_id = ?', [$mid, (int) $em['id']]);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'SafariRates::menu: ' . $e->getMessage());
         }
     }
 

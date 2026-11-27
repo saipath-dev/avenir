@@ -465,6 +465,7 @@ class HomeDeskController extends BaseController
             'activities' => ['title' => 'Activities & Suppliers', 'short' => 'activity and supplier', 'icon' => 'bi-camera', 'tone' => 'purple', 'tint' => 'rose', 'items' => [
                 // tf-stage1 (29 Oct 2026): the old Place to Visit list and Excursion Rates are off the menu — their pages still open by address
                 ['url' => 'master_files/entrance_master',   'label' => 'Place to Visit / Entrance Fee Master', 'icon' => 'bi-ticket-detailed-fill'],
+                ['url' => 'master_files/entrance_master/safari', 'label' => 'Safari Rate Master', 'icon' => 'bi-binoculars'],   // tf-safarirate-r1
                 ['url' => 'master_files/paid_services',     'label' => 'Paid Activities & Services',           'icon' => 'bi-person-walking'],
                 ['url' => 'master_files/meal_master',       'label' => 'Meal Master',                          'icon' => 'bi-cup-hot-fill'],
                 ['url' => 'master_files/free_visits',       'label' => 'Free Visits',                          'icon' => 'bi-star-fill'],

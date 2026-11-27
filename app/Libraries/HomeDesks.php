@@ -32,6 +32,7 @@ final class HomeDesks
                 ['url' => 'tour/manage', 'label' => 'Tour Desk admin', 'icon' => 'bi-shield-lock', 'sub' => 'cancel, restore, remove'],
                 ['label' => 'Tour masters', 'icon' => 'bi-collection', 'items' => [
                     ['url' => 'master_files/entrance_master', 'label' => 'Places & entrance fees', 'icon' => 'bi-bank'],
+                    ['url' => 'master_files/entrance_master/safari', 'gate' => 'master_files/entrance_master', 'label' => 'Safari Rate Master', 'icon' => 'bi-binoculars', 'sub' => 'Minneriya & Yala'],   // tf-safarirate-r1
                     ['url' => 'master_files/free_visits', 'label' => 'Free visits', 'icon' => 'bi-geo-alt'],
                     ['url' => 'master_files/paid_services', 'label' => 'Paid activities & services', 'icon' => 'bi-ticket-perforated'],
                     ['url' => 'master_files/meal_master', 'label' => 'Meal master', 'icon' => 'bi-cup-hot'],
