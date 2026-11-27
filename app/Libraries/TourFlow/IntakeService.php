@@ -2203,8 +2203,11 @@ final class IntakeService
         }
         $words = array_column($this->roomOptions($id, $it), 'words', 'id')[(int) $opt['id']] ?? [];
         $this->db->transStart();
-        foreach (($it['days'] ?? []) as $d) {
-            $famId = self::familyRoom($d)['id'];   // tf-famroom-r1: the hotel's verified family room, if it has one — never guessed from a name
+        // tf-agree-r3 (27 Nov 2026, Shantha): an option with a family room is not copied onto the nights — the team decides the
+        // family's rooms at each hotel (family room, doubles, triples or a mix) or enters a manual agreement
+        $hasFam = (bool) array_filter($rooms, static fn ($rm) => ($rm['type'] ?? '') === 'family');
+        foreach (($hasFam ? [] : ($it['days'] ?? [])) as $d) {
+            $famId = null;
             $rows = [];
             foreach ($rooms as $rm) {
                 $o = $occ[$rm['type']] ?? null;
@@ -6846,7 +6849,7 @@ final class IntakeService
         $hotel = trim((string) ($d['hotel_name_raw'] ?? '')) ?: 'the hotel';
         $cands = array_values(array_filter($types, static fn ($t) => isset($t['meals'][$meal]['fam']) && $t['meals'][$meal]['fam'] !== null && $t['meals'][$meal]['fam'] !== ''));
         if ($cands === []) {
-            return ['id' => null, 'name' => null, 'rate' => null, 'issue' => "{$hotel} has no verified Family Room for {$meal} on these dates: no approved Family Room rate is on file. Enter the hotel's family room (its capacity, beds and rate from the contract) in Hotel Rates and have it approved — or agree an alternative with the agent (another room option or another hotel)."];
+            return ['id' => null, 'name' => null, 'rate' => null, 'issue' => "{$hotel} has no Family Room rate for {$meal} on these dates. Choose doubles, triples or a mix for the family in Hotel & room selection, or enter a manual agreement (Avenir responsibility)."];
         }
         $pick = null;
         foreach ($cands as $t) {
@@ -6854,44 +6857,13 @@ final class IntakeService
                 $pick = $t;
             }
         }
-        if ($pick === null && count($cands) === 1) {
-            $pick = $cands[0];
-        }
+        // tf-agree-r3 (27 Nov 2026, Shantha): no family room is picked automatically — the team chooses the room at each hotel
         if ($pick === null) {
-            return ['id' => null, 'name' => null, 'rate' => null, 'issue' => "{$hotel} has more than one room with a Family Room rate (" . implode(', ', array_map(static fn ($t) => (string) $t['name'], $cands)) . "). Choose which one the family takes in Hotel & room selection for the night."];
+            return ['id' => null, 'name' => null, 'rate' => null, 'issue' => "{$hotel}: the family's room is not chosen yet (rooms with a family rate: " . implode(', ', array_map(static fn ($t) => (string) $t['name'], $cands)) . "). Choose the room — or doubles, triples or a mix — in Hotel & room selection, or enter a manual agreement."];
         }
         $name = (string) $pick['name'];
-        $miss = [];
-        if (($pick['max_occupancy'] ?? null) === null) {
-            $miss[] = 'its capacity (Max occ.)';
-        }
-        if (($pick['bed_config'] ?? null) === null) {
-            $miss[] = 'its beds';
-        }
-        if (array_key_exists('child_share', $pick) && ($pick['child_share'] ?? null) === null) {
-            $miss[] = 'how a child sharing a bed is charged';   // tf-roomkind-r1
-        }
-        if ($miss !== []) {
-            return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name}: not recorded yet — " . implode(', ', $miss) . '. Enter them from the contract in Hotel Rates → Room types, so the room can be checked against the party.'];
-        }
-        if ($party !== null) {
-            $a = (int) ($party['adults'] ?? 0);
-            $c = (int) ($party['children'] ?? 0);
-            $tooMany = [];
-            if ($a + $c > (int) $pick['max_occupancy']) {
-                $tooMany[] = 'it holds up to ' . (int) $pick['max_occupancy'] . ' guests';
-            }
-            if (($pick['max_adults'] ?? null) !== null && $a > (int) $pick['max_adults']) {
-                $tooMany[] = 'up to ' . (int) $pick['max_adults'] . ' adults';
-            }
-            if (($pick['max_children'] ?? null) !== null && $c > (int) $pick['max_children']) {
-                $tooMany[] = 'up to ' . (int) $pick['max_children'] . ' children';
-            }
-            if ($tooMany !== []) {
-                return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => null, 'issue' => "{$hotel} — {$name} is too small for this family: " . implode(', ', $tooMany) . ", but the option puts {$a} adult(s) and {$c} child(ren) in it. Agree an alternative with the agent, or correct the room's capacity in Hotel Rates if the contract allows more."];
-            }
-        }
-        return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => (float) $pick['meals'][$meal]['fam'], 'issue' => null, 'beds' => (string) $pick['bed_config'], 'capacity' => (int) $pick['max_occupancy']];
+        // tf-agree-r3: capacity, beds, occupancy and child pricing are the team's decision for a family — recorded when known, never a stop
+        return ['id' => (int) $pick['id'], 'name' => $name, 'rate' => (float) $pick['meals'][$meal]['fam'], 'issue' => null, 'beds' => $pick['bed_config'] ?? null, 'capacity' => isset($pick['max_occupancy']) ? (int) $pick['max_occupancy'] : null];
     }
 
     public static function roomRowRate(array $d, array $r): ?float

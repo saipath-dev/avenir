@@ -345,11 +345,7 @@ final class QuoteService
                 $blockers[]    = ['code' => 'hotel_meal_' . $d['id'], 'label' => "Night {$n} ({$hotel}): meal plan not stated."];
             }
             $state = (string) ($d['rate_state'] ?? '');
-            // tf-famroom-r1: a family room is asked for, but this hotel has no published plan for the night at all — the family room
-            // is its own question too (the plan's rates alone would not make a family room)
-            if ($needFam && $state !== 'rate') {
-                $famAdd($d, $n, $hotel, $hotel . ' has no approved published rate for these dates yet, so no Family Room can be verified. When the contract is entered, enter the family room too (capacity, beds, Family Room rate) — or agree an alternative with the agent.');
-            }
+            // tf-agree-r3 (27 Nov 2026, Shantha): no separate family-room stop — the team decides the family's rooms; the published-rate check below still applies
             if (in_array($state, ['not_in_panel', 'no_supplier'], true)) {
                 $line['state'] = 'missing';
                 $line['why']   = $state === 'no_supplier' ? 'No supplier record.' : 'Not in the Hotel Rates panel.';
@@ -425,7 +421,7 @@ final class QuoteService
                             continue;
                         }
                         $r['room_type_id'] = $fr['id'];
-                        $line['lines'][] = ['kind' => 'fam', 'label' => $fr['name'] . ' — Family Room (' . $fr['beds'] . ', up to ' . $fr['capacity'] . ')', 'qty' => (int) $r['qty'], 'rate' => (float) $fr['rate'], 'amount' => round((int) $r['qty'] * (float) $fr['rate'], 2)];
+                        $line['lines'][] = ['kind' => 'fam', 'label' => $fr['name'] . ' — Family Room' . (($fr['beds'] ?? null) || ($fr['capacity'] ?? null) ? ' (' . implode(', ', array_filter([$fr['beds'] ?? null, ($fr['capacity'] ?? null) ? 'up to ' . $fr['capacity'] : null])) . ')' : ''), 'qty' => (int) $r['qty'], 'rate' => (float) $fr['rate'], 'amount' => round((int) $r['qty'] * (float) $fr['rate'], 2)];
                         $amount += (int) $r['qty'] * (float) $fr['rate'];
                         continue;
                     }
@@ -441,7 +437,7 @@ final class QuoteService
                 }
                 if ($famShort && $short === []) {
                     $line['state'] = 'missing';
-                    $line['why']   = 'No verified Family Room at this hotel for the night.';
+                    $line['why']   = 'The family\'s room is not priced for the night — choose the rooms or enter a manual agreement.';
                     $hotels[] = $line;
                     continue;
                 }
@@ -1203,9 +1199,9 @@ final class QuoteService
                 $tid = $d['room_type_id'] ?? null;
                 $tname = null;
                 if ($o === 'fam') {
-                    // tf-famroom-r1: which of the hotel's rooms is the family room is settled in costing() from Hotel Rates — never by its name
+                    // tf-agree-r3: the family's rooms at this hotel are the team's decision — a family room with no room chosen is left unpriced
                     $tid = null;
-                    $tname = 'Family Room';
+                    $tname = 'Family Room (room not chosen)';
                 }
                 $rows[] = ['occ' => $o, 'qty' => 1, 'room_type_id' => $tid, 'room_type_name' => $tname];
             }

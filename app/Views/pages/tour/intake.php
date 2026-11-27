@@ -2126,6 +2126,10 @@
         { title:'Agent & booking', keys:['agent_name','agent_contact','agent_email','agent_country','agent_reference','tour_name','hotel_class'] },
         { title:'Dates & party',   keys:['arrival_date','departure_date','nights','pax_total','pax_adults','pax_children','rooms_note','meal_basis','arrival_flight','departure_flight'] }
     ];
+    // tf-agree-r3 (27 Nov 2026, Shantha): a night priced by a manual agreement (Avenir responsibility) shows its agreed total everywhere — never "Missing"
+    window.tfAgOf = d => { const L = (d && d.agreements) || []; if (!L.length) return null; const ch = ((typeof CURRENT !== 'undefined' && CURRENT && CURRENT.room_options) || []).find(o => o.chosen), oid = ch ? Number(ch.id) : null;
+        return L.find(a => oid != null && Number(a.option_id) === oid) || L.find(a => a.option_id == null) || null; };
+    window.tfAgTxt = a => (a.currency || 'USD') + ' ' + Number(a.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const RATE = {
         rate:          ['pill-green','Published rate'],
         no_plan:       ['pill-red','Published rate missing'],
@@ -2795,6 +2799,8 @@
             return p.length ? `${cur} ${p.join(' / ')}` : '';
         };
         function nightRate(d) {
+            const AGn = window.tfAgOf(d);
+            if (AGn) return `<div class="rateline"><span class="pill pill-green">Manual agreement — Avenir responsibility</span> <span class="help">· ${esc(AGn.meal_plan || '')} · ${esc(window.tfAgTxt(AGn))} agreed total / night</span></div>`;
             const [cls, label] = RATE[d.rate_state] || RATE.not_checked;
             let line = '';
             if (d.rate_state === 'rate') {
@@ -4780,6 +4786,8 @@
         const arrange = d => { const m = d.room_mix || {}; const t = ['sgl', 'dbl', 'twn', 'tpl'].filter(k => Number(m[k] != null ? m[k] : R[k]) > 0).map(k => Number(m[k] != null ? m[k] : R[k]) + ' ' + ROOMW[k]).join(', '); return t || (d.rooms || roomsTxt); };
         const rateLink = d => ML && ML.rates && d.hotel_acc ? `<a href="${SITE}master_files/hotel_rate_v2?hotel=${encodeURIComponent(d.hotel_acc)}" target="_blank" rel="noopener">View rates <i class="bi bi-box-arrow-up-right"></i></a>` : '';
         const rateBox = d => {
+            const AGb = window.tfAgOf(d);
+            if (AGb) return `<div class="inq-rate2"><b class="amt">${esc(window.tfAgTxt(AGb))}</b><span>agreed total / night</span><em class="ok">Manual agreement — Avenir responsibility</em></div>`;
             const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null;
             // tf-hotelpick-r1: a night with its own room rows shows each row's published figure (category · occupancy)
             if ((d.room_rows || []).length && d.rate_state === 'rate') {
@@ -4825,7 +4833,8 @@
                     <button type="button" class="inq-btn" data-inqsvc="${d.day_no}"><i class="bi bi-plus-lg"></i> Activities and services</button></div>`}</div></div>`;
         };
         // tf-signal-r1: the Requested Itinerary row of the mock-up — hotel in bold with room type and rate beneath, meal plan, rooms, the day's activities, the note
-        const reqRate = d => { const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
+        const reqRate = d => { const AGq = window.tfAgOf(d); if (AGq) return `<span>Hotel rate: ${esc(window.tfAgTxt(AGq))} agreed total / night · Manual agreement — Avenir responsibility</span>`;
+            const cur = d.rate_currency || 'USD', f = v => v != null && v !== '' ? Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 }) : null;
             // tf-hotelpick-r1: a night with its own room rows — each row's published figure, a missing one said as missing
             if ((d.room_rows || []).length && d.rate_state === 'rate') {
                 const types = {}; (d.room_types || []).forEach(t => { types[Number(t.id)] = t; });
@@ -6520,15 +6529,15 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     }
     // tf-ratefix-r1 (27 Nov 2026, Shantha): rates still loading, and the family-room check the Hotels list and the costing apply
     const hpLoading = () => !HP.rates || HP.rates.state === 'loading';
-    function hpFamIssue(r) {   // null = usable; else what Hotel Rates must still record for this family room
+    function hpFamIssue(r) {   // null = usable; else what is still needed to price this family room (its rate, or which room)
         if (r.occ !== 'fam' || hpLoading()) return null;
+        if (HP.day && window.tfAgOf(HP.day)) return null;   // tf-agree-r3: the night is priced by its manual agreement
         const meal = hpEl('md_meal').value, types = (HP.rates && HP.rates.room_types) || [];
         const c = types.filter(t => t.meals && t.meals[meal] && t.meals[meal].fam != null);
         if (!c.length) return 'no family rate for ' + (meal || 'the meal plan') + ' (or quad rate marked as the family price)';
         const t = c.find(x => Number(x.id) === Number(r.room_type_id)) || (c.length === 1 ? c[0] : null);
         if (!t) return 'choose which family room (' + c.map(x => x.name).join(', ') + ')';
-        const miss = []; if (t.max_occupancy == null || t.max_occupancy === '') miss.push('Max occ. (maximum guests)'); if (!String(t.bed_config || '').trim()) miss.push('Beds (bed configuration)');
-        return miss.length ? t.name + ': ' + miss.join(' and ') + ' not recorded in Hotel Rates' : null;
+        return null;   // tf-agree-r3: capacity, beds and child pricing are the team's decision — never a stop
     }
     function hpMealOptions() {
         const sel = hpEl('md_meal'), cur = sel.value || (HP.day && HP.day.meal_plan) || '';
@@ -6557,6 +6566,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
                 <div data-l="Amount" class="amt">${v !== null && q > 0 && !fi && !hpLoading() ? esc(hpMoney(v * q)) : '—'}</div>
                 <button type="button" class="del" data-del="${i}" title="Remove this row" aria-label="Remove this row"><i class="bi bi-trash3"></i></button></div>`;
         }).join('') : '<div class="hp-empty">No room rows: the night uses the inquiry\'s room mix. Add a row to set this night\'s rooms.</div>';
+        if (HP.day && window.tfAgOf(HP.day)) { const A = window.tfAgOf(HP.day); hpEl('md_rows').insertAdjacentHTML('afterbegin', `<div class="hp-empty" style="background:#eef7e6;color:#3f6f1f;border-color:#cfe6bd"><b>Manual agreement — Avenir responsibility:</b> ${esc(A.rooms)} × ${esc(A.room_label)}, ${esc(A.adults)} adult(s)${Number(A.children) ? ' + ' + esc(A.children) + ' child(ren)' : ''}, ${esc(A.meal_plan)} — ${esc(window.tfAgTxt(A))} agreed total per night. This night is priced by the agreement; the rows below are for reference.</div>`); }
         hpEl('md_rows').querySelectorAll('[data-k]').forEach(el => el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', () => {
             const r = HP.rows[Number(el.closest('[data-i]').dataset.i)];
             if (el.dataset.k === 'qty') { r.qty = Math.max(0, Math.min(60, parseInt(el.value, 10) || 0)); hpTotals(); const row = el.closest('.hp-tr'); const v = hpRate(r); row.querySelector('.amt').textContent = v !== null && r.qty > 0 ? hpMoney(v * r.qty) : '—'; return; }
@@ -6572,7 +6582,8 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         let rooms = 0, beds = 0, tot = 0, gap = false;
         HP.rows.forEach(r => { const q = Number(r.qty) || 0; if (q < 1) return; rooms += q; beds += q * HP_BEDS[r.occ]; const v = hpRate(r); if (v === null || hpFamIssue(r)) gap = true; else tot += v * q; });
         hpEl('md_count').textContent = rooms + ' room' + (rooms === 1 ? '' : 's') + ' · ' + beds + ' guest' + (beds === 1 ? '' : 's');
-        hpEl('md_total').innerHTML = !rooms ? '—' : (hpLoading() && hpEl('md_hotel').value.trim()) ? '<span class="hp-load">Loading rates…</span>' : gap ? '<span style="color:#b3261e">Rate missing</span>' : esc(hpMoney(tot));
+        const AGh = HP.day && window.tfAgOf(HP.day);   // tf-agree-r3: the agreed total prices the night
+        hpEl('md_total').innerHTML = AGh ? esc(window.tfAgTxt(AGh)) + ' <small>agreed total / night · Manual agreement — Avenir responsibility</small>' : !rooms ? '—' : (hpLoading() && hpEl('md_hotel').value.trim()) ? '<span class="hp-load">Loading rates…</span>' : gap ? '<span style="color:#b3261e">Rate missing</span>' : esc(hpMoney(tot));
         const ok = hpEl('md_ok'); if (ok) { const busy = hpLoading() && !!hpEl('md_hotel').value.trim(); ok.disabled = busy; ok.innerHTML = busy ? '<span class="spinner-border spinner-border-sm"></span> Loading rates…' : '<i class="bi bi-check2-circle"></i> Save hotel selection'; }
         const pax = Number((HP.day && HP.day.room_mix && HP.day.room_mix.pax) || (CURRENT && CURRENT.pax_total) || 0);
         hpEl('md_count').title = pax && beds && beds !== pax ? `The rooms sleep ${beds}; ${pax} guest(s) are on the tour that night.` : '';
@@ -6700,6 +6711,9 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const priceOn = (t, n) => { const v = rmRate(t.id, n.occ); return v != null && (n.occ !== 'fam' || true) && rmFits(t, n.a, n.k) ? v : null; };
         let best = null;
         types.forEach(t => { const vs = need.map(n => priceOn(t, n)); if (vs.every(v => v != null)) { const tot = vs.reduce((s, v) => s + v, 0); if (!best || tot < best.tot) best = { t, tot }; } });
+        // tf-agree-r3 (27 Nov 2026, Shantha): a family's rooms are the team's decision at each hotel — family room, doubles, triples or a mix.
+        // No family room is picked automatically: the row is left for staff to choose (or the night priced by a manual agreement).
+        if (need.some(n => n.occ === 'fam')) return need.map(n => ({ room_type_id: null, room_type_name: null, occ: n.occ, qty: 1, a: n.a, k: n.k, nobed: (n.r.children || []).some(c => !c.bed) }));
         const rows = need.map(n => { let t = best ? best.t : null;
             if (!t) { const c = types.map(x => ({ x, v: priceOn(x, n) })).filter(y => y.v != null).sort((p, q) => p.v - q.v)[0]; t = c ? c.x : (n.occ === 'fam' ? (types.find(x => x.room_kind === 'family' || x.room_kind === 'quad' || /family|quad/i.test(x.name)) || null) : null); }
             return { room_type_id: t ? t.id : null, room_type_name: t ? t.name : null, occ: n.occ, qty: 1, a: n.a, k: n.k, nobed: (n.r.children || []).some(c => !c.bed) }; });
@@ -6709,10 +6723,10 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     }
     function rmFlags(row) {
         const t = rmTypes().find(x => Number(x.id) === Number(row.room_type_id)), f = [];
-        if (!t) { f.push(row.occ === 'fam' ? 'No family room in Hotel Rates for this hotel' : 'No category chosen'); return f; }
+        if (!t) { f.push('No category chosen'); return f; }
         if (rmRate(t.id, row.occ) == null) f.push(row.occ === 'fam' ? 'No family rate (or quad rate marked as the family price) for ' + (rmMeal() || 'the meal plan') : 'No ' + (rmMeal() || '') + ' ' + (RM_OCC.find(o => o[0] === row.occ) || [, row.occ])[1].toLowerCase() + ' rate');
-        if (row.occ === 'fam') { if (t.max_occupancy == null) f.push('capacity not entered'); if (!t.bed_config) f.push('beds not entered'); if (row.nobed && !t.child_share) f.push('child-sharing rule not entered'); if (row.nobed && t.child_share === 'not_allowed') f.push('the hotel does not allow a child to share a bed'); }
-        if (row.a != null && !rmFits(t, row.a, row.k || 0)) f.push('too small for ' + (row.a + (row.k || 0)) + ' guests');
+        // tf-agree-r3: capacity, beds and child-sharing are not checked for a family's arrangement — the team decides it
+        if (row.occ !== 'fam' && row.a != null && !rmFits(t, row.a, row.k || 0)) f.push('too small for ' + (row.a + (row.k || 0)) + ' guests');
         if (row.occ === 'xbd' && Number(t.extra_bed_allowed) === 0) f.push('the hotel allows no extra bed in this category');
         if (row.nobed && row.occ !== 'fam') { const m = (t.meals || {})[rmMeal()] || {}; if (m.cnb == null) f.push('child without a bed: no charge in the contract'); }
         return f;
