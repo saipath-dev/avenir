@@ -4641,7 +4641,7 @@
                 const cands = types.filter(t => ((t.meals || {})[M] || {}).fam != null), near = cands.length ? cands : types.filter(t => /family|quad/i.test(t.name));
                 const t = near[0] || null, m = t ? ((t.meals || {})[M] || {}) : {};
                 const chk = t ? [
-                    ['Family / quad rate (' + (M || 'meal plan') + ')', m.fam != null ? cur + ' ' + money2(m.fam) : null],
+                    ['Family / quad rate (' + (M || 'meal plan') + ')', m.fam != null ? cur + ' ' + money2(m.fam) + ' (family rate)' : (m.quad != null ? cur + ' ' + money2(m.quad) + ' (quad rate, 4 guests)' : null)],
                     ['Max occupancy (adults + children)', t.max_occupancy != null ? String(t.max_occupancy) : null],
                     ['Bed configuration', t.bed_config || null],
                     ['Child sharing a bed', kids.some(c => !c.bed) ? (m.cnb != null ? cur + ' ' + money2(m.cnb) : null) : 'not needed'],
@@ -4650,7 +4650,7 @@
                 const ready = t && chk.every(c => c[1] != null) && !small;
                 fam = `<div class="rc-card"><div class="rc-h"><b>Family room match · Option ${famOpt.no}</b><span class="${ready ? 'rc-ok' : 'rc-warn'}">${ready ? 'Matched' : 'Not confirmed yet'}</span></div><div class="rc-b">
                     <div class="rc-two"><div class="rc-box"><small>THE FAMILY NEEDS</small><b>One room for ${a + kids.length} guests</b><div>${a} adult(s) + ${kids.filter(c => c.bed).length} child(ren) in beds = ${beds} beds${kids.some(c => !c.bed) ? '<br>' + kids.filter(c => !c.bed).length + ' child(ren) sharing a bed' : ''}</div></div>
-                    <div class="rc-box rc-sel"><small>${cands.length ? 'FAMILY ROOM AT ' : 'CLOSEST AT '}${esc((d.hotel_name_raw || '').toUpperCase())}</small><b>${t ? esc(t.name) : 'No family or quadruple room'}</b><div>${t ? (m.fam != null ? 'Family rate on file.' : 'Only ' + ['sgl', 'dbl', 'tpl'].filter(c => m[c] != null).map(c => ({ sgl: 'single', dbl: 'double', tpl: 'triple' })[c] + ' ' + money2(m[c])).join(', ') + ' held — no family rate.') : 'Hotel Rates holds no room for a family here.'}</div></div></div>
+                    <div class="rc-box rc-sel"><small>${cands.length ? 'FAMILY ROOM AT ' : 'CLOSEST AT '}${esc((d.hotel_name_raw || '').toUpperCase())}</small><b>${t ? esc(t.name) : 'No family or quadruple room'}</b><div>${t ? (m.fam != null ? 'Family rate on file.' : (m.quad != null ? 'Quad rate on file: ' + esc(cur) + ' ' + money2(m.quad) + ' (4 guests)' + (m.tpl != null ? ', triple ' + money2(m.tpl) : '') + '.' : 'Only ' + ['sgl', 'dbl', 'tpl'].filter(c => m[c] != null).map(c => ({ sgl: 'single', dbl: 'double', tpl: 'triple' })[c] + ' ' + money2(m[c])).join(', ') + ' held — no family or quad rate.')) : 'Hotel Rates holds no room for a family here.'}</div></div></div>
                     ${t ? `<div class="rc-need">Offered as Option ${famOpt.no} only when Hotel Rates holds:</div>${chk.map(c => `<div class="rc-li ${c[1] == null ? 'rc-li-miss' : ''}"><span>${esc(c[0])}</span><b>${c[1] == null ? 'not entered' : esc(c[1])}</b></div>`).join('')}` : ''}
                     ${small ? `<div class="rc-li rc-li-miss"><span>Capacity</span><b>holds ${esc(t.max_occupancy)} — the family is ${a + kids.length}</b></div>` : ''}
                     <div class="rc-note">Figures come from the hotel's contract, entered and approved in Hotel Rates. Nothing is assumed or substituted.</div></div></div>`;
