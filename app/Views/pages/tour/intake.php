@@ -4620,7 +4620,7 @@
         const money2 = v => Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const htRow = d => {
             const AG = agFor(d, optChosen ? optChosen.id : null);   // tf-agree-r1: a manual agreement prices the night
-            const L = AG ? [{ opt: null, occ: AG.occ, n: AG.rooms, rate: Number(AG.rate), why: '' }] : nightLines(d), cur = AG ? AG.currency : (d.rate_currency || 'USD'), cat = (d.room_rows || []).some(r => r.room_type_name && r.occ !== 'fam') ? [...new Set(d.room_rows.filter(r => r.occ !== 'fam').map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || '');
+            const L = AG ? [{ opt: null, occ: AG.occ, n: AG.rooms, rate: Number(AG.rate), why: '' }] : nightLines(d), cur = AG ? AG.currency : (d.rate_currency || 'USD'), cat = AG ? AG.room_label : (d.room_rows || []).some(r => r.room_type_name && r.occ !== 'fam') ? [...new Set(d.room_rows.filter(r => r.occ !== 'fam').map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || '');
             const ok = AG ? true : d.hotel_name_raw && d.rate_state === 'rate' && L.length && L.every(l => l.rate != null);
             const why = !d.hotel_name_raw ? 'Hotel not chosen' : (d.rate_state !== 'rate' ? (String(d.rate_note || '').split(/(?<=[.;])\s/)[0].replace(/[.;]$/, '').slice(0, 90) || 'No approved rate for this date')
                 : (!L.length ? 'Rooms not set' : [...new Set(L.filter(l => l.rate == null).map(l => l.why || (OCC_RT[l.occ] + ': no ' + (d.meal_plan || '') + ' rate')))].join(' · ')));
