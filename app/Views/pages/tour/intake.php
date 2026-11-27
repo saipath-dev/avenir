@@ -1280,6 +1280,7 @@
     .hp .rm-save { background:#78b848; border:0; color:#10230a; font-weight:700; border-radius:10px; padding:9px 16px; }
     .hp .rm-save:hover { background:#5f9a36; color:#fff; }
     @media (max-width:600px) { .hp .rm-r, .hp .rm-r:has(select) { grid-template-columns:1fr 1fr; } }
+    .hp .hp-load { color:#5f6f80; font-size:12.5px; display:inline-flex; gap:6px; align-items:center; }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -6450,6 +6451,18 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         const m = t && t.meals ? t.meals[meal] : null;
         return m && m[col] != null ? Number(m[col]) : null;
     }
+    // tf-ratefix-r1 (27 Nov 2026, Shantha): rates still loading, and the family-room check the Hotels list and the costing apply
+    const hpLoading = () => !HP.rates || HP.rates.state === 'loading';
+    function hpFamIssue(r) {   // null = usable; else what Hotel Rates must still record for this family room
+        if (r.occ !== 'fam' || hpLoading()) return null;
+        const meal = hpEl('md_meal').value, types = (HP.rates && HP.rates.room_types) || [];
+        const c = types.filter(t => t.meals && t.meals[meal] && t.meals[meal].fam != null);
+        if (!c.length) return 'no family rate for ' + (meal || 'the meal plan') + ' (or quad rate marked as the family price)';
+        const t = c.find(x => Number(x.id) === Number(r.room_type_id)) || (c.length === 1 ? c[0] : null);
+        if (!t) return 'choose which family room (' + c.map(x => x.name).join(', ') + ')';
+        const miss = []; if (t.max_occupancy == null || t.max_occupancy === '') miss.push('Max occ. (maximum guests)'); if (!String(t.bed_config || '').trim()) miss.push('Beds (bed configuration)');
+        return miss.length ? t.name + ': ' + miss.join(' and ') + ' not recorded in Hotel Rates' : null;
+    }
     function hpMealOptions() {
         const sel = hpEl('md_meal'), cur = sel.value || (HP.day && HP.day.meal_plan) || '';
         const has = HP.rates && HP.rates.state === 'rate' ? (HP.rates.meals || []) : null;
@@ -6465,13 +6478,16 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         };
         hpEl('md_rows').innerHTML = HP.rows.length ? HP.rows.map((r, i) => {
             const v = hpRate(r), q = Number(r.qty) || 0;
-            const rateCell = !r.room_type_id ? '<span class="miss">Choose a category</span>' : !meal ? '<span class="miss">Choose the meal plan</span>' : v === null ? '<span class="miss"><i class="bi bi-exclamation-triangle-fill"></i> No published rate</span>' : esc(hpMoney(v));
+            const fi = hpFamIssue(r);
+            const rateCell = hpLoading() && hpEl('md_hotel').value.trim() ? '<span class="hp-load"><span class="spinner-border spinner-border-sm"></span> Loading rates…</span>'
+                : !r.room_type_id ? '<span class="miss">Choose a category</span>' : !meal ? '<span class="miss">Choose the meal plan</span>' : v === null ? '<span class="miss"><i class="bi bi-exclamation-triangle-fill"></i> No published rate</span>'
+                : (fi ? `${esc(hpMoney(v))}<div class="miss" style="font-size:11.5px"><i class="bi bi-exclamation-triangle-fill"></i> Not usable yet: ${esc(fi)}</div>` : esc(hpMoney(v)));
             return `<div class="hp-tr" data-i="${i}">
                 <div data-l="Category"><select class="form-select" data-k="room_type_id" aria-label="Category">${typeOpts(r)}</select></div>
                 <div data-l="Occupancy"><select class="form-select" data-k="occ" aria-label="Occupancy">${(r.occ === 'fam' ? HP_OCC.concat([['fam', 'Family room']]) : HP_OCC).map(([k, w]) => `<option value="${k}" ${r.occ === k ? 'selected' : ''}>${w}</option>`).join('')}</select></div>
                 <div data-l="Rooms"><input type="number" class="form-control" min="1" max="60" step="1" data-k="qty" value="${q || ''}" aria-label="Rooms"></div>
                 <div data-l="Rate per night">${rateCell}</div>
-                <div data-l="Amount" class="amt">${v !== null && q > 0 ? esc(hpMoney(v * q)) : '—'}</div>
+                <div data-l="Amount" class="amt">${v !== null && q > 0 && !fi && !hpLoading() ? esc(hpMoney(v * q)) : '—'}</div>
                 <button type="button" class="del" data-del="${i}" title="Remove this row" aria-label="Remove this row"><i class="bi bi-trash3"></i></button></div>`;
         }).join('') : '<div class="hp-empty">No room rows: the night uses the inquiry\'s room mix. Add a row to set this night\'s rooms.</div>';
         hpEl('md_rows').querySelectorAll('[data-k]').forEach(el => el.addEventListener(el.tagName === 'INPUT' ? 'input' : 'change', () => {
@@ -6487,9 +6503,10 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     }
     function hpTotals() {
         let rooms = 0, beds = 0, tot = 0, gap = false;
-        HP.rows.forEach(r => { const q = Number(r.qty) || 0; if (q < 1) return; rooms += q; beds += q * HP_BEDS[r.occ]; const v = hpRate(r); if (v === null) gap = true; else tot += v * q; });
+        HP.rows.forEach(r => { const q = Number(r.qty) || 0; if (q < 1) return; rooms += q; beds += q * HP_BEDS[r.occ]; const v = hpRate(r); if (v === null || hpFamIssue(r)) gap = true; else tot += v * q; });
         hpEl('md_count').textContent = rooms + ' room' + (rooms === 1 ? '' : 's') + ' · ' + beds + ' guest' + (beds === 1 ? '' : 's');
-        hpEl('md_total').innerHTML = !rooms ? '—' : gap ? '<span style="color:#b3261e">Rate missing</span>' : esc(hpMoney(tot));
+        hpEl('md_total').innerHTML = !rooms ? '—' : (hpLoading() && hpEl('md_hotel').value.trim()) ? '<span class="hp-load">Loading rates…</span>' : gap ? '<span style="color:#b3261e">Rate missing</span>' : esc(hpMoney(tot));
+        const ok = hpEl('md_ok'); if (ok) { const busy = hpLoading() && !!hpEl('md_hotel').value.trim(); ok.disabled = busy; ok.innerHTML = busy ? '<span class="spinner-border spinner-border-sm"></span> Loading rates…' : '<i class="bi bi-check2-circle"></i> Save hotel selection'; }
         const pax = Number((HP.day && HP.day.room_mix && HP.day.room_mix.pax) || (CURRENT && CURRENT.pax_total) || 0);
         hpEl('md_count').title = pax && beds && beds !== pax ? `The rooms sleep ${beds}; ${pax} guest(s) are on the tour that night.` : '';
     }
@@ -6507,7 +6524,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
     async function hpLoadRates() {
         const seq = ++HP.seq, hotel = hpEl('md_hotel').value.trim();
         if (!hotel) { HP.rates = null; hpMealOptions(); hpState(); hpDrawRows(); return; }
-        HP.rates = { state: 'loading' }; hpState();
+        HP.rates = { state: 'loading' }; hpState(); hpDrawRows();   // tf-ratefix-r1: the rows say "Loading rates…" until the answer comes
         const j = await post('/intake/' + CURRENT.id + '/day/' + HP.day.id + '/rates', { hotel_name_raw: hotel, area: hpEl('md_area').value, day_date: hpEl('md_date').value, meal_plan: hpEl('md_meal').value });
         if (seq !== HP.seq) return;   // a newer pick is on its way
         HP.rates = j.status === 200 ? j.data : { state: 'error', note: j.message || 'The rates could not be read.' };
@@ -6564,7 +6581,9 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         if (!hpEl('md_meal').value) { toast('error', 'Choose the meal plan.'); hpEl('md_meal').focus(); return false; }
         const rows = HP.rows.filter(r => Number(r.qty) > 0);
         if (HP.rows.length && !rows.length) { toast('error', 'Give each room row at least 1 room, or remove it.'); return false; }
+        if (hpLoading()) { toast('info', 'The rates are still loading — save in a moment.'); return false; }
         const missing = rows.filter(r => hpRate(r) === null).map(r => (r.room_type_name || 'room') + ' ' + (HP_OCC.concat([['fam', 'Family room']]).find(o => o[0] === r.occ) || [, r.occ])[1].toLowerCase());
+        const famIssues = [...new Set(rows.map(hpFamIssue).filter(Boolean))];
         btn.disabled = true;
         const j = await post('/intake/' + CURRENT.id + '/day/' + id, {
             day_date: hpEl('md_date').value, area: hpEl('md_area').value, hotel_name_raw: hotel, meal_plan: hpEl('md_meal').value,
@@ -6573,6 +6592,12 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
         });
         btn.disabled = false;
         if (j.status !== 200) { toast('error', j.message); return false; }
+        // tf-ratefix-r1: "Saved" only when the server's copy of the night has the hotel, meal plan and room rows that were sent
+        const back = ((j.data && j.data.days) || []).find(x => Number(x.id) === Number(id));
+        const sig = list => (list || []).map(r => [r.occ, Number(r.qty), r.occ === 'fam' ? '' : String(r.room_type_id || '')].join('|')).join(';');
+        const stored = back && String(back.hotel_name_raw || '').trim().toLowerCase() === hotel.toLowerCase() && String(back.meal_plan || '').toUpperCase() === hpEl('md_meal').value.toUpperCase()
+            && (rows.length === 0 || sig(back.room_rows) === sig(rows));
+        if (!stored) { toast('error', 'The hotel selection was not stored as chosen. Nothing has been changed on the list — try again, or tell the System Administrator.'); return false; }
         CURRENT = j.data;
         if (keepOpen) {
             HP.day = (CURRENT.days || []).find(x => Number(x.id) === Number(id)) || HP.day;
@@ -6580,7 +6605,8 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             renderDetail(); return true;
         }
         hide('#m_day'); renderDetail();
-        if (missing.length) toast('warning', 'Saved. No published rate for ' + missing.join(', ') + ' — the night is not costed and the quotation stays blocked until a published rate covers it or another category is chosen.');
+        if (famIssues.length) Swal.fire({ icon: 'warning', title: 'Room choice saved — not priced yet', html: 'The hotel, meal plan and rooms are stored, but the family room cannot be priced until Hotel Rates records:<br><b>' + famIssues.map(esc).join('<br>') + '</b><br><br>The Hotels list shows this night as missing until then, and the quotation stays blocked.', confirmButtonColor: '#842484' });
+        else if (missing.length) toast('warning', 'Saved. No published rate for ' + missing.join(', ') + ' — the night is not costed and the quotation stays blocked until a published rate covers it or another category is chosen.');
         else toast('success', 'Hotel selection saved.');
         return true;
     }
