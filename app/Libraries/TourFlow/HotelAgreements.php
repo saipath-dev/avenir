@@ -18,7 +18,10 @@ namespace App\Libraries\TourFlow;
  */
 final class HotelAgreements
 {
-    public const LABEL = 'Manual agreement — confirmed by phone';
+    // tf-agree-r2 (27 Nov 2026, Shantha): Avenir accepts responsibility for what is entered. Only what prices the nights is required —
+    // hotel (from the nights), nights, room, rooms, guests covered, meal plan, currency and the agreed TOTAL per night; the rest is
+    // optional and editable later. The total is used as entered: no contract rate, capacity, beds or child pricing is added or asked.
+    public const LABEL = 'Manual agreement — Avenir responsibility';
     public const OCC   = ['sgl' => 'Single', 'dbl' => 'Double', 'twn' => 'Twin', 'tpl' => 'Triple', 'quad' => 'Quadruple', 'fam' => 'Family room', 'unit' => 'Whole unit / villa'];
     public const MEALS = ['RO', 'BB', 'HB', 'FB', 'AI'];
     private const MAX_DOC = 8 * 1024 * 1024;
@@ -83,6 +86,13 @@ final class HotelAgreements
                 `uploaded_at` DATETIME NOT NULL,
                 PRIMARY KEY (`id`), KEY `k_ag` (`agreement_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            // tf-agree-r2: the call details and the occupancy are optional
+            foreach (['contact_name' => 'VARCHAR(160) NULL', 'call_date' => 'DATE NULL', 'occ' => 'VARCHAR(10) NULL'] as $col => $type) {
+                $c = $db->query("SHOW COLUMNS FROM tf_intake_hotel_agreement LIKE '{$col}'")->getRowArray();
+                if ($c && strtoupper((string) $c['Null']) === 'NO') {
+                    $db->query("ALTER TABLE tf_intake_hotel_agreement MODIFY `{$col}` {$type}");
+                }
+            }
             self::$ready[$k] = true;
         } catch (\Throwable $e) {
             log_message('error', 'HotelAgreements::ensure: ' . $e->getMessage());
@@ -130,13 +140,12 @@ final class HotelAgreements
      */
     public static function night(array $a): array
     {
-        $occ = self::OCC[$a['occ']] ?? $a['occ'];
+        $occ = $a['occ'] ? (self::OCC[$a['occ']] ?? $a['occ']) : null;
         $who = $a['adults'] . ' adult' . ($a['adults'] === 1 ? '' : 's') . ($a['children'] ? ' + ' . $a['children'] . ' child' . ($a['children'] === 1 ? '' : 'ren') . ($a['child_ages'] ? ' (' . $a['child_ages'] . ')' : '') : '');
-        $lines = [['kind' => 'agree', 'label' => self::LABEL . ': ' . $a['rooms'] . ' × ' . $a['room_label'] . ' — ' . $occ . ', ' . $who . ($a['bed_arrangement'] ? ', ' . $a['bed_arrangement'] : ''),
-            'qty' => $a['rooms'], 'rate' => (float) $a['rate'], 'amount' => round($a['rooms'] * (float) $a['rate'], 2)]];
-        if ($a['children'] > 0 && $a['child_supp_mode'] === 'included') {
-            $lines[] = ['kind' => 'child', 'label' => 'Child supplement: included / no extra charge (agreed by phone)', 'qty' => $a['children'], 'rate' => 0.0, 'amount' => 0.0];
-        } elseif ($a['children'] > 0 && $a['child_supp_mode'] === 'charge') {
+        // the agreed total for the night: every room and every guest it names — nothing added on top unless a supplement was entered
+        $lines = [['kind' => 'agree', 'label' => self::LABEL . ': ' . $a['rooms'] . ' × ' . $a['room_label'] . ($occ ? ' — ' . $occ : '') . ', ' . $who . ' — agreed total per night' . ($a['bed_arrangement'] ? ' (' . $a['bed_arrangement'] . ')' : ''),
+            'qty' => 1, 'rate' => (float) $a['rate'], 'amount' => round((float) $a['rate'], 2)]];
+        if ($a['children'] > 0 && $a['child_supp_mode'] === 'charge') {
             $n = (int) ($a['child_supp_children'] ?? $a['children']);
             $lines[] = ['kind' => 'child', 'label' => 'Child supplement agreed by phone: ' . $n . ' × ' . number_format((float) $a['child_supp_amount'], 2) . ' a night', 'qty' => $n, 'rate' => (float) $a['child_supp_amount'], 'amount' => round($n * (float) $a['child_supp_amount'], 2)];
         }
@@ -215,21 +224,24 @@ final class HotelAgreements
         $contact = $str('contact_name', 160);
         $call = $str('call_date', 10);
         if ($room === '') { $miss[] = 'the room agreed'; }
-        if (!isset(self::OCC[$occ])) { $miss[] = 'the occupancy'; }
+        if ($occ !== '' && !isset(self::OCC[$occ])) { $miss[] = 'a known occupancy (or leave it blank)'; }
         if ($rooms < 1 || $rooms > 20) { $miss[] = 'the number of rooms (1–20)'; }
-        if ($rate === null || $rate <= 0) { $miss[] = 'the agreed rate'; }
+        if ($rate === null || $rate <= 0) { $miss[] = 'the agreed total per night'; }
         if (!in_array($cur, ['USD', 'LKR'], true)) { $miss[] = 'the currency (USD or LKR)'; }
         if (!in_array($meal, self::MEALS, true)) { $miss[] = 'the meal plan'; }
         if ($adults < 1) { $miss[] = 'the adults covered'; }
+        if ($children < 0) { $miss[] = 'the children covered (0 or more)'; }
         if ($children > 0) {
+            // child ages are optional; when given, they must read as ages
             $agesList = array_values(array_filter(array_map('trim', preg_split('/[,;\/ ]+/', $ages)), static fn ($x) => $x !== ''));
-            if (count($agesList) !== $children || array_filter($agesList, static fn ($x) => !is_numeric($x) || (float) $x < 0 || (float) $x > 17)) {
-                $miss[] = 'the age of each child covered (' . $children . ' age' . ($children === 1 ? '' : 's') . ', e.g. 11, 9, 7)';
+            if ($agesList && array_filter($agesList, static fn ($x) => !is_numeric($x) || (float) $x < 0 || (float) $x > 17)) {
+                $miss[] = 'child ages as numbers (e.g. 11, 9, 7) — or leave them blank';
             } else {
                 $ages = implode(', ', $agesList);
             }
-            if (!in_array($mode, ['included', 'charge'], true)) {
-                $miss[] = 'the child supplement (Included / no extra charge, or the amount)';
+            // a child supplement only when one is entered: the total covers the party as entered
+            if (!in_array($mode, ['', 'included', 'charge'], true)) {
+                $mode = '';
             } elseif ($mode === 'charge' && ($suppAmt === null || $suppAmt <= 0)) {
                 $miss[] = 'the child supplement amount per child per night';
             } elseif ($mode === 'charge' && $suppN !== null && ($suppN < 1 || $suppN > $children)) {
@@ -239,9 +251,7 @@ final class HotelAgreements
             $ages = '';
             $mode = '';
         }
-        if ($bed === '') { $miss[] = 'the bed arrangement agreed'; }
-        if ($contact === '') { $miss[] = "the hotel contact's name"; }
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $call) || !strtotime($call) || $call > date('Y-m-d')) { $miss[] = 'the call date (not in the future)'; }
+        if ($call !== '' && (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $call) || !strtotime($call) || $call > date('Y-m-d'))) { $miss[] = 'a call date that is a date, not in the future (or leave it blank)'; }
         if ($miss) {
             throw new \InvalidArgumentException('Not saved — the agreement still needs: ' . implode('; ', $miss) . '.');
         }
@@ -252,11 +262,11 @@ final class HotelAgreements
         $n = [
             'option_id' => $optId, 'hotel_name' => $hotel, 'day_ids' => implode(',', array_map(static fn ($d) => (int) $d['id'], $days)),
             'date_from' => $days[0]['day_date'] ?? null, 'date_to' => $days[count($days) - 1]['day_date'] ?? null,
-            'room_label' => $room, 'occ' => $occ, 'rooms' => $rooms, 'rate' => round($rate, 2), 'currency' => $cur, 'meal_plan' => $meal,
-            'adults' => $adults, 'children' => $children, 'child_ages' => $ages !== '' ? $ages : null, 'bed_arrangement' => $bed,
+            'room_label' => $room, 'occ' => $occ !== '' ? $occ : null, 'rooms' => $rooms, 'rate' => round($rate, 2), 'currency' => $cur, 'meal_plan' => $meal,
+            'adults' => $adults, 'children' => $children, 'child_ages' => $ages !== '' ? $ages : null, 'bed_arrangement' => $bed !== '' ? $bed : null,
             'child_supp_mode' => $mode !== '' ? $mode : null, 'child_supp_amount' => $mode === 'charge' ? round((float) $suppAmt, 2) : null,
             'child_supp_children' => $mode === 'charge' ? ($suppN ?? $children) : null,
-            'contact_name' => $contact, 'call_date' => $call, 'notes' => trim((string) ($v['notes'] ?? '')) !== '' ? mb_substr(trim((string) $v['notes']), 0, 4000) : null,
+            'contact_name' => $contact !== '' ? $contact : null, 'call_date' => $call !== '' ? $call : null, 'notes' => trim((string) ($v['notes'] ?? '')) !== '' ? mb_substr(trim((string) $v['notes']), 0, 4000) : null,
             'written_ref' => trim((string) ($v['written_ref'] ?? '')) !== '' ? mb_substr(trim((string) $v['written_ref']), 0, 255) : null,
         ];
         $now = date('Y-m-d H:i:s');

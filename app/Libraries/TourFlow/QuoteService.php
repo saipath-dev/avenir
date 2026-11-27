@@ -309,7 +309,7 @@ final class QuoteService
                 $hotels[] = $line;
                 continue;
             }
-            // tf-agree-r1 (27 Nov 2026, Shantha): a night priced by a manual hotel agreement — exactly what the hotel agreed by phone,
+            // tf-agree-r1/r2 (27 Nov 2026, Shantha): a night priced by a manual hotel agreement — the agreed total entered under Avenir's responsibility,
             // in place of the published contract (whose rate, family-room and child-charge stops do not apply to this night)
             if (isset($agreeDays[$n])) {
                 $ag = $agreeDays[$n];
@@ -335,9 +335,7 @@ final class QuoteService
                 if ($option === null && $party > 0 && $ag['adults'] + $ag['children'] !== $party && empty($it['groups'])) {
                     $warnings[] = ['code' => 'agree_party_' . $d['id'], 'label' => "{$hotel}, night {$n}: the manual agreement covers " . ($ag['adults'] + $ag['children']) . " guest(s); the party is {$party}. Check what the hotel agreed."];
                 }
-                if (empty($ag['docs']) && empty($ag['written_ref'])) {
-                    $warnings[] = ['code' => 'agree_written_' . (int) $ag['id'], 'label' => "{$hotel}: " . HotelAgreements::LABEL . ' (' . $ag['contact_name'] . ', ' . date('j M Y', strtotime((string) $ag['call_date'])) . ') — the written confirmation is not attached yet.'];
-                }
+                // tf-agree-r2: written confirmation, contact and call date are optional — no warning when they are blank
                 $hotels[] = $line;
                 continue;
             }
