@@ -464,6 +464,7 @@ final class IntakeService
         $it['room_options'] = $this->roomOptions($id, $it);   // tf-roomopt-r1 (after the names, so each room shows who is in it)
         $it['party_slots'] = array_values(self::partySlots($it));   // tf-roomopt-r2
         $it['accom_reqs'] = self::accomRequirements($it);   // tf-accreq-r1
+        $it['hotel_agreements'] = HotelAgreements::forIntake($this->db, $id);   // tf-agree-r1: manual hotel agreements (by phone)
         $it['requests']   = $this->db->query('SELECT * FROM tf_intake_request WHERE intake_id = ? ORDER BY sort_order, id', [$id])->getResultArray();
         $it['services']   = $this->db->query('SELECT * FROM tf_intake_service WHERE intake_id = ? ORDER BY day_no, sort_order, id', [$id])->getResultArray();
         // Entrance & Activities follows the list, the party and the settings on its own (see syncServices) —
@@ -529,6 +530,7 @@ final class IntakeService
             $d['room_mix']   = self::roomMix($it, (int) $d['day_no']);
             $d['room_types'] = json_decode((string) ($d['room_types_json'] ?? ''), true) ?: [];
             $d['room_match'] = $matches[(int) $d['id']] ?? [];   // tf-roommatch-r1: the confirmed room arrangement per room option
+            $d['agreements'] = array_values(array_filter((array) ($it['hotel_agreements'] ?? []), static fn ($a) => in_array((int) $d['id'], $a['day_ids'], true)));   // tf-agree-r1
             $d['rate_supp']  = json_decode((string) ($d['rate_supp_json'] ?? ''), true) ?: [];
             // the panel's answer where it has moved away from the figure kept on the night
             $d['rate_drift'] = json_decode((string) ($d['rate_drift_json'] ?? ''), true) ?: null;

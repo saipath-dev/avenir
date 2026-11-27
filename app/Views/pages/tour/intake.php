@@ -1281,6 +1281,15 @@
     .hp .rm-save:hover { background:#5f9a36; color:#fff; }
     @media (max-width:600px) { .hp .rm-r, .hp .rm-r:has(select) { grid-template-columns:1fr 1fr; } }
     .hp .hp-load { color:#5f6f80; font-size:12.5px; display:inline-flex; gap:6px; align-items:center; }
+    /* tf-agree-r1: Manual hotel agreement */
+    .ag-pop { text-align:left; } .ag-pop .swal2-html-container { text-align:left; margin:6px 12px 0; }
+    .ag { font-size:13px; } .ag-note { background:#fbf5fb; border:1px solid #ead6ea; border-radius:8px; padding:8px 10px; color:#3f1a44; }
+    .ag-sec { margin:12px 0 6px; font-weight:700; color:#842484; font-size:13px; border-bottom:1px solid #eee6ef; padding-bottom:3px; }
+    .ag-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px 12px; } .ag-f { display:flex; flex-direction:column; gap:3px; } .ag-f span { font-size:12px; color:#5f6f80; } .ag-w { grid-column:span 2; }
+    .ag-nights { display:flex; gap:12px; flex-wrap:wrap; } .ag-supp { display:flex; gap:10px; align-items:center; flex-wrap:wrap; } .ag-supp small, .ag-docs small { color:#7d8a98; }
+    .ag-who { margin-top:10px; font-size:12px; color:#5f6f80; } .ag-hist { margin-top:8px; font-size:11.5px; color:#5f6f80; max-height:140px; overflow:auto; border-top:1px solid #eee6ef; padding-top:6px; }
+    .ht-s .ag-by { display:block; font-weight:400; color:#5f6f80; font-size:11px; margin-top:2px; }
+    @media (max-width:700px) { .ag-grid { grid-template-columns:1fr; } .ag-w { grid-column:auto; } }
 </style>
 <body>
 <div id="layout-wrapper">
@@ -4589,7 +4598,7 @@
         // tf-famroom-r1 (26 Nov 2026, Shantha): the Hotels tab as one table — Day / Date · Hotel · Room Type · No. of Rooms · Meal Plan ·
         // Room Rate · Status / Actions. Each night lists its rooms (per option while the agent has not chosen) with the hotel's own
         // published figure per room and night; a Family Room shows only the hotel's verified Family Room rate, else "No verified Family Room".
-        const OCC_RT = { sgl: 'Single Room', dbl: 'Double Room', twn: 'Twin Room', tpl: 'Triple Room', fam: 'Family Room' };
+        const OCC_RT = { sgl: 'Single Room', dbl: 'Double Room', twn: 'Twin Room', tpl: 'Triple Room', fam: 'Family Room', quad: 'Quadruple Room', unit: 'Whole unit' };
         const RT_OCC = { single: 'sgl', double: 'dbl', twin: 'twn', triple: 'tpl', family: 'fam' };
         const nTypes = d => Array.isArray(d.room_types) ? d.room_types : [];
         const famOf = d => { const M = String(d.meal_plan || '').toUpperCase(); const c = nTypes(d).filter(t => t.meals && t.meals[M] && t.meals[M].fam != null);
@@ -4610,8 +4619,9 @@
             return out; };
         const money2 = v => Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const htRow = d => {
-            const L = nightLines(d), cur = d.rate_currency || 'USD', cat = (d.room_rows || []).some(r => r.room_type_name && r.occ !== 'fam') ? [...new Set(d.room_rows.filter(r => r.occ !== 'fam').map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || '');
-            const ok = d.hotel_name_raw && d.rate_state === 'rate' && L.length && L.every(l => l.rate != null);
+            const AG = agFor(d, optChosen ? optChosen.id : null);   // tf-agree-r1: a manual agreement prices the night
+            const L = AG ? [{ opt: null, occ: AG.occ, n: AG.rooms, rate: Number(AG.rate), why: '' }] : nightLines(d), cur = AG ? AG.currency : (d.rate_currency || 'USD'), cat = (d.room_rows || []).some(r => r.room_type_name && r.occ !== 'fam') ? [...new Set(d.room_rows.filter(r => r.occ !== 'fam').map(r => r.room_type_name).filter(Boolean))].join(' + ') : (d.room_type_name || '');
+            const ok = AG ? true : d.hotel_name_raw && d.rate_state === 'rate' && L.length && L.every(l => l.rate != null);
             const why = !d.hotel_name_raw ? 'Hotel not chosen' : (d.rate_state !== 'rate' ? (String(d.rate_note || '').split(/(?<=[.;])\s/)[0].replace(/[.;]$/, '').slice(0, 90) || 'No approved rate for this date')
                 : (!L.length ? 'Rooms not set' : [...new Set(L.filter(l => l.rate == null).map(l => l.why || (OCC_RT[l.occ] + ': no ' + (d.meal_plan || '') + ' rate')))].join(' · ')));
             const optCell = l => l.opt ? `<small class="ia-o">${esc(l.opt)}</small>` : '';
@@ -4625,8 +4635,8 @@
                 <td class="ht-n">${L.map(l => `<div>${l.n}</div>`).join('') || '<div>—</div>'}</td>
                 <td class="ht-m">${esc(d.meal_plan ? (MEALW[String(d.meal_plan).toUpperCase()] || d.meal_plan) : 'Not set')}</td>
                 <td class="ht-rate">${L.map(l => `<div class="${l.rate == null ? 'miss' : ''}">${l.rate == null ? 'Missing' : esc(cur) + ' ' + money2(l.rate)}</div>`).join('') || '<div class="miss">—</div>'}${L.length ? '<small>per room / night</small>' : ''}</td>
-                <td class="ht-s"><div class="${ok ? 'ok' : 'miss'}">${ok ? '<i class="bi bi-check-circle-fill"></i> Rate available' : '<i class="bi bi-exclamation-triangle-fill"></i> ' + esc(why || 'Rate missing')}</div>
-                    <div class="ht-a">${it.locked ? '' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">${d.hotel_name_raw ? 'Change' : 'Choose hotel'}</button>`}${d.hotel_name_raw && nTypes(d).length ? `<button type="button" class="inq-btn" data-inqcats="${d.day_no}" title="Every room category of this hotel, what each sleeps and costs, and the family-room match">Room categories</button>` : ''}${d.hotel_name_raw && IS_SUPER ? `<button type="button" class="inq-btn" data-inqrate="${d.id}" title="Super Admin: opens the Hotel Rates master on the rate this night uses">Edit hotel</button>` : ''}<button type="button" class="inq-chev" data-htog="${d.day_no}" aria-label="Details of night ${d.day_no}"><i class="bi bi-chevron-down"></i></button></div></td></tr>
+                <td class="ht-s"><div class="${ok ? 'ok' : 'miss'}">${AG ? `<i class="bi bi-telephone-fill"></i> Manual agreement — confirmed by phone<small class="ag-by">${esc(AG.contact_name)} · ${esc(AG.call_date)} · ${esc(AG.meal_plan)} · ${esc(AG.adults)} ad${AG.children ? ' + ' + esc(AG.children) + ' ch' : ''}${AG.children ? (AG.child_supp_mode === 'included' ? ' · child supplement included' : ' · child +' + esc(AG.currency) + ' ' + money2(AG.child_supp_amount) + ' × ' + esc(AG.child_supp_children)) : ''} · entered by ${esc(AG.updated_by || '')}</small>` : (ok ? '<i class="bi bi-check-circle-fill"></i> Rate available' : '<i class="bi bi-exclamation-triangle-fill"></i> ' + esc(why || 'Rate missing'))}</div>
+                    <div class="ht-a">${it.locked ? '' : `<button type="button" class="inq-btn" data-inqedit="${d.id}">${d.hotel_name_raw ? 'Change' : 'Choose hotel'}</button>`}${d.hotel_name_raw && !it.locked ? `<button type="button" class="inq-btn" data-inqagree="${d.day_no}" data-agid="${AG ? AG.id : ''}" title="Record what the hotel agreed by telephone for this inquiry">${AG ? 'Edit agreement' : 'Manual agreement'}</button>` : ''}${d.hotel_name_raw && nTypes(d).length ? `<button type="button" class="inq-btn" data-inqcats="${d.day_no}" title="Every room category of this hotel, what each sleeps and costs, and the family-room match">Room categories</button>` : ''}${d.hotel_name_raw && IS_SUPER ? `<button type="button" class="inq-btn" data-inqrate="${d.id}" title="Super Admin: opens the Hotel Rates master on the rate this night uses">Edit hotel</button>` : ''}<button type="button" class="inq-chev" data-htog="${d.day_no}" aria-label="Details of night ${d.day_no}"><i class="bi bi-chevron-down"></i></button></div></td></tr>
                 <tr class="ht-more" data-hmore="${d.day_no}" ${INQ_OPEN['h' + d.day_no] ? '' : 'hidden'}><td colspan="7"><div class="kv">
                     <span>Activities</span><span>${things.length ? esc(things.join(', ')) : '—'}</span>
                     ${note ? `<span>Special note</span><span>${note}</span>` : ''}
@@ -4707,6 +4717,62 @@
         window.tfRoomCats = d => {
             Swal.fire({ width: 1240, showCloseButton: true, confirmButtonText: 'Close', confirmButtonColor: '#842484', html: roomCatsHtml(d), customClass: { popup: 'rc-pop' },
                 didOpen: el => { el.querySelectorAll('[data-rcf]').forEach(b => b.addEventListener('click', () => { el.querySelectorAll('[data-rcf]').forEach(x => x.classList.toggle('on', x === b)); el.querySelectorAll('.rc-t tbody tr[data-rck]').forEach(tr => { const k = tr.dataset.rck; tr.hidden = !(b.dataset.rcf === 'all' || k === b.dataset.rcf || (b.dataset.rcf === 'dbl' && (k === 'dbl' || k === 'tpl'))); }); })); } });
+        };
+        // tf-agree-r1 (27 Nov 2026, Shantha): Manual hotel agreement — what a hotel agreed by telephone for this inquiry's nights,
+        // recorded here (never on the hotel's general contract) and used for those nights in the Hotels list and the quotation.
+        const AG_OCC = { sgl: 'Single', dbl: 'Double', twn: 'Twin', tpl: 'Triple', quad: 'Quadruple', fam: 'Family room', unit: 'Whole unit / villa' };
+        const agFor = (d, optId) => { const L = d.agreements || []; return L.find(a => optId != null && Number(a.option_id) === Number(optId)) || L.find(a => a.option_id == null) || null; };
+        window.tfAgreement = (dayNo, agId) => {
+            const d = (it.days || []).find(x => Number(x.day_no) === Number(dayNo)); if (!d) return;
+            const ag = agId ? (it.hotel_agreements || []).find(a => Number(a.id) === Number(agId)) : null;
+            const same = (it.days || []).filter(x => String(x.hotel_name_raw || '').trim().toLowerCase() === String(d.hotel_name_raw || '').trim().toLowerCase());
+            const picked = ag ? ag.day_ids.map(Number) : same.map(x => Number(x.id));
+            const opts = (it.room_options || []).filter(o => o.included);
+            const v = Object.assign({ room_label: '', occ: '', rooms: 1, rate: '', currency: 'USD', meal_plan: d.meal_plan || '', adults: it.pax_adults || '', children: it.pax_children || 0, child_ages: '', bed_arrangement: '', child_supp_mode: '', child_supp_amount: '', child_supp_children: '', contact_name: '', call_date: new Date().toISOString().slice(0, 10), notes: '', written_ref: '', option_id: '' }, ag || {});
+            const f = (lbl, html, wide) => `<label class="ag-f ${wide ? 'ag-w' : ''}"><span>${lbl}</span>${html}</label>`;
+            const inp = (k, type, extra) => `<input class="form-control form-control-sm" id="ag_${k}" type="${type || 'text'}" value="${esc(v[k] == null ? '' : v[k])}" ${extra || ''}>`;
+            const hist = ag && (ag.history || []).length ? `<div class="ag-hist"><b>History</b>${ag.history.map(h => `<div>${esc(h.at)} · ${esc(h.by || '')} · ${esc(h.action)}${h.action === 'edit' && h.old ? ': ' + esc(Object.keys(h.old).map(k => k + ' ' + (h.old[k] == null ? '—' : h.old[k]) + ' → ' + (h.new && h.new[k] != null ? h.new[k] : '—')).join('; ')) : ''}</div>`).join('')}</div>` : '';
+            const docs = ag && (ag.docs || []).length ? ag.docs.map(x => `<a href="${SITE}tour/intake/intake/${it.id}/agreement_doc/${x.id}" target="_blank" rel="noopener">${esc(x.file_name)}</a> <small>(${esc(x.uploaded_by || '')}, ${esc(x.uploaded_at)})</small>`).join('<br>') : '<small>None attached yet — not required.</small>';
+            Swal.fire({ width: 980, title: (ag ? 'Edit' : 'New') + ' manual hotel agreement', showCancelButton: true, confirmButtonText: 'Save agreement', confirmButtonColor: '#78b848', showDenyButton: !!ag, denyButtonText: 'Withdraw agreement', customClass: { popup: 'ag-pop' },
+                html: `<div class="ag">
+                    <div class="ag-note">${esc(d.hotel_name_raw || '')} · enter exactly what the hotel agreed by telephone. Applies to this inquiry only; the hotel's general contract is not changed.</div>
+                    <div class="ag-sec">Nights</div><div class="ag-nights">${same.map(x => `<label><input type="checkbox" class="ag-n" value="${x.id}" ${picked.includes(Number(x.id)) ? 'checked' : ''}> Night ${x.day_no} · ${esc(dm(x.day_date, { day: 'numeric', month: 'short', year: 'numeric' }))}</label>`).join('')}</div>
+                    ${opts.length ? f('For room option', `<select class="form-select form-select-sm" id="ag_option_id"><option value="">Every option</option>${opts.map(o => `<option value="${o.id}" ${String(v.option_id) === String(o.id) ? 'selected' : ''}>Option ${o.no} · ${esc(o.name)}</option>`).join('')}</select>`) : ''}
+                    <div class="ag-sec">Room, rate and meal plan</div>
+                    <div class="ag-grid">${f('Room agreed', inp('room_label', 'text', 'placeholder="e.g. 2 Bedroom Family Unit"'), true)}${f('Occupancy', `<select class="form-select form-select-sm" id="ag_occ"><option value="">choose…</option>${Object.keys(AG_OCC).map(k => `<option value="${k}" ${v.occ === k ? 'selected' : ''}>${AG_OCC[k]}</option>`).join('')}</select>`)}${f('Rooms', inp('rooms', 'number', 'min="1" max="20"'))}
+                        ${f('Agreed rate per room per night', inp('rate', 'number', 'min="0" step="0.01"'))}${f('Currency', `<select class="form-select form-select-sm" id="ag_currency">${['USD', 'LKR'].map(c => `<option ${v.currency === c ? 'selected' : ''}>${c}</option>`).join('')}</select>`)}${f('Meal plan', `<select class="form-select form-select-sm" id="ag_meal_plan"><option value="">choose…</option>${['RO', 'BB', 'HB', 'FB', 'AI'].map(m => `<option ${v.meal_plan === m ? 'selected' : ''}>${m}</option>`).join('')}</select>`)}</div>
+                    <div class="ag-sec">Guests and beds covered</div>
+                    <div class="ag-grid">${f('Adults', inp('adults', 'number', 'min="1"'))}${f('Children', inp('children', 'number', 'min="0"'))}${f('Child ages', inp('child_ages', 'text', 'placeholder="e.g. 11, 9, 7"'))}${f('Bed arrangement agreed', inp('bed_arrangement', 'text', 'placeholder="e.g. 1 king + 2 singles, 7-yr-old shares"'), true)}</div>
+                    <div class="ag-sec">Child supplement</div>
+                    <div class="ag-supp"><label><input type="radio" name="ag_supp" value="included" ${v.child_supp_mode === 'included' ? 'checked' : ''}> Included / no extra charge</label><label><input type="radio" name="ag_supp" value="charge" ${v.child_supp_mode === 'charge' ? 'checked' : ''}> Charged:</label>
+                        ${inp('child_supp_amount', 'number', 'min="0" step="0.01" placeholder="per child per night" style="max-width:150px"')}<span>for</span>${inp('child_supp_children', 'number', 'min="1" placeholder="children" style="max-width:110px"')}<small>(only when children are covered)</small></div>
+                    <div class="ag-sec">The call</div>
+                    <div class="ag-grid">${f("Hotel contact's name", inp('contact_name', 'text'))}${f('Call date', inp('call_date', 'date'))}${f('Written confirmation reference (optional)', inp('written_ref', 'text', 'placeholder="e.g. e-mail of 28 Nov from Reservations"'))}${f('Agreement notes', `<textarea class="form-control form-control-sm" id="ag_notes" rows="2">${esc(v.notes || '')}</textarea>`, true)}</div>
+                    <div class="ag-sec">Written confirmation</div><div class="ag-docs">${docs}<div class="mt-1"><input type="file" id="ag_file" class="form-control form-control-sm" accept=".pdf,.jpg,.jpeg,.png,.webp,.eml,.msg"><small>Optional — attach it now or later.</small></div></div>
+                    ${ag ? `<div class="ag-who">Entered by ${esc(ag.created_by || '')} on ${esc(ag.created_at || '')}${ag.updated_at && ag.updated_at !== ag.created_at ? ' · last edited by ' + esc(ag.updated_by || '') + ' on ' + esc(ag.updated_at) : ''}</div>` : ''}${hist}</div>`,
+                preConfirm: async () => {
+                    const g = id => (document.getElementById('ag_' + id) || {}).value;
+                    const body = { id: ag ? ag.id : null, day_ids: [...document.querySelectorAll('.ag-n:checked')].map(x => Number(x.value)), option_id: g('option_id') || '', room_label: g('room_label'), occ: g('occ'), rooms: g('rooms'), rate: g('rate'), currency: g('currency'), meal_plan: g('meal_plan'),
+                        adults: g('adults'), children: g('children'), child_ages: g('child_ages'), bed_arrangement: g('bed_arrangement'), child_supp_mode: (document.querySelector('input[name="ag_supp"]:checked') || {}).value || '', child_supp_amount: g('child_supp_amount'), child_supp_children: g('child_supp_children'),
+                        contact_name: g('contact_name'), call_date: g('call_date'), notes: g('notes'), written_ref: g('written_ref') };
+                    const j = await post('/intake/' + it.id + '/agreement', body);
+                    if (j.status !== 200) { Swal.showValidationMessage(j.message || 'Not saved.'); return false; }
+                    const file = (document.getElementById('ag_file') || {}).files; let up = null;
+                    if (file && file[0]) { const fd = new FormData(); fd.append('file', file[0]); up = await fetch(SITE + 'tour/intake/intake/' + it.id + '/agreement/' + j.agreement_id + '/doc', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd }).then(r => r.json()).catch(() => ({ status: 0, message: 'The file could not be sent.' })); }
+                    return { j, up };
+                } }).then(async res => {
+                    if (res.isDenied && ag) {
+                        const why = await Swal.fire({ title: 'Withdraw the manual agreement?', input: 'text', inputPlaceholder: 'Why (required)', showCancelButton: true, confirmButtonText: 'Withdraw', confirmButtonColor: '#b23a32', inputValidator: x => !String(x || '').trim() ? 'Say why.' : undefined });
+                        if (!why.isConfirmed) return;
+                        const j = await post('/intake/' + it.id + '/agreement', { withdraw: 1, id: ag.id, reason: why.value });
+                        if (j.status !== 200) { toast('error', j.message); return; }
+                        CURRENT = j.data; renderDetail(); toast('success', j.message); return;
+                    }
+                    if (!res.isConfirmed || !res.value) return;
+                    const { j, up } = res.value; CURRENT = (up && up.status === 200 && up.data) ? up.data : j.data; renderDetail();
+                    if (up && up.status !== 200) toast('warning', 'Agreement saved; the written confirmation was not attached: ' + (up.message || ''));
+                    else toast('success', j.message);
+                });
         };
         const accomBlock = () => { const L = roomLines(null), A = it.accom_reqs || [];
             return `<div class="inq-accom"><div class="ia-rooms"><div class="ia-k">Room arrangement</div>${L.length ? L.map(([l, w]) => `<div class="ia-row">${l ? `<span class="ia-opt">${esc(l)}</span>` : ''}${w.map(x => `<span class="ia-chip">${esc(x)}</span>`).join('')}</div>`).join('') : '<div class="ia-row"><span class="ia-chip ia-none">Not set</span></div>'}</div>
@@ -4942,6 +5008,7 @@ ${SEES_PRICING ? `                            <i class="bi bi-cash-coin last"></
             if (w) w.location.href = j.data.url; else location.href = j.data.url;
         }));
         shell.querySelectorAll('[data-inqsvc]').forEach(b => b.addEventListener('click', () => openServices(Number(b.dataset.inqsvc))));
+        shell.querySelectorAll('[data-inqagree]').forEach(b => b.addEventListener('click', () => window.tfAgreement && window.tfAgreement(Number(b.dataset.inqagree), b.dataset.agid ? Number(b.dataset.agid) : null)));   // tf-agree-r1
         shell.querySelectorAll('[data-inqcats]').forEach(b => b.addEventListener('click', () => { const d = (it.days || []).find(x => Number(x.day_no) === Number(b.dataset.inqcats)); if (d && window.tfRoomCats) window.tfRoomCats(d); }));   // tf-roomcats-r1
         inqShow(shell.querySelector(`.inq-pane[data-pane="${INQ_TAB}"]`) ? INQ_TAB : 'itin');
         inqCrew(it, shell);

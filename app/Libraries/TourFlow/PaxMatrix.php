@@ -238,6 +238,31 @@ final class PaxMatrix
             // ---- rooms, night by night --------------------------------------------------------
             $hotelUsd = 0.0;
             foreach (($it['days'] ?? []) as $d) {
+                // tf-agree-r1: a night priced by a manual hotel agreement — its agreed figure for the party it covers; another size is on request
+                $ag = null;
+                $chosenOpt = null;
+                foreach ((array) ($it['room_options'] ?? []) as $ro) {
+                    if (!empty($ro['chosen'])) {
+                        $chosenOpt = (int) $ro['id'];
+                    }
+                }
+                foreach ((array) ($it['hotel_agreements'] ?? []) as $a) {
+                    if (in_array((int) $d['id'], $a['day_ids'], true) && ($a['option_id'] === null || $a['option_id'] === $chosenOpt)) {
+                        $ag = $a;
+                    }
+                }
+                if ($ag !== null) {
+                    if ($own) {
+                        $an = HotelAgreements::night($ag);
+                        $u  = strtoupper((string) $an['currency']) === 'USD' ? $an['amount'] : $toUsd($an['amount']);
+                        if ($u !== null) {
+                            $hotelUsd += $u;
+                        }
+                    } else {
+                        $gaps[] = ['part' => 'hotels', 'text' => 'Night ' . (int) $d['day_no'] . ' (' . $ag['hotel_name'] . ') is priced by a manual agreement for this party only.'];
+                    }
+                    continue;
+                }
                 $mix      = $own ? ($d['room_mix'] ?? IntakeService::roomMix($it, (int) $d['day_no'])) : ['sgl' => $b['sgl'], 'dbl' => $b['dbl'], 'twn' => $b['twn'], 'tpl' => $b['tpl'], 'pax' => $p];
                 $paxNight = $own ? (($mix['pax'] ?? null) !== null && (int) $mix['pax'] > 0 ? (int) $mix['pax'] : $N) : $p;
                 $n        = self::night($d, $mix, $paxNight, $toUsd);

@@ -215,6 +215,23 @@ final class QuoteService
             }
         }
 
+        // tf-agree-r1: the manual hotel agreements (by phone) that price nights of this costing — for this room option (or the
+        // chosen one), else one made for every option
+        $agreeOpt = $option !== null ? (int) ($option['id'] ?? 0) : null;
+        if ($option === null) {
+            foreach ((array) ($it['room_options'] ?? []) as $ro) {
+                if (!empty($ro['chosen'])) {
+                    $agreeOpt = (int) $ro['id'];
+                }
+            }
+        }
+        $agreeDays = [];   // day_no => agreement
+        foreach (($it['days'] ?? []) as $dd) {
+            $ag = HotelAgreements::forNight((array) ($it['hotel_agreements'] ?? []), (int) $dd['id'], $agreeOpt);
+            if ($ag !== null) {
+                $agreeDays[(int) $dd['day_no']] = $ag;
+            }
+        }
         // ---- hotels: one line per night, room mix × published rate --------------------
         $hotels = [];
         $hotelUsd = 0.0;
@@ -222,9 +239,24 @@ final class QuoteService
         $childReview = null;
         if ((int) ($it['pax_children'] ?? 0) > 0 && ChildFares::ready($this->db)) {
             $childReview = (new ChildFares($this->db, $this->user))->review($it);
-            if ($childReview['open'] > 0) {
-                $list = array_map(static fn ($i) => $i['title'] . ' (' . ($i['status'] === 'review_again' ? 'review again' : 'needs checking') . ')', array_values(array_filter($childReview['items'], static fn ($i) => $i['status'] !== 'confirmed')));
-                $blockers[] = ['code' => 'child_review', 'label' => 'Child Fare Review: ' . $childReview['open'] . ' item(s) to confirm before quotation — ' . implode('; ', array_slice($list, 0, 6)) . (count($list) > 6 ? ' …' : '') . '. Mark each Applicable or Not applicable in the Child Fare Review.'];
+            // tf-agree-r1: a hotel night priced by a manual agreement carries the child supplement agreed by phone — its Child Fare Review item is settled by it
+            $openItems = array_values(array_filter($childReview['items'], static function ($i) use ($agreeDays) {
+                if ($i['status'] === 'confirmed') {
+                    return false;
+                }
+                if ($i['kind'] === 'hotel') {
+                    for ($dn = (int) $i['day_from']; $dn <= (int) $i['day_to']; $dn++) {
+                        if (!isset($agreeDays[$dn])) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                return true;
+            }));
+            if (count($openItems) > 0) {
+                $list = array_map(static fn ($i) => $i['title'] . ' (' . ($i['status'] === 'review_again' ? 'review again' : 'needs checking') . ')', $openItems);
+                $blockers[] = ['code' => 'child_review', 'label' => 'Child Fare Review: ' . count($openItems) . ' item(s) to confirm before quotation — ' . implode('; ', array_slice($list, 0, 6)) . (count($list) > 6 ? ' …' : '') . '. Mark each Applicable or Not applicable in the Child Fare Review.'];
             }
             if (count(ChildFares::children($it)) !== (int) $it['pax_children']) {
                 $blockers[] = ['code' => 'child_count', 'label' => 'The party has ' . (int) $it['pax_children'] . ' child(ren); give each one\'s age and bedding in the Child Fare Review.'];
@@ -274,6 +306,38 @@ final class QuoteService
                 $line['state'] = 'missing';
                 $line['why']   = 'No date for the night.';
                 $blockers[]    = ['code' => 'hotel_date_' . $d['id'], 'label' => "Night {$n} ({$hotel}): no date, so no rate can be read."];
+                $hotels[] = $line;
+                continue;
+            }
+            // tf-agree-r1 (27 Nov 2026, Shantha): a night priced by a manual hotel agreement — exactly what the hotel agreed by phone,
+            // in place of the published contract (whose rate, family-room and child-charge stops do not apply to this night)
+            if (isset($agreeDays[$n])) {
+                $ag = $agreeDays[$n];
+                $an = HotelAgreements::night($ag);
+                $acur = strtoupper((string) $an['currency']);
+                $line['plan']      = HotelAgreements::LABEL;
+                $line['agreement'] = ['id' => $ag['id'], 'label' => HotelAgreements::LABEL, 'contact' => $ag['contact_name'], 'call_date' => $ag['call_date'], 'by' => $ag['updated_by'], 'at' => $ag['updated_at'],
+                    'adults' => $ag['adults'], 'children' => $ag['children'], 'child_ages' => $ag['child_ages'], 'bed' => $ag['bed_arrangement'], 'written' => !empty($ag['docs']) || !empty($ag['written_ref'])];
+                $line['room_type'] = $an['room'];
+                $line['meal_plan'] = $an['meal_plan'];
+                $line['currency']  = $acur;
+                $line['lines']     = $an['lines'];
+                $line['amount']    = $an['amount'];
+                $line['amount_usd'] = $acur === 'USD' ? $an['amount'] : $toUsd($an['amount']);
+                if ($line['amount_usd'] === null) {
+                    $line['state'] = 'missing';
+                    $line['why']   = 'No USD rate to convert the agreed LKR figure.';
+                    $blockers[]    = ['code' => 'agree_cur_' . $d['id'], 'label' => "{$hotel}, night {$n}: the manual agreement is in LKR and there is no USD rate to convert it."];
+                } else {
+                    $hotelUsd += $line['amount_usd'];
+                }
+                $party = (int) ($it['pax_adults'] ?? 0) + (int) ($it['pax_children'] ?? 0);
+                if ($option === null && $party > 0 && $ag['adults'] + $ag['children'] !== $party && empty($it['groups'])) {
+                    $warnings[] = ['code' => 'agree_party_' . $d['id'], 'label' => "{$hotel}, night {$n}: the manual agreement covers " . ($ag['adults'] + $ag['children']) . " guest(s); the party is {$party}. Check what the hotel agreed."];
+                }
+                if (empty($ag['docs']) && empty($ag['written_ref'])) {
+                    $warnings[] = ['code' => 'agree_written_' . (int) $ag['id'], 'label' => "{$hotel}: " . HotelAgreements::LABEL . ' (' . $ag['contact_name'] . ', ' . date('j M Y', strtotime((string) $ag['call_date'])) . ') — the written confirmation is not attached yet.'];
+                }
                 $hotels[] = $line;
                 continue;
             }

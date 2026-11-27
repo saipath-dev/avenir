@@ -577,7 +577,10 @@ $routes->group('tour/intake', ['filter' => ['UserSessionFilter', 'UserPermission
     $routes->post('intake/(:num)/day/(:num)', [TourIntakeController::class, 'day']);
     $routes->post('intake/(:num)/day/(:num)/reprice', [TourIntakeController::class, 'reprice']);
     $routes->post('intake/(:num)/day/(:num)/rates', [TourIntakeController::class, 'nightRates']);
-    $routes->post('intake/(:num)/day/(:num)/room_match', [TourIntakeController::class, 'roomMatch']);   // tf-roommatch-r1   // tf-hotelpick-r1: read only
+    $routes->post('intake/(:num)/day/(:num)/room_match', [TourIntakeController::class, 'roomMatch']);   // tf-roommatch-r1
+    $routes->post('intake/(:num)/agreement', [TourIntakeController::class, 'agreement']);   // tf-agree-r1
+    $routes->post('intake/(:num)/agreement/(:num)/doc', [TourIntakeController::class, 'agreementDoc']);
+    $routes->get('intake/(:num)/agreement_doc/(:num)', [TourIntakeController::class, 'agreementDocGet']);   // tf-hotelpick-r1: read only
     // schema 32: the dates rule — the departure day, an extra night, the email's dates, the missing nights
     $routes->post('intake/(:num)/day/(:num)/departure', [TourIntakeController::class, 'departureDay']);
     $routes->post('intake/(:num)/day/(:num)/extra_night', [TourIntakeController::class, 'extraNight']);

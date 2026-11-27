@@ -2477,6 +2477,49 @@ class TourIntakeController extends BaseController
         return is_string($made) ? $made : null;
     }
 
+    // tf-agree-r1: POST intake/(:num)/agreement {id?, day_ids[], option_id?, room_label, occ, rooms, rate, currency, meal_plan, adults, children,
+    // child_ages, bed_arrangement, child_supp_mode, child_supp_amount, child_supp_children, contact_name, call_date, notes, written_ref}
+    // — a manual hotel agreement (by phone) saved for this inquiry's nights; {withdraw:1, id, reason} withdraws one
+    public function agreement($id)
+    {
+        try {
+            $svc = $this->svc();
+            $svc->assertOpen((int) $id);
+            $b = $this->body();
+            $db = $this->db();
+            if (!empty($b['withdraw'])) {
+                \App\Libraries\TourFlow\HotelAgreements::withdraw($db, (int) $id, (int) ($b['id'] ?? 0), (string) ($b['reason'] ?? ''), $this->actorName());
+                return $this->json(['status' => 200, 'message' => 'Manual agreement withdrawn. The nights go back to the published contract.', 'data' => $svc->get((int) $id)]);
+            }
+            $r = \App\Libraries\TourFlow\HotelAgreements::save($db, (int) $id, $b, $this->actorName());
+            return $this->json(['status' => 200, 'message' => $r['changed'] ? 'Manual agreement saved — confirmed by phone.' : 'Nothing changed.', 'agreement_id' => $r['id'], 'data' => $svc->get((int) $id)]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // tf-agree-r1: POST intake/(:num)/agreement/(:num)/doc (multipart "file") — the written confirmation, attached later
+    public function agreementDoc($id, $agId)
+    {
+        try {
+            $this->svc()->assertOpen((int) $id);
+            \App\Libraries\TourFlow\HotelAgreements::attach($this->db(), (int) $id, (int) $agId, $this->request->getFile('file'), $this->actorName());
+            return $this->json(['status' => 200, 'message' => 'Written confirmation attached.', 'data' => $this->svc()->get((int) $id)]);
+        } catch (\Throwable $e) {
+            return $this->fail($e, 400);
+        }
+    }
+
+    // tf-agree-r1: GET intake/(:num)/agreement_doc/(:num) — open an attached written confirmation
+    public function agreementDocGet($id, $docId)
+    {
+        $d = \App\Libraries\TourFlow\HotelAgreements::doc($this->db(), (int) $id, (int) $docId);
+        if (!$d) {
+            return $this->response->setStatusCode(404)->setBody('Not found.');
+        }
+        return $this->response->setHeader('Content-Type', $d['mime'])->setHeader('Content-Disposition', 'inline; filename="' . str_replace('"', '', $d['file_name']) . '"')->setBody($d['data']);
+    }
+
     // tf-roommatch-r1: POST intake/(:num)/day/(:num)/room_match {matches:[{option_id, rows, edited}]} — save and confirm a night's room arrangement
     public function roomMatch($id, $dayId)
     {
