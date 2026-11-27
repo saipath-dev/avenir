@@ -42,7 +42,7 @@ foreach ($c['days'] as $d) {
     foreach ($d['services'] as $s) {
         if ($s['included']) {
             // tf-safarirate-r2: a safari is one all-inclusive line ("Minneriya Jeep Safari (park entrance, taxes and private jeep included)")
-            $included[] = !empty($s['safari']) ? $s['title'] . ' (' . (string) $s['note'] . ')' : $s['title'];
+            $included[] = !empty($s['safari']) ? $s['title'] . ' (' . str_replace(' · ', ', ', (string) $s['note']) . ')' : $s['title'];
         } elseif ($s['note'] === 'payable direct') {
             $direct[] = $s['title'];
         }

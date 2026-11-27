@@ -1005,9 +1005,18 @@ final class QuoteService
             $dayOf((int) $s['day_no']);
             // a no-charge stop is part of the programme and of what is included, at no cost
             if (!empty($s['safari']) && (string) $s['line_state'] === 'priced') {
-                // tf-safarirate-r2: one safari line, all-inclusive, inside the tour price — no amount and no breakdown on the line
+                // tf-safarirate-r3 (27 Nov 2026, Shantha): one safari line, all-inclusive, with its price as it stands inside the tour price —
+                // the exact cost for the party with the quotation's markup, per guest and for the party ("USD 58.15 per guest · 2 guests
+                // USD 116.29"); never the cost or the breakdown, and no amount while the quotation has an open check
+                $pctS  = $cost['markup']['pct'] ?? null;
+                $paxS  = (int) ($cost['pax'] ?? 0);
+                $words = '';
+                if (empty($cost['blockers']) && $pctS !== null && $paxS > 0 && isset($s['safari']['cost_usd'])) {
+                    $tot   = round((float) $s['safari']['cost_usd'] * (1 + (float) $pctS / 100), 2);
+                    $words = 'USD ' . number_format($tot / $paxS, 2) . ' per guest' . ($paxS > 1 ? ' · ' . $paxS . ' guests USD ' . number_format($tot, 2) : '') . ' · ';
+                }
                 $days[$s['day_no']]['services'][] = ['title' => $s['safari']['label'], 'kind' => 'safari', 'description' => $s['description'], 'included' => true, 'safari' => true,
-                    'note' => 'park entrance, taxes and private jeep included'];
+                    'note' => $words . 'park entrance, taxes and private jeep included'];
                 continue;
             }
             $days[$s['day_no']]['services'][] = ['title' => $s['title'], 'kind' => $s['kind'], 'description' => $s['description'], 'included' => $s['costed'] || $s['pay_mode'] === 'no_charge' || $s['pay_mode'] === 'in_rate', 'note' => $s['pay_mode'] === 'direct' ? 'payable direct' : ($s['pay_mode'] === 'own_arrangement' ? 'own arrangement'
