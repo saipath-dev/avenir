@@ -1308,6 +1308,44 @@ final class ServiceLookup
             $conv = $this->usdRate($dayDate);
             return $conv['rate'] !== null && $conv['rate'] > 0 ? 1 / $conv['rate'] : null;
         };
+        // tf-safarirate-r1 (27 Nov 2026, Shantha): a safari park with a Safari Rate Master record is costed from it alone —
+        // the gazette entrance per guest incl. VAT, and per jeep the gate charges incl. VAT plus the operator's hire, at the
+        // fixed quotation rate (USD 1 = LKR 320). Places & Entrance Fees' own entrance and jeep rates are not read for it, so
+        // nothing is counted twice. The agent's price (USD 75 an adult) is set by the costing, not here.
+        $sr = (int) $p['jeep'] === 1 ? SafariRates::forPlace($this->db, (int) $p['id']) : null;
+        if ($sr !== null) {
+            $gaps = SafariRates::gaps($sr);
+            $u    = SafariRates::units($sr);
+            $svc['rate_currency'] = 'USD';
+            $svc['rate_adult']    = $u['ticket_adult'];
+            $svc['rate_child']    = $u['ticket_child'];
+            if ($gaps) {
+                $svc['match_state'] = 'rate_missing';
+                $svc['match_note']  = self::note('In the Safari Rate Master as ' . $sr['label'] . ' but ' . implode(', ', $gaps) . ' is not entered — complete it there. Nothing is guessed.');
+                return $this->unpriced($svc, $pax, $dayDate, $party);
+            }
+            $svc['unit_usd']  = $u['adult_usd'];
+            $svc['child_usd'] = $u['child_usd'];
+            $svc['jeep_usd']  = $u['per_jeep_usd'];
+            $svc['match_state'] = 'matched';
+            $svc = $this->price($svc, $pax, $dayDate, $party);
+            if (in_array($svc['pay_mode'] ?? '', self::FREE_MODES, true)) {
+                $svc['amount_usd'] = null;
+                $svc['amount_lkr'] = null;
+                $svc['usd_rate']   = null;
+                $svc['rate_date']  = null;
+            }
+            $n2 = static fn (float $x): string => number_format($x, 2);
+            $jq = self::effectiveQty($svc) ?? (isset($svc['jeeps_auto']) ? (float) $svc['jeeps_auto'] : null);
+            $words = 'Safari Rate Master, ' . strtolower(SafariRates::SEASONS[$sr['season']] ?? $sr['season']) . ', USD 1 = LKR ' . rtrim(rtrim(number_format((float) $sr['fx_lkr'], 2), '0'), '.') . ': entrance USD '
+                . $n2((float) $u['adult_usd']) . ' a guest incl. VAT' . (!empty($svc['child_note']) ? ' (' . $svc['child_note'] . ')' : '') . '; per jeep USD ' . $n2((float) $u['per_jeep_usd'])
+                . ' (gate charges + VAT ' . $n2((float) $u['gate_per_jeep_usd']) . ', ' . ($sr['operator'] ?: 'jeep') . ' LKR ' . number_format((float) $sr['hire_lkr']) . ')'
+                . ($jq !== null ? ' × ' . (int) $jq . ' jeep(s)' : '') . '.';
+            $svc['match_note'] = self::note($words, $sr['evidence'] !== 'confirmed' ? 'Jeep hire awaiting supplier evidence.' : null, $overruled ? '"No charge" does not apply to a safari park.' : null);
+            unset($svc['party_split']);
+            $svc['checked_at'] = date('Y-m-d H:i:s');
+            return $svc;
+        }
         $held  = [];
         $notes = [];
         $rate  = $this->rateOn((int) $p['id'], $date, 'entrance');

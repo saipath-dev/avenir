@@ -17,6 +17,7 @@ use App\Controllers\MasterFiles\ExcursionRatesController;
 use App\Controllers\MasterFiles\FreeVisitsController;
 use App\Controllers\MasterFiles\PaidServicesController;
 use App\Controllers\MasterFiles\EntranceMasterController;
+use App\Controllers\MasterFiles\SafariRateController;   // tf-safarirate-r1
 use App\Controllers\MasterFiles\MealMasterController;
 use App\Controllers\MasterFiles\TourPhotosController;
 use App\Controllers\MasterFiles\TransportController;
@@ -289,6 +290,10 @@ $routes->group('master_files/free_visits', ['filter' => ['UserSessionFilter', 'U
 // old Place to Visit list shown read only. One menu URL = one privilege; granted to the System Administrator only.
 $routes->group('master_files/entrance_master', ['filter' => ['UserSessionFilter', 'UserPermissionFilter']], static function ($routes) {
     $routes->get('/', [EntranceMasterController::class, 'index']);
+    // tf-safarirate-r1 (27 Nov 2026, Shantha): the Safari Rate Master, under the same privilege
+    $routes->get('safari', [SafariRateController::class, 'index']);
+    $routes->get('safari/data', [SafariRateController::class, 'data']);
+    $routes->post('safari/save', [SafariRateController::class, 'save']);
     $routes->get('data', [EntranceMasterController::class, 'data']);
     $routes->get('check', [EntranceMasterController::class, 'check']);
     $routes->post('place', [EntranceMasterController::class, 'place']);

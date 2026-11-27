@@ -51,6 +51,8 @@ $tdItems = [
     ['url' => 'master_files/crew_bata',          'label' => 'Crew Roles & Quotation Costing', 'icon' => 'bi-calculator', 'zone' => 'master', 'group' => 'tgs', 'sub' => 'what is quoted — not what is paid'],
     // schema 39 (tf-entrance-r1): the one master of places and their entrance fees
     ['url' => 'master_files/entrance_master',    'label' => 'Places & Entrance Fees', 'icon' => 'bi-bank',    'zone' => 'master', 'group' => 'places', 'sub' => 'the one master of places and their fees'],
+    // tf-safarirate-r1 (27 Nov 2026, Shantha): Minneriya and Yala — seasonal entrance, gate charges, jeep hire, the price per adult
+    ['url' => 'master_files/entrance_master/safari', 'label' => 'Safari Rate Master', 'icon' => 'bi-binoculars', 'zone' => 'master', 'group' => 'places', 'sub' => 'Minneriya & Yala: entrance, jeep, USD 75', 'gate' => 'master_files/entrance_master'],
     // schema 40 (tf-meals-r1): lunches and dinners outside the hotel for Half Board tours
     ['url' => 'master_files/meal_master',        'label' => 'Meal Master',        'icon' => 'oci oci-meal',     'zone' => 'master', 'group' => 'places', 'sub' => 'lunches and dinners outside the hotel'],
     // the two programme masters (schema 29): free visits (never costed) and paid activities & services (costed)

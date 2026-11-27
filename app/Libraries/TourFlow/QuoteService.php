@@ -615,6 +615,7 @@ final class QuoteService
         // reading the section uses, and what stops the quotation is said line by line.
         $services = [];
         $servicesUsd = 0.0;
+        $safariFix = ['cost' => 0.0, 'sell' => 0.0, 'adult' => 0.0, 'child' => 0.0];   // tf-safarirate-r1
         foreach (($it['services'] ?? []) as $s) {
             $mode = (string) ($s['pay_mode'] ?? 'unknown');
             $c    = ServiceLookup::classify($s);
@@ -657,6 +658,35 @@ final class QuoteService
                         $warnings[] = ['code' => 'svc_mode_' . $s['id'], 'label' => $day . ': who pays for "' . $s['title'] . '" is not settled; it is costed in the tour so the quotation is not short.'];
                     }
                     $servicesUsd += $sl['amount_usd'];
+                    // tf-safarirate-r1 (27 Nov 2026, Shantha): a park of the Safari Rate Master is sold at its own price per adult
+                    // (USD 75), outside the markup; its internal cost stays as costed above. Below cost → flagged for Management.
+                    $sr = !empty($s['place_id']) ? SafariRates::forPlace($this->db, (int) $s['place_id']) : null;
+                    if ($sr !== null && $sl['amount_usd'] !== null) {
+                        $kidsN  = max(0, (int) ($it['pax_children'] ?? 0));
+                        $adultN = ($it['pax_adults'] ?? null) !== null && $it['pax_adults'] !== '' ? (int) $it['pax_adults'] : max(0, $pax - $kidsN);
+                        $sell   = SafariRates::sell($sr, $adultN, $kidsN);
+                        $sl['title_client'] = $sr['label'];
+                        $sl['safari'] = ['rate_id' => (int) $sr['id'], 'label' => $sr['label'], 'adults' => $adultN, 'children' => $kidsN, 'cost_usd' => (float) $sl['amount_usd'],
+                            'sell_usd' => $sell['usd'], 'words' => $sell['words'], 'season' => $sr['season'], 'fx' => (float) $sr['fx_lkr'], 'evidence' => $sr['evidence'],
+                            'jeeps' => $s['qty'] !== null && $s['qty'] !== '' ? (float) $s['qty'] : null];
+                        if ($sell['child_open']) {
+                            $blockers[] = ['code' => 'safari_child_' . $s['id'], 'label' => $day . ': "' . $sr['label'] . '" has ' . $kidsN . ' child(ren), and the child selling price is not set in the Safari Rate Master. Management decides it there before a child is quoted.'];
+                        } elseif ($sell['usd'] !== null) {
+                            $safariFix['cost'] += (float) $sl['amount_usd'];
+                            $safariFix['sell'] += (float) $sell['usd'];
+                            $safariFix['adult'] += (float) $sr['sell_adult_usd'];
+                            $safariFix['child'] += (float) ($sr['sell_child_usd'] ?? 0);
+                            $short = round((float) $sl['amount_usd'] - (float) $sell['usd'], 2);
+                            $sl['safari']['short_usd'] = $short > 0 ? $short : null;
+                            if ($short > 0) {
+                                $warnings[] = ['code' => 'safari_short_' . $s['id'], 'label' => $day . ': "' . $sr['label'] . '" costs USD ' . number_format((float) $sl['amount_usd'], 2) . ' for ' . $adultN . ' adult(s)'
+                                    . ($kidsN ? ' and ' . $kidsN . ' child(ren)' : '') . ' but sells at USD ' . number_format((float) $sell['usd'], 2) . ' (' . $sell['words'] . ') — below the selling price by USD ' . number_format($short, 2) . '. Internal only: Management decides.'];
+                            }
+                        }
+                        if ($sr['evidence'] !== 'confirmed') {
+                            $warnings[] = ['code' => 'safari_evidence_' . (int) $sr['id'], 'label' => $sr['label'] . ': the jeep hire (' . ($sr['operator'] ?: 'operator') . ', LKR ' . number_format((float) $sr['hire_lkr']) . ' a jeep) is awaiting supplier evidence in the Safari Rate Master.'];
+                        }
+                    }
                     break;
             }
             $services[] = $sl;
@@ -758,11 +788,12 @@ final class QuoteService
             'agent_currency' => $agentQ['quote_currency'], 'agent_is_agent' => $agentQ['is_agent'],
             'set_by' => $it['markup_by'] ?? null, 'set_at' => $it['markup_at'] ?? null, 'note' => $it['markup_note'] ?? null,
             'sell_usd' => null, 'profit_usd' => null, 'per_person_usd' => null,
+            'safari' => ['cost_usd' => round($safariFix['cost'], 2), 'sell_usd' => round($safariFix['sell'], 2), 'adult_usd' => $safariFix['adult'], 'child_usd' => $safariFix['child']],
         ];
         if ($pct === null) {
             $blockers[] = ['code' => 'pricing', 'label' => 'Pricing has not been set by Management: no markup on this inquiry and no default under Pricing. The client quotation cannot be produced until it is.'];
         } else {
-            $markup['sell_usd']       = round($costUsd * (1 + $pct / 100), 2);
+            $markup['sell_usd']       = round(($costUsd - $safariFix['cost']) * (1 + $pct / 100) + $safariFix['sell'], 2);   // tf-safarirate-r1
             $markup['profit_usd']     = round($markup['sell_usd'] - $costUsd, 2);
             $markup['per_person_usd'] = $pax > 0 ? round($markup['sell_usd'] / $pax, 2) : null;
         }
@@ -993,6 +1024,13 @@ final class QuoteService
             }
             $dayOf((int) $s['day_no']);
             // a no-charge stop is part of the programme and of what is included, at no cost
+            if (!empty($s['safari']) && (string) $s['line_state'] === 'priced') {
+                // tf-safarirate-r1 (27 Nov 2026, Shantha): one safari line, all-inclusive — "Minneriya Jeep Safari — 2 adults × USD 75 = USD 150";
+                // no cost, no breakdown; while the quotation has an open check no amount is shown
+                $days[$s['day_no']]['services'][] = ['title' => $s['safari']['label'], 'kind' => 'safari', 'description' => $s['description'], 'included' => true, 'safari' => true,
+                    'note' => (empty($cost['blockers']) && !empty($s['safari']['words']) ? $s['safari']['words'] . ' · ' : '') . 'park entrance, taxes and private jeep included'];
+                continue;
+            }
             $days[$s['day_no']]['services'][] = ['title' => $s['title'], 'kind' => $s['kind'], 'description' => $s['description'], 'included' => $s['costed'] || $s['pay_mode'] === 'no_charge' || $s['pay_mode'] === 'in_rate', 'note' => $s['pay_mode'] === 'direct' ? 'payable direct' : ($s['pay_mode'] === 'own_arrangement' ? 'own arrangement'
                 : ($s['pay_mode'] === 'in_rate' ? 'included in the hotel rate'
                 : ($s['pay_mode'] === 'optional' ? 'optional extra' . ($s['unit_usd'] !== null && $s['unit_usd'] > 0 ? ' — USD ' . number_format((float) $s['unit_usd'], 2) . ' per person' : '')
@@ -1222,14 +1260,18 @@ final class QuoteService
             }
         }
         $share($g, $all, (float) $c['sections']['hotels'] - $placed);                       // a hotel's own airport transfer kept apart
-        $share($g, $all, (float) $c['cost_usd'] - (float) $c['sections']['hotels']);       // transport, guide, entrances, activities, meals
+        $fix = $c['markup']['safari'] ?? ['cost_usd' => 0.0, 'adult_usd' => 0.0, 'child_usd' => 0.0];   // tf-safarirate-r1
+        $share($g, $all, (float) $c['cost_usd'] - (float) $c['sections']['hotels'] - (float) $fix['cost_usd']);       // transport, guide, entrances, activities, meals
         $pct = (float) $c['markup']['pct'];
         $rows = [];
         foreach ($g as $x) {
             $age = $x['age'] !== null ? rtrim(rtrim(number_format((float) $x['age'], 2, '.', ''), '0'), '.') : null;
             $label = $x['kind'] === 'adult' ? 'Adult' : 'Child' . ($age !== null ? ', ' . $age . ' years' : '') . ($x['bed'] ? '' : ' — no bed');
-            $cost = round($x['cost'], 2);
-            $sell = round($x['cost'] * (1 + $pct / 100), 2);
+            // tf-safarirate-r1: the safaris' cost shared by every guest, never marked up; each guest pays the safari's own price
+            $fixCost = $n > 0 ? (float) $fix['cost_usd'] / $n : 0.0;
+            $fixSell = $x['kind'] === 'adult' ? (float) $fix['adult_usd'] : (float) $fix['child_usd'];
+            $cost = round($x['cost'] + $fixCost, 2);
+            $sell = round($x['cost'] * (1 + $pct / 100) + $fixSell, 2);
             $key = $label . '|' . $sell;
             if (isset($rows[$key])) {
                 $rows[$key]['count']++;

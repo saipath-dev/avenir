@@ -374,7 +374,9 @@ final class PaxMatrix
             $complete = !in_array(null, $parts, true);
             // the three parts add up to the cost, exactly as the detailed costing adds its sections
             $cost = $complete ? round(array_sum($s), 2) : null;
-            $sell = ($cost !== null && $pct !== null) ? round($cost * (1 + $pct / 100), 2) : null;
+            // tf-safarirate-r1: a Safari Rate Master park sells at its own price per adult, outside the markup
+            $fix  = self::safariFix($it, (int) $p, $N);
+            $sell = ($cost !== null && $pct !== null) ? round(($cost - $fix['cost']) * (1 + $pct / 100) + $fix['sell'], 2) : null;
             $rooms = $L['rooms'];
             $veh   = array_map(static fn ($v) => $v['code'] . 'x' . $v['qty'], $L['vehicles']);
             $out[] = [
@@ -644,6 +646,43 @@ final class PaxMatrix
             $usd += round((float) $s['unit_usd'] * self::serviceCount($s, $p, $N), 2);
         }
         return [$usd, $gaps];
+    }
+
+    /**
+     * tf-safarirate-r1 (27 Nov 2026, Shantha): the safaris of the Safari Rate Master at a party of $p — their internal cost
+     * (as services() costs them) and what the agent pays (the price per adult × $p; at the inquiry's own party its adults,
+     * and its children at the child price when Management has set one).
+     *
+     * @return array{cost: float, sell: float}
+     */
+    public static function safariFix(array $it, int $p, int $N): array
+    {
+        $out = ['cost' => 0.0, 'sell' => 0.0];
+        $db  = \Config\Database::connect();
+        foreach (($it['services'] ?? []) as $s) {
+            if (empty($s['place_id']) || !empty($s['free_visit_id']) || ServiceLookup::classify($s)['state'] !== 'priced') {
+                continue;
+            }
+            $sr = SafariRates::forPlace($db, (int) $s['place_id']);
+            if ($sr === null || $sr['sell_adult_usd'] === null) {
+                continue;
+            }
+            if ($N > 0 && $p === $N) {
+                $kids = max(0, (int) ($it['pax_children'] ?? 0));
+                $adl  = ($it['pax_adults'] ?? null) !== null && $it['pax_adults'] !== '' ? (int) $it['pax_adults'] : max(0, $N - $kids);
+                $sell = SafariRates::sell($sr, $adl, $kids)['usd'];
+                if ($sell === null) {
+                    continue;   // a child with no child price: the costing stops the quotation
+                }
+                $out['cost'] += round((float) ($s['amount_usd'] ?? 0), 2);
+                $out['sell'] += $sell;
+                continue;
+            }
+            $jp = EntranceMaster::jeepsNeeded($p, EntranceMaster::rules($db, (int) $s['place_id'])['seats']);
+            $out['cost'] += round((float) $s['unit_usd'] * $p + (float) $s['jeep_usd'] * (float) ($jp ?? ($s['qty'] ?? 0)), 2);
+            $out['sell'] += round((float) $sr['sell_adult_usd'] * $p, 2);
+        }
+        return $out;
     }
 
     /** How many a service line is costed for at a party of $p. */
